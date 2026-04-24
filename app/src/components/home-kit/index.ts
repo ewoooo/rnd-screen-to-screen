@@ -24,6 +24,7 @@ export {
 	CARD_BG,
 	CARD_BORDER,
 	CARD_RADIUS,
+	FONT,
 	GNB_BORDER,
 	OFFERING_BG,
 	OFFERING_BORDER,
@@ -32,3 +33,4 @@ export {
 	T_BRAND,
 	T_BRAND_SHADOW,
 } from "./tokens";
+export type { FontStyle } from "./tokens";
