@@ -1,0 +1,30 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26686",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26686",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "divider",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": 296, "height": 1, "fluid_width": true },
+	"props": {
+		"type": { "type": "enum", "values": ["light", "heavy", "dot"], "default": "light" },
+		"vertical": { "type": "boolean", "default": false }
+	},
+	"structure": {
+		"root": "divider",
+		"variants": [
+			{ "name": "type=light", "node_id": "1:26687", "thickness": "1px solid" },
+			{ "name": "type=heavy", "node_id": "1:26689", "thickness": "10px block" },
+			{ "name": "type=dot", "node_id": "1:26691", "thickness": "dotted line", "note": "WDS Divider 자체 dotted 미지원 → sx로 borderStyle 오버라이드" }
+		]
+	}
+}

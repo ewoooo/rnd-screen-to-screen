@@ -1,0 +1,101 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26825",
+		"figma_name": "accordion",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule"
+	},
+	"variants": [
+		{
+			"id": "1:26839",
+			"name": "state=close, type=2"
+		},
+		{
+			"id": "1:26832",
+			"name": "state=open, type=2"
+		},
+		{
+			"id": "1:26826",
+			"name": "state=open, type=1"
+		}
+	],
+	"size": {
+		"width": 304,
+		"header_h": 42,
+		"row_h": 34
+	},
+	"props": {
+		"state": {
+			"type": "'open' | 'close'",
+			"default": "close"
+		},
+		"type": {
+			"type": "'1' | '2'",
+			"default": "2",
+			"description": "1: row 4개 dropdown / 2: dropdown + 추가 accordion-option"
+		},
+		"header": {
+			"type": "string",
+			"default": "option type"
+		},
+		"options": {
+			"type": "Array<{ label: string; condition?: string; disabled?: boolean }>"
+		}
+	},
+	"structure": {
+		"root": "accordion (1:26825)",
+		"layout": {
+			"direction": "column",
+			"border": "1 solid #b2b2b2",
+			"radius": 16,
+			"overflow": "clip"
+		},
+		"header": {
+			"h": 42,
+			"padding": "0 20",
+			"bg": "#f2f2f2 (selected)",
+			"items": [
+				"option text 12 medium #1a1a1a",
+				"ico arrow-up/down 14"
+			]
+		},
+		"open_rows": [
+			"DropdownList × 4 (h=34, padding 0 20, bg white, 12 medium text)",
+			"type=2 시 추가 AccordionOption row 1개 (bg white)",
+			"close type=2 시 헤더 아래 #f2f2f2 row 한 개"
+		]
+	},
+	"tokens": {
+		"colors": {
+			"accordian/border": "#b2b2b2",
+			"accordian/selectedbackground": "#f2f2f2",
+			"accordian/background": "#ffffff",
+			"accordian/textfocused": "#1a1a1a",
+			"accordian/textdefault": "#666",
+			"dropdown/disabled": "#b2b2b2"
+		},
+		"radius": {
+			"accordian/radius": 16
+		}
+	},
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 2회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

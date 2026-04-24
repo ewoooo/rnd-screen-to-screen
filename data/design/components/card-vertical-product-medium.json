@@ -1,0 +1,177 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26922",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26922",
+		"figma_type": "COMPONENT",
+		"figma_name": "card-vertical-product/medium",
+		"figma_section": "molecule",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule",
+		"figma_doc": "하나의 상품 정보를 전달합니다. 단독으로 쓰이지 않고 반복된 형태로 배치되어 하나의 섹션을 이룹니다."
+	},
+	"size": {
+		"width": 228,
+		"height": 369,
+		"fluid_height": true
+	},
+	"props": {
+		"areaTextInformation": {
+			"type": "boolean",
+			"default": true,
+			"description": "할인율 등 promotion 텍스트 노출"
+		},
+		"slotBadge": {
+			"type": "ReactNode",
+			"default": null,
+			"description": "Slot area에 들어갈 노드 (badge 등). 비면 기본 텍스트"
+		},
+		"textBrandName": {
+			"type": "string",
+			"default": "brand name"
+		},
+		"textTitle": {
+			"type": "string",
+			"default": "어드민 지정 타이틀 텍스트 최대 두 줄"
+		},
+		"textInformation": {
+			"type": "string",
+			"default": "text"
+		},
+		"textPrice": {
+			"type": "string",
+			"default": "NN,NNN원"
+		},
+		"textMonth": {
+			"type": "string",
+			"default": "/N개월"
+		}
+	},
+	"structure": {
+		"root": "card-vertical-product/medium (1:26922)",
+		"layout": {
+			"direction": "column",
+			"gap": 20,
+			"padding": "20 20 50 20",
+			"radius": 32,
+			"shadow": "0px 4px 15px 0px rgba(0,0,0,0.1)"
+		},
+		"children": [
+			{
+				"role": "thumbnail",
+				"node_id": "1:26923",
+				"ref": "img/rectangle size=large (188×188, radius 20)"
+			},
+			{
+				"role": "info_product",
+				"node_id": "1:26925",
+				"width": 188,
+				"children": [
+					{
+						"role": "txt",
+						"gap": 8,
+						"items": [
+							{
+								"role": "con-brand-name",
+								"gap": 2,
+								"items": [
+									"brand (12/14 medium)",
+									"title (16/20 bold, max 1 line ellipsis)"
+								]
+							},
+							{
+								"role": "con-price",
+								"items": [
+									"info (14 bold violet, conditional)",
+									"price (14 bold)",
+									"month (12 bold)"
+								]
+							}
+						]
+					},
+					{
+						"role": "slot-badge",
+						"node_id": "1:26942",
+						"h": 17,
+						"bg": "card/slot #ffeaea",
+						"default_text": "Slot area (13 bold #d54949)"
+					}
+				]
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"card/defaultbackground": "#ffffff",
+			"card/brandname": "#1a1a1a",
+			"card/productname": "#1a1a1a",
+			"card/promotion": "#3014b8",
+			"card/price": "#1a1a1a",
+			"card/month": "#1a1a1a",
+			"card/slot": "#ffeaea",
+			"card/onslot": "#d54949"
+		},
+		"radius": {
+			"card/radius-vertical": 32,
+			"card/radius-thumbnail-large-middle": 20
+		}
+	},
+	"typography": {
+		"brand": {
+			"size": 12,
+			"line_height": 14,
+			"weight": "Medium"
+		},
+		"title": {
+			"size": 16,
+			"line_height": 20,
+			"weight": "Bold",
+			"max_lines": 1
+		},
+		"info": {
+			"size": 14,
+			"line_height": 14,
+			"weight": "Bold"
+		},
+		"price": {
+			"size": 14,
+			"line_height": 20,
+			"weight": "Bold"
+		},
+		"month": {
+			"size": 12,
+			"line_height": 14,
+			"weight": "Bold"
+		},
+		"slot": {
+			"size": 13,
+			"line_height": 20,
+			"weight": "Bold"
+		}
+	},
+	"composition": [
+		{
+			"name": "img-rectangle",
+			"kind": "image",
+			"pilot": "ImgRectanglePilot"
+		},
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 4회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

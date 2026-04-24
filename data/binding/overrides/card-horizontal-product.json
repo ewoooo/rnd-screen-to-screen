@@ -1,0 +1,54 @@
+{
+	"meta": {
+		"purpose": "Figma card-horizontal-product (C4) → WDS Card 계열 오버라이드",
+		"figma_source": "data/design/components/card-horizontal-product.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"notion_code": "C4",
+		"fetched_at": "2026-04-24",
+		"strategy": "Figma card-horizontal은 thumbnail+info+CTA 수평 조합. WDS Card(direction=row) + CardThumbnail + CardContent + Chip로 일대일 매핑."
+	},
+	"mapping": {
+		"target_component": "card",
+		"target_import": "import { Card, CardCaption, CardContent, CardThumbnail, CardTitle, Chip, IconButton, Typography } from '@wanteddev/wds';",
+		"target_package": "@wanteddev/wds",
+		"root": {
+			"wds": "Card",
+			"props": { "platform": "mobile", "direction": "row", "gap": 16, "width": 310 },
+			"from_figma": { "node": "1:27104", "size": "310×80", "gap": 16 }
+		},
+		"thumbnail": {
+			"wds": "CardThumbnail",
+			"props": { "ratio": "1/1", "sx": { "width": 80, "height": 80, "borderRadius": 16 } },
+			"from_figma": { "node": "1:27105", "ref": "img/rectangle (1:26760)", "radius_token": "card/radius-thumbnail-small=16" }
+		},
+		"button_add": {
+			"wds": "IconButton (absolute positioned)",
+			"props": { "variant": "solid", "size": "small", "color": "primary" },
+			"from_figma": { "node": "1:27122", "position": "absolute left=52 top=52" },
+			"conditional": "showAdd",
+			"note": "Card는 자체 absolute 슬롯 미제공 → div wrapper로 position 처리"
+		},
+		"info_block": {
+			"wds": "CardContent",
+			"props": { "direction": "column", "gap": 10 },
+			"from_figma": { "node": "1:27106", "width": 214, "gap": 10 },
+			"children": [
+				{ "wds": "CardCaption", "variant": "label2-medium", "color": "neutral-secondary", "from_figma": "txt_brand (1:27109)" },
+				{ "wds": "CardTitle", "variant": "title3-bold", "color": "neutral-primary", "maxLines": 2, "from_figma": "txt_name (1:27111, max_lines=2)" },
+				{ "wds": "Typography (price composite)", "from_figma": "txt_price (info+price+month)", "tokens_drop": ["card/promotion #3014b8"], "replace_with": "var(--semantic-text-accent-violet)" },
+				{ "wds": "Chip", "props": { "size": "small", "variant": "outlined" }, "conditional": "showCta", "from_figma": "ButtonChip size=small type=stoke" }
+			]
+		}
+	},
+	"token_overrides": {
+		"strategy": "Figma card/* 토큰 → WDS semantic text/color로 위임",
+		"mappings": [
+			{ "from_figma": "card/promotion #3014b8", "to_wds": "var(--semantic-text-accent-violet)", "confidence": "medium", "note": "보라 계열 강조 semantic 후보. 실제 토큰명 wds-token-registry 확인 필요" },
+			{ "from_figma": "card/brandName/productName/price #1a1a1a", "to_wds": "color='neutral-primary'", "confidence": "high" }
+		]
+	},
+	"open_questions": [
+		"WDS Card에 absolute 오버레이 슬롯 정식 패턴이 있는지 (현재 div wrapper 우회)",
+		"price 영역 inline span 조합 대신 전용 PriceComposite 컴포넌트가 필요한지"
+	]
+}

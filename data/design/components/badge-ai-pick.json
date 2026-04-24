@@ -1,0 +1,47 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "HEe3mcTVRPCZBlGwAaysWM",
+		"section": "atom",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "4:1342",
+		"figma_name": "ico/ai",
+		"canonical_atomic_level": "atom",
+		"note": "AI 추천을 표시하는 작은 라벨. Figma 에서는 SVG asset (Group2613687) 으로 박혀있어 ico/ai 라는 이름이지만 시각적으로는 outlined badge 형태."
+	},
+	"size": {
+		"width": 38,
+		"height": 13
+	},
+	"props": {
+		"text": {
+			"type": "string",
+			"default": "AI PICK"
+		}
+	},
+	"structure": "outlined badge: bg white, border 1px #1a1a1a, radius 3, text caption2 bold 9/11 #1a1a1a tracking -0.3, padding 0 4",
+	"tokens": {
+		"colors": {
+			"border": "#1a1a1a",
+			"text": "#1a1a1a",
+			"bg": "#ffffff"
+		},
+		"radius": 3
+	},
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 1회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

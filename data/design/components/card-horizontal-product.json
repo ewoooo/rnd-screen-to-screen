@@ -1,0 +1,222 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27104",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-27104",
+		"figma_type": "COMPONENT",
+		"figma_name": "card-horizontal-product",
+		"notion_code_candidate": "C4",
+		"notion_component_name": "mlc/card",
+		"mapping_confidence": "partial",
+		"mapping_note": "mlc/card는 Notion에서 단일 카드 개념이지만 Figma엔 수평/수직·상품/프로모션·small/medium 등 6+ 변형 존재. card-horizontal-product만 매핑 시 정보 누락. card-family 단위로 묶는 매핑 규칙 필요.",
+		"figma_siblings": [
+			"card-horizontal-product-option (1:26999)",
+			"card-horizontal-delivery (1:27123)",
+			"card-horizontal-product-barcode-information (1:27149)",
+			"card-horizontal-product-pass (1:27162)",
+			"card-horizontal-product-information (1:27177)",
+			"card-horizontal-product-select (1:27292)",
+			"card-vertical-product/small (1:26849)",
+			"card-vertical-product/medium (1:26922)",
+			"card-vertical-product-list (1:26984)",
+			"card-vertical-promotion (1:27298)"
+		],
+		"figma_section": "molecule",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule"
+	},
+	"size": {
+		"width": 310,
+		"height": 80
+	},
+	"props": {
+		"buttonAdd": {
+			"type": "boolean",
+			"default": true,
+			"description": "+ 추가 버튼 노출"
+		},
+		"buttonArea": {
+			"type": "boolean",
+			"default": true,
+			"description": "우측 CTA 칩 버튼 노출"
+		},
+		"textBrandName": {
+			"type": "string",
+			"default": "brand-name"
+		},
+		"textTitle": {
+			"type": "string",
+			"default": "어드민 지정 타이틀 텍스트 최대 두 줄 …",
+			"max_lines": 2
+		},
+		"textInfoLarge": {
+			"type": "string",
+			"default": "text",
+			"description": "할인율 등 강조 정보"
+		},
+		"textPrice": {
+			"type": "string",
+			"default": "NN,NNN원"
+		},
+		"textMonth": {
+			"type": "string",
+			"default": "/N개월"
+		},
+		"thumbnailSize": {
+			"type": "slot",
+			"default": null,
+			"description": "썸네일 컴포넌트 교체 슬롯 (size=small/medium 등)"
+		}
+	},
+	"structure": {
+		"root": "card-horizontal-product (1:27104)",
+		"gap": 16,
+		"children": [
+			{
+				"role": "thumbnail",
+				"node_id": "1:27105",
+				"ref": "img/rectangle (1:26760)",
+				"default_size": "80×80",
+				"radius_token": "card/radius-thumbnail-small = 16"
+			},
+			{
+				"role": "info-block",
+				"node_id": "1:27106",
+				"width": 214,
+				"gap": 10,
+				"children": [
+					{
+						"role": "txt_brand",
+						"node_id": "1:27109"
+					},
+					{
+						"role": "txt_name",
+						"node_id": "1:27111",
+						"max_lines": 2
+					},
+					{
+						"role": "txt_price",
+						"items": [
+							"txt-string-blue (info)",
+							"txt-price-sale (price)",
+							"txt-period (month)"
+						]
+					},
+					{
+						"role": "cta-chip",
+						"ref": "ButtonChip size=small type=stoke",
+						"visible_when": "buttonArea = true"
+					}
+				]
+			},
+			{
+				"role": "button-add",
+				"node_id": "1:27122",
+				"position": "absolute left=52, top=52",
+				"visible_when": "buttonAdd = true"
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"card/brandName": "#1a1a1a",
+			"card/productName": "#1a1a1a",
+			"card/promotion": "#3014b8",
+			"card/price": "#1a1a1a",
+			"card/month": "#1a1a1a",
+			"image/grid": "#3014b8",
+			"image/area": "#d8d1fa",
+			"image/background": "#f2f2f2",
+			"button/white/primary": "#ffffff",
+			"button/white/onPrimary": "#1a1a1a",
+			"button/white/secondary": "#f2f2f2",
+			"button/add/primary": "#4d4d4d",
+			"button/add/onPrimary": "#ffffff",
+			"Main color/white_01": "#FFFFFF"
+		},
+		"numbers": {
+			"text/spacing/xs": 4,
+			"card/radius-thumbnail-small": 16
+		}
+	},
+	"typography": {
+		"brand": {
+			"family": "Pretendard",
+			"weight": "Medium",
+			"size": 12,
+			"line_height": 14,
+			"letter_spacing": -1,
+			"max_lines": 1
+		},
+		"title": {
+			"family": "Pretendard",
+			"weight": "Bold",
+			"size": 14,
+			"line_height": 20,
+			"letter_spacing": -1,
+			"max_lines": 2
+		},
+		"price_info": {
+			"family": "Pretendard",
+			"weight": "Bold",
+			"size": 14,
+			"line_height": 20,
+			"letter_spacing": -1
+		},
+		"period": {
+			"family": "Pretendard",
+			"weight": "Bold",
+			"size": 12,
+			"line_height": 14,
+			"letter_spacing": -1
+		},
+		"cta_chip": {
+			"family": "Pretendard",
+			"weight": "Bold",
+			"size": 12,
+			"line_height": 14,
+			"letter_spacing": -1
+		}
+	},
+	"figma_docs": [
+		{
+			"node_id": "1:26768",
+			"name": "size=small, type=standard-product",
+			"doc": "특별한 속성이 없는 일반적인 상품의 썸네일을 표시할 때 사용합니다."
+		},
+		{
+			"node_id": "1:26760",
+			"name": "img/rectangle",
+			"doc": "화면 내 상품 및 컨텐츠의 사각형 썸네일 이미지를 구성하는 컴포넌트입니다."
+		},
+		{
+			"node_id": "1:26591",
+			"name": "size=small",
+			"doc": "variant값 중 size 속성이 small 이하인 상품 카드에 적용됩니다."
+		},
+		{
+			"node_id": "1:26587",
+			"name": "button-add",
+			"doc": "특정 항목을 장바구니, 위시리스트 등에 포함시키는 '추가' 액션용 버튼입니다."
+		}
+	],
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 6회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

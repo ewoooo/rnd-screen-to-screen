@@ -1,0 +1,21 @@
+{
+	"meta": {
+		"purpose": "Figma btn-text-icon → WDS Button(icon+text) 오버라이드",
+		"figma_source": "data/design/components/btn-text-icon.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "button (variant=outlined or solid + icon)",
+		"target_import": "import { Button } from '@wanteddev/wds';",
+		"root": {
+			"wds": "Button",
+			"props": { "variant": "outlined", "size": "small | medium" },
+			"icon_slot": "leadingContent or trailingContent prop"
+		},
+		"size_mapping": {
+			"size=middle": "Button size='medium'",
+			"size=small": "Button size='small'"
+		}
+	}
+}

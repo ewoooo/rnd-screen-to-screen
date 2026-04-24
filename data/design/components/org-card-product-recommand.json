@@ -1,0 +1,56 @@
+{
+	"meta": { "source": "Figma", "file_key": "HEe3mcTVRPCZBlGwAaysWM", "section": "organism", "fetched_at": "2026-04-24" },
+	"component": { "figma_node_id": "29:6865", "figma_name": ".org/card-product-recommand", "canonical_atomic_level": "organism", "best_case_node": "27:31912", "note": "묶음 상품 추천 카드. title (28/32 Tuniverse Medium) + 흰 카드(slot-product 345h + 가격+CTA + pagenation)" },
+	"size": { "width": 336, "height_default": 555 },
+	"props": {
+		"showText": { "type": "boolean", "default": true },
+		"title": { "type": "string", "max_lines": 2 },
+		"showSub": { "type": "boolean", "default": true },
+		"showIco": { "type": "boolean", "default": true, "description": "ico-info 18×18 (IconCircleInfo)" },
+		"icon": { "type": "ReactNode", "description": "ico-info 대체 노드" },
+		"sub": { "type": "string", "max_lines": 1 },
+		"slotProduct": { "type": "ReactNode", "description": "큰 영역 345h (children or placeholder)" },
+		"showInfo": { "type": "boolean", "default": true, "description": "cardAreaInfo — 가격 violet info 노출" },
+		"info": { "type": "string", "default": "첫 구독", "description": "violet 16 bold" },
+		"price": { "type": "string", "default": "12,900원" },
+		"period": { "type": "string", "default": "/1개월" },
+		"slotBadge": { "type": "ReactNode" },
+		"showSlotBadge": { "type": "boolean", "default": true },
+		"ctaLabel": { "type": "string", "default": "구성 담기 +" },
+		"showPagination": { "type": "boolean", "default": true },
+		"paginationCount": { "type": "number", "default": 2 },
+		"paginationActive": { "type": "number", "default": 0 }
+	},
+	"structure": {
+		"outer": "FlexBox column gap=20 alignItems=center width=336",
+		"title_block": "FlexBox column gap=9 px=12 — Tuniverse 28/32 Medium 2-line + sub_row gap=4 alignItems=center [IconCircleInfo 18×18 + label1 14/20 Regular w=230]",
+		"card": "div bg white py=20 radius=30 shadow column gap=16 alignItems=center",
+		"slot_product": "div w-full 345h #ffeaea center placeholder | children",
+		"footer": "FlexBox column gap=15 px=24 width=full: info_product row justify-between [left column gap=7 w=156: 가격 row + slot-badge] [right ButtonIconTextBackgroundPilot dark fill 34h 'CTA'] + pagination row gap=4 IndicatorDotPilot × N"
+	},
+	"tokens": {
+		"colors": { "card/bg": "white", "title": "#000", "sub": "#000", "slot/bg": "#ffeaea", "slot/text": "#d54949", "btn/dark/bg": "#000", "btn/dark/text": "white", "violet": "#3617ce" },
+		"radius": { "card": 30, "btn": 30 }
+	},
+	"typography": {
+		"title": { "size": 28, "lh": 32, "w": "Medium", "family": "T Universe Sans TTF (fallback Pretendard)" },
+		"sub": { "size": 14, "lh": 20, "w": "Regular" },
+		"info_violet": { "size": 16, "lh": 20, "w": "Bold" },
+		"price": { "size": 16, "lh": 20, "w": "Bold" },
+		"period": { "size": 12, "lh": 14, "w": "Bold" },
+		"slot_badge": { "size": 13, "lh": 20, "w": "Medium" },
+		"cta": { "size": 16, "lh": 20, "w": "Bold" }
+	},
+	"composition": [
+		{ "name": "outer-title-text", "kind": "typography", "spec": { "size": 28, "lh": 32, "weight": "Medium" }, "pilot": null, "raw_reason": "WDS Typography heading2 + sx 강제 (Tuniverse 부재 → Pretendard)" },
+		{ "name": "ico-info", "kind": "icon", "pilot": null, "raw_reason": "IconCircleInfo 직접 사용 (atom Pilot 부재)" },
+		{ "name": "outer-sub-text", "kind": "typography", "spec": { "size": 14, "lh": 20, "weight": "Regular" }, "pilot": null },
+		{ "name": "slot-product-area", "kind": "slot", "pilot": null, "raw_reason": "큰 345h #ffeaea placeholder div + children" },
+		{ "name": "info-violet-text", "kind": "typography", "spec": { "size": 16, "lh": 20, "weight": "Bold" }, "pilot": null },
+		{ "name": "price-text", "kind": "typography", "spec": { "size": 16, "lh": 20, "weight": "Bold" }, "pilot": null },
+		{ "name": "period-text", "kind": "typography", "spec": { "size": 12, "lh": 14, "weight": "Bold" }, "pilot": null },
+		{ "name": "slot-badge-area", "kind": "slot", "pilot": null, "raw_reason": "#ffeaea full-width small placeholder" },
+		{ "name": "cta-button", "kind": "button", "pilot": "ButtonIconTextBackgroundPilot" },
+		{ "name": "pagination-dots", "kind": "indicator", "pilot": "IndicatorDotPilot" }
+	]
+}

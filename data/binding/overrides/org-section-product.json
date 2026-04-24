@@ -1,0 +1,9 @@
+{
+	"meta": { "purpose": "Figma .org/section-product → 단순 title + slot wrapper organism", "fetched_at": "2026-04-24", "strategy": "OrgCardProductPilot 의 footer 제거 버전. AI PICK 라벨은 BadgeAiPickPilot 사용 (이전 실수 반복 방지)." },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
+		"outer_root": "FlexBox column gap=20 alignItems=flex-start width=336",
+		"title_block": "FlexBox column gap=8 px=12 — heading2 28/32 + (BadgeAiPickPilot + label1 14/20)",
+		"slot_block": "div 336×312 #ffeaea center — children or placeholder Typography title3 #d54949"
+	}
+}

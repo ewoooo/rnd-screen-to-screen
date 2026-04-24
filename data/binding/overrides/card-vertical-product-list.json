@@ -1,0 +1,18 @@
+{
+	"meta": {
+		"purpose": "Figma card-vertical-product-list → WDS Card",
+		"figma_source": "data/design/components/card-vertical-product-list.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "Card flexDirection=column justifyContent=space-between, padding 24, radius 32, shadow. 두 slot 영역은 ReactNode 주입 + 기본 placeholder."
+	},
+	"mapping": {
+		"target_import": "import { Card, CardContent, CardTitle, Typography } from '@wanteddev/wds';",
+		"root": { "wds": "Card", "props": { "platform": "mobile", "flexDirection": "column", "justifyContent": "space-between", "width": 312, "sx": { "height": 386, "padding": 24, "borderRadius": 32 } } },
+		"top_block": { "wds": "FlexBox row gap=18", "children": [
+			{ "wds": "CardContent column gap=10", "items": ["Typography caption1 bold sub", "CardTitle body1 bold ellipsis", "Typography caption1 medium gray price"] },
+			{ "wds": "div slot-image 100×60 #ffeaea" }
+		]},
+		"slot_product_block": { "wds": "div 264×206 #ffeaea" }
+	},
+	"open_questions": ["slot 영역 정식 BadgeSlot 부재"]
+}

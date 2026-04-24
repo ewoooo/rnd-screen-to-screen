@@ -1,0 +1,16 @@
+{
+	"meta": {
+		"purpose": "Figma pageindicator-number → WDS PageCounter 오버라이드",
+		"figma_source": "data/design/components/pageindicator-number.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "page-counter",
+		"target_import": "import { PageCounter } from '@wanteddev/wds';",
+		"root": {
+			"wds": "PageCounter",
+			"props": { "size": "small", "currentPage": "N", "totalPages": "N", "alternative": "옵션 (어두운 배경 위)" }
+		}
+	}
+}

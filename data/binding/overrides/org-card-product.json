@@ -1,0 +1,34 @@
+{
+	"meta": {
+		"purpose": "Figma .org/card-product → 카드 컨테이너 organism",
+		"figma_source": "data/design/components/org-card-product.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "외곽 wrapper(FlexBox column gap=20) 안에 [선택적 txt-title 블록] + [Content Container Card]. Content Container 는 WDS Card platform=mobile flexDirection=column. slot 은 children prop."
+	},
+	"mapping": {
+		"target_import": "import { Card, FlexBox, Typography } from '@wanteddev/wds'; import { IconChevronRight } from '@wanteddev/wds-icon';",
+		"root": { "wds": "FlexBox column gap=20", "props": { "alignItems": "flex-start" } },
+		"txt_title_l": {
+			"wds": "FlexBox column gap=8 px=12",
+			"items": [
+				{ "wds": "Typography heading2 medium", "sx": { "fontSize": 28, "lineHeight": "32px", "letterSpacing": "-0.05em" }, "max_lines": 2 },
+				{ "wds": "FlexBox row gap=4 alignItems=center", "items": ["ico/ai placeholder div 38×13 (TextIconPilot 활용 가능)", "Typography label1 regular sub"] }
+			]
+		},
+		"txt_title_m": {
+			"wds": "FlexBox column gap=2 px=12",
+			"items": [
+				{ "wds": "FlexBox row gap=2 alignItems=center", "items": ["Typography heading2 medium 20/32", "IconChevronRight 24×24 (rotate 0)"] },
+				{ "wds": "row sub" }
+			]
+		},
+		"content_container": {
+			"wds": "Card",
+			"props": { "platform": "mobile", "flexDirection": "column", "alignItems": "center", "justifyContent": "center", "gap": 40, "sx": { "padding": "40px 16px 0", "borderRadius": 30, "background": "white", "boxShadow": "0 4px 15px rgba(0,0,0,0.1)", "overflow": "hidden" } },
+			"slot_l": "div 304×637 #ffeaea (placeholder) 또는 children",
+			"slot_m": "div 304×214 #ffeaea (placeholder) 또는 children",
+			"footer": "선택적: div 1×267.81 #f6f6f6 + FlexBox column padding(14,10,20) + TextButton+IconChevronRight"
+		}
+	},
+	"open_questions": ["ico/ai 정식 atom Pilot 부재 — 현재 div placeholder 38×13. WDS atom 으로 추가 후보."]
+}

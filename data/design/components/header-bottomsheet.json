@@ -1,0 +1,57 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26583",
+		"figma_name": "header-bottomsheet",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule"
+	},
+	"size": {
+		"width": 360,
+		"height": 50
+	},
+	"props": {
+		"showClose": {
+			"type": "boolean",
+			"default": true,
+			"description": "우측 close 아이콘 노출 (areaIco)"
+		},
+		"onClose": {
+			"type": "() => void"
+		}
+	},
+	"structure": {
+		"root": "header-bottomsheet (1:26583)",
+		"layout": {
+			"direction": "row",
+			"padding": "14 22 0 22",
+			"radius": "30 30 0 0",
+			"bg": "white",
+			"justifyContent": "flex-end"
+		},
+		"children": [
+			{
+				"role": "btn-search/close",
+				"icon": "ico/close 24×24"
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"bottomsheet/background": "#ffffff"
+		}
+	},
+	"composition": [
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 1회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

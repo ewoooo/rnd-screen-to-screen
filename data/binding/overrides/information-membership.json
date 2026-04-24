@@ -1,0 +1,9 @@
+{
+	"meta": { "purpose": "Figma information-membership → 빈 상태 + CTA chip", "fetched_at": "2026-04-24", "strategy": "FlexBox column center. title body1 bold + sub label1 regular(없으면 medium). chip 은 ButtonChipPilot middle." },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
+		"root": { "wds": "FlexBox column gap=20 alignItems=center", "props": { "width": 280 } },
+		"text_block": { "wds": "FlexBox column gap=5 alignItems=center", "items": ["body1 bold title center", "label1 regular subtitle center #666"] },
+		"action": { "wds": "ButtonChipPilot size=middle" }
+	}
+}

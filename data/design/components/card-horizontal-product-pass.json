@@ -1,0 +1,86 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27162",
+		"figma_name": "card-horizontal-product-pass",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule",
+		"figma_doc": "그룹 상품의 주요 정보 노출"
+	},
+	"size": {
+		"width": 336,
+		"height": 75
+	},
+	"props": {
+		"name": {
+			"type": "string",
+			"default": "pass-product-name"
+		},
+		"price": {
+			"type": "string",
+			"default": "29,900원"
+		},
+		"month": {
+			"type": "string",
+			"default": "1개월"
+		},
+		"actionLabel": {
+			"type": "string",
+			"default": "변경"
+		},
+		"showAction": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"structure": {
+		"root": "card-horizontal-product-pass (1:27162)",
+		"layout": {
+			"direction": "row",
+			"gap": 20,
+			"padding": "18 20 18 24",
+			"radius": 20,
+			"bg": "#f2f2f2"
+		},
+		"children": [
+			{
+				"role": "txt column gap=5",
+				"items": [
+					"name 14 bold ellipsis",
+					"price+month 12 medium #666"
+				]
+			},
+			{
+				"role": "btn-text",
+				"wds": "BtnTextPilot type=line weight=bold #1a1a1a"
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"card/secondarybackground": "#f2f2f2",
+			"card/productname": "#1a1a1a",
+			"card/subprice": "#666",
+			"card/submonth": "#666",
+			"button/dark": "#1a1a1a"
+		}
+	},
+	"composition": [
+		{
+			"name": "btn-text",
+			"kind": "button",
+			"pilot": "BtnTextPilot"
+		},
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		}
+	]
+}

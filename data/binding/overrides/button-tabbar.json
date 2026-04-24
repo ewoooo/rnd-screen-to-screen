@@ -1,0 +1,26 @@
+{
+	"meta": {
+		"purpose": "Figma button-tabbar → 합성 (icon+label 세로 정렬, active 색상 토글)",
+		"figma_source": "data/design/components/button-tabbar.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "WDS BottomNavigationItem은 BottomNavigation 자식 전제 — 단독 atom으로 부적합. SegmentedControl도 가로 그룹 전제. button 위에 FlexBox로 직접 합성."
+	},
+	"mapping": {
+		"target_component": "compound (button + FlexBox + Typography)",
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
+		"root": {
+			"wds": "button (HTML)",
+			"props": { "type": "button", "onClick": "function" }
+		},
+		"layout": {
+			"wds": "FlexBox column gap=4 alignItems=center",
+			"icon_slot": "ReactNode (24px)",
+			"label": "Typography variant=caption2 weight=medium"
+		},
+		"state_mapping": {
+			"select": "color=primary 강조",
+			"default": "color=assistive (opacity 0.5)"
+		}
+	}
+}

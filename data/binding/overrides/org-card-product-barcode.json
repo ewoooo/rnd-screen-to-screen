@@ -1,0 +1,12 @@
+{
+	"meta": { "purpose": "Figma .org/card-product-barcode → 할인 바코드 단독 카드 organism", "fetched_at": "2026-04-24", "strategy": "이중 카드(top/bottom + dot divider). top: slot-img + brand row btn + title + slot-badge + InformationBarcodePilot. bottom: 주의사항 list + 선택 footer btn. 외부 time 텍스트는 dark bg 가정." },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
+		"outer": "FlexBox column gap=20 alignItems=center width=336 shadow=0 4 15 rgba(0,0,0,0.1)",
+		"card_top": "div bg white rounded-tl/tr=30 padding=24 28 16 column gap=20 alignItems=center → slot-img placeholder + brand row (BtnTextIconPilot text + chevron) + title + slot-badge + InformationBarcodePilot",
+		"divider": "div 336×24 raw repeating-linear-gradient (pass 와 동일 패턴)",
+		"card_bottom": "div bg white rounded-bl/br=30 padding=16 28 0 column items=center → notice column gap=8 + footer (선택)",
+		"time": "FlexBox row gap=5 + Typography caption1 medium #fff"
+	},
+	"open_questions": ["dot-divider 를 OrgCardProductPassPilot 과 공유 — 추후 DividerDotPilot 추출"]
+}

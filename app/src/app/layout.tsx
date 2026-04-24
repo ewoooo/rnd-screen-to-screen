@@ -2,12 +2,32 @@
 
 import { ThemeProvider } from "@wanteddev/wds";
 import { AppRouterCacheProvider } from "@wanteddev/wds-nextjs";
+import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
+import { GlobalVersionNav } from "@/components/GlobalVersionNav";
+
 import "@wanteddev/wds/global.css";
+import "./wds-tokens.css";
 import "./globals.css";
 
+// 스크린 라우트(/discover/v*-* 등)만 mobile-frame으로 감싼다.
+// /, /pilot-kit/* 등 카탈로그/인덱스는 풀스크린.
+const isScreenRoute = (pathname: string) => {
+	if (
+		pathname === "/" ||
+		pathname.startsWith("/pilot-kit") ||
+		pathname.startsWith("/home-kit") ||
+		pathname.startsWith("/search-kit")
+	)
+		return false;
+	return true;
+};
+
 const RootLayout = ({ children }: PropsWithChildren) => {
+	const pathname = usePathname() ?? "/";
+	const wrap = isScreenRoute(pathname);
+
 	return (
 		<html lang="ko" suppressHydrationWarning>
 			<head>
@@ -40,8 +60,17 @@ const RootLayout = ({ children }: PropsWithChildren) => {
 			<body>
 				<ThemeProvider>
 					<AppRouterCacheProvider>
-						<div className="mobile-stage">
-							<div className="mobile-frame">{children}</div>
+						<div className="app-shell">
+							<GlobalVersionNav />
+							<main className="app-main">
+								{wrap ? (
+									<div className="mobile-stage">
+										<div className="mobile-frame">{children}</div>
+									</div>
+								) : (
+									children
+								)}
+							</main>
 						</div>
 					</AppRouterCacheProvider>
 				</ThemeProvider>

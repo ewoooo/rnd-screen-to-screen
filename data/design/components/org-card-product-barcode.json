@@ -1,0 +1,53 @@
+{
+	"meta": { "source": "Figma", "file_key": "HEe3mcTVRPCZBlGwAaysWM", "section": "organism", "fetched_at": "2026-04-24" },
+	"component": { "figma_node_id": "29:7011", "figma_name": ".org/card-product-barcode", "canonical_atomic_level": "organism", "best_case_node": "27:32173", "note": "할인 바코드 단독 카드. 이중 카드(top white + dot divider + bottom white) 구조. .org/card-product-pass 와 비슷한 패턴." },
+	"size": { "width": 336, "height_default": 527 },
+	"props": {
+		"slotImg": { "type": "ReactNode", "description": "상단 32h slot — 보통 ImageBrandLogoPilot (stacked +N)" },
+		"brandRowText": { "type": "string", "default": "{브랜드명, 브랜드명, 브랜드명}", "description": "title 위 brand row" },
+		"showBrandRow": { "type": "boolean", "default": true },
+		"title": { "type": "string", "default": "15% 할인", "max_lines": 1 },
+		"slotBadge": { "type": "ReactNode", "description": "title 아래 상태/태그 (예: '오프라인')" },
+		"showSlotBadge": { "type": "boolean", "default": true },
+		"barcode": { "type": "ReactNode", "description": "InformationBarcodePilot 또는 placeholder" },
+		"noticeTitle": { "type": "string", "default": "매장에서 결제 전, 할인 바코드를 보여주세요." },
+		"noticeItems": { "type": "string[]", "default": ["T 멤버십의 매장 바코드를 제공하는 구독 상품을 통합 바코드로 이용할 수 있어요.", "오프라인 매장에서 할인 바코드 이용 시, 해당 구독 상품 혜택을 사용한 것으로 처리돼요."] },
+		"showBtn": { "type": "boolean", "default": true },
+		"btnLabel": { "type": "string", "default": "할인 내역 보기" },
+		"showTime": { "type": "boolean", "default": false, "description": "카드 외부 하단 '남은 시간 NN:NN' 흰색 텍스트 (dark bg 가정)" },
+		"timeText": { "type": "string", "default": "남은 시간 16 : 55" }
+	},
+	"structure": {
+		"outer": "FlexBox column gap=20 alignItems=center width=336 shadow",
+		"card_sku": "div column items=start w=full",
+		"card_top": "div bg white rounded-tl/tr=30 pt=24 px=28 pb=16 column gap=20 alignItems=center: [slot-img 32h #ffeaea center] + [body column items=center: con column gap=5 alignItems=center: text column gap=10: brand-row row + title 22/26 Medium center + slot-badge #ffeaea center] + [InformationBarcode 240w]",
+		"divider": "div w=336 h=24 (dot pattern + line)",
+		"card_bottom": "div bg white rounded-bl/br=30 pt=16 px=28 column items=center: [txt_sub column gap=8 pb=24: notice-title 14/20 Bold + notice-items column gap=8 12/14 Medium #6c6c6c hypen list] + [선택 footer: divider 267.81×1 #f6f6f6 + BtnTextIcon]",
+		"time": "선택: row gap=5 12/14 Medium white"
+	},
+	"tokens": {
+		"colors": { "card/bg": "white", "slot/bg": "#ffeaea", "slot/text": "#d54949", "title": "#000", "notice/title": "#000", "notice/sub": "#6c6c6c", "divider": "#f6f6f6", "time/text": "white" },
+		"radius": { "card/top": 30, "card/bottom": 30 }
+	},
+	"typography": {
+		"brand_row": { "size": 12, "lh": 20, "w": "SemiBold" },
+		"title": { "size": 22, "lh": 26, "w": "Medium" },
+		"slot_badge": { "size": 13, "lh": 20, "w": "SemiBold" },
+		"notice_title": { "size": 14, "lh": 20, "w": "Bold" },
+		"notice_sub": { "size": 12, "lh": 14, "w": "Medium" },
+		"btn": { "size": 14, "lh": 20, "w": "Bold" },
+		"time": { "size": 12, "lh": 14, "w": "Medium" }
+	},
+	"composition": [
+		{ "name": "slot-img-area", "kind": "slot", "pilot": null, "raw_reason": "stacked logo placeholder div + ReactNode (보통 ImageBrandLogoPilot)" },
+		{ "name": "brand-row-btn", "kind": "button", "pilot": "BtnTextIconPilot" },
+		{ "name": "title-text", "kind": "typography", "spec": { "size": 22, "lh": 26, "weight": "Medium" }, "pilot": null, "raw_reason": "WDS Typography heading1 + sx" },
+		{ "name": "slot-badge-area", "kind": "slot", "pilot": null, "raw_reason": "full-width #ffeaea div placeholder" },
+		{ "name": "barcode", "kind": "composite", "pilot": "InformationBarcodePilot" },
+		{ "name": "dot-divider", "kind": "divider", "pilot": null, "raw_reason": "raw repeating-linear-gradient (SVG 근사). 추후 DividerDotPilot 추출 후보 — pass 와 동일 부품 재활용 가능" },
+		{ "name": "notice-title-text", "kind": "typography", "spec": { "size": 14, "lh": 20, "weight": "Bold" }, "pilot": null },
+		{ "name": "notice-sub-text", "kind": "typography", "spec": { "size": 12, "lh": 14, "weight": "Medium" }, "pilot": null },
+		{ "name": "footer-btn", "kind": "button", "pilot": "BtnTextIconPilot" },
+		{ "name": "time-text", "kind": "typography", "spec": { "size": 12, "lh": 14, "weight": "Medium" }, "pilot": null, "raw_reason": "외부 dark bg 위 흰 텍스트" }
+	]
+}

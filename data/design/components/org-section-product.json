@@ -1,0 +1,32 @@
+{
+	"meta": { "source": "Figma", "file_key": "HEe3mcTVRPCZBlGwAaysWM", "section": "organism", "fetched_at": "2026-04-24" },
+	"component": { "figma_node_id": "29:6776", "figma_name": ".org/section-product", "canonical_atomic_level": "organism", "best_case_node": "27:31214", "note": ".org/card-product 의 footer btn 없는 형태. title (선택) + slot 만." },
+	"size": { "width": 336, "slot_height_default": 312 },
+	"props": {
+		"showTxt": { "type": "boolean", "default": true },
+		"title": { "type": "string", "max_lines": 2 },
+		"showSub": { "type": "boolean", "default": true },
+		"showIco": { "type": "boolean", "default": true, "description": "ico/ai (38×13) — BadgeAiPickPilot 매핑" },
+		"sub": { "type": "string", "max_lines": 1 },
+		"icon": { "type": "ReactNode", "description": "ico/ai 대체 노드" },
+		"slot": { "type": "ReactNode", "description": "slot-products children. 비면 #ffeaea 312h placeholder" }
+	},
+	"structure": {
+		"outer": { "direction": "column", "gap": 20, "alignItems": "flex-start", "width": 336 },
+		"txt_title": { "px": 12, "column": "gap=8", "items": ["main 28/32 Medium 2-line ellipsis", "sub_row gap=4 alignItems=center: [ico/ai] + sub 14/20 Regular ellipsis"] },
+		"slot": { "size": "336×312 default", "bg": "#ffeaea", "default_text": "Slot area 20 bold #d54949" }
+	},
+	"tokens": {
+		"colors": { "slot/bg": "#ffeaea", "slot/text": "#d54949", "title/main": "#000", "title/sub": "#000" }
+	},
+	"typography": {
+		"title": { "size": 28, "lh": 32, "w": "Medium", "letter_spacing": -1 },
+		"sub": { "size": 14, "lh": 20, "w": "Regular", "letter_spacing": -1 }
+	},
+	"composition": [
+		{ "name": "outer-title-main", "kind": "typography", "spec": { "size": 28, "lh": 32, "weight": "Medium" }, "pilot": null, "raw_reason": "WDS Typography heading2 + sx 강제" },
+		{ "name": "ai-pick-badge", "kind": "badge", "pilot": "BadgeAiPickPilot" },
+		{ "name": "outer-sub-text", "kind": "typography", "spec": { "size": 14, "lh": 20, "weight": "Regular" }, "pilot": null, "raw_reason": "WDS Typography label1" },
+		{ "name": "slot-products-area", "kind": "slot", "pilot": null, "raw_reason": "ReactNode children + 336×312 #ffeaea placeholder div" }
+	]
+}

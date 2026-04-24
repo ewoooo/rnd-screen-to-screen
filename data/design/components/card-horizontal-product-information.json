@@ -1,0 +1,68 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27177",
+		"figma_name": "card-horizontal-product-information",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule",
+		"figma_doc": "안내사항이나 부가 정보 전달"
+	},
+	"size": {
+		"width": 256,
+		"height": 46
+	},
+	"props": {
+		"text": {
+			"type": "string",
+			"default": "info"
+		},
+		"actionLabel": {
+			"type": "string",
+			"default": "자세히"
+		},
+		"showAction": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"structure": {
+		"root": "card-horizontal-product-information (1:27177)",
+		"layout": {
+			"direction": "row",
+			"justifyContent": "space-between",
+			"padding": "16 20",
+			"border": "1 solid #b2b2b2",
+			"radius": 14,
+			"bg": "#f2f2f2"
+		},
+		"children": [
+			"text 12 medium #1a1a1a",
+			"BtnTextPilot type=line weight=bold"
+		]
+	},
+	"tokens": {
+		"colors": {
+			"card/info/background": "#f2f2f2",
+			"card/info/border": "#b2b2b2",
+			"card/info/primary": "#1a1a1a"
+		}
+	},
+	"composition": [
+		{
+			"name": "btn-text",
+			"kind": "button",
+			"pilot": "BtnTextPilot"
+		},
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		}
+	]
+}

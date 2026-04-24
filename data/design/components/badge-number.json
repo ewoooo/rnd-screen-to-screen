@@ -1,0 +1,45 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26463",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26463",
+		"figma_type": "COMPONENT",
+		"figma_name": "badge-number",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": {
+		"width": 20,
+		"height": 20
+	},
+	"props": {
+		"count": {
+			"type": "number",
+			"required": true,
+			"description": "노출 숫자. 99 초과 시 99+ 처리는 컨슈머 책임"
+		},
+		"target": {
+			"type": "ReactNode",
+			"default": null,
+			"description": "오버레이 대상. 없으면 stand-alone bubble"
+		}
+	},
+	"structure": {
+		"root": "badge-number",
+		"usage": "Header(C1)의 카트 아이콘 위에 오버레이 — 이미 HeaderPilot에서 PushBadge로 사용 중"
+	},
+	"composition": [
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 1회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

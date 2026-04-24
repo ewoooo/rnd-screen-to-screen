@@ -1,0 +1,11 @@
+{
+	"meta": { "purpose": "Figma com-card-product → con-title-card best-case 전용 카드 (1~N rows + footer btn)", "fetched_at": "2026-04-24" },
+	"mapping": {
+		"target_import": "import { Card, FlexBox, Typography } from '@wanteddev/wds'; import { IconChevronRight } from '@wanteddev/wds-icon';",
+		"root": { "wds": "Card", "props": { "platform": "mobile", "flexDirection": "column", "alignItems": "center", "width": 336, "sx": { "padding": "20px 12px", "borderRadius": 30, "background": "white", "boxShadow": "0 4px 15px rgba(0,0,0,0.1)" } } },
+		"con_list_btn": { "wds": "FlexBox column gap=20 alignItems=center" },
+		"con_list": { "wds": "FlexBox column gap=8 alignItems=center" },
+		"row": { "wds": "FlexBox row gap=16 alignItems=center", "props": { "height": 62, "padding": "0 12px" } },
+		"footer": "FlexBox column gap=15 px=8 + divider 1×100% #f6f6f6 + btn TextButton + IconChevronRight"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"meta": {
+		"purpose": "Figma image/brand-logo/round → WDS Avatar 오버라이드",
+		"figma_source": "data/design/components/image-brand-logo-round.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "WDS Avatar(variant=company)가 brand logo round에 가장 가까움. size enum이 다르므로 number(픽셀)로 직접 지정."
+	},
+	"mapping": {
+		"target_component": "avatar",
+		"target_import": "import { Avatar } from '@wanteddev/wds';",
+		"root": {
+			"wds": "Avatar",
+			"props": { "variant": "company", "size": "number (32|36|48|60)" },
+			"size_mapping": {
+				"extra-small": 32,
+				"small": 36,
+				"middle": 48,
+				"large": 60
+			}
+		}
+	}
+}

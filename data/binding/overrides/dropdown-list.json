@@ -1,0 +1,27 @@
+{
+	"meta": {
+		"purpose": "Figma dropdown-list → WDS Select + Option 오버라이드",
+		"figma_source": "data/design/components/dropdown-list.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "select",
+		"target_import": "import { Select, Option } from '@wanteddev/wds';",
+		"root": {
+			"wds": "Select",
+			"props": {
+				"width": 304,
+				"placeholder": "string",
+				"disabled": "boolean",
+				"value": "string",
+				"defaultValue": "string",
+				"onChange": "(v: string) => void"
+			}
+		},
+		"item": {
+			"wds": "Option",
+			"props": { "value": "string", "children": "label" }
+		}
+	}
+}

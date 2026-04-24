@@ -1,0 +1,29 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26268",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26268",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "badge-product-state",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": 27, "height": 17 },
+	"props": {
+		"text": { "type": "string", "required": true, "description": "예: NEW, BEST" },
+		"type": { "type": "enum", "values": ["blue", "gray"], "default": "blue" }
+	},
+	"structure": {
+		"root": "badge-product-state",
+		"variants": [
+			{ "name": "type=blue", "node_id": "1:26269", "size": [27, 17] },
+			{ "name": "type=gray", "node_id": "1:26271", "size": [27, 17] }
+		]
+	}
+}

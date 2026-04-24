@@ -1,0 +1,29 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24",
+		"note": "메타데이터만 — 정확한 내부 구조(라디오 dot 위치 등) get_design_context 필요"
+	},
+	"component": {
+		"figma_node_id": "1:26403",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26403",
+		"figma_type": "COMPONENT",
+		"figma_name": "button-survey-option",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": 336, "height": 50 },
+	"props": {
+		"text": { "type": "string", "required": true },
+		"selected": { "type": "boolean", "default": false },
+		"disabled": { "type": "boolean", "default": false },
+		"onClick": { "type": "function" }
+	},
+	"structure": {
+		"root": "button-survey-option",
+		"layout_guess": "wide button (336×50). 좌측 정렬 텍스트 + (선택 시) 우측 체크 또는 색 변화"
+	}
+}

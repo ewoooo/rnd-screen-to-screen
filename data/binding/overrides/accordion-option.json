@@ -1,0 +1,28 @@
+{
+	"meta": {
+		"purpose": "Figma accordion-option → WDS Accordion 오버라이드",
+		"figma_source": "data/design/components/accordion-option.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "accordion",
+		"target_import": "import { Accordion, AccordionSummary, AccordionDetails } from '@wanteddev/wds';",
+		"root": {
+			"wds": "Accordion",
+			"props": { "defaultExpanded": "boolean", "divider": "옵션" }
+		},
+		"summary": {
+			"wds": "AccordionSummary",
+			"slot": "summary text"
+		},
+		"details": {
+			"wds": "AccordionDetails",
+			"slot": "expanded content"
+		},
+		"priority_mapping": {
+			"priority=1": "Typography variant=body1 weight=bold (강조)",
+			"priority=2": "Typography variant=body2 weight=medium (보조)"
+		}
+	}
+}

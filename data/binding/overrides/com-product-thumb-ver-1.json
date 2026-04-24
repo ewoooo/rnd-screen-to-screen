@@ -1,0 +1,12 @@
+{
+	"meta": { "purpose": "Figma com-product-thumb-ver-1 → vertical product card (13_list_product_vertical 전용)", "fetched_at": "2026-04-24" },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds'; import { IconPlus } from '@wanteddev/wds-icon';",
+		"root": { "wds": "FlexBox column gap=16", "props": { "width": 136 } },
+		"thumb_block": { "wds": "div 136×136 radius=20 relative", "overlays": ["add-small bottom-right 26×26 #000/70"] },
+		"info_block": { "wds": "FlexBox column gap=10 paddingRight=6", "items": [
+			"con-brand-name gap=2: caption1 medium black + label1 bold ellipsis",
+			"con-price column: [strike row] + [main price+period row]"
+		]}
+	}
+}

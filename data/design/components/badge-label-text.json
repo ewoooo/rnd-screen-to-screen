@@ -1,0 +1,25 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26273",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26273",
+		"figma_type": "COMPONENT",
+		"figma_name": "badge-label-text",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": 17, "height": 17 },
+	"props": {
+		"text": { "type": "string", "required": true, "description": "1~2자 짧은 라벨 (예: D, N, !)" }
+	},
+	"structure": {
+		"root": "badge-label-text",
+		"note": "Header/Banner 등에서 PushBadge의 라벨 슬롯으로도 등장 (badge-pass-product, badge-number와 시각적 유사)"
+	}
+}

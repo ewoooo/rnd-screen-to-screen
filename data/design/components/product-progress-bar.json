@@ -1,0 +1,44 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26531",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26531",
+		"figma_type": "COMPONENT",
+		"figma_name": "product-progress-bar",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": {
+		"width": 288,
+		"height": 37
+	},
+	"props": {
+		"percent": {
+			"type": "number",
+			"required": true,
+			"description": "0~100"
+		},
+		"label": {
+			"type": "string",
+			"default": null,
+			"description": "선택 — 진행률 옆에 보조 텍스트"
+		}
+	},
+	"structure": {
+		"root": "product-progress-bar"
+	},
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		}
+	]
+}

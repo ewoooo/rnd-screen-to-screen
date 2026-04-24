@@ -1,0 +1,31 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27322",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-27322",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "btn-text-icon",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": null, "height": null },
+	"props": {
+		"text": { "type": "string", "required": true },
+		"size": { "type": "enum", "values": ["middle", "small"], "default": "middle" },
+		"iconPosition": { "type": "enum", "values": ["leading", "trailing"], "default": "trailing", "description": "Figma 기본 추정 — 보강 필요" },
+		"onClick": { "type": "function" }
+	},
+	"structure": {
+		"root": "btn-text-icon",
+		"variants": [
+			{ "name": "size=middle", "node_id": "1:27323", "size": [39, 20] },
+			{ "name": "size=small", "node_id": "1:27330", "size": [33, 20] }
+		]
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27306",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-27306",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "accordion-option",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": {
+		"width": 304,
+		"height": 42
+	},
+	"props": {
+		"summary": {
+			"type": "string",
+			"required": true,
+			"description": "접힌 상태에서 보이는 타이틀"
+		},
+		"details": {
+			"type": "ReactNode",
+			"required": false,
+			"description": "펼쳐졌을 때 노출 콘텐츠"
+		},
+		"defaultExpanded": {
+			"type": "boolean",
+			"default": false
+		},
+		"priority": {
+			"type": "enum",
+			"values": [
+				1,
+				2
+			],
+			"default": 1,
+			"description": "Figma priority — 위계 표시 (강조 정도). 시각적 weight 조정에 사용"
+		}
+	},
+	"structure": {
+		"root": "accordion-option",
+		"variants": [
+			{
+				"name": "state=default, priority=1",
+				"node_id": "1:27307"
+			},
+			{
+				"name": "state=default, priority=2",
+				"node_id": "1:27312"
+			},
+			{
+				"name": "state=spread, priority=1",
+				"node_id": "1:27317"
+			}
+		]
+	},
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		}
+	]
+}

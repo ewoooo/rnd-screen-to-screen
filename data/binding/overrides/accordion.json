@@ -1,0 +1,10 @@
+{
+	"meta": { "purpose": "Figma accordion → WDS Accordion 또는 raw 구현", "fetched_at": "2026-04-24", "strategy": "WDS Accordion 컴포넌트가 등록돼 있으나 prop 시그니처가 Figma 디자인과 1:1 매칭이 안 될 수 있어 raw div + IconChevronDown 으로 명세 충실 구현. 추후 WDS Accordion 으로 리팩 후보." },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds'; import { IconChevronDown, IconChevronUp } from '@wanteddev/wds-icon';",
+		"root": { "wds": "div", "style": { "width": 304, "border": "1px solid #b2b2b2", "borderRadius": 16, "overflow": "hidden", "background": "#ffffff" } },
+		"header": { "wds": "FlexBox row justify-between alignItems=center", "style": { "height": 42, "padding": "0 20px", "background": "#f2f2f2" }, "items": ["caption1 medium header", "Icon arrow up/down 14×14 (90deg rotated)"] },
+		"open_rows": "options.map → div h=34 padding 0 20 bg white, FlexBox row justify-between, [label caption1 medium] + [optional condition right-aligned]"
+	},
+	"open_questions": ["WDS Accordion 정식 컴포넌트로 리팩 가능 여부"]
+}

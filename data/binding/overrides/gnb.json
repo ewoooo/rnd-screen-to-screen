@@ -1,0 +1,36 @@
+{
+	"meta": {
+		"purpose": "synthesized ogn/GNB (C7) → WDS BottomNavigation 오버라이드",
+		"figma_source": "data/design/components/gnb.json (synthesized — Figma 미정의)",
+		"wds_source": "registry/wds-component-registry.json + wds-icon-registry.json",
+		"notion_code": "C7",
+		"fetched_at": "2026-04-24",
+		"strategy": "WDS BottomNavigation + BottomNavigationItem에 1:1 매핑. fixed positioning은 컨슈머가 처리(WDS는 layout-agnostic)."
+	},
+	"mapping": {
+		"target_component": "bottom-navigation",
+		"target_import": "import { BottomNavigation, BottomNavigationItem } from '@wanteddev/wds';",
+		"target_package": "@wanteddev/wds",
+		"root": {
+			"wds": "BottomNavigation",
+			"props": { "value": "string", "onValueChange": "(v: string) => void" },
+			"from_synth": "items.map → BottomNavigationItem[]",
+			"layout_note": "fixed bottom 위치는 컨슈머의 page-level 스타일 책임"
+		},
+		"item": {
+			"wds": "BottomNavigationItem",
+			"props": { "value": "string", "label": "ReactNode", "icon": "ReactNode" },
+			"icon_size": 24
+		}
+	},
+	"icon_mapping": {
+		"ico/home": "IconHome",
+		"ico/list": "IconList (카테고리 패턴)",
+		"ico/person": "IconPerson (나의 구독 패턴)",
+		"note": "WDS 아이콘 레지스트리 wds-icon-registry.json 검증 완료"
+	},
+	"token_overrides": {
+		"strategy": "BottomNavigation/Item이 active/inactive 색상을 자체 처리",
+		"mappings": []
+	}
+}

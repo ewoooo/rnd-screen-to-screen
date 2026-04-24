@@ -1,0 +1,18 @@
+{
+	"meta": { "purpose": "Figma .org/card-product-pass → 패스 상품 organism (이중 카드 + 이미지 겹침 + dot divider)", "fetched_at": "2026-04-24", "strategy": "외곽 column. Title Container + Image Container 안에서 ImgRectanglePilot(pass-product) absolute overlap top, 흰 카드 두 영역(상/하) + dot divider 사이. 카드 외부 small button (더 많은 패스 보러가기). slot-products 288×200 placeholder 또는 children. 매우 raw 비중 높음 (overlap, divider svg 등)." },
+	"mapping": {
+		"target_import": "import { Card, FlexBox, Typography } from '@wanteddev/wds'; import { IconArrowRight } from '@wanteddev/wds-icon';",
+		"outer_root": "FlexBox column gap=25 alignItems=center width=336",
+		"title_container": "FlexBox column gap=8 px=12: heading2 28/32 Medium 2-line + row(ico/ai placeholder + label1 14/20 Regular)",
+		"image_container": "div relative width=336 — ImgRectanglePilot pass-product absolute top right + 흰 카드 wrapper 아래",
+		"bg_top": "div bg white rounded-t 30 padding (37/24/18/24) flexcolumn gap=35 — grid stacked PASS badge + title 18/24 + sub + slot-products",
+		"divider": "div 336×24 with dot pattern + line — 단순화 raw div",
+		"bg_bottom": "div bg white rounded-b 30 padding (16/24/24/24) row justify-between — info-block + ButtonIconTextBackgroundPilot dark fill",
+		"outer_btn": "div border 1 #f2f2f2 radius 14 pl=12 pr=8 py=4 + Typography 14 bold + IconArrowRight"
+	},
+	"open_questions": [
+		"Pass thumbnail 의 정확한 위치 (현재 image-container 우측 상단 mb=-100 isolate). 정확히는 카드 위에 살짝 회전된 형태로 떠있음 (스크린샷 확인).",
+		"divider dot pattern 은 SVG mask. raw repeating-radial-gradient 로 근사 처리.",
+		"info-product-hor-3 별도 분리 여부 — 현재 inline."
+	]
+}

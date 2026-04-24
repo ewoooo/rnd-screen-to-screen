@@ -1,0 +1,16 @@
+{
+	"meta": {
+		"purpose": "Figma badge-pass-product → WDS ContentBadge 오버라이드",
+		"figma_source": "data/design/components/badge-pass-product.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "content-badge",
+		"target_import": "import { ContentBadge } from '@wanteddev/wds';",
+		"root": {
+			"wds": "ContentBadge",
+			"props": { "size": "small", "variant": "solid", "color": "accent" }
+		}
+	}
+}

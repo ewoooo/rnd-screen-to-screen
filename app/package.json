@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "gen:screen-registry": "node scripts/generate-screen-registry.mjs",
+    "watch:screen-registry": "node scripts/watch-screen-registry.mjs",
+    "prebuild": "npm run gen:screen-registry",
+    "dev": "node scripts/dev.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:typo": "node scripts/audit-typography.mjs",
+    "audit:composition": "node scripts/audit-composition.mjs",
+    "audit": "pnpm audit:typo && pnpm audit:composition"
   },
   "dependencies": {
     "@wanteddev/wds": "^3.5.0",

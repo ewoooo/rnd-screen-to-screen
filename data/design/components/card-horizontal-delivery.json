@@ -1,0 +1,97 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27123",
+		"figma_name": "card-horizontal-delivery",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule"
+	},
+	"size": {
+		"width": 312,
+		"height": 76,
+		"no_card_bg": true
+	},
+	"props": {
+		"thumbnailSrc": {
+			"type": "string?"
+		},
+		"brand": {
+			"type": "string"
+		},
+		"name": {
+			"type": "string",
+			"max_lines": 1
+		},
+		"address": {
+			"type": "string",
+			"max_lines": 1
+		},
+		"chipLabel": {
+			"type": "string",
+			"default": "변경"
+		}
+	},
+	"structure": {
+		"root": "card-horizontal-delivery (1:27123)",
+		"layout": {
+			"direction": "row",
+			"gap": 14,
+			"no_card_chrome": true
+		},
+		"children": [
+			{
+				"role": "thumbnail",
+				"ref": "img/rectangle size=extra-small (56×56 radius 16)"
+			},
+			{
+				"role": "info+chip",
+				"direction": "row",
+				"gap": 10,
+				"items": [
+					{
+						"role": "info",
+						"items": [
+							"brand 12 medium ellipsis",
+							"name 14 bold ellipsis",
+							"address 12 medium gap-4"
+						]
+					},
+					{
+						"role": "chip",
+						"wds": "ButtonChipPilot size=small"
+					}
+				]
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"card/brandname": "#1a1a1a",
+			"card/productname": "#1a1a1a",
+			"card/address": "#1a1a1a"
+		}
+	},
+	"composition": [
+		{
+			"name": "button-chip",
+			"kind": "button",
+			"pilot": "ButtonChipPilot"
+		},
+		{
+			"name": "img-rectangle",
+			"kind": "image",
+			"pilot": "ImgRectanglePilot"
+		},
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		}
+	]
+}

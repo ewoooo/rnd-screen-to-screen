@@ -1,0 +1,134 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26999",
+		"figma_name": "card-horizontal-product-option",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule"
+	},
+	"size": {
+		"width": 336,
+		"height": 108
+	},
+	"props": {
+		"thumbnailSrc": {
+			"type": "string?"
+		},
+		"category": {
+			"type": "string",
+			"max_lines": 1
+		},
+		"title": {
+			"type": "string",
+			"max_lines": 1
+		},
+		"price": {
+			"type": "string"
+		},
+		"month": {
+			"type": "string"
+		},
+		"actionLabel": {
+			"type": "string",
+			"default": "옵션 변경"
+		}
+	},
+	"structure": {
+		"root": "card-horizontal-product-option (1:26999)",
+		"layout": {
+			"direction": "column",
+			"gap": 10,
+			"padding": "16 16",
+			"border": "1 solid #f2f2f2",
+			"radius": 20,
+			"bg": "white"
+		},
+		"children": [
+			{
+				"role": "product",
+				"direction": "row",
+				"gap": 10,
+				"items": [
+					{
+						"role": "thumbnail",
+						"ref": "img/rectangle size=extra-small (56×56 radius 16)"
+					},
+					{
+						"role": "info",
+						"items": [
+							"category 12 medium ellipsis pb-4",
+							"title 14 bold ellipsis",
+							"price-row pt-4: price 14 bold + month 12 bold"
+						]
+					}
+				]
+			},
+			{
+				"role": "btn-text-row",
+				"align": "right",
+				"items": [
+					"BtnText 12 medium underlined #666"
+				]
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"card/cardborder": "#f2f2f2",
+			"card/brandname": "#1a1a1a",
+			"card/productname": "#1a1a1a",
+			"button/secondary": "#666"
+		}
+	},
+	"typography": {
+		"category": {
+			"size": 12,
+			"lh": 14,
+			"w": "Medium"
+		},
+		"title": {
+			"size": 14,
+			"lh": 20,
+			"w": "Bold"
+		},
+		"price": {
+			"size": 14,
+			"lh": 20,
+			"w": "Bold"
+		},
+		"month": {
+			"size": 12,
+			"lh": 14,
+			"w": "Bold"
+		}
+	},
+	"composition": [
+		{
+			"name": "btn-text",
+			"kind": "button",
+			"pilot": "BtnTextPilot"
+		},
+		{
+			"name": "img-rectangle",
+			"kind": "image",
+			"pilot": "ImgRectanglePilot"
+		},
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 2회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

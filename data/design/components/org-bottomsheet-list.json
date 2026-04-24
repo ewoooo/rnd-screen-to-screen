@@ -1,0 +1,42 @@
+{
+	"meta": { "source": "Figma", "file_key": "HEe3mcTVRPCZBlGwAaysWM", "section": "organism", "fetched_at": "2026-04-24" },
+	"component": { "figma_node_id": "29:7048", "figma_name": ".bottomsheet-list", "canonical_atomic_level": "organism", "best_case_node": "27:32175", "note": "바텀시트 list 형 organism. header(close) + title/sub + scroll slot-contents + 선택 CTA bottom" },
+	"size": { "width": 360, "height_default": 478 },
+	"props": {
+		"showTitle": { "type": "boolean", "default": true },
+		"title": { "type": "string", "default": "타이틀 한 줄 입력 가능" },
+		"showSub": { "type": "boolean", "default": true },
+		"sub": { "type": "string", "default": "어드민 지정 텍스트 한 줄 입력 가능" },
+		"slot": { "type": "ReactNode", "description": "scroll_area 안 슬롯 (336×270 default)" },
+		"showBtn": { "type": "boolean", "default": true },
+		"btnLabel": { "type": "string", "default": "추가" },
+		"showBtnIcon": { "type": "boolean", "default": true, "description": "CTA 좌측 plus icon" },
+		"showHeaderClose": { "type": "boolean", "default": true },
+		"onClose": { "type": "() => void" },
+		"onBtn": { "type": "() => void" }
+	},
+	"structure": {
+		"outer": "FlexBox column items=start width=360",
+		"header": "HeaderBottomsheetPilot 50h rounded-tl/tr=30",
+		"area": "div bg white column gap=10",
+		"title_block": "FlexBox column gap=5 px=24 — title 18/24 Bold + sub 14/20 Regular",
+		"scroll_area": "div column items=start padding(10/12/20) — slot-contents (336×270 #ffeaea placeholder | children)",
+		"btn_main": "div 88h relative — bg white absolute inset-0 + button-calltoaction absolute inset[20.45% 4.17%] (실 inset 18px top, 15px x) bg primary radius 30"
+	},
+	"tokens": {
+		"colors": { "bg": "white", "title": "#000", "slot/bg": "#ffeaea", "slot/text": "#d54949", "btn/bg": "#3014b8", "btn/text": "white" },
+		"radius": { "header": 30, "btn": 30 }
+	},
+	"typography": {
+		"title": { "size": 18, "lh": 24, "w": "Bold" },
+		"sub": { "size": 14, "lh": 20, "w": "Regular" },
+		"btn": { "size": 14, "lh": 20, "w": "Bold" }
+	},
+	"composition": [
+		{ "name": "header", "kind": "navigation", "pilot": "HeaderBottomsheetPilot" },
+		{ "name": "title-text", "kind": "typography", "spec": { "size": 18, "lh": 24, "weight": "Bold" }, "pilot": null, "raw_reason": "WDS Typography headline1 + sx" },
+		{ "name": "sub-text", "kind": "typography", "spec": { "size": 14, "lh": 20, "weight": "Regular" }, "pilot": null },
+		{ "name": "slot-contents-area", "kind": "slot", "pilot": null, "raw_reason": "336×270 #ffeaea placeholder + children" },
+		{ "name": "cta-button", "kind": "button", "pilot": "ButtonCallToActionPilot" }
+	]
+}

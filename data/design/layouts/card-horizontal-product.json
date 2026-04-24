@@ -1,0 +1,90 @@
+{
+	"meta": {
+		"source": "Figma Plugin API",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"fetched_at": "2026-04-24"
+	},
+	"tree": {
+		"id": "1:27104", "name": "card-horizontal-product", "type": "COMPONENT", "w": 310, "h": 80,
+		"layout": { "mode": "HORIZONTAL", "primary_align": "MIN", "counter_align": "CENTER", "primary_sizing": "AUTO", "counter_sizing": "AUTO", "gap": 16, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+		"sizing": { "h": "HUG", "v": "HUG" }, "constraints": "MIN/MIN",
+		"props": {
+			"button-area#1869:11": { "type": "BOOLEAN", "default": true },
+			"text-brand-name#1869:13": { "type": "TEXT", "default": "brand-name" },
+			"text-title#1869:14": { "type": "TEXT", "default": "어드민 지정 타이틀 텍스트 최대 두 줄 어드민 지정 타이틀 텍스트 최대 두 줄" },
+			"text-info-large#1869:15": { "type": "TEXT", "default": "text" },
+			"text-price#1869:16": { "type": "TEXT", "default": "NN,NNN원" },
+			"text-month#1869:17": { "type": "TEXT", "default": "/N개월" },
+			"thumbnail-size#1875:2": { "type": "INSTANCE_SWAP", "default": "1:26768" },
+			"button-add#1891:0": { "type": "BOOLEAN", "default": true }
+		},
+		"children": [
+			{
+				"id": "1:27105", "name": "img/rectangle", "type": "INSTANCE", "w": 80, "h": 80,
+				"layout": { "mode": "VERTICAL", "primary_align": "MIN", "counter_align": "MIN", "primary_sizing": "AUTO", "counter_sizing": "AUTO", "gap": 0, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+				"sizing": { "h": "HUG", "v": "HUG" }, "clips": true, "constraints": "MIN/MIN",
+				"swap_target": "thumbnail-size prop"
+			},
+			{
+				"id": "1:27106", "name": "info-container", "type": "FRAME", "w": 214, "h": 78,
+				"layout": { "mode": "HORIZONTAL", "primary_align": "MIN", "counter_align": "CENTER", "primary_sizing": "FIXED", "counter_sizing": "AUTO", "gap": 10, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+				"sizing": { "h": "FIXED", "v": "HUG" },
+				"children": [
+					{
+						"id": "1:27107", "name": "info-product-hor-1", "type": "FRAME", "w": 168, "h": 78,
+						"layout": { "mode": "VERTICAL", "primary_align": "MIN", "counter_align": "MIN", "primary_sizing": "FIXED", "counter_sizing": "FIXED", "gap": 2, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+						"sizing": { "h": "FILL", "v": "FIXED" }, "grow": 1,
+						"children": [
+							{
+								"id": "1:27108", "name": "txt", "type": "FRAME", "w": 168, "h": 56,
+								"layout": { "mode": "VERTICAL", "primary_align": "MIN", "counter_align": "MIN", "primary_sizing": "AUTO", "counter_sizing": "FIXED", "gap": 2, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+								"sizing": { "h": "FILL", "v": "HUG" }, "align": "STRETCH",
+								"children": [
+									{
+										"id": "1:27109", "name": "txt_brand", "type": "FRAME", "w": 168, "h": 14,
+										"layout": { "mode": "HORIZONTAL", "primary_sizing": "FIXED", "counter_sizing": "AUTO", "gap": 0, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+										"sizing": { "h": "FILL", "v": "HUG" }, "align": "STRETCH",
+										"children": [
+											{ "id": "1:27110", "name": "brand-name", "type": "TEXT", "w": 168, "h": 14, "sizing": { "h": "FILL", "v": "FIXED" }, "grow": 1, "text": { "auto_resize": "TRUNCATE", "truncation": "ENDING", "max_lines": null, "align": "LEFT/TOP", "chars": "brand-name" } }
+										]
+									},
+									{
+										"id": "1:27111", "name": "txt_name", "type": "FRAME", "w": 168, "h": 40,
+										"layout": { "mode": "HORIZONTAL", "primary_sizing": "FIXED", "counter_sizing": "AUTO", "gap": 0, "padding": { "t": 0, "r": 6, "b": 0, "l": 0 } },
+										"sizing": { "h": "FILL", "v": "HUG" }, "align": "STRETCH",
+										"children": [
+											{ "id": "1:27112", "name": "title", "type": "TEXT", "w": 162, "h": 40, "sizing": { "h": "FILL", "v": "HUG" }, "grow": 1, "text": { "auto_resize": "HEIGHT", "truncation": "ENDING", "max_lines": 2, "align": "LEFT/TOP", "chars": "어드민 지정 타이틀 텍스트 최대 두 줄 …" } }
+										]
+									}
+								]
+							},
+							{
+								"id": "1:27113", "name": "txt_price", "type": "FRAME", "w": 118, "h": 20,
+								"layout": { "mode": "HORIZONTAL", "primary_align": "MIN", "counter_align": "MIN", "primary_sizing": "AUTO", "counter_sizing": "AUTO", "gap": 2, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+								"sizing": { "h": "HUG", "v": "HUG" },
+								"children": [
+									{ "id": "1:27116", "name": "info", "type": "TEXT", "w": 23, "h": 20, "sizing": { "h": "HUG", "v": "HUG" }, "text": { "auto_resize": "WIDTH_AND_HEIGHT", "truncation": "DISABLED", "align": "LEFT/TOP", "chars": "text" } },
+									{ "id": "1:27118", "name": "price", "type": "TEXT", "w": 60, "h": 20, "sizing": { "h": "HUG", "v": "HUG" }, "text": { "auto_resize": "WIDTH_AND_HEIGHT", "truncation": "DISABLED", "align": "LEFT/TOP", "chars": "NN,NNN원" } },
+									{ "id": "1:27120", "name": "month", "type": "TEXT", "w": 31, "h": 14, "sizing": { "h": "HUG", "v": "HUG" }, "text": { "auto_resize": "WIDTH_AND_HEIGHT", "truncation": "DISABLED", "align": "LEFT/TOP", "chars": "/N개월" } }
+								]
+							}
+						]
+					},
+					{
+						"id": "1:27121", "name": "button-chip", "type": "INSTANCE", "w": 36, "h": 24,
+						"layout": { "mode": "HORIZONTAL", "primary_align": "CENTER", "counter_align": "CENTER", "primary_sizing": "AUTO", "counter_sizing": "AUTO", "gap": 2, "padding": { "t": 5, "r": 8, "b": 5, "l": 8 } },
+						"sizing": { "h": "HUG", "v": "HUG" }, "clips": true,
+						"visible_when": "button-area = true"
+					}
+				]
+			},
+			{
+				"id": "1:27122", "name": "button-add", "type": "INSTANCE", "w": 20, "h": 20,
+				"layout": { "mode": "HORIZONTAL", "primary_align": "CENTER", "counter_align": "CENTER", "primary_sizing": "FIXED", "counter_sizing": "FIXED", "gap": 0, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+				"sizing": { "h": "FIXED", "v": "FIXED" }, "clips": true,
+				"visible_when": "button-add = true",
+				"position_note": "부모 auto-layout 흐름이 아닌 절대배치로 overlay 됨"
+			}
+		]
+	}
+}

@@ -217,90 +217,275 @@
 				{
 					"spec_id": "SPEC-MAIN-01",
 					"name": "헤더 영역(공통) 이동",
-					"description": "[입력] 홈 아이콘 선택 시 [출력] 발견 페이지로 이동 / [입력] 카트 버튼 선택 시 [출력] 카트 페이지로 이동 [조건] 담은 상품이 있는 경우, 카트 숫자 배지 노출 / [입력] 바코드 버튼 선택 시 [조건] 구독 중인 상품 유형 중 '할인 바코드'가 있는 경우에만 바코드 버튼 노출 [출력] 통합 할인 바코드 페이지로 이동 / [입력] 검색 버튼 선택 시 [출력] 검색 페이지로 이동 / [입력] 이전 버튼 선택 시 [출력] 이전 페이지로 이동 / [입력] 나의 구독 버튼 선택 시 [출력] 나의 구독 페이지로 이동 / [입력] 설정 버튼 선택 시 [출력] 알림 설정 페이지로 이동 / [입력] 닫기 버튼 선택 시 [조건] 해당 화면이 페이지(PG)인 경우 [출력] 이전 페이지로 이동 [조건] 해당 화면이 팝업(PU)인 경우 [출력] 해당 팝업 닫힘",
-					"components": ["C1", "C2"],
-					"modules": ["MAIN", "AGR"],
-					"requirements": ["REQ-009", "REQ-010"],
+					"scenarios": [
+						{
+							"input": "홈 아이콘 선택",
+							"output": "발견 페이지로 이동"
+						},
+						{
+							"input": "카트 버튼 선택",
+							"output": "카트 페이지로 이동",
+							"condition": "담은 상품이 있는 경우 카트 숫자 배지 노출"
+						},
+						{
+							"input": "바코드 버튼 선택",
+							"condition": "구독 중인 상품 유형 중 '할인 바코드'가 있는 경우에만 바코드 버튼 노출",
+							"output": "통합 할인 바코드 페이지로 이동"
+						},
+						{
+							"input": "검색 버튼 선택",
+							"output": "검색 페이지로 이동"
+						},
+						{
+							"input": "이전 버튼 선택",
+							"output": "이전 페이지로 이동"
+						},
+						{
+							"input": "나의 구독 버튼 선택",
+							"output": "나의 구독 페이지로 이동"
+						},
+						{
+							"input": "설정 버튼 선택",
+							"output": "알림 설정 페이지로 이동"
+						},
+						{
+							"input": "닫기 버튼 선택",
+							"condition": "해당 화면이 페이지(PG)인 경우",
+							"output": "이전 페이지로 이동"
+						},
+						{
+							"input": "닫기 버튼 선택",
+							"condition": "해당 화면이 팝업(PU)인 경우",
+							"output": "해당 팝업 닫힘"
+						}
+					],
+					"components": [
+						"C1",
+						"C2"
+					],
+					"modules": [
+						"MAIN",
+						"AGR"
+					],
+					"requirements": [
+						"REQ-009",
+						"REQ-010"
+					],
 					"url": "https://www.notion.so/347de7542a4880909e9ad03e0aa9d2f1"
 				},
 				{
 					"spec_id": "SPEC-MAIN-02",
 					"name": "개인화 컨텍스트 노출",
-					"description": "[조건] 비로그인 상태인 경우 [출력] 비로그인 사용자 대상 고정 메시지 어드민 조회 및 노출 \"통신사 상관없이 모두의 구독, T우주\" 노출 & 비개인화 상품 리스트 노출 & API 데이터 동적 매핑 및 바인딩",
-					"components": ["C3", "C4", "C5"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-011", "REQ-020"],
+					"scenarios": [
+						{
+							"condition": "비로그인 상태",
+							"output": "비로그인 사용자 대상 고정 메시지 어드민 조회 및 노출 \"통신사 상관없이 모두의 구독, T우주\" & 비개인화 상품 리스트 노출 & API 데이터 동적 매핑 및 바인딩"
+						}
+					],
+					"components": [
+						"C3",
+						"C4",
+						"C5"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-011",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a4880759895f5e4de4fb614"
 				},
 				{
 					"spec_id": "SPEC-MAIN-03",
 					"name": "실시간 인기 베스트 노출",
-					"description": "[출력] 비개인화 상품 리스트 노출 & 집계 기반 로직 유형 & API 데이터 동적 매핑 및 바인딩",
-					"components": ["C3", "C4", "C5"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-013", "REQ-014", "REQ-020"],
+					"scenarios": [
+						{
+							"output": "비개인화 상품 리스트 노출 & 집계 기반 로직 유형 & API 데이터 동적 매핑 및 바인딩"
+						}
+					],
+					"components": [
+						"C3",
+						"C4",
+						"C5"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-013",
+						"REQ-014",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a4880f2984ffb3582ffe479"
 				},
 				{
 					"spec_id": "SPEC-MAIN-04",
 					"name": "이벤트/프로모션 배너_빅배너 이동",
-					"description": "[입력] 배너 선택 시 [출력] 해당 배너 상세 페이지로 이동",
-					"components": ["C6"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-016", "REQ-017", "REQ-020"],
+					"scenarios": [
+						{
+							"input": "배너 선택",
+							"output": "해당 배너 상세 페이지로 이동"
+						}
+					],
+					"components": [
+						"C6"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-016",
+						"REQ-017",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a48809194aed48c3ac7c431"
 				},
 				{
 					"spec_id": "SPEC-MAIN-05",
 					"name": "신규 오픈 상품 리스트 노출",
-					"description": "[출력] 비개인화 상품 리스트 노출 & 집계 기반 로직 유형(최근 30일(D-30 ~ D) 기준 최신순 전시) & API 데이터 동적 매핑 및 바인딩",
-					"components": ["C3", "C4", "C5"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-015", "REQ-020"],
+					"scenarios": [
+						{
+							"output": "비개인화 상품 리스트 노출 & 집계 기반 로직 유형(최근 30일(D-30 ~ D) 기준 최신순 전시) & API 데이터 동적 매핑 및 바인딩"
+						}
+					],
+					"components": [
+						"C3",
+						"C4",
+						"C5"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-015",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a4880dba95af6904fdc1878"
 				},
 				{
 					"spec_id": "SPEC-MAIN-06",
 					"name": "이벤트/프로모션 배너 이동",
-					"description": "[입력] 배너 선택시 [출력] 상품 상세 페이지로 이동",
-					"components": ["C6"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-016", "REQ-017", "REQ-020"],
+					"scenarios": [
+						{
+							"input": "배너 선택",
+							"output": "상품 상세 페이지로 이동"
+						}
+					],
+					"components": [
+						"C6"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-016",
+						"REQ-017",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a4880acb60be2b3e49b47d4"
 				},
 				{
 					"spec_id": "SPEC-MAIN-07",
 					"name": "인기 OTT 상품 리스트 이동",
-					"description": "[출력] 비개인화 상품 리스트 조회 및 노출 & 집계 기반 로직 유형 & API 데이터 동적 매핑 및 바인딩 / [입력] 상품 선택 시 [출력] 상품 상세 페이지로 이동 / [입력] 전체보기 선택 시 [출력] 카테고리 플러스 페이지로 이동",
-					"components": ["C3", "C4", "C5"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-013", "REQ-014", "REQ-020"],
+					"scenarios": [
+						{
+							"output": "비개인화 상품 리스트 조회 및 노출 & 집계 기반 로직 유형 & API 데이터 동적 매핑 및 바인딩"
+						},
+						{
+							"input": "상품 선택",
+							"output": "상품 상세 페이지로 이동"
+						},
+						{
+							"input": "전체보기 선택",
+							"output": "카테고리 플러스 페이지로 이동"
+						}
+					],
+					"components": [
+						"C3",
+						"C4",
+						"C5"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-013",
+						"REQ-014",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a48800ca6f6d029f6fb2afd"
 				},
 				{
 					"spec_id": "SPEC-MAIN-08",
 					"name": "장기 구독 할인 상품 리스트 노출",
-					"description": "[출력] 비개인화 상품 리스트 노출 & 집계 기반 로직 유형(인기순) & API 데이터 동적 매핑 및 바인딩",
-					"components": ["C3", "C4", "C5"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-019", "REQ-020"],
+					"scenarios": [
+						{
+							"output": "비개인화 상품 리스트 노출 & 집계 기반 로직 유형(인기순) & API 데이터 동적 매핑 및 바인딩"
+						}
+					],
+					"components": [
+						"C3",
+						"C4",
+						"C5"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-019",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a488004a547e556cc1ae914"
 				},
 				{
 					"spec_id": "SPEC-MAIN-09",
 					"name": "SKT 연계 혜택 상품 이동",
-					"description": "[입력] 상품 선택 시 [출력] 상품 상세페이지 이동",
-					"components": ["C4"],
-					"modules": ["MAIN"],
-					"requirements": ["REQ-018", "REQ-020"],
+					"scenarios": [
+						{
+							"input": "상품 선택",
+							"output": "상품 상세 페이지 이동"
+						}
+					],
+					"components": [
+						"C4"
+					],
+					"modules": [
+						"MAIN"
+					],
+					"requirements": [
+						"REQ-018",
+						"REQ-020"
+					],
 					"url": "https://www.notion.so/347de7542a4880b68ff7c835e237ad57"
 				},
 				{
 					"spec_id": "SPEC-MAIN-10",
 					"name": "페이지 이동 (공통)",
-					"description": "[입력] 하단 네비바의 이용 탭 선택 시 [출력] 이용 페이지 이동 / [입력] 하단 네비바의 카테고리 탭 선택 시 [출력] 카테고리 페이지 이동 / [입력] 하단 네비바의 나의 구독 탭 선택 시 [출력] 나의 구독 페이지 이동",
-					"components": ["C7", "C2", "C8"],
-					"modules": ["MAIN", "INFO", "SET"],
+					"scenarios": [
+						{
+							"input": "하단 네비바의 이용 탭 선택",
+							"output": "이용 페이지 이동"
+						},
+						{
+							"input": "하단 네비바의 카테고리 탭 선택",
+							"output": "카테고리 페이지 이동"
+						},
+						{
+							"input": "하단 네비바의 나의 구독 탭 선택",
+							"output": "나의 구독 페이지 이동"
+						}
+					],
+					"components": [
+						"C7",
+						"C2",
+						"C8"
+					],
+					"modules": [
+						"MAIN",
+						"INFO",
+						"SET"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/349de7542a48801ba21fff0f70105edc"
 				}
@@ -326,144 +511,290 @@
 				{
 					"spec_id": "SPEC-PRDD-01",
 					"name": "공지사항 배너 노출",
-					"description": "[조건] 상품 상세에 노출되어야 하는 공지 있을 경우 [출력] 상품 상세 최상단에 1개 노출 & 공지 2개 이상일 경우, 필독Y 체크된 공지 최신순으로 1개씩 좌우 롤링되어 노출",
-					"components": ["C9"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"condition": "상품 상세에 노출되어야 하는 공지 있음",
+							"output": "상품 상세 최상단에 1개 노출 & 공지 2개 이상일 경우, 필독Y 체크된 공지 최신순으로 1개씩 좌우 롤링되어 노출"
+						}
+					],
+					"components": [
+						"C9"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/157de7542a4883708417810ad828e0a5"
 				},
 				{
 					"spec_id": "SPEC-PRDD-02",
 					"name": "상품 기본 정보 노출",
-					"description": "[출력] 상품 이미지 영역 및 페이지네이션 노출 & 상품 기본 정보 호출 & 상품 상세 데이터 & 가격 정보 API 데이터 동적 매핑 & 노출",
-					"components": ["C10", "C5", "C11"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"output": "상품 이미지 영역 및 페이지네이션 노출 & 상품 기본 정보 호출 & 상품 상세 데이터 & 가격 정보 API 데이터 동적 매핑 & 노출"
+						}
+					],
+					"components": [
+						"C10",
+						"C5",
+						"C11"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/908de7542a4883fdb7690124241a61a6"
 				},
 				{
 					"spec_id": "SPEC-PRDD-03",
 					"name": "쿠폰 받기 버튼 노출",
-					"description": "[조건] 해당 상품에 적용 가능한 쿠폰 있는 경우 [출력] 쿠폰받기 버튼 노출",
-					"components": ["C12"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"condition": "해당 상품에 적용 가능한 쿠폰 있음",
+							"output": "쿠폰받기 버튼 노출"
+						}
+					],
+					"components": [
+						"C12"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/35ade7542a4883dd929f81e2d494281b"
 				},
 				{
 					"spec_id": "SPEC-PRDD-04",
 					"name": "공유하기 팝업 노출",
-					"description": "[입력] 공유하기 버튼 선택 [출력] 공유하기 팝업 노출",
-					"components": ["C2"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "공유하기 버튼 선택",
+							"output": "공유하기 팝업 노출"
+						}
+					],
+					"components": [
+						"C2"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/525de7542a48826288c301ffedc53e1c"
 				},
 				{
 					"spec_id": "SPEC-PRDD-05",
 					"name": "최대 할인 구독가 툴팁 노출",
-					"description": "[입력] 최대 할인 구독가 인포메이션 버튼 선택 [출력] 정적 어드민 데이터 호출",
-					"components": ["C13", "C14"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "최대 할인 구독가 인포메이션 버튼 선택",
+							"output": "정적 어드민 데이터 호출"
+						}
+					],
+					"components": [
+						"C13",
+						"C14"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/e53de7542a488283a2fb01e3de65dfc4"
 				},
 				{
 					"spec_id": "SPEC-PRDD-06",
 					"name": "최대 할인 구독가 데이터 호출",
-					"description": "[조건] 최대 할인 구독가 리스트 영역 펼치는 경우 [출력] 정적 어드민 지정 데이터 호출",
-					"components": ["C14"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"condition": "최대 할인 구독가 리스트 영역 펼침",
+							"output": "정적 어드민 지정 데이터 호출"
+						}
+					],
+					"components": [
+						"C14"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/eb7de7542a48833dbc7881d9d29ac48e"
 				},
 				{
 					"spec_id": "SPEC-PRDD-07",
 					"name": "배송 정보 데이터 호출",
-					"description": "[조건] 배송 정보 영역 펼치는 경우 [출력] 배송비 및 배송 조건 정보 & 정적 어드민 데이터 호출",
-					"components": ["C14"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"condition": "배송 정보 영역 펼침",
+							"output": "배송비 및 배송 조건 정보 & 정적 어드민 데이터 호출"
+						}
+					],
+					"components": [
+						"C14"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/571de7542a48837c824f81ad8bb10c0b"
 				},
 				{
 					"spec_id": "SPEC-PRDD-08",
 					"name": "추천 마케팅/프로모션 배너 영역 노출",
-					"description": "[출력] 어드민에 등록된 프로모션 랜덤 노출",
-					"components": ["C6"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"output": "어드민에 등록된 프로모션 랜덤 노출"
+						}
+					],
+					"components": [
+						"C6"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/12ede7542a4882bd87e481bd5306bf4d"
 				},
 				{
 					"spec_id": "SPEC-PRDD-09",
 					"name": "상품 정보 콘텐츠 호출 및 노출",
-					"description": "[입력] 상품 정보 탭 선택 [출력] 상품 정보 콘텐츠 영역 호출 및 UI 요소 데이터 매핑 & 노출",
-					"components": ["C15"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "상품 정보 탭 선택",
+							"output": "상품 정보 콘텐츠 영역 호출 및 UI 요소 데이터 매핑 & 노출"
+						}
+					],
+					"components": [
+						"C15"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/947de7542a48825dbff401c48977e008"
 				},
 				{
 					"spec_id": "SPEC-PRDD-10",
 					"name": "사용 방법 콘텐츠 호출 및 노출",
-					"description": "[입력] 사용 방법 탭 선택 [출력] 정적 어드민 지정 데이터 호출",
-					"components": ["C15"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "사용 방법 탭 선택",
+							"output": "정적 어드민 지정 데이터 호출"
+						}
+					],
+					"components": [
+						"C15"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/41cde7542a4882e29f6f81b9eb1402a1"
 				},
 				{
 					"spec_id": "SPEC-PRDD-11",
 					"name": "추천 상품 리스트 호출 및 노출",
-					"description": "[출력] 어드민 내 등록된 다른 구독 주기 상품 리스트 호출 & 연계 상품 리스트 호출 & 연관 상품 리스트 호출 & 연관 기획전 호출 & 어드민 지정 로직 유형 및 API 데이터 동적 매핑 & 노출",
-					"components": ["C3", "C4"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"output": "어드민 내 등록된 다른 구독 주기 상품 리스트 호출 & 연계 상품 리스트 호출 & 연관 상품 리스트 호출 & 연관 기획전 호출 & 어드민 지정 로직 유형 및 API 데이터 동적 매핑 & 노출"
+						}
+					],
+					"components": [
+						"C3",
+						"C4"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/139de7542a488300a6db818d2243efd3"
 				},
 				{
 					"spec_id": "SPEC-PRDD-12",
 					"name": "상품 문의 내역 호출",
-					"description": "[출력] 해당 상품에 등록된 문의 노출 & API 데이터 동적 매핑 및 바인딩",
-					"components": ["C14"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"output": "해당 상품에 등록된 문의 노출 & API 데이터 동적 매핑 및 바인딩"
+						}
+					],
+					"components": [
+						"C14"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/1e2de7542a4883de8bdf81e8a6a99e1f"
 				},
 				{
 					"spec_id": "SPEC-PRDD-13",
 					"name": "기타 정보 호출 및 노출",
-					"description": "[출력] 어드민 지정 데이터로 상품 정보 고시 호출 & 법적 고지사항 노출",
-					"components": ["C14"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"output": "어드민 지정 데이터로 상품 정보 고시 호출 & 법적 고지사항 노출"
+						}
+					],
+					"components": [
+						"C14"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/794de7542a4883c7acda01aaae656b70"
 				},
 				{
 					"spec_id": "SPEC-PRDD-14",
 					"name": "좋아요 적용",
-					"description": "[입력] 좋아요 버튼 선택 [출력] 선택 상품 좋아요 리스트에 반영 & 반영 완료 알림 처리",
-					"components": ["C2", "C16"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "좋아요 버튼 선택",
+							"output": "선택 상품 좋아요 리스트에 반영 & 반영 완료 알림 처리"
+						}
+					],
+					"components": [
+						"C2",
+						"C16"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/0a1de7542a488330a71b817f44b0a415"
 				},
 				{
 					"spec_id": "SPEC-PRDD-15",
 					"name": "선물하기 바텀시트 노출",
-					"description": "[입력] 선물하기 버튼 선택 [출력] 상품 선물하기 바텀시트 노출",
-					"components": ["C17", "C16"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "선물하기 버튼 선택",
+							"output": "상품 선물하기 바텀시트 노출"
+						}
+					],
+					"components": [
+						"C17",
+						"C16"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/179de7542a48831ea48701c0bf7023da"
 				},
 				{
 					"spec_id": "SPEC-PRDD-16",
 					"name": "결제 화면으로 이동",
-					"description": "[입력] 구독하기 버튼 선택 [출력] 결제 화면 이동",
-					"components": ["C12", "C16"],
-					"modules": ["PRDD"],
+					"scenarios": [
+						{
+							"input": "구독하기 버튼 선택",
+							"output": "결제 화면 이동"
+						}
+					],
+					"components": [
+						"C12",
+						"C16"
+					],
+					"modules": [
+						"PRDD"
+					],
 					"requirements": [],
 					"url": "https://www.notion.so/213de7542a4882f2acd301aadca90be3"
 				}

@@ -1,0 +1,23 @@
+{
+	"meta": {
+		"purpose": "Figma input/default → WDS TextField 오버라이드",
+		"figma_source": "data/design/components/input-default.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "text-field",
+		"target_import": "import { TextField } from '@wanteddev/wds';",
+		"root": {
+			"wds": "TextField",
+			"props": {
+				"width": 304,
+				"height": 42,
+				"placeholder": "string",
+				"disabled": "boolean",
+				"invalid": "boolean"
+			},
+			"note": "WDS TextField는 native input attrs도 통과 (value/defaultValue/onChange)"
+		}
+	}
+}

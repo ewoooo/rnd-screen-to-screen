@@ -1,0 +1,9 @@
+{
+	"meta": { "purpose": "Figma tabbar (extras) → 화면 하단 탭바", "fetched_at": "2026-04-24", "strategy": "ButtonTabbarPilot 4개 가로 배치. activeKey 가 선택된 버튼 결정. selected indicator (top bar) 는 active 위에 absolute." },
+	"mapping": {
+		"target_import": "import { FlexBox } from '@wanteddev/wds';",
+		"outer": "div display=flex justify-center alignItems=center gap=6 padding=0 35px backdropFilter=blur(20px) bg=white shadow=0 8 16 rgba(0,0,0,0.24)",
+		"button": "ButtonTabbarPilot label icon state — onClick=onSelect(key)",
+		"indicator": "div absolute top=0 width=68 height=10 background=#000 (active 위)"
+	}
+}

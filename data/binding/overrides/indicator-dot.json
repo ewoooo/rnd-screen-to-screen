@@ -1,0 +1,25 @@
+{
+	"meta": {
+		"purpose": "Figma indicator-dot → 단순 div span (WDS 매칭 컴포넌트 없음)",
+		"figma_source": "data/design/components/indicator-dot.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "WDS PaginationDots는 클릭 컨트롤이라 단순 carousel 인디케이터엔 과함. atom 단위에서 div span으로 충분."
+	},
+	"mapping": {
+		"target_component": "(없음 — span 직접)",
+		"target_import": "(없음 — 컴포넌트 자체에서 span 렌더)",
+		"root": {
+			"wds": "span (inline-block)",
+			"props": {
+				"size_selected": "12×4 borderRadius=2",
+				"size_default": "4×4 borderRadius=2",
+				"transition": "width .2s"
+			},
+			"color_mapping": {
+				"selected": "var(--semantic-background-inverse)",
+				"default": "var(--semantic-line-normal)"
+			}
+		}
+	}
+}

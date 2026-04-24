@@ -1,0 +1,9 @@
+{
+	"meta": { "purpose": "Figma input (focused/filled) → raw input 또는 WDS InputForm", "fetched_at": "2026-04-24", "strategy": "stateful variant (caret blink, focus border) 비주얼 충실 구현은 raw div 가 단순. 실 입력 필요시 WDS InputForm 으로 리팩." },
+	"mapping": {
+		"target_import": "import { Typography } from '@wanteddev/wds';",
+		"root": { "wds": "div", "style": { "width": 304, "padding": "14px 20px", "border": "1px solid #000", "borderRadius": 16, "background": "#ffffff", "display": "flex", "alignItems": "center", "gap": 0 } },
+		"caret": { "wds": "div", "style": { "width": 2, "height": 16, "background": "#3014b8", "borderRadius": 1 }, "animation": "blink 1s step-end infinite" },
+		"text": "Typography caption1 medium (focused: #666 placeholder, filled: #1a1a1a)"
+	}
+}

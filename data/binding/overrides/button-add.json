@@ -1,0 +1,21 @@
+{
+	"meta": {
+		"purpose": "Figma button-add → WDS IconButton(solid) + IconPlus 오버라이드",
+		"figma_source": "data/design/components/button-add.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "icon-button",
+		"target_import": "import { IconButton } from '@wanteddev/wds';\\nimport { IconPlus } from '@wanteddev/wds-icon';",
+		"root": {
+			"wds": "IconButton",
+			"props": { "variant": "solid", "size": "small | medium" },
+			"icon_slot": "IconPlus"
+		},
+		"size_mapping": {
+			"size=middle": "IconButton size='medium' + IconPlus 16",
+			"size=small": "IconButton size='small' + IconPlus 12"
+		}
+	}
+}

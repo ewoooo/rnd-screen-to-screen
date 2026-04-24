@@ -1,0 +1,21 @@
+{
+	"meta": {
+		"purpose": "Figma divider → WDS Divider 오버라이드",
+		"figma_source": "data/design/components/divider.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24"
+	},
+	"mapping": {
+		"target_component": "divider",
+		"target_import": "import { Divider } from '@wanteddev/wds';",
+		"root": {
+			"wds": "Divider",
+			"props": { "vertical": "boolean", "thickness": "1px | 10px", "size": "string" },
+			"variant_mapping": {
+				"type=light": "thickness='1px' (기본)",
+				"type=heavy": "thickness='10px' (블록 구분자)",
+				"type=dot": "sx={{ borderStyle: 'dotted' }} 추가"
+			}
+		}
+	}
+}

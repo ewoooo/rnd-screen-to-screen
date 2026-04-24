@@ -1,92 +1,92 @@
 {
-  "meta": {
-    "purpose": "내부 컴포넌트 코드(atom 레벨) ↔ Montage WDS 컴포넌트 1:1 매핑",
-    "scope": "atom 전용. ogn/mlc 레벨은 wds-component-compound-layout-registry.json 참조",
-    "source_input": "rnd-screen-to-screen/data/screen-features.json (components)",
-    "source_output": "rnd-screen-to-screen/registry/wds-component-registry.json",
-    "fetched_at": "2026-04-24",
-    "entry_count": 10
-  },
-  "mappings": {
-    "C2": {
-      "internal_code": "atom/iconbutton",
-      "internal_category": "Action",
-      "wds_component": "icon-button",
-      "variant": null,
-      "confidence": "high",
-      "note": null
-    },
-    "C5": {
-      "internal_code": "atom/text-area",
-      "internal_category": "Input & Form",
-      "wds_component": "typography",
-      "variant": null,
-      "confidence": "high",
-      "note": "내부 카탈로그의 'text-area'는 표시용 텍스트 블록을 의미. WDS의 text-area(입력용)가 아니라 typography로 매핑."
-    },
-    "C6": {
-      "internal_code": "atom/banner",
-      "internal_category": "Data Display",
-      "wds_component": "card",
-      "variant": null,
-      "confidence": "medium",
-      "note": "WDS에 banner 컴포넌트 없음. 프로모션/이벤트 배너는 card로 표현."
-    },
-    "C8": {
-      "internal_code": "atom/link",
-      "internal_category": "Action",
-      "wds_component": "text-button",
-      "variant": null,
-      "confidence": "medium",
-      "note": "WDS에 link 전용 컴포넌트 없음. 텍스트 링크 UI는 text-button으로 대체."
-    },
-    "C10": {
-      "internal_code": "atom/thumnail",
-      "internal_category": "Data Display",
-      "wds_component": "thumbnail",
-      "variant": null,
-      "confidence": "high",
-      "note": "내부 코드의 오타(thumnail → thumbnail)."
-    },
-    "C11": {
-      "internal_code": "atom/tag",
-      "internal_category": "Data Display",
-      "wds_component": "chip",
-      "variant": null,
-      "confidence": "high",
-      "note": "WDS에 tag 없음. chip으로 대체."
-    },
-    "C12": {
-      "internal_code": "atom/button(primary)",
-      "internal_category": "Action",
-      "wds_component": "button",
-      "variant": "primary",
-      "confidence": "high",
-      "note": null
-    },
-    "C13": {
-      "internal_code": "atom/tooltip",
-      "internal_category": "Data Display",
-      "wds_component": "tooltip",
-      "variant": null,
-      "confidence": "high",
-      "note": null
-    },
-    "C14": {
-      "internal_code": "atom/accordion",
-      "internal_category": "Data Display",
-      "wds_component": "accordion",
-      "variant": null,
-      "confidence": "high",
-      "note": null
-    },
-    "C17": {
-      "internal_code": "atom/button(secondary/ghost)",
-      "internal_category": "Action",
-      "wds_component": "button",
-      "variant": "secondary|ghost",
-      "confidence": "high",
-      "note": "단일 button 컴포넌트의 variant 속성으로 처리."
-    }
-  }
+	"meta": {
+		"purpose": "내부 컴포넌트 코드(atom 레벨) ↔ Montage WDS 컴포넌트 1:1 매핑",
+		"scope": "atom 전용. ogn/mlc 레벨은 wds-component-compound-layout-registry.json 참조",
+		"source_input": "rnd-screen-to-screen/data/screen-features.json (components)",
+		"source_output": "rnd-screen-to-screen/registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24",
+		"entry_count": 10
+	},
+	"mappings": {
+		"C2": {
+			"internal_code": "atom/iconbutton",
+			"internal_category": "Action",
+			"wds_component": "icon-button",
+			"variant": null,
+			"confidence": "high",
+			"note": null
+		},
+		"C5": {
+			"internal_code": "atom/text-area",
+			"internal_category": "Input & Form",
+			"wds_component": "typography",
+			"variant": null,
+			"confidence": "high",
+			"note": "내부 카탈로그의 'text-area'는 표시용 텍스트 블록을 의미. WDS의 text-area(입력용)가 아니라 typography로 매핑."
+		},
+		"C6": {
+			"internal_code": "atom/banner",
+			"internal_category": "Data Display",
+			"wds_component": "card",
+			"variant": null,
+			"confidence": "medium",
+			"note": "WDS에 banner 컴포넌트 없음. 프로모션/이벤트 배너는 card로 표현."
+		},
+		"C8": {
+			"internal_code": "atom/link",
+			"internal_category": "Action",
+			"wds_component": "text-button",
+			"variant": null,
+			"confidence": "medium",
+			"note": "WDS에 link 전용 컴포넌트 없음. 텍스트 링크 UI는 text-button으로 대체."
+		},
+		"C10": {
+			"internal_code": "atom/thumnail",
+			"internal_category": "Data Display",
+			"wds_component": "thumbnail",
+			"variant": null,
+			"confidence": "high",
+			"note": "내부 코드의 오타(thumnail → thumbnail)."
+		},
+		"C11": {
+			"internal_code": "atom/tag",
+			"internal_category": "Data Display",
+			"wds_component": "chip",
+			"variant": null,
+			"confidence": "high",
+			"note": "WDS에 tag 없음. chip으로 대체."
+		},
+		"C12": {
+			"internal_code": "atom/button(primary)",
+			"internal_category": "Action",
+			"wds_component": "button",
+			"variant": "primary",
+			"confidence": "high",
+			"note": null
+		},
+		"C13": {
+			"internal_code": "atom/tooltip",
+			"internal_category": "Data Display",
+			"wds_component": "tooltip",
+			"variant": null,
+			"confidence": "high",
+			"note": null
+		},
+		"C14": {
+			"internal_code": "atom/accordion",
+			"internal_category": "Data Display",
+			"wds_component": "accordion",
+			"variant": null,
+			"confidence": "high",
+			"note": null
+		},
+		"C17": {
+			"internal_code": "atom/button(secondary/ghost)",
+			"internal_category": "Action",
+			"wds_component": "button",
+			"variant": "secondary|ghost",
+			"confidence": "high",
+			"note": "단일 button 컴포넌트의 variant 속성으로 처리."
+		}
+	}
 }

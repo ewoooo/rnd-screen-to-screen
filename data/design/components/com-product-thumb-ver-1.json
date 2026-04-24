@@ -1,0 +1,123 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "HEe3mcTVRPCZBlGwAaysWM",
+		"section": "organism-card",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "27:23994",
+		"figma_name": "com-product-thumb-ver-1",
+		"canonical_atomic_level": "molecule",
+		"note": "13_list_product_vertical 그리드용. molecule card-vertical-product/small 과 별개."
+	},
+	"size": {
+		"width": 136,
+		"height": "auto"
+	},
+	"props": {
+		"thumbnailSrc": {
+			"type": "string?"
+		},
+		"brand": {
+			"type": "string"
+		},
+		"name": {
+			"type": "string",
+			"max_lines": 2
+		},
+		"infoSmall": {
+			"type": "string",
+			"description": "할인율 small (12 violet)"
+		},
+		"priceOrigin": {
+			"type": "string",
+			"description": "원가 line-through gray"
+		},
+		"price": {
+			"type": "string"
+		},
+		"period": {
+			"type": "string"
+		},
+		"showAdd": {
+			"type": "boolean",
+			"default": true
+		},
+		"onAdd": {
+			"type": "() => void"
+		}
+	},
+	"structure": {
+		"layout": {
+			"direction": "column",
+			"gap": 16,
+			"width": 136
+		},
+		"thumb": {
+			"size": "136×136",
+			"radius": 20,
+			"bg": "rgba(0,0,0,0.03)",
+			"overlays": [
+				"add-small bottom=12 right=12 26×26 #000/70 radius 99 + plus-white 16"
+			]
+		},
+		"info": {
+			"pr": 6,
+			"direction": "column",
+			"gap": 10,
+			"items": [
+				{
+					"role": "txt",
+					"gap": 8,
+					"items": [
+						{
+							"role": "con-brand-name gap 2",
+							"items": [
+								"brand 12/14 Medium black ellipsis",
+								"name 14/20 Bold black ellipsis"
+							]
+						}
+					]
+				},
+				{
+					"role": "con-price column",
+					"items": [
+						{
+							"row": "strike row gap=2: info(12 bold violet) + origin(12 medium #a0a0a0 line-through opacity 50)"
+						},
+						{
+							"row": "main row gap=2: price(16 bold black) + period(12 bold black, pb-1 pt-5)"
+						}
+					]
+				}
+			]
+		}
+	},
+	"tokens": {
+		"colors": {
+			"thumb/bg": "rgba(0,0,0,0.03)",
+			"add/bg": "rgba(0,0,0,0.7)",
+			"violet": "#3617ce",
+			"origin/gray": "#a0a0a0"
+		},
+		"radius": {
+			"thumb": 20,
+			"add": 99
+		}
+	},
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 2회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

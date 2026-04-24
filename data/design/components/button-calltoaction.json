@@ -1,0 +1,32 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:27339",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-27339",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "button-calltoaction",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": 330, "height": 52, "fluid_width": true },
+	"props": {
+		"text": { "type": "string", "required": true },
+		"state": { "type": "enum", "values": ["default", "disabled", "loading"], "default": "default" },
+		"fullWidth": { "type": "boolean", "default": true, "description": "CTA는 보통 풀폭" },
+		"onClick": { "type": "function" }
+	},
+	"structure": {
+		"root": "button-calltoaction",
+		"variants": [
+			{ "name": "state=default", "node_id": "1:27340" },
+			{ "name": "state=disabled", "node_id": "1:27346" },
+			{ "name": "state=loading", "node_id": "1:27352" }
+		]
+	}
+}

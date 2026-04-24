@@ -1,0 +1,82 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24",
+		"note": "메타데이터만 — 정확한 layout(아이콘 위/아래, label 위치)은 get_design_context 필요"
+	},
+	"component": {
+		"figma_node_id": "1:26280",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26280",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "button-tabbar",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": {
+		"width": 68,
+		"height": 64
+	},
+	"props": {
+		"label": {
+			"type": "string",
+			"required": true
+		},
+		"icon": {
+			"type": "ReactNode",
+			"required": true
+		},
+		"state": {
+			"type": "enum",
+			"values": [
+				"select",
+				"default"
+			],
+			"default": "default"
+		},
+		"onClick": {
+			"type": "function"
+		}
+	},
+	"structure": {
+		"root": "button-tabbar (단일 아이템)",
+		"variants": [
+			{
+				"name": "state=select",
+				"node_id": "1:26281",
+				"size": [
+					68,
+					64
+				]
+			},
+			{
+				"name": "state=default",
+				"node_id": "1:26287",
+				"size": [
+					68,
+					64
+				]
+			}
+		],
+		"layout_guess": "icon 24 위 + label 11px 아래, 세로 정렬"
+	},
+	"open_questions": [
+		"GnbPilot의 BottomNavigationItem과 시각적으로 동일하면 합칠지 — BottomNavigationItem은 BottomNavigation의 자식 전제, 단독 사용엔 부적합"
+	],
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 1회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

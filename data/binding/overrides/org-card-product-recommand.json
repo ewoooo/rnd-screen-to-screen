@@ -1,0 +1,13 @@
+{
+	"meta": { "purpose": "Figma .org/card-product-recommand → 묶음 상품 추천 카드 organism", "fetched_at": "2026-04-24", "strategy": "title + 흰 카드(큰 slot-product + 가격 row + dark CTA + pagination). ico-info 는 IconCircleInfo (WDS) 직접 사용." },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds'; import { IconCircleInfo } from '@wanteddev/wds-icon';",
+		"outer": "FlexBox column gap=20 alignItems=center width=336",
+		"title_block": "FlexBox column gap=9 px=12 — heading2 28/32 + (IconCircleInfo + label1 14/20)",
+		"card": "div bg white py=20 radius=30 shadow column gap=16 alignItems=center",
+		"slot_product": "div w-full minHeight=345 — slotProduct ? transparent : #ffeaea",
+		"info_block": "FlexBox row justify-between alignItems=center px=24 — left column gap=7 w=156 [Typography spans + slot-badge] + ButtonIconTextBackgroundPilot dark fill",
+		"pagination": "FlexBox row gap=4 — IndicatorDotPilot × N (active 강조)"
+	},
+	"open_questions": ["IconCircleInfo 위치 (subtitle row 의 ico-info) — Figma 의 정확한 변형 확인", "Tuniverse 폰트 부재 — Pretendard 로 대체 (이전 .org/card-product 와 동일)"]
+}

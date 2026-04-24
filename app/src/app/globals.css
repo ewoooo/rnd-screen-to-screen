@@ -1,6 +1,8 @@
 body {
 	margin: 0;
-	background: #e5e7eb;
+	/* mobile-stage(프레임 바깥)는 개발 chrome. 중립 톤으로 WDS atomic의 옅은 coolNeutral 사용. */
+	background: var(--atomic-coolNeutral-95);
+	color: var(--semantic-label-normal);
 	font-family:
 		"Wanted Sans Variable",
 		"Wanted Sans",
@@ -13,19 +15,31 @@ body {
 		sans-serif;
 }
 
+.app-shell {
+	display: flex;
+	min-height: 100vh;
+}
+
+.app-main {
+	flex: 1;
+	min-width: 0;
+}
+
 .mobile-stage {
 	min-height: 100vh;
-	min-width: 100vw;
+	/* 사이드바와 함께 flex row 안에 있으므로 뷰포트 너비가 아니라 남은 공간 전체 */
+	width: 100%;
 	display: grid;
 	place-items: center;
-	padding: 16px;
+	padding: var(--spacing-16);
 }
 
 .mobile-frame {
 	width: 375px;
-	height: 667px;
-	background: #ffffff;
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+	height: 80vh;
+	/* 프레임 내부는 실제 앱 화면 → semantic background 사용 (다크모드 대응) */
+	background: var(--semantic-background-normal-normal);
+	box-shadow: 0 4px 24px rgba(var(--atomic-neutral-10-rgb), var(--opacity-8));
 	border-radius: 20px;
 	overflow: hidden;
 	position: relative;
@@ -35,7 +49,7 @@ body {
 
 @media (max-width: 375px) {
 	.mobile-stage {
-		padding: 0;
+		padding: var(--spacing-0);
 	}
 	.mobile-frame {
 		width: 100%;

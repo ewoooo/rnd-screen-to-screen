@@ -1,0 +1,74 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26091",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26091",
+		"figma_type": "COMPONENT",
+		"figma_name": "header",
+		"notion_code_candidate": "C1",
+		"notion_component_name": "ogn/header",
+		"mapping_confidence": "high",
+		"mapping_note": "Figma 'header'는 우리 ogn/header와 역할 일치. 네이밍만 접두사 없음.",
+		"figma_section": "organism",
+		"figma_section_node_id": "143:8047",
+		"canonical_atomic_level": "organism"
+	},
+	"size": {
+		"width": 360,
+		"height": 64
+	},
+	"props": {},
+	"structure": {
+		"root": "header (1:26091)",
+		"children": [
+			{
+				"role": "leading",
+				"node_id": "1:26092",
+				"size": "28×28",
+				"content": "빈 슬롯 (로고/타이틀용)"
+			},
+			{
+				"role": "trailing",
+				"node_id": "1:26094",
+				"gap": 12,
+				"items": [
+					{
+						"role": "btn-search",
+						"node_id": "1:26096",
+						"icon": "ico/search (1:27401)"
+					},
+					{
+						"role": "button-icon",
+						"node_id": "1:26098",
+						"ref": "C2 atom/iconbutton",
+						"with_badge": true
+					}
+				]
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"button/dark": "#1a1a1a",
+			"badge/label/primary": "#3014b8",
+			"badge/label/onPrimary": "#ffffff"
+		}
+	},
+	"effects": {
+		"background": "linear-gradient(to bottom, #ffffff → rgba(246,246,246,0.8))",
+		"backdrop_blur": 20,
+		"padding": 18
+	},
+	"figma_docs": [
+		{
+			"node_id": "1:26098",
+			"name": "button-icon",
+			"doc": "아이콘 버튼의 기능과 관련된 새로운 정보나 이벤트가 발생했음을 알리는 배지 결합형 컴포넌트입니다."
+		}
+	]
+}

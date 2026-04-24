@@ -1,0 +1,86 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26640",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26640",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "image/brand-logo/round",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": {
+		"width": null,
+		"height": null
+	},
+	"props": {
+		"src": {
+			"type": "string",
+			"required": true
+		},
+		"alt": {
+			"type": "string",
+			"default": ""
+		},
+		"size": {
+			"type": "enum",
+			"values": [
+				"extra-small",
+				"small",
+				"middle",
+				"large"
+			],
+			"default": "middle"
+		}
+	},
+	"structure": {
+		"root": "image/brand-logo/round",
+		"variants": [
+			{
+				"name": "size=extra-small",
+				"node_id": "1:26641",
+				"size": [
+					32,
+					32
+				]
+			},
+			{
+				"name": "size=small",
+				"node_id": "1:26650",
+				"size": [
+					36,
+					36
+				]
+			},
+			{
+				"name": "size=middle",
+				"node_id": "1:26659",
+				"size": [
+					48,
+					48
+				]
+			},
+			{
+				"name": "size=large",
+				"node_id": "1:26668",
+				"size": [
+					60,
+					60
+				]
+			}
+		]
+	},
+	"composition": [
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 1회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

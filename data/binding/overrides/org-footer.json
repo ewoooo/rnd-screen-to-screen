@@ -1,0 +1,10 @@
+{
+	"meta": { "purpose": "Figma .org/footer → 화면 하단 footer chrome", "fetched_at": "2026-04-24", "strategy": "긴 column 형 footer. SK텔레콤 회사 정보, 약관 링크, 패밀리사이트. BtnTextPilot 재사용." },
+	"mapping": {
+		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
+		"outer": "div bg #f6f6f6 column gap=30 alignItems=center pb=70 width=360",
+		"divider_heavy": "div bg #f2f2f2 height=10",
+		"info_block": "FlexBox column gap=20 alignItems=start: company name + info pairs + paragraph + 약관 링크 BtnText 행",
+		"family_block": "(opt) divider light + family-site row of BtnText × N + copyright"
+	}
+}

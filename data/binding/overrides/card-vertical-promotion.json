@@ -1,0 +1,21 @@
+{
+	"meta": {
+		"purpose": "Figma card-vertical-promotion → 보라 카드 + 상단 이미지",
+		"figma_source": "data/design/components/card-vertical-promotion.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "image+card 겹침 구조라 WDS Card 단독으로는 표현 어려움. 외곽 div(position:relative) + ImgRectanglePilot + Card(absolute bottom). 보라 #3617ce 색상은 semantic 토큰 매핑 후보 미정."
+	},
+	"mapping": {
+		"target_import": "import { Card, Typography } from '@wanteddev/wds';",
+		"layout": {
+			"wrapper": { "tag": "div", "style": { "position": "relative", "width": 146, "height": 246 } },
+			"image": { "wds": "ImgRectanglePilot", "props": { "size": "medium", "type": "promotion-product" }, "style": { "position": "absolute", "top": 0, "left": 0 } },
+			"card": { "wds": "Card", "props": { "platform": "mobile", "flexDirection": "column", "justifyContent": "flex-end" }, "style": { "position": "absolute", "left": 0, "right": 0, "bottom": 0, "top": "21.14%", "padding": "0 15px 22px 15px", "background": "#3617ce", "borderRadius": 32, "boxShadow": "inset 0 2px 0 rgba(255,255,255,0.2), 0 4px 15px rgba(0,0,0,0.1)" } },
+			"text": [
+				{ "wds": "Typography", "variant": "caption1", "weight": "bold", "sx": { "color": "#ffffff" } },
+				{ "wds": "Typography", "variant": "title2", "weight": "medium", "sx": { "color": "#ffffff", "lineHeight": "24px" }, "max_lines": 3, "note": "Figma 명세 그대로 20/24 Medium 유지" }
+			]
+		}
+	},
+	"open_questions": ["T Universe Sans TTF 폰트 미설치 → Pretendard로 대체", "promo/bg #3617ce 매칭 semantic 토큰 부재"]
+}

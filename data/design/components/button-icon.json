@@ -1,0 +1,71 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26098",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26098",
+		"figma_type": "COMPONENT",
+		"figma_name": "button-icon",
+		"notion_code_candidate": "C2",
+		"notion_component_name": "atom/iconbutton",
+		"mapping_confidence": "partial",
+		"mapping_note": "Figma 'button-icon'은 배지 결합형(아이콘+badge). 순수 atom/iconbutton(배지 없음)은 분리되지 않음. 배지 없는 변형도 있는지 확인 필요.",
+		"figma_section": "molecule",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule"
+	},
+	"size": {
+		"width": 28,
+		"height": 28
+	},
+	"props": {},
+	"structure": {
+		"root": "button-icon (1:26098)",
+		"children": [
+			{
+				"role": "icon",
+				"node_id": "1:26099",
+				"contains": [
+					"touch-target 32×32",
+					"ico/* 24×24"
+				]
+			},
+			{
+				"role": "badge",
+				"ref_node": "badge-label-text (1:26273)",
+				"position": "top-right offset (-3.34, -6)"
+			}
+		]
+	},
+	"tokens": {
+		"colors": {
+			"button/dark": "#1a1a1a",
+			"badge/label/primary": "#3014b8",
+			"badge/label/onPrimary": "#ffffff"
+		}
+	},
+	"typography": {
+		"badge": {
+			"family": "Pretendard",
+			"weight": "Bold",
+			"size": 9,
+			"line_height": 11,
+			"letter_spacing": -0.3
+		}
+	},
+	"effects": {
+		"badge_padding": "3px 5px",
+		"badge_radius": 30
+	},
+	"figma_docs": [
+		{
+			"node_id": "1:26098",
+			"name": "button-icon",
+			"doc": "아이콘 버튼의 기능과 관련된 새로운 정보나 이벤트가 발생했음을 알리는 배지 결합형 컴포넌트입니다."
+		}
+	]
+}

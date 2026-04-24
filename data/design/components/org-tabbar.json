@@ -1,0 +1,19 @@
+{
+	"meta": { "source": "Figma", "file_key": "HEe3mcTVRPCZBlGwAaysWM", "section": "organism", "fetched_at": "2026-04-24" },
+	"component": { "figma_node_id": "29:6952", "figma_name": "tabbar (extras)", "canonical_atomic_level": "organism", "note": "화면 하단 탭바. backdrop-blur + shadow + 4 button-tabbar items (홈/이용/카테고리/구독함). selected indicator (top 10h)" },
+	"size": { "height": 64 },
+	"props": {
+		"items": { "type": "Array<{ label: string; icon: ReactNode; key: string }>" },
+		"activeKey": { "type": "string" },
+		"onSelect": { "type": "(key: string) => void" }
+	},
+	"structure": {
+		"outer": "div bg white px=35 row gap=6 alignItems=center justify-center backdrop-blur 20 shadow=0 8 16 rgba(0,0,0,0.24)",
+		"item": "ButtonTabbarPilot — 68w × 64h py=10 px=11 column gap=10: con-icon-label (24 icon + 10/11 Bold label)",
+		"selected_indicator": "div absolute top=0 left=center 68w × 10h — selected 만"
+	},
+	"tokens": { "colors": { "bg": "white", "label/active": "#000", "label/default": "#666", "indicator": "#000" } },
+	"composition": [
+		{ "name": "tab-button", "kind": "button", "pilot": "ButtonTabbarPilot" }
+	]
+}

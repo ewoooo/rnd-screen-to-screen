@@ -1,0 +1,60 @@
+{
+	"meta": {
+		"source": "Figma",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"section": "molecule",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "45:8068",
+		"figma_name": "text-icon",
+		"figma_section_node_id": "12:8103",
+		"canonical_atomic_level": "molecule",
+		"figma_doc": "특정 콘텐츠에 대한 시스템 추천 사유나 핵심 속성 태그를 보조 텍스트와 함께 전달"
+	},
+	"size": {
+		"width": 61,
+		"height": 14
+	},
+	"props": {
+		"icon": {
+			"type": "ReactNode",
+			"description": "아이콘 (없으면 기본 아이콘 placeholder)"
+		},
+		"text": {
+			"type": "string",
+			"default": "text"
+		}
+	},
+	"structure": {
+		"root": "text-icon (45:8068)",
+		"layout": {
+			"direction": "row",
+			"gap": 4,
+			"alignItems": "center"
+		},
+		"children": [
+			"icon (~13×13)",
+			"text (12 medium #1a1a1a ellipsis)"
+		]
+	},
+	"tokens": {
+		"colors": {
+			"badge/label/description": "#1a1a1a"
+		}
+	},
+	"composition": [
+		{
+			"name": "typography-inline",
+			"kind": "typography",
+			"pilot": null,
+			"raw_reason": "WDS Typography 직접 사용 (variant + sx)"
+		},
+		{
+			"name": "raw-layout-wrappers",
+			"kind": "layout",
+			"pilot": null,
+			"raw_reason": "raw HTML wrapper 1회 (div/span/button 등 layout-only). 추후 의미 있는 부품은 atom 추출 후보."
+		}
+	]
+}

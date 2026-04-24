@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"source": "Figma Plugin API",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"fetched_at": "2026-04-24"
+	},
+	"tree": {
+		"id": "1:26098", "name": "button-icon", "type": "COMPONENT", "w": 28, "h": 28,
+		"layout": { "mode": "NONE", "primary_align": "MIN", "counter_align": "MIN", "primary_sizing": "AUTO", "counter_sizing": "FIXED", "gap": 0, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+		"sizing": { "h": "FIXED", "v": "FIXED" }, "constraints": "MIN/MIN",
+		"layout_note": "mode=NONE (absolute positioning). 자식 2개가 절대좌표로 배치됨.",
+		"children": [
+			{
+				"id": "1:26099", "name": "btn-search", "type": "INSTANCE", "w": 32.67, "h": 32.67,
+				"layout": { "mode": "HORIZONTAL", "primary_align": "CENTER", "counter_align": "CENTER", "primary_sizing": "FIXED", "counter_sizing": "FIXED", "gap": 0, "padding": { "t": 0, "r": 0, "b": 0, "l": 0 } },
+				"sizing": { "h": "FIXED", "v": "FIXED" }, "constraints": "SCALE/SCALE",
+				"children": [
+					{ "id": "I1:26099;1:26278", "name": "touch-target", "type": "FRAME", "w": 32, "h": 32, "sizing": { "h": "FIXED", "v": "FIXED" }, "constraints": "CENTER/CENTER" },
+					{ "id": "I1:26099;1:26279", "name": "ico/cart", "type": "INSTANCE", "w": 24, "h": 24, "sizing": { "h": "FIXED", "v": "FIXED" } }
+				]
+			},
+			{
+				"id": "1:26100", "name": "badge-label-text", "type": "INSTANCE", "w": 17, "h": 17,
+				"layout": { "mode": "HORIZONTAL", "primary_align": "MIN", "counter_align": "MIN", "primary_sizing": "AUTO", "counter_sizing": "AUTO", "gap": 10, "padding": { "t": 3, "r": 5, "b": 3, "l": 5 } },
+				"sizing": { "h": "HUG", "v": "HUG" }, "constraints": "MAX/MIN",
+				"constraints_note": "MAX/MIN = 우측상단 고정",
+				"children": [
+					{ "id": "I1:26100;1:26274", "name": "N", "type": "TEXT", "w": 7, "h": 11, "sizing": { "h": "HUG", "v": "HUG" }, "text": { "auto_resize": "WIDTH_AND_HEIGHT", "truncation": "DISABLED", "max_lines": null, "align": "CENTER/TOP", "chars": "N" } }
+				]
+			}
+		]
+	}
+}

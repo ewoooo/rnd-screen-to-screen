@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"source": "Figma metadata (atom 섹션 143:8046)",
+		"file_key": "NUZTOCBPhf2X8oTB4TLSIf",
+		"file_name": "04_ADP_P3-T1_Library",
+		"fetched_at": "2026-04-24"
+	},
+	"component": {
+		"figma_node_id": "1:26545",
+		"figma_url": "https://www.figma.com/design/NUZTOCBPhf2X8oTB4TLSIf/04_ADP_P3-T1_Library?node-id=1-26545",
+		"figma_type": "COMPONENT_SET",
+		"figma_name": "dropdown-list",
+		"figma_section": "atom",
+		"figma_section_node_id": "143:8046",
+		"canonical_atomic_level": "atom"
+	},
+	"size": { "width": 304, "height": 34 },
+	"props": {
+		"options": { "type": "array<{ value, label }>", "required": true },
+		"value": { "type": "string", "required": false },
+		"defaultValue": { "type": "string", "required": false },
+		"placeholder": { "type": "string", "default": "선택" },
+		"disabled": { "type": "boolean", "default": false },
+		"onChange": { "type": "function", "default": null }
+	},
+	"structure": {
+		"root": "dropdown-list",
+		"variants": [
+			{ "name": "state=default", "node_id": "1:26546" },
+			{ "name": "state=disabled", "node_id": "1:26551" }
+		]
+	}
+}

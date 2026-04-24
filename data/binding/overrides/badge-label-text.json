@@ -1,0 +1,17 @@
+{
+	"meta": {
+		"purpose": "Figma badge-label-text → WDS ContentBadge(xsmall) 오버라이드",
+		"figma_source": "data/design/components/badge-label-text.json",
+		"wds_source": "registry/wds-component-registry.json",
+		"fetched_at": "2026-04-24",
+		"strategy": "WDS Label은 form 라벨용(required asterisk 포함). 시각 라벨 배지에는 ContentBadge xsmall이 적합."
+	},
+	"mapping": {
+		"target_component": "content-badge",
+		"target_import": "import { ContentBadge } from '@wanteddev/wds';",
+		"root": {
+			"wds": "ContentBadge",
+			"props": { "size": "xsmall", "variant": "solid", "color": "accent" }
+		}
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"meta": { "purpose": "Figma card-horizontal-product-information → 안내 카드", "fetched_at": "2026-04-24" },
+	"mapping": {
+		"target_import": "import { Card, FlexBox, Typography } from '@wanteddev/wds';",
+		"root": { "wds": "Card", "props": { "platform": "mobile", "flexDirection": "row", "justifyContent": "space-between", "alignItems": "center", "width": 256, "sx": { "padding": "16px 20px", "border": "1px solid #b2b2b2", "borderRadius": 14, "background": "#f2f2f2", "boxShadow": "none" } } },
+		"items": ["caption1 medium text", "BtnTextPilot type=line weight=bold"]
+	}
+}
