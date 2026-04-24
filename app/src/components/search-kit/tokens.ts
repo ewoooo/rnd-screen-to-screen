@@ -1,8 +1,10 @@
 /**
- * search-kit 전용 상수. home-kit 과 공유되는 것은 @/components/home-kit 에서 import.
+ * Re-export shim — 실체는 pilot-kit/tokens.ts 합본.
+ * Phase 1-C 마이그레이션: search-kit → pilot-kit 통합 진행 중.
  */
-
-export const KEYBOARD_BG = "#D1D5DB";
-export const BUBBLE_USER_BG = "#E5E7EB";
-export const SEARCH_BAR_BG = "rgba(255, 255, 255, 0.9)";
-export const SEARCH_BAR_RADIUS = 999;
+export {
+	BUBBLE_USER_BG,
+	KEYBOARD_BG,
+	SEARCH_BAR_BG,
+	SEARCH_BAR_RADIUS,
+} from "@/components/pilot-kit/tokens";
