@@ -1,36 +1,20 @@
 import type { CSSProperties, ReactNode } from "react";
 
-import { BADGE_BG, T_BRAND } from "./tokens";
+import { BADGE_BG, FONT, T_BRAND } from "./tokens";
+
+// Phase 1 마이그레이션: SectionLabel/MonoCaption 실체는 pilot-kit으로 이전.
+export { SectionLabelPilot as SectionLabel } from "@/components/pilot-kit/SectionLabelPilot";
+export { MonoCaptionPilot as MonoCaption } from "@/components/pilot-kit/MonoCaptionPilot";
 
 /**
- * Figma 원본 픽셀 기준 타이포 슬롯.
- * 업무 의미 이름으로 export — WDS variant 이름은 내부에서만 매핑 고려.
- *
- * 공통 규칙: lineHeight는 Figma 값, letterSpacing 유지, color는 semantic 토큰 우선.
+ * Figma 픽셀 기준 타이포 슬롯.
+ * 크기/두께/자간/행간은 tokens.FONT 에서 소비 — color 만 슬롯마다 지정.
  */
 
 const base: CSSProperties = {
 	margin: 0,
 	fontStyle: "normal",
 };
-
-// 13 / 700 / neutral — 카드 상단 라벨 ("T멤버십 포인트", "결합가족 보기" 등)
-export function SectionLabel({ children }: { children: ReactNode }) {
-	return (
-		<span
-			style={{
-				...base,
-				fontSize: 13,
-				fontWeight: 700,
-				letterSpacing: "-0.39px",
-				lineHeight: 1.4,
-				color: "var(--semantic-label-neutral)",
-			}}
-		>
-			{children}
-		</span>
-	);
-}
 
 // 20 / 700 — 큰 타이틀 ("5곳에서 사용가능", "32GB", "엄마의 사용패턴에...")
 // pre-line으로 개행 유지.
@@ -39,10 +23,7 @@ export function Heading20({ children }: { children: ReactNode }) {
 		<p
 			style={{
 				...base,
-				fontSize: 20,
-				fontWeight: 700,
-				letterSpacing: "-1px",
-				lineHeight: 1.3,
+				...FONT.heading20,
 				whiteSpace: "pre-line",
 				color: "var(--semantic-label-normal)",
 			}}
@@ -58,10 +39,7 @@ export function AiText({ children }: { children: ReactNode }) {
 		<span
 			style={{
 				...base,
-				fontSize: 13,
-				fontWeight: 700,
-				letterSpacing: "-0.39px",
-				lineHeight: 1.4,
+				...FONT.aiText,
 				color: T_BRAND,
 			}}
 		>
@@ -76,10 +54,7 @@ export function ListTitle({ children }: { children: ReactNode }) {
 		<span
 			style={{
 				...base,
-				fontSize: 14,
-				fontWeight: 600,
-				letterSpacing: "-0.7px",
-				lineHeight: 1.4,
+				...FONT.listTitle,
 				color: "var(--semantic-label-normal)",
 				whiteSpace: "nowrap",
 				overflow: "hidden",
@@ -97,35 +72,8 @@ export function ListSub({ children }: { children: ReactNode }) {
 		<span
 			style={{
 				...base,
-				fontSize: 13,
-				fontWeight: 700,
-				letterSpacing: "-0.52px",
-				lineHeight: 1.3,
+				...FONT.listSub,
 				color: "var(--semantic-label-alternative)",
-			}}
-		>
-			{children}
-		</span>
-	);
-}
-
-// 11 / 700 / alternative — 모노 숫자 (바코드 digits, 타이머 등)
-export function MonoCaption({
-	children,
-	brand,
-}: {
-	children: ReactNode;
-	brand?: boolean;
-}) {
-	return (
-		<span
-			style={{
-				...base,
-				fontSize: 11,
-				fontWeight: 700,
-				letterSpacing: "-0.44px",
-				lineHeight: 1.4,
-				color: brand ? T_BRAND : "var(--semantic-label-alternative)",
 			}}
 		>
 			{children}
@@ -139,13 +87,10 @@ export function StatBadge({ children }: { children: ReactNode }) {
 		<span
 			style={{
 				...base,
+				...FONT.statBadge,
 				background: BADGE_BG,
 				borderRadius: 6,
 				padding: "var(--spacing-4) var(--spacing-6)",
-				fontSize: 11,
-				fontWeight: 700,
-				letterSpacing: "-0.44px",
-				lineHeight: 1.3,
 				color: "var(--semantic-label-alternative)",
 				whiteSpace: "nowrap",
 			}}
@@ -161,16 +106,13 @@ export function PillChip({ children }: { children: ReactNode }) {
 		<span
 			style={{
 				...base,
+				...FONT.pillChip,
 				display: "inline-flex",
 				alignItems: "center",
 				justifyContent: "center",
 				background: "var(--semantic-fill-normal)",
 				borderRadius: 999,
 				padding: "var(--spacing-6) var(--spacing-12)",
-				fontSize: 12,
-				fontWeight: 600,
-				letterSpacing: "-0.6px",
-				lineHeight: 1.3,
 				color: "var(--semantic-label-alternative)",
 				flexShrink: 0,
 			}}
