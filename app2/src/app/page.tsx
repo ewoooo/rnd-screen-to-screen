@@ -1,16 +1,16 @@
 import Link from "next/link";
 
-import registry from "@/generated/screen-version-registry.json";
-import type { Registry } from "@/types/registry";
-
-const typed = registry as Registry;
+const SCREENS = [
+	{ id: "home-benefit", label: "혜택" },
+	{ id: "home-manage", label: "관리" },
+	{ id: "home-device-change", label: "단말 변경" },
+	{ id: "home-senior", label: "시니어" },
+	{ id: "home-guest", label: "비로그인" },
+	{ id: "product-detail", label: "상품 상세" },
+	{ id: "search-result", label: "검색 결과" },
+] as const;
 
 export default function Home() {
-	const totalVersions = typed.screens.reduce(
-		(n, s) => n + s.versions.length,
-		0,
-	);
-
 	return (
 		<main
 			style={{
@@ -31,67 +31,29 @@ export default function Home() {
 						margin: "4px 0 0",
 					}}
 				>
-					home-kit 기반 · {typed.screens.length}개 화면 · {totalVersions}개 버전
+					home-kit · {SCREENS.length}개 화면
 				</p>
 			</div>
-			<nav style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-				{typed.screens.map((screen) => (
-					<section
-						key={screen.id}
+			<nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+				{SCREENS.map((s) => (
+					<Link
+						key={s.id}
+						href={`/${s.id}`}
 						style={{
+							padding: "12px 16px",
+							borderRadius: 10,
+							background: "#111827",
+							color: "#fff",
+							textDecoration: "none",
+							fontSize: 14,
+							fontWeight: 500,
 							display: "flex",
-							flexDirection: "column",
-							gap: 8,
+							justifyContent: "space-between",
 						}}
 					>
-						<div
-							style={{
-								display: "flex",
-								alignItems: "baseline",
-								justifyContent: "space-between",
-							}}
-						>
-							<Link
-								href={screen.route}
-								style={{
-									fontSize: 14,
-									fontWeight: 600,
-									color: "#111827",
-									textDecoration: "none",
-								}}
-							>
-								{screen.id}
-							</Link>
-							<span style={{ fontSize: 11, color: "#9ca3af" }}>
-								latest · {screen.latest}
-							</span>
-						</div>
-						<div
-							style={{
-								display: "flex",
-								flexWrap: "wrap",
-								gap: 6,
-							}}
-						>
-							{screen.versions.map((v) => (
-								<Link
-									key={v.id}
-									href={v.route}
-									style={{
-										padding: "8px 12px",
-										borderRadius: 10,
-										background: "#111827",
-										color: "#fff",
-										textDecoration: "none",
-										fontSize: 12,
-										fontWeight: 500,
-									}}
-								>
-									{v.label}
-								</Link>
-							))}
-						</div>
-					</section>
+						<span>{s.label}</span>
+						<span style={{ opacity: 0.5, fontSize: 12 }}>/{s.id}</span>
+					</Link>
 				))}
 			</nav>
 		</main>

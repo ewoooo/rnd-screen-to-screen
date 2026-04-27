@@ -1,0 +1,1 @@
+export { PromoBlock } from "./PromoBlock";

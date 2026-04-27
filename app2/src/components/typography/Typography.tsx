@@ -6,11 +6,8 @@ import { DEFAULT_TAG, type Variant, VARIANT_STYLES } from "./styles";
 type Props = {
 	variant: Variant;
 	children: ReactNode;
-	/** color override (예: mono-caption을 T_BRAND로) */
 	color?: string;
-	/** 기본 태그 override */
 	as?: "p" | "span" | "div";
-	/** 이외 inline 보강 */
 	style?: CSSProperties;
 };
 

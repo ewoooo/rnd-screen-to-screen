@@ -1,43 +1,22 @@
-# DESIGN
+# DESIGN — 모바일 360 + 시스템 어휘 SSOT
 
-이 프로젝트는 **모바일 화면**을 만든다. 데스크톱·태블릿 대응은 하지 않는다.
+이 문서는 **수치·토큰·variant 명세 SSOT**다. 운영 규약·시스템 메타는 [`AGENTS.md`](./AGENTS.md).
 
-이 문서는 **디자인 제약과 검증 기준**이 SSOT다. 신규 화면의 실제 조립 공식은 `LAYOUT.md`의 home-kit 레퍼런스 템플릿을 따른다.
+## 모바일 제약
 
-## 기준
-
-- **뷰포트 폭**: 360px (Figma 라이브러리 `04_ADP_P3-T1_Library`의 mobile artboard 기준)
+- **뷰포트 폭**: 360px (Figma `04_ADP_P3-T1_Library` mobile artboard 기준)
 - **타깃 플랫폼**: iOS / Android 모바일 웹뷰
-- **WDS `platform` prop**: 항상 `"mobile"`로 지정 (예: `<Card platform="mobile">`)
 - **터치 인터랙션 우선**: 호버 전제 UI 금지
+- 미디어 쿼리 사용하지 않음 — 한 가지 폭만 지원
+- WDS 컴포넌트 직접 사용 시 `platform="mobile"`
 
-## 함의
-
-- 모든 컴포넌트·화면은 360px 폭에서 1차로 완성도를 검증한다
-- 가로 스크롤은 모바일 carousel 패턴으로만 사용 (마우스 드래그 가정 안 함)
-- 폰트·간격은 모바일 가독성 기준 (본문 14px, 헤딩 18~24px 범위)
-- 미디어 쿼리는 사용하지 않는다 — 한 가지 폭만 지원
-
-## 검증 방법
-
-- 브라우저 devtools에서 360×800 viewport로 확인 (Chrome/Safari 모바일 모드)
-- 별도의 데스크톱 레이아웃은 만들지 않는다
-
----
-
-# 간격 & 실측 원칙
+검증: 브라우저 DevTools에서 360×800 viewport (Chrome/Safari 모바일 모드).
 
 ## Figma가 ground truth
 
-**수치(gap, padding, font size, line-height, border-radius)는 추측하지 않고 Figma 노드트리에서 직접 읽는다.**
+수치(gap, padding, font size, line-height, border-radius)는 추측하지 않고 **Figma 노드트리에서 직접 읽는다**. WDS Typography variant 스케일과 명세가 정확히 일치하지 않을 수 있다 — 불일치 시 **Figma 값을 따른다**.
 
-- WDS `Typography` variant 스케일과 Figma 명세가 정확히 일치하지 않을 수 있다. 불일치 시 **Figma 값을 따른다**.
-- home-kit·search-kit의 text 슬롯은 Figma 픽셀을 그대로 반영한 raw `<span>` 으로 정의되어 있다.
-- WDS 토큰 수치(semantic color, spacing scale)는 `registry/wds-token-registry.json` 직접 조회 (app/AGENTS.md 참조).
-
-## 노드트리 읽는 법
-
-`mcp__plugin_figma_figma__get_metadata` 호출 → 각 frame의 `x/y/width/height` 로 **자식 간 실제 gap 계산**:
+### 노드트리 좌표로 실 gap 계산
 
 ```
 child[n].y + child[n].height  →  이전 자식 종료
@@ -45,78 +24,155 @@ child[n+1].y                   →  다음 자식 시작
 gap = child[n+1].y - (child[n].y + child[n].height)
 ```
 
-Figma 에디터 숫자만 믿지 말고 **항상 좌표 연산으로 검증**한다. auto-layout frame 도 실 좌표 기준이 정답이다.
+`mcp__plugin_figma_figma__get_metadata` 호출 → 자식 좌표 연산. Figma 에디터 숫자만 믿지 말고 **항상 좌표 연산으로 검증**.
 
-## 실측된 간격 규칙 (T 앱 홈 5화면)
+## 간격 — 홈 5화면 실측
 
-Figma 노드 `0:606 Card/List` 재확인 결과:
+Figma 노드 `0:606 Card/List` 기준:
 
 | 관계 | gap | 코드 반영 위치 |
 |---|---|---|
-| Statusbar + Header → Banner/Small | 상단 106px 패딩 | `Shell.tsx` scrollArea `padding-top: 106` |
-| Banner/Small → 첫 카드 | 0px (Figma) / 4px (현재 구현) | 미세 차이 허용 중 |
-| **카드 → 카드 (Card/L2·L3·offering_banner 간)** | **4px** | `Shell.tsx` scrollArea `gap: var(--spacing-4)` |
-| 마지막 카드 → MY 편집 | 24px | `MyEditButton.tsx` `marginTop: var(--spacing-20)` (+ scrollArea gap 4) |
-| MY 편집 → GNB | 하단 120px 패딩 | `Shell.tsx` scrollArea `padding-bottom: 120` |
+| Statusbar+Header → 첫 부품 | 상단 106px 패딩 | `Shell` `ContentOutlet` padding-top |
+| 카드 → 카드 | **4px** (var(--spacing-4)) | `CardList` gap=4 (기본) |
+| 마지막 카드 → MY 편집 | 24px | `MyEditButton` margin |
+| MY 편집 → GNB | 하단 120px 패딩 | `Shell` `ContentOutlet` padding-bottom |
 
 **유지 규약**: 홈 화면 카드들은 **타이트(4px)** 로 붙어야 한다. MY 편집만 별도 section 느낌으로 24px 여유.
 
-검색 플로우(DetailShell) 는 별도 규약 — `search-kit/DetailShell.tsx` 는 scrollArea gap 16으로 카드 간 여유 있음. 이는 검색 결과 화면의 의도적 breathing space.
+검색 도메인은 별도 — 결과 화면은 16px gap (의도적 breathing space). 다른 도메인 추가 시 별도 명시.
 
-## 카드 내부 실측 기준
+## 카드 내부 실측
 
-- **카드 너비**: 369px (screen width 393 - 좌우 12px 여백)
-- **카드 padding**: 32px (Card/L3), 32px (Card/L2)
+- **카드 너비**: 369px (screen 393 - 좌우 12px 여백)
+- **카드 padding**: 32px (모든 level)
 - **카드 radius**: 24px
 - **카드 배경**: `rgba(255, 255, 255, 0.9)` (frosted)
-- **카드 테두리**: `1px solid white`
+- **카드 테두리**: `1px solid rgba(255, 255, 255, 1)`
 
-구현 공식은 `LAYOUT.md`를 따른다. 실제 값은 `app/src/components/home-kit/Card.tsx` + `tokens.ts` (`CARD_BG`, `CARD_BORDER`, `CARD_RADIUS`)가 기준이다.
+## 시스템 어휘 — variant SSOT
 
-## 수정 이력
+### Typography variant (6)
 
-| 날짜 | 발견 | 수정 |
-|---|---|---|
-| 2026-04-24 | Shell scrollArea gap 24 → Figma 원본 4. 홈 5화면 모두 카드 간격 과잉 | gap 4 로 변경, MyEditButton marginTop 20 |
+수치 SSOT는 `app2/src/components/typography/styles.ts`. Figma 픽셀 그대로 고정 — WDS Typography variant와 일치하지 않아도 명세 우선.
 
-# 텍스트 슬롯 (home-kit 기준)
+| variant | size / weight | letterSpacing | lineHeight | color | 기본 태그 | 특수 |
+|---|---|---|---|---|---|---|
+| `section-label` | 13 / 700 | -0.39px | 1.4 | `--semantic-label-neutral` | `<span>` | — |
+| `heading-20` | 20 / 700 | -1px | 1.3 | `--semantic-label-normal` | `<p>` | `whiteSpace: pre-line` |
+| `ai-text` | 13 / 700 | -0.39px | 1.4 | `T_BRAND` | `<span>` | — |
+| `list-title` | 14 / 600 | -0.7px | 1.4 | `--semantic-label-normal` | `<span>` | nowrap + ellipsis |
+| `list-sub` | 13 / 700 | -0.52px | 1.3 | `--semantic-label-alternative` | `<span>` | — |
+| `mono-caption` | 11 / 700 | -0.44px | 1.4 | `--semantic-label-alternative` (`color` prop으로 override 가능, 예: `T_BRAND`) | `<span>` | — |
 
-Figma 픽셀 기준 고정. 세부는 `app/src/components/home-kit/text.tsx`.
+API: `<Typography variant color? as? style?>{children}</Typography>`
 
-| 슬롯 | size / weight / color | 역할 |
-|---|---|---|
-| `SectionLabel` | 13 / 700 / `--semantic-label-neutral` | 카드 상단 라벨 |
-| `Heading20` | 20 / 700 / `--semantic-label-normal` | 큰 값·타이틀 |
-| `AiText` | 13 / 700 / `T_BRAND` | AI 제안 인라인 |
-| `ListTitle` | 14 / 600 / `--semantic-label-normal` | 행 제목 |
-| `ListSub` | 13 / 700 / `--semantic-label-alternative` | 행 부제 |
-| `MonoCaption` | 11 / 700 / alternative or brand | 숫자·타이머 |
-| `StatBadge` | 11 / 700 / `#f4f5fa` bg | stat 회색 pill |
-| `PillChip` | 12 / 600 / fill-normal bg | 행 우측 pill |
+### Card level (3)
 
-# 컬러 (프로젝트 도메인 상수)
+수치 SSOT는 `app2/src/components/home-kit/card/Card.tsx`.
 
-WDS 토큰 외 T 앱 고유값. `app/src/components/home-kit/tokens.ts` 가 SSOT.
+| level | 높이 | layout | 슬롯 |
+|---|---|---|---|
+| `1` | 64h 고정 | row, padding 0 | `left: { icon, label }` + center divider + `right: { icon, label }`. 각 slot은 `<Typography list-title>` |
+| `2` | `aside` 있으면 112h, 없으면 가변 | `aside` 있으면 row, 없으면 column | `label: string`, `title?`, `badge?`, `body?`, `aside?` |
+| `3` | 232~299h | column, alignItems: flex-end | `label: string`, `title: string`, `ai?: { icon?, text }`, `cta: { text, onClick? }` |
+
+L2 분기 동작:
+- `aside` 있음 → row layout. 좌측 column에 label + (title + badge) inline, 우측에 aside
+- `aside` 없음 → column layout. `<CardHeader label title />` + `body`
+
+L3 CTA 버튼: `T_BRAND` bg + `T_BRAND_SHADOW` + h=36 + `borderRadius=12` + 12/600/-0.48 텍스트.
+
+API: discriminated union. `level` prop이 1/2/3 중 어느 것인지에 따라 props 구성이 컴파일 타임에 강제됨.
+
+### Banner variant (2)
+
+수치 SSOT는 `app2/src/components/home-kit/banner/Banner.tsx`.
+
+| variant | h | 텍스트 | 컨테이너 |
+|---|---|---|---|
+| `top` | 48 | 12 / 700 / -0.48px / `--semantic-label-alternative` | 투명, padding `0 var(--spacing-16)` |
+| `offering` | 94 | 14 / 600 / -0.56px / 1.2 / `--semantic-label-normal` (whiteSpace: nowrap) | `OFFERING_BG` + `OFFERING_BORDER` + radius 24 + padding `0 var(--spacing-32)` + `overflow: hidden` |
+
+API: `<Banner variant text imageSize={{w, h}} imageLabel?>`. 우측에 `Placeholder`로 이미지 슬롯.
+
+### 비-카드 부품
+
+#### `StatBadge`
+11/700/-0.44/1.3, `BADGE_BG` bg, radius 6, padding `var(--spacing-4) var(--spacing-6)`, `--semantic-label-alternative`, nowrap.
+
+#### `PillChip`
+12/600/-0.6/1.3, radius 999, padding `var(--spacing-6) var(--spacing-12)`. 두 tone:
+- `neutral` (default): `--semantic-fill-normal` bg + `--semantic-label-alternative`
+- `violet`: `BADGE_BG` bg + `T_BRAND`
+
+#### `ListRow`
+- 좌: `Placeholder` 썸네일 (w/h/label prop)
+- 본문: `<Typography list-title>{title}</Typography>` + `<Typography list-sub>{sub}</Typography>` (column, gap 2)
+- 우: `pill` 문자열 → `<PillChip>{pill}</PillChip>`, 또는 `trailing` ReactNode
+
+#### `MyEditButton`
+하단 ghost "MY 편집" 버튼. 5/5 화면 footer.
+
+#### `Placeholder`
+미정 이미지·아이콘 자리. props: `w` (number | string), `h` (number | string), `label`, `style?`. Dashed border + `--semantic-line-solid-normal` + `--semantic-background-normal-alternative` bg + 10/500 라벨. **회색 박스 금지 — 투명 dashed**.
+
+#### `Icon`
+SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 SVG 원본), `color?`, `alt?`.
+- `color` 미지정 → `next/image` 원본 (멀티컬러 SVG, 로고)
+- `color` 지정 → CSS `mask-image` + `background-color`로 단색 페인트
+
+#### `ContentOutlet`
+스크롤 슬롯. `flex: 1` + `overflowY: auto` + 세로 flex + 스크롤바 hide. padding/gap은 호출자 주입. WebKit/Firefox/IE 모두 스크롤바 숨김.
+
+## 색 — 자체 토큰 (8개)
+
+WDS 토큰에 대응되지 않는 T 앱 브랜드 톤. SSOT는 `app2/src/components/home-kit/tokens.ts`.
 
 | 상수 | 값 | 용도 |
 |---|---|---|
-| `T_BRAND` | `#3617ce` | T멤버십 브랜드 보라. CTA, AI 텍스트, GNB active |
+| `T_BRAND` | `#3617ce` | T멤버십 보라. CTA, AI 텍스트, GNB active |
 | `T_BRAND_SHADOW` | `0 8px 16px rgba(27, 11, 102, 0.16)` | CTA 버튼 그림자 |
 | `PAGE_BG` | `#ebeef6` | 홈 페이지 배경 (연보라) |
-| `PAGE_BG_SEMI` | `rgba(235, 238, 246, 0.95)` | Statusbar/Header/GNB 반투명 배경 |
+| `PAGE_BG_SEMI` | `rgba(235, 238, 246, 0.95)` | StatusBar / GNH / GNB 반투명 배경 |
 | `GNB_BORDER` | `#ecf1ff` | GNB 상단 구분선 |
-| `CARD_BG` / `CARD_BORDER` / `CARD_RADIUS` | — / — / 24 | 카드 공통 |
-| `OFFERING_BG` / `OFFERING_BORDER` | `rgba(253,253,254,0.5)` / `rgba(255,255,255,0.5)` | offering_banner 투명도 |
-| `BADGE_BG` | `#f4f5fa` | Stat 배지 배경 |
+| `CARD_BG` | `rgba(255, 255, 255, 0.9)` | 카드 |
+| `CARD_BORDER` | `rgba(255, 255, 255, 1)` | 카드 테두리 |
+| `CARD_RADIUS` | `24` | 카드 radius |
+| `OFFERING_BG` | `rgba(253, 253, 254, 0.5)` | offering banner |
+| `OFFERING_BORDER` | `rgba(255, 255, 255, 0.5)` | offering banner |
+| `BADGE_BG` | `#f4f5fa` | StatBadge / PillChip violet |
 
-WDS semantic 토큰(`--semantic-label-*`, `--semantic-line-*`, `--semantic-fill-*`)은 직접 CSS var 로 소비.
+## WDS 토큰 — 직접 var() 소비
 
-# 검증 절차
+수치 SSOT는 `registry/wds-token-registry.json`. 이 문서나 다른 메모에 **베이크 금지**.
+
+광범위 사용 예:
+- `var(--semantic-label-{normal, neutral, alternative})`
+- `var(--semantic-fill-normal)`
+- `var(--semantic-line-solid-{normal, alternative})`
+- `var(--semantic-background-normal-{normal, alternative})`
+- `var(--spacing-{0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 32})`
+- `var(--opacity-8)`
+
+## 검증 절차
 
 새 화면 조립 또는 기존 화면 수정 시:
 
 1. Figma 노드 id 확인 → `mcp__plugin_figma_figma__get_metadata` 로 구조 추출
 2. 자식 좌표로 **실 gap/size 계산** — Figma 에디터 숫자 의존 금지
-3. `LAYOUT.md`의 home-kit 조립 공식을 우선 적용. 없는 부품만 project kit 또는 WDS registry에서 확인
-4. 브라우저 DevTools 로 **computed style 로 픽셀 재확인** (런타임 ≠ 추측)
-5. 스크린샷을 Figma 원본과 대조
+3. 위 시스템 어휘에서 매핑 (Card level / Banner variant / Typography variant)
+4. **어휘에 없으면 strain 신호**:
+   - 새 variant 추가 가능한가? → variant SSOT 확장
+   - 기존 컴포넌트 API에 새 슬롯 강제? → 시스템 재설계 신호 (회의 보고)
+   - inline raw 강요? → 어휘 부족 (회의 보고)
+5. 브라우저 DevTools `computed style`로 픽셀 재확인 (런타임 ≠ 추측)
+6. 스크린샷을 Figma 원본과 대조
+
+## 수정 이력
+
+| 날짜 | 발견 | 수정 |
+|---|---|---|
+| 2026-04-24 | Shell scrollArea gap 24 → Figma 원본 4. 홈 5화면 모두 카드 간격 과잉 | gap 4 적용, MyEditButton marginTop 20 |
+| 2026-04-27 | wrap 4종 (`BarcodeCard`/`HeroCard`/`StatCard`/`DualMenuCard`) 제거 — 어휘 분산 | `Card level={1\|2\|3}` 단일 API discriminated union으로 통합 |
+| 2026-04-27 | `TopBanner` / `OfferingBanner` 분리 — 어휘 분산 | `Banner variant="top"\|"offering"` 단일 API |
+| 2026-04-27 | text.tsx 8 슬롯 중 6 순수 타이포 | `Typography variant`(6) 단일 컴포넌트로 흡수. StatBadge/PillChip만 home-kit/text.tsx에 남김 |
