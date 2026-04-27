@@ -38,7 +38,7 @@ function StepItem({ step, isLast }: { step: ProcessingStep; isLast: boolean }) {
 						justifyContent: "center",
 						color: isInProgress ? T_BRAND : "#FFFFFF",
 						fontSize: 11,
-						fontWeight: 800,
+						fontWeight: 700,
 					}}
 				>
 					{isInProgress ? "·" : "✓"}

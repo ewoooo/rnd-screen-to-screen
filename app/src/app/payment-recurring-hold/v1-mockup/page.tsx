@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { ListSub } from "@/components/home-kit";
+import { Card, ListSub, SectionLabel } from "@/components/home-kit";
 import {
 	ActionRow,
 	DualCTA,
@@ -29,18 +29,26 @@ export default function PaymentRecurringHoldV1MockupPage() {
 				<SubscriptionCard />
 				<AlertBanner />
 				<HorizontalSteps />
-				<div style={actionLabelStyle}>{mock.actionLabel}</div>
-				<div>
-					{mock.actions.map((a) => (
-						<ActionRow
-							key={a.id}
-							label={a.label}
-							desc={a.desc}
-							trailing={a.trailing}
-							state={a.state}
-						/>
-					))}
-				</div>
+				<Card
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						gap: "var(--spacing-12)",
+					}}
+				>
+					<SectionLabel>{mock.actionLabel}</SectionLabel>
+					<div>
+						{mock.actions.map((a) => (
+							<ActionRow
+								key={a.id}
+								label={a.label}
+								desc={a.desc}
+								trailing={a.trailing}
+								state={a.state}
+							/>
+						))}
+					</div>
+				</Card>
 			</PayContent>
 		</DetailShell>
 	);
@@ -215,7 +223,7 @@ const subCardStyle: CSSProperties = {
 
 const subNameStyle: CSSProperties = {
 	fontSize: 18,
-	fontWeight: 800,
+	fontWeight: 700,
 	color: "var(--semantic-label-normal)",
 };
 
@@ -240,12 +248,12 @@ const alertGlyph: CSSProperties = {
 
 const alertTitleStyle: CSSProperties = {
 	fontSize: 14,
-	fontWeight: 800,
+	fontWeight: 700,
 	color: T_BRAND,
 };
 
 const alertBadgeStyle: CSSProperties = {
-	background: "#FFFFFF",
+	background: "var(--semantic-background-normal-normal, #FFFFFF)",
 	color: T_BRAND,
 	padding: "3px 10px",
 	borderRadius: 999,
@@ -260,10 +268,3 @@ const alertBodyStyle: CSSProperties = {
 	lineHeight: "19.2px",
 };
 
-const actionLabelStyle: CSSProperties = {
-	fontSize: 12,
-	fontWeight: 700,
-	color: "var(--semantic-label-alternative)",
-	letterSpacing: -0.3,
-	paddingTop: "var(--spacing-8)",
-};

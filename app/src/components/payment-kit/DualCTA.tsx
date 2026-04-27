@@ -66,7 +66,7 @@ const sharedBtn = {
 
 const secondaryStyle = {
 	...sharedBtn,
-	background: "#FFFFFF",
+	background: "var(--semantic-background-normal-normal, #FFFFFF)",
 	color: "var(--semantic-label-normal)",
 	border: "1px solid var(--semantic-line-normal-normal, #b2b2b2)",
 } as const;

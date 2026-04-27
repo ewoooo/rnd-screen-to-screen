@@ -1,3 +1,4 @@
+import { FONT } from "@/components/home-kit";
 import { GNB_BORDER, T_BRAND } from "./tokens";
 
 type State = "ok" | "disabled";
@@ -32,8 +33,7 @@ export function ActionRow({
 			<div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<span
 					style={{
-						fontSize: 14,
-						fontWeight: 600,
+						...FONT.listTitle,
 						color: "var(--semantic-label-normal)",
 					}}
 				>
@@ -41,7 +41,8 @@ export function ActionRow({
 				</span>
 				<span
 					style={{
-						fontSize: 12,
+						...FONT.pillChip,
+						fontWeight: 400,
 						color: "var(--semantic-label-alternative)",
 					}}
 				>
@@ -50,7 +51,7 @@ export function ActionRow({
 			</div>
 			<span
 				style={{
-					fontSize: 12,
+					...FONT.pillChip,
 					fontWeight: 700,
 					color: isDisabled
 						? "var(--semantic-label-assistive)"

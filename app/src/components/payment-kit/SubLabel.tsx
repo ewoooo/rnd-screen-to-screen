@@ -1,4 +1,4 @@
-import { ListSub, SectionLabel } from "@/components/home-kit";
+import { FONT, ListSub, SectionLabel } from "@/components/home-kit";
 import { T_BRAND } from "./tokens";
 
 /** 카드 그룹 위 라벨 행 — home-kit SectionLabel + 우측 mark. required=true 면 보라 점 강조. */
@@ -15,7 +15,16 @@ export function SubLabel({ text, mark, required }: { text: string; mark?: string
 			<SectionLabel>{text}</SectionLabel>
 			{mark ? (
 				required ? (
-					<span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: T_BRAND, fontSize: 12, fontWeight: 700 }}>
+					<span
+						style={{
+							display: "inline-flex",
+							alignItems: "center",
+							gap: 4,
+							...FONT.pillChip,
+							fontWeight: 700,
+							color: T_BRAND,
+						}}
+					>
 						<span
 							style={{
 								display: "inline-block",

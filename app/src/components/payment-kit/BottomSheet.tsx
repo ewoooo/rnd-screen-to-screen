@@ -19,7 +19,7 @@ export function BottomSheet({ children }: { children: ReactNode }) {
 		>
 			<div
 				style={{
-					background: "#FFFFFF",
+					background: "var(--semantic-background-normal-normal, #FFFFFF)",
 					width: "100%",
 					borderTopLeftRadius: 20,
 					borderTopRightRadius: 20,

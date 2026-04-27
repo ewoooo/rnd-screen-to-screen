@@ -22,7 +22,7 @@ export function ResultIcon({ tone, glyph }: { tone: Tone; glyph: string }) {
 				justifyContent: "center",
 				color,
 				fontSize: 32,
-				fontWeight: 800,
+				fontWeight: 700,
 			}}
 		>
 			{glyph}

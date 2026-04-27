@@ -92,7 +92,7 @@ const dashedCardStyle: CSSProperties = {
 	padding: "var(--spacing-16)",
 	borderRadius: 20,
 	border: "1px dashed var(--semantic-line-normal-normal, #b2b2b2)",
-	background: "#FFFFFF",
+	background: "var(--semantic-background-normal-normal, #FFFFFF)",
 };
 
 const summaryStyle: CSSProperties = {

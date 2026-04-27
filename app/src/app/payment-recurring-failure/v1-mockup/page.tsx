@@ -62,7 +62,7 @@ const dimCardStyle: CSSProperties = {
 
 const dimTitleStyle: CSSProperties = {
 	fontSize: 18,
-	fontWeight: 800,
+	fontWeight: 700,
 	color: "var(--semantic-label-normal)",
 };
 

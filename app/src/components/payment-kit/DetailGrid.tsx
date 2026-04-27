@@ -1,3 +1,4 @@
+import { FONT } from "@/components/home-kit";
 import { GNB_BORDER, T_BRAND } from "./tokens";
 
 export type DetailGridItem = {
@@ -40,7 +41,8 @@ export function DetailGrid({ items }: { items: readonly DetailGridItem[] }) {
 					>
 						<span
 							style={{
-								fontSize: 12,
+								...FONT.pillChip,
+								fontWeight: 400,
 								color: "var(--semantic-label-alternative)",
 							}}
 						>
@@ -48,8 +50,7 @@ export function DetailGrid({ items }: { items: readonly DetailGridItem[] }) {
 						</span>
 						<span
 							style={{
-								fontSize: 13,
-								fontWeight: 700,
+								...FONT.listSub,
 								color: valueColor,
 							}}
 						>

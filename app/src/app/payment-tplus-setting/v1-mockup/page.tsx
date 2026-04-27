@@ -66,7 +66,7 @@ function BalanceCard() {
 				<span
 					style={{
 						fontSize: 28,
-						fontWeight: 800,
+						fontWeight: 700,
 						color: T_BRAND,
 						letterSpacing: -0.5,
 					}}

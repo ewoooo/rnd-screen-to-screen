@@ -93,7 +93,7 @@ export function RadioDot({ selected }: { selected: boolean }) {
 						width: 8,
 						height: 8,
 						borderRadius: 999,
-						background: "#FFFFFF",
+						background: "var(--semantic-background-normal-normal, #FFFFFF)",
 					}}
 				/>
 			) : null}

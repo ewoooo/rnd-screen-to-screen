@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import { FONT } from "@/components/home-kit";
 import { CARD_BG, CARD_BORDER, T_BRAND } from "./tokens";
 
 export function FieldGroup({ children }: { children: ReactNode }) {
@@ -11,9 +12,7 @@ export function FieldLabel({ children }: { children: ReactNode }) {
 		<label
 			style={{
 				display: "block",
-				fontSize: 12,
-				fontWeight: 600,
-				letterSpacing: "-0.3px",
+				...FONT.pillChip,
 				color: "var(--semantic-label-alternative)",
 				paddingBottom: "var(--spacing-8)",
 			}}
