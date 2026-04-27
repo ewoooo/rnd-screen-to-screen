@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 
+import { Card, SectionLabel } from "@/components/home-kit";
 import {
 	ActionRow,
 	AmountDivider,
@@ -31,12 +32,25 @@ export default function PaymentInstantV1MockupPage() {
 				/>
 				<SectionLabel>{mock.newMethod.label}</SectionLabel>
 				<NewMethodCard />
-				<SectionLabel>{mock.supplementLabel}</SectionLabel>
-				<div>
-					{mock.supplements.map((s) => (
-						<ActionRow key={s.id} label={s.label} desc={s.desc} trailing={s.trailing} />
-					))}
-				</div>
+				<Card
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						gap: "var(--spacing-12)",
+					}}
+				>
+					<SectionLabel>{mock.supplementLabel}</SectionLabel>
+					<div>
+						{mock.supplements.map((s) => (
+							<ActionRow
+								key={s.id}
+								label={s.label}
+								desc={s.desc}
+								trailing={s.trailing}
+							/>
+						))}
+					</div>
+				</Card>
 				<ThickDivider />
 				<div style={summaryStyle}>
 					{mock.summary.map((item) => (
@@ -49,10 +63,6 @@ export default function PaymentInstantV1MockupPage() {
 			</PayContent>
 		</DetailShell>
 	);
-}
-
-function SectionLabel({ children }: { children: string }) {
-	return <div style={sectionLabelStyle}>{children}</div>;
 }
 
 function NewMethodCard() {
@@ -76,14 +86,6 @@ function NewMethodCard() {
 		</div>
 	);
 }
-
-const sectionLabelStyle: CSSProperties = {
-	fontSize: 12,
-	fontWeight: 700,
-	color: "var(--semantic-label-alternative)",
-	letterSpacing: -0.3,
-	paddingTop: "var(--spacing-8)",
-};
 
 const dashedCardStyle: CSSProperties = {
 	display: "flex",

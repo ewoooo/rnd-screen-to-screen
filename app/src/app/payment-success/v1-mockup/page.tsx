@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { Heading20, ListSub } from "@/components/home-kit";
+import { Card, Heading20, ListSub, SectionLabel } from "@/components/home-kit";
 import {
 	AmountDivider,
 	AmountRow,
@@ -42,32 +42,49 @@ export default function PaymentSuccessV1MockupPage() {
 
 function MethodSummary() {
 	return (
-		<div style={methodSummaryStyle}>
-			<span style={methodLabelStyle}>{mock.methodSummary.label}</span>
-			<div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-				{mock.methodSummary.items.map((it) => (
-					<div key={it.id} style={methodRowStyle}>
-						<span
+		<Card
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				gap: "var(--spacing-12)",
+			}}
+		>
+			<SectionLabel>{mock.methodSummary.label}</SectionLabel>
+			<div>
+				{mock.methodSummary.items.map((it, i) => {
+					const isLast = i === mock.methodSummary.items.length - 1;
+					return (
+						<div
+							key={it.id}
 							style={{
-								fontSize: 13,
-								color: "var(--semantic-label-alternative)",
+								...methodRowStyle,
+								borderBottom: isLast
+									? "none"
+									: "1px solid var(--semantic-line-normal-normal, #ecf1ff)",
 							}}
 						>
-							{it.label}
-						</span>
-						<span
-							style={{
-								fontSize: 13,
-								fontWeight: 700,
-								color: it.tone === "discount" ? T_BRAND : "var(--semantic-label-normal)",
-							}}
-						>
-							{it.value}
-						</span>
-					</div>
-				))}
+							<span
+								style={{
+									fontSize: 13,
+									color: "var(--semantic-label-alternative)",
+								}}
+							>
+								{it.label}
+							</span>
+							<span
+								style={{
+									fontSize: 13,
+									fontWeight: 700,
+									color: it.tone === "discount" ? T_BRAND : "var(--semantic-label-normal)",
+								}}
+							>
+								{it.value}
+							</span>
+						</div>
+					);
+				})}
 			</div>
-		</div>
+		</Card>
 	);
 }
 
@@ -79,26 +96,11 @@ const resultStyle: CSSProperties = {
 	paddingTop: "var(--spacing-16)",
 };
 
-const methodSummaryStyle: CSSProperties = {
-	display: "flex",
-	flexDirection: "column",
-	gap: "var(--spacing-8)",
-};
-
-const methodLabelStyle: CSSProperties = {
-	fontSize: 12,
-	fontWeight: 700,
-	color: "var(--semantic-label-alternative)",
-	letterSpacing: -0.3,
-};
-
 const methodRowStyle: CSSProperties = {
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "space-between",
-	background: "var(--semantic-fill-normal)",
-	borderRadius: 10,
-	padding: "var(--spacing-10) var(--spacing-12)",
+	padding: "var(--spacing-12) 0",
 };
 
 const amountWrapStyle: CSSProperties = {
