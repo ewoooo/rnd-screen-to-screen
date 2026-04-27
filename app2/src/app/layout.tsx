@@ -1,16 +1,10 @@
-"use client";
-
 import { ThemeProvider } from "@wanteddev/wds";
 import { AppRouterCacheProvider } from "@wanteddev/wds-nextjs";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, type PropsWithChildren, type ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
 import "@wanteddev/wds/global.css";
 import "./wds-tokens.css";
 import "./globals.css";
-
-// 루트 인덱스(/)만 풀스크린, 나머지 화면 라우트는 mobile-frame.
-const isScreenRoute = (pathname: string) => pathname !== "/";
 
 const RootLayout = ({ children }: PropsWithChildren) => (
 	<html lang="ko" suppressHydrationWarning>
@@ -41,42 +35,11 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 		<body>
 			<ThemeProvider>
 				<AppRouterCacheProvider>
-					<Suspense fallback={<RawChildren>{children}</RawChildren>}>
-						<Chrome>{children}</Chrome>
-					</Suspense>
+					<main>{children}</main>
 				</AppRouterCacheProvider>
 			</ThemeProvider>
 		</body>
 	</html>
 );
-
-const RawChildren = ({ children }: PropsWithChildren): ReactNode => (
-	<main>{children}</main>
-);
-
-const Chrome = ({ children }: PropsWithChildren) => {
-	const pathname = usePathname() ?? "/";
-	const searchParams = useSearchParams();
-	const embedded = searchParams?.get("embed") === "1";
-	const wrap = !embedded && isScreenRoute(pathname);
-
-	if (embedded) {
-		return <main>{children}</main>;
-	}
-
-	return (
-		<div className="app-shell">
-			<main className="app-main">
-				{wrap ? (
-					<div className="mobile-stage">
-						<div className="mobile-frame">{children}</div>
-					</div>
-				) : (
-					children
-				)}
-			</main>
-		</div>
-	);
-};
 
 export default RootLayout;

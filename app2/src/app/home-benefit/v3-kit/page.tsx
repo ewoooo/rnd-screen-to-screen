@@ -1,23 +1,24 @@
 import {
 	BarcodeCard,
 	Card,
-	Heading20,
 	HeroCard,
 	ListRow,
 	MyEditButton,
 	OfferingBanner,
-	SectionLabel,
 	Shell,
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
+import { MobileScreen } from "@/components/system";
+import { Typography } from "@/components/typography";
 import { homeBenefitFixture } from "./_mock";
 
 export default function HomeBenefitV3Kit() {
 	const f = homeBenefitFixture;
 
 	return (
-		<Shell>
+		<MobileScreen>
+			<Shell>
 			<TopBanner
 				text={f.headerBanner.text}
 				imageSize={{ w: 35, h: 56 }}
@@ -55,7 +56,7 @@ export default function HomeBenefitV3Kit() {
 					gap: "var(--spacing-24)",
 				}}
 			>
-				<SectionLabel>{f.movieSection.label}</SectionLabel>
+				<Typography variant="section-label">{f.movieSection.label}</Typography>
 				<div
 					style={{
 						display: "flex",
@@ -89,8 +90,8 @@ export default function HomeBenefitV3Kit() {
 						gap: "var(--spacing-4)",
 					}}
 				>
-					<SectionLabel>{f.couponSection.label}</SectionLabel>
-					<Heading20>{f.couponSection.countText}</Heading20>
+					<Typography variant="section-label">{f.couponSection.label}</Typography>
+					<Typography variant="heading-20">{f.couponSection.countText}</Typography>
 				</div>
 				<div
 					style={{
@@ -112,6 +113,7 @@ export default function HomeBenefitV3Kit() {
 			</Card>
 
 			<MyEditButton />
-		</Shell>
+			</Shell>
+		</MobileScreen>
 	);
 }

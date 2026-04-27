@@ -1,6 +1,8 @@
+import { Placeholder } from "@/components/system";
+import { Typography } from "@/components/typography";
+
 import { Card } from "./Card";
-import { Placeholder } from "./Placeholder";
-import { MonoCaption, SectionLabel } from "./text";
+import { T_BRAND } from "./tokens";
 
 type Props = {
 	label: string;
@@ -22,7 +24,7 @@ export function BarcodeCard({ label, digits, timerText }: Props) {
 					gap: "var(--spacing-12)",
 				}}
 			>
-				<SectionLabel>{label}</SectionLabel>
+				<Typography variant="section-label">{label}</Typography>
 				<div
 					style={{
 						display: "flex",
@@ -40,10 +42,14 @@ export function BarcodeCard({ label, digits, timerText }: Props) {
 					>
 						<div style={{ display: "flex", gap: "var(--spacing-8)" }}>
 							{digits.map((d) => (
-								<MonoCaption key={d}>{d}</MonoCaption>
+								<Typography key={d} variant="mono-caption">
+									{d}
+								</Typography>
 							))}
 						</div>
-						<MonoCaption brand>{timerText}</MonoCaption>
+						<Typography variant="mono-caption" color={T_BRAND}>
+							{timerText}
+						</Typography>
 					</div>
 				</div>
 			</div>

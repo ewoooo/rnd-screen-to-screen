@@ -1,7 +1,7 @@
 {
   "meta": {
     "purpose": "화면별 구현 버전 등록 — 자동 생성. 손으로 편집하지 말 것.",
-    "generated_at": "2026-04-27T04:23:07.321Z",
+    "generated_at": "2026-04-27T05:05:33.486Z",
     "generator": "app/scripts/generate-screen-registry.mjs",
     "source_pattern": "app/src/app/<screen>/v*-*/page.tsx",
     "do_not_edit": true

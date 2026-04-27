@@ -1,6 +1,7 @@
+import { Placeholder } from "@/components/system";
+import { Typography } from "@/components/typography";
+
 import { Card } from "./Card";
-import { Placeholder } from "./Placeholder";
-import { ListTitle } from "./text";
 
 type Item = { id: string; label: string };
 
@@ -34,7 +35,7 @@ export function DualMenuCard({ items, iconSize = 20, iconLabel = "ic" }: Props) 
 					}}
 				>
 					<Placeholder w={iconSize} h={iconSize} label={iconLabel} />
-					<ListTitle>{m.label}</ListTitle>
+					<Typography variant="list-title">{m.label}</Typography>
 				</div>
 			))}
 		</Card>

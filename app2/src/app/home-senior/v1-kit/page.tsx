@@ -8,13 +8,15 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
+import { MobileScreen } from "@/components/system";
 import { homeSeniorFixture } from "./_mock";
 
 export default function HomeSeniorV1Kit() {
 	const f = homeSeniorFixture;
 
 	return (
-		<Shell>
+		<MobileScreen>
+			<Shell>
 			<TopBanner
 				text={f.topBanner.text}
 				imageSize={{ w: 59, h: 47 }}
@@ -51,6 +53,7 @@ export default function HomeSeniorV1Kit() {
 			))}
 
 			<MyEditButton />
-		</Shell>
+			</Shell>
+		</MobileScreen>
 	);
 }

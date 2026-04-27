@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
 
-import { Placeholder } from "./Placeholder";
-import { ListSub, ListTitle, PillChip } from "./text";
+import { Placeholder } from "@/components/system";
+import { Typography } from "@/components/typography";
+
+import { PillChip } from "./text";
 
 type Props = {
 	thumb: { w: number; h: number; label: string };
@@ -44,8 +46,8 @@ export function ListRow({ thumb, title, sub, pill, trailing }: Props) {
 						minWidth: 0,
 					}}
 				>
-					<ListTitle>{title}</ListTitle>
-					<ListSub>{sub}</ListSub>
+					<Typography variant="list-title">{title}</Typography>
+					<Typography variant="list-sub">{sub}</Typography>
 				</div>
 			</div>
 			{trailing ?? (pill ? <PillChip>{pill}</PillChip> : null)}

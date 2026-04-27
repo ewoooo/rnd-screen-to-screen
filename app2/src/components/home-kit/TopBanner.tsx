@@ -1,4 +1,4 @@
-import { Placeholder } from "./Placeholder";
+import { Placeholder } from "@/components/system";
 
 type Props = {
 	text: string;

@@ -1,4 +1,4 @@
-import { Placeholder } from "./Placeholder";
+import { Placeholder } from "@/components/system";
 import { OFFERING_BG, OFFERING_BORDER } from "./tokens";
 
 type Props = {

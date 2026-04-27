@@ -21,10 +21,8 @@ export const OFFERING_BORDER = "rgba(255, 255, 255, 0.5)";
 export const BADGE_BG = "#f4f5fa";
 
 /**
- * Figma 픽셀 실측 기반 텍스트 슬롯 스타일.
- * WDS Typography variant 스케일과 일치하지 않을 수 있어 raw 수치로 고정한다.
- *
- * color 는 여기에 포함하지 않는다 — semantic CSS var 로 슬롯마다 직접 지정.
+ * StatBadge / PillChip 의 텍스트 사이즈 토큰.
+ * 순수 타이포 6 슬롯 SSOT 는 typography/styles.ts 로 이전.
  */
 export type FontStyle = {
 	fontSize: number;
@@ -34,42 +32,6 @@ export type FontStyle = {
 };
 
 export const FONT = {
-	sectionLabel: {
-		fontSize: 13,
-		fontWeight: 700,
-		letterSpacing: "-0.39px",
-		lineHeight: 1.4,
-	},
-	heading20: {
-		fontSize: 20,
-		fontWeight: 700,
-		letterSpacing: "-1px",
-		lineHeight: 1.3,
-	},
-	aiText: {
-		fontSize: 13,
-		fontWeight: 700,
-		letterSpacing: "-0.39px",
-		lineHeight: 1.4,
-	},
-	listTitle: {
-		fontSize: 14,
-		fontWeight: 600,
-		letterSpacing: "-0.7px",
-		lineHeight: 1.4,
-	},
-	listSub: {
-		fontSize: 13,
-		fontWeight: 700,
-		letterSpacing: "-0.52px",
-		lineHeight: 1.3,
-	},
-	monoCaption: {
-		fontSize: 11,
-		fontWeight: 700,
-		letterSpacing: "-0.44px",
-		lineHeight: 1.4,
-	},
 	statBadge: {
 		fontSize: 11,
 		fontWeight: 700,

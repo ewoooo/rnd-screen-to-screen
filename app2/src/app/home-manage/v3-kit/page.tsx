@@ -8,6 +8,7 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
+import { MobileScreen } from "@/components/system";
 import { homeManageFixture } from "./_mock";
 
 const graphicSize: Record<
@@ -24,7 +25,8 @@ export default function HomeManageV3Kit() {
 	const f = homeManageFixture;
 
 	return (
-		<Shell>
+		<MobileScreen>
+			<Shell>
 			<TopBanner
 				text={f.headerBanner.text}
 				imageSize={{ w: 59, h: 47 }}
@@ -72,6 +74,7 @@ export default function HomeManageV3Kit() {
 			/>
 
 			<MyEditButton />
-		</Shell>
+			</Shell>
+		</MobileScreen>
 	);
 }

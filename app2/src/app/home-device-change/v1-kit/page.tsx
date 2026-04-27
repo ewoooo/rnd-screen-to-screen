@@ -8,13 +8,15 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
+import { MobileScreen } from "@/components/system";
 import { homeDeviceChangeFixture } from "./_mock";
 
 export default function HomeDeviceChangeV1Kit() {
 	const f = homeDeviceChangeFixture;
 
 	return (
-		<Shell>
+		<MobileScreen>
+			<Shell>
 			<TopBanner
 				text={f.topBanner.text}
 				imageSize={{ w: 62, h: 94 }}
@@ -51,6 +53,7 @@ export default function HomeDeviceChangeV1Kit() {
 			))}
 
 			<MyEditButton />
-		</Shell>
+			</Shell>
+		</MobileScreen>
 	);
 }

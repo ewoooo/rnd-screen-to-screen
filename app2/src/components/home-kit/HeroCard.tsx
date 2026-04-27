@@ -1,6 +1,7 @@
+import { Placeholder } from "@/components/system";
+import { Typography } from "@/components/typography";
+
 import { Card } from "./Card";
-import { Placeholder } from "./Placeholder";
-import { AiText, Heading20, SectionLabel } from "./text";
 import { T_BRAND, T_BRAND_SHADOW } from "./tokens";
 
 type Props = {
@@ -41,8 +42,8 @@ export function HeroCard({ label, headline, aiText, ctaText, onCta }: Props) {
 						gap: "var(--spacing-8)",
 					}}
 				>
-					<SectionLabel>{label}</SectionLabel>
-					<Heading20>{headline}</Heading20>
+					<Typography variant="section-label">{label}</Typography>
+					<Typography variant="heading-20">{headline}</Typography>
 				</div>
 				<div
 					style={{
@@ -52,7 +53,7 @@ export function HeroCard({ label, headline, aiText, ctaText, onCta }: Props) {
 					}}
 				>
 					<Placeholder w={18} h={18} label="ai" />
-					<AiText>{aiText}</AiText>
+					<Typography variant="ai-text">{aiText}</Typography>
 				</div>
 			</div>
 			<button

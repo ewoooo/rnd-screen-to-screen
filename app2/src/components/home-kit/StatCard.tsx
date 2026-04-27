@@ -1,6 +1,8 @@
+import { Placeholder } from "@/components/system";
+import { Typography } from "@/components/typography";
+
 import { Card } from "./Card";
-import { Placeholder } from "./Placeholder";
-import { Heading20, SectionLabel, StatBadge } from "./text";
+import { StatBadge } from "./text";
 
 type Props = {
 	label: string;
@@ -31,7 +33,7 @@ export function StatCard({ label, value, badge, graphic }: Props) {
 					gap: "var(--spacing-4)",
 				}}
 			>
-				<SectionLabel>{label}</SectionLabel>
+				<Typography variant="section-label">{label}</Typography>
 				<div
 					style={{
 						display: "flex",
@@ -39,7 +41,7 @@ export function StatCard({ label, value, badge, graphic }: Props) {
 						gap: "var(--spacing-6)",
 					}}
 				>
-					<Heading20>{value}</Heading20>
+					<Typography variant="heading-20">{value}</Typography>
 					{badge ? <StatBadge>{badge}</StatBadge> : null}
 				</div>
 			</div>

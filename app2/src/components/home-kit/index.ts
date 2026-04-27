@@ -5,20 +5,10 @@ export { HeroCard } from "./HeroCard";
 export { ListRow } from "./ListRow";
 export { MyEditButton } from "./MyEditButton";
 export { OfferingBanner } from "./OfferingBanner";
-export { Placeholder } from "./Placeholder";
 export { Shell } from "./Shell";
 export { StatCard } from "./StatCard";
 export { TopBanner } from "./TopBanner";
-export {
-	AiText,
-	Heading20,
-	ListSub,
-	ListTitle,
-	MonoCaption,
-	PillChip,
-	SectionLabel,
-	StatBadge,
-} from "./text";
+export { PillChip, StatBadge } from "./text";
 export {
 	BADGE_BG,
 	CARD_BG,

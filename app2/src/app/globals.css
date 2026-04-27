@@ -47,6 +47,11 @@ body {
 	flex-direction: column;
 }
 
+/* ContentOutlet scrollbar 숨김 — WebKit (Firefox/IE는 inline scrollbar-width: none) */
+.content-outlet::-webkit-scrollbar {
+	display: none;
+}
+
 @media (max-width: 375px) {
 	.mobile-stage {
 		padding: var(--spacing-0);
