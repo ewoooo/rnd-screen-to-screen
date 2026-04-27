@@ -34,7 +34,7 @@ export default function PaymentSupplementAddV1MockupPage() {
 							<MethodCard
 								key={opt.id}
 								emoji={opt.emoji}
-								gradient={opt.gradient}
+								
 								name={opt.name}
 								sub={opt.sub}
 								disabled={opt.disabled}

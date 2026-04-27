@@ -60,7 +60,7 @@ function RankSection({
 					<MethodCard
 						key={opt.id}
 						emoji={opt.emoji}
-						gradient={opt.gradient}
+						
 						name={opt.name}
 						sub={opt.disabled ? opt.disabledReason ?? opt.sub : opt.sub}
 						selected={opt.id === selectedId}

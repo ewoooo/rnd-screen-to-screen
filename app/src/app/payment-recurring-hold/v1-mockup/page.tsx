@@ -56,11 +56,17 @@ export default function PaymentRecurringHoldV1MockupPage() {
 
 function SubscriptionCard() {
 	return (
-		<div style={subCardStyle}>
+		<Card
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				gap: 4,
+			}}
+		>
 			<ListSub>{mock.subscriptionCard.label}</ListSub>
 			<span style={subNameStyle}>{mock.subscriptionCard.name}</span>
 			<span style={subMetaStyle}>{mock.subscriptionCard.meta}</span>
-		</div>
+		</Card>
 	);
 }
 
@@ -212,15 +218,6 @@ function stepPalette(state: ProgressStep["state"]) {
 	};
 }
 
-const subCardStyle: CSSProperties = {
-	background: "var(--semantic-fill-normal)",
-	borderRadius: 20,
-	padding: "var(--spacing-16)",
-	display: "flex",
-	flexDirection: "column",
-	gap: 4,
-};
-
 const subNameStyle: CSSProperties = {
 	fontSize: 18,
 	fontWeight: 700,
@@ -234,7 +231,6 @@ const subMetaStyle: CSSProperties = {
 
 const alertStyle: CSSProperties = {
 	background: "var(--semantic-fill-normal)",
-	borderLeft: `4px solid ${T_BRAND}`,
 	borderRadius: 16,
 	padding: "var(--spacing-16)",
 	display: "flex",

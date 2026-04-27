@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
-import { CARD_BG, CARD_BORDER, T_BRAND } from "@/components/home-kit/tokens";
+import { Card, FONT } from "@/components/home-kit";
+import { T_BRAND } from "@/components/home-kit/tokens";
 import {
 	FieldGroup,
 	FieldInput,
@@ -52,32 +53,33 @@ export default function PaymentTplusSettingV1MockupPage() {
 
 function BalanceCard() {
 	return (
-		<div>
-			<div style={balanceCardStyle}>
-				<span
-					style={{
-						fontSize: 12,
-						fontWeight: 600,
-						color: "var(--semantic-label-alternative)",
-					}}
-				>
-					{mock.balance.label}
-				</span>
-				<span
-					style={{
-						fontSize: 28,
-						fontWeight: 700,
-						color: T_BRAND,
-						letterSpacing: -0.5,
-					}}
-				>
-					{mock.balance.amount}
-				</span>
-				<span style={{ fontSize: 11, color: "var(--semantic-label-alternative)" }}>
-					{mock.balance.conversion}
-				</span>
-			</div>
-		</div>
+		<Card
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				gap: "var(--spacing-4)",
+			}}
+		>
+			<span
+				style={{
+					...FONT.pillChip,
+					color: "var(--semantic-label-alternative)",
+				}}
+			>
+				{mock.balance.label}
+			</span>
+			<span
+				style={{
+					...FONT.heading20,
+					color: T_BRAND,
+				}}
+			>
+				{mock.balance.amount}
+			</span>
+			<span style={{ fontSize: 11, color: "var(--semantic-label-alternative)" }}>
+				{mock.balance.conversion}
+			</span>
+		</Card>
 	);
 }
 
@@ -119,16 +121,6 @@ function PointInputCard({ label, value, max }: { label: string; value: string; m
 	);
 }
 
-const balanceCardStyle: CSSProperties = {
-	background: CARD_BG,
-	border: `1px solid ${CARD_BORDER}`,
-	borderRadius: 16,
-	padding: "var(--spacing-20)",
-	display: "flex",
-	flexDirection: "column",
-	gap: "var(--spacing-4)",
-};
-
 const formStyle: CSSProperties = {
 	display: "flex",
 	flexDirection: "column",
@@ -136,8 +128,7 @@ const formStyle: CSSProperties = {
 };
 
 const pointCardStyle: CSSProperties = {
-	background: CARD_BG,
-	border: `1px solid ${CARD_BORDER}`,
+	background: "var(--semantic-fill-normal)",
 	borderRadius: 16,
 	padding: "var(--spacing-16)",
 	display: "flex",

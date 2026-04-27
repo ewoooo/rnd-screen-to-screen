@@ -25,7 +25,7 @@ export default function PaymentInstantV1MockupPage() {
 				<SectionLabel>{mock.registered.label}</SectionLabel>
 				<MethodCard
 					emoji={mock.registered.emoji}
-					gradient={mock.registered.gradient}
+					
 					name={mock.registered.name}
 					sub={mock.registered.sub}
 					selected
@@ -68,7 +68,7 @@ export default function PaymentInstantV1MockupPage() {
 function NewMethodCard() {
 	return (
 		<div style={dashedCardStyle}>
-			<MethodIcon emoji="＋" gradient={["#FFFFFF", "#FFFFFF"]} />
+			<MethodIcon emoji="＋" />
 			<div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
 				<span
 					style={{

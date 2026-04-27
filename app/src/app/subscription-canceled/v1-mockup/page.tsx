@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { Heading20, ListSub } from "@/components/home-kit";
+import { Card, Heading20, ListSub } from "@/components/home-kit";
 import { ButtonCallToActionPilot } from "@/components/pilot-kit/ButtonCallToActionPilot";
 import {
 	BottomSheet,
@@ -43,22 +43,19 @@ export default function SubscriptionCanceledV1MockupPage() {
 function DimmedSubCard({ name, sub }: { name: string; sub: string }) {
 	return (
 		<div style={{ filter: "blur(1px)", opacity: 0.4 }}>
-			<div style={dimCardStyle}>
+			<Card
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					gap: "var(--spacing-8)",
+				}}
+			>
 				<span style={dimTitleStyle}>{name}</span>
 				<ListSub>{sub}</ListSub>
-			</div>
+			</Card>
 		</div>
 	);
 }
-
-const dimCardStyle: CSSProperties = {
-	background: "var(--semantic-fill-normal)",
-	borderRadius: 20,
-	padding: "var(--spacing-16)",
-	display: "flex",
-	flexDirection: "column",
-	gap: "var(--spacing-8)",
-};
 
 const dimTitleStyle: CSSProperties = {
 	fontSize: 18,
