@@ -73,8 +73,9 @@ export default function HomeXxxV1Kit() {
 
 ### fixture 규약
 
-- 데이터는 `app/src/fixtures/home-<screen>.ts` 에 타입과 값을 함께 선언.
-- fixture 는 **버전 간 공유** — `v1-kit`, `v2-wds-components`, `v3-kit` 모두 같은 fixture 를 import.
+- 데이터는 `app/src/fixtures/home-<screen>.ts` 에 타입과 값을 함께 선언한다.
+- fixture 는 **API 연결 전 렌더링용 mock/seed data** 다. `data/screens` 에서 자동 생성된 산출물이 아니라, 화면 재현을 위해 사람이 맞춘 임시 입력이다.
+- fixture 는 **버전 간 공유** — `v1-kit`, `v2-wds-components`, `v3-kit` 모두 같은 fixture 를 import 할 수 있다.
 - 그래픽 placeholder 크기는 fixture 에 포함(`graphic: { w, h, label }`). 화면별로 다르므로 kit 내부에 고정 금지.
 
 ### 화면 고유 블록
@@ -146,5 +147,5 @@ app/src/components/home-kit/
 - `app/AGENTS.md` — WDS prop 규약, Figma→WDS 매핑 기준(variant sizing)
 - `app/src/components/pilot-kit/README.md` — 자매 키트, atom/molecule 매핑 담당
 - `registry/wds-token-registry.json` — semantic 토큰 SSOT
-- `data/screens/` (예정) — 화면 레벨 명세 (현재 fixtures 로만 존재)
-- `CLAUDE.md` (repo root) — "반드시 제공된 토큰과 컴포넌트 사용" 원칙
+- `data/screens/` — 화면 요구사항/기능 스펙 SSOT. 앱 런타임 입력이 아니라 제작자가 읽는 출처
+- `AGENTS.md` (repo root) — 정식 화면 생성 경로와 "반드시 제공된 토큰과 컴포넌트 사용" 원칙

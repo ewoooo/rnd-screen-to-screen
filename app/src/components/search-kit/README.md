@@ -81,6 +81,12 @@ export default function SearchXX() {
 
 kit 에 없는 1회용 블록은 페이지 안에 인라인 JSX. 예 (step 11): 보상금 breakdown 카드는 `Card` + 인라인 구조로 작성 (현재 1회 사용).
 
+### mock/seed data 규약
+
+- 검색 플로우의 임시 문구·최근 검색어·추천어·대화 예시는 `app/src/fixtures/search-flow.ts` 에 둔다.
+- fixture 는 API 연결 전 렌더링용 mock/seed data 이며, `data/screens` 에서 자동 생성된 산출물이 아니다.
+- `data/screens` 는 검색/화면 요구사항을 확인하는 출처로 보고, 실제 렌더 입력은 fixture 또는 페이지 로컬 mock 으로 주입한다.
+
 ## 승격 기준
 
 home-kit 과 동일. **2 스텝 이상 중복 + 추가 화면에서 재발견 확률 있음** 일 때 승격.
@@ -138,4 +144,4 @@ home-kit                 ← tokens, Card, Placeholder, Shell 재사용
 - `app/src/components/home-kit/README.md` — 홈 화면 키트, search-kit 의 의존 대상
 - `app/AGENTS.md` — WDS prop 규약, **토큰 수치는 레지스트리 직접 조회** (문서에 베이크 금지)
 - `registry/wds-token-registry.json` — semantic 토큰 SSOT
-- `CLAUDE.md` (repo root) — "반드시 제공된 토큰과 컴포넌트 사용" 원칙
+- `AGENTS.md` (repo root) — 정식 화면 생성 경로와 "반드시 제공된 토큰과 컴포넌트 사용" 원칙

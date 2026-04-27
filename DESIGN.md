@@ -2,6 +2,8 @@
 
 이 프로젝트는 **모바일 화면**을 만든다. 데스크톱·태블릿 대응은 하지 않는다.
 
+이 문서는 **디자인 제약과 검증 기준**이 SSOT다. 신규 화면의 실제 조립 공식은 `LAYOUT.md`의 home-kit 레퍼런스 템플릿을 따른다.
+
 ## 기준
 
 - **뷰포트 폭**: 360px (Figma 라이브러리 `04_ADP_P3-T1_Library`의 mobile artboard 기준)
@@ -23,7 +25,7 @@
 
 ---
 
-# 간격 & 레이아웃 원칙
+# 간격 & 실측 원칙
 
 ## Figma가 ground truth
 
@@ -61,7 +63,7 @@ Figma 노드 `0:606 Card/List` 재확인 결과:
 
 검색 플로우(DetailShell) 는 별도 규약 — `search-kit/DetailShell.tsx` 는 scrollArea gap 16으로 카드 간 여유 있음. 이는 검색 결과 화면의 의도적 breathing space.
 
-## 카드 내부 공통치 (실측)
+## 카드 내부 실측 기준
 
 - **카드 너비**: 369px (screen width 393 - 좌우 12px 여백)
 - **카드 padding**: 32px (Card/L3), 32px (Card/L2)
@@ -69,7 +71,7 @@ Figma 노드 `0:606 Card/List` 재확인 결과:
 - **카드 배경**: `rgba(255, 255, 255, 0.9)` (frosted)
 - **카드 테두리**: `1px solid white`
 
-구현: `app/src/components/home-kit/Card.tsx` + `tokens.ts` (`CARD_BG`, `CARD_BORDER`, `CARD_RADIUS`).
+구현 공식은 `LAYOUT.md`를 따른다. 실제 값은 `app/src/components/home-kit/Card.tsx` + `tokens.ts` (`CARD_BG`, `CARD_BORDER`, `CARD_RADIUS`)가 기준이다.
 
 ## 수정 이력
 
@@ -115,6 +117,6 @@ WDS semantic 토큰(`--semantic-label-*`, `--semantic-line-*`, `--semantic-fill-
 
 1. Figma 노드 id 확인 → `mcp__plugin_figma_figma__get_metadata` 로 구조 추출
 2. 자식 좌표로 **실 gap/size 계산** — Figma 에디터 숫자 의존 금지
-3. kit 래퍼 (`home-kit` / `search-kit`) 우선 사용. 없는 요소는 화면 인라인
+3. `LAYOUT.md`의 home-kit 조립 공식을 우선 적용. 없는 부품만 project kit 또는 WDS registry에서 확인
 4. 브라우저 DevTools 로 **computed style 로 픽셀 재확인** (런타임 ≠ 추측)
 5. 스크린샷을 Figma 원본과 대조

@@ -2,6 +2,8 @@
 
 Figma 04_ADP_P3-T1_Library 컴포넌트를 WDS(@wanteddev/wds)로 1:1 매핑한 React 래퍼 모음. **개별 화면이 아니라 디자인-시스템 매핑 검증 키트**다. 카탈로그는 `app/src/app/pilot-kit/` 라우트에서 시각 확인 가능.
 
+정식 화면 생성 경로의 기본값은 home-kit 또는 도메인 kit(search-kit 등)다. pilot-kit 은 Figma→WDS 매핑을 검증하거나 home-kit/search-kit에 없는 보완 부품 후보를 확인할 때 사용한다.
+
 ## 무엇이 Pilot 인가
 
 Pilot 은 _"Figma 컴포넌트를 우리 코드 스택에서 어떻게 만들 것인가"_ 의 1차 답안이다. 한 Pilot 은 다음 3개 산출물의 묶음:
@@ -42,12 +44,13 @@ Figma 의 `textBrandName` / `areaXxx` 같은 명을 그대로 옮기지 않고, 
 ```
 data/design/components/*.json   ─┐
                                   ├─→ Pilot tsx ─→ app/src/app/pilot-kit/*/page.tsx (카탈로그)
-data/binding/overrides/*.json   ─┘                ↳ 실 화면에서 import 가능
+data/binding/overrides/*.json   ─┘                ↳ 예외적으로 실 화면에서 import 가능
                                                    (예: app/src/app/discover/v2-pilot/)
 @wanteddev/wds                  ─┘
 ```
 
 - Pilot 끼리 합성 가능. 예: `CardHorizontalDeliveryPilot` 이 `ImgRectanglePilot` + `ButtonChipPilot` 사용.
+- 신규 화면을 만들 때 Pilot 을 기본 조립 단위로 쓰지 않는다. 먼저 home-kit/search-kit 매칭을 끝낸 뒤, 부족한 부품 보완용으로만 검토한다.
 - 절대로 Pilot 이 아닌 raw 화면 코드를 import 하지 말 것 (역방향 금지).
 
 ## 새 Pilot 추가 워크플로우
@@ -208,7 +211,6 @@ WDS 에 1:1 대응 컴포넌트가 없어 `<div>` / `<span>` 으로 구현 중�
 ## 관련 문서
 
 - `app/AGENTS.md` — WDS prop 규약, 토큰 참조 규칙
-- `app/CLAUDE.md` — 본 README 를 가리키는 진입점 (`@AGENTS.md`)
 - `registry/wds-component-registry.json` — WDS 컴포넌트 인벤토리
 - `registry/wds-token-registry.json` — WDS 디자인 토큰 (typography, color, radius 등) source of truth
 - `data/design/components/` — Figma 명세 사본
