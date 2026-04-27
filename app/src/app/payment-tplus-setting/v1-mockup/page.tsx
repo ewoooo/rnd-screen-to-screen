@@ -128,7 +128,7 @@ const formStyle: CSSProperties = {
 };
 
 const pointCardStyle: CSSProperties = {
-	background: "var(--semantic-fill-normal)",
+	background: "var(--semantic-background-normal-normal, #FFFFFF)",
 	borderRadius: 16,
 	padding: "var(--spacing-16)",
 	display: "flex",

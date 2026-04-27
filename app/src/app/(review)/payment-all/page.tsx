@@ -32,6 +32,11 @@ const PHONE_H = 800;
 export default function PaymentAllReviewPage() {
 	return (
 		<div style={pageStyle}>
+			{/* Figma capture handoff — 임시. 캡처 끝나면 제거. */}
+			<script
+				src="https://mcp.figma.com/mcp/html-to-design/capture.js"
+				async
+			/>
 			<header style={headerStyle}>
 				<div>
 					<h1 style={titleStyle}>결제 화면 리뷰 — Figma SCREEN 1~9 매핑</h1>
