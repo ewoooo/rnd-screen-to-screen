@@ -1,0 +1,41 @@
+{
+	"meta": {
+		"screen_id": "payment-recurring-failure",
+		"screen_name": "정기 결제 실패 안내 — 회차별 재시도 중",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "SCREEN 4 · 정기 결제 실패",
+			"frame_position": 4
+		},
+		"policy_refs": ["3.4.2.1", "ACT_결제_PTY_06_01"],
+		"scope": "정기 결제 D/D+1/D+2 회차 중 실패 발생 시 BottomSheet 형태 안내. 즉시 결제 또는 결제 수단 변경 유도."
+	},
+	"purpose": "정기 결제 실패 사실을 알리고 자동 재시도 정책(D+2까지 6회)을 설명하며 즉시 결제 또는 결제 수단 변경 행동을 제시한다.",
+	"sections": [
+		{ "id": "background", "type": "dimmed-sub-card", "title": "구독 카드 (배경 흐림 처리)" },
+		{ "id": "bottom-sheet", "type": "bottom-sheet", "slots": ["handle", "result-icon", "title", "detail-grid", "body", "btn-group"] },
+		{
+			"id": "detail-grid",
+			"type": "key-value",
+			"items": [
+				{ "key": "결제 수단", "value": "신한카드 ••3721" },
+				{ "key": "시도 횟수", "value": "2/6회" },
+				{ "key": "실패 사유", "value": "잔액 부족" }
+			]
+		},
+		{ "id": "btn-group", "type": "two-buttons", "items": ["결제 수단 변경(secondary)", "즉시 결제(primary)"] }
+	],
+	"scenarios": [
+		{ "case": "1~2회차 실패", "result": "재시도 안내 + 즉시 결제 권유" },
+		{ "case": "5회차 이상 실패", "result": "D+3 보류 임박 강조 (이 화면 후 payment-recurring-hold 으로 전이)" },
+		{ "case": "잔액 부족 외 사유", "result": "실패 사유 텍스트만 변경, CTA 동일" }
+	],
+	"data_inputs": ["회차/시도 횟수", "결제 수단 라벨", "실패 사유"],
+	"data_outputs": ["즉시 결제 시작", "결제 수단 변경 화면 진입"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/BottomSheet", "payment-kit/ResultIcon", "payment-kit/DetailGrid"],
+		"cta": "두 개의 ButtonCallToActionPilot (secondary/primary 변형 또는 raw)"
+	}
+}

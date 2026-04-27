@@ -1,0 +1,39 @@
+{
+	"meta": {
+		"screen_id": "payment-processing",
+		"screen_name": "결제 처리 중",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "SCREEN 5 · 최초 결제 처리 중",
+			"frame_position": 5
+		},
+		"policy_refs": ["3.3.1.1", "ACT_결제_PTY_04_01"],
+		"scope": "결제 우선순위에 따른 회차별 처리 진행도와 중앙 spinner."
+	},
+	"purpose": "결제 진행 중 상태를 보여 화면 닫지 않도록 안내하고, 1순위(쿠폰)→2순위(T+포인트)→3순위(주 결제 수단) 순차 처리 결과를 시각화한다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "결제 처리 중", "slots": ["title only (no back)"] },
+		{
+			"id": "step-timeline",
+			"type": "vertical-step-timeline",
+			"items": [
+				{ "title": "1순위 · 쿠폰", "desc": "T우주 50% 할인쿠폰 → -6,950원", "state": "done" },
+				{ "title": "2순위 · T+ 포인트", "desc": "5,000P 차감 → 잔여 1,950원", "state": "done" },
+				{ "title": "3순위 · 신한카드 ••3721", "desc": "처리 중… 1,950원", "state": "in-progress" }
+			]
+		},
+		{ "id": "loading", "type": "centered-loading", "title": "결제를 처리하고 있어요", "sub": "잠시만 기다려 주세요\n화면을 닫거나 뒤로 가지 마세요" }
+	],
+	"scenarios": [
+		{ "case": "전체 성공", "result": "payment-success 로 이동" },
+		{ "case": "중간 실패", "result": "이미 처리된 수단을 역순 취소 후 payment-recurring-failure 로 이동" }
+	],
+	"data_inputs": ["순위별 결제 수단/금액", "현재 진행 단계"],
+	"data_outputs": ["전체 성공 여부", "각 수단별 처리 결과"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell (back 비노출)",
+		"sections": ["payment-kit/VerticalStepTimeline (페이지 로컬)", "spinner + Heading20 + ListSub"],
+		"cta": "없음 — 사용자 인터랙션 차단"
+	}
+}

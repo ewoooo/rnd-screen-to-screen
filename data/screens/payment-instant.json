@@ -1,0 +1,64 @@
+{
+	"meta": {
+		"screen_id": "payment-instant",
+		"screen_name": "즉시 결제",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "SCREEN 8 · 즉시 결제",
+			"frame_position": 8
+		},
+		"policy_refs": ["3.4.2.2", "ACT_결제_PTY_06_02"],
+		"scope": "정기 결제 실패/취소/보류 상태에서 즉시 결제를 위한 결제 수단 선택 화면."
+	},
+	"purpose": "기존 등록 결제 수단 사용/신규 결제 수단 등록 중 선택하고, 보조 수단 변경 + 최종 금액 확인 + 즉시 결제 실행.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "즉시 결제", "slots": ["back"] },
+		{ "id": "hero", "type": "hero", "title": ["결제 수단을", "선택해 주세요"], "sub": "즉시 결제 후 다음 정기결제일도 이 수단을 사용해요" },
+		{
+			"id": "registered-method",
+			"type": "method-card",
+			"title": "등록된 결제 수단",
+			"item": { "name": "신한카드 ••3721", "sub": "1차 결제 수단 · 비자", "selected": true }
+		},
+		{
+			"id": "new-method",
+			"type": "dashed-card",
+			"title": "새 결제 수단 등록",
+			"item": { "name": "다른 카드 또는 계좌이체 추가", "sub": "새 수단이 다음 정기결제에도 사용돼요" }
+		},
+		{
+			"id": "supplement-rows",
+			"type": "action-rows",
+			"title": "보조 결제 수단 (변경 가능)",
+			"items": [
+				{ "label": "T+ 포인트", "desc": "현재 5,000P 설정됨", "trailing": "변경 ›" },
+				{ "label": "쿠폰", "desc": "T우주 50% 할인쿠폰 적용 중", "trailing": "변경 ›" }
+			]
+		},
+		{
+			"id": "amount-summary",
+			"type": "amount-summary",
+			"items": [
+				{ "label": "T우주 멤버십", "value": "13,900원" },
+				{ "label": "쿠폰 할인", "value": "-6,950원", "tone": "discount" },
+				{ "label": "T+ 포인트", "value": "-5,000P", "tone": "discount" }
+			],
+			"total": { "label": "즉시 결제 금액", "value": "1,950원" }
+		},
+		{ "id": "info-box", "type": "info-box", "bullets": ["즉시 결제 성공 시 해당 일자 기준으로 정기결제일이 재설정돼요", "새 결제 수단 등록 시 다음 정기결제일에도 동일하게 적용돼요"] },
+		{ "id": "cta", "type": "sticky-footer", "value": "1,950원 즉시 결제" }
+	],
+	"scenarios": [
+		{ "case": "정기 결제 보류 상태에서 진입", "result": "성공 시 새 정기결제일 재설정" },
+		{ "case": "정기 결제 성공 상태에서 진입", "result": "이용 불가 안내 (이전 화면에서 차단)" },
+		{ "case": "M+1 정기결제일 당일", "result": "이용 불가 안내" }
+	],
+	"data_inputs": ["등록된 결제 수단", "보조 수단 설정", "결제 금액"],
+	"data_outputs": ["즉시 결제 결과", "재설정된 정기결제일"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/Hero", "payment-kit/MethodCard", "payment-kit/ActionRow", "payment-kit/AmountRow", "payment-kit/InfoBox"],
+		"cta": "pilot-kit/ButtonCallToActionPilot"
+	}
+}

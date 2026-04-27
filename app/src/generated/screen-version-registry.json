@@ -1,7 +1,7 @@
 {
   "meta": {
     "purpose": "화면별 구현 버전 등록 — 자동 생성. 손으로 편집하지 말 것.",
-    "generated_at": "2026-04-27T02:31:06.840Z",
+    "generated_at": "2026-04-27T03:26:21.659Z",
     "generator": "app/scripts/generate-screen-registry.mjs",
     "source_pattern": "app/src/app/<screen>/v*-*/page.tsx",
     "do_not_edit": true
@@ -314,6 +314,25 @@
       ]
     },
     {
+      "id": "payment-instant",
+      "route": "/payment-instant",
+      "latest": "v1-mockup",
+      "versions": [
+        {
+          "id": "v1-mockup",
+          "num": 1,
+          "approach": "mockup",
+          "label": "v1 · mockup",
+          "route": "/payment-instant/v1-mockup",
+          "path": "app/src/app/payment-instant/v1-mockup",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
       "id": "payment-method-register",
       "route": "/payment-method-register",
       "latest": "v2-mockup",
@@ -337,6 +356,82 @@
           "label": "v2 · mockup",
           "route": "/payment-method-register/v2-mockup",
           "path": "app/src/app/payment-method-register/v2-mockup",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "payment-processing",
+      "route": "/payment-processing",
+      "latest": "v1-mockup",
+      "versions": [
+        {
+          "id": "v1-mockup",
+          "num": 1,
+          "approach": "mockup",
+          "label": "v1 · mockup",
+          "route": "/payment-processing/v1-mockup",
+          "path": "app/src/app/payment-processing/v1-mockup",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "payment-recurring-failure",
+      "route": "/payment-recurring-failure",
+      "latest": "v1-mockup",
+      "versions": [
+        {
+          "id": "v1-mockup",
+          "num": 1,
+          "approach": "mockup",
+          "label": "v1 · mockup",
+          "route": "/payment-recurring-failure/v1-mockup",
+          "path": "app/src/app/payment-recurring-failure/v1-mockup",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "payment-recurring-hold",
+      "route": "/payment-recurring-hold",
+      "latest": "v1-mockup",
+      "versions": [
+        {
+          "id": "v1-mockup",
+          "num": 1,
+          "approach": "mockup",
+          "label": "v1 · mockup",
+          "route": "/payment-recurring-hold/v1-mockup",
+          "path": "app/src/app/payment-recurring-hold/v1-mockup",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "payment-success",
+      "route": "/payment-success",
+      "latest": "v1-mockup",
+      "versions": [
+        {
+          "id": "v1-mockup",
+          "num": 1,
+          "approach": "mockup",
+          "label": "v1 · mockup",
+          "route": "/payment-success/v1-mockup",
+          "path": "app/src/app/payment-success/v1-mockup",
           "files": [
             "_mock.ts",
             "page.tsx"
@@ -622,6 +717,25 @@
           "label": "v1 · kit",
           "route": "/search-11/v1-kit",
           "path": "app/src/app/search-11/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subscription-canceled",
+      "route": "/subscription-canceled",
+      "latest": "v1-mockup",
+      "versions": [
+        {
+          "id": "v1-mockup",
+          "num": 1,
+          "approach": "mockup",
+          "label": "v1 · mockup",
+          "route": "/subscription-canceled/v1-mockup",
+          "path": "app/src/app/subscription-canceled/v1-mockup",
           "files": [
             "_mock.ts",
             "page.tsx"

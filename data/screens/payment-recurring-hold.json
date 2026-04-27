@@ -1,0 +1,60 @@
+{
+	"meta": {
+		"screen_id": "payment-recurring-hold",
+		"screen_name": "정기 결제 보류 — 구독 관리",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "SCREEN 7 · 정기 결제 보류",
+			"frame_position": 7
+		},
+		"policy_refs": ["3.4.2.1", "3.4.3.1", "ACT_결제_PTY_07_01"],
+		"scope": "D+3 보류 상태에서 즉시 결제·결제 수단 변경·즉시 해지 등 가능한 업무를 안내."
+	},
+	"purpose": "구독 보류 상태(D+3~)와 해지 임박일을 명확히 보여주고, 보류 상태에서 가능/불가한 업무 매트릭스를 행 단위로 제시한다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "구독 관리", "slots": ["back"] },
+		{ "id": "sub-card", "type": "sub-card", "title": "T우주 멤버십", "meta": ["월 13,900원", "결제일 매월 1일"] },
+		{
+			"id": "alert-banner",
+			"type": "alert-banner",
+			"tone": "violet",
+			"badge": "D+3",
+			"title": "정기 결제 보류 중",
+			"body": "1월 1일~3일 결제 6회 모두 실패했어요. 2월 1일까지 즉시 결제하지 않으면 구독이 해지돼요."
+		},
+		{
+			"id": "horizontal-steps",
+			"type": "horizontal-progress",
+			"items": [
+				{ "label": "D\n1·2회차\n실패", "state": "done" },
+				{ "label": "D+1\n3·4회차\n실패", "state": "done" },
+				{ "label": "D+2\n5·6회차\n실패", "state": "done" },
+				{ "label": "D+3~\n보류", "state": "current" },
+				{ "label": "M+1D\n해지", "state": "future" }
+			]
+		},
+		{
+			"id": "action-rows",
+			"type": "action-rows",
+			"items": [
+				{ "label": "즉시 결제", "desc": "지금 바로 결제해서 구독을 재개해요", "state": "ok" },
+				{ "label": "결제 수단 변경", "desc": "다른 카드나 계좌로 변경할 수 있어요", "state": "ok" },
+				{ "label": "즉시 해지", "desc": "구독을 바로 종료해요", "state": "ok" },
+				{ "label": "결제 취소", "desc": "보류 상태에서는 불가해요", "state": "disabled" }
+			]
+		},
+		{ "id": "btn-group", "type": "two-buttons", "items": ["해지하기(secondary)", "즉시 결제(primary)"] }
+	],
+	"scenarios": [
+		{ "case": "다음 정기결제일 도래", "result": "subscription-canceled 화면으로 전이" },
+		{ "case": "즉시 결제 성공", "result": "payment-success 로 이동, 정기결제일 재설정" }
+	],
+	"data_inputs": ["보류 시작일", "다음 정기결제일", "결제 수단 정보", "허용 업무 목록"],
+	"data_outputs": ["선택된 행동(즉시 결제·해지·변경)"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/AlertBanner (페이지 로컬)", "payment-kit/HorizontalSteps (페이지 로컬)", "payment-kit/ActionRow"],
+		"cta": "두 개 버튼 (secondary + primary)"
+	}
+}
