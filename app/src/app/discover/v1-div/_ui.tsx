@@ -10,7 +10,7 @@ import {
   TextButton,
 } from '@wanteddev/wds';
 import type { ReactNode } from 'react';
-import type { MockProduct } from '@/fixtures/products';
+import type { MockProduct } from './_mock';
 
 export const HorizontalScroll = ({ children }: { children: ReactNode }) => (
   <div

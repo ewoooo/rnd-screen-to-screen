@@ -54,10 +54,10 @@ Figma 원본 픽셀 기준으로 고정. WDS `Typography` variant 스케일과 �
 
 ```tsx
 import { Shell, HeroCard, StatCard, MyEditButton } from "@/components/home-kit";
-import { someFixture } from "@/fixtures/...";
+import { homeMock } from "./_mock";
 
 export default function HomeXxxV1Kit() {
-  const f = someFixture;
+  const f = homeMock;
   return (
     <Shell>
       <TopBanner .../>
@@ -71,12 +71,12 @@ export default function HomeXxxV1Kit() {
 
 페이지 파일은 **"Figma 프레임을 말로 낭독한 것"** 에 가까워야 한다. 100 줄 내외가 목표치.
 
-### fixture 규약
+### `_mock.ts` 규약
 
-- 데이터는 `app/src/fixtures/home-<screen>.ts` 에 타입과 값을 함께 선언한다.
-- fixture 는 **API 연결 전 렌더링용 mock/seed data** 다. `data/screens` 에서 자동 생성된 산출물이 아니라, 화면 재현을 위해 사람이 맞춘 임시 입력이다.
-- fixture 는 **버전 간 공유** — `v1-kit`, `v2-wds-components`, `v3-kit` 모두 같은 fixture 를 import 할 수 있다.
-- 그래픽 placeholder 크기는 fixture 에 포함(`graphic: { w, h, label }`). 화면별로 다르므로 kit 내부에 고정 금지.
+- 데이터는 각 화면 버전 폴더의 `_mock.ts` 에 타입과 값을 함께 선언한다.
+- `_mock.ts` 는 **API 연결 전 렌더링용 mock/seed data** 다. `data/screens` 에서 자동 생성된 산출물이 아니라, 화면 재현을 위해 사람이 맞춘 임시 입력이다.
+- mock 은 버전 간 공유하지 않는다. R&D 버전 독립성과 cross-import 금지가 중복 제거보다 우선이다.
+- 그래픽 placeholder 크기는 `_mock.ts` 에 포함(`graphic: { w, h, label }`). 화면별로 다르므로 kit 내부에 고정 금지.
 
 ### 화면 고유 블록
 

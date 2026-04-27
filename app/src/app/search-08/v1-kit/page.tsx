@@ -4,7 +4,7 @@ import {
 	RecentChip,
 	SearchField,
 } from "@/components/search-kit";
-import { recentQueries } from "@/fixtures/search-flow";
+import { recentQueries } from "./_mock";
 
 export default function Search08V1Kit() {
 	return (

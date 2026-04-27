@@ -1,6 +1,6 @@
 import { Placeholder, Shell, T_BRAND } from "@/components/home-kit";
 import { SearchField, SuggestionChip } from "@/components/search-kit";
-import { searchEntryFixture } from "@/fixtures/search-flow";
+import { searchEntryFixture } from "./_mock";
 
 const gnbTabs = [
 	{ key: "my", label: "MY", active: false },

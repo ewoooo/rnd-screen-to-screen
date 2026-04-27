@@ -1,4 +1,10 @@
-import type { HomeDeviceStat } from "./home-device-change";
+export type HomeDeviceStat = {
+	id: string;
+	label: string;
+	value: string;
+	badge?: string;
+	graphic?: { w: number; h: number; label: string };
+};
 
 export type HomeSeniorFixture = {
 	topBanner: { text: string };

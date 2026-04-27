@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { homeBenefitFixture } from "@/fixtures/home-benefit";
+import { homeBenefitFixture } from "./_mock";
 
 // T멤버십 브랜드 컬러는 WDS 토큰에 없으므로 도메인 상수로 유지.
 const T_BRAND = "#3617ce";

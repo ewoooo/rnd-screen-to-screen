@@ -11,7 +11,7 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
-import { homeBenefitFixture } from "@/fixtures/home-benefit";
+import { homeBenefitFixture } from "./_mock";
 
 export default function HomeBenefitV3Kit() {
 	const f = homeBenefitFixture;

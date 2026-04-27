@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@wanteddev/wds';
 
-import { mockProducts } from '@/fixtures/products';
+import { mockProducts } from './_mock';
 import { HorizontalScroll, SectionHeader, ProductCard } from './_ui';
 
 // SPEC-MAIN-02 — 개인화 컨텍스트 노출 (비로그인)

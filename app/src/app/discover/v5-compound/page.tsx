@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FlexBox } from "@wanteddev/wds";
 
-import { mockProducts } from "@/fixtures/products";
+import { mockProducts } from "./_mock";
 
 import {
 	C1Header,

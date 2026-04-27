@@ -12,7 +12,7 @@ import {
 	T_BRAND,
 	T_BRAND_SHADOW,
 } from "@/components/home-kit";
-import { homeGuestFixture } from "@/fixtures/home-guest";
+import { homeGuestFixture } from "./_mock";
 
 export default function HomeGuestV1Kit() {
 	const f = homeGuestFixture;

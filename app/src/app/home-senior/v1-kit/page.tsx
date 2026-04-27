@@ -8,7 +8,7 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
-import { homeSeniorFixture } from "@/fixtures/home-senior";
+import { homeSeniorFixture } from "./_mock";
 
 export default function HomeSeniorV1Kit() {
 	const f = homeSeniorFixture;

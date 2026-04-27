@@ -3,7 +3,7 @@
 import { Button, Chip, Typography } from "@wanteddev/wds";
 import type { CSSProperties } from "react";
 
-import { homeBenefitFixture } from "@/fixtures/home-benefit";
+import { homeBenefitFixture } from "./_mock";
 
 // v1-wds와 동일한 도메인 상수. T멤버십 브랜드 컬러와 페이지 배경은 WDS 토큰에 없어 유지.
 const T_BRAND = "#3617ce";

@@ -2,7 +2,7 @@
 
 import { FlexBox } from "@wanteddev/wds";
 
-import { mockProducts } from "@/fixtures/products";
+import { mockProducts } from "./_mock";
 import { BannerContentsPilot } from "@/components/pilot-kit/BannerContentsPilot";
 import { CardHorizontalProductPilot } from "@/components/pilot-kit/CardHorizontalProductPilot";
 import { GnbPilot } from "@/components/pilot-kit/GnbPilot";

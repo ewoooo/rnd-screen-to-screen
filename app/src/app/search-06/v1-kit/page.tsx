@@ -13,7 +13,7 @@ import {
 	categoryTabs,
 	deviceCards,
 	infoCard,
-} from "@/fixtures/search-flow";
+} from "./_mock";
 
 export default function Search06V1Kit() {
 	return (

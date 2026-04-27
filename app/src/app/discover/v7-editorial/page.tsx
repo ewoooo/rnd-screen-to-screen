@@ -19,7 +19,7 @@ import { GnbPilot } from "@/components/pilot-kit/GnbPilot";
 import { HeaderPilot } from "@/components/pilot-kit/HeaderPilot";
 import { ListPilot } from "@/components/pilot-kit/ListPilot";
 import { OrgCardProductPassPilot } from "@/components/pilot-kit/OrgCardProductPassPilot";
-import { mockProducts, type MockProduct } from "@/fixtures/products";
+import { mockProducts, type MockProduct } from "./_mock";
 
 // Discover v7-editorial — Figma "Layout Best Practice / 04_pass" 의 quality 기준 적용.
 // 원칙:

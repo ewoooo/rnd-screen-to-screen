@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { homeManageFixture } from "@/fixtures/home-manage";
+import { homeManageFixture } from "./_mock";
 
 const T_BRAND = "#3617ce";
 const PAGE_BG = "#ebeef6";

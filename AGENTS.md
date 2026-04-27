@@ -37,7 +37,6 @@ Next.js 앱 실체. 의존성은 **GitHub Packages**의 `@wanteddev/*` 스코프
 주요 디렉터리
 - `app/src/app/` — App Router 페이지
 - `app/src/components/` — 프로젝트 전용 컴포넌트 (WDS 위에 얹는 래퍼 등)
-- `app/src/fixtures/` — **API 연결 전 렌더링용 mock/seed data** (타입 + 값). 컴포넌트 입력으로 실제 사용되지만, `data/screens`에서 자동 생성된 산출물은 아니다.
 
 ### `data/`
 **이 프로젝트 고유**의 도메인 데이터. 외부 라이브러리 메타는 두지 않는다.
@@ -83,21 +82,21 @@ Next.js 앱 실체. 의존성은 **GitHub Packages**의 `@wanteddev/*` 스코프
 3. DESIGN.md / LAYOUT.md 로 모바일 기준과 home-kit 레이어 공식 고정
 4. home-kit 또는 도메인 kit(search-kit 등) 로 섹션 조립
 5. kit 에 없는 요소만 인라인 작성 또는 보완 kit/WDS registry 확인
-6. app/src/fixtures 또는 페이지 로컬 mock data 로 임시 렌더 데이터 주입
+6. 같은 버전 폴더의 _mock.ts 로 임시 렌더 데이터 주입
 7. app/src/app/<screen>/v{N}-{approach}/page.tsx 작성
 8. app/ 에서 npm run gen:screen-registry 실행
 9. 360px viewport 에서 시각 검증
 ```
 
 - `data/screens`는 요구사항/기능 스펙의 출처이며 앱 런타임 입력이 아니다.
-- `app/src/fixtures`는 API 연결 전 렌더링을 위한 mock/seed data다. `data/screens`에서 자동 생성된 렌더 모델로 부르지 않는다.
-- 향후 실제 API 또는 변환기가 생기면 fixtures 값만 교체하거나 별도 render model 계층을 설계한다.
+- `_mock.ts`는 API 연결 전 렌더링을 위한 page-local mock/seed data다. `data/screens`에서 자동 생성된 렌더 모델로 부르지 않는다.
+- 향후 실제 API 또는 변환기가 생기면 `_mock.ts` 값을 교체하거나 별도 render model 계층을 설계한다.
 
 ### 기타 규칙
 
 1. **아이콘이 필요할 때**: `registry/wds-icon-registry.json`의 `entries[]`에서 `kebab` 또는 `name`으로 검색. 존재하지 않으면 만들지 말고 사용자에게 대안을 물어본다.
 2. **컴포넌트가 필요할 때**: 신규 화면은 `LAYOUT.md`와 home-kit 부품을 먼저 맞춘다 → 없으면 `project_kits`(search-kit/pilot-kit 포함) 조회 → 그래도 없으면 `registry/wds-component-registry.json`의 `categories`에서 카테고리별 탐색. 목록에 없으면 WDS가 제공하지 않는다고 판단.
-3. **도메인 데이터 배치**: 프로젝트 수준 spec(화면/피쳐 정의 등 JSON SSOT)은 `data/`, 렌더링용 mock/seed data(타입 포함 TS)는 `app/src/fixtures/`. `fixtures`는 앱 번들 내부 임시 입력이며 API 연결 전 화면 재현을 위해 사용한다.
+3. **도메인 데이터 배치**: 프로젝트 수준 spec(화면/피쳐 정의 등 JSON SSOT)은 `data/`, 렌더링용 mock/seed data(타입 포함 TS)는 각 화면 버전 폴더의 `_mock.ts`. mock 은 버전 내부 임시 입력이며 API 연결 전 화면 재현을 위해 사용한다.
 4. **`@wanteddev/*` 패키지 import 위치**: `app/` 내부에서만. `data/`·`registry/`는 런타임 의존성 없는 JSON만 가진다.
 
 ## 화면 버전 관리 규약 (screen-first)

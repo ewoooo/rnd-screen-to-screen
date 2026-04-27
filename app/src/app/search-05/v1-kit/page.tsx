@@ -11,7 +11,7 @@ import {
 	categoryTabs,
 	deviceCards,
 	eventCards,
-} from "@/fixtures/search-flow";
+} from "./_mock";
 
 export default function Search05V1Kit() {
 	return (

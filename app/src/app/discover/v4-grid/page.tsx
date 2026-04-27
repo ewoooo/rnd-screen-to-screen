@@ -26,7 +26,7 @@ import {
 	IconSearch,
 } from "@wanteddev/wds-icon";
 
-import { mockProducts, type MockProduct } from "@/fixtures/products";
+import { mockProducts, type MockProduct } from "./_mock";
 
 // Discover v4-grid — 2열 그리드 IA. 가로스크롤 대신 2×2 카드 묶음 + 전체보기.
 // 화면 명세: data/screens/TU-DSP-MAIN-MO-02-PG-001-1.json (비로그인)

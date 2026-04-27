@@ -14,7 +14,7 @@ import {
 	T_BRAND,
 	T_BRAND_SHADOW,
 } from "@/components/home-kit";
-import { mockProducts, type MockProduct } from "@/fixtures/products";
+import { mockProducts, type MockProduct } from "./_mock";
 
 // Discover v8-homekit — 홈킷 시각언어로 발견(비로그인) 화면 재구성.
 // 원칙:

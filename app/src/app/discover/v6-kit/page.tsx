@@ -8,7 +8,7 @@ import { CardVerticalProductMediumPilot } from "@/components/pilot-kit/CardVerti
 import { GnbPilot } from "@/components/pilot-kit/GnbPilot";
 import { HeaderPilot } from "@/components/pilot-kit/HeaderPilot";
 import { ListPilot } from "@/components/pilot-kit/ListPilot";
-import { mockProducts, type MockProduct } from "@/fixtures/products";
+import { mockProducts, type MockProduct } from "./_mock";
 
 // Discover v6-kit — kit-first 절차 준수 버전.
 // CLAUDE.md "화면 제작 진입 순서" 의 4단계(registry → project_kits → pilot-kit) 그대로.

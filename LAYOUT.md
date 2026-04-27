@@ -87,7 +87,7 @@ scrollbarWidth: none;
    - 배너 스트립 → `OfferingBanner`
    - 가로 상품 carousel → 카드 안 가로 스트립 패턴
    - 검색 플로우 → `search-kit` 부품 우선, 공용 베이스는 home-kit 재사용
-4. 필요한 문구·상품·상태값은 `app/src/fixtures` 또는 페이지 로컬 mock/seed data 로 임시 주입한다.
+4. 필요한 문구·상품·상태값은 같은 버전 폴더의 `_mock.ts` 로 임시 주입한다.
 5. home-kit/search-kit에 없는 부품(아코디언·탭·스티키 풋터 등)은 위 토큰·타이포 슬롯·셸 공식으로 신규 작성한다.
 6. `app/src/app/<screen>/v{N}-{approach}/page.tsx` 에 화면 버전을 작성한다.
 7. `app/` 에서 `npm run gen:screen-registry` 로 screen registry 를 재생성한다.

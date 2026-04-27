@@ -27,7 +27,7 @@ import {
 	IconSearch,
 } from "@wanteddev/wds-icon";
 
-import { mockProducts } from "@/fixtures/products";
+import { mockProducts } from "./_mock";
 
 // Discover v3-wds — *Pilot 래퍼 무시. WDS 컴포넌트 직접 합성.
 // 화면 명세: data/screens/TU-DSP-MAIN-MO-02-PG-001-1.json (비로그인)

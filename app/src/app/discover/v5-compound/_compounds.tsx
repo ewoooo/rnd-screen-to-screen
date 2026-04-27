@@ -27,7 +27,7 @@ import {
 	IconSearch,
 } from "@wanteddev/wds-icon";
 
-import type { MockProduct } from "@/fixtures/products";
+import type { MockProduct } from "./_mock";
 
 // v5-compound 전용 컴파운드 캡슐.
 // registry/wds-component-compound-layout-registry.json 의 C1/C3/C4/C6/C7 계약을

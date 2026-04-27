@@ -8,7 +8,7 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
-import { homeDeviceChangeFixture } from "@/fixtures/home-device-change";
+import { homeDeviceChangeFixture } from "./_mock";
 
 export default function HomeDeviceChangeV1Kit() {
 	const f = homeDeviceChangeFixture;

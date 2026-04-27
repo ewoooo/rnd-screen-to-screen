@@ -21,7 +21,7 @@ import {
 	PAGE_BG,
 	PAGE_BG_SEMI,
 } from "@/components/home-kit/tokens";
-import { mockProducts, type MockProduct } from "@/fixtures/products";
+import { mockProducts, type MockProduct } from "./_mock";
 
 // product-detail v1-homekit — 상품상세(비로그인 단독상품)을 home-kit 톤으로 풀어낸 첫 구현.
 // 데이터: data/screens/TU-DSP-PRDD-MO-06-PG-001-1.json (16개 SPEC)

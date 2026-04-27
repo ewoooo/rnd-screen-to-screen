@@ -8,7 +8,7 @@ import {
 	StatCard,
 	TopBanner,
 } from "@/components/home-kit";
-import { homeManageFixture } from "@/fixtures/home-manage";
+import { homeManageFixture } from "./_mock";
 
 const graphicSize: Record<
 	(typeof homeManageFixture.stats)[number]["graphic"],

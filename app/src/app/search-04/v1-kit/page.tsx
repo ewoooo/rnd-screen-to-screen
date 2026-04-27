@@ -4,7 +4,7 @@ import {
 	SearchField,
 	SuggestionRow,
 } from "@/components/search-kit";
-import { step04Suggestions } from "@/fixtures/search-flow";
+import { step04Suggestions } from "./_mock";
 
 export default function Search04V1Kit() {
 	return (

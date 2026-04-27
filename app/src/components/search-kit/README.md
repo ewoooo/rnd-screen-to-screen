@@ -83,9 +83,9 @@ kit 에 없는 1회용 블록은 페이지 안에 인라인 JSX. 예 (step 11): 
 
 ### mock/seed data 규약
 
-- 검색 플로우의 임시 문구·최근 검색어·추천어·대화 예시는 `app/src/fixtures/search-flow.ts` 에 둔다.
-- fixture 는 API 연결 전 렌더링용 mock/seed data 이며, `data/screens` 에서 자동 생성된 산출물이 아니다.
-- `data/screens` 는 검색/화면 요구사항을 확인하는 출처로 보고, 실제 렌더 입력은 fixture 또는 페이지 로컬 mock 으로 주입한다.
+- 검색 플로우의 임시 문구·최근 검색어·추천어·대화 예시는 각 step 버전 폴더의 `_mock.ts` 에 둔다.
+- `_mock.ts` 는 API 연결 전 렌더링용 mock/seed data 이며, `data/screens` 에서 자동 생성된 산출물이 아니다.
+- `data/screens` 는 검색/화면 요구사항을 확인하는 출처로 보고, 실제 렌더 입력은 page-local `_mock.ts` 로 주입한다.
 
 ## 승격 기준
 
