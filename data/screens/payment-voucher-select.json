@@ -1,0 +1,60 @@
+{
+	"meta": {
+		"screen_id": "payment-voucher-select",
+		"screen_name": "이용권 선택",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"source_policy_title": "[수정완료] Tobe_결제 프로세스 설계 및 결제 수단 관리",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "보조 결제 수단을 추가할 수 있어요 — 이용권 상세",
+			"frame_position": 3
+		},
+		"policy_refs": ["3.1.2.2", "ACT_결제_PTY_02_02"],
+		"scope": "보유 이용권 목록을 보여주고 1장을 적용 (쿠폰과 동시 사용 불가)"
+	},
+	"purpose": "보유 이용권 중 한 장을 선택해 적용한다. 사용 시점에 현금영수증 발급 대상.",
+	"sections": [
+		{
+			"id": "header",
+			"type": "navigation",
+			"title": "이용권 선택",
+			"slots": ["back"]
+		},
+		{
+			"id": "voucher-list",
+			"type": "selection-list",
+			"title": "보유 이용권",
+			"item_template": ["이용권명", "구매 금액", "유효기간", "사용 조건"]
+		},
+		{
+			"id": "exclusive-notice",
+			"type": "notice",
+			"title": "쿠폰과 함께 사용 불가",
+			"description": "이용권과 쿠폰은 동시 사용할 수 없어요. 쿠폰을 적용하려면 이용권을 해제하세요."
+		},
+		{
+			"id": "cash-receipt-notice",
+			"type": "notice",
+			"title": "현금영수증 안내",
+			"description": "이용권 사용 시점에 구매 금액 기준으로 현금영수증이 발급돼요."
+		},
+		{
+			"id": "primary-cta",
+			"type": "sticky-footer",
+			"slots": ["적용하기"]
+		}
+	],
+	"scenarios": [
+		{ "case": "쿠폰이 이미 적용된 상태에서 이용권 선택", "result": "Pop-up — 쿠폰과 이용권은 함께 사용할 수 없습니다" },
+		{ "case": "선물하기 상품에서 진입", "result": "사용 불가 안내 처리" },
+		{ "case": "이용 중인 이용권 변경/삭제 시도", "result": "변경·삭제 불가 안내" },
+		{ "case": "최초 결제 0원이 되는 이용권 적용", "result": "주 결제 수단 추후 등록 가능 (다음 정기결제일 전)" }
+	],
+	"data_inputs": ["보유 이용권 목록", "현재 쿠폰 적용 여부", "구독 상품 유형"],
+	"data_outputs": ["선택된 이용권 ID", "적용 후 잔여 결제 금액"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["home-kit/Card", "home-kit/ListRow", "home-kit/PillChip"],
+		"cta": "pilot-kit/ButtonCallToActionPilot (sticky)"
+	}
+}

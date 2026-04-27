@@ -1,0 +1,560 @@
+{
+	"meta": {
+		"type": "policy_to_screen_draft",
+		"status": "draft",
+		"created_at": "2026-04-27",
+		"source": {
+			"title": "[수정완료] Tobe_결제 프로세스 설계 및 결제 수단 관리",
+			"url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+			"module": "PAY",
+			"subject": "구독 결제/정기결제",
+			"tags": ["결제", "정기결제", "구독", "취소환불"]
+		},
+		"intent": "정책서만으로 화면 후보와 draft screen spec을 만들 수 있는지 검증하기 위한 1차 산출물",
+		"generation_rule": "정책 액션(ACT)과 Case/조건/Return을 화면 후보로 분해하고, 구현 전 단계의 중간 스펙으로 남긴다.",
+		"screen_candidate_count": 8,
+		"confidence": "medium",
+		"notes": [
+			"이 파일은 검토용 초안이며 정식 화면 사양서가 아니다.",
+			"섹션 순서, IA 경로, CTA 문구, 실제 API 데이터는 후속 화면 사양화 단계에서 확정해야 한다.",
+			"home-kit은 셸/카드/행/placeholder 톤을 맞추는 기본 레이어로 사용하고, 결제 입력/동의/상태 제어는 WDS 또는 신규 PAY kit 후보로 보완한다."
+		]
+	},
+	"domain": {
+		"journey": "구독·결제",
+		"business_area": "구독 결제 관리",
+		"business_name": "구독 결제/정기결제",
+		"actors": ["고객", "고객센터", "유통망"],
+		"channels": ["T우주", "T월드", "고객센터", "유통망/대리점"],
+		"principles": [
+			"명의 동일 원칙",
+			"순차 결제 처리",
+			"결제 실패 복구 우선",
+			"원 결제 수단 환불"
+		]
+	},
+	"policy_flow": [
+		{
+			"step": 1,
+			"name": "결제 수단 설정",
+			"policy_refs": ["3.1", "ACT_결제_PTY_01", "ACT_결제_PTY_02"]
+		},
+		{
+			"step": 2,
+			"name": "결제 동의",
+			"policy_refs": ["3.2", "ACT_결제_PTY_03"]
+		},
+		{
+			"step": 3,
+			"name": "최초 결제 처리",
+			"policy_refs": ["3.3", "ACT_결제_PTY_04"]
+		},
+		{
+			"step": 4,
+			"name": "정기 결제 반복",
+			"policy_refs": ["3.4", "ACT_결제_PTY_05", "ACT_결제_PTY_06", "ACT_결제_PTY_07"]
+		},
+		{
+			"step": 5,
+			"name": "취소/환불 및 사후 관리",
+			"policy_refs": ["3.5", "ACT_결제_PTY_08", "ACT_결제_PTY_09", "ACT_결제_PTY_10"]
+		}
+	],
+	"screens": [
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-01",
+			"screen_slug": "payment-method-register",
+			"screen_name": "결제 수단 선택/등록",
+			"screen_type": "page",
+			"primary_user_goal": "정기 결제에 사용할 1차 주 결제 수단을 선택하고 등록한다.",
+			"policy_refs": ["3.1.1", "3.1.1.1", "3.1.1.2", "ACT_결제_PTY_01_01", "ACT_결제_PTY_01_02"],
+			"priority": "P0",
+			"sections": [
+				{
+					"id": "header",
+					"type": "navigation",
+					"title": "결제 수단 등록",
+					"content": ["이전", "닫기 또는 도움말 후보"]
+				},
+				{
+					"id": "method-type",
+					"type": "selection",
+					"title": "결제 수단 유형",
+					"content": ["신용/체크카드", "계좌이체", "간편 결제"],
+					"conditions": ["가입자와 결제자 명의", "채널 구분", "법인 명의 여부"]
+				},
+				{
+					"id": "payer-name-check",
+					"type": "form",
+					"title": "결제자 명의 확인",
+					"content": ["가입자 본인", "타인 명의", "최대 5명 등록 제한"]
+				},
+				{
+					"id": "method-detail",
+					"type": "form",
+					"title": "결제 정보 입력",
+					"content": ["카드사/카드번호/유효기간", "은행명/계좌번호", "생년월일", "인증"]
+				},
+				{
+					"id": "primary-rank",
+					"type": "selection",
+					"title": "주 결제 수단 차수",
+					"content": ["1차 필수", "2차 선택", "2차는 신용/체크카드만 허용"]
+				}
+			],
+			"scenarios": [
+				{
+					"input": "1차 결제 수단 등록 완료",
+					"output": "결제 수단 등록 결과 성공"
+				},
+				{
+					"condition": "타인 명의 + 간편 결제",
+					"output": "이용 불가 안내 처리"
+				},
+				{
+					"condition": "타인 명의 등록 인원이 이미 5명",
+					"output": "타인 명의 결제 수단은 최대 5명까지 등록 가능 안내"
+				},
+				{
+					"condition": "2차 결제 수단으로 계좌이체 선택",
+					"output": "2차는 신용/체크카드만 허용 안내"
+				}
+			],
+			"data_inputs": ["결제 수단 유형", "결제자 명의", "채널 구분", "카드 정보", "계좌 정보", "결제 수단 차수"],
+			"data_outputs": ["이용 가능 결제 수단 목록", "결제 수단 등록 결과", "실패 사유"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow", "home-kit/Placeholder"],
+				"wds_candidates": ["Header", "Button", "Input", "Radio", "Checkbox", "BottomSheet"],
+				"new_kit_candidate": "pay-kit/PaymentMethodForm"
+			},
+			"unknowns": ["정확한 인증 방식별 화면 전환", "온라인 self 채널에서 일반 결제 PG 검토중 항목 처리", "최종 CTA 문구"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-02",
+			"screen_slug": "auxiliary-payment-method",
+			"screen_name": "보조 결제 수단 설정",
+			"screen_type": "page",
+			"primary_user_goal": "T+포인트, 쿠폰, 이용권을 보조 결제 수단으로 설정한다.",
+			"policy_refs": ["3.1.2", "3.1.2.1", "ACT_결제_PTY_02", "ACT_결제_PTY_02_01"],
+			"priority": "P1",
+			"sections": [
+				{
+					"id": "point-card",
+					"type": "card",
+					"title": "T+포인트",
+					"content": ["잔액 조회", "사용 금액 설정", "정기 결제 최대 10만P", "1P = 1원"]
+				},
+				{
+					"id": "coupon-card",
+					"type": "card",
+					"title": "쿠폰",
+					"content": ["사용 가능한 쿠폰 목록", "최초 결제 0원 예외"]
+				},
+				{
+					"id": "voucher-card",
+					"type": "card",
+					"title": "이용권",
+					"content": ["사용 가능한 이용권 목록", "최초 결제 0원 예외"]
+				},
+				{
+					"id": "primary-method-notice",
+					"type": "notice",
+					"title": "주 결제 수단 등록 필요",
+					"content": ["T+포인트 사용 시 0원이어도 즉시 등록 필수", "일부 쿠폰/이용권은 추후 등록 가능"]
+				}
+			],
+			"scenarios": [
+				{
+					"input": "T+포인트 사용 금액 설정",
+					"output": "T+포인트 등록 결과"
+				},
+				{
+					"condition": "잔여 포인트 부족",
+					"output": "사용 가능 금액 기준으로 안내 또는 조정"
+				},
+				{
+					"condition": "타인 명의 T+포인트",
+					"output": "이용 불가 안내"
+				}
+			],
+			"data_inputs": ["멤버십카드번호", "포인트 잔액", "사용 금액", "쿠폰 목록", "이용권 목록"],
+			"data_outputs": ["보조 결제 수단 등록 결과", "적용 금액"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow", "home-kit/PillChip"],
+				"wds_candidates": ["Checkbox", "Input", "Button", "Accordion"],
+				"new_kit_candidate": "pay-kit/AuxiliaryPaymentCard"
+			},
+			"unknowns": ["쿠폰/이용권 선택 UI 형태", "포인트 금액 입력 방식", "보조 수단 복수 선택 허용 범위"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-03",
+			"screen_slug": "payment-consent",
+			"screen_name": "결제 동의",
+			"screen_type": "page",
+			"primary_user_goal": "구독 유형별 필수 약관과 정기결제 동의를 완료한다.",
+			"policy_refs": ["3.2", "ACT_결제_PTY_03"],
+			"priority": "P0",
+			"sections": [
+				{
+					"id": "subscription-type",
+					"type": "summary",
+					"title": "구독 유형",
+					"content": ["정기구독", "선물하기"]
+				},
+				{
+					"id": "required-consents",
+					"type": "agreement-list",
+					"title": "필수 동의",
+					"content": ["정기결제 동의", "약관 동의", "구매 확인"]
+				},
+				{
+					"id": "submit",
+					"type": "sticky-cta",
+					"title": "동의하고 결제하기"
+				}
+			],
+			"scenarios": [
+				{
+					"condition": "정기구독",
+					"output": "정기결제 동의 + 약관 + 구매확인 필요"
+				},
+				{
+					"condition": "선물하기",
+					"output": "약관 + 구매확인 필요"
+				},
+				{
+					"input": "필수 동의 누락 상태에서 CTA 선택",
+					"output": "누락 동의 항목 안내"
+				}
+			],
+			"data_inputs": ["구독 유형", "동의 항목 목록", "동의 여부"],
+			"data_outputs": ["결제 동의 완료 여부"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow"],
+				"wds_candidates": ["Checkbox", "Button", "Accordion"],
+				"new_kit_candidate": "pay-kit/AgreementList"
+			},
+			"unknowns": ["약관 전문 링크", "선택 동의 존재 여부", "하단 CTA 고정 정책"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-04",
+			"screen_slug": "initial-payment-review",
+			"screen_name": "최초 결제 확인/처리",
+			"screen_type": "page",
+			"primary_user_goal": "최초 결제 금액과 결제 수단 적용 순서를 확인하고 결제를 실행한다.",
+			"policy_refs": ["3.3", "3.3.1.1", "3.3.1.2", "ACT_결제_PTY_04_01", "ACT_결제_PTY_04_02"],
+			"priority": "P0",
+			"sections": [
+				{
+					"id": "order-summary",
+					"type": "summary-card",
+					"title": "결제 예정 금액",
+					"content": ["상품명", "정기 결제 금액", "할인/보조 수단 적용 금액", "최종 결제 금액"]
+				},
+				{
+					"id": "payment-sequence",
+					"type": "ordered-list",
+					"title": "결제 처리 순서",
+					"content": ["1순위 쿠폰/이용권", "2순위 T+포인트", "3순위 주 결제 수단"]
+				},
+				{
+					"id": "cash-receipt",
+					"type": "optional-form",
+					"title": "현금 영수증",
+					"content": ["계좌이체 또는 이용권 결제 시 발급", "미입력 시 자진 발급"]
+				},
+				{
+					"id": "submit",
+					"type": "sticky-cta",
+					"title": "결제하기"
+				}
+			],
+			"scenarios": [
+				{
+					"input": "결제하기 선택",
+					"output": "쿠폰/이용권 → T+포인트 → 주 결제 수단 순서로 결제 처리"
+				},
+				{
+					"condition": "중간 단계 결제 실패",
+					"output": "이미 처리 완료된 결제 수단을 역순 취소 후 전체 실패 처리"
+				},
+				{
+					"condition": "알선형 상품",
+					"output": "신용/체크카드·계좌이체·T+포인트·쿠폰·이용권 이용 불가"
+				}
+			],
+			"data_inputs": ["등록된 전체 결제 수단", "결제 금액", "현금 영수증 발행 정보"],
+			"data_outputs": ["각 결제 수단별 처리 결과", "최초 결제 완료 여부", "현금 영수증 발급 결과"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow", "home-kit/StatBadge"],
+				"wds_candidates": ["Button", "Input", "Divider"],
+				"new_kit_candidate": "pay-kit/PaymentSequence"
+			},
+			"unknowns": ["결제 처리 중 로딩 화면 분리 여부", "실패 시 복구 CTA", "현금 영수증 입력 노출 조건"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-05",
+			"screen_slug": "recurring-payment-status",
+			"screen_name": "정기 결제 실패/보류 상태",
+			"screen_type": "page",
+			"primary_user_goal": "정기 결제 실패 상태와 재시도 일정을 확인하고 복구 행동을 선택한다.",
+			"policy_refs": ["3.4.2", "3.4.2.1", "ACT_결제_PTY_06_01"],
+			"priority": "P0",
+			"sections": [
+				{
+					"id": "status-hero",
+					"type": "status-card",
+					"title": "정기 결제 상태",
+					"content": ["대기", "진행중", "실패", "정기 결제 보류", "구독 해지"]
+				},
+				{
+					"id": "retry-timeline",
+					"type": "timeline",
+					"title": "결제 재시도 일정",
+					"content": ["D: 1~2회차", "D+1: 3~4회차", "D+2: 5~6회차", "D+3: 보류"]
+				},
+				{
+					"id": "allowed-actions",
+					"type": "action-list",
+					"title": "가능한 업무",
+					"content": ["즉시결제", "주 결제 수단 변경", "보조 수단 변경", "해지"]
+				},
+				{
+					"id": "recovery-cta",
+					"type": "sticky-cta",
+					"title": "즉시 결제하기"
+				}
+			],
+			"scenarios": [
+				{
+					"condition": "1~6회차 이내 결제 성공",
+					"output": "구독 기간 연장"
+				},
+				{
+					"condition": "6회차 모두 실패",
+					"output": "D+3 정기 결제 보류"
+				},
+				{
+					"condition": "보류 상태에서 다음 정기결제일까지 즉시 결제 없음",
+					"output": "구독 해지"
+				}
+			],
+			"data_inputs": ["정기 결제 회차", "등록 결제 수단", "결제 상태", "구독 기간"],
+			"data_outputs": ["결제 처리 결과", "허용 업무 목록", "다음 상태"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow", "home-kit/StatBadge"],
+				"wds_candidates": ["Badge", "Button", "Progress", "Tabs"],
+				"new_kit_candidate": "pay-kit/PaymentStatusTimeline"
+			},
+			"unknowns": ["실패 사유 표시 문구", "D/D+1/D+2 날짜 표기 방식", "상태별 CTA 우선순위"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-06",
+			"screen_slug": "instant-payment",
+			"screen_name": "즉시 결제",
+			"screen_type": "page",
+			"primary_user_goal": "정기 결제 실패·취소·보류 상태에서 즉시 결제를 완료한다.",
+			"policy_refs": ["3.4.2.2", "ACT_결제_PTY_06_02"],
+			"priority": "P0",
+			"sections": [
+				{
+					"id": "reason",
+					"type": "notice",
+					"title": "즉시 결제가 필요한 상태",
+					"content": ["정기 결제 실패", "정기 결제 취소", "정기 결제 보류"]
+				},
+				{
+					"id": "method-choice",
+					"type": "selection",
+					"title": "결제 수단 선택",
+					"content": ["기존 등록 결제 수단", "신규 결제 수단 등록"]
+				},
+				{
+					"id": "auxiliary-change",
+					"type": "optional-card",
+					"title": "보조 결제 수단 변경",
+					"content": ["쿠폰", "이용권", "T+포인트"]
+				},
+				{
+					"id": "new-cycle",
+					"type": "summary-card",
+					"title": "결제 성공 후 적용",
+					"content": ["구독 기간 재개", "정기결제일 재설정 가능"]
+				}
+			],
+			"scenarios": [
+				{
+					"condition": "정기 결제 성공 상태에서 즉시 결제 요청",
+					"output": "즉시 결제 불가 안내"
+				},
+				{
+					"condition": "M+1 정기결제일 당일",
+					"output": "즉시 결제 불가 안내"
+				},
+				{
+					"condition": "정기 결제 보류 상태에서 즉시 결제 성공",
+					"output": "해당 일자 기준으로 새 정기결제일 및 구독 기간 재설정"
+				}
+			],
+			"data_inputs": ["결제 상태", "기존 결제 수단", "신규 결제 수단", "보조 결제 수단"],
+			"data_outputs": ["즉시 결제 결과", "재설정된 정기결제일", "구독 기간"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow"],
+				"wds_candidates": ["Button", "Radio", "Input", "BottomSheet"],
+				"new_kit_candidate": "pay-kit/InstantPaymentPanel"
+			},
+			"unknowns": ["즉시 결제와 결제 수단 신규 등록의 화면 통합 여부", "정기결제일 재설정 안내 문구"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-07",
+			"screen_slug": "payment-method-management",
+			"screen_name": "결제 수단 관리",
+			"screen_type": "page",
+			"primary_user_goal": "등록된 주/보조 결제 수단을 확인하고 변경·삭제 가능 여부에 따라 관리한다.",
+			"policy_refs": ["3.1.1.2", "3.4.3", "ACT_결제_PTY_07_01"],
+			"priority": "P1",
+			"sections": [
+				{
+					"id": "primary-methods",
+					"type": "list",
+					"title": "주 결제 수단",
+					"content": ["1차 결제 수단", "2차 결제 수단", "변경", "삭제"]
+				},
+				{
+					"id": "auxiliary-methods",
+					"type": "list",
+					"title": "보조 결제 수단",
+					"content": ["T+포인트", "쿠폰", "이용권", "변경/삭제"]
+				},
+				{
+					"id": "status-restrictions",
+					"type": "matrix-summary",
+					"title": "결제 상태별 제한",
+					"content": ["대기", "진행중", "성공", "실패", "취소", "정기결제 보류", "구독 해지"]
+				}
+			],
+			"scenarios": [
+				{
+					"condition": "1차 주 결제 수단 삭제 시도",
+					"output": "삭제 불가 안내"
+				},
+				{
+					"condition": "정기 결제 진행중",
+					"output": "모든 변경 업무 일시 제한"
+				},
+				{
+					"condition": "결제 성공 후",
+					"output": "결제 취소 또는 변경예약 중심으로 제한"
+				},
+				{
+					"condition": "정기 결제 보류",
+					"output": "즉시결제 및 결제 수단 변경 가능"
+				}
+			],
+			"data_inputs": ["등록 결제 수단", "결제 상태", "D/D+1/D+2/D+3 구간"],
+			"data_outputs": ["업무별 가능/불가 상태", "변경/삭제 처리 결과"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow", "home-kit/PillChip"],
+				"wds_candidates": ["Button", "Badge", "Accordion", "Tabs"],
+				"new_kit_candidate": "pay-kit/PaymentMethodManagementList"
+			},
+			"unknowns": ["상태별 제한 표를 사용자 화면에 얼마나 노출할지", "변경예약과 즉시변경의 IA 분리 여부"]
+		},
+		{
+			"draft_screen_id": "PAY-SUBSCRIPTION-PAYMENT-08",
+			"screen_slug": "payment-cancel-refund",
+			"screen_name": "결제 취소/환불",
+			"screen_type": "page",
+			"primary_user_goal": "결제 완료 후 원 결제 수단 또는 대체 계좌로 취소/환불을 요청한다.",
+			"policy_refs": ["3.5.1", "3.5.1.1", "ACT_결제_PTY_08_01"],
+			"priority": "P1",
+			"sections": [
+				{
+					"id": "refund-principle",
+					"type": "notice",
+					"title": "환불 원칙",
+					"content": ["원 결제 수단 환불", "불가 시 동일 명의 계좌 입력"]
+				},
+				{
+					"id": "payment-method-refund",
+					"type": "list",
+					"title": "결제 수단별 환불 방식",
+					"content": ["신용/체크카드", "계좌이체", "T+포인트", "쿠폰", "이용권"]
+				},
+				{
+					"id": "fallback-account",
+					"type": "form",
+					"title": "계좌 정보 입력",
+					"content": ["은행명", "계좌번호", "예금주", "생년월일"]
+				},
+				{
+					"id": "partial-refund",
+					"type": "notice",
+					"title": "부분 취소",
+					"content": ["부분 취소 가능 수단", "부분 취소 불가 수단은 재결제 후 원 거래 전액 취소"]
+				}
+			],
+			"scenarios": [
+				{
+					"condition": "원 결제 수단 환불 가능",
+					"output": "원 수단으로 승인 취소 또는 재적립"
+				},
+				{
+					"condition": "카드 183일 경과 또는 원 계좌/원 카드 이상",
+					"output": "계좌 정보 입력 받아 환불 처리"
+				},
+				{
+					"condition": "부분 취소 불가 수단",
+					"output": "환불 제외 금액 재결제 후 원 거래 전액 취소"
+				}
+			],
+			"data_inputs": ["원 결제 수단 정보", "환불 대상 금액", "대체 계좌 정보"],
+			"data_outputs": ["취소/환불 처리 결과", "처리 소요 시간", "실패 사유"],
+			"ui_mapping": {
+				"kit_candidates": ["home-kit/Card", "home-kit/ListRow"],
+				"wds_candidates": ["Input", "Button", "Accordion", "Divider"],
+				"new_kit_candidate": "pay-kit/RefundMethodGuide"
+			},
+			"unknowns": ["환불 요청 화면과 환불 안내 화면 분리 여부", "부분 환불 금액 계산 노출 방식", "법령 보관 안내 노출 위치"]
+		}
+	],
+	"cross_screen_rules": [
+		{
+			"id": "PAY-RULE-01",
+			"name": "보조 결제 수단 차감 순서",
+			"rule": "쿠폰/이용권 → T+포인트 → 주 결제 수단 순으로 처리한다.",
+			"applies_to": ["PAY-SUBSCRIPTION-PAYMENT-02", "PAY-SUBSCRIPTION-PAYMENT-04", "PAY-SUBSCRIPTION-PAYMENT-06"]
+		},
+		{
+			"id": "PAY-RULE-02",
+			"name": "정기 결제 재시도",
+			"rule": "정기결제일 D 포함 D+2까지 최대 6회 시도하고, 모두 실패하면 D+3부터 보류 상태로 전환한다.",
+			"applies_to": ["PAY-SUBSCRIPTION-PAYMENT-05", "PAY-SUBSCRIPTION-PAYMENT-06", "PAY-SUBSCRIPTION-PAYMENT-07"]
+		},
+		{
+			"id": "PAY-RULE-03",
+			"name": "1차 주 결제 수단 필수",
+			"rule": "정기 결제 신청 시 1차 주 결제 수단은 필수이며 삭제할 수 없다.",
+			"applies_to": ["PAY-SUBSCRIPTION-PAYMENT-01", "PAY-SUBSCRIPTION-PAYMENT-07"]
+		},
+		{
+			"id": "PAY-RULE-04",
+			"name": "원 결제 수단 환불",
+			"rule": "취소/환불은 원 결제 수단으로 반환하는 것을 원칙으로 하며, 불가 시 동일 명의 계좌 환불로 처리한다.",
+			"applies_to": ["PAY-SUBSCRIPTION-PAYMENT-08"]
+		}
+	],
+	"global_unknowns": [
+		"정책서에는 화면 ID, IA 경로, URL, 최종 화면명이 없다.",
+		"정책서에는 WDS 컴포넌트 코드와 직접 매핑되는 component id가 없다.",
+		"정책서에는 실제 스토리보드/Figma 기준의 섹션 순서와 픽셀 실측값이 없다.",
+		"정책서에는 상품/구독/결제 수단의 실제 mock 데이터 예시가 부족하다.",
+		"정책서에는 API 호출 단위와 화면 상태 전이의 프론트엔드 경계가 명시되어 있지 않다."
+	],
+	"recommended_next_steps": [
+		"이 draft 중 1개 화면을 선택해 정식 data/screens 포맷에 가까운 화면 사양서로 승격한다.",
+		"결제 입력/상태/동의 패턴을 pay-kit 후보로 둘지, WDS 직접 조립으로 둘지 결정한다.",
+		"PoC 화면은 payment-method-register 또는 recurring-payment-status 중 하나를 우선 구현한다.",
+		"구현 후 360px 모바일 viewport에서 home-kit 톤과 결제 업무 UI의 밀도가 맞는지 검증한다."
+	]
+}

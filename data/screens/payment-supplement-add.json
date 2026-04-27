@@ -1,0 +1,63 @@
+{
+	"meta": {
+		"screen_id": "payment-supplement-add",
+		"screen_name": "보조 결제 수단 추가",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"source_policy_title": "[수정완료] Tobe_결제 프로세스 설계 및 결제 수단 관리",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "보조 결제 수단을 추가할 수 있어요",
+			"frame_position": 3
+		},
+		"policy_refs": ["3.1.2", "3.1.2.1", "3.1.2.2", "ACT_결제_PTY_02"],
+		"scope": "주 결제 수단 등록 후 진입. T+포인트·쿠폰·이용권을 골라 보조 수단으로 등록하거나 건너뛰기 가능."
+	},
+	"purpose": "보조 결제 수단 옵션(T+포인트·쿠폰·이용권)을 한 화면에서 토글·요약 확인하고 각 상세 화면으로 이동한다.",
+	"sections": [
+		{
+			"id": "header",
+			"type": "navigation",
+			"title": "보조 결제 수단 추가",
+			"slots": ["back", "건너뛰기"]
+		},
+		{
+			"id": "primary-summary",
+			"type": "summary-card",
+			"title": "주 결제 수단",
+			"description": "이전 단계에서 등록한 주 결제 수단 미리보기"
+		},
+		{
+			"id": "supplement-options",
+			"type": "selection-cards",
+			"title": "보조 수단 선택",
+			"items": [
+				{ "id": "tplus", "label": "T+포인트", "value_preview": "잔여 12,340P", "navigates_to": "payment-tplus-setting" },
+				{ "id": "coupon", "label": "쿠폰", "value_preview": "사용 가능한 쿠폰 5장", "navigates_to": "payment-coupon-select" },
+				{ "id": "voucher", "label": "이용권", "value_preview": "보유 이용권 2장", "navigates_to": "payment-voucher-select" }
+			]
+		},
+		{
+			"id": "constraint-notice",
+			"type": "notice",
+			"title": "복합 사용 제한",
+			"description": "쿠폰과 이용권은 함께 사용할 수 없어요. 선물하기 상품은 쿠폰·이용권 사용 불가."
+		},
+		{
+			"id": "primary-cta",
+			"type": "sticky-footer",
+			"slots": ["다음"]
+		}
+	],
+	"scenarios": [
+		{ "case": "쿠폰과 이용권 동시 적용 시도", "result": "Pop-up: 쿠폰과 이용권은 함께 사용할 수 없습니다" },
+		{ "case": "선물하기 상품에 쿠폰/이용권 적용 시도", "result": "사용 불가 안내 처리" },
+		{ "case": "건너뛰기 선택", "result": "주 결제 수단만으로 결제 동의 화면으로 이동" }
+	],
+	"data_inputs": ["주 결제 수단", "T+포인트 잔액", "사용 가능 쿠폰/이용권 목록", "구독 상품 유형"],
+	"data_outputs": ["선택된 보조 수단 목록"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["home-kit/Card", "home-kit/ListRow", "home-kit/PillChip"],
+		"cta": "pilot-kit/ButtonCallToActionPilot (sticky)"
+	}
+}

@@ -1,0 +1,59 @@
+{
+	"meta": {
+		"screen_id": "payment-coupon-select",
+		"screen_name": "쿠폰 선택",
+		"source_policy_url": "https://www.notion.so/34cde7542a488068a54ddb04c4e5d996",
+		"source_policy_title": "[수정완료] Tobe_결제 프로세스 설계 및 결제 수단 관리",
+		"figma": {
+			"file_key": "5Oj0j8u5GRevznVulQL87N",
+			"frame_label": "보조 결제 수단을 추가할 수 있어요 — 쿠폰 상세",
+			"frame_position": 3
+		},
+		"policy_refs": ["3.1.2.2", "ACT_결제_PTY_02_02"],
+		"scope": "사용 가능한 쿠폰 목록을 보여주고 1장을 적용 (이용권과 동시 사용 불가)"
+	},
+	"purpose": "사용 가능한 쿠폰 목록에서 한 장을 선택해 적용한다.",
+	"sections": [
+		{
+			"id": "header",
+			"type": "navigation",
+			"title": "쿠폰 선택",
+			"slots": ["back"]
+		},
+		{
+			"id": "coupon-list",
+			"type": "selection-list",
+			"title": "사용 가능한 쿠폰",
+			"item_template": ["쿠폰명", "할인 금액·할인율", "사용 조건", "유효기간"]
+		},
+		{
+			"id": "unavailable-list",
+			"type": "list",
+			"title": "사용 불가 쿠폰",
+			"item_template": ["쿠폰명", "사용 불가 사유 (예: 선물하기 제외, 최소 결제 금액 미달)"]
+		},
+		{
+			"id": "exclusive-notice",
+			"type": "notice",
+			"title": "이용권과 함께 사용 불가",
+			"description": "쿠폰과 이용권은 동시 사용할 수 없어요. 이용권을 적용하려면 쿠폰을 해제하세요."
+		},
+		{
+			"id": "primary-cta",
+			"type": "sticky-footer",
+			"slots": ["적용하기"]
+		}
+	],
+	"scenarios": [
+		{ "case": "이미 이용권 적용된 상태에서 쿠폰 선택", "result": "Pop-up — 쿠폰과 이용권은 함께 사용할 수 없습니다" },
+		{ "case": "최초 결제 0원 쿠폰 적용", "result": "주 결제 수단 추후 등록 가능 (다음 정기결제일 전)" },
+		{ "case": "이용 중인 쿠폰 변경/삭제 시도", "result": "변경·삭제 불가 안내" }
+	],
+	"data_inputs": ["사용 가능 쿠폰 목록", "사용 불가 쿠폰 목록", "현재 이용권 적용 여부"],
+	"data_outputs": ["선택된 쿠폰 ID", "적용 후 잔여 결제 금액"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["home-kit/Card", "home-kit/ListRow", "home-kit/PillChip", "home-kit/StatBadge"],
+		"cta": "pilot-kit/ButtonCallToActionPilot (sticky)"
+	}
+}
