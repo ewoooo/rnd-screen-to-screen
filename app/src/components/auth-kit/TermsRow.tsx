@@ -59,7 +59,7 @@ const rowStyle: CSSProperties = {
 const rowEmphStyle: CSSProperties = {
 	...rowStyle,
 	padding: "var(--spacing-14) var(--spacing-16)",
-	background: "var(--semantic-fill-normal)",
+	background: "var(--semantic-background-normal-normal)",
 	borderRadius: 16,
 	border: `1px solid ${CARD_BORDER}`,
 	marginBottom: "var(--spacing-8)",
