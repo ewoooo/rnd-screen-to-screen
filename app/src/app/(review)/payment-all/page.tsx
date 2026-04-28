@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
-import { GNB_BORDER, T_BRAND } from "@/components/home-kit/tokens";
+import { GNB_BORDER, PAGE_BG, T_BRAND } from "@/components/home-kit/tokens";
 
 type ReviewItem = {
 	href: string;
@@ -85,7 +85,7 @@ function ReviewFrame({ item }: { item: ReviewItem }) {
 
 const pageStyle: CSSProperties = {
 	minHeight: "100vh",
-	background: "#FFFFFF",
+	background: PAGE_BG,
 	display: "flex",
 	flexDirection: "column",
 	gap: 24,
@@ -187,7 +187,7 @@ const phoneOuterStyle: CSSProperties = {
 	height: PHONE_H,
 	borderRadius: 32,
 	overflow: "hidden",
-	background: "#FFFFFF",
+	background: PAGE_BG,
 	border: `1px solid ${GNB_BORDER}`,
 	boxShadow: "0 16px 40px rgba(27, 11, 102, 0.12)",
 };
@@ -196,5 +196,5 @@ const iframeStyle: CSSProperties = {
 	width: "100%",
 	height: "100%",
 	border: "none",
-	background: "#FFFFFF",
+	background: PAGE_BG,
 };

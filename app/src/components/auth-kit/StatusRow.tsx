@@ -43,8 +43,7 @@ export function StatusRowList({ title, items }: { title?: string; items: readonl
 }
 
 const cardStyle: CSSProperties = {
-	background: "var(--semantic-background-normal, #fff)",
-	border: `1px solid ${GNB_BORDER}`,
+	background: "var(--semantic-fill-normal)",
 	borderRadius: 16,
 	padding: "var(--spacing-12) var(--spacing-16)",
 };
