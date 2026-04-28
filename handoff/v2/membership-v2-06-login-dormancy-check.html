@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v2 · 06. 로그인 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+	<style>.form-stack { display: flex; flex-direction: column; gap: var(--spacing-12); }</style>
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__back">‹</span><span class="detail-shell__title">로그인</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="pay-hero"><h1 class="pay-hero__title">T우주에
+로그인해 주세요</h1></div>
+					<div class="form-stack">
+						<div class="field-group"><label class="field-label">아이디</label><div class="field-input"><span class="field-input__value">junghoon99</span></div></div>
+						<div class="field-group"><label class="field-label">비밀번호</label><div class="field-input field-input--focused"><span class="field-input__value" style="letter-spacing: 4px;">•••••••••••</span></div></div>
+					</div>
+					<div class="aux-links"><span class="aux-links__item">아이디 찾기</span><span class="aux-links__sep">·</span><span class="aux-links__item">비밀번호 찾기</span><span class="aux-links__sep">·</span><span class="aux-links__item">회원가입</span></div>
+					<div class="info-box"><ul class="info-box__list"><li class="info-box__item">1년 이상 미접속 계정은 휴면 상태로 전환돼요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom"><div class="sticky-cta"><button class="sticky-cta__btn" type="button">로그인</button></div></div>
+		</div>
+	</div>
+</body>
+</html>
