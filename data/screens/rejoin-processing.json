@@ -1,0 +1,57 @@
+{
+	"meta": {
+		"screen_id": "rejoin-processing",
+		"screen_name": "재가입 완료",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-004-05"],
+		"scope": "기존 계정 복원 또는 신규 생성 결과와 복원 범위를 안내한다."
+	},
+	"purpose": "재가입이 정상 처리되었음을 강조하고 복원된 항목·신규 발급된 회원ID·자동 로그인 사실을 보여준다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "재가입 완료" },
+		{ "id": "result-icon", "type": "result-icon", "tone": "success", "value": "✓" },
+		{ "id": "headline", "type": "heading", "value": "다시 만나서\n반가워요" },
+		{ "id": "timestamp", "type": "subtitle", "value": "2026년 4월 28일 오후 2:55" },
+		{
+			"id": "detail-grid",
+			"type": "key-value",
+			"items": [
+				{ "key": "회원 상태", "value": "정상 회원", "tone": "violet" },
+				{ "key": "회원 ID", "value": "u-1820-0042 (복원)" },
+				{ "key": "처리 결과", "value": "정상" }
+			]
+		},
+		{
+			"id": "restored",
+			"type": "status-list",
+			"title": "복원 결과",
+			"items": [
+				{ "id": "profile", "label": "기본 프로필", "value": "복원 완료", "tone": "success" },
+				{ "id": "preference", "label": "관심 카테고리", "value": "복원 완료", "tone": "success" },
+				{ "id": "coupon", "label": "쿠폰·포인트", "value": "복원 불가", "tone": "warning" }
+			]
+		},
+		{
+			"id": "info",
+			"type": "info-box",
+			"bullets": [
+				"자동 로그인된 상태로 T우주 홈으로 이동해요.",
+				"복원되지 않은 항목은 다시 사용할 수 없어요.",
+				"이력 연계 결과는 마이페이지에서 확인할 수 있어요."
+			]
+		},
+		{ "id": "cta", "type": "sticky-footer", "value": "T우주 시작하기" }
+	],
+	"scenarios": [
+		{ "case": "복원 성공", "result": "정상 회원 진입" },
+		{ "case": "신규 생성", "result": "신규 회원ID 발급 + 진입" },
+		{ "case": "부분 복원", "result": "미복원 항목 강조 + 진입" }
+	],
+	"data_inputs": ["재가입 대상 확인", "기존 계정 정보", "약관동의 결과"],
+	"data_outputs": ["회원ID", "재가입 요청ID", "세션ID", "복원 범위"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/ResultIcon", "payment-kit/Hero", "payment-kit/DetailGrid", "auth-kit/StatusRowList", "payment-kit/InfoBox"],
+		"cta": "payment-kit/StickyCTA"
+	}
+}

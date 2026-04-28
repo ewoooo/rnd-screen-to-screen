@@ -1,0 +1,44 @@
+{
+	"meta": {
+		"screen_id": "withdrawal-processing",
+		"screen_name": "탈퇴 처리 중",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-003-05"],
+		"scope": "탈퇴 상태 전환 및 파기·법정보관 큐 등록을 진행 중임을 안내한다."
+	},
+	"purpose": "정상→탈퇴유예 상태 전환·세션 종료·데이터 분류 처리 단계를 시각적으로 보여준다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "탈퇴 처리 중" },
+		{ "id": "result-icon", "type": "result-icon", "tone": "warning", "value": "⟳" },
+		{ "id": "headline", "type": "heading", "value": "탈퇴를\n처리하고 있어요" },
+		{ "id": "subtitle", "type": "subtitle", "value": "잠시만 기다려 주세요. 화면을 닫지 마세요." },
+		{
+			"id": "progress",
+			"type": "status-list",
+			"items": [
+				{ "id": "state", "label": "회원 상태 전환", "value": "완료", "tone": "success" },
+				{ "id": "session", "label": "로그인 세션 종료", "value": "완료", "tone": "success" },
+				{ "id": "classify", "label": "데이터 분류(파기/보관)", "value": "진행 중" },
+				{ "id": "queue", "label": "후속 처리 큐 등록", "value": "대기 중" }
+			]
+		},
+		{
+			"id": "info",
+			"type": "info-box",
+			"bullets": [
+				"법정 보관 대상 데이터는 보관 기간이 지나면 자동 파기돼요.",
+				"처리 중 오류가 발생하면 자동으로 재시도해요."
+			]
+		}
+	],
+	"scenarios": [
+		{ "case": "정상 처리", "result": "탈퇴 결과 안내 화면 (withdrawal-complete)으로 이동" },
+		{ "case": "분류 실패", "result": "수동 검토 큐 등록 + 알림" }
+	],
+	"data_inputs": ["회원ID", "최종 동의 정보", "탈퇴 사유"],
+	"data_outputs": ["탈퇴 요청ID", "회원상태(탈퇴유예)", "철회 만료일", "파기 요청ID"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/ResultIcon", "payment-kit/Hero", "auth-kit/StatusRowList", "payment-kit/InfoBox"]
+	}
+}

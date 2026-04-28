@@ -26,7 +26,10 @@ const isScreenRoute = (pathname: string) => {
 
 // 다중 화면을 가로 스크롤로 비교하는 리뷰 페이지는 mobile-frame · GlobalVersionNav 둘 다 우회.
 const isFullscreenReviewRoute = (pathname: string) =>
-	pathname === "/payment-all" || pathname.startsWith("/payment-all/");
+	pathname === "/payment-all" ||
+	pathname.startsWith("/payment-all/") ||
+	pathname === "/membership-all" ||
+	pathname.startsWith("/membership-all/");
 
 const RootLayout = ({ children }: PropsWithChildren) => (
 	<html lang="ko" suppressHydrationWarning>

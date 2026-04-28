@@ -1,0 +1,48 @@
+{
+	"meta": {
+		"screen_id": "dormancy-check",
+		"screen_name": "휴면 여부 확인",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-002-02"],
+		"scope": "1년 미접속으로 휴면 전환된 계정임을 알리고, 본인확인·약관 재동의 후 해제 가능 여부를 안내한다."
+	},
+	"purpose": "휴면 상태와 해제 조건(본인인증 + 약관 재동의)을 안내하고 해제 진행 여부를 사용자가 결정한다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "휴면 계정 안내" },
+		{ "id": "result-icon", "type": "result-icon", "tone": "warning", "value": "💤" },
+		{ "id": "headline", "type": "heading", "value": "휴면 상태\n계정이에요" },
+		{ "id": "subtitle", "type": "subtitle", "value": "1년 이상 미접속으로 휴면 처리된 계정이에요. 본인확인 후 다시 사용할 수 있어요." },
+		{
+			"id": "detail-grid",
+			"type": "key-value",
+			"items": [
+				{ "key": "회원 상태", "value": "휴면", "tone": "violet" },
+				{ "key": "휴면 전환일", "value": "2025.04.10" },
+				{ "key": "마지막 접속", "value": "2024.04.09" }
+			]
+		},
+		{
+			"id": "info",
+			"type": "info-box",
+			"title": "휴면 해제 조건",
+			"bullets": [
+				"본인인증을 진행해요.",
+				"이용약관·개인정보 처리방침에 다시 동의해요.",
+				"분리 보관된 개인정보는 해제와 함께 복원돼요."
+			]
+		},
+		{ "id": "cta", "type": "sticky-footer", "value": "휴면 해제 진행하기" }
+	],
+	"scenarios": [
+		{ "case": "해제 가능", "result": "본인인증 화면으로 이동" },
+		{ "case": "해제 불가 (제한 회원 등)", "result": "사유 안내 + 고객센터 링크" },
+		{ "case": "조회 실패", "result": "재시도 안내" }
+	],
+	"data_inputs": ["회원ID", "회원상태조회 결과"],
+	"data_outputs": ["해제 가능 여부", "필수 처리 항목(본인인증, 약관동의)", "해제 불가 사유"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/ResultIcon", "payment-kit/Hero", "payment-kit/DetailGrid", "payment-kit/InfoBox"],
+		"cta": "payment-kit/StickyCTA"
+	}
+}

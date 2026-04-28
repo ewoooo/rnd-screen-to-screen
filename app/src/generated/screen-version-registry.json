@@ -1,7 +1,7 @@
 {
   "meta": {
     "purpose": "화면별 구현 버전 등록 — 자동 생성. 손으로 편집하지 말 것.",
-    "generated_at": "2026-04-27T04:04:28.775Z",
+    "generated_at": "2026-04-28T00:52:00.043Z",
     "generator": "app/scripts/generate-screen-registry.mjs",
     "source_pattern": "app/src/app/<screen>/v*-*/page.tsx",
     "do_not_edit": true
@@ -106,6 +106,63 @@
           "label": "v8 · homekit",
           "route": "/discover/v8-homekit",
           "path": "app/src/app/discover/v8-homekit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dormancy-check",
+      "route": "/dormancy-check",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/dormancy-check/v1-kit",
+          "path": "app/src/app/dormancy-check/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dormancy-recovery",
+      "route": "/dormancy-recovery",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/dormancy-recovery/v1-kit",
+          "path": "app/src/app/dormancy-recovery/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dormancy-recovery-complete",
+      "route": "/dormancy-recovery-complete",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/dormancy-recovery-complete/v1-kit",
+          "path": "app/src/app/dormancy-recovery-complete/v1-kit",
           "files": [
             "_mock.ts",
             "page.tsx"
@@ -249,6 +306,44 @@
           "label": "v1 · kit",
           "route": "/home-senior/v1-kit",
           "path": "app/src/app/home-senior/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "login",
+      "route": "/login",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/login/v1-kit",
+          "path": "app/src/app/login/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "membership-validation",
+      "route": "/membership-validation",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/membership-validation/v1-kit",
+          "path": "app/src/app/membership-validation/v1-kit",
           "files": [
             "_mock.ts",
             "page.tsx"
@@ -516,6 +611,63 @@
       ]
     },
     {
+      "id": "rejoin-eligibility",
+      "route": "/rejoin-eligibility",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/rejoin-eligibility/v1-kit",
+          "path": "app/src/app/rejoin-eligibility/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rejoin-history-check",
+      "route": "/rejoin-history-check",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/rejoin-history-check/v1-kit",
+          "path": "app/src/app/rejoin-history-check/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rejoin-processing",
+      "route": "/rejoin-processing",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/rejoin-processing/v1-kit",
+          "path": "app/src/app/rejoin-processing/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
       "id": "search-01",
       "route": "/search-01",
       "latest": "v1-kit",
@@ -725,6 +877,63 @@
       ]
     },
     {
+      "id": "signup-info-form",
+      "route": "/signup-info-form",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/signup-info-form/v1-kit",
+          "path": "app/src/app/signup-info-form/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signup-processing",
+      "route": "/signup-processing",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/signup-processing/v1-kit",
+          "path": "app/src/app/signup-processing/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signup-terms",
+      "route": "/signup-terms",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/signup-terms/v1-kit",
+          "path": "app/src/app/signup-terms/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
       "id": "subscription-canceled",
       "route": "/subscription-canceled",
       "latest": "v1-mockup",
@@ -736,6 +945,120 @@
           "label": "v1 · mockup",
           "route": "/subscription-canceled/v1-mockup",
           "path": "app/src/app/subscription-canceled/v1-mockup",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verification-identity",
+      "route": "/verification-identity",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/verification-identity/v1-kit",
+          "path": "app/src/app/verification-identity/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withdrawal-complete",
+      "route": "/withdrawal-complete",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/withdrawal-complete/v1-kit",
+          "path": "app/src/app/withdrawal-complete/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withdrawal-final-consent",
+      "route": "/withdrawal-final-consent",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/withdrawal-final-consent/v1-kit",
+          "path": "app/src/app/withdrawal-final-consent/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withdrawal-pre-notice",
+      "route": "/withdrawal-pre-notice",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/withdrawal-pre-notice/v1-kit",
+          "path": "app/src/app/withdrawal-pre-notice/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withdrawal-processing",
+      "route": "/withdrawal-processing",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/withdrawal-processing/v1-kit",
+          "path": "app/src/app/withdrawal-processing/v1-kit",
+          "files": [
+            "_mock.ts",
+            "page.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "withdrawal-reason-input",
+      "route": "/withdrawal-reason-input",
+      "latest": "v1-kit",
+      "versions": [
+        {
+          "id": "v1-kit",
+          "num": 1,
+          "approach": "kit",
+          "label": "v1 · kit",
+          "route": "/withdrawal-reason-input/v1-kit",
+          "path": "app/src/app/withdrawal-reason-input/v1-kit",
           "files": [
             "_mock.ts",
             "page.tsx"

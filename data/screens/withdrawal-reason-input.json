@@ -1,0 +1,61 @@
+{
+	"meta": {
+		"screen_id": "withdrawal-reason-input",
+		"screen_name": "탈퇴 사유 입력",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-003-02"],
+		"scope": "탈퇴 사유를 카테고리에서 선택하고, 기타는 자유 텍스트로 최대 500자까지 입력받는다."
+	},
+	"purpose": "탈퇴 사유 코드(+ 기타 의견)를 수집하여 분석에 활용하고 다음 단계 CTA 활성 여부를 결정한다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "탈퇴 사유" },
+		{ "id": "step", "type": "step-bar", "index": 0, "total": 3 },
+		{ "id": "headline", "type": "heading", "value": "탈퇴하시는 이유가\n무엇인가요?" },
+		{ "id": "lead", "type": "subtitle", "value": "더 나은 서비스를 위해 알려주세요. (1개 이상 선택)" },
+		{
+			"id": "reasons",
+			"type": "reason-list",
+			"items": [
+				{ "key": "price", "label": "가격이 부담돼요", "checked": true },
+				{ "key": "use-low", "label": "이용 빈도가 낮아요" },
+				{ "key": "alt-service", "label": "다른 서비스로 옮겨요" },
+				{ "key": "ux", "label": "사용이 불편해요" },
+				{ "key": "trouble", "label": "오류·결제 문제가 있었어요" },
+				{ "key": "etc", "label": "기타 (직접 입력)" }
+			]
+		},
+		{
+			"id": "etc-text",
+			"type": "textarea",
+			"label": "자유 의견 (선택)",
+			"placeholder": "더 자세한 의견을 들려주세요. (최대 500자)",
+			"max": 500,
+			"current": 0
+		},
+		{
+			"id": "info",
+			"type": "info-box",
+			"bullets": [
+				"의견은 익명으로 분석에 활용돼요.",
+				"부적절한 표현은 자동 필터링될 수 있어요."
+			]
+		},
+		{ "id": "cta", "type": "sticky-footer", "value": "다음" }
+	],
+	"scenarios": [
+		{ "case": "사유 선택 + 다음", "result": "탈퇴 전 안내 화면으로 이동" },
+		{ "case": "기타 선택만 + 텍스트 비어있음", "result": "CTA 비활성" },
+		{ "case": "텍스트 500자 초과", "result": "초과분 차단 + 카운터 강조" },
+		{ "case": "금칙어 포함", "result": "필터 안내 + 수정 요청" }
+	],
+	"data_inputs": ["사유 선택(다중)", "기타 의견 텍스트"],
+	"data_outputs": ["탈퇴 사유 코드", "기타 의견", "사유 저장ID"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/StepBar", "payment-kit/Hero", "auth-kit/CheckList(inline)", "auth-kit/CharCountTextarea(inline)", "payment-kit/InfoBox"],
+		"cta": "payment-kit/StickyCTA"
+	},
+	"strain_notes": [
+		"신규 어휘 후보: CheckList(체크박스+라벨 다중선택), CharCountTextarea. 결제도메인에 없음. 가입/탈퇴/약관 모두 체크박스 다중선택을 쓰므로 auth-kit으로 승격."
+	]
+}

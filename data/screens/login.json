@@ -1,0 +1,49 @@
+{
+	"meta": {
+		"screen_id": "login",
+		"screen_name": "로그인",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-002-01"],
+		"scope": "아이디/비밀번호로 로그인하고, 회원 상태(정상/휴면/탈퇴/제한)에 따른 후속 경로를 결정한다."
+	},
+	"purpose": "정상이면 세션 생성, 휴면이면 휴면 해제 플로우로 분기, 탈퇴이면 재가입 안내로 분기.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "로그인" },
+		{ "id": "headline", "type": "heading", "value": "T우주에\n로그인해 주세요" },
+		{
+			"id": "form",
+			"type": "form",
+			"fields": [
+				{ "key": "userId", "label": "아이디", "placeholder": "아이디 또는 이메일" },
+				{ "key": "password", "label": "비밀번호", "placeholder": "비밀번호", "type": "password" }
+			]
+		},
+		{
+			"id": "links",
+			"type": "link-row",
+			"items": ["아이디 찾기", "비밀번호 찾기", "회원가입"]
+		},
+		{
+			"id": "info",
+			"type": "info-box",
+			"bullets": [
+				"5회 이상 비밀번호 오류 시 일정 시간 로그인이 제한돼요.",
+				"1년 이상 미접속 계정은 휴면 상태로 전환돼요."
+			]
+		},
+		{ "id": "cta", "type": "sticky-footer", "value": "로그인" }
+	],
+	"scenarios": [
+		{ "case": "정상 회원", "result": "로그인 성공, 세션 생성" },
+		{ "case": "휴면 회원", "result": "휴면 여부 확인 화면(dormancy-check)으로 이동" },
+		{ "case": "탈퇴 회원", "result": "재가입 가능 여부 안내 (rejoin-eligibility)" },
+		{ "case": "비밀번호 불일치 5회", "result": "일정 시간 로그인 제한" }
+	],
+	"data_inputs": ["아이디", "비밀번호", "채널", "로그인 시도일시"],
+	"data_outputs": ["회원상태코드", "휴면여부", "로그인세션ID", "다음 경로"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/Hero", "payment-kit/FieldGroup+FieldInput", "auth-kit/LinkRow(inline)", "payment-kit/InfoBox"],
+		"cta": "payment-kit/StickyCTA"
+	}
+}

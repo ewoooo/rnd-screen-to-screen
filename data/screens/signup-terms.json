@@ -1,0 +1,64 @@
+{
+	"meta": {
+		"screen_id": "signup-terms",
+		"screen_name": "약관 동의",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-001-01", "PG-MBR-TERM-001", "POL-MBR-TERM-001-06", "POL-MBR-TERM-001-07", "POL-MBR-TERM-001-10"],
+		"scope": "회원 가입에 필요한 약관(필수·선택)을 확인하고 동의를 받는다."
+	},
+	"purpose": "필수 약관 동의는 강제하고 선택 약관은 개별 토글하며, 만 14세 미만이면 법정대리인 동의 화면으로 분기한다.",
+	"sections": [
+		{ "id": "header", "type": "navigation", "title": "약관 동의" },
+		{ "id": "headline", "type": "heading", "value": "T우주 시작을 위해\n약관에 동의해 주세요" },
+		{ "id": "lead", "type": "subtitle", "value": "필수 약관에 동의해야 가입을 진행할 수 있어요." },
+		{
+			"id": "agree-all",
+			"type": "agree-all-row",
+			"label": "전체 동의",
+			"sub": "선택 항목 동의를 포함합니다."
+		},
+		{
+			"id": "required-terms",
+			"type": "terms-list",
+			"label": "필수 약관",
+			"items": [
+				{ "key": "service", "label": "서비스 이용약관 (필수)", "required": true },
+				{ "key": "privacy", "label": "개인정보 수집·이용 동의 (필수)", "required": true }
+			]
+		},
+		{
+			"id": "optional-terms",
+			"type": "terms-list",
+			"label": "선택 약관",
+			"items": [
+				{ "key": "marketing", "label": "마케팅 정보 수신 동의 (선택)", "required": false },
+				{ "key": "personalized", "label": "맞춤형 혜택 제공 동의 (선택)", "required": false }
+			]
+		},
+		{
+			"id": "guardian-notice",
+			"type": "info-box",
+			"bullets": [
+				"만 14세 미만 고객은 법정대리인 동의가 필요해요.",
+				"동의한 약관 버전은 동의이력에 저장돼요."
+			]
+		},
+		{ "id": "cta", "type": "sticky-footer", "value": "동의하고 계속하기" }
+	],
+	"scenarios": [
+		{ "case": "필수 + 선택 모두 동의", "result": "다음 단계(개인정보 입력)로 이동" },
+		{ "case": "필수만 동의", "result": "다음 단계 진행, 선택 항목 미동의 상태 저장" },
+		{ "case": "필수 약관 미동의", "result": "CTA 비활성, 누락 항목 강조 (POL-MBR-TERM-001-06)" },
+		{ "case": "만 14세 미만 식별", "result": "법정대리인 동의 화면으로 redirect (FN-MBR-COM-004)" }
+	],
+	"data_inputs": ["약관별 동의 여부", "약관 버전(노출 시점 최신)"],
+	"data_outputs": ["동의이력ID", "약관동의 상태", "다음 단계 허용 플래그"],
+	"ui_mapping": {
+		"shell": "search-kit/DetailShell",
+		"sections": ["payment-kit/Hero", "auth-kit/TermsAgreeAllRow", "auth-kit/TermsListGroup", "payment-kit/InfoBox"],
+		"cta": "payment-kit/StickyCTA → pilot-kit/ButtonCallToActionPilot"
+	},
+	"strain_notes": [
+		"신규 어휘: TermsAgreeAllRow, TermsListGroup. 결제 도메인의 ActionRow + checkbox 조합으로 풀 수도 있으나, 약관 토글 + 본문 보기 링크 + required 마크 의미가 반복되므로 auth-kit으로 분리."
+	]
+}
