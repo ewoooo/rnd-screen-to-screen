@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { MethodToggle } from "@/components/auth-kit";
+import { ActionChip, MethodToggle } from "@/components/auth-kit";
 import {
 	FieldGroup,
 	FieldInput,
@@ -11,40 +11,9 @@ import {
 	StepBar,
 	StickyCTA,
 } from "@/components/payment-kit";
-import { T_BRAND } from "@/components/payment-kit/tokens";
 import { DetailShell } from "@/components/search-kit";
 
 import { verificationIdentityV1KitMock as mock } from "./_mock";
-
-const linkChip = (label: string) => (
-	<span
-		style={{
-			fontSize: 13,
-			fontWeight: 700,
-			color: T_BRAND,
-			padding: "6px 12px",
-			borderRadius: 999,
-			background: "rgba(94,63,247,0.08)",
-			whiteSpace: "nowrap",
-		}}
-	>
-		{label}
-	</span>
-);
-
-const timerChip = (label: string) => (
-	<span
-		style={{
-			fontSize: 13,
-			fontWeight: 700,
-			color: T_BRAND,
-			fontVariantNumeric: "tabular-nums",
-			whiteSpace: "nowrap",
-		}}
-	>
-		{label}
-	</span>
-);
 
 export default function VerificationIdentityV1KitPage() {
 	return (
@@ -60,7 +29,7 @@ export default function VerificationIdentityV1KitPage() {
 						<FieldLabel>{mock.channel.label}</FieldLabel>
 						<FieldInput
 							value={mock.channel.value}
-							trailing={linkChip(mock.channel.trailing)}
+							trailing={<ActionChip label={mock.channel.trailing} />}
 						/>
 					</FieldGroup>
 					<FieldGroup>
@@ -69,7 +38,7 @@ export default function VerificationIdentityV1KitPage() {
 							value={mock.code.value}
 							focused
 							letterSpacing={6}
-							trailing={timerChip(mock.code.timer)}
+							trailing={<ActionChip label={mock.code.timer} tone="plain" tabular />}
 						/>
 					</FieldGroup>
 				</div>

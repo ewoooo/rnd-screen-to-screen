@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
 
 import { FONT } from "@/components/home-kit";
-import { CARD_BORDER, T_BRAND } from "@/components/payment-kit/tokens";
+
+import { CheckIndicator } from "./CheckIndicator";
 
 type Item = { key: string; label: string; checked?: boolean };
 
@@ -14,7 +15,7 @@ export function CheckList({ items }: { items: readonly Item[] }) {
 		<div style={listStyle}>
 			{items.map((it) => (
 				<div key={it.key} style={rowStyle}>
-					<span style={it.checked ? checkOnStyle : checkOffStyle}>{it.checked ? "✓" : ""}</span>
+					<CheckIndicator checked={it.checked} />
 					<span
 						style={{
 							...FONT.listSub,
@@ -42,28 +43,4 @@ const rowStyle: CSSProperties = {
 	alignItems: "center",
 	gap: "var(--spacing-12)",
 	padding: "var(--spacing-12) var(--spacing-4)",
-};
-
-const checkBase: CSSProperties = {
-	width: 22,
-	height: 22,
-	borderRadius: 11,
-	display: "inline-flex",
-	alignItems: "center",
-	justifyContent: "center",
-	fontSize: 12,
-	fontWeight: 800,
-};
-
-const checkOnStyle: CSSProperties = {
-	...checkBase,
-	background: T_BRAND,
-	color: "#fff",
-};
-
-const checkOffStyle: CSSProperties = {
-	...checkBase,
-	background: "transparent",
-	color: "transparent",
-	border: `1.5px solid ${CARD_BORDER}`,
 };

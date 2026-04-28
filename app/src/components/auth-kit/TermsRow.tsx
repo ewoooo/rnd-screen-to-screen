@@ -3,6 +3,8 @@ import type { CSSProperties } from "react";
 import { FONT } from "@/components/home-kit";
 import { CARD_BORDER, T_BRAND } from "@/components/payment-kit/tokens";
 
+import { CheckIndicator } from "./CheckIndicator";
+
 type Props = {
 	label: string;
 	required?: boolean;
@@ -17,15 +19,13 @@ type Props = {
 export function TermsRow({ label, required, checked, emphasized }: Props) {
 	return (
 		<div style={emphasized ? rowEmphStyle : rowStyle}>
-			<span style={checked ? checkOnStyle : checkOffStyle}>{checked ? "✓" : ""}</span>
+			<CheckIndicator checked={checked} />
 			<span
 				style={{
 					...FONT.listSub,
 					flex: 1,
 					fontWeight: emphasized ? 700 : 500,
-					color: emphasized
-						? "var(--semantic-label-normal)"
-						: "var(--semantic-label-normal)",
+					color: "var(--semantic-label-normal)",
 				}}
 			>
 				{label}
@@ -63,28 +63,4 @@ const rowEmphStyle: CSSProperties = {
 	borderRadius: 16,
 	border: `1px solid ${CARD_BORDER}`,
 	marginBottom: "var(--spacing-8)",
-};
-
-const checkBase: CSSProperties = {
-	width: 22,
-	height: 22,
-	borderRadius: 11,
-	display: "inline-flex",
-	alignItems: "center",
-	justifyContent: "center",
-	fontSize: 12,
-	fontWeight: 800,
-};
-
-const checkOnStyle: CSSProperties = {
-	...checkBase,
-	background: T_BRAND,
-	color: "#fff",
-};
-
-const checkOffStyle: CSSProperties = {
-	...checkBase,
-	background: "transparent",
-	color: "transparent",
-	border: `1.5px solid ${CARD_BORDER}`,
 };

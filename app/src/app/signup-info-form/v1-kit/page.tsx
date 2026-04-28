@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 
+import { ActionChip } from "@/components/auth-kit";
 import {
 	FieldGroup,
 	FieldInput,
@@ -10,26 +11,9 @@ import {
 	StepBar,
 	StickyCTA,
 } from "@/components/payment-kit";
-import { T_BRAND } from "@/components/payment-kit/tokens";
 import { DetailShell } from "@/components/search-kit";
 
 import { signupInfoFormV1KitMock as mock } from "./_mock";
-
-const trailingChip = (label: string) => (
-	<span
-		style={{
-			fontSize: 13,
-			fontWeight: 700,
-			color: T_BRAND,
-			padding: "6px 12px",
-			borderRadius: 999,
-			background: "rgba(94,63,247,0.08)",
-			whiteSpace: "nowrap",
-		}}
-	>
-		{label}
-	</span>
-);
 
 export default function SignupInfoFormV1KitPage() {
 	return (
@@ -47,7 +31,7 @@ export default function SignupInfoFormV1KitPage() {
 						<FieldLabel>{mock.fields.userId.label}</FieldLabel>
 						<FieldInput
 							value={mock.fields.userId.value}
-							trailing={trailingChip(mock.fields.userId.trailing)}
+							trailing={<ActionChip label={mock.fields.userId.trailing} />}
 						/>
 					</FieldGroup>
 					<FieldGroup>
@@ -62,7 +46,7 @@ export default function SignupInfoFormV1KitPage() {
 						<FieldLabel>{mock.fields.email.label}</FieldLabel>
 						<FieldInput
 							value={mock.fields.email.value}
-							trailing={trailingChip(mock.fields.email.trailing)}
+							trailing={<ActionChip label={mock.fields.email.trailing} />}
 						/>
 					</FieldGroup>
 					<FieldGroup>
