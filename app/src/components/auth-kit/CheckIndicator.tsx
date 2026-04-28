@@ -29,7 +29,7 @@ const onStyle: CSSProperties = {
 
 const offStyle: CSSProperties = {
 	...baseStyle,
-	background: "transparent",
+	background: "var(--semantic-fill-normal)",
 	color: "transparent",
 	border: `1.5px solid ${CARD_BORDER}`,
 };

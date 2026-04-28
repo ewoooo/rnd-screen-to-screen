@@ -79,6 +79,24 @@ const Chrome = ({ children }: PropsWithChildren) => {
 	const wrap = !fullscreen && isScreenRoute(pathname);
 
 	if (fullscreen) {
+		// embed=1 (iframe 안 단독 화면): main이 viewport 전체 높이를 차지해야
+		// DetailShell의 height: 100%가 풀스크린으로 펼쳐짐. 그렇지 않으면
+		// 컨텐츠 높이만큼만 차지하고 body 흰 회색이 하단에 남음.
+		// review 라우트(/payment-all, /membership-all)는 자체 pageStyle을 갖고
+		// 가로 트랙이라 별도 레이아웃 제약 불필요.
+		if (embedded) {
+			return (
+				<main
+					style={{
+						height: "100vh",
+						display: "flex",
+						flexDirection: "column",
+					}}
+				>
+					{children}
+				</main>
+			);
+		}
 		return <main>{children}</main>;
 	}
 
