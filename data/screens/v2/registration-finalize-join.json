@@ -1,0 +1,20 @@
+{
+	"meta": {
+		"screen_id": "registration-finalize-join",
+		"screen_name": "가입 완료",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-001-05"],
+		"cluster": "join",
+		"v2_round": true
+	},
+	"purpose": "회원 계정 생성 완료 + 자동 로그인 + 가입 알림 결과를 한 화면에 표기한다.",
+	"sections": ["result-icon(success)", "heading", "timestamp", "detail-grid(회원ID/채널/결과)", "status-list(이메일/SMS 발송)", "info-box", "sticky-cta"],
+	"scenarios": [
+		{ "case": "정상", "result": "자동 로그인 + 홈 진입" },
+		{ "case": "알림 실패", "result": "성공 화면 유지, 백엔드 재시도" },
+		{ "case": "계정 생성 실패", "result": "오류 안내 + 입력으로 롤백" }
+	],
+	"data_inputs": ["인증세션ID", "약관동의이력ID", "가입세션 입력값"],
+	"data_outputs": ["회원ID", "회원상태(정상)", "로그인세션ID"],
+	"ui_mapping": "payment-kit/ResultIcon + DetailGrid + auth-kit/StatusRowList + InfoBox"
+}

@@ -1,0 +1,19 @@
+{
+	"meta": {
+		"screen_id": "withdrawal-final-consent-v2",
+		"screen_name": "탈퇴 최종 동의",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-003-04"],
+		"cluster": "withdrawal",
+		"v2_round": true
+	},
+	"purpose": "탈퇴 의사 최종 확인 + 7일 철회 유예 + 개인정보 처리 동의.",
+	"sections": ["step-bar", "heading", "info-box(철회 가능 기간)", "info-box(개인정보 처리)", "consent-list(2)", "sticky-cta"],
+	"scenarios": [
+		{ "case": "두 항목 체크", "result": "탈퇴 처리로 진행" },
+		{ "case": "한 항목 미체크", "result": "CTA 비활성" }
+	],
+	"data_inputs": ["동의 체크(2)", "철회 유예기간"],
+	"data_outputs": ["최종 동의 상태", "철회 만료일", "동의이력ID"],
+	"ui_mapping": "payment-kit/InfoBox×2 + auth-kit/TermsRow×2"
+}

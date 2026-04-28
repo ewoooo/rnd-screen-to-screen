@@ -1,0 +1,21 @@
+{
+	"meta": {
+		"screen_id": "member-validation-join",
+		"screen_name": "회원 검증",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-001-04", "PG-MBR-JOIN-001"],
+		"cluster": "join",
+		"v2_round": true
+	},
+	"purpose": "본인인증 결과로 기존 가입·휴면·탈퇴·제한 상태를 판정해 후속 경로를 결정한다.",
+	"sections": ["result-icon", "heading", "subtitle", "detail-grid(상태/판정코드)", "info-box", "sticky-cta"],
+	"scenarios": [
+		{ "case": "신규가입 가능", "result": "가입 처리로 진행" },
+		{ "case": "기존 정상 회원", "result": "로그인 유도" },
+		{ "case": "휴면 회원", "result": "휴면 해제 플로우 진입" },
+		{ "case": "탈퇴 회원 - 재가입 제한", "result": "제한 종료일 안내" }
+	],
+	"data_inputs": ["CI/DI", "인증세션ID"],
+	"data_outputs": ["가입가능여부", "판정사유 코드", "전환 업무"],
+	"ui_mapping": "payment-kit/ResultIcon + DetailGrid + InfoBox"
+}

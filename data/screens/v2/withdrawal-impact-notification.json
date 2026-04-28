@@ -1,0 +1,19 @@
+{
+	"meta": {
+		"screen_id": "withdrawal-impact-notification",
+		"screen_name": "탈퇴 전 안내",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-003-03"],
+		"cluster": "withdrawal",
+		"v2_round": true
+	},
+	"purpose": "자산 소멸·미납·연결 서비스 영향을 안내하고 사용자 확인을 받는다.",
+	"sections": ["step-bar", "heading", "detail-grid(자산)", "info-box(처리 사항)", "info-box(연결 서비스)", "consent-row", "sticky-cta"],
+	"scenarios": [
+		{ "case": "확인 체크 + 미납 0", "result": "최종 동의로 진행" },
+		{ "case": "미납 존재", "result": "결제 안내 + CTA 비활성" }
+	],
+	"data_inputs": ["회원ID", "보유 자산", "미납 정보"],
+	"data_outputs": ["안내 완료 여부", "확인 항목 이력"],
+	"ui_mapping": "payment-kit/DetailGrid + InfoBox + auth-kit/TermsRow(emph)"
+}

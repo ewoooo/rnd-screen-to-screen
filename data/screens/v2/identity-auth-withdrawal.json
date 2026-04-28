@@ -1,0 +1,19 @@
+{
+	"meta": {
+		"screen_id": "identity-auth-withdrawal",
+		"screen_name": "본인인증 (탈퇴)",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-003-01"],
+		"cluster": "withdrawal",
+		"v2_round": true
+	},
+	"purpose": "탈퇴 진입 시 별도 본인인증 게이트. 고위험 액션 직전 본인 확인.",
+	"sections": ["step-bar", "heading", "method-toggle", "channel-field", "code-field", "info-box(보안)", "sticky-cta"],
+	"scenarios": [
+		{ "case": "성공", "result": "사유 입력으로 진행" },
+		{ "case": "최대 실패", "result": "탈퇴 차단" }
+	],
+	"data_inputs": ["회원ID", "탈퇴 의도 신호"],
+	"data_outputs": ["인증결과", "인증세션ID"],
+	"ui_mapping": "auth-kit/MethodToggle + payment-kit/Field + auth-kit/ActionChip"
+}

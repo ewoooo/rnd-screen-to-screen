@@ -1,0 +1,19 @@
+{
+	"meta": {
+		"screen_id": "dormancy-release-process",
+		"screen_name": "휴면 해제 처리 중",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-002-05"],
+		"cluster": "dormancy",
+		"v2_round": true
+	},
+	"purpose": "휴면→정상 상태 전환과 분리보관 데이터 복원을 진행 중임을 안내.",
+	"sections": ["result-icon(rotate)", "heading", "subtitle", "status-list(4단계)", "info-box"],
+	"scenarios": [
+		{ "case": "전체 복원", "result": "결과 안내 화면으로" },
+		{ "case": "부분 복원", "result": "복원 불가 항목 표기 후 진행" }
+	],
+	"data_inputs": ["회원ID", "재동의 이력ID"],
+	"data_outputs": ["해제 처리 상태", "복원 범위", "세션ID"],
+	"ui_mapping": "payment-kit/ResultIcon + auth-kit/StatusRowList + InfoBox"
+}

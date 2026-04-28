@@ -1,0 +1,19 @@
+{
+	"meta": {
+		"screen_id": "dormancy-status-check",
+		"screen_name": "휴면 여부 확인",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-002-02"],
+		"cluster": "dormancy",
+		"v2_round": true
+	},
+	"purpose": "1년 미접속으로 휴면 전환된 계정임을 알리고 본인인증·약관 재동의 후 해제 가능 여부를 안내한다.",
+	"sections": ["result-icon(💤)", "heading", "subtitle", "detail-grid(상태/전환일/마지막접속)", "info-box(해제조건)", "sticky-cta"],
+	"scenarios": [
+		{ "case": "해제 가능", "result": "본인인증(휴면) 화면으로 진행" },
+		{ "case": "해제 불가", "result": "사유 안내 + 고객센터" }
+	],
+	"data_inputs": ["회원ID", "회원상태조회 결과"],
+	"data_outputs": ["해제 가능 여부", "필수 처리 항목", "해제 불가 사유"],
+	"ui_mapping": "payment-kit/ResultIcon + DetailGrid + InfoBox"
+}

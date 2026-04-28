@@ -1,0 +1,19 @@
+{
+	"meta": {
+		"screen_id": "terms-reconsent-dormancy",
+		"screen_name": "약관 재동의 (휴면)",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-002-04"],
+		"cluster": "dormancy",
+		"v2_round": true
+	},
+	"purpose": "휴면 기간 중 변경된 약관에 대한 재동의를 받는다. 가입 시 약관 동의 화면과 어휘는 같으나 헤더·카피가 다름.",
+	"sections": ["heading", "agree-all-row", "required-terms", "optional-terms", "info-box(재동의 안내)", "sticky-cta"],
+	"scenarios": [
+		{ "case": "재동의 완료", "result": "휴면 해제 처리로 진행" },
+		{ "case": "필수 미동의", "result": "CTA 비활성" }
+	],
+	"data_inputs": ["인증세션ID", "변경된 약관 버전"],
+	"data_outputs": ["재동의 이력ID", "약관 동의 상태(갱신)"],
+	"ui_mapping": "auth-kit/TermsRow + InfoBox + StickyCTA"
+}

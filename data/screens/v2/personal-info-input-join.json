@@ -1,0 +1,20 @@
+{
+	"meta": {
+		"screen_id": "personal-info-input-join",
+		"screen_name": "개인정보 입력",
+		"source_policy_doc": "data/NC_정책서_Full_v1.0_확정본.html",
+		"policy_refs": ["PR-MBR-CS-001-02"],
+		"cluster": "join",
+		"v2_round": true
+	},
+	"purpose": "가입 기본 정보(이름·아이디·비밀번호·이메일·휴대폰)를 입력받고 형식·중복을 검증한다.",
+	"sections": ["step-bar", "heading", "form(6 fields)", "info-box", "sticky-cta"],
+	"scenarios": [
+		{ "case": "전 항목 통과", "result": "본인인증 화면으로 진행" },
+		{ "case": "중복 검출", "result": "인라인 에러, CTA 비활성" },
+		{ "case": "형식 오류", "result": "필드별 에러" }
+	],
+	"data_inputs": ["이름", "아이디", "비밀번호", "이메일", "휴대폰"],
+	"data_outputs": ["검증결과", "임시저장ID"],
+	"ui_mapping": "payment-kit/Field + StepBar + auth-kit/ActionChip(중복확인)"
+}

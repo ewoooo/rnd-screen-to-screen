@@ -29,7 +29,9 @@ const isFullscreenReviewRoute = (pathname: string) =>
 	pathname === "/payment-all" ||
 	pathname.startsWith("/payment-all/") ||
 	pathname === "/membership-all" ||
-	pathname.startsWith("/membership-all/");
+	pathname.startsWith("/membership-all/") ||
+	pathname === "/membership-v2-all" ||
+	pathname.startsWith("/membership-v2-all/");
 
 const RootLayout = ({ children }: PropsWithChildren) => (
 	<html lang="ko" suppressHydrationWarning>
