@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 16. 탈퇴 처리 중 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__title">탈퇴 처리 중</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot step-bar__dot--active"></span><span class="step-bar__dot"></span></div>
+					<div class="result-block">
+						<div class="result-icon result-icon--warning rotate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg></div>
+						<h1 class="result-block__title">탈퇴를 처리하고 있어요
+잠시만 기다려 주세요</h1>
+						<span class="result-block__sub">화면을 닫아도 처리는 계속 진행돼요.</span>
+					</div>
+					<div class="status-card">
+						<div class="status-card__title">진행 단계</div>
+						<div class="status-card__row"><span class="status-card__label">회원 상태 전환</span><span class="status-card__value status-card__value--success">완료</span></div>
+						<div class="status-card__row"><span class="status-card__label">로그인 세션 종료</span><span class="status-card__value status-card__value--success">진행 중</span></div>
+						<div class="status-card__row"><span class="status-card__label">개인정보 파기·보관 처리</span><span class="status-card__value">대기</span></div>
+						<div class="status-card__row"><span class="status-card__label">연계 서비스 후속 처리</span><span class="status-card__value">대기</span></div>
+					</div>
+					<div class="info-box"><ul class="info-box__list"><li class="info-box__item">탈퇴 처리에 따라 일부 항목은 분리 보관될 수 있어요.</li><li class="info-box__item">처리 결과 안내 화면이 자동으로 열려요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom"><div class="sticky-cta"><button class="sticky-cta__btn" type="button" disabled>처리 중...</button></div></div>
+		</div>
+	</div>
+</body>
+</html>

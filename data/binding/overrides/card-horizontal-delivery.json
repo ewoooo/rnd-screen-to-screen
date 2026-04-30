@@ -1,8 +1,0 @@
-{
-	"meta": { "purpose": "Figma card-horizontal-delivery → 카드 chrome 없는 row 컴포넌트", "fetched_at": "2026-04-24", "strategy": "FlexBox row 직접 사용 (Card 사용 안 함, 배경/보더 없음). thumbnail + info column + ButtonChipPilot." },
-	"mapping": {
-		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
-		"root": { "wds": "FlexBox row gap=14", "props": { "alignItems": "center", "width": 312 } },
-		"info_block": { "wds": "FlexBox column gap=2", "items": ["caption1 medium brand", "body2 bold name ellipsis", "caption1 medium address"] }
-	}
-}

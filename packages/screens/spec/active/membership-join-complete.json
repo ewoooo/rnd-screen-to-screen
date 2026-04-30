@@ -1,0 +1,132 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "active",
+		"route": "/membership-join-complete",
+		"source": "implemented-page"
+	},
+	"screen": {
+		"id": "membership-join-complete",
+		"name": "가입 완료",
+		"domain": "membership",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "가입 결과 확인 + 다음 행동 선택",
+		"info_hierarchy": [
+			"hero (완료 환영)",
+			"result-summary (가입 정보 카드)",
+			"supporting-notice (혜택 안내)",
+			"actions (홈 / 내정보)"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "one-card"
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "MembershipShell",
+				"patterns": ["MembershipTopBar"],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"MembershipHero",
+					"MembershipSummaryCard",
+					"MembershipNotice"
+				]
+			},
+			"bottom": {
+				"owner": "MembershipShell",
+				"patterns": ["MembershipResultActions"],
+				"flow": "reserved"
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": []
+	},
+	"areas": [
+		{
+			"id": "hero",
+			"slot": "content",
+			"pattern": "organisms/membership/MembershipHero",
+			"uses": ["ContentSection", "TextBlock", "ProgressIndicator"],
+			"layout": { "section_inset": "inherit" },
+			"content_role": "primary-copy"
+		},
+		{
+			"id": "summary",
+			"slot": "content",
+			"pattern": "organisms/membership/MembershipSummaryCard",
+			"uses": ["ContentSection", "SectionCard", "InfoList", "TextBlock"],
+			"layout": {
+				"section_inset": "inherit",
+				"trailing_semantic": "status"
+			},
+			"content_role": "result-summary"
+		},
+		{
+			"id": "benefit-notice",
+			"slot": "content",
+			"pattern": "organisms/membership/MembershipNotice",
+			"uses": ["ContentSection", "NoticeBlock", "TextBlock"],
+			"layout": { "section_inset": "inherit" },
+			"content_role": "supporting-notice"
+		},
+		{
+			"id": "actions",
+			"slot": "bottom",
+			"pattern": "organisms/membership/MembershipResultActions",
+			"uses": ["PrimaryCTABar", "Button"],
+			"content_role": "primary-action",
+			"layout": { "surface": "page-semi-gradient" }
+		}
+	],
+	"design_system_contract": {
+		"templates": [
+			"AppScreen",
+			"AppScreenContent",
+			"ContentOutlet",
+			"ContentList",
+			"ContentSection"
+		],
+		"organisms": ["membership"],
+		"molecules": [
+			"InfoList",
+			"NoticeBlock",
+			"PrimaryCTABar",
+			"SectionCard"
+		],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [
+			{
+				"location": "molecules/info-list/InfoList.tsx",
+				"kind": "raw-border",
+				"value": "borderBottom: 1px solid var(--semantic-line-solid-alternative)",
+				"reason": "row separator. WDS Divider로 흡수 검토 후보",
+				"owner": "molecule"
+			},
+			{
+				"location": "molecules/info-list/InfoList.tsx",
+				"kind": "raw-radius",
+				"value": "borderRadius: var(--spacing-16)",
+				"reason": "mediaIcon 박스 코너. spacing 토큰을 radius로 사용 — radius alias 후보",
+				"owner": "molecule"
+			}
+		],
+		"new_vocabulary_required": [
+			"organisms/membership/MembershipSummaryCard",
+			"organisms/membership/MembershipResultActions"
+		]
+	}
+}

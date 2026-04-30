@@ -1,9 +1,0 @@
-{
-	"meta": { "purpose": "Figma card-horizontal-product-pass → WDS Card secondary bg", "fetched_at": "2026-04-24" },
-	"mapping": {
-		"target_import": "import { Card, CardContent, CardTitle, FlexBox, Typography } from '@wanteddev/wds';",
-		"root": { "wds": "Card", "props": { "platform": "mobile", "flexDirection": "row", "gap": 20, "alignItems": "center", "width": 336, "sx": { "padding": "18px 20px 18px 24px", "borderRadius": 20, "background": "#f2f2f2", "boxShadow": "none" } } },
-		"text": { "wds": "FlexBox column gap=5 flex=1", "items": ["body2 bold name ellipsis", "row caption1 medium price + / + month"] },
-		"action": { "wds": "BtnTextPilot type=line weight=bold" }
-	}
-}

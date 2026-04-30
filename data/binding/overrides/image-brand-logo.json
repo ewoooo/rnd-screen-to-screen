@@ -1,9 +1,0 @@
-{
-	"meta": { "purpose": "Figma image/brand-logo (stacked logos) → 두 개 로고가 겹친 형태", "fetched_at": "2026-04-24", "strategy": "ImageBrandLogoRoundPilot 을 두 개 배치하고 negative margin 으로 겹침. size=s 시 우상단 +N 뱃지." },
-	"mapping": {
-		"target_import": "import { Typography } from '@wanteddev/wds';",
-		"root": { "wds": "div", "props": { "style": { "position": "relative", "display": "inline-flex" } } },
-		"logos": "ImageBrandLogoRoundPilot × 2 with marginRight negative",
-		"badge": { "wds": "div absolute top=-8 left=48 20×20 circle #4d4d4d", "text": "Typography caption2 bold #ffffff" }
-	}
-}

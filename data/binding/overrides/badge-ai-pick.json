@@ -1,9 +1,0 @@
-{
-	"meta": { "purpose": "Figma ico/ai (AI PICK label) → outlined badge", "fetched_at": "2026-04-24", "strategy": "WDS ContentBadge variant=outlined size=xsmall 시도 가능하나 색·radius 매칭 어려워 raw inline-flex div 로 1:1 구현. 추후 ContentBadge prop 보강되면 교체." },
-	"mapping": {
-		"target_import": "import { Typography } from '@wanteddev/wds';",
-		"root": "div inline-flex align center justify center, height 13, padding 0 4, border 1 solid #1a1a1a, borderRadius 3, background white",
-		"text": "Typography caption2 bold + sx fontSize 9 lineHeight 11 letterSpacing -0.3 color #1a1a1a"
-	},
-	"open_questions": ["WDS ContentBadge outlined-mono 정식 variant 확인 후 교체"]
-}

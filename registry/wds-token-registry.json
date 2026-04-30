@@ -691,6 +691,14 @@
 						}
 					}
 				},
+				"surface": {
+					"_project_extension": true,
+					"_note": "프로젝트 확장 — page-level chrome 표면 (Shell/ScreenChrome 배경). CSS var only. lib/brand-tokens.ts의 semanticSurface alias로 소비.",
+					"page": {
+						"normal": { "light": "#ffffff", "dark": "#ffffff" },
+						"semi": { "light": "rgba(255, 255, 255, 0.95)", "dark": "rgba(255, 255, 255, 0.95)" }
+					}
+				},
 				"static": {
 					"white": {
 						"light": "#ffffff",

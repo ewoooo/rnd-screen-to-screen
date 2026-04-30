@@ -1,8 +1,0 @@
-{
-	"meta": { "purpose": "Figma header (extras) → 화면 상단 chrome", "fetched_at": "2026-04-24", "strategy": "raw div outer + WDS IconButton(IconSearch) + ButtonIconPilot(cart with badge). gradient bg + backdrop-blur 직접 raw style." },
-	"mapping": {
-		"target_import": "import { FlexBox, IconButton } from '@wanteddev/wds'; import { IconSearch, IconBusinessBag } from '@wanteddev/wds-icon';",
-		"outer": "div display=flex justify-between alignItems=center padding=18 width=360 height=64 background=linear-gradient(...) backdropFilter=blur(20px)",
-		"trailing": "FlexBox row gap=12 — IconButton + IconSearch + ButtonIconPilot icon=IconBusinessBag badgeCount=N"
-	}
-}

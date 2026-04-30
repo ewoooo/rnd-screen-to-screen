@@ -1,0 +1,17 @@
+{
+  "name": "rnd-screen-to-screen",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:mobile": "npm run dev -w @screen/mobile",
+    "dev:preview": "npm run dev -w @screen/preview",
+    "build:mobile": "npm run build -w @screen/mobile",
+    "build:preview": "npm run build -w @screen/preview",
+    "lint:mobile": "npm run lint -w @screen/mobile",
+    "lint:preview": "npm run lint -w @screen/preview"
+  }
+}

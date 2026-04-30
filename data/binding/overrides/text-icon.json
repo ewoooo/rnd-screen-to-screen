@@ -1,8 +1,0 @@
-{
-	"meta": { "purpose": "Figma text-icon → 아이콘 + 짧은 텍스트 인라인", "fetched_at": "2026-04-24", "strategy": "FlexBox row gap=4. 아이콘은 ReactNode 슬롯, 텍스트는 caption1 medium." },
-	"mapping": {
-		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
-		"root": { "wds": "FlexBox row gap=4 alignItems=center" },
-		"items": ["icon slot", "Typography caption1 medium ellipsis"]
-	}
-}

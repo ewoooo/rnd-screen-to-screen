@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>08. 결제 처리 중 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<style>
+		.timeline {
+			display: flex;
+			flex-direction: column;
+			padding-top: var(--spacing-16);
+		}
+		.tl-item { display: flex; gap: var(--spacing-12); align-items: stretch; }
+		.tl-rail { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
+		.tl-dot {
+			width: 28px; height: 28px;
+			border-radius: 14px;
+			background: var(--t-brand);
+			color: #fff;
+			display: flex; align-items: center; justify-content: center;
+			font-size: 11px; font-weight: 700;
+		}
+		.tl-dot--current {
+			background: transparent;
+			border: 2px solid var(--t-brand);
+			color: var(--t-brand);
+		}
+		.tl-line {
+			width: 2px; flex: 1; min-height: 32px;
+			background: var(--t-brand);
+			margin: 4px 0;
+		}
+		.tl-line--pending {
+			background: var(--semantic-line-normal-normal);
+		}
+		.tl-text { display: flex; flex-direction: column; gap: 2px; padding: 4px 0 16px; }
+		.tl-title {
+			font-size: 13px; font-weight: 700;
+			color: var(--semantic-label-normal);
+		}
+		.tl-desc {
+			font-size: 12px;
+			color: var(--semantic-label-alternative);
+		}
+		.tl-desc--current {
+			color: var(--t-brand);
+			font-weight: 700;
+		}
+
+		.loading-block {
+			display: flex; flex-direction: column;
+			align-items: center;
+			gap: var(--spacing-12);
+			padding: var(--spacing-32) 0;
+		}
+		.loading-spinner {
+			width: 48px; height: 48px;
+			border-radius: 24px;
+			border: 4px solid var(--t-brand);
+			border-top-color: transparent;
+			animation: spin 1s linear infinite;
+		}
+		.loading-title {
+			font-size: 16px; font-weight: 600;
+			color: var(--semantic-label-normal);
+		}
+		.loading-sub {
+			font-size: 13px; font-weight: 700;
+			letter-spacing: -0.52px;
+			line-height: 1.3;
+			color: var(--semantic-label-alternative);
+			text-align: center;
+			white-space: pre-line;
+		}
+	</style>
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status">
+				<span>7:28</span>
+				<span class="ph" style="width: 56px; height: 14px;">status</span>
+			</div>
+			<div class="detail-shell__header">
+				<div class="detail-shell__head-left">
+					<span class="detail-shell__back">‹</span>
+					<span class="detail-shell__title">결제 처리 중</span>
+				</div>
+			</div>
+			<div class="detail-shell__body detail-shell__body--no-bottom">
+				<div class="pay-content">
+					<div class="timeline">
+						<div class="tl-item">
+							<div class="tl-rail">
+								<div class="tl-dot">✓</div>
+								<div class="tl-line"></div>
+							</div>
+							<div class="tl-text">
+								<span class="tl-title">1순위 · 쿠폰</span>
+								<span class="tl-desc">T우주 50% 할인쿠폰 → -6,950원</span>
+							</div>
+						</div>
+						<div class="tl-item">
+							<div class="tl-rail">
+								<div class="tl-dot">✓</div>
+								<div class="tl-line tl-line--pending"></div>
+							</div>
+							<div class="tl-text">
+								<span class="tl-title">2순위 · T+ 포인트</span>
+								<span class="tl-desc">5,000P 차감 → 잔여 1,950원</span>
+							</div>
+						</div>
+						<div class="tl-item">
+							<div class="tl-rail">
+								<div class="tl-dot tl-dot--current">·</div>
+							</div>
+							<div class="tl-text">
+								<span class="tl-title">3순위 · 신한카드 ••3721</span>
+								<span class="tl-desc tl-desc--current">처리 중… 1,950원</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="loading-block">
+						<div class="loading-spinner"></div>
+						<span class="loading-title">결제를 처리하고 있어요</span>
+						<span class="loading-sub">잠시만 기다려 주세요
+화면을 닫거나 뒤로 가지 마세요</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

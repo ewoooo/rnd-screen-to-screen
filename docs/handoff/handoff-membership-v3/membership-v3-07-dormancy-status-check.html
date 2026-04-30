@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 07. 휴면 여부 확인 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__back">‹</span><span class="detail-shell__title">휴면 안내</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot step-bar__dot--active"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span></div>
+					<div class="result-block">
+						<div class="result-icon result-icon--warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 7 12 13 16 15"/></svg></div>
+						<h1 class="result-block__title">휴면 상태로 전환된
+계정이에요</h1>
+						<span class="result-block__sub">개인정보 보호를 위해 1년간 미사용 계정은 휴면으로 전환돼요.</span>
+					</div>
+					<div class="status-card">
+						<div class="status-card__title">계정 상태</div>
+						<div class="status-card__row"><span class="status-card__label">최근 로그인</span><span class="status-card__value">2025.03.12</span></div>
+						<div class="status-card__row"><span class="status-card__label">휴면 전환일</span><span class="status-card__value">2026.03.12</span></div>
+						<div class="status-card__row"><span class="status-card__label">분리보관 정보</span><span class="status-card__value status-card__value--warning">존재</span></div>
+					</div>
+					<span class="text-section-label" style="padding-top: 4px;">해제하려면 다음 단계가 필요해요</span>
+					<div class="status-card">
+						<div class="status-card__row"><span class="status-card__label">1. 본인인증</span><span class="status-card__value">필수</span></div>
+						<div class="status-card__row"><span class="status-card__label">2. 변경된 약관 재동의</span><span class="status-card__value">필수</span></div>
+						<div class="status-card__row"><span class="status-card__label">3. 분리보관 데이터 복원</span><span class="status-card__value">자동</span></div>
+					</div>
+					<div class="info-box"><ul class="info-box__list"><li class="info-box__item">휴면 해제는 보통 1분 이내에 끝나요.</li><li class="info-box__item">법정 보관 기간이 지난 일부 정보는 복원되지 않을 수 있어요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom"><div class="sticky-cta"><button class="sticky-cta__btn" type="button">휴면 해제 시작하기</button></div></div>
+		</div>
+	</div>
+</body>
+</html>

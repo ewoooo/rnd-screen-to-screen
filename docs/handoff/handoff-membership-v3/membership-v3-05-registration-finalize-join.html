@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 05. 가입 완료 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+	<style>.chip-row { display: flex; gap: var(--spacing-8); flex-wrap: wrap; padding-top: var(--spacing-8); }
+	.chip-row .action-chip--fill { padding: 10px 16px; }</style>
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__title">가입 완료</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot step-bar__dot--active"></span></div>
+					<div class="result-block">
+						<div class="result-icon result-icon--success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></div>
+						<h1 class="result-block__title">가입을 완료했어요
+T우주에 오신 걸 환영해요</h1>
+						<span class="result-block__sub">회원 ID로 자동 로그인했어요. 곧 가입 완료 알림이 도착해요.</span>
+					</div>
+					<div class="status-card">
+						<div class="status-card__title">가입 처리 결과</div>
+						<div class="status-card__row"><span class="status-card__label">회원 ID</span><span class="status-card__value">UV-2026****0428</span></div>
+						<div class="status-card__row"><span class="status-card__label">가입일시</span><span class="status-card__value">2026.04.28 07:28</span></div>
+						<div class="status-card__row"><span class="status-card__label">알림 발송</span><span class="status-card__value status-card__value--success">SMS · 이메일</span></div>
+					</div>
+					<span class="text-section-label" style="padding-top: 4px;">바로 해볼 수 있는 것들</span>
+					<div class="chip-row">
+						<span class="action-chip action-chip--fill">내정보 점검</span>
+						<span class="action-chip action-chip--fill">첫 가입 혜택 확인</span>
+						<span class="action-chip action-chip--fill">알림 설정</span>
+					</div>
+					<div class="info-box"><ul class="info-box__list"><li class="info-box__item">알림 발송이 실패해도 가입 결과는 그대로 유지돼요.</li><li class="info-box__item">자동 로그인이 풀린 경우 다시 로그인하면 돼요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom"><div class="sticky-cta"><button class="sticky-cta__btn" type="button">홈으로 가기</button></div></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 02. 개인정보 입력 (가입) — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+	<style>.form-stack { display: flex; flex-direction: column; gap: var(--spacing-12); }</style>
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__back">‹</span><span class="detail-shell__title">회원 정보</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot"></span><span class="step-bar__dot step-bar__dot--active"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span></div>
+					<div class="pay-hero"><h1 class="pay-hero__title">로그인에 사용할
+회원 정보를 입력해 주세요</h1><span class="pay-hero__sub">아이디와 이메일은 로그인 식별자라 가입 후 변경 정책이 달라요.</span></div>
+					<div class="form-stack">
+						<div class="field-group"><label class="field-label">이름</label><div class="field-input"><span class="field-input__value field-input__value--placeholder">실명을 입력해 주세요</span></div></div>
+						<div class="field-group"><label class="field-label">아이디</label><div class="field-input"><span class="field-input__value">tuniverse_kim</span><span class="action-chip action-chip--fill">중복 확인</span></div></div>
+						<div class="field-group"><label class="field-label">비밀번호</label><div class="field-input"><span class="field-input__value">••••••••</span></div><span class="field-help">영문·숫자·특수문자를 8자 이상 조합</span></div>
+						<div class="field-group"><label class="field-label">이메일</label><div class="field-input"><span class="field-input__value">kim@example.com</span></div></div>
+						<div class="field-group"><label class="field-label">연락처</label><div class="field-input"><span class="field-input__value">010-1234-5678</span></div></div>
+					</div>
+					<div class="terms-row"><span class="check-indicator check-indicator--off"></span><span class="terms-row__label">마케팅 정보 수신 동의 (선택)</span></div>
+					<div class="info-box"><ul class="info-box__list"><li class="info-box__item">중복 확인은 다음 단계 본인인증 직전에 한 번 더 진행돼요.</li><li class="info-box__item">아이디는 가입 후 변경할 수 없어요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom"><div class="sticky-cta"><button class="sticky-cta__btn" type="button">다음</button></div></div>
+		</div>
+	</div>
+</body>
+</html>

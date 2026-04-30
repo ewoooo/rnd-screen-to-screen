@@ -1,9 +1,0 @@
-{
-	"meta": { "purpose": "Figma information-barcode → 바코드 + 번호 + 복사 버튼", "fetched_at": "2026-04-24", "strategy": "바코드 자체는 SVG asset 이라 placeholder 줄무늬 div 로 대체 (사용 시 src 주입). 번호는 4 그룹 span. action 은 BtnTextPilot." },
-	"mapping": {
-		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds';",
-		"root": { "wds": "FlexBox column gap=5", "props": { "width": 240 } },
-		"barcode": { "wds": "div", "fallback_style": "repeating-linear-gradient stripes", "size": "240×108" },
-		"row": { "wds": "FlexBox row justify-between", "items": ["Typography caption1 medium 4 그룹", "BtnTextPilot type=line weight=medium #666"] }
-	}
-}

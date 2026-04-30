@@ -1,9 +1,0 @@
-{
-	"meta": { "purpose": "Figma card-horizontal-product-select → header + slot column", "fetched_at": "2026-04-24" },
-	"mapping": {
-		"target_import": "import { FlexBox, Typography } from '@wanteddev/wds'; import { IconChevronRight } from '@wanteddev/wds-icon';",
-		"root": { "wds": "FlexBox column gap=12", "props": { "width": 336 } },
-		"title_row": { "wds": "FlexBox row justify=space-between", "items": ["heading2/body1 bold title", "BtnTextIconPilot text + chevron"] },
-		"slot": { "wds": "div h=104 #ffeaea center", "default": "Typography title3 bold #d54949 'Slot area'" }
-	}
-}

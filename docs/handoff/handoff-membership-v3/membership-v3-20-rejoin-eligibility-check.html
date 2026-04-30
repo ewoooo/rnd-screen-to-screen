@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 20. 재가입 가능 여부 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__back">‹</span><span class="detail-shell__title">재가입 가능 여부</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot step-bar__dot--active"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span></div>
+					<div class="result-block">
+						<div class="result-icon result-icon--blocked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+						<h1 class="result-block__title">아직은 재가입할 수 없어요
+조금만 더 기다려 주세요</h1>
+						<span class="result-block__sub">탈퇴 후 90일 동안은 동일 정보로 재가입이 제한돼요.</span>
+					</div>
+					<div class="status-card">
+						<div class="status-card__title">제한 정보</div>
+						<div class="status-card__row"><span class="status-card__label">제한 사유</span><span class="status-card__value">최근 탈퇴 이력</span></div>
+						<div class="status-card__row"><span class="status-card__label">탈퇴 일자</span><span class="status-card__value">2025.11.02</span></div>
+						<div class="status-card__row"><span class="status-card__label">제한 종료일</span><span class="status-card__value status-card__value--warning">2026.07.30</span></div>
+						<div class="status-card__row"><span class="status-card__label">남은 기간</span><span class="status-card__value">93일</span></div>
+					</div>
+					<div class="info-box"><div class="info-box__title">왜 제한이 있나요?</div><ul class="info-box__list"><li class="info-box__item">탈퇴 직후 반복 가입을 막기 위해 90일 제한 정책을 운영해요.</li><li class="info-box__item">제한 종료일 이후에는 같은 본인 정보로 다시 가입할 수 있어요.</li><li class="info-box__item">고객센터에서 예외 사유를 확인할 수도 있어요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom">
+				<div class="dual-cta">
+					<button class="sticky-cta__btn" style="background: var(--semantic-fill-normal); color: var(--semantic-label-normal);" type="button">고객센터</button>
+					<button class="sticky-cta__btn" type="button">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

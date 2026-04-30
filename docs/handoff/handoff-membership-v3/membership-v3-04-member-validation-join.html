@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 04. 회원 검증 (가입) — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__back">‹</span><span class="detail-shell__title">가입 가능 여부 확인</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot step-bar__dot--active"></span><span class="step-bar__dot"></span></div>
+					<div class="result-block">
+						<div class="result-icon result-icon--blocked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16"/></svg></div>
+						<h1 class="result-block__title">이미 가입된 회원이에요
+로그인하러 가시겠어요?</h1>
+						<span class="result-block__sub">동일한 본인인증 정보로 등록된 정상 회원이 확인됐어요.</span>
+					</div>
+					<div class="status-card">
+						<div class="status-card__title">확인된 회원 상태</div>
+						<div class="status-card__row"><span class="status-card__label">가입 채널</span><span class="status-card__value">T우주 앱</span></div>
+						<div class="status-card__row"><span class="status-card__label">최근 로그인</span><span class="status-card__value">2026.04.20</span></div>
+						<div class="status-card__row"><span class="status-card__label">아이디(마스킹)</span><span class="status-card__value">tuni****_kim</span></div>
+					</div>
+					<div class="info-box"><div class="info-box__title">왜 가입이 진행되지 않았나요?</div><ul class="info-box__list"><li class="info-box__item">동일 명의의 정상 회원이 있을 때는 새 가입 대신 로그인을 안내해요.</li><li class="info-box__item">아이디·비밀번호가 기억나지 않으면 아래 버튼에서 찾을 수 있어요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom">
+				<div class="dual-cta">
+					<button class="sticky-cta__btn" style="background: var(--semantic-fill-normal); color: var(--semantic-label-normal);" type="button">아이디·비밀번호 찾기</button>
+					<button class="sticky-cta__btn" type="button">로그인하러 가기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

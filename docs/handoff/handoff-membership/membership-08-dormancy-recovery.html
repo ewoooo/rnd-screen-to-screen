@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>08. 휴면 해제 처리 중 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status">
+				<span>7:28</span>
+				<span class="ph" style="width: 56px; height: 14px;">status</span>
+			</div>
+			<div class="detail-shell__header">
+				<div class="detail-shell__head-left">
+					<span class="detail-shell__back">‹</span>
+					<span class="detail-shell__title">휴면 해제 중</span>
+				</div>
+			</div>
+			<div class="detail-shell__body detail-shell__body--no-bottom">
+				<div class="pay-content">
+					<div class="result-block">
+						<div class="result-icon result-icon--success rotate" style="font-size: 28px;">⟳</div>
+						<h2 class="result-block__title">휴면 해제를
+처리하고 있어요</h2>
+						<span class="result-block__sub">잠시만 기다려 주세요. 화면을 닫지 마세요.</span>
+					</div>
+
+					<div class="status-card">
+						<div class="status-card__title">처리 단계</div>
+						<div class="status-card__row">
+							<span class="status-card__label">본인 확인</span>
+							<span class="status-card__value status-card__value--success">완료</span>
+						</div>
+						<div class="status-card__row">
+							<span class="status-card__label">약관 재동의 반영</span>
+							<span class="status-card__value status-card__value--success">완료</span>
+						</div>
+						<div class="status-card__row">
+							<span class="status-card__label">회원 상태 전환</span>
+							<span class="status-card__value">진행 중</span>
+						</div>
+						<div class="status-card__row">
+							<span class="status-card__label">분리 보관 데이터 복원</span>
+							<span class="status-card__value">대기 중</span>
+						</div>
+					</div>
+
+					<div class="info-box">
+						<ul class="info-box__list">
+							<li class="info-box__item">분리 보관된 일부 데이터는 복원에 시간이 걸릴 수 있어요.</li>
+							<li class="info-box__item">처리 중 오류 발생 시 자동으로 재시도해요.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

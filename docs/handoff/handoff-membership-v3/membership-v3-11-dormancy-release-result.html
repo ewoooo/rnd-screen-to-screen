@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=360, initial-scale=1" />
+	<title>v3 · 11. 휴면 해제 완료 — handoff</title>
+	<link rel="stylesheet" href="_shared.css" />
+	<link rel="stylesheet" href="_payment.css" />
+	<link rel="stylesheet" href="_membership.css" />
+	<style>.chip-row { display: flex; gap: var(--spacing-8); flex-wrap: wrap; padding-top: var(--spacing-8); }
+	.chip-row .action-chip--fill { padding: 10px 16px; }</style>
+</head>
+<body>
+	<div class="canvas">
+		<div class="detail-shell">
+			<div class="detail-shell__status"><span>7:28</span><span class="ph" style="width: 56px; height: 14px;">status</span></div>
+			<div class="detail-shell__header"><div class="detail-shell__head-left"><span class="detail-shell__title">휴면 해제 완료</span></div></div>
+			<div class="detail-shell__body">
+				<div class="pay-content">
+					<div class="step-bar"><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot"></span><span class="step-bar__dot step-bar__dot--active"></span></div>
+					<div class="result-block">
+						<div class="result-icon result-icon--success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 8"/></svg></div>
+						<h1 class="result-block__title">휴면을 해제했어요
+다시 모든 서비스를 이용할 수 있어요</h1>
+						<span class="result-block__sub">분리보관된 정보를 복원하고 자동으로 로그인했어요.</span>
+					</div>
+					<div class="status-card">
+						<div class="status-card__title">복원 결과</div>
+						<div class="status-card__row"><span class="status-card__label">회원 상태</span><span class="status-card__value status-card__value--success">정상</span></div>
+						<div class="status-card__row"><span class="status-card__label">복원된 항목</span><span class="status-card__value">5개</span></div>
+						<div class="status-card__row"><span class="status-card__label">완료 시각</span><span class="status-card__value">2026.04.28 07:29</span></div>
+						<div class="status-card__row"><span class="status-card__label">알림 발송</span><span class="status-card__value status-card__value--success">SMS · 이메일</span></div>
+					</div>
+					<span class="text-section-label" style="padding-top: 4px;">한 번 점검해 보면 좋아요</span>
+					<div class="chip-row">
+						<span class="action-chip action-chip--fill">내정보 점검</span>
+						<span class="action-chip action-chip--fill">알림 설정 확인</span>
+						<span class="action-chip action-chip--fill">복원된 혜택</span>
+					</div>
+					<div class="info-box"><ul class="info-box__list"><li class="info-box__item">법정 보관 기간이 지난 일부 정보는 복원되지 않았어요.</li><li class="info-box__item">알림 발송이 실패해도 해제 결과는 유지돼요.</li></ul></div>
+				</div>
+			</div>
+			<div class="detail-shell__bottom"><div class="sticky-cta"><button class="sticky-cta__btn" type="button">홈으로 가기</button></div></div>
+		</div>
+	</div>
+</body>
+</html>
