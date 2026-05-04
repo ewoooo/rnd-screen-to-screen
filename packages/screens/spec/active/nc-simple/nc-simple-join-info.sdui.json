@@ -1,0 +1,47 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-join-info", "name": "개인정보 입력 (간소화)", "route": "/nc-simple-join-info", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-001", "name": "회원 가입", "step": 2, "total": 4, "progress": "회원 가입 2/4" },
+		"hero": { "titleLines": ["기본 정보를", "입력해 주세요"], "description": "본인 확인에 사용돼요." },
+		"form": {
+			"fields": [
+				{ "id": "name", "label": "이름", "control": "text", "required": true, "placeholder": "홍길동" },
+				{ "id": "birthDate", "label": "생년월일", "control": "text", "required": true, "placeholder": "YYYYMMDD" },
+				{ "id": "phone", "label": "휴대전화", "control": "text", "required": true, "placeholder": "010-0000-0000" }
+			]
+		},
+		"continue": { "eyebrow": "입력 완료 시 다음 단계 진행", "primaryAction": "다음으로" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-join-info", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원가입", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 4, "progressStep": 2 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
+				{ "type": "NcPersonalInfoForm", "id": "area.form", "props": { "bind": "form" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-join", "route_id": "nc-simple-join-info", "step_fraction": "2/4", "predecessor": "nc-simple-join-terms", "successor": "nc-simple-join-auth", "transitions": [{ "to": "nc-simple-join-auth", "trigger": "primary_cta", "guard": "personal_info_validated" }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-001-02", "docs/NC_정책서_간소화_v1.0_확정본.md"] },
+		"process": { "id": "PR-MBR-CS-001-02", "name": "개인정보 입력", "cluster": "US-MBR-CS-001 회원 가입 2/4 (간소화)", "actor": "고객", "entry_condition": "약관 동의 완료", "exit_condition": "회원 기본 정보 입력 및 형식 검증 완료", "predecessor": ["PR-MBR-CS-001-01"], "successor": ["PR-MBR-CS-001-03"] },
+		"purpose": "최소 필드만 입력받아 형식·중복을 검증한다.",
+		"system_inputs_to_user": ["축소된 입력 항목"],
+		"user_inputs": ["이름", "생년월일", "휴대전화"],
+		"system_outputs": ["검증 결과", "다음 이동 경로"],
+		"branches": ["통과 → 본인인증", "미충족 → 진행 제한"],
+		"design_signals": { "primary_block": "축소된 폼", "cta_intent": "다음으로" }
+	},
+	"x_interfacePlan": { "genre": "form", "primary_task": "최소 정보 입력", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
+		{ "rule": "H-7", "result": "pass", "evidence": "step flow → back" },
+		{ "rule": "H-9", "result": "pass", "evidence": "CTA disabled 대체" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

@@ -1,0 +1,53 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-full-leave-auth", "name": "본인인증 (탈퇴)", "route": "/nc-full-leave-auth", "domain": "nc-full", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-003", "name": "회원 탈퇴", "step": 1, "total": 5, "progress": "회원 탈퇴 1/5" },
+		"hero": { "titleLines": ["탈퇴 전", "본인 확인이 필요해요"], "description": "고객 보호를 위해 탈퇴 시 별도의 본인 확인을 진행합니다." },
+		"methods": {
+			"items": [
+				{ "id": "phone", "title": "휴대폰 본인인증", "leadingIcon": "smartphone", "trailingChip": "추천" },
+				{ "id": "pass", "title": "PASS 인증", "leadingIcon": "shield-check", "trailingChip": null },
+				{ "id": "joint-cert", "title": "공동인증서", "leadingIcon": "certificate", "trailingChip": null }
+			],
+			"selectedId": null
+		},
+		"policyNotice": { "badge": "안내", "text": "본인인증에 5회 이상 실패하면 일정 시간 동안 탈퇴 진행이 제한될 수 있어요.", "tone": "info" },
+		"continue": { "eyebrow": "선택한 수단의 외부 인증 화면으로 이동", "primaryAction": "인증하기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-full-leave-auth", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원 탈퇴", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 5, "progressStep": 1 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } } } },
+				{ "type": "SelectableList", "id": "area.methods", "props": { "bind": "methods", "selectionMode": "single", "density": "comfortable", "textPolicy": { "title": { "variant": "listTitle", "maxLines": 1, "overflow": "truncate" } } } },
+				{ "type": "NcNotice", "id": "area.policy-notice", "props": { "bind": "policyNotice", "tone": "default" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-full/_pagination/nc-full-leave.json", "_canonical_hash": "TBD", "policy_id": "nc-full-leave", "route_id": "nc-full-leave-auth", "step_fraction": "1/5", "predecessor": null, "successor": "nc-full-leave-reason", "transitions": [{ "to": "nc-full-leave-reason", "trigger": "system", "guard": "auth_succeeded" }], "branches": [{ "condition": "auth_failed", "behavior": "동일 화면 재시도. 재시도 한도 초과 시 안내 후 종료." }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-003-01", "docs/NC_정책서_Full_v1.0_확정본.md#본인인증-pr-mbr-cs-003-01"] },
+		"process": { "id": "PR-MBR-CS-003-01", "name": "본인인증", "cluster": "US-MBR-CS-003 회원 탈퇴 1/5", "actor": "고객, 외부 인증기관", "entry_condition": "회원 탈퇴 요청 시작", "exit_condition": "본인인증 결과 수신 완료", "predecessor": [], "successor": ["PR-MBR-CS-003-02"], "related_functions": ["본인인증 처리"], "related_policies": ["탈퇴 본인인증 적용 기준 정책", "인증 실패 재시도 및 제한 기준 정책"] },
+		"purpose": "탈퇴는 고위험 행위이므로 별도 본인 확인을 수행한다.",
+		"system_inputs_to_user": ["허용 인증 수단", "재시도/잠금 정책"],
+		"user_inputs": ["인증 수단 선택", "외부 인증기관 입력값"],
+		"system_outputs": ["인증 결과", "다음 이동 경로"],
+		"branches": ["인증 성공 → 탈퇴 사유 입력", "인증 실패 → 재시도", "재시도 한도 초과 → 안내 후 종료"],
+		"exceptions": ["외부 인증기관 응답 지연/실패 → 안내 후 재시도"],
+		"design_signals": { "primary_block": "인증 수단 단일 선택 리스트", "hero_intent": "탈퇴 추가 본인 확인 안내", "info_box_intent": "재시도/잠금 정책", "cta_intent": "인증하기" }
+	},
+	"x_interfacePlan": { "genre": "selector", "primary_task": "인증 수단 선택", "info_hierarchy": ["hero", "required-input", "supporting-notice", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
+		{ "rule": "H-3", "result": "pass", "evidence": "title only + leading icon" },
+		{ "rule": "H-6", "result": "pass", "evidence": "TopBar progress label만" },
+		{ "rule": "H-7", "result": "pass", "evidence": "step flow 진입점이지만 마이페이지에서 진입 → back" },
+		{ "rule": "H-9", "result": "pass", "evidence": "CTA disabled로 대체" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

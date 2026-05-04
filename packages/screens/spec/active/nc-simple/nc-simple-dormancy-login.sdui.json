@@ -1,0 +1,30 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-dormancy-login", "name": "로그인 (휴면, 간소화)", "route": "/nc-simple-dormancy-login", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-002", "name": "휴면 해제", "step": 1, "total": 4, "progress": "휴면 해제 1/4" },
+		"hero": { "titleLines": ["로그인부터 시작할게요"], "description": "휴면 계정이면 별도 절차로 안내해 드려요." },
+		"form": { "fields": [
+			{ "id": "accountId", "label": "아이디", "control": "text", "required": true },
+			{ "id": "password", "label": "비밀번호", "control": "password", "required": true }
+		] },
+		"continue": { "eyebrow": "로그인 후 휴면 여부 확인", "primaryAction": "로그인" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-dormancy-login", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "휴면 해제", "leadingIcon": "close", "progressBind": "flow.progress", "progressTotal": 4, "progressStep": 1 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
+				{ "type": "NcLoginForm", "id": "area.form", "props": { "bind": "form" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-dormancy.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-dormancy", "route_id": "nc-simple-dormancy-login", "step_fraction": "1/4", "predecessor": null, "successor": "nc-simple-dormancy-auth", "transitions": [{ "to": "nc-simple-dormancy-auth", "trigger": "system", "guard": "is_dormant_account" }] },
+	"x_policyExtract": { "source": { "type": "policy", "refs": ["PR-MBR-CS-002-01", "docs/NC_정책서_간소화_v1.0_확정본.md"] }, "process": { "id": "PR-MBR-CS-002-01", "name": "로그인", "cluster": "US-MBR-CS-002 휴면 해제 1/4 (간소화)", "actor": "고객", "entry_condition": "휴면 계정으로 서비스 이용 시도", "exit_condition": "로그인 시도 완료", "predecessor": [], "successor": ["PR-MBR-CS-002-02"] }, "purpose": "로그인 + BSS 휴면 자동 판정.", "user_inputs": ["ID", "PW"], "branches": ["휴면 → 본인인증", "정상 → 일반 결과"], "design_signals": { "primary_block": "ID/PW 폼", "cta_intent": "로그인" } },
+	"x_interfacePlan": { "genre": "form", "primary_task": "로그인", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [{ "rule": "H-7", "result": "pass", "evidence": "close" }, { "rule": "H-12", "result": "pass", "evidence": "ok" }] }
+}

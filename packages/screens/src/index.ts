@@ -13,7 +13,7 @@ export {
 	activeScreenSpecs,
 	type ActiveRenderableScreenSpecId,
 	type ActiveScreenSpecId,
-} from "./active-specs";
+} from "./active-spec-list";
 export {
 	getScreenSpecIssues,
 	type DesignException,
@@ -32,7 +32,14 @@ export {
 	type SDUINode,
 } from "./spec";
 
-export type ScreenGroup = "home" | "membership" | "product" | "search" | "tu";
+export type ScreenGroup =
+	| "home"
+	| "membership"
+	| "product"
+	| "search"
+	| "tu"
+	| "nc-full"
+	| "nc-simple";
 
 export type ScreenEntry = {
 	id: string;
@@ -50,7 +57,7 @@ export const screens = [
 		path: "/home-benefit",
 		label: "홈 혜택",
 		group: "home",
-		spec: "spec/active/home-benefit.json",
+		spec: "spec/inactive/home-benefit.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -58,7 +65,7 @@ export const screens = [
 		path: "/home-manage",
 		label: "관리 홈",
 		group: "home",
-		spec: "spec/active/home-manage.json",
+		spec: "spec/inactive/home-manage.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -66,7 +73,7 @@ export const screens = [
 		path: "/home-device-change",
 		label: "기기 변경",
 		group: "home",
-		spec: "spec/active/home-device-change.json",
+		spec: "spec/inactive/home-device-change.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -74,7 +81,7 @@ export const screens = [
 		path: "/home-senior",
 		label: "시니어 홈",
 		group: "home",
-		spec: "spec/active/home-senior.json",
+		spec: "spec/inactive/home-senior.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -82,7 +89,7 @@ export const screens = [
 		path: "/home-guest",
 		label: "게스트 홈",
 		group: "home",
-		spec: "spec/active/home-guest.json",
+		spec: "spec/inactive/home-guest.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -90,8 +97,8 @@ export const screens = [
 		path: "/product-detail",
 		label: "상품 상세",
 		group: "product",
-		spec: "spec/active/product-detail.json",
-		renderSpec: "spec/active/product-detail.sdui.json",
+		spec: "spec/inactive/product-detail.json",
+		renderSpec: "spec/inactive/product-detail.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -99,8 +106,8 @@ export const screens = [
 		path: "/membership-terms-consent",
 		label: "약관 동의",
 		group: "membership",
-		spec: "spec/active/membership-terms-consent.json",
-		renderSpec: "spec/active/membership-terms-consent.sdui.json",
+		spec: "spec/active/membership/membership-terms-consent.json",
+		renderSpec: "spec/active/membership/membership-terms-consent.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -108,8 +115,8 @@ export const screens = [
 		path: "/membership-join-complete",
 		label: "가입 완료",
 		group: "membership",
-		spec: "spec/active/membership-join-complete.json",
-		renderSpec: "spec/active/membership-join-complete.sdui.json",
+		spec: "spec/active/membership/membership-join-complete.json",
+		renderSpec: "spec/active/membership/membership-join-complete.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -117,8 +124,8 @@ export const screens = [
 		path: "/membership-leave-reason",
 		label: "탈퇴 사유",
 		group: "membership",
-		spec: "spec/active/membership-leave-reason.json",
-		renderSpec: "spec/active/membership-leave-reason.sdui.json",
+		spec: "spec/active/membership/membership-leave-reason.json",
+		renderSpec: "spec/active/membership/membership-leave-reason.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -126,8 +133,8 @@ export const screens = [
 		path: "/membership-personal-info",
 		label: "개인정보 입력",
 		group: "membership",
-		spec: "spec/active/membership-personal-info.json",
-		renderSpec: "spec/active/membership-personal-info.sdui.json",
+		spec: "spec/active/membership/membership-personal-info.json",
+		renderSpec: "spec/active/membership/membership-personal-info.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -135,8 +142,8 @@ export const screens = [
 		path: "/membership-identity-verification",
 		label: "본인인증",
 		group: "membership",
-		spec: "spec/active/membership-identity-verification.json",
-		renderSpec: "spec/active/membership-identity-verification.sdui.json",
+		spec: "spec/active/membership/membership-identity-verification.json",
+		renderSpec: "spec/active/membership/membership-identity-verification.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -144,8 +151,8 @@ export const screens = [
 		path: "/membership-leave-impact",
 		label: "탈퇴 영향",
 		group: "membership",
-		spec: "spec/active/membership-leave-impact.json",
-		renderSpec: "spec/active/membership-leave-impact.sdui.json",
+		spec: "spec/active/membership/membership-leave-impact.json",
+		renderSpec: "spec/active/membership/membership-leave-impact.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -153,8 +160,8 @@ export const screens = [
 		path: "/membership-leave-complete",
 		label: "탈퇴 결과",
 		group: "membership",
-		spec: "spec/active/membership-leave-complete.json",
-		renderSpec: "spec/active/membership-leave-complete.sdui.json",
+		spec: "spec/active/membership/membership-leave-complete.json",
+		renderSpec: "spec/active/membership/membership-leave-complete.sdui.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -162,7 +169,7 @@ export const screens = [
 		path: "/search-result",
 		label: "검색 결과",
 		group: "search",
-		spec: "spec/active/search-result.json",
+		spec: "spec/inactive/search-result.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -170,7 +177,7 @@ export const screens = [
 		path: "/tu-dsp-main-mo-02-pg-001-2",
 		label: "TU 발견",
 		group: "tu",
-		spec: "spec/active/tu-dsp-main-mo-02-pg-001-2.json",
+		spec: "spec/inactive/tu-dsp-main-mo-02-pg-001-2.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -178,7 +185,7 @@ export const screens = [
 		path: "/tu-dsp-main-mo-02-pg-002",
 		label: "TU 권한",
 		group: "tu",
-		spec: "spec/active/tu-dsp-main-mo-02-pg-002.json",
+		spec: "spec/inactive/tu-dsp-main-mo-02-pg-002.json",
 		createdAt: "2026-04-30",
 	},
 	{
@@ -186,7 +193,7 @@ export const screens = [
 		path: "/tu-my-agr-mo-02-bs-001",
 		label: "TU 바텀시트",
 		group: "tu",
-		spec: "spec/active/tu-my-agr-mo-02-bs-001.json",
+		spec: "spec/inactive/tu-my-agr-mo-02-bs-001.json",
 		createdAt: "2026-04-30",
 	},
 ] as const satisfies readonly ScreenEntry[];

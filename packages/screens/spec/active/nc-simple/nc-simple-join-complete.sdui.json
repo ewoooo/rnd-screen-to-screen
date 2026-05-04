@@ -1,0 +1,37 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-join-complete", "name": "가입 완료 (간소화)", "route": "/nc-simple-join-complete", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-001", "name": "회원 가입", "step": 4, "total": 4, "progress": "회원 가입 4/4" },
+		"hero": { "titleLines": ["가입 완료!", "환영합니다"], "description": "정회원 세션이 시작됐어요." },
+		"continue": { "primaryAction": "홈으로 가기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-join-complete", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원가입", "leadingIcon": "close", "progressVisible": false } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-join", "route_id": "nc-simple-join-complete", "step_fraction": "4/4", "predecessor": "nc-simple-join-auth", "successor": null, "transitions": [{ "to": "external:home", "trigger": "primary_action" }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-001-05", "docs/NC_정책서_간소화_v1.0_확정본.md"] },
+		"process": { "id": "PR-MBR-CS-001-05", "name": "가입 처리 결과 안내", "cluster": "US-MBR-CS-001 회원 가입 4/4 (간소화)", "actor": "고객, BSS", "entry_condition": "회원 검증 + 가입 처리 완료", "exit_condition": "회원 생성 및 가입 완료 안내 완료", "predecessor": ["PR-MBR-CS-001-04"], "successor": [] },
+		"purpose": "가입 완료를 단축 안내한다.",
+		"system_inputs_to_user": ["환영 메시지"],
+		"user_inputs": ["홈으로 진입"],
+		"system_outputs": ["다음 진입 화면", "세션 상태"],
+		"branches": ["홈으로 진입"],
+		"design_signals": { "primary_block": "단일 hero", "cta_intent": "홈으로 가기" }
+	},
+	"x_interfacePlan": { "genre": "result", "primary_task": "결과 인지 + 홈", "info_hierarchy": ["hero", "action"], "cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-7", "result": "pass", "evidence": "dead-end → close" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

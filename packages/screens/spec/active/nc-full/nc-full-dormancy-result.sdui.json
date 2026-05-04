@@ -1,0 +1,53 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-full-dormancy-result", "name": "휴면 해제 완료", "route": "/nc-full-dormancy-result", "domain": "nc-full", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-002", "name": "휴면 해제", "step": 4, "total": 4, "progress": "휴면 해제 4/4" },
+		"hero": { "titleLines": ["휴면이 해제됐어요", "다시 만나서 반가워요"], "description": "기존 회원 정보가 복원되었으며, 정상 회원 세션이 시작됐어요." },
+		"summary": {
+			"title": "해제 정보",
+			"items": [
+				{ "id": "releasedAt", "label": "해제 일시", "value": "2026-05-04 14:32" },
+				{ "id": "memberId", "label": "회원번호", "value": "M-2024-000456" },
+				{ "id": "restored", "label": "복원 상태", "value": "주문/위시리스트 복원" }
+			]
+		},
+		"sessionNotice": { "badge": "안내", "text": "보안을 위해 일정 시간 미사용 시 자동 로그아웃될 수 있어요. 비밀번호 변경을 권장해요.", "action": "비밀번호 변경", "tone": "info" },
+		"actions": {
+			"primary": { "id": "go-home", "label": "홈으로 가기" },
+			"secondary": { "id": "change-password", "label": "비밀번호 변경" }
+		}
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-full-dormancy-result", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "휴면 해제", "leadingIcon": "close", "progressVisible": false } },
+				"bottom": { "type": "NcResultActions", "id": "area.actions", "props": { "bind": "actions" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } } } },
+				{ "type": "NcSummaryCard", "id": "area.summary", "props": { "bind": "summary" } },
+				{ "type": "NcNotice", "id": "area.session-notice", "props": { "bind": "sessionNotice", "tone": "default" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-full/_pagination/nc-full-dormancy.json", "_canonical_hash": "TBD", "policy_id": "nc-full-dormancy", "route_id": "nc-full-dormancy-result", "step_fraction": "4/4", "predecessor": "nc-full-dormancy-terms", "successor": null, "transitions": [{ "to": "external:home", "trigger": "primary_action" }, { "to": "external:change-password", "trigger": "secondary_action" }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-002-05", "PR-MBR-CS-002-06", "docs/NC_정책서_Full_v1.0_확정본.md#휴면-해제-처리-결과-안내-pr-mbr-cs-002-06"] },
+		"process": { "id": "PR-MBR-CS-002-06", "name": "휴면 해제 처리 결과 안내", "cluster": "US-MBR-CS-002 휴면 해제 4/4", "actor": "고객, BSS", "entry_condition": "휴면 해제 처리 완료", "exit_condition": "해제 결과 안내 및 후속 이동 완료", "predecessor": ["PR-MBR-CS-002-05"], "successor": [], "related_functions": ["휴면 해제 완료 안내", "처리 이력 및 알림 처리", "업무 결과 재조회 및 이력 확인"], "related_policies": ["휴면 해제 결과 및 후속 안내 기준 정책"] },
+		"purpose": "휴면 해제 완료를 안내하고 정상 세션으로 전환된 후 다음 진입을 결정한다.",
+		"system_inputs_to_user": ["해제 일시", "회원번호", "복원 범위", "보안 권고"],
+		"user_inputs": ["다음 행동 선택"],
+		"system_outputs": ["다음 진입 화면", "세션 상태"],
+		"branches": ["홈으로 / 비밀번호 변경"],
+		"exceptions": ["세션 전환 실패 → 로그인 화면 우회"],
+		"design_signals": { "primary_block": "해제 정보 카드 + 보안 권고", "hero_intent": "환영 + 정상 세션 전환 안내", "cta_intent": "홈으로 / 비밀번호 변경" }
+	},
+	"x_interfacePlan": { "genre": "result", "primary_task": "결과 인지 + 다음 행동", "info_hierarchy": ["hero", "result-summary", "supporting-notice", "actions"], "cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "one-card" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-2", "result": "pass", "evidence": "SummaryCard title='해제 정보'" },
+		{ "rule": "H-7", "result": "pass", "evidence": "dead-end → close" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

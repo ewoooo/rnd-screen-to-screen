@@ -1,0 +1,14 @@
+{
+	"meta": { "schema_version": 2, "status": "active", "route": "/nc-simple-leave-auth", "source": "policy-driven", "policy_doc": "docs/NC_정책서_간소화_v1.0_확정본.md", "policy_section": "4.가.3) PR-MBR-CS-003-01", "pagination_ref": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-leave.json", "variant_of": "nc-full-leave-auth" },
+	"screen": { "id": "nc-simple-leave-auth", "name": "본인인증 (탈퇴, 간소화)", "domain": "nc-simple", "use_case": "US-MBR-CS-003", "process_id": "PR-MBR-CS-003-01", "step_fraction": "1/5", "type": "page" },
+	"x_interfacePlan": { "genre": "selector", "primary_task": "탈퇴 본인 확인 수단 선택", "info_hierarchy": ["hero (탈퇴 1/5)", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat", "simplified": { "policy_notice": "기본 미노출" } },
+	"screen_contract": { "shell": "AppScreen", "slots": { "top": { "owner": "NcShell", "patterns": ["NcTopBar"], "flow": "reserved" }, "content": { "owner": "ContentList", "patterns": ["NcHero", "SelectableList"] }, "bottom": { "owner": "NcShell", "patterns": ["NcContinueBar"], "flow": "reserved" } } },
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"areas": [
+		{ "id": "top-progress", "slot": "top", "pattern": "organisms/nc/NcTopBar", "uses": ["StatusBar", "TopNavigation", "ProgressIndicator"], "layout": { "flow": "reserved", "progress_source": "data.flow.progress", "leading": "back" }, "content_role": "flow-progress" },
+		{ "id": "hero", "slot": "content", "pattern": "organisms/nc/NcHero", "uses": ["ContentSection", "TextBlock", "ContentRail"], "layout": { "section_inset": "inherit", "description_rail": "measure:body", "block_padding_top": "spacing-16", "block_padding_bottom": "spacing-32" }, "content_role": "primary-copy" },
+		{ "id": "methods", "slot": "content", "pattern": "molecules/SelectableList", "uses": ["ContentSection", "SelectableList"], "layout": { "section_inset": "inherit", "density": "comfortable", "selection_mode": "single", "trailing_semantic": "status" }, "content_role": "required-input" },
+		{ "id": "continue", "slot": "bottom", "pattern": "organisms/nc/NcContinueBar", "uses": ["Box", "Button", "TextBlock"], "content_role": "primary-action", "layout": { "surface": "page-semi-gradient" }, "state_binding": { "primary_disabled_when": "methods.selectedId == null", "eyebrow_when_blocked": "인증 수단을 선택해 주세요", "eyebrow_when_ready": "data.continue.eyebrow" } }
+	],
+	"design_system_contract": { "templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection", "ContentRail"], "organisms": ["nc"], "molecules": ["SelectableList", "ProgressIndicator"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": ["organisms/nc"] }
+}

@@ -103,6 +103,11 @@ export type PolicyExtract = {
 		type: "policy" | "implemented-page" | "handoff" | "manual";
 		refs: readonly string[];
 	};
+	evidence_refs?: readonly {
+		field: string;
+		source_ref: string;
+		summary: string;
+	}[];
 	process?: {
 		id?: string;
 		name?: string;
@@ -283,6 +288,17 @@ export function getRenderableScreenSpecIssues(
 		issues.push({
 			severity: "warning",
 			message: "x_policyExtract.source.refs should preserve policy traceability.",
+		});
+	}
+
+	if (
+		spec.x_policyExtract.source.type === "policy" &&
+		(spec.x_policyExtract.evidence_refs?.length ?? 0) === 0
+	) {
+		issues.push({
+			severity: "warning",
+			message:
+				"x_policyExtract.evidence_refs should map extracted policy fields back to source sections or clauses.",
 		});
 	}
 

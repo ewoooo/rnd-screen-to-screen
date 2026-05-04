@@ -1,0 +1,43 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-join-auth", "name": "본인인증 (간소화)", "route": "/nc-simple-join-auth", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-001", "name": "회원 가입", "step": 3, "total": 4, "progress": "회원 가입 3/4" },
+		"hero": { "titleLines": ["본인 확인을 진행할게요"], "description": "인증 수단을 선택하세요." },
+		"methods": { "items": [
+			{ "id": "phone", "title": "휴대폰 인증", "leadingIcon": "smartphone" },
+			{ "id": "pass", "title": "PASS", "leadingIcon": "shield-check" }
+		], "selectedId": null },
+		"continue": { "eyebrow": "외부 인증 화면으로 이동", "primaryAction": "인증하기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-join-auth", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원가입", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 4, "progressStep": 3 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
+				{ "type": "SelectableList", "id": "area.methods", "props": { "bind": "methods", "selectionMode": "single", "density": "comfortable" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-join", "route_id": "nc-simple-join-auth", "step_fraction": "3/4", "predecessor": "nc-simple-join-info", "successor": "nc-simple-join-complete", "transitions": [{ "to": "nc-simple-join-complete", "trigger": "system", "guard": "auth_succeeded AND member_verification_passed" }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-001-03", "docs/NC_정책서_간소화_v1.0_확정본.md"] },
+		"process": { "id": "PR-MBR-CS-001-03", "name": "본인인증", "cluster": "US-MBR-CS-001 회원 가입 3/4 (간소화)", "actor": "고객, 외부 인증기관", "entry_condition": "개인정보 입력 완료", "exit_condition": "본인인증 결과 수신 완료", "predecessor": ["PR-MBR-CS-001-02"], "successor": ["PR-MBR-CS-001-04"] },
+		"purpose": "가입자 본인 확인.",
+		"system_inputs_to_user": ["인증 수단 (축소)"],
+		"user_inputs": ["인증 수단 선택"],
+		"system_outputs": ["인증 결과"],
+		"branches": ["성공 → 검증/처리 → 완료", "실패 → 재시도"],
+		"design_signals": { "primary_block": "인증 수단 단일 선택", "cta_intent": "인증하기" }
+	},
+	"x_interfacePlan": { "genre": "selector", "primary_task": "인증 수단 선택", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-3", "result": "pass", "evidence": "title only + leading icon" },
+		{ "rule": "H-7", "result": "pass", "evidence": "step flow → back" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

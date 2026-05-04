@@ -1,0 +1,32 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-leave-confirm", "name": "탈퇴 최종 동의 (간소화)", "route": "/nc-simple-leave-confirm", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-003", "name": "회원 탈퇴", "step": 4, "total": 5, "progress": "회원 탈퇴 4/5" },
+		"hero": { "titleLines": ["정말 탈퇴하시겠어요?"], "description": "유예 기간 후 정보가 영구 삭제돼요." },
+		"confirm": {
+			"title": "확인",
+			"items": [
+				{ "id": "all", "title": "위 유의사항을 모두 이해했어요", "required": true, "defaultChecked": false }
+			]
+		},
+		"continue": { "eyebrow": "확인 후 탈퇴 처리", "primaryAction": "탈퇴하기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-leave-confirm", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원 탈퇴", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 5, "progressStep": 4 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue", "primaryTone": "destructive" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
+				{ "type": "NcLeaveConfirmList", "id": "area.confirm", "props": { "bind": "confirm", "selectionMode": "multi" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-leave.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-leave", "route_id": "nc-simple-leave-confirm", "step_fraction": "4/5", "predecessor": "nc-simple-leave-notice", "successor": "nc-simple-leave-result", "transitions": [{ "to": "nc-simple-leave-result", "trigger": "primary_cta", "guard": "final_consent_confirmed AND withdrawal_processed" }] },
+	"x_policyExtract": { "source": { "type": "policy", "refs": ["PR-MBR-CS-003-04", "docs/NC_정책서_간소화_v1.0_확정본.md"] }, "process": { "id": "PR-MBR-CS-003-04", "name": "탈퇴 최종 동의", "cluster": "US-MBR-CS-003 회원 탈퇴 4/5 (간소화)", "actor": "고객", "entry_condition": "안내 확인 완료", "exit_condition": "최종 의사 확정", "predecessor": ["PR-MBR-CS-003-03"], "successor": ["PR-MBR-CS-003-05"] }, "purpose": "회복 불가성 인지 후 의사 확정.", "user_inputs": ["확인 동의", "탈퇴 CTA"], "branches": ["동의 → 탈퇴 처리 → 결과", "미동의 → 중단"], "design_signals": { "primary_block": "단일 ConsentList", "cta_intent": "탈퇴하기 (destructive)" } },
+	"x_interfacePlan": { "genre": "form", "primary_task": "최종 의사 확정", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [{ "rule": "H-9", "result": "pass", "evidence": "CTA disabled 대체" }, { "rule": "H-12", "result": "pass", "evidence": "ok" }] }
+}

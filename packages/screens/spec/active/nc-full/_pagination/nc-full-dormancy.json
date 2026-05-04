@@ -1,0 +1,102 @@
+{
+	"policy_id": "nc-full-dormancy",
+	"name": "휴면 해제",
+	"use_case_id": "US-MBR-CS-002",
+	"source_ref": {
+		"docs": "docs/NC_정책서_Full_v1.0_확정본.md",
+		"section": "4.다.6)~11) PR-MBR-CS-002-01 ~ PR-MBR-CS-002-06",
+		"flow_chart": "4.나. 전체 업무 흐름도 / US-MBR-CS-002"
+	},
+	"actors": ["고객", "BSS", "외부 인증기관"],
+	"entry_condition": "휴면 계정으로 서비스 이용 시도",
+	"exit_condition": "휴면 해제 완료 또는 일반 로그인 결과 반환",
+	"routes": [
+		{
+			"id": "nc-full-dormancy-login",
+			"type": "page",
+			"process_id": "PR-MBR-CS-002-01",
+			"process_name": "로그인",
+			"primary_task": "휴면 계정 진입을 위한 로그인 시도",
+			"actor": "고객",
+			"predecessor": null,
+			"successor": "nc-full-dormancy-auth",
+			"step_fraction": "1/4",
+			"split_reason": "휴면 해제 진입점. PR-MBR-CS-002-02(휴면 여부 확인)는 BSS 자동 판정으로 화면 없음."
+		},
+		{
+			"id": "nc-full-dormancy-auth",
+			"type": "page",
+			"process_id": "PR-MBR-CS-002-03",
+			"process_name": "본인인증",
+			"primary_task": "외부 인증기관을 통한 본인 확인",
+			"actor": "고객, 외부 인증기관",
+			"predecessor": "nc-full-dormancy-login",
+			"successor": "nc-full-dormancy-terms",
+			"step_fraction": "2/4",
+			"split_reason": "휴면 해제 전 본인 확인. 가입/탈퇴/재가입의 본인인증과 같은 UI 컴포넌트를 쓰지만 flow별 별도 route id로 분리(나1 강제)."
+		},
+		{
+			"id": "nc-full-dormancy-terms",
+			"type": "page",
+			"process_id": "PR-MBR-CS-002-04",
+			"process_name": "약관 동의",
+			"primary_task": "재동의가 필요한 약관 및 고지 확인",
+			"actor": "고객",
+			"predecessor": "nc-full-dormancy-auth",
+			"successor": "nc-full-dormancy-result",
+			"step_fraction": "3/4",
+			"split_reason": "재동의 대상만 노출. 가입의 약관 동의와 dataset이 다르므로 별도 route."
+		},
+		{
+			"id": "nc-full-dormancy-result",
+			"type": "page",
+			"process_id": "PR-MBR-CS-002-06",
+			"process_name": "휴면 해제 처리 결과 안내",
+			"primary_task": "휴면 해제 완료 안내 및 후속 진입",
+			"actor": "고객, BSS",
+			"predecessor": "nc-full-dormancy-terms",
+			"successor": null,
+			"step_fraction": "4/4",
+			"split_reason": "PR-MBR-CS-002-05(휴면 해제 처리)는 BSS 처리. 종료 조건인 '결과 안내'만 사용자 화면."
+		}
+	],
+	"transitions": [
+		{
+			"from": "nc-full-dormancy-login",
+			"to": "nc-full-dormancy-auth",
+			"trigger": "system",
+			"guard": "is_dormant_account",
+			"note": "PR-MBR-CS-002-02 BSS 자동 판정. 휴면 아니면 일반 로그인 결과로 분기(spec 범위 외)."
+		},
+		{
+			"from": "nc-full-dormancy-auth",
+			"to": "nc-full-dormancy-terms",
+			"trigger": "system",
+			"guard": "auth_succeeded"
+		},
+		{
+			"from": "nc-full-dormancy-terms",
+			"to": "nc-full-dormancy-result",
+			"trigger": "primary_cta",
+			"guard": "all_required_consents_checked AND dormancy_release_processed",
+			"note": "동의 확정 후 BSS PR-MBR-CS-002-05(휴면 해제 처리)가 자동 진행되고 그 결과로 result 화면 진입."
+		}
+	],
+	"branches": [
+		{
+			"from": "nc-full-dormancy-login",
+			"condition": "NOT is_dormant_account",
+			"behavior": "일반 로그인 결과 반환. 휴면 해제 flow 종료(spec 범위 외)."
+		},
+		{
+			"from": "nc-full-dormancy-auth",
+			"condition": "auth_failed",
+			"behavior": "동일 화면 재시도. 재시도 제한 초과 시 안내 후 종료(spec 범위 외)."
+		}
+	],
+	"design_signals": [
+		"top chrome에 4-step progress",
+		"login은 일반 login 화면 재사용 가능 — flow 진입점 표시는 progress가 담당",
+		"본인인증은 외부 IDP entry/return 처리"
+	]
+}

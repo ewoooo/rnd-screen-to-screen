@@ -1,0 +1,189 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "nc-full-join-complete",
+		"name": "가입 완료",
+		"route": "/nc-full-join-complete",
+		"domain": "nc-full",
+		"type": "page",
+		"status": "spec-only"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"flow": {
+			"useCase": "US-MBR-CS-001",
+			"name": "회원 가입",
+			"step": 4,
+			"total": 4,
+			"progress": "회원 가입 4/4"
+		},
+		"hero": {
+			"titleLines": ["가입이 완료됐어요", "지금 바로 시작해 보세요"],
+			"description": "환영합니다. 가입 정보로 자동 로그인되어 회원 서비스를 바로 이용할 수 있어요."
+		},
+		"summary": {
+			"title": "가입 정보",
+			"items": [
+				{ "id": "name", "label": "이름", "value": "홍길동" },
+				{ "id": "phone", "label": "휴대전화", "value": "010-****-**12" },
+				{ "id": "joinedAt", "label": "가입일", "value": "2026-05-04" },
+				{ "id": "memberId", "label": "회원번호", "value": "M-2026-000123" }
+			]
+		},
+		"benefitNotice": {
+			"badge": "안내",
+			"text": "가입 즉시 정회원 세션이 시작되며, 가입 후 30일 동안 신규 회원 혜택을 받을 수 있어요.",
+			"action": "혜택 보기",
+			"tone": "info"
+		},
+		"actions": {
+			"primary": { "id": "go-home", "label": "홈으로 가기" },
+			"secondary": { "id": "go-profile", "label": "내 정보 보기" }
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-full-join-complete",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "NcTopBar",
+					"id": "slot.top.nc-full-join-complete",
+					"props": {
+						"title": "회원가입",
+						"leadingIcon": "close",
+						"progressVisible": false
+					}
+				},
+				"bottom": {
+					"type": "NcResultActions",
+					"id": "area.actions",
+					"props": { "bind": "actions" }
+				}
+			},
+			"children": [
+				{
+					"type": "NcHero",
+					"id": "area.hero",
+					"props": {
+						"bind": "hero",
+						"textPolicy": {
+							"title": { "variant": "displayTitle", "overflow": "wrap" },
+							"description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" }
+						}
+					}
+				},
+				{
+					"type": "NcSummaryCard",
+					"id": "area.summary",
+					"props": {
+						"bind": "summary",
+						"textPolicy": {
+							"label": { "variant": "supportText" },
+							"value": { "variant": "listTitle", "maxLines": 1, "overflow": "truncate" }
+						}
+					}
+				},
+				{
+					"type": "NcNotice",
+					"id": "area.benefit-notice",
+					"props": { "bind": "benefitNotice", "tone": "default" }
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/nc-full/_pagination/nc-full-join.json",
+		"_canonical_hash": "TBD",
+		"policy_id": "nc-full-join",
+		"route_id": "nc-full-join-complete",
+		"step_fraction": "4/4",
+		"predecessor": "nc-full-join-auth",
+		"successor": null,
+		"transitions": [
+			{ "to": "external:home", "trigger": "primary_action", "guard": null },
+			{ "to": "external:profile", "trigger": "secondary_action", "guard": null }
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-MBR-CS-001-04",
+				"PR-MBR-CS-001-05",
+				"docs/NC_정책서_Full_v1.0_확정본.md#가입-처리-pr-mbr-cs-001-05"
+			]
+		},
+		"process": {
+			"id": "PR-MBR-CS-001-05",
+			"name": "가입 처리 결과 안내",
+			"cluster": "US-MBR-CS-001 회원 가입 4/4",
+			"actor": "고객, BSS",
+			"entry_condition": "회원 검증 완료 + 가입 처리 완료",
+			"exit_condition": "회원 생성 및 가입 완료 안내 완료",
+			"predecessor": ["PR-MBR-CS-001-04"],
+			"successor": [],
+			"related_functions": [
+				"회원 계정 생성",
+				"가입 완료 처리",
+				"세션 생성 및 전환",
+				"처리 이력 및 알림 처리"
+			],
+			"related_policies": [
+				"회원 계정 생성 및 식별정보 관리 기준 정책",
+				"기본 프로필 초기화 기준 정책",
+				"가입 완료 처리 및 세션 전환 기준 정책"
+			]
+		},
+		"purpose": "회원 검증·가입 처리 완료 후 결과를 사용자에게 안내하고 정회원 세션으로 전환된 직후의 진입을 결정한다.",
+		"system_inputs_to_user": ["회원 식별정보(마스킹)", "가입 일시", "회원번호", "정회원 세션 시작 안내", "신규 혜택 안내"],
+		"user_inputs": ["다음 행동 선택(홈/내 정보)"],
+		"system_outputs": ["다음 진입 화면", "세션 상태"],
+		"branches": [
+			"홈으로 → 메인 진입",
+			"내 정보 → 회원 프로필 진입"
+		],
+		"exceptions": [
+			"세션 전환 실패 → 로그인 화면으로 우회 안내",
+			"가입 처리 완료는 됐으나 알림 발송 실패 → 알림은 비동기 재시도, 화면은 정상 진입"
+		],
+		"design_signals": {
+			"primary_block": "환영 hero + 가입 정보 요약 + 다음 행동 2개",
+			"hero_intent": "환영 + 정회원 세션 시작 안내",
+			"info_box_intent": "신규 혜택/세션 맥락",
+			"cta_intent": "홈으로 / 내 정보 보기"
+		}
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "결과 확인 + 다음 행동 선택",
+		"info_hierarchy": ["hero", "result-summary", "supporting-notice", "actions"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card"
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "n/a", "evidence": "form 장르 아님 (result)" },
+			{ "rule": "H-2", "result": "pass", "evidence": "SummaryCard title='가입 정보'와 hero가 의미 중복 없음" },
+			{ "rule": "H-3", "result": "n/a", "evidence": "SelectableList 미사용" },
+			{ "rule": "H-4", "result": "n/a", "evidence": "textarea 미사용" },
+			{ "rule": "H-5", "result": "n/a", "evidence": "form 아님" },
+			{ "rule": "H-6", "result": "pass", "evidence": "progress 자체 비표시" },
+			{ "rule": "H-7", "result": "pass", "evidence": "dead-end → close" },
+			{ "rule": "H-8", "result": "n/a", "evidence": "form 장르 아님" },
+			{ "rule": "H-9", "result": "n/a", "evidence": "required input 없음" },
+			{ "rule": "H-10", "result": "documented", "evidence": "InfoList trailing_semantic=value (가입 정보 값 노출)" },
+			{ "rule": "H-11", "result": "n/a", "evidence": "escape hatch 없음" },
+			{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+		]
+	}
+}

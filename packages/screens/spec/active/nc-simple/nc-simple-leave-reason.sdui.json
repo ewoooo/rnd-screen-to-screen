@@ -1,0 +1,35 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-leave-reason", "name": "탈퇴 사유 (간소화)", "route": "/nc-simple-leave-reason", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-003", "name": "회원 탈퇴", "step": 2, "total": 5, "progress": "회원 탈퇴 2/5" },
+		"hero": { "titleLines": ["떠나시는 이유를 알려주세요"], "description": "서비스 개선에 사용돼요." },
+		"reasons": {
+			"selectedId": null,
+			"items": [
+				{ "id": "rare-use", "title": "잘 쓰지 않아요" },
+				{ "id": "no-benefit", "title": "혜택이 부족해요" },
+				{ "id": "privacy", "title": "개인정보가 걱정돼요" },
+				{ "id": "other", "title": "기타" }
+			]
+		},
+		"continue": { "eyebrow": "사유 선택 후 진행", "primaryAction": "다음으로" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-leave-reason", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원 탈퇴", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 5, "progressStep": 2 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
+				{ "type": "SelectableList", "id": "area.reasons", "props": { "bind": "reasons", "selectionMode": "single", "density": "compact" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-leave.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-leave", "route_id": "nc-simple-leave-reason", "step_fraction": "2/5", "predecessor": "nc-simple-leave-auth", "successor": "nc-simple-leave-notice", "transitions": [{ "to": "nc-simple-leave-notice", "trigger": "primary_cta", "guard": "reason_entered" }] },
+	"x_policyExtract": { "source": { "type": "policy", "refs": ["PR-MBR-CS-003-02", "docs/NC_정책서_간소화_v1.0_확정본.md"] }, "process": { "id": "PR-MBR-CS-003-02", "name": "탈퇴 사유 입력", "cluster": "US-MBR-CS-003 회원 탈퇴 2/5 (간소화)", "actor": "고객", "entry_condition": "본인인증 성공", "exit_condition": "사유 선택 완료", "predecessor": ["PR-MBR-CS-003-01"], "successor": ["PR-MBR-CS-003-03"] }, "purpose": "사유를 단일 선택으로 수집한다.", "user_inputs": ["사유 선택"], "system_outputs": ["수집된 사유"], "branches": ["선택 → 안내", "미선택 → 진행 제한"], "design_signals": { "primary_block": "단일 선택 (compact)", "cta_intent": "다음으로" } },
+	"x_interfacePlan": { "genre": "form", "primary_task": "사유 선택", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [{ "rule": "H-3", "result": "pass", "evidence": "compact" }, { "rule": "H-4", "result": "n/a", "evidence": "textarea 미사용" }, { "rule": "H-12", "result": "pass", "evidence": "ok" }] }
+}

@@ -1,0 +1,191 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "nc-full-join-auth",
+		"name": "본인인증",
+		"route": "/nc-full-join-auth",
+		"domain": "nc-full",
+		"type": "page",
+		"status": "spec-only"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"flow": {
+			"useCase": "US-MBR-CS-001",
+			"name": "회원 가입",
+			"step": 3,
+			"total": 4,
+			"progress": "회원 가입 3/4"
+		},
+		"hero": {
+			"titleLines": ["본인 확인을", "진행할게요"],
+			"description": "회원 가입을 위해 본인 확인이 필요해요. 인증 수단을 선택하면 인증기관 화면으로 이동합니다."
+		},
+		"methods": {
+			"items": [
+				{ "id": "phone", "title": "휴대폰 본인인증", "leadingIcon": "smartphone", "trailingChip": "추천" },
+				{ "id": "pass", "title": "PASS 인증", "leadingIcon": "shield-check", "trailingChip": null },
+				{ "id": "joint-cert", "title": "공동인증서", "leadingIcon": "certificate", "trailingChip": null }
+			],
+			"selectedId": null
+		},
+		"policyNotice": {
+			"badge": "안내",
+			"text": "동일 정보로 5회 이상 인증 실패 시 일정 시간 동안 인증이 제한될 수 있어요.",
+			"action": null,
+			"tone": "info"
+		},
+		"continue": {
+			"eyebrow": "선택한 수단의 외부 인증 화면으로 이동",
+			"primaryAction": "인증하기"
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-full-join-auth",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "NcTopBar",
+					"id": "slot.top.nc-full-join-auth",
+					"props": {
+						"title": "회원가입",
+						"leadingIcon": "back",
+						"progressBind": "flow.progress",
+						"progressTotal": 4,
+						"progressStep": 3
+					}
+				},
+				"bottom": {
+					"type": "NcContinueBar",
+					"id": "area.continue",
+					"props": { "bind": "continue" }
+				}
+			},
+			"children": [
+				{
+					"type": "NcHero",
+					"id": "area.hero",
+					"props": {
+						"bind": "hero",
+						"textPolicy": {
+							"title": { "variant": "displayTitle", "overflow": "wrap" },
+							"description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" }
+						}
+					}
+				},
+				{
+					"type": "SelectableList",
+					"id": "area.methods",
+					"props": {
+						"bind": "methods",
+						"selectionMode": "single",
+						"density": "comfortable",
+						"textPolicy": {
+							"title": { "variant": "listTitle", "maxLines": 1, "overflow": "truncate" }
+						}
+					}
+				},
+				{
+					"type": "NcNotice",
+					"id": "area.policy-notice",
+					"props": { "bind": "policyNotice", "tone": "default" }
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/nc-full/_pagination/nc-full-join.json",
+		"_canonical_hash": "TBD",
+		"policy_id": "nc-full-join",
+		"route_id": "nc-full-join-auth",
+		"step_fraction": "3/4",
+		"predecessor": "nc-full-join-info",
+		"successor": "nc-full-join-complete",
+		"transitions": [
+			{
+				"to": "nc-full-join-complete",
+				"trigger": "system",
+				"guard": "auth_succeeded AND member_verification_passed",
+				"note": "본인인증 성공 후 BSS 회원 검증·가입 처리 통과 시 완료 화면으로 진입"
+			}
+		],
+		"branches": [
+			{ "condition": "auth_failed", "behavior": "동일 화면 재시도. 재시도 제한 초과 시 가입 중단" }
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": ["PR-MBR-CS-001-03", "docs/NC_정책서_Full_v1.0_확정본.md#본인인증-pr-mbr-cs-001-03"]
+		},
+		"process": {
+			"id": "PR-MBR-CS-001-03",
+			"name": "본인인증",
+			"cluster": "US-MBR-CS-001 회원 가입 3/4",
+			"actor": "고객, 외부 인증기관",
+			"entry_condition": "개인정보 입력 완료",
+			"exit_condition": "본인인증 결과 수신 완료",
+			"predecessor": ["PR-MBR-CS-001-02"],
+			"successor": ["PR-MBR-CS-001-04"],
+			"related_functions": ["본인인증 처리"],
+			"related_policies": [
+				"본인인증 적용 기준 정책",
+				"인증 수단 선택 및 허용 기준 정책",
+				"인증 결과 판정 및 반영 기준 정책",
+				"인증 실패 재시도 및 제한 기준 정책"
+			]
+		},
+		"purpose": "외부 인증기관을 통해 가입자 본인 여부를 확인한다.",
+		"system_inputs_to_user": ["허용 인증 수단 목록", "추천 수단 표시", "재시도/잠금 정책 안내"],
+		"user_inputs": ["인증 수단 선택", "외부 인증기관 화면 입력값"],
+		"system_outputs": ["인증 결과", "CI/DI", "다음 이동 경로"],
+		"branches": [
+			"인증 성공 → 회원 검증(BSS) → 가입 처리 → 완료 안내",
+			"인증 실패 → 동일 화면에서 재시도",
+			"재시도 한도 초과 → 가입 중단/안내"
+		],
+		"exceptions": [
+			"외부 인증기관 응답 지연/실패 → 안내 후 재시도",
+			"인증 결과 위변조 의심 → 가입 차단 및 안내"
+		],
+		"design_signals": {
+			"primary_block": "인증 수단 단일 선택 리스트",
+			"hero_intent": "본인 확인 목적과 외부 이동 안내",
+			"info_box_intent": "재시도/잠금 정책 안내",
+			"cta_intent": "인증하기"
+		}
+	},
+	"x_interfacePlan": {
+		"genre": "selector",
+		"primary_task": "인증 수단 1개 선택",
+		"info_hierarchy": ["hero", "required-input (인증 수단 리스트)", "supporting-notice", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat"
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0개 (selector flat)" },
+			{ "rule": "H-2", "result": "n/a", "evidence": "SectionCard 미사용" },
+			{ "rule": "H-3", "result": "pass", "evidence": "title only, sub 없음 → comfortable density 유지(leading icon으로 시각 위계)" },
+			{ "rule": "H-4", "result": "n/a", "evidence": "textarea 미사용" },
+			{ "rule": "H-5", "result": "pass", "evidence": "에러는 외부 인증 후 동일 화면 재시도 흐름, 단일 message owner" },
+			{ "rule": "H-6", "result": "pass", "evidence": "TopBar progress label만" },
+			{ "rule": "H-7", "result": "pass", "evidence": "step flow → back" },
+			{ "rule": "H-8", "result": "n/a", "evidence": "form 장르 아님" },
+			{ "rule": "H-9", "result": "pass", "evidence": "required는 CTA disabled로 대체" },
+			{ "rule": "H-10", "result": "n/a", "evidence": "InfoList 미사용" },
+			{ "rule": "H-11", "result": "n/a", "evidence": "escape hatch 없음" },
+			{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+		]
+	}
+}

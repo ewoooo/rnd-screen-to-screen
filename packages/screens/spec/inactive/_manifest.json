@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"status": "policy-less",
+	"description": "정책서 backing이 없는 디자인 strain test 화면. 라우트는 여전히 동작하지만 source 정책이 없어 active 분류에서 분리되었다. 새 정책서 매핑이 생기면 active로 승격한다.",
+	"groups": {
+		"home": {
+			"dir": ".",
+			"description": "홈 도메인 strain test 5화면.",
+			"screens": [
+				"home-benefit",
+				"home-manage",
+				"home-device-change",
+				"home-senior",
+				"home-guest"
+			]
+		},
+		"product": {
+			"dir": ".",
+			"description": "상품 상세 단일 화면.",
+			"screens": ["product-detail"]
+		},
+		"search": {
+			"dir": ".",
+			"description": "검색 결과 단일 화면.",
+			"screens": ["search-result"]
+		},
+		"tu": {
+			"dir": ".",
+			"description": "TU 도메인 화면.",
+			"screens": [
+				"tu-dsp-main-mo-02-pg-001-2",
+				"tu-dsp-main-mo-02-pg-002",
+				"tu-my-agr-mo-02-bs-001"
+			]
+		}
+	},
+	"render_spec_pilots": ["product-detail"]
+}

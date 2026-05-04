@@ -462,6 +462,7 @@ product-detail/page.tsx
 - `packages/screens/src/benchmark.ts` — screen generation benchmark SSOT. 디자인/기획 평가 항목, 관련 API, 1~5 scoring hint 정의
 - `packages/screens/spec/active/<route-id>.json` — 렌더 가능한 화면의 screen contract SSOT. `screen_contract` / `areas` / `system_mapping` / `layout_tokens` / `system_fit` 중심
 - `packages/screens/spec/active/<route-id>.sdui.json` — 정책서 → 화면 요구사항 → SDUI 렌더 트리 파일럿. 현재 `product-detail`, `membership-terms-consent`가 운영 중이며, v2 screen contract를 대체하지 않고 검증용으로 병행한다
+- `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json` — 정책서 단위 화면 분할 SSOT. domain 버킷 안에 정책별로 둔다(예: `membership/_pagination/membership-join.json`, `membership/_pagination/membership-leave.json`, `nc-full/_pagination/nc-full.json`, `nc-simple/_pagination/nc-simple.json`). `policy_id` / `source_ref`(예: `docs/NC_정책서_Full_v1.0_확정본.md`) / `routes[]`(id, type, primary_task, predecessor, successor, step_fraction, split_reason) / `transitions[]`(from, to, trigger, guard)을 담는다. 각 route의 `.sdui.json`에 들어가는 `x_pagination` 슬라이스는 이 파일에서 derive되며, 슬라이스의 `_canonical_hash`(B 파일의 sha256)가 lint에서 검증된다. AI 세션은 `.sdui.json`만 읽어도 해당 route의 위치/전이를 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다
 - 구버전 imported/legacy/source-for-active spec은 레포 상위 백업 디렉토리 `../rnd-screen-to-screen-backup/packages/screens/spec/_deprecated/`에 보존한다. `packages/screens/spec/active/`와 active registry는 이 백업을 참조하지 않는다.
 
 ### 정책서 → 화면 분할 → 인터페이스 설계 → 스펙/계약 → 렌더 생성
@@ -472,8 +473,8 @@ product-detail/page.tsx
 
 흐름:
 1. **정책서 읽기** — `docs/`의 정책서 또는 사용자가 지정한 Notion 원문만 기준으로 삼는다. 레포 상위 백업의 deprecated spec은 읽지 않는다.
-2. **화면 단위 분할** — 정책 process, entry/exit condition, 주요 user action, branch/exception을 기준으로 생성할 route 후보를 나눈다. 한 화면은 하나의 주요 목적과 하나의 primary CTA를 가져야 한다. 분할 결과는 route id, 화면명, domain, type(`page`/`bottom-sheet`), predecessor/successor로 표현한다.
-3. **`x_policyExtract` 작성** — 정책서의 process, purpose, system/user input, output, branches, exceptions, design_signals를 추출한다. 정책 ID와 원문 ref를 반드시 남긴다.
+2. **`x_pagination` 작성 (화면 단위 분할 SSOT)** — 정책 process, entry/exit condition, 주요 user action, branch/exception을 기준으로 route를 분할하고 화면 간 전이를 표현한다. 한 화면은 하나의 primary task와 하나의 primary CTA를 가져야 한다. **분할 단위는 use case (flow)** 다. 정책서가 여러 use case(예: 회원 가입 / 휴면 해제 / 회원 탈퇴 / 재가입)를 담고 있으면 use case당 1개 pagination 파일로 분리한다. 산출물은 두 곳에 둔다. (B) use case당 1개 SSOT — `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json`. `<policy-id>`는 `<doc>-<use-case>` 형식(예: `nc-full-join`, `nc-full-leave`). domain 버킷은 그릇이고 한 도메인에 여러 flow 파일이 있을 수 있다. 같은 정책서에서 파생된 flow 파일을 묶어보고 싶으면 `<domain>/_pagination/_index.json`에 source doc + flow 목록만 담는 얇은 색인 파일을 둘 수 있다(routes/transitions는 담지 않는다 — SSOT 충돌 방지). (A) 각 route의 `.sdui.json` 안 `x_pagination` 슬라이스 — B의 동일 정보 중 해당 route 부분만 denormalize. drift 방지를 위해 슬라이스에 B의 `_canonical_hash`(sha256)를 박고, lint에서 모든 슬라이스 hash가 B의 현재 hash와 일치하는지 검증한다. AI/세션은 A만 읽어도 predecessor/successor/step_fraction을 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다. **공유 화면 규칙**: 같은 UI(예: 본인인증)가 여러 flow에서 등장해도 route id는 flow별로 분리한다(`nc-join-auth`, `nc-rejoin-auth`처럼). 컴포넌트는 organism/molecule 레벨에서 재사용하고, pagination route는 흐름 단위로 별개로 유지한다 — 한 route에 여러 flow context가 동시에 들어가면 슬라이스 SSOT가 깨진다.
+3. **`x_policyExtract` 작성** — 정책서의 process, purpose, system/user input, output, branches, exceptions, design_signals를 추출한다. 정책 ID와 원문 ref를 반드시 남긴다. `source.refs`는 정책서/섹션 단위 출처를 보존하고, `evidence_refs`에는 각 process, branch, exception, user/system input이 어떤 원문 섹션·문장·표에서 왔는지 항목별 근거를 남긴다. 원문 근거 없이 요약만 만든 `x_policyExtract`는 화면 계약 근거로 쓰지 않는다.
 4. **`x_interfacePlan` 작성** — 화면 장르(`flow`/`browse`/`detail`/`form`/`result` 등), primary task, 사용자 결정/입력, 정보 위계, progress 위치, CTA 위치, 선택/입력 패턴, 텍스트 measure 정책을 먼저 정한다. 이 단계는 “어떤 컴포넌트를 쓸지”보다 “어떤 인터페이스 문법이 맞는지”를 결정한다.
 5. **Pattern Fit 점검** — `x_interfacePlan`을 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
 6. **`x_screenContract` 작성** — v2 `screen_contract` / `layout_contract` / `areas` / `design_system_contract`로 화면 슬롯, 레이아웃 소유권, 사용 컴포넌트 어휘를 고정한다. 이 단계에서 `AppScreen`/`BottomSheet`, `ContentSection`, molecule/organism 사용 여부를 결정하되, 결정 근거는 `x_interfacePlan`과 연결되어야 한다.
@@ -552,8 +553,9 @@ Heuristic Review 룰 (적용 시 `x_heuristicReview.applied_rules`에 결과/근
 - 파일럿은 `RenderableScreenSpecV1` 타입과 `getRenderableScreenSpecIssues` 검증 함수를 통과해야 한다.
 
 생성 산출물 체크리스트:
+- `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json` (정책서당 1회 작성·갱신, B-SSOT)
 - `packages/screens/spec/active/<route-id>.json`
-- `packages/screens/spec/active/<route-id>.sdui.json`
+- `packages/screens/spec/active/<route-id>.sdui.json` (`x_pagination` 슬라이스 포함, `_canonical_hash` 박음)
 - `packages/screens/src/index.ts`
 - `packages/screens/src/active-specs.ts`
 - `packages/screens/spec/active/_manifest.json`
@@ -632,3 +634,6 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-30 | `membership-leave-reason` flat 재설계 — SectionCard/NoticeBlock 제거, textarea 항상 노출(선택), error 메시지 폼 안 단일화 |
 | 2026-04-30 | 스크린 생성 절차에 `x_interfacePlan`과 Heuristic Review 단계 추가 — 명세를 단순 계약으로 옮기기 전에 화면 장르, primary task, 정보 위계, progress/CTA 위치, caption measure 정책을 먼저 결정 |
 | 2026-04-30 | `ContentRail` 채택 — screen margin 보정 금지, `ContentOutlet` 기본 inset / `ContentSection` bleed / `ContentRail` inset·measure로 가로 기준선과 caption 행폭을 분리 |
+| 2026-05-04 | `x_pagination` 단계 신설 — 정책서와 `x_policyExtract` 사이에 화면 단위 분할 SSOT 단계를 명시화. 정책서당 1개 SSOT(`spec/active/<domain>/_pagination/<policy-id>.json`)와 각 route `.sdui.json`의 `x_pagination` 슬라이스(hybrid + hash guard 옵션 4) 운영. drift는 `_canonical_hash`로 lint 검증 |
+| 2026-05-04 | spec 버킷 도메인화 — `spec/active/` 평탄에서 도메인 버킷(`membership/`, `nc-full/`, `nc-simple/`)으로 그룹. 한 도메인에 복수 정책 가능(`membership/`은 join + leave 2 정책). NC는 Full/Simple 두 정책서 분리 운영(`docs/NC_정책서_Full_v1.0_확정본.md`, `docs/NC_정책서_간소화_v1.0_확정본.md`) |
+| 2026-05-04 | pagination 분할 단위 정정 — "정책서당 1개" → "use case(flow)당 1개". 정책서가 여러 flow(가입/휴면/탈퇴/재가입)를 담으면 flow별로 pagination 파일 분리. policy_id 형식 `<doc>-<use-case>`. 공유 화면(예: 본인인증)은 flow별 별도 route id로 분리 강제(`nc-join-auth`, `nc-rejoin-auth`). 컴포넌트는 organism 레벨에서 재사용 |

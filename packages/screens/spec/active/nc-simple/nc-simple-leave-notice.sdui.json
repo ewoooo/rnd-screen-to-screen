@@ -1,0 +1,27 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-leave-notice", "name": "탈퇴 전 안내 (간소화)", "route": "/nc-simple-leave-notice", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-003", "name": "회원 탈퇴", "step": 3, "total": 5, "progress": "회원 탈퇴 3/5" },
+		"hero": { "titleLines": ["탈퇴 시 유의사항"], "description": "탈퇴 후 30일 내 철회하지 않으면 정보가 영구 삭제돼요." },
+		"cautions": { "badge": "유의사항", "text": "보유 포인트·쿠폰·구독 혜택은 탈퇴 시 모두 소멸됩니다. 미납금이 있는 경우 정산이 필요해요.", "tone": "warning" },
+		"continue": { "eyebrow": "확인 후 진행", "primaryAction": "확인하고 계속하기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-simple-leave-notice", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원 탈퇴", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 5, "progressStep": 3 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
+				{ "type": "NcNotice", "id": "area.cautions", "props": { "bind": "cautions", "tone": "warning" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-leave.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-leave", "route_id": "nc-simple-leave-notice", "step_fraction": "3/5", "predecessor": "nc-simple-leave-reason", "successor": "nc-simple-leave-confirm", "transitions": [{ "to": "nc-simple-leave-confirm", "trigger": "primary_cta", "guard": "notice_acknowledged" }] },
+	"x_policyExtract": { "source": { "type": "policy", "refs": ["PR-MBR-CS-003-03", "docs/NC_정책서_간소화_v1.0_확정본.md"] }, "process": { "id": "PR-MBR-CS-003-03", "name": "탈퇴 전 안내 확인", "cluster": "US-MBR-CS-003 회원 탈퇴 3/5 (간소화)", "actor": "고객, BSS", "entry_condition": "사유 입력 완료", "exit_condition": "유의사항 확인 완료", "predecessor": ["PR-MBR-CS-003-02"], "successor": ["PR-MBR-CS-003-04"] }, "purpose": "유의사항을 단축 카피로 안내한다.", "system_inputs_to_user": ["축약된 유의사항"], "user_inputs": ["다음 단계 진행"], "branches": ["확인 → 최종 동의"], "design_signals": { "primary_block": "단일 NoticeBlock", "cta_intent": "확인하고 계속하기" } },
+	"x_interfacePlan": { "genre": "notice", "primary_task": "유의사항 확인", "info_hierarchy": ["hero", "supporting-notice", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [{ "rule": "H-12", "result": "pass", "evidence": "ok" }] }
+}

@@ -1,0 +1,13 @@
+{
+	"meta": { "schema_version": 2, "status": "active", "route": "/nc-simple-leave-result", "source": "policy-driven", "policy_doc": "docs/NC_정책서_간소화_v1.0_확정본.md", "policy_section": "4.가.3) PR-MBR-CS-003-06", "pagination_ref": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-leave.json", "variant_of": "nc-full-leave-result" },
+	"screen": { "id": "nc-simple-leave-result", "name": "탈퇴 완료 (간소화)", "domain": "nc-simple", "use_case": "US-MBR-CS-003", "process_id": "PR-MBR-CS-003-06", "step_fraction": "5/5", "type": "page" },
+	"x_interfacePlan": { "genre": "result", "primary_task": "탈퇴 결과 인지 + 홈으로", "info_hierarchy": ["hero (완료, 유예 안내)", "action (홈)"], "cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "flat", "simplified": { "summary": "미사용", "actions": "primary 1개" } },
+	"screen_contract": { "shell": "AppScreen", "slots": { "top": { "owner": "NcShell", "patterns": ["NcTopBar"], "flow": "reserved" }, "content": { "owner": "ContentList", "patterns": ["NcHero"] }, "bottom": { "owner": "NcShell", "patterns": ["NcContinueBar"], "flow": "reserved" } } },
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"areas": [
+		{ "id": "top-progress", "slot": "top", "pattern": "organisms/nc/NcTopBar", "uses": ["StatusBar", "TopNavigation"], "layout": { "flow": "reserved", "leading": "close", "progress_visible": false }, "content_role": "flow-progress" },
+		{ "id": "hero", "slot": "content", "pattern": "organisms/nc/NcHero", "uses": ["ContentSection", "TextBlock", "ContentRail"], "layout": { "section_inset": "inherit", "description_rail": "measure:body", "block_padding_top": "spacing-16", "block_padding_bottom": "spacing-32" }, "content_role": "primary-copy" },
+		{ "id": "continue", "slot": "bottom", "pattern": "organisms/nc/NcContinueBar", "uses": ["Box", "Button", "TextBlock"], "content_role": "primary-action", "layout": { "surface": "page-semi-gradient" } }
+	],
+	"design_system_contract": { "templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection", "ContentRail"], "organisms": ["nc"], "molecules": [], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": ["organisms/nc"] }
+}
