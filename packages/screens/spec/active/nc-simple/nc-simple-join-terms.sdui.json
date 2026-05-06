@@ -1,51 +1,172 @@
 {
-	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
-	"metadata": { "id": "nc-simple-join-terms", "name": "약관 동의 (간소화)", "route": "/nc-simple-join-terms", "domain": "nc-simple", "type": "page", "status": "spec-only" },
-	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "nc-simple-join-terms",
+		"name": "회원 가입 - 약관 동의",
+		"route": "/nc-simple-join-terms",
+		"domain": "nc-simple",
+		"type": "page",
+		"status": "active"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
 	"data": {
-		"flow": { "useCase": "US-MBR-CS-001", "name": "회원 가입", "step": 1, "total": 4, "progress": "회원 가입 1/4" },
-		"hero": { "titleLines": ["약관에 동의하고", "시작하세요"], "description": "필수 약관에 동의해 주세요." },
+		"topbar": {
+			"title": "회원 가입",
+			"progressLabel": "1/4",
+			"progressPercent": 25,
+			"showProgressLabel": false
+		},
+		"hero": {
+			"titleLines": ["가입에 필요한", "약관에 동의해 주세요"],
+			"description": "필수 항목에 모두 동의해야 다음 단계로 진행할 수 있어요."
+		},
 		"terms": {
-			"title": "약관 동의",
-			"allLabel": "전체 동의",
-			"items": [
-				{ "id": "service", "title": "서비스 이용약관", "required": true, "defaultChecked": false },
-				{ "id": "privacy", "title": "개인정보 수집·이용", "required": true, "defaultChecked": false },
-				{ "id": "marketing", "title": "마케팅 수신 (선택)", "required": false, "defaultChecked": false }
+			"selectAllLabel": "모든 약관에 동의합니다",
+			"required": [
+				{ "id": "tos", "title": "서비스 이용약관", "required": true, "hasDetail": true },
+				{ "id": "privacy", "title": "개인정보 수집·이용 동의", "required": true, "hasDetail": true }
+			],
+			"optional": [
+				{ "id": "marketing", "title": "마케팅 정보 수신 동의", "required": false, "hasDetail": true },
+				{ "id": "personalize", "title": "맞춤형 혜택 제공 동의", "required": false, "hasDetail": true }
 			]
 		},
-		"notice": { "badge": "안내", "text": "만 14세 미만은 법정대리인 동의가 필요해요.", "tone": "info" },
-		"user": { "isMinor": false },
-		"continue": { "eyebrow": "필수 약관 동의 후 진행", "primaryAction": "다음으로" }
+		"continue": {
+			"eyebrow": "약관 동의 완료",
+			"primaryAction": "다음"
+		}
+	},
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json",
+		"_canonical_hash": "3cbe13f2495b0385d29e0f7a97faaa46d15d26685493cd9ae2b613bd576b63c7",
+		"policy_id": "nc-simple-join",
+		"use_case_id": "US-MBR-CS-001",
+		"route": {
+			"id": "nc-simple-join-terms",
+			"type": "form",
+			"primary_task": "회원 가입 필수·선택 약관에 동의한다",
+			"predecessor": null,
+			"successor": "nc-simple-join-info",
+			"step_fraction": "1/4"
+		},
+		"transitions": [
+			{ "from": null, "to": "nc-simple-join-terms", "trigger": "비회원 고객이 회원 가입 진입", "guard": "MBR_NONE 상태로 가입 채널 진입" },
+			{ "from": "nc-simple-join-terms", "to": "nc-simple-join-info", "trigger": "필수 약관 전체 동의 후 다음", "guard": "POL-MBR-TERM-001-06 충족(필수 약관 모두 동의)" }
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"docs/NC_정책서_간소화_v1.0_확정본.md §4.가.1) PR-MBR-CS-001-01",
+				"docs/NC_정책서_간소화_v1.0_확정본.md §6.나.1) PG-MBR-TERM-001"
+			]
+		},
+		"process": {
+			"id": "PR-MBR-CS-001-01",
+			"name": "약관 동의",
+			"cluster": "US-MBR-CS-001 회원 가입 1/4",
+			"actor": "고객",
+			"entry_condition": "비회원 가입 진입",
+			"exit_condition": "필수 약관 모두 동의",
+			"predecessor": [],
+			"successor": ["PR-MBR-CS-001-02"],
+			"related_functions": ["약관 동의 처리", "법정대리인 동의 처리"],
+			"related_policies": ["PG-MBR-TERM-001", "PG-MBR-TERM-002", "PG-MBR-TERM-003"]
+		},
+		"purpose": "회원 가입에 필요한 필수·선택 약관 동의를 받는다.",
+		"system_inputs_to_user": ["필수 약관 목록", "선택 약관 목록", "약관 전문/요약"],
+		"user_inputs": ["전체 동의", "개별 동의/해제", "약관 상세 보기"],
+		"system_outputs": ["동의 이력", "동의 채널", "동의 일시"],
+		"branches": [
+			"필수 약관 모두 동의 → 다음 단계 진행",
+			"필수 약관 미동의 → 진행 차단",
+			"법정대리인 동의 대상 → 별도 동의 흐름 분기"
+		],
+		"exceptions": [
+			"약관 버전 변경 시 최신 버전 강제",
+			"법정대리인 동의 미완료 시 진행 차단",
+			"세션 만료 시 재동의"
+		],
+		"design_signals": {
+			"primary_block": "ConsentList 필수/선택 분리",
+			"hero_intent": "단계 맥락 + 필수성 안내 1문장",
+			"cta_intent": "다음 (필수 미동의 시 비활성)"
+		}
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "필수 약관 전체 동의 후 다음 단계 진행",
+		"info_hierarchy": ["hero", "consent-list (required-input)", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat",
+		"copy_policy": { "description_measure": "body", "avoid_full_width_caption": true }
+	},
+	"x_screenContract": {
+		"screen_contract": {
+			"shell": "AppScreen",
+			"slots": {
+				"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+				"content": { "owner": "ContentList", "patterns": ["MembershipHero", "TermsAgreementGroup"] },
+				"bottom": { "owner": "MembershipShell", "patterns": ["MembershipContinueBar"], "flow": "reserved" }
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": []
+		},
+		"areas": [
+			{ "id": "hero", "slot": "content", "pattern": "organisms/membership/MembershipHero", "uses": ["ContentSection", "TextBlock"], "content_role": "primary-copy" },
+			{ "id": "terms", "slot": "content", "pattern": "organisms/membership/TermsAgreementGroup", "uses": ["ContentSection", "ConsentList", "Checkbox"], "content_role": "required-input" },
+			{ "id": "continue", "slot": "bottom", "pattern": "organisms/membership/MembershipContinueBar", "uses": ["Button", "TextBlock"], "content_role": "primary-action" }
+		],
+		"design_system_contract": {
+			"templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection"],
+			"organisms": ["membership"],
+			"molecules": ["ConsentList"],
+			"atoms": ["TextBlock"],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
+			{ "rule": "H-2", "result": "pass", "evidence": "hero=header" },
+			{ "rule": "H-7", "result": "pass", "evidence": "step flow → back" },
+			{ "rule": "H-8", "result": "pass", "evidence": "법정대리인 NoticeBlock 분리 옵션" },
+			{ "rule": "H-12", "result": "pass", "evidence": "ContentOutlet inset 그대로 상속" }
+		]
+	},
+	"x_benchmark": {
+		"criteria": ["design.visualHierarchy", "design.componentConsistency", "planning.policyCoverage"],
+		"guards": ["guard.rawEscapeHatch", "guard.unexplainedNewVocabulary"]
 	},
 	"children": [
-		{ "type": "AppScreen", "id": "screen.nc-simple-join-terms", "componentVersion": "0.1.0",
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-simple-join-terms",
+			"componentVersion": "0.1.0",
 			"props": {
-				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원가입", "leadingIcon": "close", "progressBind": "flow.progress", "progressTotal": 4, "progressStep": 1 } },
-				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+				"top": { "type": "MembershipTopBar", "id": "slot.top", "props": { "bind": "topbar", "leading": "back" } },
+				"bottom": { "type": "MembershipContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
 			},
 			"children": [
-				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
-				{ "type": "TermsAgreementGroup", "id": "area.terms", "props": { "bind": "terms", "selectionMode": "multi" } },
-				{ "type": "NcNotice", "id": "area.guardian-notice", "props": { "bind": "notice", "tone": "default", "visibleWhen": "user.isMinor" } }
+				{ "type": "MembershipHero", "id": "area.hero", "props": { "bind": "hero" } },
+				{ "type": "TermsAgreementGroup", "id": "area.terms", "props": { "bind": "terms" } }
 			]
 		}
-	],
-	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-join", "route_id": "nc-simple-join-terms", "step_fraction": "1/4", "predecessor": null, "successor": "nc-simple-join-info", "transitions": [{ "to": "nc-simple-join-info", "trigger": "primary_cta", "guard": "all_required_consents_checked" }] },
-	"x_policyExtract": {
-		"source": { "type": "policy", "refs": ["PR-MBR-CS-001-01", "docs/NC_정책서_간소화_v1.0_확정본.md"] },
-		"process": { "id": "PR-MBR-CS-001-01", "name": "약관 동의", "cluster": "US-MBR-CS-001 회원 가입 1/4 (간소화)", "actor": "고객", "entry_condition": "회원 가입 시작 상태", "exit_condition": "필수·선택 약관 동의 완료", "predecessor": [], "successor": ["PR-MBR-CS-001-02"] },
-		"purpose": "필수·선택 약관 동의를 단축 카피로 받는다.",
-		"system_inputs_to_user": ["약관 목록(축소 표시)"],
-		"user_inputs": ["필수 동의값", "선택 동의값"],
-		"system_outputs": ["동의 결과", "다음 이동 경로"],
-		"branches": ["필수 모두 동의 → 정보 입력", "미동의 → 진행 제한"],
-		"design_signals": { "primary_block": "약관 그룹 (compact)", "hero_intent": "단축 안내", "cta_intent": "다음으로" }
-	},
-	"x_interfacePlan": { "genre": "selector", "primary_task": "약관 동의", "info_hierarchy": ["hero", "required-input", "conditional-notice", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "one-card" },
-	"x_heuristicReview": { "applied_rules": [
-		{ "rule": "H-1", "result": "pass", "evidence": "card 1개" },
-		{ "rule": "H-7", "result": "pass", "evidence": "flow 진입점 → close" },
-		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
-	] }
+	]
 }

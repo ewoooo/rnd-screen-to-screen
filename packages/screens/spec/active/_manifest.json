@@ -43,7 +43,7 @@
 		"nc-simple": {
 			"dir": "nc-simple",
 			"source": "docs/NC_정책서_간소화_v1.0_확정본.md",
-			"description": "NC 간소화 v1.0 확정본을 source로 생성한 화면. 프로세스 목록 + 기능 목록 + 정책 정의 기준.",
+			"description": "NC 간소화 v1.0 확정본을 source로 생성한 16화면. join 4 / leave 4 / rejoin 4 (incl. blocked) / dormancy 4.",
 			"screens": [
 				"nc-simple-join-terms",
 				"nc-simple-join-info",
@@ -51,12 +51,12 @@
 				"nc-simple-join-complete",
 				"nc-simple-leave-auth",
 				"nc-simple-leave-reason",
-				"nc-simple-leave-notice",
 				"nc-simple-leave-confirm",
 				"nc-simple-leave-result",
 				"nc-simple-rejoin-auth",
 				"nc-simple-rejoin-info",
 				"nc-simple-rejoin-complete",
+				"nc-simple-rejoin-blocked",
 				"nc-simple-dormancy-login",
 				"nc-simple-dormancy-auth",
 				"nc-simple-dormancy-terms",

@@ -1,14 +1,69 @@
 {
-	"meta": { "schema_version": 2, "status": "active", "route": "/nc-simple-leave-reason", "source": "policy-driven", "policy_doc": "docs/NC_정책서_간소화_v1.0_확정본.md", "policy_section": "4.가.3) PR-MBR-CS-003-02", "pagination_ref": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-leave.json", "variant_of": "nc-full-leave-reason" },
-	"screen": { "id": "nc-simple-leave-reason", "name": "탈퇴 사유 입력 (간소화)", "domain": "nc-simple", "use_case": "US-MBR-CS-003", "process_id": "PR-MBR-CS-003-02", "step_fraction": "2/5", "type": "page" },
-	"x_interfacePlan": { "genre": "form", "primary_task": "탈퇴 사유 단일 선택", "info_hierarchy": ["hero (탈퇴 2/5)", "required-input (사유 SelectableList compact)", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat", "simplified": { "textarea": "미사용", "reason_options": "축소" } },
-	"screen_contract": { "shell": "AppScreen", "slots": { "top": { "owner": "NcShell", "patterns": ["NcTopBar"], "flow": "reserved" }, "content": { "owner": "ContentList", "patterns": ["NcHero", "SelectableList"] }, "bottom": { "owner": "NcShell", "patterns": ["NcContinueBar"], "flow": "reserved" } } },
-	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"meta": { "schema_version": 2, "status": "active", "route": "/nc-simple-leave-reason", "source": "implemented-page", "source_ref": "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.27) PG-MBR-LEAVE-001" },
+	"screen": { "id": "nc-simple-leave-reason", "name": "회원 탈퇴 - 사유 입력", "domain": "nc-simple", "type": "page" },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["docs/NC_정책서_간소화_v1.0_확정본.md §4.가.3) PR-MBR-CS-003-02", "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.27) PG-MBR-LEAVE-001"] },
+		"process": { "id": "PR-MBR-CS-003-02", "name": "탈퇴 사유 입력", "cluster": "US-MBR-CS-003 회원 탈퇴 2/4", "actor": "고객", "entry_condition": "본인인증 SUCCESS", "exit_condition": "사유 코드 1개 선택 + (기타 시 의견 입력)", "predecessor": ["PR-MBR-CS-003-01"], "successor": ["PR-MBR-CS-003-03"], "related_policies": ["PG-MBR-LEAVE-001"] },
+		"purpose": "표준 사유 코드와 (기타 선택 시) 자유 의견을 수집·저장한다.",
+		"system_inputs_to_user": ["표준 사유 5종 (POL-MBR-LEAVE-001-02)", "자유 의견 입력 (기타 선택 시)", "최대 500자 카운터"],
+		"user_inputs": ["사유 1개 선택", "자유 의견 텍스트 (조건부 필수)"],
+		"system_outputs": ["사유 코드", "자유 의견", "사유 저장 이력"],
+		"branches": [
+			"표준 사유 선택 (기타 외) → 다음 단계",
+			"기타 선택 + 의견 입력 → 다음 단계",
+			"기타 선택 + 의견 미입력 → 진행 차단 (POL-MBR-LEAVE-001-04)"
+		],
+		"exceptions": ["사유 미선택 시 진행 차단 (POL-MBR-LEAVE-001-06)", "500자 초과 errorText", "금칙어/민감정보 입력 차단 (POL-MBR-LEAVE-001-07/12)"],
+		"design_signals": {
+			"primary_block": "RadioGroup compact 5개 + 조건부 textarea (기타 선택 시 노출)",
+			"hero_intent": "한 줄 — 떠나시는 이유를 알려주세요",
+			"cta_intent": "다음 (사유 미선택/필수 의견 누락 시 비활성)"
+		},
+		"evidence_refs": [
+			{ "field": "system_inputs_to_user.사유 5종", "source_ref": "§6.나.27) POL-MBR-LEAVE-001-02", "summary": "사유 코드 = 이용 빈도, 혜택 불만, 개인정보 우려, 다른 서비스, 기타" },
+			{ "field": "branches.기타 + 의견 미입력", "source_ref": "§6.나.27) POL-MBR-LEAVE-001-04", "summary": "기타 선택 시 의견 필수" }
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "사유 1개 선택 (+ 기타 시 의견)",
+		"info_hierarchy": ["hero (1줄)", "required-input (radio compact, conditional textarea)", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat",
+		"interaction_pattern": { "main_control": "radio_compact + conditional_textarea", "free_text_visibility": "conditional_on_etc", "cta_label_dynamic": false },
+		"copy_policy": { "title_style": "short_action", "description_measure": "body", "avoid_full_width_caption": true },
+		"quality_checks": ["radio rows에 sub copy 없으므로 SelectableList density=compact (H-3)", "기타 선택 시에만 textarea 노출 (조건부) — H-4 명시", "errorText는 form 안 단일 (H-5)"]
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["MembershipHero", "MembershipReasonForm"] },
+			"bottom": { "owner": "MembershipShell", "patterns": ["MembershipContinueBar"], "flow": "reserved" }
+		}
+	},
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [] },
 	"areas": [
-		{ "id": "top-progress", "slot": "top", "pattern": "organisms/nc/NcTopBar", "uses": ["StatusBar", "TopNavigation", "ProgressIndicator"], "layout": { "flow": "reserved", "progress_source": "data.flow.progress", "leading": "back" }, "content_role": "flow-progress" },
-		{ "id": "hero", "slot": "content", "pattern": "organisms/nc/NcHero", "uses": ["ContentSection", "TextBlock", "ContentRail"], "layout": { "section_inset": "inherit", "description_rail": "measure:body", "block_padding_top": "spacing-16", "block_padding_bottom": "spacing-32" }, "content_role": "primary-copy" },
-		{ "id": "reasons", "slot": "content", "pattern": "molecules/SelectableList", "uses": ["ContentSection", "SelectableList"], "layout": { "section_inset": "inherit", "density": "compact", "selection_mode": "single" }, "content_role": "required-input" },
-		{ "id": "continue", "slot": "bottom", "pattern": "organisms/nc/NcContinueBar", "uses": ["Box", "Button", "TextBlock"], "content_role": "primary-action", "layout": { "surface": "page-semi-gradient" }, "state_binding": { "primary_disabled_when": "reasons.selectedId == null", "eyebrow_when_blocked": "탈퇴 사유를 선택해 주세요", "eyebrow_when_ready": "data.continue.eyebrow" } }
+		{ "id": "hero", "slot": "content", "pattern": "organisms/membership/MembershipHero", "uses": ["TextBlock"], "content_role": "primary-copy" },
+		{ "id": "reason", "slot": "content", "pattern": "organisms/membership/MembershipReasonForm", "uses": ["SelectableList", "FormField", "TextArea"], "layout": { "selectable_density": "compact", "free_text_visibility": "conditional_on_etc", "free_text_required": "when reason=etc" }, "content_role": "required-input" },
+		{ "id": "continue", "slot": "bottom", "pattern": "organisms/membership/MembershipContinueBar", "uses": ["Button"], "content_role": "primary-action", "state_binding": { "primary_disabled_when": "reason 미선택 || (reason=etc && freeText 미입력)", "eyebrow_when_blocked": "탈퇴 사유를 선택해 주세요", "error_message_owner": "FormField.errorText" } }
 	],
-	"design_system_contract": { "templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection", "ContentRail"], "organisms": ["nc"], "molecules": ["SelectableList", "ProgressIndicator"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": ["organisms/nc"] }
+	"design_system_contract": {
+		"templates": ["AppScreen", "ContentList", "ContentSection"],
+		"organisms": ["membership"],
+		"molecules": ["SelectableList", "FormField", "TextArea"],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0 (flat)" },
+			{ "rule": "H-3", "result": "pass", "evidence": "compact" },
+			{ "rule": "H-4", "result": "pass", "evidence": "free_text_visibility=conditional_on_etc 명시" },
+			{ "rule": "H-5", "result": "pass", "evidence": "errorText FormField 단일" },
+			{ "rule": "H-7", "result": "pass", "evidence": "back" }
+		]
+	}
 }

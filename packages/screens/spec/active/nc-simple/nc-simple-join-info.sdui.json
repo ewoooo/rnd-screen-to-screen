@@ -1,47 +1,89 @@
 {
-	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
-	"metadata": { "id": "nc-simple-join-info", "name": "개인정보 입력 (간소화)", "route": "/nc-simple-join-info", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-join-info", "name": "회원 가입 - 개인정보 입력", "route": "/nc-simple-join-info", "domain": "nc-simple", "type": "page", "status": "active" },
 	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
 	"data": {
-		"flow": { "useCase": "US-MBR-CS-001", "name": "회원 가입", "step": 2, "total": 4, "progress": "회원 가입 2/4" },
-		"hero": { "titleLines": ["기본 정보를", "입력해 주세요"], "description": "본인 확인에 사용돼요." },
+		"topbar": { "title": "회원 가입", "progressLabel": "2/4", "progressPercent": 50 },
+		"hero": { "titleLines": ["가입 정보를", "입력해 주세요"], "description": "본인인증 결과로 채워질 항목은 다음 단계에서 자동으로 연결돼요." },
 		"form": {
 			"fields": [
-				{ "id": "name", "label": "이름", "control": "text", "required": true, "placeholder": "홍길동" },
-				{ "id": "birthDate", "label": "생년월일", "control": "text", "required": true, "placeholder": "YYYYMMDD" },
-				{ "id": "phone", "label": "휴대전화", "control": "text", "required": true, "placeholder": "010-0000-0000" }
+				{ "id": "userId", "label": "아이디", "placeholder": "영문/숫자 6~20자", "type": "text", "required": true, "rule": "POL-MBR-INFO-002-03/04" },
+				{ "id": "password", "label": "비밀번호", "placeholder": "영문 대/소문자·숫자·특수문자 중 3종 이상, 10~20자", "type": "password", "required": true, "rule": "POL-MBR-INFO-002-05/06" },
+				{ "id": "email", "label": "이메일", "placeholder": "example@domain.com", "type": "email", "required": true, "rule": "POL-MBR-INFO-002-07" },
+				{ "id": "phone", "label": "휴대폰 번호", "placeholder": "숫자만 입력", "type": "tel", "required": true, "rule": "POL-MBR-INFO-002-08" }
 			]
 		},
-		"continue": { "eyebrow": "입력 완료 시 다음 단계 진행", "primaryAction": "다음으로" }
+		"continue": { "eyebrow": "정보 입력 완료", "primaryAction": "다음" }
 	},
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json",
+		"_canonical_hash": "3cbe13f2495b0385d29e0f7a97faaa46d15d26685493cd9ae2b613bd576b63c7",
+		"policy_id": "nc-simple-join",
+		"use_case_id": "US-MBR-CS-001",
+		"route": { "id": "nc-simple-join-info", "type": "form", "primary_task": "아이디/비밀번호/이메일/연락처 입력", "predecessor": "nc-simple-join-terms", "successor": "nc-simple-join-auth", "step_fraction": "2/4" },
+		"transitions": [{ "from": "nc-simple-join-terms", "to": "nc-simple-join-info", "trigger": "필수 약관 동의 후 다음", "guard": "POL-MBR-TERM-001-06" }, { "from": "nc-simple-join-info", "to": "nc-simple-join-auth", "trigger": "필수 입력 검증 통과", "guard": "POL-MBR-INFO-002-* + POL-MBR-INFO-003-*" }]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["docs/NC_정책서_간소화_v1.0_확정본.md §4.가.1) PR-MBR-CS-001-02", "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.4-6) PG-MBR-INFO-001/002/003"] },
+		"process": { "id": "PR-MBR-CS-001-02", "name": "개인정보 입력", "cluster": "US-MBR-CS-001 회원 가입 2/4", "actor": "고객", "entry_condition": "약관 동의 완료", "exit_condition": "검증·중복 통과", "predecessor": ["PR-MBR-CS-001-01"], "successor": ["PR-MBR-CS-001-03"], "related_policies": ["PG-MBR-INFO-001", "PG-MBR-INFO-002", "PG-MBR-INFO-003"] },
+		"purpose": "가입 필수 정보를 입력받고 형식 검증과 중복 확인을 수행한다.",
+		"system_inputs_to_user": ["필수 항목 폼", "형식 helperText", "중복 결과"],
+		"user_inputs": ["아이디", "비밀번호", "이메일", "연락처"],
+		"system_outputs": ["임시저장 데이터", "중복 확인 결과"],
+		"branches": ["검증/중복 통과 → 본인인증", "기존 정상 회원 → 로그인 안내", "기존 휴면 → 휴면 해제 안내", "기존 탈퇴 → 재가입 안내"],
+		"exceptions": ["검증 실패 errorText", "공백 불가", "중복 확인 실패 시 진행 차단"],
+		"design_signals": { "primary_block": "FormField x 4", "cta_intent": "다음" }
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "필수 4항목 입력 + 검증 통과",
+		"info_hierarchy": ["hero", "form", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat",
+		"copy_policy": { "description_measure": "body", "avoid_full_width_caption": true }
+	},
+	"x_screenContract": {
+		"screen_contract": {
+			"shell": "AppScreen",
+			"slots": {
+				"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+				"content": { "owner": "ContentList", "patterns": ["MembershipHero", "MembershipPersonalInfoForm"] },
+				"bottom": { "owner": "MembershipShell", "patterns": ["MembershipContinueBar"], "flow": "reserved" }
+			}
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [] },
+		"areas": [
+			{ "id": "hero", "slot": "content", "pattern": "organisms/membership/MembershipHero", "uses": ["ContentSection", "TextBlock"], "content_role": "primary-copy" },
+			{ "id": "form", "slot": "content", "pattern": "organisms/membership/MembershipPersonalInfoForm", "uses": ["ContentSection", "FormField", "TextField"], "content_role": "required-input" },
+			{ "id": "continue", "slot": "bottom", "pattern": "organisms/membership/MembershipContinueBar", "uses": ["Button"], "content_role": "primary-action" }
+		],
+		"design_system_contract": { "templates": ["AppScreen", "ContentList", "ContentSection"], "organisms": ["membership"], "molecules": ["FormField", "TextField"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": [] }
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
+			{ "rule": "H-5", "result": "pass", "evidence": "errorText FormField 단일" },
+			{ "rule": "H-7", "result": "pass", "evidence": "back" },
+			{ "rule": "H-9", "result": "pass", "evidence": "* 미사용" }
+		]
+	},
+	"x_benchmark": { "criteria": ["design.componentConsistency", "planning.policyCoverage"], "guards": ["guard.rawEscapeHatch"] },
 	"children": [
-		{ "type": "AppScreen", "id": "screen.nc-simple-join-info", "componentVersion": "0.1.0",
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-simple-join-info",
+			"componentVersion": "0.1.0",
 			"props": {
-				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원가입", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 4, "progressStep": 2 } },
-				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+				"top": { "type": "MembershipTopBar", "id": "slot.top", "props": { "bind": "topbar", "leading": "back" } },
+				"bottom": { "type": "MembershipContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
 			},
 			"children": [
-				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
-				{ "type": "NcPersonalInfoForm", "id": "area.form", "props": { "bind": "form" } }
+				{ "type": "MembershipHero", "id": "area.hero", "props": { "bind": "hero" } },
+				{ "type": "MembershipPersonalInfoForm", "id": "area.form", "props": { "bind": "form" } }
 			]
 		}
-	],
-	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-join", "route_id": "nc-simple-join-info", "step_fraction": "2/4", "predecessor": "nc-simple-join-terms", "successor": "nc-simple-join-auth", "transitions": [{ "to": "nc-simple-join-auth", "trigger": "primary_cta", "guard": "personal_info_validated" }] },
-	"x_policyExtract": {
-		"source": { "type": "policy", "refs": ["PR-MBR-CS-001-02", "docs/NC_정책서_간소화_v1.0_확정본.md"] },
-		"process": { "id": "PR-MBR-CS-001-02", "name": "개인정보 입력", "cluster": "US-MBR-CS-001 회원 가입 2/4 (간소화)", "actor": "고객", "entry_condition": "약관 동의 완료", "exit_condition": "회원 기본 정보 입력 및 형식 검증 완료", "predecessor": ["PR-MBR-CS-001-01"], "successor": ["PR-MBR-CS-001-03"] },
-		"purpose": "최소 필드만 입력받아 형식·중복을 검증한다.",
-		"system_inputs_to_user": ["축소된 입력 항목"],
-		"user_inputs": ["이름", "생년월일", "휴대전화"],
-		"system_outputs": ["검증 결과", "다음 이동 경로"],
-		"branches": ["통과 → 본인인증", "미충족 → 진행 제한"],
-		"design_signals": { "primary_block": "축소된 폼", "cta_intent": "다음으로" }
-	},
-	"x_interfacePlan": { "genre": "form", "primary_task": "최소 정보 입력", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
-	"x_heuristicReview": { "applied_rules": [
-		{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
-		{ "rule": "H-7", "result": "pass", "evidence": "step flow → back" },
-		{ "rule": "H-9", "result": "pass", "evidence": "CTA disabled 대체" },
-		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
-	] }
+	]
 }

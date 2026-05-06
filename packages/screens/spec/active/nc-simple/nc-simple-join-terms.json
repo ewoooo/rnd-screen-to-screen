@@ -1,15 +1,164 @@
 {
-	"meta": { "schema_version": 2, "status": "active", "route": "/nc-simple-join-terms", "source": "policy-driven", "policy_doc": "docs/NC_정책서_간소화_v1.0_확정본.md", "policy_section": "4.가.1) PR-MBR-CS-001-01", "pagination_ref": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-join.json", "variant_of": "nc-full-join-terms" },
-	"screen": { "id": "nc-simple-join-terms", "name": "약관 동의 (간소화)", "domain": "nc-simple", "use_case": "US-MBR-CS-001", "process_id": "PR-MBR-CS-001-01", "step_fraction": "1/4", "type": "page" },
-	"x_interfacePlan": { "genre": "selector", "primary_task": "필수·선택 약관 동의", "info_hierarchy": ["hero (가입 1/4)", "required-input (약관 그룹)", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "one-card", "simplified": { "hero_description": "단축", "notice": "기본 미노출 (미성년 시에만)" } },
-	"screen_contract": { "shell": "AppScreen", "slots": { "top": { "owner": "NcShell", "patterns": ["NcTopBar"], "flow": "reserved" }, "content": { "owner": "ContentList", "patterns": ["NcHero", "TermsAgreementGroup", "NcNotice"] }, "bottom": { "owner": "NcShell", "patterns": ["NcContinueBar"], "flow": "reserved" } } },
-	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"meta": {
+		"schema_version": 2,
+		"status": "active",
+		"route": "/nc-simple-join-terms",
+		"source": "implemented-page",
+		"source_ref": "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.1) PG-MBR-TERM-001"
+	},
+	"screen": {
+		"id": "nc-simple-join-terms",
+		"name": "회원 가입 - 약관 동의",
+		"domain": "nc-simple",
+		"type": "page"
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"docs/NC_정책서_간소화_v1.0_확정본.md §4.가.1) PR-MBR-CS-001-01",
+				"docs/NC_정책서_간소화_v1.0_확정본.md §6.나.1) PG-MBR-TERM-001",
+				"docs/NC_정책서_간소화_v1.0_확정본.md §6.나.2) PG-MBR-TERM-002",
+				"docs/NC_정책서_간소화_v1.0_확정본.md §6.나.3) PG-MBR-TERM-003"
+			]
+		},
+		"process": {
+			"id": "PR-MBR-CS-001-01",
+			"name": "약관 동의",
+			"cluster": "US-MBR-CS-001 회원 가입 1/4",
+			"actor": "고객",
+			"entry_condition": "비회원 고객 가입 진입 (MBR_NONE)",
+			"exit_condition": "필수 약관 모두 동의 후 다음 단계 이동",
+			"predecessor": [],
+			"successor": ["PR-MBR-CS-001-02"],
+			"related_functions": ["약관 동의 처리", "법정대리인 동의 처리", "처리 이력 및 알림 처리"],
+			"related_policies": ["약관 동의 적용 정책", "법정대리인 동의 정책", "약관 동의 이력 관리 정책"]
+		},
+		"purpose": "회원 가입에 필요한 필수·선택 약관을 확인하고 동의를 받는다.",
+		"system_inputs_to_user": [
+			"필수 약관 목록 (서비스 이용약관, 개인정보 수집·이용 동의)",
+			"선택 약관 목록 (마케팅 정보 수신, 맞춤형 혜택 제공)",
+			"약관 전문 / 핵심 요약 / 개정 이력 보기"
+		],
+		"user_inputs": ["전체 동의", "개별 약관 동의/해제", "약관 상세 보기"],
+		"system_outputs": ["동의 이력", "동의 채널", "동의 일시"],
+		"branches": [
+			"필수 약관 모두 동의 → 다음 단계 진행 가능",
+			"필수 약관 미동의 → 다음 단계 진행 불가 (POL-MBR-TERM-001-06)",
+			"만 14세 미만 식별 시 → 법정대리인 동의 분기 (POL-MBR-TERM-002-01/02)"
+		],
+		"exceptions": [
+			"필수 약관 누락 시 CTA 비활성 + 안내",
+			"법정대리인 동의 미완료 시 다음 단계 진행 불가 (POL-MBR-TERM-002-06)",
+			"약관 버전 변경 시 최신 버전 강제 (POL-MBR-TERM-001-10)"
+		],
+		"design_signals": {
+			"primary_block": "필수/선택 약관 ConsentList + 전체 동의 row",
+			"hero_intent": "한 줄 — 가입에 필요한 약관을 확인해 주세요",
+			"cta_intent": "다음 (필수 약관 미동의 시 비활성)"
+		},
+		"evidence_refs": [
+			{ "field": "system_inputs_to_user.필수 약관", "source_ref": "§6.나.1) POL-MBR-TERM-001-01", "summary": "필수 약관 = 서비스 이용약관, 개인정보 수집·이용 동의" },
+			{ "field": "branches.필수 약관 미동의", "source_ref": "§6.나.1) POL-MBR-TERM-001-06", "summary": "필수 약관 미동의 시 다음 단계 진행 불가" },
+			{ "field": "branches.법정대리인", "source_ref": "§6.나.2) POL-MBR-TERM-002-01/02", "summary": "만 14세 미만 가입은 법정대리인 동의 대상" },
+			{ "field": "user_inputs.전체 동의", "source_ref": "§6.나.1) POL-MBR-TERM-001-08/09", "summary": "전체 동의 적용 범위 = 필수+선택, 선택은 개별 해제 허용" }
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "필수 약관 전체 동의 후 다음 단계 진행",
+		"info_hierarchy": [
+			"hero (1줄 안내)",
+			"required-input (ConsentList: 전체 동의 + 필수/선택)",
+			"action (다음)"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat",
+		"interaction_pattern": {
+			"main_control": "consent_list",
+			"detail_view": "BottomSheet (약관 전문)"
+		},
+		"copy_policy": {
+			"description_measure": "body",
+			"avoid_full_width_caption": true,
+			"title_style": "short_action"
+		},
+		"quality_checks": [
+			"hero가 본문 헤더 역할을 겸하므로 SectionCard label 중복 금지 (H-2)",
+			"법정대리인 동의 분기 안내는 NoticeBlock으로 분리, 폼과 섞지 않음 (H-8)",
+			"primary CTA disabled 상태가 첫 viewport에서 인지 가능"
+		]
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["MembershipHero", "TermsAgreementGroup"] },
+			"bottom": { "owner": "MembershipShell", "patterns": ["MembershipContinueBar"], "flow": "reserved" }
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": []
+	},
 	"areas": [
-		{ "id": "top-progress", "slot": "top", "pattern": "organisms/nc/NcTopBar", "uses": ["StatusBar", "TopNavigation", "ProgressIndicator"], "layout": { "flow": "reserved", "progress_source": "data.flow.progress", "leading": "close" }, "content_role": "flow-progress" },
-		{ "id": "hero", "slot": "content", "pattern": "organisms/nc/NcHero", "uses": ["ContentSection", "TextBlock", "ContentRail"], "layout": { "section_inset": "inherit", "description_rail": "measure:body", "block_padding_top": "spacing-16", "block_padding_bottom": "spacing-32" }, "content_role": "primary-copy" },
-		{ "id": "terms", "slot": "content", "pattern": "organisms/nc/TermsAgreementGroup", "uses": ["ContentSection", "SectionCard", "ConsentList", "TextBlock"], "layout": { "section_inset": "inherit", "card_label_omitted": true, "card_title_only": true }, "content_role": "required-input" },
-		{ "id": "guardian-notice", "slot": "content", "pattern": "organisms/nc/NcNotice", "uses": ["ContentSection", "NoticeBlock", "TextBlock"], "layout": { "section_inset": "inherit" }, "content_role": "conditional-notice", "state_binding": { "visible_when": "data.user.isMinor === true" } },
-		{ "id": "continue", "slot": "bottom", "pattern": "organisms/nc/NcContinueBar", "uses": ["Box", "Button", "TextBlock"], "content_role": "primary-action", "layout": { "surface": "page-semi-gradient" }, "state_binding": { "primary_disabled_when": "terms.missingRequiredCount > 0", "eyebrow_when_blocked": "필수 약관에 동의해 주세요", "eyebrow_when_ready": "data.continue.eyebrow" } }
+		{
+			"id": "hero",
+			"slot": "content",
+			"pattern": "organisms/membership/MembershipHero",
+			"uses": ["ContentSection", "TextBlock", "ContentRail"],
+			"layout": { "section_inset": "inherit", "description_rail": "measure:body" },
+			"content_role": "primary-copy"
+		},
+		{
+			"id": "terms",
+			"slot": "content",
+			"pattern": "organisms/membership/TermsAgreementGroup",
+			"uses": ["ContentSection", "ConsentList", "Checkbox"],
+			"layout": { "section_inset": "inherit", "sectioning": "flat" },
+			"content_role": "required-input"
+		},
+		{
+			"id": "continue",
+			"slot": "bottom",
+			"pattern": "organisms/membership/MembershipContinueBar",
+			"uses": ["Box", "Button", "TextBlock"],
+			"content_role": "primary-action",
+			"layout": { "surface": "page-semi-gradient" },
+			"state_binding": {
+				"primary_disabled_when": "필수 약관 중 미동의 1건 이상",
+				"eyebrow_when_blocked": "필수 약관에 모두 동의해 주세요",
+				"eyebrow_when_ready": "data.continue.eyebrow"
+			}
+		}
 	],
-	"design_system_contract": { "templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection", "ContentRail"], "organisms": ["nc"], "molecules": ["ConsentList", "NoticeBlock", "SectionCard", "ProgressIndicator"], "atoms": ["TextBlock"], "allowed_escape_hatches": [{ "location": "molecules/consent-list/ConsentList.tsx", "kind": "raw-min-height", "value": "minHeight: 60 / 64", "reason": "터치 타깃", "owner": "molecule" }], "new_vocabulary_required": ["organisms/nc"] }
+	"design_system_contract": {
+		"templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection"],
+		"organisms": ["membership"],
+		"molecules": ["ConsentList"],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0개 (flat)" },
+			{ "rule": "H-2", "result": "pass", "evidence": "hero가 헤더 겸용, ConsentList에 SectionCard label 미부착" },
+			{ "rule": "H-3", "result": "n/a", "evidence": "RadioGroup 미사용" },
+			{ "rule": "H-4", "result": "n/a", "evidence": "textarea 미사용" },
+			{ "rule": "H-5", "result": "pass", "evidence": "에러 메시지 owner=ConsentList row helperText 단일" },
+			{ "rule": "H-6", "result": "pass", "evidence": "progress 단계 라벨은 TopBar 단독 소유" },
+			{ "rule": "H-7", "result": "pass", "evidence": "step flow → leading=back" },
+			{ "rule": "H-8", "result": "pass", "evidence": "법정대리인 안내가 필요하면 별도 NoticeBlock 영역" },
+			{ "rule": "H-9", "result": "pass", "evidence": "필수 표시는 row 좌측 [필수] 뱃지로 대체" },
+			{ "rule": "H-10", "result": "n/a", "evidence": "InfoList 미사용" },
+			{ "rule": "H-11", "result": "pass", "evidence": "escape hatch 없음" },
+			{ "rule": "H-12", "result": "pass", "evidence": "ContentOutlet 기본 inset 사용, route margin 없음" }
+		]
+	}
 }

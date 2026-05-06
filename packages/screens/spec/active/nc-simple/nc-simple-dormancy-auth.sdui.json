@@ -1,30 +1,70 @@
 {
-	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
-	"metadata": { "id": "nc-simple-dormancy-auth", "name": "본인인증 (휴면, 간소화)", "route": "/nc-simple-dormancy-auth", "domain": "nc-simple", "type": "page", "status": "spec-only" },
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-dormancy-auth", "name": "휴면 해제 - 본인인증", "route": "/nc-simple-dormancy-auth", "domain": "nc-simple", "type": "page", "status": "active" },
 	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
 	"data": {
-		"flow": { "useCase": "US-MBR-CS-002", "name": "휴면 해제", "step": 2, "total": 4, "progress": "휴면 해제 2/4" },
-		"hero": { "titleLines": ["본인 확인이 필요해요"], "description": "인증 수단을 선택하세요." },
-		"methods": { "items": [
-			{ "id": "phone", "title": "휴대폰 인증", "leadingIcon": "smartphone" },
-			{ "id": "pass", "title": "PASS", "leadingIcon": "shield-check" }
-		], "selectedId": null },
-		"continue": { "eyebrow": "인증 후 약관 재동의 단계", "primaryAction": "인증하기" }
+		"topbar": { "title": "본인인증", "progressLabel": "2/4", "progressPercent": 50 },
+		"hero": { "titleLines": ["휴면 해제를 위해", "본인인증을 진행해 주세요"], "description": "휴면 상태 복원을 위해 본인 확인이 필요해요." },
+		"method": { "label": "인증수단", "items": [{ "id": "phone", "title": "휴대폰 본인인증", "sub": "통신사 SMS" }, { "id": "pass", "title": "PASS 인증", "sub": "PASS 앱" }, { "id": "cert", "title": "공동인증서", "sub": "기존 인증서" }] },
+		"code": { "label": "인증번호 (6자리)", "placeholder": "숫자 6자리", "helperText": "유효시간 3분", "resend": { "label": "재요청", "cooldownSeconds": 60, "maxAttempts": 5 } },
+		"continue": { "primaryActionStep1": "인증요청", "primaryActionStep2": "확인" }
 	},
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-dormancy.json",
+		"_canonical_hash": "35aaa9eff61c5ddba492c2e147f7d549bf905798cf1b909e078b97cfd9f9a0f7",
+		"policy_id": "nc-simple-dormancy",
+		"use_case_id": "US-MBR-CS-002",
+		"route": { "id": "nc-simple-dormancy-auth", "type": "form", "primary_task": "본인인증", "predecessor": "nc-simple-dormancy-login", "successor": "nc-simple-dormancy-terms", "step_fraction": "2/4" },
+		"transitions": [{ "from": "nc-simple-dormancy-login", "to": "nc-simple-dormancy-auth", "trigger": "BSS 휴면 판정", "guard": "POL-MBR-LOGIN-001-06" }, { "from": "nc-simple-dormancy-auth", "to": "nc-simple-dormancy-terms", "trigger": "본인인증 SUCCESS", "guard": "POL-MBR-AUTH-006-01" }]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["docs/NC_정책서_간소화_v1.0_확정본.md §4.가.2) PR-MBR-CS-002-03", "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.7-13)"] },
+		"process": { "id": "PR-MBR-CS-002-03", "name": "본인인증", "cluster": "US-MBR-CS-002 휴면 해제 2/4", "actor": "고객, 외부 인증기관", "entry_condition": "휴면 판정", "exit_condition": "SUCCESS", "predecessor": ["PR-MBR-CS-002-01"], "successor": ["PR-MBR-CS-002-04"], "related_policies": ["PG-MBR-AUTH-001~007"] },
+		"purpose": "휴면 해제 자격을 확인하기 위한 본인인증.",
+		"system_inputs_to_user": ["인증수단 선택지", "인증번호 입력"],
+		"user_inputs": ["수단", "인증번호"],
+		"system_outputs": ["결과 코드", "CI"],
+		"branches": ["SUCCESS → 재동의", "FAIL → 재시도/잠금"],
+		"exceptions": ["3분 만료", "5회 잠금"],
+		"design_signals": { "cta_intent": "인증요청 → 확인" }
+	},
+	"x_interfacePlan": { "genre": "form", "primary_task": "인증 성공", "info_hierarchy": ["hero", "method", "code", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_screenContract": {
+		"screen_contract": {
+			"shell": "AppScreen",
+			"slots": {
+				"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+				"content": { "owner": "ContentList", "patterns": ["MembershipHero", "AuthMethodSelector"] },
+				"bottom": { "owner": "MembershipShell", "patterns": ["MembershipContinueBar"], "flow": "reserved" }
+			}
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [] },
+		"areas": [
+			{ "id": "hero", "slot": "content", "pattern": "organisms/membership/MembershipHero", "uses": ["TextBlock"], "content_role": "primary-copy" },
+			{ "id": "method", "slot": "content", "pattern": "molecules/SelectableList", "uses": ["SelectableList"], "content_role": "required-input" },
+			{ "id": "code", "slot": "content", "pattern": "molecules/FormField", "uses": ["FormField"], "content_role": "required-input" },
+			{ "id": "continue", "slot": "bottom", "pattern": "organisms/membership/MembershipContinueBar", "uses": ["Button"], "content_role": "primary-action" }
+		],
+		"design_system_contract": { "templates": ["AppScreen", "ContentList"], "organisms": ["membership"], "molecules": ["SelectableList", "FormField", "TextField"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": ["organisms/nc/AuthMethodSelector"] }
+	},
+	"x_heuristicReview": { "applied_rules": [{ "rule": "H-1", "result": "pass", "evidence": "card 0" }, { "rule": "H-7", "result": "pass", "evidence": "back" }] },
+	"x_benchmark": { "criteria": ["design.componentConsistency"], "guards": ["guard.unexplainedNewVocabulary"] },
 	"children": [
-		{ "type": "AppScreen", "id": "screen.nc-simple-dormancy-auth", "componentVersion": "0.1.0",
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-simple-dormancy-auth",
+			"componentVersion": "0.1.0",
 			"props": {
-				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "휴면 해제", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 4, "progressStep": 2 } },
-				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+				"top": { "type": "MembershipTopBar", "id": "slot.top", "props": { "bind": "topbar", "leading": "back" } },
+				"bottom": { "type": "MembershipContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
 			},
 			"children": [
-				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 2, "overflow": "wrap" } } } },
-				{ "type": "SelectableList", "id": "area.methods", "props": { "bind": "methods", "selectionMode": "single", "density": "comfortable" } }
+				{ "type": "MembershipHero", "id": "area.hero", "props": { "bind": "hero" } },
+				{ "type": "SelectableList", "id": "area.method", "props": { "bind": "method" } },
+				{ "type": "FormField", "id": "area.code", "props": { "bind": "code", "visibilityBind": "method.value" } }
 			]
 		}
-	],
-	"x_pagination": { "_canonical": "packages/screens/spec/active/nc-simple/_pagination/nc-simple-dormancy.json", "_canonical_hash": "TBD", "policy_id": "nc-simple-dormancy", "route_id": "nc-simple-dormancy-auth", "step_fraction": "2/4", "predecessor": "nc-simple-dormancy-login", "successor": "nc-simple-dormancy-terms", "transitions": [{ "to": "nc-simple-dormancy-terms", "trigger": "system", "guard": "auth_succeeded" }] },
-	"x_policyExtract": { "source": { "type": "policy", "refs": ["PR-MBR-CS-002-03", "docs/NC_정책서_간소화_v1.0_확정본.md"] }, "process": { "id": "PR-MBR-CS-002-03", "name": "본인인증", "cluster": "US-MBR-CS-002 휴면 해제 2/4 (간소화)", "actor": "고객, 외부 인증기관", "entry_condition": "휴면 식별", "exit_condition": "본인인증 결과 수신", "predecessor": ["PR-MBR-CS-002-02"], "successor": ["PR-MBR-CS-002-04"] }, "purpose": "휴면 해제 본인 확인.", "user_inputs": ["인증 수단"], "branches": ["성공 → 약관 재동의", "실패 → 재시도"], "design_signals": { "primary_block": "축소 인증 수단", "cta_intent": "인증하기" } },
-	"x_interfacePlan": { "genre": "selector", "primary_task": "인증 수단 선택", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
-	"x_heuristicReview": { "applied_rules": [{ "rule": "H-12", "result": "pass", "evidence": "ok" }] }
+	]
 }

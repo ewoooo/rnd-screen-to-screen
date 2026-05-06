@@ -1,69 +1,68 @@
 {
-	"policy_id": "nc-simple-dormancy",
-	"name": "휴면 해제 (간소화)",
-	"use_case_id": "US-MBR-CS-002",
-	"source_ref": {
-		"docs": "docs/NC_정책서_간소화_v1.0_확정본.md",
-		"section": "4.가.2) PR-MBR-CS-002-01 ~ PR-MBR-CS-002-06",
-		"flow_chart": "4.나. 전체 업무 흐름도 / US-MBR-CS-002"
-	},
-	"actors": ["고객", "BSS", "외부 인증기관"],
-	"entry_condition": "휴면 계정으로 서비스 이용 시도",
-	"exit_condition": "휴면 해제 완료 또는 일반 로그인 결과 반환",
-	"variant_of": "nc-full-dormancy",
-	"variant_kind": "ui_simplified",
-	"routes": [
-		{
-			"id": "nc-simple-dormancy-login",
-			"type": "page",
-			"process_id": "PR-MBR-CS-002-01",
-			"process_name": "로그인",
-			"primary_task": "휴면 계정 진입을 위한 로그인 시도",
-			"actor": "고객",
-			"predecessor": null,
-			"successor": "nc-simple-dormancy-auth",
-			"step_fraction": "1/4"
-		},
-		{
-			"id": "nc-simple-dormancy-auth",
-			"type": "page",
-			"process_id": "PR-MBR-CS-002-03",
-			"process_name": "본인인증",
-			"primary_task": "외부 인증기관을 통한 본인 확인",
-			"actor": "고객, 외부 인증기관",
-			"predecessor": "nc-simple-dormancy-login",
-			"successor": "nc-simple-dormancy-terms",
-			"step_fraction": "2/4"
-		},
-		{
-			"id": "nc-simple-dormancy-terms",
-			"type": "page",
-			"process_id": "PR-MBR-CS-002-04",
-			"process_name": "약관 동의",
-			"primary_task": "재동의가 필요한 약관 및 고지 확인",
-			"actor": "고객",
-			"predecessor": "nc-simple-dormancy-auth",
-			"successor": "nc-simple-dormancy-result",
-			"step_fraction": "3/4"
-		},
-		{
-			"id": "nc-simple-dormancy-result",
-			"type": "page",
-			"process_id": "PR-MBR-CS-002-06",
-			"process_name": "휴면 해제 처리 결과 안내",
-			"primary_task": "휴면 해제 완료 안내",
-			"actor": "고객, BSS",
-			"predecessor": "nc-simple-dormancy-terms",
-			"successor": null,
-			"step_fraction": "4/4"
-		}
-	],
-	"transitions": [
-		{ "from": "nc-simple-dormancy-login", "to": "nc-simple-dormancy-auth", "trigger": "system", "guard": "is_dormant_account" },
-		{ "from": "nc-simple-dormancy-auth", "to": "nc-simple-dormancy-terms", "trigger": "system", "guard": "auth_succeeded" },
-		{ "from": "nc-simple-dormancy-terms", "to": "nc-simple-dormancy-result", "trigger": "primary_cta", "guard": "all_required_consents_checked AND dormancy_release_processed" }
-	],
-	"design_signals": [
-		"NC Full과 같은 4 routes. 차이는 안내 문구 압축, 재동의 항목 노출 최소화"
-	]
+  "policy_id": "nc-simple-dormancy",
+  "use_case_id": "US-MBR-CS-002",
+  "use_case_name": "휴면 해제",
+  "source_ref": {
+    "doc": "docs/NC_정책서_간소화_v1.0_확정본.md",
+    "sections": [
+      "§3.나 유즈케이스 — US-MBR-CS-002",
+      "§4.가.2) 휴면 해제 프로세스 목록 (PR-MBR-CS-002-01 ~ PR-MBR-CS-002-06)",
+      "§4.나 전체 업무 흐름도 — 휴면 해제",
+      "§6.나 정책 상세 — PG-MBR-LOGIN-001, PG-MBR-DORM-001~004, PG-MBR-AUTH-001~007, PG-MBR-TERM-001-03/12, PG-MBR-SESS-002"
+    ]
+  },
+  "design_notes": [
+    "§1.나 '셀프 처리 우선' + 휴면 해제 BPMN 흐름은 로그인 → (휴면이면) 인증 → 재동의 → 결과의 4단계.",
+    "PR-MBR-CS-002-02(휴면 여부 확인)는 BSS 자동 판정이며 사용자 화면이 없다. POL-MBR-LOGIN-001-12 안내 문구는 로그인 화면의 결과 상태로 노출되며 별도 route를 만들지 않는다.",
+    "PR-MBR-CS-002-05(휴면 해제 처리)는 BSS 시스템 처리이며 사용자 입력이 없으므로 PR-MBR-CS-002-06(결과 안내)와 한 결과 화면으로 통합.",
+    "재동의(PR-MBR-CS-002-04)는 POL-MBR-TERM-001-03/12에 따라 개정된 필수 약관과 선택 약관을 다루며, 약관 set이 다르므로 join-terms와 다른 별도 route로 분리."
+  ],
+  "routes": [
+    {
+      "id": "nc-simple-dormancy-login",
+      "type": "form",
+      "primary_task": "로그인을 시도하고 휴면 상태를 안내받는다",
+      "predecessor": null,
+      "successor": "nc-simple-dormancy-auth",
+      "step_fraction": "1/4",
+      "split_reason": "PR-MBR-CS-002-01. 휴면 해제 흐름의 진입은 로그인 시도이며 POL-MBR-LOGIN-001-12 휴면 진입 안내 문구가 이 화면에서 결과 상태로 표현됨",
+      "policy_refs": ["PR-MBR-CS-002-01", "PR-MBR-CS-002-02", "PG-MBR-LOGIN-001", "PG-MBR-STAT-001", "PG-MBR-DORM-001"]
+    },
+    {
+      "id": "nc-simple-dormancy-auth",
+      "type": "form",
+      "primary_task": "본인인증을 수행해 휴면 해제 자격을 확인한다",
+      "predecessor": "nc-simple-dormancy-login",
+      "successor": "nc-simple-dormancy-terms",
+      "step_fraction": "2/4",
+      "split_reason": "PR-MBR-CS-002-03. PG-MBR-AUTH-001~007 인증 흐름이 join-auth와 동일 어휘이지만 use case 분리 원칙에 따라 별도 route id 부여",
+      "policy_refs": ["PR-MBR-CS-002-03", "PG-MBR-AUTH-001", "PG-MBR-AUTH-002", "PG-MBR-AUTH-003", "PG-MBR-AUTH-004", "PG-MBR-AUTH-005", "PG-MBR-AUTH-006", "PG-MBR-AUTH-007"]
+    },
+    {
+      "id": "nc-simple-dormancy-terms",
+      "type": "form",
+      "primary_task": "개정된 필수 약관과 선택 약관에 재동의한다",
+      "predecessor": "nc-simple-dormancy-auth",
+      "successor": "nc-simple-dormancy-result",
+      "step_fraction": "3/4",
+      "split_reason": "PR-MBR-CS-002-04. POL-MBR-TERM-001-03(휴면 해제 재동의 대상)과 POL-MBR-TERM-001-12(필수 약관 변경 시 재동의)가 적용되어 약관 set이 join-terms와 다름. 재동의가 필요 없는 경우 이 route를 skip하지 않고 빈 상태로 통과시키지 않으며, lint에서 step_fraction을 그대로 유지하는 것을 우선",
+      "policy_refs": ["PR-MBR-CS-002-04", "PG-MBR-TERM-001", "PG-MBR-TERM-003"]
+    },
+    {
+      "id": "nc-simple-dormancy-result",
+      "type": "result",
+      "primary_task": "휴면 해제 완료 결과를 안내하고 정상 회원 상태로 진입시킨다",
+      "predecessor": "nc-simple-dormancy-terms",
+      "successor": null,
+      "step_fraction": "4/4",
+      "split_reason": "PR-MBR-CS-002-05(휴면 해제 처리, BSS) + PR-MBR-CS-002-06(결과 안내)을 한 결과 화면으로 통합. POL-MBR-DORM-004 결과 안내 정책이 이 화면의 콘텐츠 SSOT",
+      "policy_refs": ["PR-MBR-CS-002-05", "PR-MBR-CS-002-06", "PG-MBR-DORM-002", "PG-MBR-DORM-003", "PG-MBR-DORM-004", "PG-MBR-SESS-002"]
+    }
+  ],
+  "transitions": [
+    { "from": null, "to": "nc-simple-dormancy-login", "trigger": "휴면 회원이 로그인 시도", "guard": "MBR_DORMANT 상태 가능성" },
+    { "from": "nc-simple-dormancy-login", "to": "nc-simple-dormancy-auth", "trigger": "BSS가 휴면 상태 판정 후 휴면 해제 플로우 안내", "guard": "POL-MBR-LOGIN-001-06 휴면 안내 노출 + POL-MBR-DORM-001-01 해제 가능 상태" },
+    { "from": "nc-simple-dormancy-auth", "to": "nc-simple-dormancy-terms", "trigger": "본인인증 SUCCESS", "guard": "POL-MBR-AUTH-006-01 + POL-MBR-DORM-001-03 본인확인 필수" },
+    { "from": "nc-simple-dormancy-terms", "to": "nc-simple-dormancy-result", "trigger": "재동의 완료 후 BSS 휴면 해제 처리 성공", "guard": "POL-MBR-TERM-001-03 재동의 + POL-MBR-DORM-002 휴면 상태 전환 성공" }
+  ]
 }
