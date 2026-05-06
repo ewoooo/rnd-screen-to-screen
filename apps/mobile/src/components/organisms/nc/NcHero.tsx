@@ -1,30 +1,3 @@
-import { Box, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { ContentRail, ContentSection } from "@/components/templates/app-screen";
-
-type Props = {
-	titleLines: readonly string[];
-	description: string;
-};
-
-export function NcHero({ titleLines, description }: Props) {
-	return (
-		<ContentSection>
-			<Box pt="group" pb="section">
-				<VStack gap="stack">
-					<VStack gap="inline">
-						<TextBlock variant="displayTitle" lines={titleLines} />
-					</VStack>
-					<ContentRail rail="measure" measure="body">
-						<TextBlock
-							variant="bodySubtle"
-							text={description}
-							color="semantic.label.alternative"
-							maxLines={3}
-						/>
-					</ContentRail>
-				</VStack>
-			</Box>
-		</ContentSection>
-	);
-}
+// alias to organisms/global/FlowHero — 빌링/NC 정합화 후 NC 화면 호환용.
+// 후속 차수에 NC 화면들도 FlowHero로 직접 import 정리.
+export { FlowHero as NcHero } from "@/components/organisms/global";
