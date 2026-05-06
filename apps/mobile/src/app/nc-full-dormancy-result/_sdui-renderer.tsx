@@ -1,12 +1,12 @@
 "use client";
 
 import {
-	NcHero,
-	NcNotice,
-	NcResultActions,
-	NcSummaryCard,
-	NcTopBar,
-} from "@/components/organisms/nc";
+	FlowHero,
+	FlowNotice,
+	FlowResultActions,
+	FlowSummaryCard,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -44,17 +44,17 @@ export function NcFullDormancyResultScreen({
 
 	return (
 		<AppScreen
-			top={<NcTopBar title="휴면 해제" leading="close" />}
+			top={<ProgressTopBar title="휴면 해제" leading="close" />}
 			bottom={
-				<NcResultActions
+				<FlowResultActions
 					primaryLabel={actions.primary.label}
 					secondaryLabel={actions.secondary?.label}
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcSummaryCard label="" title={summary.title} items={items} />
-			<NcNotice
+			<FlowHero {...hero} />
+			<FlowSummaryCard label="" title={summary.title} items={items} />
+			<FlowNotice
 				badge={sessionNotice.badge}
 				text={sessionNotice.text}
 				action={sessionNotice.action ?? ""}

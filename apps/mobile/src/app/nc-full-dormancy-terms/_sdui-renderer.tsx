@@ -3,13 +3,13 @@
 import { useMemo, useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcNotice,
-	NcTopBar,
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
 	TermsAgreementGroup,
 	type TermsAgreementItem,
-} from "@/components/organisms/nc";
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -56,14 +56,14 @@ export function NcFullDormancyTermsScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="휴면 해제"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -71,7 +71,7 @@ export function NcFullDormancyTermsScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
+			<FlowHero {...hero} />
 			<TermsAgreementGroup
 				title={terms.title}
 				allLabel={terms.allLabel}
@@ -79,7 +79,7 @@ export function NcFullDormancyTermsScreen({
 				items={terms.items}
 				onStateChange={(s) => setMissing(s.missingRequiredCount)}
 			/>
-			<NcNotice
+			<FlowNotice
 				badge={changeNotice.badge}
 				text={changeNotice.text}
 				action={changeNotice.action ?? ""}

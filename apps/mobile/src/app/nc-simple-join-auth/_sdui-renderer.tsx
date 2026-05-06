@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import {
 	AuthMethodSelector,
 	type AuthMethodItem,
@@ -64,7 +64,7 @@ export function NcSimpleJoinAuthScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -79,7 +79,7 @@ export function NcSimpleJoinAuthScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={primaryAction}
 					disabled={blocked}
@@ -87,7 +87,7 @@ export function NcSimpleJoinAuthScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
+			<FlowHero {...hero} />
 			<AuthMethodSelector
 				methodLabel={method.label}
 				methods={method.items}

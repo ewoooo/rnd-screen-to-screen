@@ -3,12 +3,12 @@
 import { useMemo, useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcTopBar,
+	FlowContinueBar,
+	FlowHero,
+	ProgressTopBar,
 	TermsAgreementGroup,
 	type TermsAgreementItem,
-} from "@/components/organisms/nc";
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -44,14 +44,14 @@ export function NcFullLeaveConfirmScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="회원 탈퇴"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -59,7 +59,7 @@ export function NcFullLeaveConfirmScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
+			<FlowHero {...hero} />
 			<TermsAgreementGroup
 				title={confirm.title}
 				allLabel="모두 확인했어요"

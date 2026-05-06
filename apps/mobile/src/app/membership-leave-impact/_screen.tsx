@@ -4,13 +4,13 @@ import { useState } from "react";
 
 import { Checkbox } from "@/components/molecules";
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipNotice,
-	MembershipSummaryCard,
-	MembershipTopBar,
-	type MembershipSummaryItem,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	FlowSummaryCard,
+	ProgressTopBar,
+	type FlowSummaryItem,
+} from "@/components/organisms/global";
 import { HStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";
 import { AppScreen, ContentSection } from "@/components/templates/app-screen";
@@ -23,7 +23,7 @@ type LeaveImpactData = {
 	impact: {
 		label: string;
 		title: string;
-		items: readonly MembershipSummaryItem[];
+		items: readonly FlowSummaryItem[];
 	};
 	unpaid?: {
 		badge: string;
@@ -52,7 +52,7 @@ export function MembershipLeaveImpactScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					progress={{
 						label: topbar.progressLabel,
@@ -61,7 +61,7 @@ export function MembershipLeaveImpactScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -69,13 +69,13 @@ export function MembershipLeaveImpactScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipSummaryCard
+			<FlowHero {...hero} />
+			<FlowSummaryCard
 				label={impact.label}
 				title={impact.title}
 				items={impact.items}
 			/>
-			{unpaid ? <MembershipNotice {...unpaid} /> : null}
+			{unpaid ? <FlowNotice {...unpaid} /> : null}
 			<ContentSection>
 				<HStack
 					align="center"

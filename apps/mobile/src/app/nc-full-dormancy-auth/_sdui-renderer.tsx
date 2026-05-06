@@ -9,11 +9,11 @@ import { useState, type ReactNode } from "react";
 
 import { SelectableList } from "@/components/molecules";
 import {
-	NcContinueBar,
-	NcHero,
-	NcNotice,
-	NcTopBar,
-} from "@/components/organisms/nc";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen, ContentSection } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -70,14 +70,14 @@ export function NcFullDormancyAuthScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="휴면 해제"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -85,7 +85,7 @@ export function NcFullDormancyAuthScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
+			<FlowHero {...hero} />
 			<ContentSection inset="bleed">
 				<SelectableList
 					name="dormancy-auth-method"
@@ -95,7 +95,7 @@ export function NcFullDormancyAuthScreen({
 					density="comfortable"
 				/>
 			</ContentSection>
-			<NcNotice
+			<FlowNotice
 				badge={policyNotice.badge}
 				text={policyNotice.text}
 				action={policyNotice.action ?? ""}

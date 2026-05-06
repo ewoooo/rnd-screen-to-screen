@@ -3,12 +3,12 @@
 import { useMemo, useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipTopBar,
+	FlowContinueBar,
+	FlowHero,
+	ProgressTopBar,
 	TermsAgreementGroup,
 	type TermsAgreementItem,
-} from "@/components/organisms/membership";
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -64,7 +64,7 @@ export function NcSimpleJoinTermsScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -79,7 +79,7 @@ export function NcSimpleJoinTermsScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -87,7 +87,7 @@ export function NcSimpleJoinTermsScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
+			<FlowHero {...hero} />
 			<TermsAgreementGroup
 				title="약관 동의"
 				allLabel={terms.selectAllLabel}

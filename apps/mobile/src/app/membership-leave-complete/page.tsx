@@ -7,13 +7,13 @@ import {
 import type { ReactNode } from "react";
 
 import {
-	MembershipHero,
-	MembershipNotice,
-	MembershipResultActions,
-	MembershipSummaryCard,
-	MembershipTopBar,
-	type MembershipSummaryItem,
-} from "@/components/organisms/membership";
+	FlowHero,
+	FlowNotice,
+	FlowResultActions,
+	FlowSummaryCard,
+	ProgressTopBar,
+	type FlowSummaryItem,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 const SUMMARY_MEDIA_ICON: Record<string, ReactNode> = {
@@ -30,7 +30,7 @@ export default function MembershipLeaveCompletePage() {
 		summary: {
 			label: string;
 			title: string;
-			items: readonly Omit<MembershipSummaryItem, "mediaIcon">[];
+			items: readonly Omit<FlowSummaryItem, "mediaIcon">[];
 		};
 		notice: {
 			badge: string;
@@ -49,7 +49,7 @@ export default function MembershipLeaveCompletePage() {
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={data.topbar.title}
 					leading="close"
 					progress={{
@@ -59,19 +59,19 @@ export default function MembershipLeaveCompletePage() {
 				/>
 			}
 			bottom={
-				<MembershipResultActions
+				<FlowResultActions
 					primaryLabel={data.actions.primaryLabel}
 					secondaryLabel={data.actions.secondaryLabel}
 				/>
 			}
 		>
-			<MembershipHero {...data.hero} />
-			<MembershipSummaryCard
+			<FlowHero {...data.hero} />
+			<FlowSummaryCard
 				label={data.summary.label}
 				title={data.summary.title}
 				items={summaryItems}
 			/>
-			<MembershipNotice {...data.notice} />
+			<FlowNotice {...data.notice} />
 		</AppScreen>
 	);
 }

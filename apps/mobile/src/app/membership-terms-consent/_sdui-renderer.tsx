@@ -3,13 +3,13 @@
 import { useMemo, useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipNotice,
-	MembershipTopBar,
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
 	TermsAgreementGroup,
 	type TermsAgreementItem,
-} from "@/components/organisms/membership";
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1, SDUIJsonValue } from "@screen/screens";
@@ -68,7 +68,7 @@ export function MembershipTermsConsentScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title="회원가입"
 					progress={
 						progress
@@ -78,7 +78,7 @@ export function MembershipTermsConsentScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -86,7 +86,7 @@ export function MembershipTermsConsentScreen({
 				/>
 			}
 		>
-			<MembershipHero
+			<FlowHero
 				titleLines={hero.titleLines}
 				description={hero.description}
 			/>
@@ -94,7 +94,7 @@ export function MembershipTermsConsentScreen({
 				{...terms}
 				onStateChange={(s) => setMissingCount(s.missingRequiredCount)}
 			/>
-			<MembershipNotice {...notice} tone={notice.tone ?? "info"} />
+			<FlowNotice {...notice} tone={notice.tone ?? "info"} />
 		</AppScreen>
 	);
 }

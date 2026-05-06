@@ -3,14 +3,14 @@
 import { useMemo, useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcPersonalInfoForm,
-	NcTopBar,
+	FlowContinueBar,
+	FlowHero,
+	FlowPersonalInfoForm,
+	ProgressTopBar,
 	TermsAgreementGroup,
-	type NcPersonalField,
+	type FlowPersonalField,
 	type TermsAgreementItem,
-} from "@/components/organisms/nc";
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -46,7 +46,7 @@ export function NcFullRejoinInfoScreen({
 	const terms = readData<TermsData>(spec, "terms");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly NcPersonalField[]>(
+	const fields = useMemo<readonly FlowPersonalField[]>(
 		() =>
 			form.fields.map((f) => ({
 				id: f.id,
@@ -89,14 +89,14 @@ export function NcFullRejoinInfoScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="재가입"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -104,8 +104,8 @@ export function NcFullRejoinInfoScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcPersonalInfoForm
+			<FlowHero {...hero} />
+			<FlowPersonalInfoForm
 				fields={fields}
 				values={values}
 				errors={errors}

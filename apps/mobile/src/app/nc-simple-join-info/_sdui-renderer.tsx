@@ -3,13 +3,13 @@
 import { useMemo, useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipPersonalInfoForm,
-	MembershipTopBar,
-	type MembershipFieldKind,
-	type MembershipPersonalField,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowPersonalInfoForm,
+	ProgressTopBar,
+	type FlowFieldKind,
+	type FlowPersonalField,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -32,7 +32,7 @@ type SpecField = {
 type FormData = { fields: readonly SpecField[] };
 type ContinueData = { eyebrow?: string; primaryAction: string };
 
-const KIND_MAP: Record<SpecField["type"], MembershipFieldKind> = {
+const KIND_MAP: Record<SpecField["type"], FlowFieldKind> = {
 	text: "text",
 	password: "text",
 	email: "text",
@@ -50,7 +50,7 @@ export function NcSimpleJoinInfoScreen({
 	const form = readData<FormData>(spec, "form");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly MembershipPersonalField[]>(
+	const fields = useMemo<readonly FlowPersonalField[]>(
 		() =>
 			form.fields.map((f) => ({
 				id: f.id,
@@ -76,7 +76,7 @@ export function NcSimpleJoinInfoScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -91,7 +91,7 @@ export function NcSimpleJoinInfoScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -99,8 +99,8 @@ export function NcSimpleJoinInfoScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipPersonalInfoForm
+			<FlowHero {...hero} />
+			<FlowPersonalInfoForm
 				fields={fields}
 				values={values}
 				errors={errors}

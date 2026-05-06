@@ -1,12 +1,12 @@
 "use client";
 
 import {
-	NcHero,
-	NcNotice,
-	NcResultActions,
-	NcSummaryCard,
-	NcTopBar,
-} from "@/components/organisms/nc";
+	FlowHero,
+	FlowNotice,
+	FlowResultActions,
+	FlowSummaryCard,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -44,17 +44,17 @@ export function NcFullJoinCompleteScreen({
 
 	return (
 		<AppScreen
-			top={<NcTopBar title="회원가입" leading="close" />}
+			top={<ProgressTopBar title="회원가입" leading="close" />}
 			bottom={
-				<NcResultActions
+				<FlowResultActions
 					primaryLabel={actions.primary.label}
 					secondaryLabel={actions.secondary?.label}
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcSummaryCard label="" title={summary.title} items={summaryItems} />
-			<NcNotice
+			<FlowHero {...hero} />
+			<FlowSummaryCard label="" title={summary.title} items={summaryItems} />
+			<FlowNotice
 				badge={benefitNotice.badge}
 				text={benefitNotice.text}
 				action={benefitNotice.action ?? ""}

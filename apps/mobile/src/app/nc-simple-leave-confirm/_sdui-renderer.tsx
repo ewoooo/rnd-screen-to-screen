@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import {
 	FinalConsentRow,
 	LeaveImpactChecklist,
@@ -57,7 +57,7 @@ export function NcSimpleLeaveConfirmScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -72,7 +72,7 @@ export function NcSimpleLeaveConfirmScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -80,7 +80,7 @@ export function NcSimpleLeaveConfirmScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
+			<FlowHero {...hero} />
 			<LeaveImpactChecklist
 				items={impact.items}
 				onStateChange={(s) => setMissingRequired(s.missingRequiredCount)}

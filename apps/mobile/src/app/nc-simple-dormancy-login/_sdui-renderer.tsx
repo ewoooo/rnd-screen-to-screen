@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipNotice,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import {
 	LoginForm,
 	type LoginField,
@@ -74,7 +74,7 @@ export function NcSimpleDormancyLoginScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="close"
 					progress={
@@ -89,7 +89,7 @@ export function NcSimpleDormancyLoginScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryActionDormancy}
 					disabled={blocked}
@@ -97,8 +97,8 @@ export function NcSimpleDormancyLoginScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipNotice
+			<FlowHero {...hero} />
+			<FlowNotice
 				badge={notice.badge}
 				text={notice.text}
 				action={notice.action ?? ""}
