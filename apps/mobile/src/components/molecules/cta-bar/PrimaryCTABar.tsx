@@ -26,7 +26,7 @@ export function PrimaryCTABar({
 			gap="inline"
 			style={{
 				padding: "var(--spacing-12) var(--spacing-16) var(--spacing-20)",
-				background: `linear-gradient(to top, ${semanticSurface.page.semi} 70%, transparent)`,
+				background: semanticSurface.page.normal,
 				gridTemplateColumns: hasSecondary ? "1fr 2fr" : "1fr",
 			}}
 		>

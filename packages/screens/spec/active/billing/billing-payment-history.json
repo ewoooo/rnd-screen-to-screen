@@ -1,0 +1,21 @@
+{
+	"meta": { "schema_version": 2, "status": "active", "route": "/billing-payment-history", "source": "policy-driven", "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.md", "policy_section": "4. US-BIL-CHK-007 / PR-BIL-CHK-007-01,02", "pagination_ref": "packages/screens/spec/active/billing/_pagination/billing-chk.json" },
+	"screen": { "id": "billing-payment-history", "name": "납부 이력 및 증빙", "domain": "billing", "use_case": "US-BIL-CHK-007", "process_id": "PR-BIL-CHK-007-01,02", "step_fraction": "7/8", "type": "page" },
+	"x_interfacePlan": { "genre": "browse", "primary_task": "납부 이력 조회 및 증빙 발급 가능 여부 확인", "info_hierarchy": ["list (납부 이력 InfoList)", "supporting (증빙 ChipGroup)", "action (재발행 요청)"], "cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "flat", "rail_policy": { "owner": "ContentRail", "route_margin": "forbidden" } },
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "patterns": ["GlobalNavigationHeader"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["InfoList", "SectionCard", "ChipGroup"] },
+			"bottom": { "owner": "PrimaryCTABar", "patterns": ["PrimaryCTABar"], "flow": "reserved" }
+		}
+	},
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"areas": [
+		{ "id": "top", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["GlobalNavigationHeader"], "layout": { "leading": "back", "title": "납부 이력" }, "content_role": "chrome" },
+		{ "id": "history", "slot": "content", "pattern": "molecules/InfoList", "uses": ["InfoList"], "layout": { "trailing_semantic": "value" }, "content_role": "list" },
+		{ "id": "receipt-types", "slot": "content", "pattern": "molecules/SectionCard", "uses": ["SectionCard", "ChipGroup"], "content_role": "selector-group" },
+		{ "id": "cta", "slot": "bottom", "pattern": "molecules/PrimaryCTABar", "uses": ["PrimaryCTABar", "Button"], "content_role": "primary-action" }
+	],
+	"design_system_contract": { "templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection"], "organisms": ["global"], "molecules": ["InfoList", "SectionCard", "ChipGroup", "PrimaryCTABar"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": [] }
+}

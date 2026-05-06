@@ -22,7 +22,7 @@ export function NcContinueBar({
 		<Box
 			px="stack"
 			py="stack"
-			bgGradient={`linear-gradient(to top, ${semanticSurface.page.semi} 70%, transparent)`}
+			background={semanticSurface.page.normal}
 		>
 			<VStack gap="stack">
 				<TextBlock

@@ -1,0 +1,30 @@
+{
+	"meta": { "schema_version": 2, "status": "active", "route": "/billing-pay-third-party-consent", "source": "policy-driven", "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.md", "policy_section": "4. US-BIL-PAY-006 / PR-BIL-PAY-006-01,02,03", "pagination_ref": "packages/screens/spec/active/billing/_pagination/billing-pay.json" },
+	"screen": { "id": "billing-pay-third-party-consent", "name": "타인 명의 납부수단 동의", "domain": "billing", "use_case": "US-BIL-PAY-006", "process_id": "PR-BIL-PAY-006-01,02,03", "step_fraction": "6/8", "type": "page" },
+	"x_interfacePlan": { "genre": "form", "primary_task": "명의자 동의 + 인증 진입", "info_hierarchy": ["hero", "warning-notice", "context-info", "consent (필수)", "primary-action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat", "copy_policy": { "description_measure": "body", "avoid_full_width_caption": true }, "rail_policy": { "owner": "ContentRail", "route_margin": "forbidden" } },
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "patterns": ["GlobalNavigationHeader"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["ContentSection", "TextBlock", "NoticeBlock", "InfoList", "ConsentList"] },
+			"bottom": { "owner": "StickyActionBar", "patterns": ["StickyActionBar"], "flow": "reserved" }
+		}
+	},
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"areas": [
+		{ "id": "top-progress", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["TopNavigation", "ProgressIndicator"], "layout": { "flow": "reserved", "leading": "back" }, "content_role": "flow-progress" },
+		{ "id": "hero", "slot": "content", "pattern": "ContentSection + TextBlock", "uses": ["ContentSection", "ContentRail", "TextBlock"], "content_role": "primary-copy" },
+		{ "id": "notice", "slot": "content", "pattern": "molecules/NoticeBlock", "uses": ["ContentSection", "NoticeBlock"], "content_role": "warning-notice" },
+		{ "id": "info", "slot": "content", "pattern": "molecules/InfoList", "uses": ["ContentSection", "InfoList", "TextBlock"], "layout": { "section_inset": "inherit", "trailing_semantic": "value" }, "content_role": "context-info" },
+		{ "id": "consents", "slot": "content", "pattern": "molecules/ConsentList", "uses": ["ContentSection", "ConsentList"], "content_role": "required-input" },
+		{ "id": "continue", "slot": "bottom", "pattern": "molecules/StickyActionBar", "uses": ["Box", "Button", "TextBlock"], "content_role": "primary-action", "state_binding": { "primary_disabled_when": "consents.allChecked == false" } }
+	],
+	"design_system_contract": {
+		"templates": ["AppScreen", "ContentList", "ContentSection", "ContentRail"],
+		"organisms": ["global"],
+		"molecules": ["NoticeBlock", "InfoList", "ConsentList", "StickyActionBar"],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

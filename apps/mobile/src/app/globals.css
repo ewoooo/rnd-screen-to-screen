@@ -19,8 +19,6 @@ body {
 	height: 100dvh;
 	background: var(--semantic-background-normal-normal);
 	font-family:
-		"Pretendard Variable",
-		"Pretendard JP Variable",
 		Pretendard,
 		"Pretendard JP",
 		-apple-system,

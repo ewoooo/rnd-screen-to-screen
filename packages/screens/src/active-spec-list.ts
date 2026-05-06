@@ -81,6 +81,66 @@ import ncSimpleRejoinCompleteSpec from "../spec/active/nc-simple/nc-simple-rejoi
 import ncSimpleRejoinCompleteRenderableSpec from "../spec/active/nc-simple/nc-simple-rejoin-complete.sdui.json";
 import ncSimpleRejoinInfoSpec from "../spec/active/nc-simple/nc-simple-rejoin-info.json";
 import ncSimpleRejoinInfoRenderableSpec from "../spec/active/nc-simple/nc-simple-rejoin-info.sdui.json";
+import billingSummarySpec from "../spec/active/billing/billing-summary.json";
+import billingSummaryRenderableSpec from "../spec/active/billing/billing-summary.sdui.json";
+import billingDetailSpec from "../spec/active/billing/billing-detail.json";
+import billingDetailRenderableSpec from "../spec/active/billing/billing-detail.sdui.json";
+import billingRealtimeSpec from "../spec/active/billing/billing-realtime.json";
+import billingRealtimeRenderableSpec from "../spec/active/billing/billing-realtime.sdui.json";
+import billingMscHistorySpec from "../spec/active/billing/billing-msc-history.json";
+import billingMscHistoryRenderableSpec from "../spec/active/billing/billing-msc-history.sdui.json";
+import billingStatementSpec from "../spec/active/billing/billing-statement.json";
+import billingStatementRenderableSpec from "../spec/active/billing/billing-statement.sdui.json";
+import billingStatementResultSpec from "../spec/active/billing/billing-statement-result.json";
+import billingStatementResultRenderableSpec from "../spec/active/billing/billing-statement-result.sdui.json";
+import billingTargetSelectSpec from "../spec/active/billing/billing-target-select.json";
+import billingTargetSelectRenderableSpec from "../spec/active/billing/billing-target-select.sdui.json";
+import billingPaymentHistorySpec from "../spec/active/billing/billing-payment-history.json";
+import billingPaymentHistoryRenderableSpec from "../spec/active/billing/billing-payment-history.sdui.json";
+import billingReceiptResultSpec from "../spec/active/billing/billing-receipt-result.json";
+import billingReceiptResultRenderableSpec from "../spec/active/billing/billing-receipt-result.sdui.json";
+import billingArrearsStatusSpec from "../spec/active/billing/billing-arrears-status.json";
+import billingArrearsStatusRenderableSpec from "../spec/active/billing/billing-arrears-status.sdui.json";
+import billingPayMethodSpec from "../spec/active/billing/billing-pay-method.json";
+import billingPayMethodRenderableSpec from "../spec/active/billing/billing-pay-method.sdui.json";
+import billingPayMethodAuthSpec from "../spec/active/billing/billing-pay-method-auth.json";
+import billingPayMethodAuthRenderableSpec from "../spec/active/billing/billing-pay-method-auth.sdui.json";
+import billingPayConfirmSpec from "../spec/active/billing/billing-pay-confirm.json";
+import billingPayConfirmRenderableSpec from "../spec/active/billing/billing-pay-confirm.sdui.json";
+import billingPayResultSpec from "../spec/active/billing/billing-pay-result.json";
+import billingPayResultRenderableSpec from "../spec/active/billing/billing-pay-result.sdui.json";
+import billingPayScheduleSpec from "../spec/active/billing/billing-pay-schedule.json";
+import billingPayScheduleRenderableSpec from "../spec/active/billing/billing-pay-schedule.sdui.json";
+import billingPayScheduleResultSpec from "../spec/active/billing/billing-pay-schedule-result.json";
+import billingPayScheduleResultRenderableSpec from "../spec/active/billing/billing-pay-schedule-result.sdui.json";
+import billingPayProxySpec from "../spec/active/billing/billing-pay-proxy.json";
+import billingPayProxyRenderableSpec from "../spec/active/billing/billing-pay-proxy.sdui.json";
+import billingPayProxyExecuteSpec from "../spec/active/billing/billing-pay-proxy-execute.json";
+import billingPayProxyExecuteRenderableSpec from "../spec/active/billing/billing-pay-proxy-execute.sdui.json";
+import billingPayProxyResultSpec from "../spec/active/billing/billing-pay-proxy-result.json";
+import billingPayProxyResultRenderableSpec from "../spec/active/billing/billing-pay-proxy-result.sdui.json";
+import billingPayThirdPartyConsentSpec from "../spec/active/billing/billing-pay-third-party-consent.json";
+import billingPayThirdPartyConsentRenderableSpec from "../spec/active/billing/billing-pay-third-party-consent.sdui.json";
+import billingPayPrepaySpec from "../spec/active/billing/billing-pay-prepay.json";
+import billingPayPrepayRenderableSpec from "../spec/active/billing/billing-pay-prepay.sdui.json";
+import billingPayPrepayResultSpec from "../spec/active/billing/billing-pay-prepay-result.json";
+import billingPayPrepayResultRenderableSpec from "../spec/active/billing/billing-pay-prepay-result.sdui.json";
+import billingPayFailureSpec from "../spec/active/billing/billing-pay-failure.json";
+import billingPayFailureRenderableSpec from "../spec/active/billing/billing-pay-failure.sdui.json";
+import billingSetStatementSpec from "../spec/active/billing/billing-set-statement.json";
+import billingSetStatementRenderableSpec from "../spec/active/billing/billing-set-statement.sdui.json";
+import billingSetMethodSpec from "../spec/active/billing/billing-set-method.json";
+import billingSetMethodRenderableSpec from "../spec/active/billing/billing-set-method.sdui.json";
+import billingSetMethodCancelSpec from "../spec/active/billing/billing-set-method-cancel.json";
+import billingSetMethodCancelRenderableSpec from "../spec/active/billing/billing-set-method-cancel.sdui.json";
+import billingSetMethodCancelResultSpec from "../spec/active/billing/billing-set-method-cancel-result.json";
+import billingSetMethodCancelResultRenderableSpec from "../spec/active/billing/billing-set-method-cancel-result.sdui.json";
+import billingSetMscLimitSpec from "../spec/active/billing/billing-set-msc-limit.json";
+import billingSetMscLimitRenderableSpec from "../spec/active/billing/billing-set-msc-limit.sdui.json";
+import billingSetContentLimitSpec from "../spec/active/billing/billing-set-content-limit.json";
+import billingSetContentLimitRenderableSpec from "../spec/active/billing/billing-set-content-limit.sdui.json";
+import billingSetAutoPrepaySpec from "../spec/active/billing/billing-set-auto-prepay.json";
+import billingSetAutoPrepayRenderableSpec from "../spec/active/billing/billing-set-auto-prepay.sdui.json";
 import productDetailSpec from "../spec/inactive/product-detail.json";
 import productDetailRenderableSpec from "../spec/inactive/product-detail.sdui.json";
 import searchResultSpec from "../spec/inactive/search-result.json";
@@ -95,6 +155,36 @@ const asRenderableScreenSpec = (spec: unknown) =>
 	spec as RenderableScreenSpecV1;
 
 export const activeScreenSpecs = {
+	"billing-summary": asScreenSpec(billingSummarySpec),
+	"billing-detail": asScreenSpec(billingDetailSpec),
+	"billing-realtime": asScreenSpec(billingRealtimeSpec),
+	"billing-msc-history": asScreenSpec(billingMscHistorySpec),
+	"billing-statement": asScreenSpec(billingStatementSpec),
+	"billing-statement-result": asScreenSpec(billingStatementResultSpec),
+	"billing-target-select": asScreenSpec(billingTargetSelectSpec),
+	"billing-payment-history": asScreenSpec(billingPaymentHistorySpec),
+	"billing-receipt-result": asScreenSpec(billingReceiptResultSpec),
+	"billing-arrears-status": asScreenSpec(billingArrearsStatusSpec),
+	"billing-pay-method": asScreenSpec(billingPayMethodSpec),
+	"billing-pay-method-auth": asScreenSpec(billingPayMethodAuthSpec),
+	"billing-pay-confirm": asScreenSpec(billingPayConfirmSpec),
+	"billing-pay-result": asScreenSpec(billingPayResultSpec),
+	"billing-pay-schedule": asScreenSpec(billingPayScheduleSpec),
+	"billing-pay-schedule-result": asScreenSpec(billingPayScheduleResultSpec),
+	"billing-pay-proxy": asScreenSpec(billingPayProxySpec),
+	"billing-pay-proxy-execute": asScreenSpec(billingPayProxyExecuteSpec),
+	"billing-pay-proxy-result": asScreenSpec(billingPayProxyResultSpec),
+	"billing-pay-third-party-consent": asScreenSpec(billingPayThirdPartyConsentSpec),
+	"billing-pay-prepay": asScreenSpec(billingPayPrepaySpec),
+	"billing-pay-prepay-result": asScreenSpec(billingPayPrepayResultSpec),
+	"billing-pay-failure": asScreenSpec(billingPayFailureSpec),
+	"billing-set-statement": asScreenSpec(billingSetStatementSpec),
+	"billing-set-method": asScreenSpec(billingSetMethodSpec),
+	"billing-set-method-cancel": asScreenSpec(billingSetMethodCancelSpec),
+	"billing-set-method-cancel-result": asScreenSpec(billingSetMethodCancelResultSpec),
+	"billing-set-msc-limit": asScreenSpec(billingSetMscLimitSpec),
+	"billing-set-content-limit": asScreenSpec(billingSetContentLimitSpec),
+	"billing-set-auto-prepay": asScreenSpec(billingSetAutoPrepaySpec),
 	"home-benefit": asScreenSpec(homeBenefitSpec),
 	"home-device-change": asScreenSpec(homeDeviceChangeSpec),
 	"home-guest": asScreenSpec(homeGuestSpec),
@@ -151,6 +241,72 @@ export const activeScreenSpecs = {
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;
 
 export const activeRenderableScreenSpecs = {
+	"billing-summary": asRenderableScreenSpec(billingSummaryRenderableSpec),
+	"billing-detail": asRenderableScreenSpec(billingDetailRenderableSpec),
+	"billing-realtime": asRenderableScreenSpec(billingRealtimeRenderableSpec),
+	"billing-msc-history": asRenderableScreenSpec(billingMscHistoryRenderableSpec),
+	"billing-statement": asRenderableScreenSpec(billingStatementRenderableSpec),
+	"billing-statement-result": asRenderableScreenSpec(
+		billingStatementResultRenderableSpec,
+	),
+	"billing-target-select": asRenderableScreenSpec(
+		billingTargetSelectRenderableSpec,
+	),
+	"billing-payment-history": asRenderableScreenSpec(
+		billingPaymentHistoryRenderableSpec,
+	),
+	"billing-receipt-result": asRenderableScreenSpec(
+		billingReceiptResultRenderableSpec,
+	),
+	"billing-arrears-status": asRenderableScreenSpec(
+		billingArrearsStatusRenderableSpec,
+	),
+	"billing-pay-method": asRenderableScreenSpec(billingPayMethodRenderableSpec),
+	"billing-pay-method-auth": asRenderableScreenSpec(
+		billingPayMethodAuthRenderableSpec,
+	),
+	"billing-pay-confirm": asRenderableScreenSpec(billingPayConfirmRenderableSpec),
+	"billing-pay-result": asRenderableScreenSpec(billingPayResultRenderableSpec),
+	"billing-pay-schedule": asRenderableScreenSpec(
+		billingPayScheduleRenderableSpec,
+	),
+	"billing-pay-schedule-result": asRenderableScreenSpec(
+		billingPayScheduleResultRenderableSpec,
+	),
+	"billing-pay-proxy": asRenderableScreenSpec(billingPayProxyRenderableSpec),
+	"billing-pay-proxy-execute": asRenderableScreenSpec(
+		billingPayProxyExecuteRenderableSpec,
+	),
+	"billing-pay-proxy-result": asRenderableScreenSpec(
+		billingPayProxyResultRenderableSpec,
+	),
+	"billing-pay-third-party-consent": asRenderableScreenSpec(
+		billingPayThirdPartyConsentRenderableSpec,
+	),
+	"billing-pay-prepay": asRenderableScreenSpec(billingPayPrepayRenderableSpec),
+	"billing-pay-prepay-result": asRenderableScreenSpec(
+		billingPayPrepayResultRenderableSpec,
+	),
+	"billing-pay-failure": asRenderableScreenSpec(billingPayFailureRenderableSpec),
+	"billing-set-statement": asRenderableScreenSpec(
+		billingSetStatementRenderableSpec,
+	),
+	"billing-set-method": asRenderableScreenSpec(billingSetMethodRenderableSpec),
+	"billing-set-method-cancel": asRenderableScreenSpec(
+		billingSetMethodCancelRenderableSpec,
+	),
+	"billing-set-method-cancel-result": asRenderableScreenSpec(
+		billingSetMethodCancelResultRenderableSpec,
+	),
+	"billing-set-msc-limit": asRenderableScreenSpec(
+		billingSetMscLimitRenderableSpec,
+	),
+	"billing-set-content-limit": asRenderableScreenSpec(
+		billingSetContentLimitRenderableSpec,
+	),
+	"billing-set-auto-prepay": asRenderableScreenSpec(
+		billingSetAutoPrepayRenderableSpec,
+	),
 	"membership-identity-verification": asRenderableScreenSpec(
 		membershipIdentityVerificationRenderableSpec,
 	),

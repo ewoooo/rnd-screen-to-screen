@@ -10,6 +10,7 @@ const GROUPS = [
 	"tu",
 	"product",
 	"search",
+	"billing",
 	"home",
 ] as const satisfies readonly ScreenGroup[];
 
@@ -18,6 +19,7 @@ const GROUP_LABEL: Record<ScreenGroup, string> = {
 	membership: "Membership",
 	product: "Product",
 	search: "Search",
+	billing: "Billing",
 	tu: "TU",
 	"nc-full": "NC Full",
 	"nc-simple": "NC Simple",
@@ -34,6 +36,7 @@ export default function Home() {
 			membership: [],
 			product: [],
 			search: [],
+			billing: [],
 			tu: [],
 			"nc-full": [],
 			"nc-simple": [],

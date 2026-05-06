@@ -1,0 +1,76 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "billing-summary", "name": "청구 요약", "route": "/billing-summary", "domain": "billing", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"summary": {
+			"label": "이번 달 청구",
+			"title": "73,420원",
+			"meta": [
+				{ "id": "due", "label": "납부기한", "value": "2026-05-25" },
+				{ "id": "state", "label": "상태", "value": "청구확정" },
+				{ "id": "auto", "label": "자동납부", "value": "예정 (5/25)" }
+			]
+		},
+		"details": {
+			"title": "청구 상세",
+			"rows": [
+				{ "id": "this-month", "title": "당월 요금", "trailingLabel": "73,420원" },
+				{ "id": "arrears", "title": "미납액", "trailingLabel": "0원" },
+				{ "id": "auto-method", "title": "자동납부 수단", "trailingLabel": "신한카드 ****1234" },
+				{ "id": "lines", "title": "회선", "sub": "010-1234-5678 외 1", "trailingLabel": "2회선" }
+			]
+		},
+		"notice": { "tone": "info", "title": "수납 반영 중", "text": "결제 후 BSS 반영 중인 금액이 있어요. 중복 납부에 주의해 주세요." },
+		"cta": { "primary": { "id": "pay-now", "label": "지금 납부" } }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.billing-summary", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "GlobalNavigationHeader", "id": "slot.top", "props": { "title": "청구 요약", "leading": "back" } },
+				"bottom": { "type": "PrimaryCTABar", "id": "area.cta", "props": { "bind": "cta" } }
+			},
+			"children": [
+				{ "type": "SummaryCard", "id": "area.summary", "props": { "bind": "summary" } },
+				{ "type": "InfoList", "id": "area.details", "props": { "bind": "details", "trailingSemantic": "value" } },
+				{ "type": "NoticeBlock", "id": "area.notice", "props": { "bind": "notice" } }
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/billing/_pagination/billing-chk.json",
+		"_canonical_hash": "9b1a9f6fcfa3257ba8e132796b27c1eb6693b62fc6a7048278b2d9fcf0b6a341",
+		"policy_id": "billing-chk", "route_id": "billing-summary",
+		"step_fraction": "1/8", "predecessor": null, "successor": "billing-detail",
+		"transitions": [
+			{ "to": "billing-detail", "trigger": "primary_cta", "guard": "user_taps_view_detail" },
+			{ "to": "billing-target-select", "trigger": "primary_cta", "guard": "next_action=pay_now OR pay_arrears" },
+			{ "to": "billing-arrears-status", "trigger": "primary_cta", "guard": "next_action=verify_arrears_resolution" }
+		]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-BIL-CHK-001-02", "docs/정책서-Full-청구관리및요금수납_정책서.md#process-pr-bil-chk-001-02"] },
+		"process": { "id": "PR-BIL-CHK-001-02", "name": "청구 요약 및 납부 필요 여부 확인", "cluster": "US-BIL-CHK-001", "actor": "청구 확인자, 연계 시스템", "entry_condition": "청구 상태 진입 및 대상 회선 확인 완료", "exit_condition": "청구 요약 및 납부 필요 여부 확인 결과가 확인된 상태", "predecessor": ["PR-BIL-CHK-001-01"], "successor": ["PR-BIL-CHK-001-03"], "related_functions": ["FN-BIL-CHK-001 청구 요약 조회", "FN-BIL-CHK-010 다음 행동 추천"], "related_policies": ["PG-BIL-CHG-001 청구·이용요금 노출 정책", "PG-BIL-CUS-001 고객 안내 정책", "PG-BIL-PAY-002 납부 가능 여부 판정 정책"] },
+		"purpose": "당월 청구 금액·납부 기한·자동납부 예정·미납/완납 상태를 요약하여 납부 필요 여부를 판단한다.",
+		"system_inputs_to_user": ["당월 청구 금액", "납부기한", "청구 상태", "자동납부 예정 정보", "다음 행동 안내"],
+		"user_inputs": ["다음 행동 선택"],
+		"system_outputs": ["납부 필요 여부", "다음 행동 분기"],
+		"branches": ["청구확정 → 납부/상세 확인", "미납 → 즉시 납부", "수납대기 → 결과 확인", "납부제한 → 사유 확인", "완납 → 납부 불필요"],
+		"exceptions": ["조회 실패 → 재조회 또는 상담 안내", "미확정 금액 → 예상/실시간으로 구분 안내"],
+		"design_signals": { "primary_block": "청구액·기한·상태 요약 카드", "hero_intent": "요약 카드", "cta_intent": "지금 납부" },
+		"evidence_refs": [
+			{ "claim": "당월 청구·기한·자동납부 표시", "policy": ["POL-BIL-CHG-001-01", "POL-BIL-CHG-001-06"], "lines": "582-587" },
+			{ "claim": "납부 필요 여부 5분류", "policy": ["POL-BIL-CUS-001-02"], "lines": "721" },
+			{ "claim": "납부 제한 사유 안내", "policy": ["POL-BIL-CUS-001-03"], "lines": "722" }
+		]
+	},
+	"x_interfacePlan": { "genre": "browse", "primary_task": "당월 청구 요약 확인 + 다음 행동 분기", "info_hierarchy": ["summary-card", "supporting-list", "action"], "cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "one-card", "copy_policy": { "caption_measure": "short", "avoid_full_width_caption": true } },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-1", "result": "n/a", "evidence": "browse 장르" },
+		{ "rule": "H-2", "result": "pass", "evidence": "SummaryCard title=금액, 별도 hero 중복 없음" },
+		{ "rule": "H-7", "result": "pass", "evidence": "browse hub 진입, leading=back" },
+		{ "rule": "H-8", "result": "pass", "evidence": "browse 장르 NoticeBlock 허용 (수납대기 안내)" },
+		{ "rule": "H-10", "result": "pass", "evidence": "InfoList trailing=value" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

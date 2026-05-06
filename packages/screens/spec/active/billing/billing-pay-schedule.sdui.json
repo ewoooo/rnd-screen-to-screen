@@ -1,0 +1,127 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "billing-pay-schedule", "name": "납부 예약·선납", "route": "/billing-pay-schedule", "domain": "billing", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-BIL-PAY-003", "name": "예약 납부", "step": 3, "total": 8, "progress": "예약 납부 3/8" },
+		"hero": { "titleLines": ["언제, 얼마를 미리 낼까요?"], "description": "예약 실행일은 납부기한 이전 영업일 안에서 선택할 수 있고, 선납 금액은 허용 범위 안에서만 확정돼요." },
+		"form": {
+			"fields": [
+				{ "id": "executeDate", "label": "예약 실행일", "control": "select", "required": true, "options": ["2026-05-08", "2026-05-09", "2026-05-12"] },
+				{ "id": "amount", "label": "선납 금액", "control": "text", "required": true, "placeholder": "예: 30,000", "rule": "BSS 허용 범위 안에서 확정" }
+			]
+		},
+		"targets": {
+			"label": "선납 대상",
+			"selectionMode": "multi",
+			"items": [
+				{ "id": "next", "title": "다음달 청구분", "sub": "예상 78,400원" },
+				{ "id": "prepay", "title": "선결제 가능 항목", "sub": "콘텐츠 이용료 12,000원" }
+			]
+		},
+		"continue": { "eyebrow": "신청하면 예약 결과가 안내돼요", "primaryAction": "신청" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.billing-pay-schedule", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "GlobalNavigationHeader", "id": "slot.top", "props": { "title": "예약·선납", "leading": "back", "progressBind": "flow.progress", "progressTotal": 8, "progressStep": 3 } },
+				"bottom": { "type": "StickyActionBar", "id": "area.continue", "props": { "bind": "continue", "primaryDisabledWhen": "form.invalidCount > 0 OR targets.selectedCount == 0" } }
+			},
+			"children": [
+				{ "type": "ContentSection", "id": "area.hero", "children": [
+					{ "type": "TextBlock", "id": "hero.title", "props": { "bind": "hero.titleLines", "variant": "displayTitle", "overflow": "wrap" } },
+					{ "type": "ContentRail", "id": "hero.description.rail", "props": { "rail": "measure", "measure": "body" }, "children": [
+						{ "type": "TextBlock", "id": "hero.description", "props": { "bind": "hero.description", "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } }
+					] }
+				] },
+				{ "type": "ContentSection", "id": "area.form", "children": [
+					{ "type": "FormField", "id": "form.executeDate", "props": { "bind": "form.fields.0" } },
+					{ "type": "FormField", "id": "form.amount", "props": { "bind": "form.fields.1" } }
+				] },
+				{ "type": "ContentSection", "id": "area.targets", "children": [
+					{ "type": "TextBlock", "id": "targets.label", "props": { "bind": "targets.label", "variant": "sectionLabel" } },
+					{ "type": "SelectableList", "id": "targets.list", "props": { "bind": "targets", "selectionMode": "multi" } }
+				] }
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/active/billing/_pagination/billing-pay.json",
+		"_canonical_hash": "d3a099698e95beeaf0f5e2e00d3b1d875602fa12e9974510e51afeef4f6a64d3",
+		"policy_id": "billing-pay", "route_id": "billing-pay-schedule", "step_fraction": "3/8",
+		"predecessor": null, "successor": "billing-pay-schedule-result",
+		"transitions": [{ "to": "billing-pay-schedule-result", "trigger": "primary_cta", "guard": "schedule_request_submitted" }]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-BIL-PAY-003-01", "PR-BIL-PAY-003-02", "docs/정책서-Full-청구관리및요금수납_정책서.md#L5755-L6121"] },
+		"process": {
+			"id": "PR-BIL-PAY-003-01,02", "name": "예약·선납 가능 여부 확인 + 요청 접수", "cluster": "US-BIL-PAY-003 3/8",
+			"actor": "납부 실행자, BSS",
+			"entry_condition": "납부 가능 금액 확정", "exit_condition": "예약·선납 요청 접수 완료",
+			"predecessor": [], "successor": ["PR-BIL-PAY-003-03"],
+			"related_functions": ["FN-BIL-PAY-001 납부 대상·금액 확정"],
+			"related_policies": [
+				"POL-BIL-PAY-003-01 예약 납부 신청 가능 조건",
+				"POL-BIL-PAY-003-02 예약 실행일 기준",
+				"POL-BIL-PAY-003-05 선납 가능 대상",
+				"POL-BIL-PAY-003-06 선납 금액 산정",
+				"POL-BIL-PAY-003-08 선결제 승인 기준"
+			]
+		},
+		"purpose": "예약 납부와 선납 가능 여부를 확인하고 사용자가 실행일·금액·대상을 입력하여 요청을 접수한다.",
+		"system_inputs_to_user": ["실행 가능일 후보", "선납 허용 금액", "선납 대상 항목"],
+		"user_inputs": ["실행일 선택", "금액 입력", "대상 선택"],
+		"system_outputs": ["요청 접수 결과"],
+		"branches": ["접수 → schedule-result"],
+		"exceptions": ["허용 범위 초과 → 형식 오류", "BSS 점검 시간 → 시간 제한 사유 노출"],
+		"design_signals": { "primary_block": "FormField + SelectableList(다중)", "hero_intent": "예약 시작 안내", "cta_intent": "신청" },
+		"evidence_refs": [
+			{ "claim": "process entry/exit", "policy": "PR-BIL-PAY-003-01", "doc_line": "L5758-L5770" },
+			{ "claim": "예약 실행일 기준", "policy": "POL-BIL-PAY-003-02", "doc_line": "L4544" },
+			{ "claim": "선납 금액 산정", "policy": "POL-BIL-PAY-003-06", "doc_line": "L4548" }
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "form", "primary_task": "실행일·금액·대상 입력 후 요청 접수",
+		"user_decision": "언제 얼마를 어떤 대상에 미리 낼지",
+		"hierarchy": { "top": "progress", "lead": "short_action_title", "body": "form_fields + multi_select", "bottom": "primary_cta" },
+		"copy_policy": { "title_style": "short_action", "description_measure": "body", "avoid_full_width_caption": true },
+		"interaction_pattern": { "main_control": "form + selectable_list_multi", "cta_position": "bottom_chrome", "progress_position": "top_chrome" },
+		"info_hierarchy": ["hero", "required-input (form)", "selector (대상)", "action"],
+		"cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat",
+		"quality_checks": ["form 영역에 NoticeBlock 미사용(H-8)", "required *를 CTA disabled로 대체(H-9)"]
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["ContentSection", "TextBlock", "FormField", "SelectableList"] },
+			"bottom": { "owner": "StickyActionBar", "flow": "reserved" }
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+		"areas": [
+			{ "id": "top-progress", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["TopNavigation", "ProgressIndicator"], "layout": { "leading": "back" }, "content_role": "flow-progress" },
+			{ "id": "hero", "slot": "content", "pattern": "ContentSection + TextBlock", "uses": ["ContentSection", "ContentRail", "TextBlock"], "content_role": "primary-copy" },
+			{ "id": "form", "slot": "content", "pattern": "molecules/FormField", "uses": ["ContentSection", "FormField", "TextField", "Select"], "content_role": "required-input" },
+			{ "id": "targets", "slot": "content", "pattern": "molecules/SelectableList", "uses": ["ContentSection", "SelectableList"], "layout": { "selectionMode": "multi", "trailing_semantic": "value" }, "content_role": "primary-choice" },
+			{ "id": "continue", "slot": "bottom", "pattern": "molecules/StickyActionBar", "uses": ["Button", "TextBlock"], "content_role": "primary-action", "state_binding": { "primary_disabled_when": "form.invalidCount > 0 OR targets.selectedCount == 0" } }
+		],
+		"design_system_contract": {
+			"templates": ["AppScreen", "ContentList", "ContentSection", "ContentRail"],
+			"organisms": ["global"],
+			"molecules": ["FormField", "form-controls", "SelectableList", "StickyActionBar"],
+			"atoms": ["TextBlock"],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "form 장르 card 0개 (flat)" },
+			{ "rule": "H-7", "result": "pass", "evidence": "step flow → back" },
+			{ "rule": "H-8", "result": "pass", "evidence": "form 영역에 NoticeBlock 없음" },
+			{ "rule": "H-9", "result": "pass", "evidence": "required는 CTA disabled로 대체" },
+			{ "rule": "H-12", "result": "pass", "evidence": "ContentSection inset 사용" }
+		]
+	}
+}

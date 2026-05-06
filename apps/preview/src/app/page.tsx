@@ -27,7 +27,7 @@ import { Separator } from "@/components/ui/separator";
 const MOBILE_ORIGIN =
 	process.env.NEXT_PUBLIC_MOBILE_ORIGIN ?? "http://localhost:3001";
 
-const GROUPS = [
+const GROUP_ORDER = [
 	"home",
 	"membership",
 	"product",
@@ -35,8 +35,22 @@ const GROUPS = [
 	"tu",
 	"nc-full",
 	"nc-simple",
+	"billing",
 ] as const satisfies readonly ScreenGroup[];
 type RegistryScreen = (typeof screens)[number];
+
+function getScreenGroups() {
+	const orderedGroups = GROUP_ORDER.filter((group) =>
+		screens.some((screen) => screen.group === group),
+	);
+	const additionalGroups = screens
+		.map((screen) => screen.group)
+		.filter((group, index, groups) => !GROUP_ORDER.includes(group) && groups.indexOf(group) === index);
+
+	return [...orderedGroups, ...additionalGroups];
+}
+
+const GROUPS = getScreenGroups();
 
 type BenchmarkFinding = {
 	id: string;
@@ -172,26 +186,20 @@ function getDesignExceptionLabel(
 }
 
 export default function PreviewPage() {
-	const [selectedPath, setSelectedPath] = useState<ScreenPath>(screens[0].path);
+	const [selectedPath, setSelectedPath] = useState<ScreenPath>(
+		screens[0].path,
+	);
 	const selected = screens.find((screen) => screen.path === selectedPath) ?? screens[0];
 	const selectedSpec = activeScreenSpecs[selected.id];
 	const specIssues = getScreenSpecIssues(selectedSpec);
 	const benchmarkFindings = getBenchmarkFindings(selectedSpec);
 	const componentTree = getComponentTree(selectedSpec);
-	const grouped = screens.reduce<Record<ScreenGroup, RegistryScreen[]>>(
+	const grouped = screens.reduce<Partial<Record<ScreenGroup, RegistryScreen[]>>>(
 		(acc, screen) => {
-			acc[screen.group].push(screen);
+			(acc[screen.group] ??= []).push(screen);
 			return acc;
 		},
-		{
-			home: [],
-			membership: [],
-			product: [],
-			search: [],
-			tu: [],
-			"nc-full": [],
-			"nc-simple": [],
-		},
+		{},
 	);
 	const iframeSrc = useMemo(
 		() => `${MOBILE_ORIGIN}${selected.path}`,
@@ -219,7 +227,7 @@ export default function PreviewPage() {
 								{group}
 							</h2>
 							<div className="flex flex-col gap-1">
-								{grouped[group].map((screen) => {
+								{(grouped[group] ?? []).map((screen) => {
 									const active = screen.path === selected.path;
 
 									return (

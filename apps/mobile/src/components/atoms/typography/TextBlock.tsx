@@ -87,7 +87,13 @@ export function TextBlock({
 		balance,
 		style,
 	});
-	const content = lines ? lines.join("\n") : text;
+	const content = lines
+		? lines.map((line, index) => (
+				<span key={`${line}-${index}`} style={{ display: "block" }}>
+					{line}
+				</span>
+			))
+		: text;
 	const mapped = textBlockVariantMap[variant];
 
 	return (
