@@ -1,1 +1,6 @@
-export { InfoList, type InfoListItem } from "./InfoList";
+export {
+	InfoList,
+	type InfoListItem,
+	type InfoListTrailingKind,
+	type InfoListTrailingTone,
+} from "./InfoList";

@@ -4,11 +4,20 @@ import type { ReactNode } from "react";
 import { Box, HStack, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";
 
+export type InfoListTrailingKind = "value" | "status" | "action";
+export type InfoListTrailingTone =
+	| "neutral"
+	| "positive"
+	| "negative"
+	| "cautionary";
+
 export type InfoListItem = {
 	id: string;
 	title: string;
 	sub: string;
 	trailingLabel?: string;
+	trailingKind?: InfoListTrailingKind;
+	trailingTone?: InfoListTrailingTone;
 	mediaLabel?: string;
 	mediaIcon?: ReactNode;
 };
@@ -19,11 +28,20 @@ type Props = {
 	selectable?: boolean;
 };
 
+const TONE_COLOR: Record<InfoListTrailingTone, string> = {
+	neutral: "semantic.label.normal",
+	positive: "semantic.status.positive",
+	negative: "semantic.status.negative",
+	cautionary: "semantic.status.cautionary",
+};
+
 export function InfoList({ items, selectedId, selectable = false }: Props) {
 	return (
 		<VStack role="list">
 			{items.map((item, index) => {
 				const selected = selectedId === item.id;
+				const kind = item.trailingKind ?? "value";
+				const tone = item.trailingTone ?? "neutral";
 				return (
 					<Box
 						key={item.id}
@@ -76,13 +94,25 @@ export function InfoList({ items, selectedId, selectable = false }: Props) {
 							/>
 						</VStack>
 						{item.trailingLabel ? (
-							<Chip
-								size="small"
-								variant={selected ? "solid" : "outlined"}
-								active={selectable && selected}
-							>
-								{item.trailingLabel}
-							</Chip>
+							kind === "status" ? (
+								<TextBlock
+									variant="meta"
+									text={item.trailingLabel}
+									color={TONE_COLOR[tone] as never}
+								/>
+							) : (
+								<Chip
+									size="small"
+									variant={
+										kind === "action" || (selected && selectable)
+											? "solid"
+											: "outlined"
+									}
+									active={selectable && selected}
+								>
+									{item.trailingLabel}
+								</Chip>
+							)
 						) : (
 							<span aria-hidden />
 						)}

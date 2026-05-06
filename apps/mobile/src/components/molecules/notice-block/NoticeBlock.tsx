@@ -3,10 +3,10 @@ import { Button, Card, ContentBadge } from "@wanteddev/wds";
 import { VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";
 
-type NoticeTone = "info" | "warning" | "critical";
+type NoticeTone = "info" | "warning" | "critical" | "success";
 
 type Props = {
-	badge: string;
+	badge?: string;
 	text: string;
 	action?: string;
 	tone?: NoticeTone;
@@ -18,7 +18,10 @@ const TONE_STYLE: Record<
 		background: string;
 		border: string;
 		badgeColor: "accent" | "neutral";
-		textColor: "semantic.label.normal" | "semantic.status.negative";
+		textColor:
+			| "semantic.label.normal"
+			| "semantic.status.negative"
+			| "semantic.status.positive";
 	}
 > = {
 	info: {
@@ -39,6 +42,12 @@ const TONE_STYLE: Record<
 		badgeColor: "accent",
 		textColor: "semantic.status.negative",
 	},
+	success: {
+		background: "var(--semantic-background-normal-alternative)",
+		border: "var(--semantic-status-positive)",
+		badgeColor: "accent",
+		textColor: "semantic.status.positive",
+	},
 };
 
 export function NoticeBlock({ badge, text, action, tone = "info" }: Props) {
@@ -56,9 +65,11 @@ export function NoticeBlock({ badge, text, action, tone = "info" }: Props) {
 			}}
 		>
 			<VStack gap="inline">
-				<ContentBadge size="small" color={toneStyle.badgeColor} variant="outlined">
-					{badge}
-				</ContentBadge>
+				{badge ? (
+					<ContentBadge size="small" color={toneStyle.badgeColor} variant="outlined">
+						{badge}
+					</ContentBadge>
+				) : null}
 				<TextBlock
 					variant="body"
 					text={text}

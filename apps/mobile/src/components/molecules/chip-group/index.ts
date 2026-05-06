@@ -1,1 +1,1 @@
-export { ChipGroup } from "./ChipGroup";
+export { ChipGroup, type ChipItem } from "./ChipGroup";
