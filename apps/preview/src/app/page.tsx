@@ -33,6 +33,8 @@ const GROUPS = [
 	"product",
 	"search",
 	"tu",
+	"nc-full",
+	"nc-simple",
 ] as const satisfies readonly ScreenGroup[];
 type RegistryScreen = (typeof screens)[number];
 
@@ -181,7 +183,15 @@ export default function PreviewPage() {
 			acc[screen.group].push(screen);
 			return acc;
 		},
-		{ home: [], membership: [], product: [], search: [], tu: [] },
+		{
+			home: [],
+			membership: [],
+			product: [],
+			search: [],
+			tu: [],
+			"nc-full": [],
+			"nc-simple": [],
+		},
 	);
 	const iframeSrc = useMemo(
 		() => `${MOBILE_ORIGIN}${selected.path}`,
@@ -190,7 +200,7 @@ export default function PreviewPage() {
 
 	return (
 		<main className="grid min-h-dvh grid-cols-1 bg-transparent sm:grid-cols-[260px_minmax(390px,1fr)_340px] xl:grid-cols-[300px_minmax(420px,1fr)_380px]">
-			<aside className="flex flex-col border-r bg-card sm:min-h-dvh">
+			<aside className="flex flex-col border-r bg-card sm:sticky sm:top-0 sm:h-dvh sm:max-h-dvh sm:overflow-hidden">
 				<div className="flex items-center gap-3 p-5">
 					<div className="min-w-0">
 						<h1 className="truncate text-xl font-semibold">Screen Preview</h1>
@@ -267,7 +277,7 @@ export default function PreviewPage() {
 				</div>
 			</section>
 
-			<aside className="flex max-h-screen min-h-0 flex-col border-l bg-card sm:min-h-dvh">
+			<aside className="flex flex-col border-l bg-card sm:sticky sm:top-0 sm:h-dvh sm:max-h-dvh sm:overflow-hidden">
 				<div className="shrink-0 border-b p-5">
 					<div className="flex items-start justify-between gap-3">
 						<div className="min-w-0">

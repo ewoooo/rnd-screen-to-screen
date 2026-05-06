@@ -4,6 +4,8 @@ import { screens, type ScreenEntry, type ScreenGroup } from "@screen/screens";
 import { Box, HStack, VStack } from "@/components/atoms/layout";
 
 const GROUPS = [
+	"nc-full",
+	"nc-simple",
 	"membership",
 	"tu",
 	"product",
@@ -17,6 +19,8 @@ const GROUP_LABEL: Record<ScreenGroup, string> = {
 	product: "Product",
 	search: "Search",
 	tu: "TU",
+	"nc-full": "NC Full",
+	"nc-simple": "NC Simple",
 };
 
 export default function Home() {
@@ -25,7 +29,15 @@ export default function Home() {
 			(acc[s.group] ??= []).push(s);
 			return acc;
 		},
-		{ home: [], membership: [], product: [], search: [], tu: [] },
+		{
+			home: [],
+			membership: [],
+			product: [],
+			search: [],
+			tu: [],
+			"nc-full": [],
+			"nc-simple": [],
+		},
 	);
 
 	return (

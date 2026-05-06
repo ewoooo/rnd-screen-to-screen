@@ -66,7 +66,14 @@ export type ScreenSpecV2 = {
 	screen: {
 		id: string;
 		name: string;
-		domain: "home" | "membership" | "product" | "search" | "tu";
+		domain:
+			| "home"
+			| "membership"
+			| "product"
+			| "search"
+			| "tu"
+			| "nc-full"
+			| "nc-simple";
 		type: ScreenSpecType;
 	};
 	screen_contract: {

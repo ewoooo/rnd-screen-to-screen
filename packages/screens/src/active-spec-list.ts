@@ -17,6 +17,38 @@ import membershipPersonalInfoSpec from "../spec/active/membership/membership-per
 import membershipPersonalInfoRenderableSpec from "../spec/active/membership/membership-personal-info.sdui.json";
 import membershipTermsConsentSpec from "../spec/active/membership/membership-terms-consent.json";
 import membershipTermsConsentRenderableSpec from "../spec/active/membership/membership-terms-consent.sdui.json";
+import ncFullDormancyAuthSpec from "../spec/active/nc-full/nc-full-dormancy-auth.json";
+import ncFullDormancyAuthRenderableSpec from "../spec/active/nc-full/nc-full-dormancy-auth.sdui.json";
+import ncFullDormancyLoginSpec from "../spec/active/nc-full/nc-full-dormancy-login.json";
+import ncFullDormancyLoginRenderableSpec from "../spec/active/nc-full/nc-full-dormancy-login.sdui.json";
+import ncFullDormancyResultSpec from "../spec/active/nc-full/nc-full-dormancy-result.json";
+import ncFullDormancyResultRenderableSpec from "../spec/active/nc-full/nc-full-dormancy-result.sdui.json";
+import ncFullDormancyTermsSpec from "../spec/active/nc-full/nc-full-dormancy-terms.json";
+import ncFullDormancyTermsRenderableSpec from "../spec/active/nc-full/nc-full-dormancy-terms.sdui.json";
+import ncFullJoinAuthSpec from "../spec/active/nc-full/nc-full-join-auth.json";
+import ncFullJoinAuthRenderableSpec from "../spec/active/nc-full/nc-full-join-auth.sdui.json";
+import ncFullJoinCompleteSpec from "../spec/active/nc-full/nc-full-join-complete.json";
+import ncFullJoinCompleteRenderableSpec from "../spec/active/nc-full/nc-full-join-complete.sdui.json";
+import ncFullJoinInfoSpec from "../spec/active/nc-full/nc-full-join-info.json";
+import ncFullJoinInfoRenderableSpec from "../spec/active/nc-full/nc-full-join-info.sdui.json";
+import ncFullJoinTermsSpec from "../spec/active/nc-full/nc-full-join-terms.json";
+import ncFullJoinTermsRenderableSpec from "../spec/active/nc-full/nc-full-join-terms.sdui.json";
+import ncFullLeaveAuthSpec from "../spec/active/nc-full/nc-full-leave-auth.json";
+import ncFullLeaveAuthRenderableSpec from "../spec/active/nc-full/nc-full-leave-auth.sdui.json";
+import ncFullLeaveConfirmSpec from "../spec/active/nc-full/nc-full-leave-confirm.json";
+import ncFullLeaveConfirmRenderableSpec from "../spec/active/nc-full/nc-full-leave-confirm.sdui.json";
+import ncFullLeaveNoticeSpec from "../spec/active/nc-full/nc-full-leave-notice.json";
+import ncFullLeaveNoticeRenderableSpec from "../spec/active/nc-full/nc-full-leave-notice.sdui.json";
+import ncFullLeaveReasonSpec from "../spec/active/nc-full/nc-full-leave-reason.json";
+import ncFullLeaveReasonRenderableSpec from "../spec/active/nc-full/nc-full-leave-reason.sdui.json";
+import ncFullLeaveResultSpec from "../spec/active/nc-full/nc-full-leave-result.json";
+import ncFullLeaveResultRenderableSpec from "../spec/active/nc-full/nc-full-leave-result.sdui.json";
+import ncFullRejoinAuthSpec from "../spec/active/nc-full/nc-full-rejoin-auth.json";
+import ncFullRejoinAuthRenderableSpec from "../spec/active/nc-full/nc-full-rejoin-auth.sdui.json";
+import ncFullRejoinCompleteSpec from "../spec/active/nc-full/nc-full-rejoin-complete.json";
+import ncFullRejoinCompleteRenderableSpec from "../spec/active/nc-full/nc-full-rejoin-complete.sdui.json";
+import ncFullRejoinInfoSpec from "../spec/active/nc-full/nc-full-rejoin-info.json";
+import ncFullRejoinInfoRenderableSpec from "../spec/active/nc-full/nc-full-rejoin-info.sdui.json";
 import productDetailSpec from "../spec/inactive/product-detail.json";
 import productDetailRenderableSpec from "../spec/inactive/product-detail.sdui.json";
 import searchResultSpec from "../spec/inactive/search-result.json";
@@ -45,6 +77,22 @@ export const activeScreenSpecs = {
 	"membership-leave-reason": asScreenSpec(membershipLeaveReasonSpec),
 	"membership-personal-info": asScreenSpec(membershipPersonalInfoSpec),
 	"membership-terms-consent": asScreenSpec(membershipTermsConsentSpec),
+	"nc-full-dormancy-auth": asScreenSpec(ncFullDormancyAuthSpec),
+	"nc-full-dormancy-login": asScreenSpec(ncFullDormancyLoginSpec),
+	"nc-full-dormancy-result": asScreenSpec(ncFullDormancyResultSpec),
+	"nc-full-dormancy-terms": asScreenSpec(ncFullDormancyTermsSpec),
+	"nc-full-join-auth": asScreenSpec(ncFullJoinAuthSpec),
+	"nc-full-join-complete": asScreenSpec(ncFullJoinCompleteSpec),
+	"nc-full-join-info": asScreenSpec(ncFullJoinInfoSpec),
+	"nc-full-join-terms": asScreenSpec(ncFullJoinTermsSpec),
+	"nc-full-leave-auth": asScreenSpec(ncFullLeaveAuthSpec),
+	"nc-full-leave-confirm": asScreenSpec(ncFullLeaveConfirmSpec),
+	"nc-full-leave-notice": asScreenSpec(ncFullLeaveNoticeSpec),
+	"nc-full-leave-reason": asScreenSpec(ncFullLeaveReasonSpec),
+	"nc-full-leave-result": asScreenSpec(ncFullLeaveResultSpec),
+	"nc-full-rejoin-auth": asScreenSpec(ncFullRejoinAuthSpec),
+	"nc-full-rejoin-complete": asScreenSpec(ncFullRejoinCompleteSpec),
+	"nc-full-rejoin-info": asScreenSpec(ncFullRejoinInfoSpec),
 	"product-detail": asScreenSpec(productDetailSpec),
 	"search-result": asScreenSpec(searchResultSpec),
 	"tu-dsp-main-mo-02-pg-001-2": asScreenSpec(tuDiscoverySpec),
@@ -76,6 +124,42 @@ export const activeRenderableScreenSpecs = {
 	"membership-terms-consent": asRenderableScreenSpec(
 		membershipTermsConsentRenderableSpec,
 	),
+	"nc-full-dormancy-auth": asRenderableScreenSpec(
+		ncFullDormancyAuthRenderableSpec,
+	),
+	"nc-full-dormancy-login": asRenderableScreenSpec(
+		ncFullDormancyLoginRenderableSpec,
+	),
+	"nc-full-dormancy-result": asRenderableScreenSpec(
+		ncFullDormancyResultRenderableSpec,
+	),
+	"nc-full-dormancy-terms": asRenderableScreenSpec(
+		ncFullDormancyTermsRenderableSpec,
+	),
+	"nc-full-join-auth": asRenderableScreenSpec(ncFullJoinAuthRenderableSpec),
+	"nc-full-join-complete": asRenderableScreenSpec(
+		ncFullJoinCompleteRenderableSpec,
+	),
+	"nc-full-join-info": asRenderableScreenSpec(ncFullJoinInfoRenderableSpec),
+	"nc-full-join-terms": asRenderableScreenSpec(ncFullJoinTermsRenderableSpec),
+	"nc-full-leave-auth": asRenderableScreenSpec(ncFullLeaveAuthRenderableSpec),
+	"nc-full-leave-confirm": asRenderableScreenSpec(
+		ncFullLeaveConfirmRenderableSpec,
+	),
+	"nc-full-leave-notice": asRenderableScreenSpec(
+		ncFullLeaveNoticeRenderableSpec,
+	),
+	"nc-full-leave-reason": asRenderableScreenSpec(
+		ncFullLeaveReasonRenderableSpec,
+	),
+	"nc-full-leave-result": asRenderableScreenSpec(
+		ncFullLeaveResultRenderableSpec,
+	),
+	"nc-full-rejoin-auth": asRenderableScreenSpec(ncFullRejoinAuthRenderableSpec),
+	"nc-full-rejoin-complete": asRenderableScreenSpec(
+		ncFullRejoinCompleteRenderableSpec,
+	),
+	"nc-full-rejoin-info": asRenderableScreenSpec(ncFullRejoinInfoRenderableSpec),
 	"product-detail": asRenderableScreenSpec(productDetailRenderableSpec),
 } as const satisfies Partial<Record<ActiveScreenSpecId, RenderableScreenSpecV1>>;
 
