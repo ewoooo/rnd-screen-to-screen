@@ -14,12 +14,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="ko" suppressHydrationWarning>
-			<head>
-				<script
-					src="https://mcp.figma.com/mcp/html-to-design/capture.js"
-					async
-				/>
-			</head>
 			<body>
 				<ThemeProvider>
 					<AppRouterCacheProvider>{children}</AppRouterCacheProvider>

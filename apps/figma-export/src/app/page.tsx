@@ -10,6 +10,9 @@ import {
 	type ScreenGroup,
 } from "@screen/screens";
 
+import { MobileViewFrame } from "@figma-export/components/MobileViewFrame";
+import { useComponentToFigma } from "@figma-export/hooks/useComponentToFigma";
+
 import { BillingArrearsStatusScreen } from "@/app/billing-arrears-status/_sdui-renderer";
 import { BillingDetailScreen } from "@/app/billing-detail/_sdui-renderer";
 import { BillingMscHistoryScreen } from "@/app/billing-msc-history/_sdui-renderer";
@@ -158,6 +161,8 @@ const FLOW_DEFINITIONS = [
 ] as const;
 
 export default function FigmaExportPage() {
+	useComponentToFigma();
+
 	const exportScreens = screens.filter(
 		(screen) => EXPORT_GROUPS.includes(screen.group) && RENDERERS[screen.id],
 	);
@@ -209,9 +214,9 @@ function ScreenFrame({ id, label }: { id: string; label: string }) {
 				<strong>{label}</strong>
 				<span>{id}</span>
 			</div>
-			<div className="batch-phone-frame">
+			<MobileViewFrame>
 				<Renderer spec={spec} />
-			</div>
+			</MobileViewFrame>
 		</article>
 	);
 }

@@ -421,7 +421,7 @@ button {
 	line-height: 16px;
 }
 
-.batch-phone-frame {
+.mobile-view-frame {
 	width: 375px;
 	height: 812px;
 	overflow: hidden;
@@ -431,7 +431,7 @@ button {
 	box-shadow: 0 8px 24px rgb(15 23 42 / 8%);
 }
 
-.batch-phone-frame .mobile-frame {
+.mobile-view-frame .mobile-frame {
 	width: 375px;
 	height: 812px;
 	min-height: 0;
