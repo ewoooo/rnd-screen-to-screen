@@ -6,86 +6,155 @@ import {
 	screens,
 	type ActiveRenderableScreenSpecId,
 	type RenderableScreenSpecV1,
+	type ScreenEntry,
 	type ScreenGroup,
 } from "@screen/screens";
 
-import { NcFullDormancyAuthScreen } from "@/app/nc-full-dormancy-auth/_sdui-renderer";
-import { NcFullDormancyLoginScreen } from "@/app/nc-full-dormancy-login/_sdui-renderer";
-import { NcFullDormancyResultScreen } from "@/app/nc-full-dormancy-result/_sdui-renderer";
-import { NcFullDormancyTermsScreen } from "@/app/nc-full-dormancy-terms/_sdui-renderer";
-import { NcFullJoinAuthScreen } from "@/app/nc-full-join-auth/_sdui-renderer";
-import { NcFullJoinCompleteScreen } from "@/app/nc-full-join-complete/_sdui-renderer";
-import { NcFullJoinInfoScreen } from "@/app/nc-full-join-info/_sdui-renderer";
-import { NcFullJoinTermsScreen } from "@/app/nc-full-join-terms/_sdui-renderer";
-import { NcFullLeaveAuthScreen } from "@/app/nc-full-leave-auth/_sdui-renderer";
-import { NcFullLeaveConfirmScreen } from "@/app/nc-full-leave-confirm/_sdui-renderer";
-import { NcFullLeaveNoticeScreen } from "@/app/nc-full-leave-notice/_sdui-renderer";
-import { NcFullLeaveReasonScreen } from "@/app/nc-full-leave-reason/_sdui-renderer";
-import { NcFullLeaveResultScreen } from "@/app/nc-full-leave-result/_sdui-renderer";
-import { NcFullRejoinAuthScreen } from "@/app/nc-full-rejoin-auth/_sdui-renderer";
-import { NcFullRejoinCompleteScreen } from "@/app/nc-full-rejoin-complete/_sdui-renderer";
-import { NcFullRejoinInfoScreen } from "@/app/nc-full-rejoin-info/_sdui-renderer";
-import { NcSimpleDormancyAuthScreen } from "@/app/nc-simple-dormancy-auth/_sdui-renderer";
-import { NcSimpleDormancyLoginScreen } from "@/app/nc-simple-dormancy-login/_sdui-renderer";
-import { NcSimpleDormancyResultScreen } from "@/app/nc-simple-dormancy-result/_sdui-renderer";
-import { NcSimpleDormancyTermsScreen } from "@/app/nc-simple-dormancy-terms/_sdui-renderer";
-import { NcSimpleJoinAuthScreen } from "@/app/nc-simple-join-auth/_sdui-renderer";
-import { NcSimpleJoinCompleteScreen } from "@/app/nc-simple-join-complete/_sdui-renderer";
-import { NcSimpleJoinInfoScreen } from "@/app/nc-simple-join-info/_sdui-renderer";
-import { NcSimpleJoinTermsScreen } from "@/app/nc-simple-join-terms/_sdui-renderer";
-import { NcSimpleLeaveAuthScreen } from "@/app/nc-simple-leave-auth/_sdui-renderer";
-import { NcSimpleLeaveConfirmScreen } from "@/app/nc-simple-leave-confirm/_sdui-renderer";
-import { NcSimpleLeaveReasonScreen } from "@/app/nc-simple-leave-reason/_sdui-renderer";
-import { NcSimpleLeaveResultScreen } from "@/app/nc-simple-leave-result/_sdui-renderer";
-import { NcSimpleRejoinAuthScreen } from "@/app/nc-simple-rejoin-auth/_sdui-renderer";
-import { NcSimpleRejoinBlockedScreen } from "@/app/nc-simple-rejoin-blocked/_sdui-renderer";
-import { NcSimpleRejoinCompleteScreen } from "@/app/nc-simple-rejoin-complete/_sdui-renderer";
-import { NcSimpleRejoinInfoScreen } from "@/app/nc-simple-rejoin-info/_sdui-renderer";
+import { BillingArrearsStatusScreen } from "@/app/billing-arrears-status/_sdui-renderer";
+import { BillingDetailScreen } from "@/app/billing-detail/_sdui-renderer";
+import { BillingMscHistoryScreen } from "@/app/billing-msc-history/_sdui-renderer";
+import { BillingPayConfirmScreen } from "@/app/billing-pay-confirm/_sdui-renderer";
+import { BillingPayFailureScreen } from "@/app/billing-pay-failure/_sdui-renderer";
+import { BillingPayMethodScreen } from "@/app/billing-pay-method/_sdui-renderer";
+import { BillingPayMethodAuthScreen } from "@/app/billing-pay-method-auth/_sdui-renderer";
+import { BillingPayPrepayScreen } from "@/app/billing-pay-prepay/_sdui-renderer";
+import { BillingPayPrepayResultScreen } from "@/app/billing-pay-prepay-result/_sdui-renderer";
+import { BillingPayProxyScreen } from "@/app/billing-pay-proxy/_sdui-renderer";
+import { BillingPayProxyExecuteScreen } from "@/app/billing-pay-proxy-execute/_sdui-renderer";
+import { BillingPayProxyResultScreen } from "@/app/billing-pay-proxy-result/_sdui-renderer";
+import { BillingPayResultScreen } from "@/app/billing-pay-result/_sdui-renderer";
+import { BillingPayScheduleScreen } from "@/app/billing-pay-schedule/_sdui-renderer";
+import { BillingPayScheduleResultScreen } from "@/app/billing-pay-schedule-result/_sdui-renderer";
+import { BillingPayThirdPartyConsentScreen } from "@/app/billing-pay-third-party-consent/_sdui-renderer";
+import { BillingPaymentHistoryScreen } from "@/app/billing-payment-history/_sdui-renderer";
+import { BillingRealtimeScreen } from "@/app/billing-realtime/_sdui-renderer";
+import { BillingReceiptResultScreen } from "@/app/billing-receipt-result/_sdui-renderer";
+import { BillingSetAutoPrepayScreen } from "@/app/billing-set-auto-prepay/_sdui-renderer";
+import { BillingSetContentLimitScreen } from "@/app/billing-set-content-limit/_sdui-renderer";
+import { BillingSetMethodScreen } from "@/app/billing-set-method/_sdui-renderer";
+import { BillingSetMethodCancelScreen } from "@/app/billing-set-method-cancel/_sdui-renderer";
+import { BillingSetMethodCancelResultScreen } from "@/app/billing-set-method-cancel-result/_sdui-renderer";
+import { BillingSetMscLimitScreen } from "@/app/billing-set-msc-limit/_sdui-renderer";
+import { BillingSetStatementScreen } from "@/app/billing-set-statement/_sdui-renderer";
+import { BillingStatementScreen } from "@/app/billing-statement/_sdui-renderer";
+import { BillingStatementResultScreen } from "@/app/billing-statement-result/_sdui-renderer";
+import { BillingSummaryScreen } from "@/app/billing-summary/_sdui-renderer";
+import { BillingTargetSelectScreen } from "@/app/billing-target-select/_sdui-renderer";
+import { BillingArrearsStatusScreen as BillingArrearsStatusScreenHtml } from "@/app/billing-html-arrears-status/_sdui-renderer";
+import { BillingDetailScreen as BillingDetailScreenHtml } from "@/app/billing-html-detail/_sdui-renderer";
+import { BillingMscHistoryScreen as BillingMscHistoryScreenHtml } from "@/app/billing-html-msc-history/_sdui-renderer";
+import { BillingPayConfirmScreen as BillingPayConfirmScreenHtml } from "@/app/billing-html-pay-confirm/_sdui-renderer";
+import { BillingPayFailureScreen as BillingPayFailureScreenHtml } from "@/app/billing-html-pay-failure/_sdui-renderer";
+import { BillingPayMethodScreen as BillingPayMethodScreenHtml } from "@/app/billing-html-pay-method/_sdui-renderer";
+import { BillingPayMethodAuthScreen as BillingPayMethodAuthScreenHtml } from "@/app/billing-html-pay-method-auth/_sdui-renderer";
+import { BillingPayPrepayScreen as BillingPayPrepayScreenHtml } from "@/app/billing-html-pay-prepay/_sdui-renderer";
+import { BillingPayPrepayResultScreen as BillingPayPrepayResultScreenHtml } from "@/app/billing-html-pay-prepay-result/_sdui-renderer";
+import { BillingPayProxyScreen as BillingPayProxyScreenHtml } from "@/app/billing-html-pay-proxy/_sdui-renderer";
+import { BillingPayProxyExecuteScreen as BillingPayProxyExecuteScreenHtml } from "@/app/billing-html-pay-proxy-execute/_sdui-renderer";
+import { BillingPayProxyResultScreen as BillingPayProxyResultScreenHtml } from "@/app/billing-html-pay-proxy-result/_sdui-renderer";
+import { BillingPayResultScreen as BillingPayResultScreenHtml } from "@/app/billing-html-pay-result/_sdui-renderer";
+import { BillingPayScheduleScreen as BillingPayScheduleScreenHtml } from "@/app/billing-html-pay-schedule/_sdui-renderer";
+import { BillingPayScheduleResultScreen as BillingPayScheduleResultScreenHtml } from "@/app/billing-html-pay-schedule-result/_sdui-renderer";
+import { BillingPayThirdPartyConsentScreen as BillingPayThirdPartyConsentScreenHtml } from "@/app/billing-html-pay-third-party-consent/_sdui-renderer";
+import { BillingPaymentHistoryScreen as BillingPaymentHistoryScreenHtml } from "@/app/billing-html-payment-history/_sdui-renderer";
+import { BillingRealtimeScreen as BillingRealtimeScreenHtml } from "@/app/billing-html-realtime/_sdui-renderer";
+import { BillingReceiptResultScreen as BillingReceiptResultScreenHtml } from "@/app/billing-html-receipt-result/_sdui-renderer";
+import { BillingSetAutoPrepayScreen as BillingSetAutoPrepayScreenHtml } from "@/app/billing-html-set-auto-prepay/_sdui-renderer";
+import { BillingSetContentLimitScreen as BillingSetContentLimitScreenHtml } from "@/app/billing-html-set-content-limit/_sdui-renderer";
+import { BillingSetMethodScreen as BillingSetMethodScreenHtml } from "@/app/billing-html-set-method/_sdui-renderer";
+import { BillingSetMethodCancelScreen as BillingSetMethodCancelScreenHtml } from "@/app/billing-html-set-method-cancel/_sdui-renderer";
+import { BillingSetMethodCancelResultScreen as BillingSetMethodCancelResultScreenHtml } from "@/app/billing-html-set-method-cancel-result/_sdui-renderer";
+import { BillingSetMscLimitScreen as BillingSetMscLimitScreenHtml } from "@/app/billing-html-set-msc-limit/_sdui-renderer";
+import { BillingSetStatementScreen as BillingSetStatementScreenHtml } from "@/app/billing-html-set-statement/_sdui-renderer";
+import { BillingStatementScreen as BillingStatementScreenHtml } from "@/app/billing-html-statement/_sdui-renderer";
+import { BillingStatementResultScreen as BillingStatementResultScreenHtml } from "@/app/billing-html-statement-result/_sdui-renderer";
+import { BillingSummaryScreen as BillingSummaryScreenHtml } from "@/app/billing-html-summary/_sdui-renderer";
+import { BillingTargetSelectScreen as BillingTargetSelectScreenHtml } from "@/app/billing-html-target-select/_sdui-renderer";
 
-const EXPORT_GROUPS: readonly ScreenGroup[] = ["nc-full", "nc-simple"];
+const EXPORT_GROUPS: readonly ScreenGroup[] = ["billing", "billing-html"];
 
 type Renderer = ComponentType<{ spec: RenderableScreenSpecV1 }>;
 
 const RENDERERS: Record<string, Renderer> = {
-	"nc-full-dormancy-auth": NcFullDormancyAuthScreen,
-	"nc-full-dormancy-login": NcFullDormancyLoginScreen,
-	"nc-full-dormancy-result": NcFullDormancyResultScreen,
-	"nc-full-dormancy-terms": NcFullDormancyTermsScreen,
-	"nc-full-join-auth": NcFullJoinAuthScreen,
-	"nc-full-join-complete": NcFullJoinCompleteScreen,
-	"nc-full-join-info": NcFullJoinInfoScreen,
-	"nc-full-join-terms": NcFullJoinTermsScreen,
-	"nc-full-leave-auth": NcFullLeaveAuthScreen,
-	"nc-full-leave-confirm": NcFullLeaveConfirmScreen,
-	"nc-full-leave-notice": NcFullLeaveNoticeScreen,
-	"nc-full-leave-reason": NcFullLeaveReasonScreen,
-	"nc-full-leave-result": NcFullLeaveResultScreen,
-	"nc-full-rejoin-auth": NcFullRejoinAuthScreen,
-	"nc-full-rejoin-complete": NcFullRejoinCompleteScreen,
-	"nc-full-rejoin-info": NcFullRejoinInfoScreen,
-	"nc-simple-dormancy-auth": NcSimpleDormancyAuthScreen,
-	"nc-simple-dormancy-login": NcSimpleDormancyLoginScreen,
-	"nc-simple-dormancy-result": NcSimpleDormancyResultScreen,
-	"nc-simple-dormancy-terms": NcSimpleDormancyTermsScreen,
-	"nc-simple-join-auth": NcSimpleJoinAuthScreen,
-	"nc-simple-join-complete": NcSimpleJoinCompleteScreen,
-	"nc-simple-join-info": NcSimpleJoinInfoScreen,
-	"nc-simple-join-terms": NcSimpleJoinTermsScreen,
-	"nc-simple-leave-auth": NcSimpleLeaveAuthScreen,
-	"nc-simple-leave-confirm": NcSimpleLeaveConfirmScreen,
-	"nc-simple-leave-reason": NcSimpleLeaveReasonScreen,
-	"nc-simple-leave-result": NcSimpleLeaveResultScreen,
-	"nc-simple-rejoin-auth": NcSimpleRejoinAuthScreen,
-	"nc-simple-rejoin-blocked": NcSimpleRejoinBlockedScreen,
-	"nc-simple-rejoin-complete": NcSimpleRejoinCompleteScreen,
-	"nc-simple-rejoin-info": NcSimpleRejoinInfoScreen,
+	"billing-summary": BillingSummaryScreen,
+	"billing-detail": BillingDetailScreen,
+	"billing-realtime": BillingRealtimeScreen,
+	"billing-msc-history": BillingMscHistoryScreen,
+	"billing-statement": BillingStatementScreen,
+	"billing-statement-result": BillingStatementResultScreen,
+	"billing-target-select": BillingTargetSelectScreen,
+	"billing-payment-history": BillingPaymentHistoryScreen,
+	"billing-receipt-result": BillingReceiptResultScreen,
+	"billing-arrears-status": BillingArrearsStatusScreen,
+	"billing-pay-method": BillingPayMethodScreen,
+	"billing-pay-method-auth": BillingPayMethodAuthScreen,
+	"billing-pay-confirm": BillingPayConfirmScreen,
+	"billing-pay-result": BillingPayResultScreen,
+	"billing-pay-schedule": BillingPayScheduleScreen,
+	"billing-pay-schedule-result": BillingPayScheduleResultScreen,
+	"billing-pay-proxy": BillingPayProxyScreen,
+	"billing-pay-proxy-execute": BillingPayProxyExecuteScreen,
+	"billing-pay-proxy-result": BillingPayProxyResultScreen,
+	"billing-pay-third-party-consent": BillingPayThirdPartyConsentScreen,
+	"billing-pay-prepay": BillingPayPrepayScreen,
+	"billing-pay-prepay-result": BillingPayPrepayResultScreen,
+	"billing-pay-failure": BillingPayFailureScreen,
+	"billing-set-statement": BillingSetStatementScreen,
+	"billing-set-method": BillingSetMethodScreen,
+	"billing-set-method-cancel": BillingSetMethodCancelScreen,
+	"billing-set-method-cancel-result": BillingSetMethodCancelResultScreen,
+	"billing-set-msc-limit": BillingSetMscLimitScreen,
+	"billing-set-content-limit": BillingSetContentLimitScreen,
+	"billing-set-auto-prepay": BillingSetAutoPrepayScreen,
+	"billing-html-arrears-status": BillingArrearsStatusScreenHtml,
+	"billing-html-detail": BillingDetailScreenHtml,
+	"billing-html-msc-history": BillingMscHistoryScreenHtml,
+	"billing-html-pay-confirm": BillingPayConfirmScreenHtml,
+	"billing-html-pay-failure": BillingPayFailureScreenHtml,
+	"billing-html-pay-method": BillingPayMethodScreenHtml,
+	"billing-html-pay-method-auth": BillingPayMethodAuthScreenHtml,
+	"billing-html-pay-prepay": BillingPayPrepayScreenHtml,
+	"billing-html-pay-prepay-result": BillingPayPrepayResultScreenHtml,
+	"billing-html-pay-proxy": BillingPayProxyScreenHtml,
+	"billing-html-pay-proxy-execute": BillingPayProxyExecuteScreenHtml,
+	"billing-html-pay-proxy-result": BillingPayProxyResultScreenHtml,
+	"billing-html-pay-result": BillingPayResultScreenHtml,
+	"billing-html-pay-schedule": BillingPayScheduleScreenHtml,
+	"billing-html-pay-schedule-result": BillingPayScheduleResultScreenHtml,
+	"billing-html-pay-third-party-consent": BillingPayThirdPartyConsentScreenHtml,
+	"billing-html-payment-history": BillingPaymentHistoryScreenHtml,
+	"billing-html-realtime": BillingRealtimeScreenHtml,
+	"billing-html-receipt-result": BillingReceiptResultScreenHtml,
+	"billing-html-set-auto-prepay": BillingSetAutoPrepayScreenHtml,
+	"billing-html-set-content-limit": BillingSetContentLimitScreenHtml,
+	"billing-html-set-method": BillingSetMethodScreenHtml,
+	"billing-html-set-method-cancel": BillingSetMethodCancelScreenHtml,
+	"billing-html-set-method-cancel-result": BillingSetMethodCancelResultScreenHtml,
+	"billing-html-set-msc-limit": BillingSetMscLimitScreenHtml,
+	"billing-html-set-statement": BillingSetStatementScreenHtml,
+	"billing-html-statement": BillingStatementScreenHtml,
+	"billing-html-statement-result": BillingStatementResultScreenHtml,
+	"billing-html-summary": BillingSummaryScreenHtml,
+	"billing-html-target-select": BillingTargetSelectScreenHtml,
 };
 
-const FLOW_ORDER = [
-	"join",
-	"leave",
-	"rejoin",
-	"dormancy",
+const FLOW_DEFINITIONS = [
+	{
+		id: "chk",
+		label: "check",
+		matches: (screen: ScreenEntry) =>
+			!screen.id.includes("-pay-") && !screen.id.includes("-set-"),
+	},
+	{
+		id: "pay",
+		label: "pay",
+		matches: (screen: ScreenEntry) => screen.id.includes("-pay-"),
+	},
+	{
+		id: "set",
+		label: "set",
+		matches: (screen: ScreenEntry) => screen.id.includes("-set-"),
+	},
 ] as const;
 
 export default function FigmaExportPage() {
@@ -97,7 +166,7 @@ export default function FigmaExportPage() {
 		<main className="batch-export-root">
 			<header className="batch-export-header">
 				<p>Screen-to-Screen · Figma middleware</p>
-				<h1>NC Full / NC Simple batch export</h1>
+				<h1>Billing / Billing HTML batch export</h1>
 				<span>{exportScreens.length} rendered screens · iframe-free DOM</span>
 			</header>
 
@@ -106,14 +175,13 @@ export default function FigmaExportPage() {
 				return (
 					<section className="batch-domain" key={group}>
 						<h2>{group}</h2>
-						{FLOW_ORDER.map((flow) => {
-							const flowScreens = groupScreens
-								.filter((screen) => screen.id.includes(`-${flow}-`));
+						{FLOW_DEFINITIONS.map((flow) => {
+							const flowScreens = groupScreens.filter(flow.matches);
 							if (flowScreens.length === 0) return null;
 							return (
-								<section className="batch-flow" key={`${group}-${flow}`}>
+								<section className="batch-flow" key={`${group}-${flow.id}`}>
 									<div className="batch-flow-title">
-										<h3>{flow}</h3>
+										<h3>{flow.label}</h3>
 										<span>{flowScreens.length} screens</span>
 									</div>
 									<div className="batch-grid">

@@ -4,7 +4,7 @@ import path from "node:path";
 const sourceUrl = process.env.CODETOFIGMA_SOURCE_URL ?? "http://127.0.0.1:3002/";
 const outFile =
 	process.env.CODETOFIGMA_OUT_FILE ??
-	path.resolve(process.cwd(), "apps/figma-export/codetofigma-nc-full-simple.html");
+	path.resolve(process.cwd(), "apps/figma-export/codetofigma-billing-html-billing.html");
 
 async function fetchText(url) {
 	const response = await fetch(url);
@@ -53,7 +53,7 @@ async function inlineStylesheets(html) {
 
 function addCodetofigmaMeta(html) {
 	const meta = [
-		'<meta name="codetofigma-export" content="NC Full / NC Simple batch export">',
+		'<meta name="codetofigma-export" content="Billing HTML / Billing batch export">',
 		'<meta name="codetofigma-source" content="' + sourceUrl + '">',
 		`<style data-codetofigma-font-override>
 *:not(svg):not(path) {
