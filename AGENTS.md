@@ -71,7 +71,7 @@
 - `Banner variant="offering"` — 카드형 반투명 배너 (h=94)
 
 ### 텍스트
-`atoms/typography/TextBlock`를 기본 사용한다. 내부는 WDS `Typography`이며, `variant`는 화면 의미 역할을 WDS `variant + weight` 조합으로 고정한다. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책을 표현한다.
+`@pxds/pxds-components/typography`의 `TextBlock`를 기본 사용한다. 내부는 WDS `Typography`이며, `variant`는 화면 의미 역할을 WDS `variant + weight` 조합으로 고정한다. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책을 표현한다.
 
 ### 비-카드 부품
 - `StatBadge` / `PillChip` (장식 wrap, `organisms/home/Badges.tsx`)
@@ -79,7 +79,7 @@
 - `MyEditButton` (footer ghost 버튼)
 - `Placeholder` (WDS `Thumbnail` 기반 미정 이미지·아이콘 자리)
 - `Logo` / `Status*` (`@pxds/pxds-icons`) — 현재 필요한 프레임 아이콘만 React SVG로 보존. 일반 WDS icon도 같은 PXDS icon adapter로 소비
-- `TextBlock` (`atoms/typography/`) — WDS `Typography` 기반 텍스트 primitive. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책 표현
+- `TextBlock` (`@pxds/pxds-components/typography`) — WDS `Typography` 기반 텍스트 primitive. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책 표현
 
 ### 토큰
 - **PXDS 토큰** — `@pxds/pxds-tokens`가 컴포넌트 스타일링에 쓰이는 런타임 시각 토큰 값의 SSOT다. 여기에는 color, spacing, typography scale, radius, shadow, opacity, surface, project extension token이 포함된다. 컴포넌트 어휘/slot/variant 계약의 SSOT는 AGENTS.md/DESIGN.md와 각 컴포넌트 API다.
@@ -242,11 +242,8 @@ templates + screen
 
 현재 atoms:
 - `@pxds/pxds-layout/primitives` — Box, Flex, Float, Grid, HStack, VStack. spacing prop은 7 슬롯 SpacingToken만 받음 (DESIGN.md 참조)
-- `atoms/feedback` — Divider, Placeholder
-- `@pxds/pxds-icons` — Logo, StatusBattery, StatusSignal, StatusWifi와 WDS icon adapter
-- `atoms/typography` — TextBlock. 도메인 의미 없이 모바일 카피 줄바꿈과 maxLines/truncate 정책만 담당
-- `@pxds/pxds-components/feedback` — Divider, Placeholder의 실제 구현 위치. `apps/mobile/src/components/atoms/feedback`은 호환 shim
-- `@pxds/pxds-components/typography` — TextBlock의 실제 구현 위치. `apps/mobile/src/components/atoms/typography`는 호환 shim
+- `@pxds/pxds-components/feedback` — Divider, Placeholder. inset-aware feedback primitive
+- `@pxds/pxds-components/typography` — TextBlock. 도메인 의미 없이 모바일 카피 줄바꿈과 maxLines/truncate 정책만 담당
 - `@pxds/pxds-components/core` — WDS component re-export. 앱에서 WDS primitive가 필요하면 이 경로를 사용한다.
 - `@pxds/pxds-icons` — WDS icon adapter + PXDS-owned frame icons. 앱/패키지에서 icon이 필요하면 이 경로를 사용한다.
 
@@ -259,23 +256,21 @@ templates + screen
 
 도메인 독립적인 조합 패턴이다. WDS primitive와 atoms를 조합해서 반복 가능한 화면 구조를 만든다.
 
-WDS/layout 외 의존이 없는 공용 패턴은 `@pxds/pxds-components/patterns`가 소유한다. 앱의 `components/molecules/<name>/index.ts`는 점진적 이전을 위한 re-export shim으로만 남길 수 있다.
+WDS/layout 외 의존이 없는 공용 패턴은 `@pxds/pxds-components/patterns`가 소유한다. 앱 로컬 `components/molecules/<name>/index.ts` shim은 두지 않고, package-owned 패턴은 공개 패키지 진입점에서 직접 import한다.
 
 현재 molecules:
-- `MediaBlock` — 이미지 / placeholder / skeleton이 들어갈 media 슬롯
 - `InfoList` — leading media + title/sub + trailing badge/action/value 구조
 - `SelectableList` — 옵션·필터·배송 방식 선택 구조
 - `ConsentList` — 전체 동의 + 필수/선택 동의 리스트 구조. 약관/동의/수신 설정처럼 required/optional 상태가 필요한 화면에서 사용
 - `PromoBlock` — 배너 / 쿠폰 / 프로모션 구조
 - `NoticeBlock` — 정책 안내/주의/오류 같은 정보성 안내 구조. 프로모션/쿠폰이 아닌 안내를 `PromoBlock`으로 표현하지 않는다
-- `QueryBar` — 검색 입력 shell
-- `FilterTabs` — 필터 탭 구조
-- `FormField` — label + control + message 구조
-- `form-controls` — WDS `Checkbox`/`TextField`/`TextArea`/`Select`/`Switch` re-export. 입력·선택 control은 새 wrapper를 만들기 전에 WDS control을 먼저 사용
 - `SectionCard` — 카드 표면 + label/title/trailing + body 슬롯 구조
 - `SummaryCard` — 상단 media + 제목 영역 + 자유 meta body 구조
 - `ChipGroup` — chip 묶음 flow
 - `PrimaryCTABar` / `StickyActionBar` — 하단 CTA 구조. `AppScreen.bottom` 안에서는 떠 있는 카드가 아니라 docked surface로 표현
+
+package-owned patterns:
+- `MediaBlock`, `QueryBar`, `FilterTabs`, `FormField`, `SelectField`, `form-controls` — `@pxds/pxds-components/patterns`에서 직접 소비한다. 입력·선택 control은 새 wrapper를 만들기 전에 WDS control 또는 package-owned pattern을 먼저 사용한다.
 
 판단 기준:
 - 두 개 이상의 organisms에서 같은 구조가 반복되면 molecules 후보
@@ -703,11 +698,12 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 |---|---|
 | 2026-04-29 | 디렉터리 이름 변경: `app2/` → active app |
 | 2026-04-29 | `system/layout/` 도입 — Box/Flex/HStack/VStack + 7 슬롯 semantic spacing 어휘 (`row/inline/stack/group/inset/block/section`) |
-| 2026-05-07 | layout primitive 패키지 승격 — Box/Flex/Float/Grid/HStack/VStack + spacing token helper를 `@pxds/pxds-layout/primitives`로 이동. `apps/mobile/src/components/atoms/layout`은 re-export shim으로 유지 |
-| 2026-05-07 | primitive atom 패키지 승격 — TextBlock을 `@pxds/pxds-components/typography`, Divider/Placeholder를 `@pxds/pxds-components/feedback`으로 이동. 앱 atoms 경로는 re-export shim으로 유지 |
+| 2026-05-07 | layout primitive 패키지 승격 — Box/Flex/Float/Grid/HStack/VStack + spacing token helper를 `@pxds/pxds-layout/primitives`로 이동. 앱 atoms layout shim은 이후 제거 |
+| 2026-05-07 | primitive atom 패키지 승격 — TextBlock을 `@pxds/pxds-components/typography`, Divider/Placeholder를 `@pxds/pxds-components/feedback`으로 이동. 앱 atoms shim은 이후 제거 |
 | 2026-05-07 | WDS core 흡수 — WDS component re-export를 `@pxds/pxds-components/core`로 분리하고 앱의 WDS component import를 core 진입점으로 전환 |
 | 2026-05-07 | WDS/PXDS icon 흡수 — WDS icon adapter, icon registry, Logo/Status* frame icons를 `@pxds/pxds-icons`로 분리하고 앱/패키지의 icon import를 icons 진입점으로 전환 |
-| 2026-05-07 | 모바일 공용 패턴 1차 승격 — FilterTabs/FormControls/FormField/MediaBlock/QueryBar/SelectField를 `@pxds/pxds-components/patterns`로 이동하고 앱 molecules 경로는 re-export shim으로 유지 |
+| 2026-05-07 | 모바일 공용 패턴 1차 승격 — FilterTabs/FormControls/FormField/MediaBlock/QueryBar/SelectField를 `@pxds/pxds-components/patterns`로 이동. 앱 molecule shim은 이후 제거 |
+| 2026-05-07 | 모바일 package shim 제거 — 앱 atoms/templates shim과 package-owned pattern별 molecule shim을 제거하고 공개 패키지 진입점 직접 import로 전환 |
 | 2026-05-07 | 모바일 토큰 SSOT 승격 — 앱/패키지 로컬 런타임 토큰 shim을 제거하고 `@pxds/pxds-tokens/registry/wds-token-registry.json`, `@pxds/pxds-tokens/tokens.css`, `@pxds/pxds-tokens/brand`로 흡수 |
 | 2026-05-07 | `apps/figma-export` 제거 — Figma bridge/hook 기능은 `@pxds/pxds-figma` 패키지에 보존하고 실행 앱은 폐기 |
 | 2026-05-07 | preview helper 패키지 분리 — `MobileViewFrame`/`MobilePreviewFrame`을 `@pxds/pxds-preview`로 이동하고 `@pxds/pxds-layout`은 실제 화면 layout runtime만 소유 |
@@ -728,13 +724,13 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-30 | 컴포넌트 디렉토리 Atomic 재정렬 — `atoms/`(layout·feedback·icon), `molecules/`, `organisms/`, `templates/app-screen/` 구조로 이동 |
 | 2026-04-30 | molecules 두께 확장 — `SectionCard`/`SummaryCard`/`ChipGroup` 도입, product/search organisms의 카드·칩 조합 책임을 molecules로 이동 |
 | 2026-04-30 | WDS 기반 molecule 정렬 — `FormField`는 WDS Form 계열, `SelectableList`는 WDS List/ListCell 계열로 교체. `InfoList`와 `SectionCard` header는 WDS 완전 교체 시 search-result 시각 회귀가 커서 기존 molecule 레이아웃 유지. WDS `FlexBox` 직접 도입은 보류 |
-| 2026-04-30 | WDS selection/input 적극 도입 — 검색 결과 카테고리는 WDS `Tab`, 상품 옵션은 WDS `RadioGroup` 기반 `SelectableList`, 약관 동의는 molecules re-export `Checkbox` 사용. `TextField`/`TextArea`/`Select`/`Switch`는 `molecules/form-controls`로 개방 |
+| 2026-04-30 | WDS selection/input 적극 도입 — 검색 결과 카테고리는 WDS `Tab`, 상품 옵션은 WDS `RadioGroup` 기반 `SelectableList`, 약관 동의와 입력 control은 이후 `@pxds/pxds-components/patterns` 공개 진입점 기준으로 정리 |
 | 2026-04-30 | `Placeholder`를 WDS `Thumbnail` 기반으로 변경 — 기존 w/h/label 호출 시그니처는 유지하고 미정 이미지 자리도 Thumbnail 표면으로 표현 |
 | 2026-04-30 | TU 전용 tone island 흡수 — `handoff-tu-tone.css` 의존 제거, TU organisms를 WDS `Typography`/`Card`와 `SectionCard`/`InfoList`/`PromoBlock` 조합으로 재작성, 페이지 배경은 `semantic.surface.page.*`로 수렴 |
 | 2026-04-30 | preview/mobile 모노레포 1차 분리 — `apps/mobile`은 WDS 모바일 화면, `apps/preview`는 shadcn 프리뷰 셸로 분리. preview는 mobile을 iframe으로만 소비 |
 | 2026-04-30 | screen registry/spec SSOT 통합 — `packages/screens` 신설. active registry는 `src/index.ts`, active spec은 `spec/active/` 아래로 이동. mobile/preview 하드코딩 목록과 mobile generated registry 제거 |
 | 2026-04-30 | screen generation benchmark SSOT 추가 — `packages/screens/src/benchmark.ts`에 디자인/기획 평가 항목, API refs, 1~5 scoring hint 정의 |
-| 2026-04-30 | `atoms/typography/TextBlock` 추가 — WDS Typography 기반 `text`/`lines`, `maxLines`, `overflow="truncate"` 지원. home-guest hero copy를 의미 단위 line break로 전환 |
+| 2026-04-30 | `TextBlock` 추가 — WDS Typography 기반 `text`/`lines`, `maxLines`, `overflow="truncate"` 지원. 현재 공개 진입점은 `@pxds/pxds-components/typography` |
 | 2026-04-30 | 홈 텍스트 전면 TextBlock 적용 후 기본 역할 variant로 승격 — `displayTitle`/`sectionLabel`/`contentTitle`/`listTitle`/`supportText`/`meta`/`assistive`/`price`/`rating`/`promo*`를 WDS Typography 조합으로 고정하고 raw banner font/letter-spacing 제거 |
 | 2026-04-30 | bottom-sheet template API 도입 — `BottomSheetRoot`/`BottomSheetBackdrop`/`BottomSheetContent`/`BottomSheet`로 WDS Modal, dimmer, content 책임을 분리. 기존 `organisms/global`의 Backdrop/BottomSheet 제거 |
 | 2026-04-30 | AppScreen flow-only 계약으로 단순화 — `topAccessory`/`bottomAccessory`/`contentInset`/`topBehavior`/`contentLayout` 제거. top/bottom chrome은 항상 layout flow를 차지하고, 검색 탭·구매 바는 각각 `top`/`bottom` 조합 안에서 표현 |
