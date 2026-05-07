@@ -2,15 +2,15 @@ import { type ReactNode } from "react";
 
 import { Card, CardContent } from "@pxds/pxds-components/core";
 
-import { VStack } from "@/components/atoms/layout";
+import { VStack } from "@pxds/pxds-layout/primitives";
 import {
 	TextBlock,
 	type TextBlockOverflow,
 	type TextBlockVariant,
-} from "@/components/atoms/typography";
+} from "@pxds/pxds-components/typography";
 import { CARD_SHADOW } from "@pxds/pxds-tokens";
 
-import { MediaBlock } from "../media-block";
+import { MediaBlock } from "@pxds/pxds-components/patterns";
 
 type TextPolicy = {
 	variant?: TextBlockVariant;

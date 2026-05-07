@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
-import { HStack, VStack } from "@/components/atoms/layout";
-import { Placeholder } from "@/components/atoms/feedback";
-import { TextBlock } from "@/components/atoms/typography";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { Placeholder } from "@pxds/pxds-components/feedback";
+import { TextBlock } from "@pxds/pxds-components/typography";
 
 import { PillChip } from "./Badges";
 

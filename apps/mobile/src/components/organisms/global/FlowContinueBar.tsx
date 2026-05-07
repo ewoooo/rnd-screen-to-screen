@@ -1,7 +1,7 @@
 import { Button } from "@pxds/pxds-components/core";
 
-import { Box, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
+import { Box, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
 import { semanticSurface } from "@pxds/pxds-tokens";
 
 type Props = {

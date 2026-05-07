@@ -1,6 +1,6 @@
 "use client";
 
-import { TextBlock } from "@/components/atoms/typography";
+import { TextBlock } from "@pxds/pxds-components/typography";
 import {
 	InfoList,
 	type InfoListItem,
@@ -9,7 +9,7 @@ import {
 	StickyActionBar,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import { AppScreen } from "@/components/templates/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

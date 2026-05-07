@@ -1,18 +1,16 @@
 "use client";
 
-import { VStack } from "@/components/atoms/layout";
+import { FormField, Switch, TextField } from "@pxds/pxds-components/patterns";
+import { VStack } from "@pxds/pxds-layout/primitives";
 import {
-	ChipGroup,
 	type ChipItem,
-	FormField,
 	NoticeBlock,
 	SectionCard,
 	StickyActionBar,
-	Switch,
-	TextField,
 } from "@/components/molecules";
+import { ChipGroup } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import { evalVisibleWhen } from "@/lib/visible-when";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";

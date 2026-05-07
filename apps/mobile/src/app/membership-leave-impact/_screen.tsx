@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Checkbox } from "@/components/molecules";
+import { Checkbox } from "@pxds/pxds-components/patterns";
 import {
 	FlowContinueBar,
 	FlowHero,
@@ -11,9 +11,9 @@ import {
 	ProgressTopBar,
 	type FlowSummaryItem,
 } from "@/components/organisms/global";
-import { HStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+import { HStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

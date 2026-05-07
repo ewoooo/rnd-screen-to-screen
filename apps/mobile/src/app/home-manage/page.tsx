@@ -10,10 +10,10 @@ import {
 	MyEditButton,
 	StatBadge,
 } from "@/components/organisms/home";
-import { HStack, VStack } from "@/components/atoms/layout";
-import { Placeholder } from "@/components/atoms/feedback";
-import { TextBlock } from "@/components/atoms/typography";
-import { AppScreen } from "@/components/templates/app-screen";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { Placeholder } from "@pxds/pxds-components/feedback";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import { homeManageFixture } from "./_mock";
 
 const graphicSize: Record<

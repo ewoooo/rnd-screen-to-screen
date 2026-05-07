@@ -1,18 +1,17 @@
 "use client";
 
+import { FormField, TextField } from "@pxds/pxds-components/patterns";
 import {
-	FormField,
 	InfoList,
 	type InfoListItem,
 	NoticeBlock,
 	PrimaryCTABar,
 	SectionCard,
-	SelectableList,
 	type SelectableItem,
-	TextField,
+	SelectableList,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

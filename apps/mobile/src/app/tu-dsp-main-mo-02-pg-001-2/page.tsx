@@ -4,7 +4,7 @@ import {
 	GlobalNavigationHeader,
 	type GnbTab,
 } from "@/components/organisms/global";
-import { AppScreen } from "@/components/templates/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import {
 	TuCarousel,
 	TuHero,

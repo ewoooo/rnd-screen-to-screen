@@ -1,10 +1,11 @@
 "use client";
 
+import { TextField } from "@pxds/pxds-components/patterns";
 import { Fragment } from "react";
 
-import { VStack } from "@/components/atoms/layout";
-import { FormField, TextField } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { VStack } from "@pxds/pxds-layout/primitives";
+import { FormField } from "@pxds/pxds-components/patterns";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 export type LoginField = {
 	id: string;

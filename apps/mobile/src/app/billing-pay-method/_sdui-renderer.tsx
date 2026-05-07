@@ -4,12 +4,12 @@ import {
 	InfoList,
 	type InfoListItem,
 	SectionCard,
-	SelectableList,
 	type SelectableItem,
+	SelectableList,
 	StickyActionBar,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import { AppScreen } from "@/components/templates/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

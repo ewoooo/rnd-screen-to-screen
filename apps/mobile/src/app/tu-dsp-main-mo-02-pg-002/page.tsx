@@ -5,7 +5,7 @@ import {
 	PermissionList,
 	PermissionNotice,
 } from "@/components/organisms/tu";
-import { AppScreen } from "@/components/templates/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
 import { permissionGuideFixture } from "./_mock";
 

@@ -1,15 +1,12 @@
 "use client";
 
+import { TextField } from "@pxds/pxds-components/patterns";
 import { useState } from "react";
+import { type SelectableItem, SelectableList } from "@/components/molecules";
 
-import { VStack } from "@/components/atoms/layout";
-import {
-	FormField,
-	SelectableList,
-	TextField,
-	type SelectableItem,
-} from "@/components/molecules";
-import { ContentRail, ContentSection } from "@/components/templates/app-screen";
+import { VStack } from "@pxds/pxds-layout/primitives";
+import { FormField } from "@pxds/pxds-components/patterns";
+import { ContentRail, ContentSection } from "@pxds/pxds-layout/app-screen";
 
 export type AuthMethodItem = SelectableItem;
 

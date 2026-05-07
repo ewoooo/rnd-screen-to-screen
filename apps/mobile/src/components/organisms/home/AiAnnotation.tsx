@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { HStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
+import { HStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
 
 type Props = {
 	icon: ReactNode;

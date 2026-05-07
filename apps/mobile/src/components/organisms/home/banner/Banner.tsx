@@ -1,9 +1,9 @@
 import { OFFERING_BG, OFFERING_BORDER } from "@pxds/pxds-tokens";
 import type { CSSProperties } from "react";
 
-import { HStack } from "@/components/atoms/layout";
-import { Placeholder } from "@/components/atoms/feedback";
-import { TextBlock } from "@/components/atoms/typography";
+import { HStack } from "@pxds/pxds-layout/primitives";
+import { Placeholder } from "@pxds/pxds-components/feedback";
+import { TextBlock } from "@pxds/pxds-components/typography";
 
 type Variant = "top" | "offering";
 

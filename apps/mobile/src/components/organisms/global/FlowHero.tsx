@@ -1,6 +1,6 @@
-import { Box, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { ContentRail, ContentSection } from "@/components/templates/app-screen";
+import { Box, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { ContentRail, ContentSection } from "@pxds/pxds-layout/app-screen";
 
 type Props = {
 	titleLines: readonly string[];

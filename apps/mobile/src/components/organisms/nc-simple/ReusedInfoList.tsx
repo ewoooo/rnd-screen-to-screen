@@ -1,9 +1,9 @@
 "use client";
 
-import { Divider } from "@/components/atoms/feedback";
-import { HStack, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { ContentSection } from "@/components/templates/app-screen";
+import { Divider } from "@pxds/pxds-components/feedback";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 export type ReusedInfoItem = {
 	id: string;

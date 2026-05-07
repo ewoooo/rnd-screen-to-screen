@@ -1,5 +1,5 @@
-import { InfoList, SectionCard, type InfoListItem } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { InfoList, type InfoListItem, SectionCard } from "@/components/molecules";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 export type FlowSummaryItem = InfoListItem;
 

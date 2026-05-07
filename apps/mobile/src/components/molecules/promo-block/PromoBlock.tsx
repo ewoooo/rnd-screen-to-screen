@@ -1,10 +1,10 @@
 import { Button, ContentBadge } from "@pxds/pxds-components/core";
 
-import { Box, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
+import { Box, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
 import { CARD_RADIUS, CARD_SHADOW } from "@pxds/pxds-tokens";
 
-import { MediaBlock } from "../media-block";
+import { MediaBlock } from "@pxds/pxds-components/patterns";
 
 type Props = {
 	text: string;

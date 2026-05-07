@@ -1,7 +1,7 @@
 "use client";
 
+import { FilterTabs } from "@pxds/pxds-components/patterns";
 import {
-	FilterTabs,
 	InfoList,
 	type InfoListItem,
 	SectionCard,
@@ -11,7 +11,7 @@ import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
 import {
 	AppScreen,
 	ContentSection,
-} from "@/components/templates/app-screen";
+} from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

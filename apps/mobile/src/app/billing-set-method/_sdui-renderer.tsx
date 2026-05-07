@@ -1,19 +1,19 @@
 "use client";
 
-import { VStack } from "@/components/atoms/layout";
+import { TextField } from "@pxds/pxds-components/patterns";
+import { VStack } from "@pxds/pxds-layout/primitives";
 import {
-	FormField,
 	InfoList,
 	type InfoListItem,
 	NoticeBlock,
 	SectionCard,
-	SelectableList,
 	type SelectableItem,
+	SelectableList,
 	StickyActionBar,
-	TextField,
 } from "@/components/molecules";
+import { FormField } from "@pxds/pxds-components/patterns";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

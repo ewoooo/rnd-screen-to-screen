@@ -2,9 +2,9 @@ import { Button, Card } from "@pxds/pxds-components/core";
 import { CARD_BG, CARD_BORDER, CARD_RADIUS, CARD_SHADOW } from "@pxds/pxds-tokens";
 import type { CSSProperties, ReactNode } from "react";
 
-import { HStack, VStack } from "@/components/atoms/layout";
-import { Divider } from "@/components/atoms/feedback";
-import { TextBlock } from "@/components/atoms/typography";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { Divider } from "@pxds/pxds-components/feedback";
+import { TextBlock } from "@pxds/pxds-components/typography";
 
 import { AiAnnotation } from "../AiAnnotation";
 import { HomeBlockHeader } from "./HomeBlockHeader";

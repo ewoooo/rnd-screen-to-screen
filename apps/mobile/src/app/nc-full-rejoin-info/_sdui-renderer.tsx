@@ -11,7 +11,7 @@ import {
 	type FlowPersonalField,
 	type TermsAgreementItem,
 } from "@/components/organisms/global";
-import { AppScreen } from "@/components/templates/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

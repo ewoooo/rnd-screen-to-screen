@@ -1,12 +1,12 @@
 import { Button, IconButton } from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
-import { Box, HStack, VStack } from "@/components/atoms/layout";
+import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 import {
 	TextBlock,
 	type TextBlockOverflow,
 	type TextBlockVariant,
-} from "@/components/atoms/typography";
+} from "@pxds/pxds-components/typography";
 
 type TextPolicy = {
 	variant?: TextBlockVariant;

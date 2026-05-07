@@ -1,4 +1,4 @@
-import { FilterTabs } from "@/components/molecules";
+import { FilterTabs } from "@pxds/pxds-components/patterns";
 
 type TabItem = {
 	id: string;

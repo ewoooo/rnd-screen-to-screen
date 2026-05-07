@@ -2,8 +2,8 @@ import { type ReactNode } from "react";
 
 import { Card, CardContent, CardTitle } from "@pxds/pxds-components/core";
 
-import { HStack, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
 import { CARD_SHADOW } from "@pxds/pxds-tokens";
 
 type Props = {

@@ -1,16 +1,13 @@
 "use client";
 
-import { TextArea } from "@/components/molecules";
-import {
-	FormField,
-	SelectableList,
-	type SelectableItem,
-} from "@/components/molecules";
-import { VStack } from "@/components/atoms/layout";
+import { TextArea } from "@pxds/pxds-components/patterns";
+import { FormField } from "@pxds/pxds-components/patterns";
+import { type SelectableItem, SelectableList } from "@/components/molecules";
+import { VStack } from "@pxds/pxds-layout/primitives";
 import {
 	ContentSection,
 	ListContents,
-} from "@/components/templates/app-screen";
+} from "@pxds/pxds-layout/app-screen";
 
 export type FlowReasonItem = SelectableItem;
 

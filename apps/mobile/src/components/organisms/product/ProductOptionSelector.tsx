@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import { SectionCard, SelectableList, type SelectableItem } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { SectionCard, type SelectableItem, SelectableList } from "@/components/molecules";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 type OptionItem = {
 	id: string;

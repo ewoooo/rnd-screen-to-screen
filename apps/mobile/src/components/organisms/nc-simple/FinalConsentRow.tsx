@@ -2,10 +2,10 @@
 
 import { Card, CardContent } from "@pxds/pxds-components/core";
 
-import { HStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { Checkbox } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { HStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { Checkbox } from "@pxds/pxds-components/patterns";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 type Props = {
 	label: string;

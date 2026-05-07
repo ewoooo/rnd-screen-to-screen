@@ -1,7 +1,8 @@
-import { HStack, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { MediaBadge, SummaryCard } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { MediaBadge } from "@pxds/pxds-components/patterns";
+import { SummaryCard } from "@/components/molecules";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 import type { ProductTextPolicyMap } from "./types";
 

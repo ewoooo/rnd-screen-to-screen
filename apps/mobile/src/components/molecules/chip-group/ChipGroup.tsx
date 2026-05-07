@@ -1,6 +1,6 @@
 import { Chip } from "@pxds/pxds-components/core";
 
-import { Flex } from "@/components/atoms/layout";
+import { Flex } from "@pxds/pxds-layout/primitives";
 
 export type ChipItem = string | { id: string; label: string };
 

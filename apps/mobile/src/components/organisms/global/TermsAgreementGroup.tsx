@@ -1,10 +1,10 @@
 import {
 	ConsentList,
-	SectionCard,
 	type ConsentListItem,
 	type ConsentListState,
+	SectionCard,
 } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 export type TermsAgreementItem = ConsentListItem;
 export type TermsAgreementState = ConsentListState;

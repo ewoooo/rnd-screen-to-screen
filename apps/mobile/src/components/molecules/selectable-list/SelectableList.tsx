@@ -10,7 +10,7 @@ import {
 } from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
-import { HStack } from "@/components/atoms/layout";
+import { HStack } from "@pxds/pxds-layout/primitives";
 
 export type SelectableDensity = "comfortable" | "compact";
 export type SelectionMode = "single" | "multi";

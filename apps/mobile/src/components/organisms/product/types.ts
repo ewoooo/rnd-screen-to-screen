@@ -1,7 +1,7 @@
 import type {
 	TextBlockOverflow,
 	TextBlockVariant,
-} from "@/components/atoms/typography";
+} from "@pxds/pxds-components/typography";
 
 export type ProductTextPolicy = {
 	variant?: TextBlockVariant;

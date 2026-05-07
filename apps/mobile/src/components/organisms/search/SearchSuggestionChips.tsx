@@ -1,5 +1,5 @@
 import { ChipGroup, SectionCard } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 type Props = {
 	label: string;

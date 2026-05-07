@@ -10,14 +10,3 @@ export {
 export { ListRow } from "./ListRow";
 export { MyEditButton } from "./MyEditButton";
 export { PillChip, StatBadge } from "./Badges";
-export {
-	BADGE_BG,
-	CARD_BG,
-	CARD_BORDER,
-	CARD_RADIUS,
-	FONT,
-	GNB_BORDER,
-	OFFERING_BG,
-	OFFERING_BORDER,
-} from "@pxds/pxds-tokens";
-export type { FontStyle } from "@pxds/pxds-tokens";

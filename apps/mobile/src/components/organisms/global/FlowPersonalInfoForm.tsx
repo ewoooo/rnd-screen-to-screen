@@ -1,15 +1,12 @@
 "use client";
 
+import { TextField } from "@pxds/pxds-components/patterns";
 import { Fragment } from "react";
 
-import {
-	FormField,
-	SelectableList,
-	TextField,
-	type SelectableItem,
-} from "@/components/molecules";
-import { VStack } from "@/components/atoms/layout";
-import { ContentSection } from "@/components/templates/app-screen";
+import { FormField } from "@pxds/pxds-components/patterns";
+import { type SelectableItem, SelectableList } from "@/components/molecules";
+import { VStack } from "@pxds/pxds-layout/primitives";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 export type FlowFieldKind = "text" | "tel" | "date" | "selectable";
 
