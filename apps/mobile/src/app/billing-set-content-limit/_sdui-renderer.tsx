@@ -12,11 +12,7 @@ import {
 	TextField,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import {
-	AppScreen,
-	ContentRail,
-	ContentSection,
-} from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 
@@ -91,20 +87,17 @@ export function BillingSetContentLimitScreen({
 				<InfoList items={currentItems} />
 			</SectionCard>
 			<ContentSection>
-				<ContentRail rail="measure" measure="body">
-					<FormField
-						label={form.amount.label}
-						required={form.amount.required}
-						helperText={form.amount.helperText}
-					>
-						<TextField
-							value=""
-							placeholder={form.amount.placeholder}
-							inputMode="numeric"
-							disabled
-						/>
-					</FormField>
-				</ContentRail>
+				<FormField
+					label={form.amount.label}
+					required={form.amount.required}
+					helperText={form.amount.helperText}
+				>
+					<TextField
+						placeholder={form.amount.placeholder}
+						inputMode="numeric"
+						disabled
+					/>
+				</FormField>
 			</ContentSection>
 			<SectionCard label={form.status.label}>
 				<SelectableList
@@ -122,7 +115,6 @@ export function BillingSetContentLimitScreen({
 		</AppScreen>
 	);
 }
-
 
 function readData<T>(spec: RenderableScreenSpecV1, key: string): T {
 	const v = spec.data[key];

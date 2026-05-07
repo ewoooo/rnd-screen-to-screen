@@ -1,0 +1,67 @@
+{
+  "layer": "template",
+  "entries": [
+    {
+      "name": "AppScreen",
+      "path": "apps/mobile/src/components/templates/app-screen/AppScreen.tsx",
+      "purpose": "Primary mobile page shell. Owns top/content/bottom slot composition through AppScreenRoot and AppScreenContent.",
+      "slots": ["top", "children", "bottom"],
+      "absorbs": ["standard page flow", "top chrome", "bottom chrome", "scroll content"],
+      "used_by": ["home", "membership", "product", "search", "nc-full", "nc-simple", "billing"],
+      "strain_notes": ["Routes should not implement page-local fixed top/bottom chrome when AppScreen can own it."]
+    },
+    {
+      "name": "AppScreenRoot",
+      "path": "apps/mobile/src/components/templates/app-screen/AppScreenRoot.tsx",
+      "purpose": "Frame-scoped root and portal context for special screens and composed templates.",
+      "slots": ["children"],
+      "absorbs": ["mobile frame context", "portal container context"],
+      "used_by": ["AppScreen", "BottomSheet"],
+      "strain_notes": ["Use directly only when a route needs frame portal behavior without the standard AppScreen flow."]
+    },
+    {
+      "name": "ContentOutlet",
+      "path": "apps/mobile/src/components/templates/app-screen/ContentOutlet.tsx",
+      "purpose": "Scroll content viewport and default horizontal inset owner.",
+      "variants_or_axes": ["inlineInset"],
+      "absorbs": ["default content inset", "scrollable content area"],
+      "used_by": ["AppScreenContent"],
+      "strain_notes": ["Horizontal padding should not be re-owned by screen routes or reusable rows."]
+    },
+    {
+      "name": "ContentList",
+      "path": "apps/mobile/src/components/templates/app-screen/ContentList.tsx",
+      "purpose": "Direct content flow owner inside AppScreenContent.",
+      "absorbs": ["direct item vertical rhythm"],
+      "used_by": ["AppScreenContent"],
+      "strain_notes": ["Domain-specific list wrappers should not re-create direct item gap ownership."]
+    },
+    {
+      "name": "ContentSection",
+      "path": "apps/mobile/src/components/templates/app-screen/ContentLayout.tsx",
+      "purpose": "Section boundary and inset exception marker inside ContentOutlet.",
+      "variants_or_axes": ["inset: inherit | bleed"],
+      "absorbs": ["normal sections", "full-bleed or edge-to-edge sections"],
+      "used_by": ["SDUI renderers", "domain screens"],
+      "strain_notes": ["Any full-bleed section should be explicit through inset=bleed."]
+    },
+    {
+      "name": "ContentRail",
+      "path": "apps/mobile/src/components/templates/app-screen/ContentLayout.tsx",
+      "purpose": "Restores readable rails inside bleed/full-width surfaces.",
+      "variants_or_axes": ["rail: inset | measure | full", "measure: caption | body | title"],
+      "absorbs": ["bleed inner inset", "caption/body/title measure limits"],
+      "used_by": ["SDUI renderers", "domain screens"],
+      "strain_notes": ["Use instead of route-local margin/padding corrections."]
+    },
+    {
+      "name": "BottomSheet",
+      "path": "apps/mobile/src/components/templates/bottom-sheet/BottomSheet.tsx",
+      "purpose": "Composed bottom-sheet API over WDS Modal with frame portal/backdrop/content contracts.",
+      "slots": ["children"],
+      "absorbs": ["modal root", "backdrop", "bottom sheet content"],
+      "used_by": ["bottom-sheet screens", "modal branches"],
+      "strain_notes": ["Routes should not create separate absolute backdrops or WDS ModalContainer directly."]
+    }
+  ]
+}

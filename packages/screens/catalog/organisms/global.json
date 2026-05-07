@@ -1,0 +1,105 @@
+{
+  "layer": "organism",
+  "domain": "global",
+  "entries": [
+    {
+      "name": "GlobalNavigationHeader",
+      "path": "apps/mobile/src/components/organisms/global/GlobalNavigationHeader.tsx",
+      "purpose": "Standard top navigation header for home/global pages.",
+      "variants_or_axes": ["title", "actions", "floating/normal WDS TopNavigation"],
+      "absorbs": ["top navigation", "close header", "global chrome actions"],
+      "used_by": ["home screens", "search/product shells"],
+      "strain_notes": ["Top chrome should enter AppScreen.top through this or a domain shell."]
+    },
+    {
+      "name": "GlobalNavigationBar",
+      "path": "apps/mobile/src/components/organisms/global/GlobalNavigationBar.tsx",
+      "purpose": "Bottom global navigation bar.",
+      "variants_or_axes": ["active", "tabs"],
+      "absorbs": ["GNB", "global bottom tabs"],
+      "used_by": ["home screens", "product shell"],
+      "strain_notes": ["If a route needs bottom navigation, compose it in AppScreen.bottom."]
+    },
+    {
+      "name": "GlobalSearch",
+      "path": "apps/mobile/src/components/organisms/global/GlobalSearch.tsx",
+      "purpose": "Search top chrome that combines search top bar and result tabs.",
+      "variants_or_axes": ["query", "tabs", "activeTab", "children"],
+      "absorbs": ["search top bar", "search result tabs in top slot"],
+      "used_by": ["search-result"],
+      "strain_notes": ["Search tabs should not be separately fixed in route body."]
+    },
+    {
+      "name": "ProgressTopBar",
+      "path": "apps/mobile/src/components/organisms/global/ProgressTopBar.tsx",
+      "purpose": "Flow top bar with title, leading affordance, and optional progress label.",
+      "variants_or_axes": ["title", "leading: back | close", "progress"],
+      "absorbs": ["flow progress chrome", "membership/nc/billing top bar"],
+      "used_by": ["membership", "nc-full", "nc-simple", "billing"],
+      "strain_notes": ["Progress placement should be declared in x_interfacePlan.progress_location."]
+    },
+    {
+      "name": "FlowHero",
+      "path": "apps/mobile/src/components/organisms/global/FlowHero.tsx",
+      "purpose": "Flow screen lead copy area.",
+      "variants_or_axes": ["titleLines", "description"],
+      "absorbs": ["short action title", "flow intro hero"],
+      "used_by": ["membership", "nc-simple"],
+      "strain_notes": ["Avoid repeating the same text as a SectionCard title immediately below."]
+    },
+    {
+      "name": "FlowSummaryCard",
+      "path": "apps/mobile/src/components/organisms/global/FlowSummaryCard.tsx",
+      "purpose": "Domain-neutral summary card for flow/result facts.",
+      "variants_or_axes": ["label", "title", "items"],
+      "absorbs": ["result summary", "pre-confirm summary", "policy effect summary"],
+      "used_by": ["membership", "nc-simple", "billing"],
+      "strain_notes": ["Completion screens should prefer unified summary over per-step messages."]
+    },
+    {
+      "name": "TermsAgreementGroup",
+      "path": "apps/mobile/src/components/organisms/global/TermsAgreementGroup.tsx",
+      "purpose": "Domain wrapper around ConsentList for terms agreement flows.",
+      "variants_or_axes": ["label", "title", "items"],
+      "absorbs": ["membership terms", "NC terms"],
+      "used_by": ["membership-terms-consent", "nc-*-terms"],
+      "strain_notes": ["Good candidate for stronger x_interactions all-agree contracts."]
+    },
+    {
+      "name": "FlowPersonalInfoForm",
+      "path": "apps/mobile/src/components/organisms/global/FlowPersonalInfoForm.tsx",
+      "purpose": "Domain-neutral personal info form section.",
+      "variants_or_axes": ["fields", "select options", "messages"],
+      "absorbs": ["identity/profile form", "billing setting form"],
+      "used_by": ["membership-personal-info", "nc-*-info"],
+      "strain_notes": ["Optional/null data should be resolved before fields reach the organism."]
+    },
+    {
+      "name": "FlowReasonForm",
+      "path": "apps/mobile/src/components/organisms/global/FlowReasonForm.tsx",
+      "purpose": "Reason selection form with optional detail input.",
+      "variants_or_axes": ["items", "detailLabel", "detailPlaceholder"],
+      "absorbs": ["leave reason", "cancellation reason", "choice with textarea"],
+      "used_by": ["membership-leave-reason", "nc-*-leave-reason"],
+      "strain_notes": ["Textarea visibility policy should be recorded in x_stateMatrix."]
+    },
+    {
+      "name": "FlowNotice",
+      "path": "apps/mobile/src/components/organisms/global/FlowNotice.tsx",
+      "purpose": "Domain wrapper for NoticeBlock in flow screens.",
+      "variants_or_axes": ["tone", "badge", "text", "action"],
+      "absorbs": ["flow policy notice", "warning/critical notice"],
+      "used_by": ["membership", "nc-simple", "billing"],
+      "strain_notes": ["Policy/legal notices should map to x_policyExtract.legal_notices."]
+    },
+    {
+      "name": "FlowContinueBar",
+      "path": "apps/mobile/src/components/organisms/global/FlowContinueBar.tsx",
+      "purpose": "Flow bottom CTA with primary action and optional blocked/helper state.",
+      "variants_or_axes": ["primaryAction", "helperText", "blocked"],
+      "absorbs": ["next CTA", "blocked flow CTA"],
+      "used_by": ["membership", "nc-simple"],
+      "strain_notes": ["Prefer PrimaryCTABar when the screen is SDUI-driven; keep state/CTA alignment explicit."]
+    }
+  ]
+}

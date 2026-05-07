@@ -7,7 +7,10 @@ import {
 	type SelectableItem,
 } from "@/components/molecules";
 import { VStack } from "@/components/atoms/layout";
-import { ContentRail, ContentSection } from "@/components/templates/app-screen";
+import {
+	ContentSection,
+	ListContents,
+} from "@/components/templates/app-screen";
 
 export type FlowReasonItem = SelectableItem;
 
@@ -39,41 +42,40 @@ export function FlowReasonForm({
 	const helperText = `${freeText.length}/${freeTextMaxLength}자`;
 
 	return (
-		<ContentSection inset="bleed">
-			<VStack gap="block">
-				<SelectableList
-					items={items}
-					value={value}
-					onChange={onValueChange}
-					name="leave-reason"
-					density="compact"
-				/>
-			</VStack>
-
-			<ContentRail rail="measure" measure="body">
-			<VStack>
-				<FormField
-					label={freeTextLabel}
-					helperText={helperText}
-					errorText={errorText}
-				>
-					<TextArea
-						width={"full"}
-						value={freeText}
-						placeholder={freeTextPlaceholder}
-						minRows={3}
-						maxRows={6}
-						maxLength={freeTextMaxLength + 50}
-						invalid={tooLong}
-						onChange={(event) =>
-							onFreeTextChange((event.target as HTMLTextAreaElement).value)
-						}
+		<>
+			<ListContents>
+				<VStack gap="block">
+					<SelectableList
+						items={items}
+						value={value}
+						onChange={onValueChange}
+						name="leave-reason"
+						density="compact"
 					/>
+				</VStack>
+			</ListContents>
+			<ContentSection>
+				<VStack>
+					<FormField
+						label={freeTextLabel}
+						helperText={helperText}
+						errorText={errorText}
+					>
+						<TextArea
+							width={"full"}
+							value={freeText}
+							placeholder={freeTextPlaceholder}
+							minRows={3}
+							maxRows={6}
+							maxLength={freeTextMaxLength + 50}
+							invalid={tooLong}
+							onChange={(event) =>
+								onFreeTextChange((event.target as HTMLTextAreaElement).value)
+							}
+						/>
 					</FormField>
-			</VStack>
-			</ContentRail>
-
-
-		</ContentSection>
+				</VStack>
+			</ContentSection>
+		</>
 	);
 }

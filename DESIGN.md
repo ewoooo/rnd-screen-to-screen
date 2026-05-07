@@ -248,5 +248,5 @@ WDS 토큰에 대응되지 않는 앱 표면 보조 토큰. 브랜드 컬러는 
 | 2026-04-29 | spacing-10 어중간 (`StickyActionBar`/`ProductSummaryCard`) | stack(12)으로 통일 |
 | 2026-04-29 | HomeActionPairBlock 가운데 인라인 divider div + raw 색·margin | `system/Divider` (Seed 차용) 도입 후 `<Divider orientation="vertical" inset="block" />` |
 | 2026-04-29 | nova-* 36 페이지 잘못 만든 코드 + 종속 `patterns/modal` · `NovaTopBar` | 일괄 삭제. 인덱스 페이지에서 nova 그룹 제거 |
-| 2026-04-29 | 디렉터리 이름 변경 — 옛 `app/` deprecated, 옛 `app2/`가 active | `_deprecated_app/` + `app/`로 재명명. AGENTS.md/DESIGN.md 경로 갱신 |
+| 2026-04-29 | 디렉터리 이름 변경 — 옛 `app2/`가 active | active 앱 경로 정리. AGENTS.md/DESIGN.md 경로 갱신 |
 | 2026-04-30 | preview/mobile 분리 — `app/` active 패키지를 `apps/mobile/`로 이동하고 `apps/preview/` shadcn 프리뷰 셸 추가 | 모바일 화면 내부와 브라우저 프리뷰 책임 분리. preview는 iframe으로 mobile을 소비 |

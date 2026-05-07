@@ -61,6 +61,7 @@ export function SelectableList(props: Props) {
 						<ListCell
 							as="label"
 							key={item.id}
+							alignItems={showCaption ? "flex-start" : "center"}
 							selected={selected}
 							disabled={item.disabled}
 							verticalPadding={compact ? "small" : "medium"}
@@ -149,6 +150,7 @@ export function SelectableList(props: Props) {
 						<ListCell
 							as="label"
 							key={item.id}
+							alignItems={showCaption ? "flex-start" : "center"}
 							selected={selected}
 							disabled={item.disabled}
 							verticalPadding={compact ? "small" : "medium"}

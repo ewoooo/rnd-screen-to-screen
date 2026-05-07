@@ -13,11 +13,7 @@ import {
 	TextField,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import {
-	AppScreen,
-	ContentRail,
-	ContentSection,
-} from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 
@@ -57,7 +53,10 @@ type FormData = {
 	methodId: SelectField;
 	dueDay: TextFieldData;
 };
-type EffectiveData = { tone: "info" | "warning" | "critical" | "success"; text: string };
+type EffectiveData = {
+	tone: "info" | "warning" | "critical" | "success";
+	text: string;
+};
 type ContinueData = { eyebrow: string; primaryAction: string };
 
 export function BillingSetMethodScreen({
@@ -78,10 +77,12 @@ export function BillingSetMethodScreen({
 		sub: "",
 		trailingLabel: it.value,
 	}));
-	const methodTypeItems: SelectableItem[] = form.methodType.options.map((o) => ({
-		id: o.id,
-		title: o.title,
-	}));
+	const methodTypeItems: SelectableItem[] = form.methodType.options.map(
+		(o) => ({
+			id: o.id,
+			title: o.title,
+		}),
+	);
 
 	return (
 		<AppScreen
@@ -107,39 +108,32 @@ export function BillingSetMethodScreen({
 				/>
 			</SectionCard>
 			<ContentSection>
-				<ContentRail rail="measure" measure="body">
-					<VStack gap="block">
-						{/* strain: WDS Select 컴포넌트는 1차에서 placeholder TextField로 대체 */}
-						<FormField
-							label={form.methodId.label}
-							required={form.methodId.required}
-							helperText={form.methodId.helperText}
-						>
-							<TextField
-								value=""
-								placeholder={form.methodId.placeholder}
-								disabled
-							/>
-						</FormField>
-						<FormField
-							label={form.dueDay.label}
-							required={form.dueDay.required}
-							helperText={form.dueDay.helperText}
-						>
-							<TextField
-								value=""
-								placeholder={form.dueDay.placeholder}
-								disabled
-							/>
-						</FormField>
-					</VStack>
-				</ContentRail>
+				<VStack gap="block">
+					{/* strain: WDS Select 컴포넌트는 1차에서 placeholder TextField로 대체 */}
+					<FormField
+						label={form.methodId.label}
+						required={form.methodId.required}
+						helperText={form.methodId.helperText}
+					>
+						<TextField placeholder={form.methodId.placeholder} disabled />
+					</FormField>
+					<FormField
+						label={form.dueDay.label}
+						required={form.dueDay.required}
+						helperText={form.dueDay.helperText}
+					>
+						<TextField placeholder={form.dueDay.placeholder} disabled />
+					</FormField>
+				</VStack>
 			</ContentSection>
-			<NoticeBlock tone={effective.tone} badge="적용 시점" text={effective.text} />
+			<NoticeBlock
+				tone={effective.tone}
+				badge="적용 시점"
+				text={effective.text}
+			/>
 		</AppScreen>
 	);
 }
-
 
 function readData<T>(spec: RenderableScreenSpecV1, key: string): T {
 	const v = spec.data[key];

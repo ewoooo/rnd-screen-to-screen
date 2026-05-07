@@ -12,11 +12,7 @@ import {
 	TextField,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import {
-	AppScreen,
-	ContentRail,
-	ContentSection,
-} from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@/components/templates/app-screen";
 import { evalVisibleWhen } from "@/lib/visible-when";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -91,32 +87,29 @@ export function BillingSetAutoPrepayScreen({
 		>
 			<FlowHero {...hero} />
 			<ContentSection>
-				<ContentRail rail="measure" measure="body">
-					<VStack gap="block">
+				<VStack gap="block">
+					<FormField
+						label={form.enable.label}
+						helperText={form.enable.helperText}
+					>
+						<Switch defaultChecked={form.enable.value} disabled />
+					</FormField>
+					{evalVisibleWhen(form.threshold.visibleWhen, {
+						enable: form.enable.value,
+					}) ? (
 						<FormField
-							label={form.enable.label}
-							helperText={form.enable.helperText}
+							label={form.threshold.label}
+							required={form.threshold.required}
+							helperText={form.threshold.helperText}
 						>
-							<Switch defaultChecked={form.enable.value} disabled />
+							<TextField
+								placeholder={form.threshold.placeholder}
+								inputMode="numeric"
+								disabled
+							/>
 						</FormField>
-						{evalVisibleWhen(form.threshold.visibleWhen, {
-							enable: form.enable.value,
-						}) ? (
-							<FormField
-								label={form.threshold.label}
-								required={form.threshold.required}
-								helperText={form.threshold.helperText}
-							>
-								<TextField
-									value=""
-									placeholder={form.threshold.placeholder}
-									inputMode="numeric"
-									disabled
-								/>
-							</FormField>
-						) : null}
-					</VStack>
-				</ContentRail>
+					) : null}
+				</VStack>
 			</ContentSection>
 			<SectionCard label={form.targets.label}>
 				<ChipGroup items={targetItems} selectedIds={form.targets.value} />
@@ -129,7 +122,6 @@ export function BillingSetAutoPrepayScreen({
 		</AppScreen>
 	);
 }
-
 
 function readData<T>(spec: RenderableScreenSpecV1, key: string): T {
 	const v = spec.data[key];

@@ -7,7 +7,7 @@ import {
 	PrimaryCTABar,
 } from "@/components/molecules";
 import { ProgressTopBar } from "@/components/organisms/global";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+import { AppScreen, TabsContents } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 
@@ -40,9 +40,9 @@ export function BillingMscHistoryScreen({
 				/>
 			}
 		>
-			<ContentSection inset="bleed">
+			<TabsContents>
 				<FilterTabs tabs={filter.items} activeId={filter.active} />
-			</ContentSection>
+			</TabsContents>
 			<InfoList
 				items={list.rows.map((r) => ({
 					id: r.id,

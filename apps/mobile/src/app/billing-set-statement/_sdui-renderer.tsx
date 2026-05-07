@@ -12,11 +12,7 @@ import {
 	TextField,
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
-import {
-	AppScreen,
-	ContentRail,
-	ContentSection,
-} from "@/components/templates/app-screen";
+import { AppScreen, ContentSection } from "@/components/templates/app-screen";
 import { evalVisibleWhen } from "@/lib/visible-when";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -53,7 +49,10 @@ type FormData = {
 	contact: TextFieldData;
 	alert: SwitchFieldData;
 };
-type EffectiveData = { tone: "info" | "warning" | "critical" | "success"; text: string };
+type EffectiveData = {
+	tone: "info" | "warning" | "critical" | "success";
+	text: string;
+};
 type ContinueData = { eyebrow: string; primaryAction: string };
 
 export function BillingSetStatementScreen({
@@ -94,37 +93,34 @@ export function BillingSetStatementScreen({
 				/>
 			</SectionCard>
 			<ContentSection>
-				<ContentRail rail="measure" measure="body">
-					<VStack gap="block">
-						{evalVisibleWhen(form.contact.visibleWhen, {
-							channel: form.channel.value,
-						}) ? (
-							<FormField
-								label={form.contact.label}
-								required={form.contact.required}
-								helperText={form.contact.helperText}
-							>
-								<TextField
-									value=""
-									placeholder={form.contact.placeholder}
-									disabled
-								/>
-							</FormField>
-						) : null}
+				<VStack gap="block">
+					{evalVisibleWhen(form.contact.visibleWhen, {
+						channel: form.channel.value,
+					}) ? (
 						<FormField
-							label={form.alert.label}
-							helperText={form.alert.helperText}
+							label={form.contact.label}
+							required={form.contact.required}
+							helperText={form.contact.helperText}
 						>
-							<Switch defaultChecked={form.alert.value} disabled />
+							<TextField placeholder={form.contact.placeholder} disabled />
 						</FormField>
-					</VStack>
-				</ContentRail>
+					) : null}
+					<FormField
+						label={form.alert.label}
+						helperText={form.alert.helperText}
+					>
+						<Switch defaultChecked={form.alert.value} disabled />
+					</FormField>
+				</VStack>
 			</ContentSection>
-			<NoticeBlock tone={effective.tone} badge="적용 시점" text={effective.text} />
+			<NoticeBlock
+				tone={effective.tone}
+				badge="적용 시점"
+				text={effective.text}
+			/>
 		</AppScreen>
 	);
 }
-
 
 function readData<T>(spec: RenderableScreenSpecV1, key: string): T {
 	const v = spec.data[key];

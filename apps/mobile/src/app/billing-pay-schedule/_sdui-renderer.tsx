@@ -90,7 +90,6 @@ export function BillingPayScheduleScreen({
 								/>
 							) : (
 								<TextField
-									value=""
 									placeholder={field.placeholder}
 									inputMode="numeric"
 								/>

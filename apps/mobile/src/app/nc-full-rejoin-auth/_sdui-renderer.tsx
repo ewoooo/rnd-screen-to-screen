@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	IconLock,
-	IconMessage,
-	IconMobile,
-} from "@wanteddev/wds-icon";
+import { IconLock, IconMessage, IconMobile } from "@wanteddev/wds-icon";
 import { useState, type ReactNode } from "react";
 
 import { SelectableList } from "@/components/molecules";
@@ -14,7 +10,7 @@ import {
 	FlowNotice,
 	ProgressTopBar,
 } from "@/components/organisms/global";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+import { AppScreen, ListContents } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 
@@ -86,7 +82,7 @@ export function NcFullRejoinAuthScreen({
 			}
 		>
 			<FlowHero {...hero} />
-			<ContentSection inset="bleed">
+			<ListContents>
 				<SelectableList
 					name="rejoin-auth-method"
 					items={items}
@@ -94,7 +90,7 @@ export function NcFullRejoinAuthScreen({
 					onChange={setValue}
 					density="comfortable"
 				/>
-			</ContentSection>
+			</ListContents>
 			<FlowNotice
 				badge={policyNotice.badge}
 				text={policyNotice.text}

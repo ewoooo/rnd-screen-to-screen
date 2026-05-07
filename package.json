@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "concurrently -n mobile,preview -c cyan,magenta \"npm:dev:mobile\" \"npm:dev:preview\"",
     "dev:mobile": "npm run dev -w @screen/mobile",
     "dev:preview": "npm run dev -w @screen/preview",
     "dev:figma-export": "npm run dev -w @screen/figma-export",
@@ -16,7 +17,13 @@
     "build:figma-export": "npm run build -w @screen/figma-export",
     "build:storybook": "npm run build -w @screen/storybook",
     "chromatic:storybook": "npm run chromatic -w @screen/storybook",
+    "doctor": "react-doctor . --yes",
+    "doctor:verbose": "react-doctor . --yes --verbose",
     "lint:mobile": "npm run lint -w @screen/mobile",
     "lint:preview": "npm run lint -w @screen/preview"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "react-doctor": "^0.0.47"
   }
 }

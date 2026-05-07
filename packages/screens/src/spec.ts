@@ -134,6 +134,94 @@ export type PolicyExtract = {
 	branches: readonly string[];
 	exceptions: readonly string[];
 	design_signals: Record<string, string>;
+	legal_notices?: readonly PolicyNotice[];
+	output_mapping?: readonly PolicyOutputMapping[];
+};
+
+export type UXJourneyStage =
+	| "entry"
+	| "explore"
+	| "search"
+	| "decision"
+	| "execution"
+	| "complete"
+	| "support";
+
+export type UXStageClassification = {
+	primary: UXJourneyStage;
+	secondary?: readonly UXJourneyStage[];
+	evidence: string;
+	checkpoints?: readonly string[];
+};
+
+export type PolicyNotice = {
+	id: string;
+	source_ref: string;
+	priority: "required" | "usability";
+	summary: string;
+	display_rule: string;
+	target_area?: string;
+};
+
+export type PolicyOutputMapping = {
+	source_output: string;
+	target_screen?: string;
+	target_area?: string;
+	display_as: string;
+};
+
+export type ScreenStateMatrixItem = {
+	state: string;
+	trigger: string;
+	visual: string;
+	action?: string;
+	data_requirements?: readonly string[];
+};
+
+export type ScreenDecisionLogItem = {
+	decision: string;
+	accepted: string;
+	rejected?: readonly string[];
+	reason: string;
+};
+
+export type ScreenInteractionTag =
+	| "tap"
+	| "interactive"
+	| "sync"
+	| "enabled"
+	| "loading"
+	| "modal"
+	| "state"
+	| "nav";
+
+export type ScreenInteraction = {
+	tag: ScreenInteractionTag;
+	selector?: string;
+	source?: string;
+	target?: string;
+	condition?: string;
+	action?: string;
+	description: string;
+};
+
+export type ScreenInterfacePlan = {
+	screen_genre?: string;
+	genre?: string;
+	primary_task: string;
+	user_decision?: string;
+	user_input?: string;
+	info_hierarchy?: readonly string[] | Record<string, SDUIJsonValue>;
+	hierarchy?: readonly string[] | Record<string, SDUIJsonValue>;
+	visual_order?: readonly string[];
+	progress_location?: string;
+	cta_location?: string | Record<string, SDUIJsonValue>;
+	selection_pattern?: string;
+	input_pattern?: string;
+	copy_policy?: Record<string, SDUIJsonValue>;
+	rail_policy?: Record<string, SDUIJsonValue>;
+	state_matrix?: readonly ScreenStateMatrixItem[];
+	decision_log?: readonly ScreenDecisionLogItem[];
 };
 
 export type ScreenBenchmarkTrace = {
@@ -166,6 +254,11 @@ export type RenderableScreenSpecV1 = {
 		design_system_contract: DesignSystemContract;
 	};
 	x_benchmark: ScreenBenchmarkTrace;
+	x_uxStage?: UXStageClassification;
+	x_interfacePlan?: ScreenInterfacePlan;
+	x_stateMatrix?: readonly ScreenStateMatrixItem[];
+	x_interactions?: readonly ScreenInteraction[];
+	x_decisionLog?: readonly ScreenDecisionLogItem[];
 };
 
 export type ScreenSpecIssueSeverity = "error" | "warning";
