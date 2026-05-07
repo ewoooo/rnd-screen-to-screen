@@ -141,6 +141,66 @@ import billingSetContentLimitSpec from "../spec/active/billing/billing-set-conte
 import billingSetContentLimitRenderableSpec from "../spec/active/billing/billing-set-content-limit.sdui.json";
 import billingSetAutoPrepaySpec from "../spec/active/billing/billing-set-auto-prepay.json";
 import billingSetAutoPrepayRenderableSpec from "../spec/active/billing/billing-set-auto-prepay.sdui.json";
+import billingHtmlArrearsStatusSpec from "../spec/experimental/billing-from-html/billing-html-arrears-status.json";
+import billingHtmlArrearsStatusRenderableSpec from "../spec/experimental/billing-from-html/billing-html-arrears-status.sdui.json";
+import billingHtmlMscHistorySpec from "../spec/experimental/billing-from-html/billing-html-msc-history.json";
+import billingHtmlMscHistoryRenderableSpec from "../spec/experimental/billing-from-html/billing-html-msc-history.sdui.json";
+import billingHtmlPayConfirmSpec from "../spec/experimental/billing-from-html/billing-html-pay-confirm.json";
+import billingHtmlPayConfirmRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-confirm.sdui.json";
+import billingHtmlPayFailureSpec from "../spec/experimental/billing-from-html/billing-html-pay-failure.json";
+import billingHtmlPayFailureRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-failure.sdui.json";
+import billingHtmlPayMethodAuthSpec from "../spec/experimental/billing-from-html/billing-html-pay-method-auth.json";
+import billingHtmlPayMethodAuthRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-method-auth.sdui.json";
+import billingHtmlPayMethodSpec from "../spec/experimental/billing-from-html/billing-html-pay-method.json";
+import billingHtmlPayMethodRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-method.sdui.json";
+import billingHtmlPayPrepayResultSpec from "../spec/experimental/billing-from-html/billing-html-pay-prepay-result.json";
+import billingHtmlPayPrepayResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-prepay-result.sdui.json";
+import billingHtmlPayPrepaySpec from "../spec/experimental/billing-from-html/billing-html-pay-prepay.json";
+import billingHtmlPayPrepayRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-prepay.sdui.json";
+import billingHtmlPayProxyExecuteSpec from "../spec/experimental/billing-from-html/billing-html-pay-proxy-execute.json";
+import billingHtmlPayProxyExecuteRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-proxy-execute.sdui.json";
+import billingHtmlPayProxyResultSpec from "../spec/experimental/billing-from-html/billing-html-pay-proxy-result.json";
+import billingHtmlPayProxyResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-proxy-result.sdui.json";
+import billingHtmlPayProxySpec from "../spec/experimental/billing-from-html/billing-html-pay-proxy.json";
+import billingHtmlPayProxyRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-proxy.sdui.json";
+import billingHtmlPayResultSpec from "../spec/experimental/billing-from-html/billing-html-pay-result.json";
+import billingHtmlPayResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-result.sdui.json";
+import billingHtmlPayScheduleResultSpec from "../spec/experimental/billing-from-html/billing-html-pay-schedule-result.json";
+import billingHtmlPayScheduleResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-schedule-result.sdui.json";
+import billingHtmlPayScheduleSpec from "../spec/experimental/billing-from-html/billing-html-pay-schedule.json";
+import billingHtmlPayScheduleRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-schedule.sdui.json";
+import billingHtmlPayThirdPartyConsentSpec from "../spec/experimental/billing-from-html/billing-html-pay-third-party-consent.json";
+import billingHtmlPayThirdPartyConsentRenderableSpec from "../spec/experimental/billing-from-html/billing-html-pay-third-party-consent.sdui.json";
+import billingHtmlPaymentHistorySpec from "../spec/experimental/billing-from-html/billing-html-payment-history.json";
+import billingHtmlPaymentHistoryRenderableSpec from "../spec/experimental/billing-from-html/billing-html-payment-history.sdui.json";
+import billingHtmlRealtimeSpec from "../spec/experimental/billing-from-html/billing-html-realtime.json";
+import billingHtmlRealtimeRenderableSpec from "../spec/experimental/billing-from-html/billing-html-realtime.sdui.json";
+import billingHtmlReceiptResultSpec from "../spec/experimental/billing-from-html/billing-html-receipt-result.json";
+import billingHtmlReceiptResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-receipt-result.sdui.json";
+import billingHtmlSetAutoPrepaySpec from "../spec/experimental/billing-from-html/billing-html-set-auto-prepay.json";
+import billingHtmlSetAutoPrepayRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-auto-prepay.sdui.json";
+import billingHtmlSetContentLimitSpec from "../spec/experimental/billing-from-html/billing-html-set-content-limit.json";
+import billingHtmlSetContentLimitRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-content-limit.sdui.json";
+import billingHtmlSetMethodCancelResultSpec from "../spec/experimental/billing-from-html/billing-html-set-method-cancel-result.json";
+import billingHtmlSetMethodCancelResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-method-cancel-result.sdui.json";
+import billingHtmlSetMethodCancelSpec from "../spec/experimental/billing-from-html/billing-html-set-method-cancel.json";
+import billingHtmlSetMethodCancelRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-method-cancel.sdui.json";
+import billingHtmlSetMethodSpec from "../spec/experimental/billing-from-html/billing-html-set-method.json";
+import billingHtmlSetMethodRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-method.sdui.json";
+import billingHtmlSetMscLimitSpec from "../spec/experimental/billing-from-html/billing-html-set-msc-limit.json";
+import billingHtmlSetMscLimitRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-msc-limit.sdui.json";
+import billingHtmlSetStatementSpec from "../spec/experimental/billing-from-html/billing-html-set-statement.json";
+import billingHtmlSetStatementRenderableSpec from "../spec/experimental/billing-from-html/billing-html-set-statement.sdui.json";
+import billingHtmlStatementResultSpec from "../spec/experimental/billing-from-html/billing-html-statement-result.json";
+import billingHtmlStatementResultRenderableSpec from "../spec/experimental/billing-from-html/billing-html-statement-result.sdui.json";
+import billingHtmlStatementSpec from "../spec/experimental/billing-from-html/billing-html-statement.json";
+import billingHtmlStatementRenderableSpec from "../spec/experimental/billing-from-html/billing-html-statement.sdui.json";
+import billingHtmlSummarySpec from "../spec/experimental/billing-from-html/billing-html-summary.json";
+import billingHtmlSummaryRenderableSpec from "../spec/experimental/billing-from-html/billing-html-summary.sdui.json";
+import billingHtmlTargetSelectSpec from "../spec/experimental/billing-from-html/billing-html-target-select.json";
+import billingHtmlTargetSelectRenderableSpec from "../spec/experimental/billing-from-html/billing-html-target-select.sdui.json";
+import billingHtmlDetailSpec from "../spec/experimental/billing-from-html/billing-html-detail.json";
+import billingHtmlDetailRenderableSpec from "../spec/experimental/billing-from-html/billing-html-detail.sdui.json";
 import productDetailSpec from "../spec/inactive/product-detail.json";
 import productDetailRenderableSpec from "../spec/inactive/product-detail.sdui.json";
 import searchResultSpec from "../spec/inactive/search-result.json";
@@ -231,6 +291,36 @@ export const activeScreenSpecs = {
 	"nc-simple-rejoin-blocked": asScreenSpec(ncSimpleRejoinBlockedSpec),
 	"nc-simple-rejoin-complete": asScreenSpec(ncSimpleRejoinCompleteSpec),
 	"nc-simple-rejoin-info": asScreenSpec(ncSimpleRejoinInfoSpec),
+	"billing-html-arrears-status": asScreenSpec(billingHtmlArrearsStatusSpec),
+	"billing-html-msc-history": asScreenSpec(billingHtmlMscHistorySpec),
+	"billing-html-pay-confirm": asScreenSpec(billingHtmlPayConfirmSpec),
+	"billing-html-pay-failure": asScreenSpec(billingHtmlPayFailureSpec),
+	"billing-html-pay-method-auth": asScreenSpec(billingHtmlPayMethodAuthSpec),
+	"billing-html-pay-method": asScreenSpec(billingHtmlPayMethodSpec),
+	"billing-html-pay-prepay-result": asScreenSpec(billingHtmlPayPrepayResultSpec),
+	"billing-html-pay-prepay": asScreenSpec(billingHtmlPayPrepaySpec),
+	"billing-html-pay-proxy-execute": asScreenSpec(billingHtmlPayProxyExecuteSpec),
+	"billing-html-pay-proxy-result": asScreenSpec(billingHtmlPayProxyResultSpec),
+	"billing-html-pay-proxy": asScreenSpec(billingHtmlPayProxySpec),
+	"billing-html-pay-result": asScreenSpec(billingHtmlPayResultSpec),
+	"billing-html-pay-schedule-result": asScreenSpec(billingHtmlPayScheduleResultSpec),
+	"billing-html-pay-schedule": asScreenSpec(billingHtmlPayScheduleSpec),
+	"billing-html-pay-third-party-consent": asScreenSpec(billingHtmlPayThirdPartyConsentSpec),
+	"billing-html-payment-history": asScreenSpec(billingHtmlPaymentHistorySpec),
+	"billing-html-realtime": asScreenSpec(billingHtmlRealtimeSpec),
+	"billing-html-receipt-result": asScreenSpec(billingHtmlReceiptResultSpec),
+	"billing-html-set-auto-prepay": asScreenSpec(billingHtmlSetAutoPrepaySpec),
+	"billing-html-set-content-limit": asScreenSpec(billingHtmlSetContentLimitSpec),
+	"billing-html-set-method-cancel-result": asScreenSpec(billingHtmlSetMethodCancelResultSpec),
+	"billing-html-set-method-cancel": asScreenSpec(billingHtmlSetMethodCancelSpec),
+	"billing-html-set-method": asScreenSpec(billingHtmlSetMethodSpec),
+	"billing-html-set-msc-limit": asScreenSpec(billingHtmlSetMscLimitSpec),
+	"billing-html-set-statement": asScreenSpec(billingHtmlSetStatementSpec),
+	"billing-html-statement-result": asScreenSpec(billingHtmlStatementResultSpec),
+	"billing-html-statement": asScreenSpec(billingHtmlStatementSpec),
+	"billing-html-summary": asScreenSpec(billingHtmlSummarySpec),
+	"billing-html-target-select": asScreenSpec(billingHtmlTargetSelectSpec),
+	"billing-html-detail": asScreenSpec(billingHtmlDetailSpec),
 	"product-detail": asScreenSpec(productDetailSpec),
 	"search-result": asScreenSpec(searchResultSpec),
 	"tu-dsp-main-mo-02-pg-001-2": asScreenSpec(tuDiscoverySpec),
@@ -412,6 +502,36 @@ export const activeRenderableScreenSpecs = {
 	"nc-simple-rejoin-info": asRenderableScreenSpec(
 		ncSimpleRejoinInfoRenderableSpec,
 	),
+	"billing-html-arrears-status": asRenderableScreenSpec(billingHtmlArrearsStatusRenderableSpec),
+	"billing-html-msc-history": asRenderableScreenSpec(billingHtmlMscHistoryRenderableSpec),
+	"billing-html-pay-confirm": asRenderableScreenSpec(billingHtmlPayConfirmRenderableSpec),
+	"billing-html-pay-failure": asRenderableScreenSpec(billingHtmlPayFailureRenderableSpec),
+	"billing-html-pay-method-auth": asRenderableScreenSpec(billingHtmlPayMethodAuthRenderableSpec),
+	"billing-html-pay-method": asRenderableScreenSpec(billingHtmlPayMethodRenderableSpec),
+	"billing-html-pay-prepay-result": asRenderableScreenSpec(billingHtmlPayPrepayResultRenderableSpec),
+	"billing-html-pay-prepay": asRenderableScreenSpec(billingHtmlPayPrepayRenderableSpec),
+	"billing-html-pay-proxy-execute": asRenderableScreenSpec(billingHtmlPayProxyExecuteRenderableSpec),
+	"billing-html-pay-proxy-result": asRenderableScreenSpec(billingHtmlPayProxyResultRenderableSpec),
+	"billing-html-pay-proxy": asRenderableScreenSpec(billingHtmlPayProxyRenderableSpec),
+	"billing-html-pay-result": asRenderableScreenSpec(billingHtmlPayResultRenderableSpec),
+	"billing-html-pay-schedule-result": asRenderableScreenSpec(billingHtmlPayScheduleResultRenderableSpec),
+	"billing-html-pay-schedule": asRenderableScreenSpec(billingHtmlPayScheduleRenderableSpec),
+	"billing-html-pay-third-party-consent": asRenderableScreenSpec(billingHtmlPayThirdPartyConsentRenderableSpec),
+	"billing-html-payment-history": asRenderableScreenSpec(billingHtmlPaymentHistoryRenderableSpec),
+	"billing-html-realtime": asRenderableScreenSpec(billingHtmlRealtimeRenderableSpec),
+	"billing-html-receipt-result": asRenderableScreenSpec(billingHtmlReceiptResultRenderableSpec),
+	"billing-html-set-auto-prepay": asRenderableScreenSpec(billingHtmlSetAutoPrepayRenderableSpec),
+	"billing-html-set-content-limit": asRenderableScreenSpec(billingHtmlSetContentLimitRenderableSpec),
+	"billing-html-set-method-cancel-result": asRenderableScreenSpec(billingHtmlSetMethodCancelResultRenderableSpec),
+	"billing-html-set-method-cancel": asRenderableScreenSpec(billingHtmlSetMethodCancelRenderableSpec),
+	"billing-html-set-method": asRenderableScreenSpec(billingHtmlSetMethodRenderableSpec),
+	"billing-html-set-msc-limit": asRenderableScreenSpec(billingHtmlSetMscLimitRenderableSpec),
+	"billing-html-set-statement": asRenderableScreenSpec(billingHtmlSetStatementRenderableSpec),
+	"billing-html-statement-result": asRenderableScreenSpec(billingHtmlStatementResultRenderableSpec),
+	"billing-html-statement": asRenderableScreenSpec(billingHtmlStatementRenderableSpec),
+	"billing-html-summary": asRenderableScreenSpec(billingHtmlSummaryRenderableSpec),
+	"billing-html-target-select": asRenderableScreenSpec(billingHtmlTargetSelectRenderableSpec),
+	"billing-html-detail": asRenderableScreenSpec(billingHtmlDetailRenderableSpec),
 	"product-detail": asRenderableScreenSpec(productDetailRenderableSpec),
 } as const satisfies Partial<Record<ActiveScreenSpecId, RenderableScreenSpecV1>>;
 

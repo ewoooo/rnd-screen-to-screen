@@ -3,12 +3,12 @@
 import { useMemo, useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcPersonalInfoForm,
-	NcTopBar,
-	type NcPersonalField,
-} from "@/components/organisms/nc";
+	FlowContinueBar,
+	FlowHero,
+	FlowPersonalInfoForm,
+	ProgressTopBar,
+	type FlowPersonalField,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -38,7 +38,7 @@ export function NcFullJoinInfoScreen({
 	const form = readData<FormData>(spec, "form");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly NcPersonalField[]>(
+	const fields = useMemo<readonly FlowPersonalField[]>(
 		() =>
 			form.fields.map((f) => ({
 				id: f.id,
@@ -70,14 +70,14 @@ export function NcFullJoinInfoScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="회원가입"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -85,8 +85,8 @@ export function NcFullJoinInfoScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcPersonalInfoForm
+			<FlowHero {...hero} />
+			<FlowPersonalInfoForm
 				fields={fields}
 				values={values}
 				errors={errors}

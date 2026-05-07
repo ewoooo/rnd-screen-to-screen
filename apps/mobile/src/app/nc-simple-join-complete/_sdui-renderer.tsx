@@ -1,11 +1,11 @@
 "use client";
 
 import {
-	MembershipHero,
-	MembershipResultActions,
-	MembershipSummaryCard,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowHero,
+	FlowResultActions,
+	FlowSummaryCard,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -40,16 +40,16 @@ export function NcSimpleJoinCompleteScreen({
 
 	return (
 		<AppScreen
-			top={<MembershipTopBar title={topbar.title} leading="close" />}
+			top={<ProgressTopBar title={topbar.title} leading="close" />}
 			bottom={
-				<MembershipResultActions
+				<FlowResultActions
 					primaryLabel={actions.primaryLabel}
 					secondaryLabel={actions.secondaryLabel}
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipSummaryCard
+			<FlowHero {...hero} />
+			<FlowSummaryCard
 				label={summary.label ?? ""}
 				title=""
 				items={items}

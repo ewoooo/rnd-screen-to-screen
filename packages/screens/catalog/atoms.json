@@ -1,0 +1,50 @@
+{
+  "layer": "atom",
+  "entries": [
+    {
+      "name": "TextBlock",
+      "path": "apps/mobile/src/components/atoms/typography/TextBlock.tsx",
+      "purpose": "WDS Typography primitive with mobile copy line-breaking, maxLines, and truncation policy.",
+      "variants_or_axes": ["variant", "text | lines", "maxLines", "overflow"],
+      "absorbs": ["intentional Korean phrase breaks", "dynamic text truncation", "role-based typography"],
+      "used_by": ["molecules", "organisms", "screen renderers"],
+      "strain_notes": ["New fontSize or raw typography in a screen is a vocabulary gap unless TextBlock cannot express the role."]
+    },
+    {
+      "name": "Box/Flex/HStack/VStack/Float",
+      "path": "apps/mobile/src/components/atoms/layout",
+      "purpose": "Layout primitives that constrain spacing to the project semantic spacing vocabulary.",
+      "variants_or_axes": ["spacing tokens", "direction/alignment wrappers"],
+      "absorbs": ["small local composition", "semantic spacing enforcement"],
+      "used_by": ["molecules", "organisms"],
+      "strain_notes": ["Use sparingly in routes; screen-level rhythm belongs to templates."]
+    },
+    {
+      "name": "Divider",
+      "path": "apps/mobile/src/components/atoms/feedback/Divider.tsx",
+      "purpose": "Inset-aware separator wrapper.",
+      "variants_or_axes": ["orientation", "inset", "thickness"],
+      "absorbs": ["row separation", "vertical menu separation"],
+      "used_by": ["home blocks", "lists", "consent rows"],
+      "strain_notes": ["Avoid inline divider divs with raw color or margin."]
+    },
+    {
+      "name": "Placeholder",
+      "path": "apps/mobile/src/components/atoms/feedback/Placeholder.tsx",
+      "purpose": "WDS Thumbnail-based placeholder for unresolved image/icon slots.",
+      "variants_or_axes": ["label", "ratio"],
+      "absorbs": ["missing media", "temporary image placeholder"],
+      "used_by": ["MediaBlock", "SummaryCard", "home/product/search organisms"],
+      "strain_notes": ["Replace with real media when the primary task requires product/place inspection."]
+    },
+    {
+      "name": "Logo/Status*",
+      "path": "apps/mobile/src/components/atoms/icon",
+      "purpose": "Frame-specific preserved React SVG icons.",
+      "variants_or_axes": ["icon component"],
+      "absorbs": ["status bar icons", "brand logo"],
+      "used_by": ["StatusBar", "GlobalNavigationBar"],
+      "strain_notes": ["General icons should come from WDS icon registry before adding local SVG atoms."]
+    }
+  ]
+}

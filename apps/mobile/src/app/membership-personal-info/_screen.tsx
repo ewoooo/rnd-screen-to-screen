@@ -3,12 +3,12 @@
 import { useMemo, useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipPersonalInfoForm,
-	MembershipTopBar,
-	type MembershipPersonalField,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowPersonalInfoForm,
+	ProgressTopBar,
+	type FlowPersonalField,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -16,7 +16,7 @@ import type { RenderableScreenSpecV1 } from "@screen/screens";
 type PersonalInfoData = {
 	topbar: { title: string; progressLabel: string; progressPercent: number };
 	hero: { titleLines: readonly string[]; description: string };
-	form: { fields: readonly MembershipPersonalField[] };
+	form: { fields: readonly FlowPersonalField[] };
 	continue: { eyebrow: string; primaryAction: string };
 };
 
@@ -62,7 +62,7 @@ export function MembershipPersonalInfoScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					progress={{
 						label: topbar.progressLabel,
@@ -71,7 +71,7 @@ export function MembershipPersonalInfoScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -79,8 +79,8 @@ export function MembershipPersonalInfoScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipPersonalInfoForm
+			<FlowHero {...hero} />
+			<FlowPersonalInfoForm
 				fields={form.fields}
 				values={values}
 				errors={errors}

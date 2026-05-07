@@ -1,12 +1,12 @@
 "use client";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcNotice,
-	NcSummaryCard,
-	NcTopBar,
-} from "@/components/organisms/nc";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	FlowSummaryCard,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -45,22 +45,22 @@ export function NcFullLeaveNoticeScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="회원 탈퇴"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={continueData.eyebrow}
 					primaryAction={continueData.primaryAction}
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcSummaryCard label="" title={impact.title} items={items} />
-			<NcNotice
+			<FlowHero {...hero} />
+			<FlowSummaryCard label="" title={impact.title} items={items} />
+			<FlowNotice
 				badge={cautions.badge}
 				text={cautions.text}
 				action={cautions.action ?? ""}

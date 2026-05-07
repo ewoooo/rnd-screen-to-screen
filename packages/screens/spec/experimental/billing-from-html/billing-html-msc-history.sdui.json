@@ -1,0 +1,351 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-msc-history",
+		"name": "휴대폰결제·콘텐츠 이용내역",
+		"route": "/billing-html-msc-history",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"filter": {
+			"items": [
+				{
+					"id": "all",
+					"label": "전체"
+				},
+				{
+					"id": "msc",
+					"label": "휴대폰결제"
+				},
+				{
+					"id": "content",
+					"label": "콘텐츠"
+				}
+			],
+			"active": "all"
+		},
+		"list": {
+			"title": "이용내역",
+			"rows": [
+				{
+					"id": "r1",
+					"title": "쿠팡",
+					"sub": "2026-05-04 14:23 · 휴대폰결제",
+					"trailingLabel": "23,000원"
+				},
+				{
+					"id": "r2",
+					"title": "넷플릭스 스탠다드",
+					"sub": "2026-05-01 · 콘텐츠 정기결제",
+					"trailingLabel": "13,500원"
+				},
+				{
+					"id": "r3",
+					"title": "배달의민족",
+					"sub": "2026-04-28 19:02 · 휴대폰결제",
+					"trailingLabel": "18,200원"
+				},
+				{
+					"id": "r4",
+					"title": "멜론 프리미엄",
+					"sub": "2026-04-25 · 콘텐츠 정기결제",
+					"trailingLabel": "10,900원"
+				}
+			]
+		},
+		"cta": {
+			"primary": {
+				"id": "change-limit",
+				"label": "한도 변경하기"
+			},
+			"secondary": {
+				"id": "prepay",
+				"label": "선결제"
+			}
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-msc-history",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top",
+					"props": {
+						"title": "이용내역",
+						"leading": "back"
+					}
+				},
+				"bottom": {
+					"type": "PrimaryCTABar",
+					"id": "area.cta",
+					"props": {
+						"bind": "cta"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "FilterTabs",
+					"id": "area.filter",
+					"props": {
+						"bind": "filter"
+					}
+				},
+				{
+					"type": "InfoList",
+					"id": "area.list",
+					"props": {
+						"bind": "list",
+						"trailingSemantic": "value"
+					}
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/experimental/billing-from-html/_pagination/billing-html-chk.json",
+		"_canonical_hash": "22c1f20f13ff08df8a5504007971a7040ab842e1d0dc881c89c2a1e290d243f9",
+		"policy_id": "billing-html-chk",
+		"route_id": "billing-html-msc-history",
+		"step_fraction": "4/8",
+		"predecessor": null,
+		"successor": null,
+		"transitions": [
+			{
+				"to": "billing-html-pay-prepay",
+				"trigger": "row_action",
+				"guard": "prepay_eligible",
+				"note": "cross_flow:billing-pay"
+			},
+			{
+				"to": "billing-html-set-msc-limit",
+				"trigger": "footer_cta",
+				"guard": "user_chooses_change_limit",
+				"note": "cross_flow:billing-set"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-CHK-004-01",
+				"PR-BIL-CHK-004-02",
+				"PR-BIL-CHK-004-03",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-004-01"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-CHK-004-01,02,03",
+			"name": "이용내역 조회 + 선결제 가능 여부 + 한도 변경 연결",
+			"cluster": "US-BIL-CHK-004",
+			"actor": "청구 확인자, 연계 시스템",
+			"entry_condition": "이용내역 진입",
+			"exit_condition": "이용내역 확인 후 선결제 또는 한도 변경 분기",
+			"predecessor": [],
+			"successor": [],
+			"related_functions": [
+				"FN-BIL-CHK-006 이용내역 조회"
+			],
+			"related_policies": [
+				"PG-BIL-PAY-003 예약·선납·선결제 정책",
+				"PG-BIL-CUS-001 고객 안내 정책"
+			]
+		},
+		"purpose": "휴대폰결제·콘텐츠 이용일시·가맹점·금액·청구 반영 여부·선결제 가능 여부를 확인한다.",
+		"system_inputs_to_user": [
+			"이용일시",
+			"가맹점",
+			"이용 금액",
+			"청구 반영 여부",
+			"선결제 가능 여부"
+		],
+		"user_inputs": [
+			"행 선택 (선결제)",
+			"한도 변경 진입"
+		],
+		"system_outputs": [
+			"선결제 가능 대상",
+			"한도 변경 진입 경로"
+		],
+		"branches": [
+			"선결제 가능 → 선결제 flow",
+			"한도 변경 → SET flow"
+		],
+		"exceptions": [
+			"조회 실패 → 재조회"
+		],
+		"design_signals": {
+			"primary_block": "FilterTabs + InfoList (가맹점/일시/금액)"
+		},
+		"evidence_refs": [
+			{
+				"claim": "선결제 가능 대상",
+				"policy": [
+					"POL-BIL-PAY-003-07",
+					"POL-BIL-PAY-003-08"
+				],
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=POL-BIL-PAY-003-07"
+			},
+			{
+				"claim": "선결제 가능 금액 산정",
+				"policy": [
+					"POL-BIL-PAY-001-08"
+				],
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=POL-BIL-PAY-001-08"
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "browse",
+		"primary_task": "이용내역 조회 + 선결제/한도 변경 진입",
+		"info_hierarchy": [
+			"filter",
+			"list",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "flat"
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"GlobalNavigationHeader"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"FilterTabs",
+					"InfoList"
+				]
+			},
+			"bottom": {
+				"owner": "PrimaryCTABar",
+				"patterns": [
+					"PrimaryCTABar"
+				],
+				"flow": "reserved"
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": [
+				"filter"
+			],
+			"content_rail_owner": "ContentRail"
+		},
+		"areas": [
+			{
+				"id": "top",
+				"slot": "top",
+				"pattern": "organisms/global/GlobalNavigationHeader",
+				"uses": [
+					"GlobalNavigationHeader"
+				],
+				"layout": {
+					"leading": "back",
+					"title": "이용내역"
+				},
+				"content_role": "chrome"
+			},
+			{
+				"id": "filter",
+				"slot": "content",
+				"pattern": "molecules/FilterTabs",
+				"uses": [
+					"FilterTabs"
+				],
+				"layout": {
+					"section_inset": "bleed"
+				},
+				"content_role": "filter"
+			},
+			{
+				"id": "list",
+				"slot": "content",
+				"pattern": "molecules/InfoList",
+				"uses": [
+					"InfoList"
+				],
+				"layout": {
+					"trailing_semantic": "value"
+				},
+				"content_role": "list"
+			},
+			{
+				"id": "cta",
+				"slot": "bottom",
+				"pattern": "molecules/PrimaryCTABar",
+				"uses": [
+					"PrimaryCTABar",
+					"Button"
+				],
+				"content_role": "primary-action"
+			}
+		],
+		"design_system_contract": {
+			"templates": [
+				"AppScreen",
+				"AppScreenContent",
+				"ContentOutlet",
+				"ContentList",
+				"ContentSection"
+			],
+			"organisms": [
+				"global"
+			],
+			"molecules": [
+				"FilterTabs",
+				"InfoList",
+				"PrimaryCTABar"
+			],
+			"atoms": [
+				"TextBlock"
+			],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{
+				"rule": "H-7",
+				"result": "pass",
+				"evidence": "browse hub → back"
+			},
+			{
+				"rule": "H-10",
+				"result": "pass",
+				"evidence": "InfoList trailing=value (금액)"
+			},
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "FilterTabs는 ContentSection bleed로만 처리, route margin 없음"
+			}
+		]
+	}
+}

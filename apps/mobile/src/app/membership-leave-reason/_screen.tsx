@@ -3,12 +3,12 @@
 import { useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipReasonForm,
-	MembershipTopBar,
-	type MembershipReasonItem,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowReasonForm,
+	ProgressTopBar,
+	type FlowReasonItem,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -19,7 +19,7 @@ type LeaveReasonData = {
 		description: string;
 	};
 	reason: {
-		items: readonly MembershipReasonItem[];
+		items: readonly FlowReasonItem[];
 		freeTextLabel: string;
 		freeTextPlaceholder: string;
 		freeTextMaxLength: number;
@@ -55,7 +55,7 @@ export function MembershipLeaveReasonScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={{
@@ -66,7 +66,7 @@ export function MembershipLeaveReasonScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -74,11 +74,11 @@ export function MembershipLeaveReasonScreen({
 				/>
 			}
 		>
-			<MembershipHero
+			<FlowHero
 				titleLines={hero.titleLines}
 				description={hero.description}
 			/>
-			<MembershipReasonForm
+			<FlowReasonForm
 				items={reason.items}
 				freeTextLabel={reason.freeTextLabel}
 				freeTextPlaceholder={reason.freeTextPlaceholder}

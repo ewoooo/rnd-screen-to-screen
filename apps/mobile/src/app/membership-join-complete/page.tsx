@@ -7,13 +7,13 @@ import {
 import type { ReactNode } from "react";
 
 import {
-	MembershipHero,
-	MembershipNotice,
-	MembershipResultActions,
-	MembershipSummaryCard,
-	MembershipTopBar,
-	type MembershipSummaryItem,
-} from "@/components/organisms/membership";
+	FlowHero,
+	FlowNotice,
+	FlowResultActions,
+	FlowSummaryCard,
+	ProgressTopBar,
+	type FlowSummaryItem,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 const SUMMARY_MEDIA_ICON: Record<string, ReactNode> = {
@@ -33,7 +33,7 @@ export default function MembershipJoinCompletePage() {
 		summary: {
 			label: string;
 			title: string;
-			items: readonly Omit<MembershipSummaryItem, "mediaIcon">[];
+			items: readonly Omit<FlowSummaryItem, "mediaIcon">[];
 		};
 		notice: {
 			badge: string;
@@ -57,7 +57,7 @@ export default function MembershipJoinCompletePage() {
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title="가입 완료"
 					progress={
 						progress
@@ -67,22 +67,22 @@ export default function MembershipJoinCompletePage() {
 				/>
 			}
 			bottom={
-				<MembershipResultActions
+				<FlowResultActions
 					primaryLabel={data.actions.primaryLabel}
 					secondaryLabel={data.actions.secondaryLabel}
 				/>
 			}
 		>
-			<MembershipHero
+			<FlowHero
 				titleLines={data.hero.titleLines}
 				description={data.hero.description}
 			/>
-			<MembershipSummaryCard
+			<FlowSummaryCard
 				label={data.summary.label}
 				title={data.summary.title}
 				items={summaryItems}
 			/>
-			<MembershipNotice {...data.notice} />
+			<FlowNotice {...data.notice} />
 		</AppScreen>
 	);
 }

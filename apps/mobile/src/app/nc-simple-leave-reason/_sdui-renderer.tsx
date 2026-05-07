@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipReasonForm,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowReasonForm,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -50,7 +50,7 @@ export function NcSimpleLeaveReasonScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -65,7 +65,7 @@ export function NcSimpleLeaveReasonScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -73,8 +73,8 @@ export function NcSimpleLeaveReasonScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipReasonForm
+			<FlowHero {...hero} />
+			<FlowReasonForm
 				items={reason.items}
 				freeTextLabel={reason.freeText.label}
 				freeTextPlaceholder={reason.freeText.placeholder}

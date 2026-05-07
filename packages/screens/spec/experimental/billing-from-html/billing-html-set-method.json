@@ -1,0 +1,236 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "experimental-html",
+		"route": "/billing-html-set-method",
+		"source": "policy-driven",
+		"policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+		"policy_section": "4. US-BIL-SET-002 / PR-BIL-SET-002-01,02,03",
+		"pagination_ref": "packages/screens/spec/experimental/billing-from-html/_pagination/billing-html-set.json"
+	},
+	"screen": {
+		"id": "billing-html-set-method",
+		"name": "납부방법 신청·변경",
+		"domain": "billing-html",
+		"use_case": "US-BIL-SET-002",
+		"process_id": "PR-BIL-SET-002-01,02,03",
+		"step_fraction": "2/6",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "자동납부 카드/계좌·납부일·납부방법 신청·변경",
+		"info_hierarchy": [
+			"hero",
+			"current-method (현재 납부방법 InfoList)",
+			"selectable (납부방법 카드/계좌)",
+			"form (납부일)",
+			"supporting (적용 시점)",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "flat",
+		"copy_policy": {
+			"description_measure": "body",
+			"avoid_full_width_caption": true
+		},
+		"rail_policy": {
+			"owner": "ContentRail",
+			"route_margin": "forbidden"
+		}
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"TopNavigation"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"Hero",
+					"CurrentMethodInfoList",
+					"MethodTypeSelectableList",
+					"MethodPicker",
+					"DueDayField",
+					"EffectiveNotice"
+				]
+			},
+			"bottom": {
+				"owner": "StickyActionBar",
+				"patterns": [
+					"PrimaryCTA"
+				],
+				"flow": "reserved"
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": [],
+		"content_rail_owner": "ContentRail"
+	},
+	"areas": [
+		{
+			"id": "top",
+			"slot": "top",
+			"pattern": "organisms/global/GlobalNavigationHeader",
+			"uses": [
+				"TopNavigation"
+			],
+			"layout": {
+				"leading": "back",
+				"title": "납부방법"
+			},
+			"content_role": "navigation"
+		},
+		{
+			"id": "hero",
+			"slot": "content",
+			"pattern": "molecules/Hero",
+			"uses": [
+				"ContentSection",
+				"TextBlock",
+				"ContentRail"
+			],
+			"layout": {
+				"section_inset": "inherit",
+				"description_rail": "measure:body"
+			},
+			"content_role": "primary-copy"
+		},
+		{
+			"id": "current",
+			"slot": "content",
+			"pattern": "molecules/InfoList",
+			"uses": [
+				"ContentSection",
+				"InfoList"
+			],
+			"layout": {
+				"section_inset": "inherit",
+				"trailing_semantic": "value"
+			},
+			"content_role": "supporting-status"
+		},
+		{
+			"id": "method-type",
+			"slot": "content",
+			"pattern": "molecules/SelectableList",
+			"uses": [
+				"ContentSection",
+				"SelectableList",
+				"RadioGroup"
+			],
+			"layout": {
+				"section_inset": "inherit",
+				"selectionMode": "single"
+			},
+			"content_role": "required-input",
+			"state_binding": {
+				"field_required": [
+					"methodType"
+				]
+			}
+		},
+		{
+			"id": "method-detail",
+			"slot": "content",
+			"pattern": "molecules/FormField",
+			"uses": [
+				"ContentSection",
+				"FormField",
+				"Select"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "required-input",
+			"state_binding": {
+				"field_required": [
+					"methodId"
+				],
+				"validation_owner": "FormField (errorText)"
+			}
+		},
+		{
+			"id": "due-day",
+			"slot": "content",
+			"pattern": "molecules/FormField",
+			"uses": [
+				"ContentSection",
+				"FormField",
+				"TextField"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "required-input"
+		},
+		{
+			"id": "effective",
+			"slot": "content",
+			"pattern": "molecules/NoticeBlock",
+			"uses": [
+				"ContentSection",
+				"NoticeBlock"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "supporting-notice"
+		},
+		{
+			"id": "continue",
+			"slot": "bottom",
+			"pattern": "molecules/StickyActionBar",
+			"uses": [
+				"Box",
+				"Button",
+				"TextBlock"
+			],
+			"content_role": "primary-action",
+			"state_binding": {
+				"primary_disabled_when": "form.invalidCount > 0 OR form.missingRequiredCount > 0",
+				"eyebrow_when_blocked": "납부방법과 납부일을 선택해 주세요",
+				"eyebrow_when_ready": "선택한 납부방법으로 변경"
+			}
+		}
+	],
+	"design_system_contract": {
+		"templates": [
+			"AppScreen",
+			"AppScreenContent",
+			"ContentOutlet",
+			"ContentList",
+			"ContentSection",
+			"ContentRail"
+		],
+		"organisms": [
+			"global"
+		],
+		"molecules": [
+			"InfoList",
+			"SelectableList",
+			"FormField",
+			"form-controls (RadioGroup, Select, TextField)",
+			"NoticeBlock",
+			"StickyActionBar"
+		],
+		"atoms": [
+			"TextBlock",
+			"Box"
+		],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

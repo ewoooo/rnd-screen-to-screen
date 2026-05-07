@@ -1,0 +1,60 @@
+{
+  "layer": "organism",
+  "domain": "product",
+  "entries": [
+    {
+      "name": "ProductShell",
+      "path": "apps/mobile/src/components/organisms/product/ProductShell.tsx",
+      "purpose": "Product detail screen shell composing AppScreen with product top/bottom chrome.",
+      "variants_or_axes": ["children", "purchaseBar"],
+      "absorbs": ["product top bar", "product bottom purchase composition"],
+      "used_by": ["product-detail"],
+      "strain_notes": ["Domain shell should remain thin; generic chrome belongs to templates/global organisms."]
+    },
+    {
+      "name": "ProductSummaryCard",
+      "path": "apps/mobile/src/components/organisms/product/ProductSummaryCard.tsx",
+      "purpose": "Product summary mapping product data to SummaryCard/MediaBlock.",
+      "variants_or_axes": ["product title", "price", "discount", "rating", "textPolicy"],
+      "absorbs": ["product media", "price", "discount", "review meta"],
+      "used_by": ["product-detail"],
+      "strain_notes": ["If non-product summaries need the same shape, extract back into SummaryCard axes."]
+    },
+    {
+      "name": "ProductOptionSelector",
+      "path": "apps/mobile/src/components/organisms/product/ProductOptionSelector.tsx",
+      "purpose": "Product option data mapped to SectionCard + SelectableList.",
+      "variants_or_axes": ["items", "selectedId"],
+      "absorbs": ["product option selection"],
+      "used_by": ["product-detail"],
+      "strain_notes": ["Selection semantics are molecule-level; product organism should mainly map data."]
+    },
+    {
+      "name": "ProductBenefitList",
+      "path": "apps/mobile/src/components/organisms/product/ProductBenefitList.tsx",
+      "purpose": "Product benefit data mapped to SectionCard + InfoList.",
+      "variants_or_axes": ["items", "trailing label"],
+      "absorbs": ["benefit list", "product metadata rows"],
+      "used_by": ["product-detail"],
+      "strain_notes": ["Cross-domain benefit/effect lists should use InfoList directly or a global flow summary wrapper."]
+    },
+    {
+      "name": "ProductPromoBanner",
+      "path": "apps/mobile/src/components/organisms/product/ProductPromoBanner.tsx",
+      "purpose": "Product promotion wrapper over PromoBlock.",
+      "variants_or_axes": ["text", "badge", "action"],
+      "absorbs": ["product promo"],
+      "used_by": ["product-detail"],
+      "strain_notes": ["Policy notice should not route through this wrapper."]
+    },
+    {
+      "name": "ProductPurchaseBar",
+      "path": "apps/mobile/src/components/organisms/product/ProductPurchaseBar.tsx",
+      "purpose": "Product sticky purchase CTA wrapper over StickyActionBar.",
+      "variants_or_axes": ["title", "aiText", "ctaText"],
+      "absorbs": ["product purchase CTA"],
+      "used_by": ["product-detail"],
+      "strain_notes": ["Execution-flow CTAs should use flow CTA vocabulary instead."]
+    }
+  ]
+}

@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipNotice,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import {
 	AuthMethodSelector,
 	type AuthMethodItem,
@@ -72,7 +72,7 @@ export function NcSimpleLeaveAuthScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -87,7 +87,7 @@ export function NcSimpleLeaveAuthScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={primaryAction}
 					disabled={blocked}
@@ -95,8 +95,8 @@ export function NcSimpleLeaveAuthScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
-			<MembershipNotice
+			<FlowHero {...hero} />
+			<FlowNotice
 				badge={notice.badge}
 				text={notice.text}
 				action={notice.action ?? ""}

@@ -3,14 +3,14 @@
 import { useMemo, useState } from "react";
 
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipPersonalInfoForm,
-	MembershipTopBar,
+	FlowContinueBar,
+	FlowHero,
+	FlowPersonalInfoForm,
+	ProgressTopBar,
 	TermsAgreementGroup,
-	type MembershipPersonalField,
+	type FlowPersonalField,
 	type TermsAgreementItem,
-} from "@/components/organisms/membership";
+} from "@/components/organisms/global";
 import {
 	ReusedInfoList,
 	type ReusedInfoItem,
@@ -77,7 +77,7 @@ export function NcSimpleRejoinInfoScreen({
 	const initialMissing = terms.required.length;
 	const [missingTerms, setMissingTerms] = useState(initialMissing);
 
-	const fields = useMemo<readonly MembershipPersonalField[]>(
+	const fields = useMemo<readonly FlowPersonalField[]>(
 		() =>
 			form.fields.map((f) => ({
 				id: f.id,
@@ -102,7 +102,7 @@ export function NcSimpleRejoinInfoScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					leading="back"
 					progress={
@@ -117,7 +117,7 @@ export function NcSimpleRejoinInfoScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -125,7 +125,7 @@ export function NcSimpleRejoinInfoScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
+			<FlowHero {...hero} />
 			<TermsAgreementGroup
 				title="약관 동의"
 				allLabel={terms.selectAllLabel}
@@ -134,7 +134,7 @@ export function NcSimpleRejoinInfoScreen({
 				onStateChange={(s) => setMissingTerms(s.missingRequiredCount)}
 			/>
 			<ReusedInfoList label={reusedInfo.label} items={reusedInfo.items} />
-			<MembershipPersonalInfoForm
+			<FlowPersonalInfoForm
 				fields={fields}
 				values={values}
 				errors={errors}

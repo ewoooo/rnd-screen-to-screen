@@ -5,5 +5,18 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
+  },
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-html-parser": "^7.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   }
 }

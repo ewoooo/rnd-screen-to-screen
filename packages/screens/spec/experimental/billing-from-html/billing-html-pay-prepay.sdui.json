@@ -1,0 +1,454 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-pay-prepay",
+		"name": "선결제",
+		"route": "/billing-html-pay-prepay",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"flow": {
+			"useCase": "US-BIL-PAY-007",
+			"name": "선결제",
+			"step": 7,
+			"total": 8,
+			"progress": "선결제 7/8"
+		},
+		"hero": {
+			"titleLines": [
+				"미리 결제할 항목을 선택하세요"
+			],
+			"description": "BSS가 선결제 가능으로 반환한 항목만 표시돼요. 선결제 금액은 다음 청구에서 자동으로 차감돼요."
+		},
+		"tabs": {
+			"selected": "phone",
+			"items": [
+				{
+					"id": "phone",
+					"label": "휴대폰결제"
+				},
+				{
+					"id": "content",
+					"label": "콘텐츠 이용료"
+				}
+			]
+		},
+		"items": {
+			"label": "선결제 가능 항목",
+			"selectionMode": "multi",
+			"items": [
+				{
+					"id": "p1",
+					"title": "동영상 구독 (5월)",
+					"sub": "콘텐츠 이용료",
+					"trailingLabel": "12,000원"
+				},
+				{
+					"id": "p2",
+					"title": "음악 스트리밍 (5월)",
+					"sub": "콘텐츠 이용료",
+					"trailingLabel": "8,900원"
+				},
+				{
+					"id": "p3",
+					"title": "디지털 상품권",
+					"sub": "휴대폰결제",
+					"trailingLabel": "30,000원"
+				}
+			]
+		},
+		"continue": {
+			"eyebrow": "선택 항목 합계가 다음 청구에서 차감돼요",
+			"primaryAction": "선결제"
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-pay-prepay",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top",
+					"props": {
+						"title": "선결제",
+						"leading": "back",
+						"progressBind": "flow.progress",
+						"progressTotal": 8,
+						"progressStep": 7
+					}
+				},
+				"bottom": {
+					"type": "StickyActionBar",
+					"id": "area.continue",
+					"props": {
+						"bind": "continue",
+						"primaryDisabledWhen": "items.selectedCount == 0"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "ContentSection",
+					"id": "area.hero",
+					"children": [
+						{
+							"type": "TextBlock",
+							"id": "hero.title",
+							"props": {
+								"bind": "hero.titleLines",
+								"variant": "displayTitle",
+								"overflow": "wrap"
+							}
+						},
+						{
+							"type": "ContentRail",
+							"id": "hero.description.rail",
+							"props": {
+								"rail": "measure",
+								"measure": "body"
+							},
+							"children": [
+								{
+									"type": "TextBlock",
+									"id": "hero.description",
+									"props": {
+										"bind": "hero.description",
+										"variant": "bodySubtle",
+										"maxLines": 3,
+										"overflow": "wrap"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "ContentSection",
+					"id": "area.tabs",
+					"children": [
+						{
+							"type": "Tab",
+							"id": "tabs.tab",
+							"props": {
+								"bind": "tabs"
+							}
+						}
+					]
+				},
+				{
+					"type": "ContentSection",
+					"id": "area.items",
+					"children": [
+						{
+							"type": "TextBlock",
+							"id": "items.label",
+							"props": {
+								"bind": "items.label",
+								"variant": "sectionLabel"
+							}
+						},
+						{
+							"type": "SelectableList",
+							"id": "items.list",
+							"props": {
+								"bind": "items",
+								"selectionMode": "multi"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/experimental/billing-from-html/_pagination/billing-html-pay.json",
+		"_canonical_hash": "b7deeccee388ab32e2b74a2b3069a0bc0bc2681fe26caa70b1fdc229f3b5368b",
+		"policy_id": "billing-html-pay",
+		"route_id": "billing-html-pay-prepay",
+		"step_fraction": "7/8",
+		"predecessor": null,
+		"successor": "billing-html-pay-prepay-result",
+		"transitions": [
+			{
+				"to": "billing-html-pay-prepay-result",
+				"trigger": "primary_cta",
+				"guard": "prepay_request_submitted"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-PAY-007-01",
+				"PR-BIL-PAY-007-02",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#L8042-L8409"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-PAY-007-01,02",
+			"name": "선결제 대상 조회 + 요청·승인",
+			"cluster": "US-BIL-PAY-007 7/8",
+			"actor": "납부 실행자, 결제 기관",
+			"entry_condition": "선결제 진입",
+			"exit_condition": "선결제 요청 송신 완료",
+			"predecessor": [],
+			"successor": [
+				"PR-BIL-PAY-007-03"
+			],
+			"related_functions": [
+				"FN-BIL-PAY-001 대상·금액 확정",
+				"FN-BIL-PAY-002 검증"
+			],
+			"related_policies": [
+				"POL-BIL-PAY-003-07 선결제 가능 대상",
+				"POL-BIL-PAY-003-08 선결제 승인 기준",
+				"POL-BIL-AUTH-001-02 수단별 사용 가능 업무",
+				"POL-BIL-SEC-001-02 마스킹"
+			]
+		},
+		"purpose": "휴대폰결제·콘텐츠 이용료 중 선결제 가능 항목을 사용자에게 보여주고 선결제 요청을 송신한다.",
+		"system_inputs_to_user": [
+			"선결제 가능 분류",
+			"항목별 금액",
+			"허용 납부수단"
+		],
+		"user_inputs": [
+			"분류 탭 선택",
+			"항목 다중 선택",
+			"선결제 CTA"
+		],
+		"system_outputs": [
+			"요청 ID"
+		],
+		"branches": [
+			"요청 송신 → 결과",
+			"선결제 불가 항목 자동 제외"
+		],
+		"exceptions": [
+			"승인 실패 → 사유 안내"
+		],
+		"design_signals": {
+			"primary_block": "Tab + SelectableList(다중)",
+			"hero_intent": "선결제 시작 안내",
+			"cta_intent": "선결제"
+		},
+		"evidence_refs": [
+			{
+				"claim": "process entry/exit",
+				"policy": "PR-BIL-PAY-007-01",
+				"doc_line": "L8045-L8060"
+			},
+			{
+				"claim": "선결제 요청·승인",
+				"policy": "PR-BIL-PAY-007-02",
+				"doc_line": "L8196-L8210"
+			},
+			{
+				"claim": "선결제 가능 대상",
+				"policy": "POL-BIL-PAY-003-07",
+				"doc_line": "L4549"
+			},
+			{
+				"claim": "선결제 승인 기준",
+				"policy": "POL-BIL-PAY-003-08",
+				"doc_line": "L4550"
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "분류·항목 선택 후 선결제 요청",
+		"user_decision": "어느 분류의 어느 항목을 선결제할지",
+		"hierarchy": {
+			"top": "progress",
+			"lead": "short_action_title",
+			"body": "category_tabs + multi_select",
+			"bottom": "primary_cta"
+		},
+		"copy_policy": {
+			"title_style": "short_action",
+			"description_measure": "body",
+			"avoid_full_width_caption": true
+		},
+		"interaction_pattern": {
+			"main_control": "tab + selectable_list_multi",
+			"cta_position": "bottom_chrome",
+			"progress_position": "top_chrome"
+		},
+		"info_hierarchy": [
+			"hero",
+			"category-tabs",
+			"selector (다중)",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat",
+		"quality_checks": [
+			"form 영역에 NoticeBlock 미사용(H-8)",
+			"선택 합계는 eyebrow에서 표현"
+		]
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"ContentSection",
+					"TextBlock",
+					"Tab",
+					"SelectableList"
+				]
+			},
+			"bottom": {
+				"owner": "StickyActionBar",
+				"flow": "reserved"
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": [],
+			"content_rail_owner": "ContentRail"
+		},
+		"areas": [
+			{
+				"id": "top-progress",
+				"slot": "top",
+				"pattern": "organisms/global/GlobalNavigationHeader",
+				"uses": [
+					"TopNavigation",
+					"ProgressIndicator"
+				],
+				"layout": {
+					"leading": "back"
+				},
+				"content_role": "flow-progress"
+			},
+			{
+				"id": "hero",
+				"slot": "content",
+				"pattern": "ContentSection + TextBlock",
+				"uses": [
+					"ContentSection",
+					"ContentRail",
+					"TextBlock"
+				],
+				"content_role": "primary-copy"
+			},
+			{
+				"id": "tabs",
+				"slot": "content",
+				"pattern": "WDS Tab",
+				"uses": [
+					"ContentSection",
+					"Tab"
+				],
+				"content_role": "category-tabs"
+			},
+			{
+				"id": "items",
+				"slot": "content",
+				"pattern": "molecules/SelectableList",
+				"uses": [
+					"ContentSection",
+					"SelectableList",
+					"TextBlock"
+				],
+				"layout": {
+					"selectionMode": "multi",
+					"trailing_semantic": "value"
+				},
+				"content_role": "primary-choice"
+			},
+			{
+				"id": "continue",
+				"slot": "bottom",
+				"pattern": "molecules/StickyActionBar",
+				"uses": [
+					"Button",
+					"TextBlock"
+				],
+				"content_role": "primary-action",
+				"state_binding": {
+					"primary_disabled_when": "items.selectedCount == 0"
+				}
+			}
+		],
+		"design_system_contract": {
+			"templates": [
+				"AppScreen",
+				"ContentList",
+				"ContentSection",
+				"ContentRail"
+			],
+			"organisms": [
+				"global"
+			],
+			"molecules": [
+				"SelectableList",
+				"StickyActionBar"
+			],
+			"atoms": [
+				"TextBlock"
+			],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{
+				"rule": "H-1",
+				"result": "pass",
+				"evidence": "form, card 0개"
+			},
+			{
+				"rule": "H-7",
+				"result": "pass",
+				"evidence": "step flow → back"
+			},
+			{
+				"rule": "H-8",
+				"result": "pass",
+				"evidence": "NoticeBlock 미사용"
+			},
+			{
+				"rule": "H-9",
+				"result": "pass",
+				"evidence": "* 미사용, CTA disabled"
+			},
+			{
+				"rule": "H-10",
+				"result": "pass",
+				"evidence": "trailingLabel은 value(가격) 의미"
+			},
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "ContentSection inset 사용"
+			}
+		]
+	}
+}

@@ -1,20 +1,16 @@
 "use client";
 
-import {
-	IconLock,
-	IconMessage,
-	IconMobile,
-} from "@wanteddev/wds-icon";
+import { IconLock, IconMessage, IconMobile } from "@wanteddev/wds-icon";
 import { useState, type ReactNode } from "react";
 
 import { SelectableList } from "@/components/molecules";
 import {
-	NcContinueBar,
-	NcHero,
-	NcNotice,
-	NcTopBar,
-} from "@/components/organisms/nc";
-import { AppScreen, ContentSection } from "@/components/templates/app-screen";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
+} from "@/components/organisms/global";
+import { AppScreen, ListContents } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 
@@ -70,14 +66,14 @@ export function NcFullLeaveAuthScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="회원 탈퇴"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -85,8 +81,8 @@ export function NcFullLeaveAuthScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<ContentSection inset="bleed">
+			<FlowHero {...hero} />
+			<ListContents>
 				<SelectableList
 					name="leave-auth-method"
 					items={items}
@@ -94,8 +90,8 @@ export function NcFullLeaveAuthScreen({
 					onChange={setValue}
 					density="comfortable"
 				/>
-			</ContentSection>
-			<NcNotice
+			</ListContents>
+			<FlowNotice
 				badge={policyNotice.badge}
 				text={policyNotice.text}
 				action={policyNotice.action ?? ""}

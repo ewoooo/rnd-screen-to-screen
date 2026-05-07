@@ -38,10 +38,6 @@ export type ScreenAuditTable = {
 	summary: ScreenAuditSummary;
 };
 
-type RenderableWithInterfacePlan = RenderableScreenSpecV1 & {
-	x_interfacePlan?: Record<string, unknown>;
-};
-
 const EMPTY = "-";
 
 function compact(values: readonly unknown[]): string {
@@ -140,10 +136,9 @@ export function createScreenAuditTable(
 	spec: ScreenSpecV2,
 	renderSpec?: RenderableScreenSpecV1,
 ): ScreenAuditTable {
-	const renderable = renderSpec as RenderableWithInterfacePlan | undefined;
-	const contract = renderable?.x_screenContract ?? spec;
-	const interfacePlan = renderable?.x_interfacePlan ?? {};
-	const policyExtract = renderable?.x_policyExtract;
+	const contract = renderSpec?.x_screenContract ?? spec;
+	const interfacePlan = renderSpec?.x_interfacePlan;
+	const policyExtract = renderSpec?.x_policyExtract;
 	const renderTypes = renderSpec ? collectNodeTypes(renderSpec.children) : [];
 	const rawRenderHints = renderSpec ? collectRawRenderHints(renderSpec.children) : [];
 	const contractUses = areaUses(contract.areas);
@@ -157,7 +152,7 @@ export function createScreenAuditTable(
 			"화면 목적",
 			compact([
 				policyExtract?.purpose,
-				interfacePlan.primary_task,
+				interfacePlan?.primary_task,
 			]),
 			compact([
 				spec.screen.name,
@@ -168,27 +163,55 @@ export function createScreenAuditTable(
 				renderSpec?.metadata.name,
 				renderSpec?.metadata.route,
 			]),
-			policyExtract || interfacePlan.primary_task ? "OK" : "Missing",
-			policyExtract || interfacePlan.primary_task
+			policyExtract || interfacePlan?.primary_task ? "OK" : "Missing",
+			policyExtract || interfacePlan?.primary_task
 				? "목적 근거가 spec/render와 연결됨"
 				: "x_policyExtract.purpose 또는 x_interfacePlan.primary_task를 보강",
 		),
 		row(
+			"UX 단계",
+			compact([
+				renderSpec?.x_uxStage?.primary,
+				renderSpec?.x_uxStage?.secondary?.join("+"),
+				renderSpec?.x_uxStage?.evidence,
+			]),
+			compact([
+				spec.screen.domain,
+				spec.screen.type,
+				spec.screen_contract.shell,
+			]),
+			compact(renderSpec?.x_uxStage?.checkpoints ?? []),
+			renderSpec?.x_uxStage ? "OK" : "Needs Review",
+			renderSpec?.x_uxStage
+				? "UX journey 단계가 interface plan 전에 분류됨"
+				: "x_uxStage.primary를 entry/explore/search/decision/execution/complete/support 중 하나로 기록",
+		),
+		row(
 			"정보 위계",
-			stringify(interfacePlan.info_hierarchy ?? interfacePlan.hierarchy),
+			stringify(interfacePlan?.info_hierarchy ?? interfacePlan?.hierarchy),
 			compact(contract.areas.map((area) => `${area.id}:${area.pattern}`)),
 			compact(renderTypes),
-			interfacePlan.info_hierarchy || interfacePlan.hierarchy
+			interfacePlan?.info_hierarchy || interfacePlan?.hierarchy
 				? "OK"
 				: "Needs Review",
-			interfacePlan.info_hierarchy || interfacePlan.hierarchy
+			interfacePlan?.info_hierarchy || interfacePlan?.hierarchy
 				? "area pattern과 렌더 node 순서를 육안 검수"
 				: "x_interfacePlan.info_hierarchy를 먼저 고정",
 		),
 		row(
+			"시각 순서",
+			stringify(interfacePlan?.visual_order),
+			compact(contract.areas.map((area) => area.id)),
+			compact(renderTypes),
+			interfacePlan?.visual_order ? "OK" : "Needs Review",
+			interfacePlan?.visual_order
+				? "visual_order와 실제 SDUI children 순서가 같은지 확인"
+				: "핵심 정보가 문서형으로 평평해지지 않도록 x_interfacePlan.visual_order를 기록",
+		),
+		row(
 			"진행 구조",
 			compact([
-				interfacePlan.progress_location,
+				interfacePlan?.progress_location,
 				policyExtract?.process?.predecessor,
 				policyExtract?.process?.successor,
 			]),
@@ -197,14 +220,14 @@ export function createScreenAuditTable(
 				spec.screen_contract.slots.bottom?.patterns,
 			]),
 			compact(renderTypes.filter((type) => /progress|step|topbar/i.test(type))),
-			interfacePlan.progress_location ? "OK" : "Needs Review",
-			interfacePlan.progress_location
+			interfacePlan?.progress_location ? "OK" : "Needs Review",
+			interfacePlan?.progress_location
 				? "progress 위치와 전후 화면 전이를 함께 확인"
 				: "flow 화면이면 progress_location 또는 x_pagination 연결 확인",
 		),
 		row(
 			"CTA",
-			stringify(interfacePlan.cta_location),
+			stringify(interfacePlan?.cta_location),
 			compact([
 				spec.screen_contract.slots.bottom?.owner,
 				spec.screen_contract.slots.bottom?.patterns,
@@ -214,8 +237,8 @@ export function createScreenAuditTable(
 					/cta|action|button|continue|purchase|bar/i.test(type),
 				),
 			),
-			interfacePlan.cta_location ? "OK" : "Needs Review",
-			interfacePlan.cta_location
+			interfacePlan?.cta_location ? "OK" : "Needs Review",
+			interfacePlan?.cta_location
 				? "primary CTA 위치, label, disabled 상태를 렌더에서 확인"
 				: "primary task가 있으면 CTA 위치를 명시",
 		),
@@ -253,7 +276,7 @@ export function createScreenAuditTable(
 		),
 		row(
 			"텍스트 정책",
-			stringify(interfacePlan.copy_policy),
+			stringify(interfacePlan?.copy_policy),
 			compact(
 				contract.areas
 					.filter((area) =>
@@ -262,10 +285,72 @@ export function createScreenAuditTable(
 					.map((area) => area.id),
 			),
 			compact(renderTypes.filter((type) => /text|typography|copy/i.test(type))),
-			interfacePlan.copy_policy ? "OK" : "Needs Review",
-			interfacePlan.copy_policy
+			interfacePlan?.copy_policy ? "OK" : "Needs Review",
+			interfacePlan?.copy_policy
 				? "lines/maxLines/measure 정책이 렌더 prop에 남는지 확인"
 				: "caption/body/title measure 정책을 x_interfacePlan에 기록",
+		),
+		row(
+			"법적/안내 고지",
+			stringify(policyExtract?.legal_notices),
+			compact(
+				contract.areas
+					.filter((area) =>
+						/notice|legal|policy|footer/i.test(area.id + area.content_role),
+					)
+					.map((area) => `${area.id}:${area.content_role}`),
+			),
+			compact(renderTypes.filter((type) => /notice|footer|cs|legal/i.test(type))),
+			(policyExtract?.legal_notices?.length ?? 0) > 0
+				? "OK"
+				: "Needs Review",
+			(policyExtract?.legal_notices?.length ?? 0) > 0
+				? "고지 source_ref와 target_area가 렌더 영역에 연결되는지 확인"
+				: "정책 화면이면 x_policyExtract.legal_notices에 필수/사용성 고지를 도출",
+		),
+		row(
+			"상태 매트릭스",
+			stringify(renderSpec?.x_stateMatrix ?? interfacePlan?.state_matrix),
+			compact(
+				contract.areas
+					.filter((area) =>
+						/state|input|choice|form|cta|notice/i.test(
+							area.content_role + area.pattern,
+						),
+					)
+					.map((area) => area.id),
+			),
+			compact(
+				renderTypes.filter((type) =>
+					/input|checkbox|radio|select|notice|cta|button|loading|error/i.test(
+						type,
+					),
+				),
+			),
+			renderSpec?.x_stateMatrix ?? interfacePlan?.state_matrix
+				? "OK"
+				: "Needs Review",
+			renderSpec?.x_stateMatrix ?? interfacePlan?.state_matrix
+				? "default/loading/error/empty/blocked 상태가 CTA와 연결되는지 확인"
+				: "x_stateMatrix 또는 x_interfacePlan.state_matrix에 상태별 trigger/visual/action 기록",
+		),
+		row(
+			"인터랙션",
+			stringify(renderSpec?.x_interactions),
+			compact([
+				spec.screen_contract.slots.top?.patterns,
+				spec.screen_contract.slots.content?.patterns,
+				spec.screen_contract.slots.bottom?.patterns,
+			]),
+			compact(
+				renderTypes.filter((type) =>
+					/button|checkbox|radio|select|modal|sheet|tab|nav|cta/i.test(type),
+				),
+			),
+			renderSpec?.x_interactions ? "OK" : "Needs Review",
+			renderSpec?.x_interactions
+				? "[tap]/[interactive]/[sync]/[enabled]/[loading]/[modal]/[state]/[nav] 계약 확인"
+				: "선택/입력/분기 화면이면 x_interactions를 정형 태그 기반으로 기록",
 		),
 		row(
 			"예외/분기",

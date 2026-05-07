@@ -1,0 +1,319 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-statement-result",
+		"name": "요금안내서 재발행 결과",
+		"route": "/billing-html-statement-result",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"result": {
+			"tone": "success",
+			"title": "재발행 요청이 접수됐어요",
+			"text": "안내서는 등록된 수신 채널로 발송돼요. 발송 완료까지 최대 24시간이 걸릴 수 있어요."
+		},
+		"info": {
+			"title": "발급 정보",
+			"rows": [
+				{
+					"id": "type",
+					"title": "발급 유형",
+					"trailingLabel": "요금안내서 (PDF)"
+				},
+				{
+					"id": "period",
+					"title": "대상 기간",
+					"trailingLabel": "2026년 4월"
+				},
+				{
+					"id": "channel",
+					"title": "수신 채널",
+					"trailingLabel": "이메일 (a***@example.com)"
+				},
+				{
+					"id": "reissuable",
+					"title": "재발행 가능 여부",
+					"trailingLabel": "가능 (보관기간 내)"
+				}
+			]
+		},
+		"cta": {
+			"primary": {
+				"id": "done",
+				"label": "확인"
+			}
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-statement-result",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top",
+					"props": {
+						"title": "재발행 결과",
+						"leading": "close"
+					}
+				},
+				"bottom": {
+					"type": "PrimaryCTABar",
+					"id": "area.cta",
+					"props": {
+						"bind": "cta"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "NoticeBlock",
+					"id": "area.result",
+					"props": {
+						"bind": "result"
+					}
+				},
+				{
+					"type": "SectionCard",
+					"id": "area.info",
+					"props": {
+						"bind": "info"
+					},
+					"children": [
+						{
+							"type": "InfoList",
+							"id": "area.info.list",
+							"props": {
+								"bind": "info",
+								"trailingSemantic": "value"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/experimental/billing-from-html/_pagination/billing-html-chk.json",
+		"_canonical_hash": "22c1f20f13ff08df8a5504007971a7040ab842e1d0dc881c89c2a1e290d243f9",
+		"policy_id": "billing-html-chk",
+		"route_id": "billing-html-statement-result",
+		"step_fraction": "5/8",
+		"predecessor": "billing-html-statement",
+		"successor": null,
+		"transitions": []
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-CHK-005-03",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-005-03"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-CHK-005-03",
+			"name": "재발행 결과 확인",
+			"cluster": "US-BIL-CHK-005",
+			"actor": "청구 확인자, 연계 시스템",
+			"entry_condition": "재발행 요청 접수",
+			"exit_condition": "발급 유형/수신처/재발행 가능 여부 안내 완료",
+			"predecessor": [
+				"PR-BIL-CHK-005-02"
+			],
+			"successor": [],
+			"related_functions": [
+				"FN-BIL-CHK-008 요금안내서 발급"
+			],
+			"related_policies": [
+				"PG-BIL-CUS-001 고객 안내 정책 (POL-07)"
+			]
+		},
+		"purpose": "재발행 결과를 명시적으로 안내한다.",
+		"system_inputs_to_user": [
+			"발급 유형",
+			"대상 기간",
+			"수신처",
+			"재발행 가능 여부"
+		],
+		"user_inputs": [
+			"확인"
+		],
+		"system_outputs": [
+			"결과 화면 종료"
+		],
+		"branches": [
+			"성공 → 안내서 수신 대기",
+			"실패 → 재시도 또는 상담 전환"
+		],
+		"exceptions": [
+			"수신 채널 미등록 → 채널 등록 안내"
+		],
+		"design_signals": {
+			"primary_block": "결과 NoticeBlock + 발급 정보 SectionCard",
+			"cta_intent": "확인"
+		},
+		"evidence_refs": [
+			{
+				"claim": "증빙 발급 결과 안내 항목",
+				"policy": [
+					"POL-BIL-CUS-001-07"
+				],
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=POL-BIL-CUS-001-07"
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "재발행 결과 인지",
+		"info_hierarchy": [
+			"result-message",
+			"result-summary",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card"
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"GlobalNavigationHeader"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"NoticeBlock",
+					"SectionCard",
+					"InfoList"
+				]
+			},
+			"bottom": {
+				"owner": "PrimaryCTABar",
+				"patterns": [
+					"PrimaryCTABar"
+				],
+				"flow": "reserved"
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": [],
+			"content_rail_owner": "ContentRail"
+		},
+		"areas": [
+			{
+				"id": "top",
+				"slot": "top",
+				"pattern": "organisms/global/GlobalNavigationHeader",
+				"uses": [
+					"GlobalNavigationHeader"
+				],
+				"layout": {
+					"leading": "close",
+					"title": "재발행 결과"
+				},
+				"content_role": "chrome"
+			},
+			{
+				"id": "result",
+				"slot": "content",
+				"pattern": "molecules/NoticeBlock",
+				"uses": [
+					"NoticeBlock"
+				],
+				"content_role": "result-message"
+			},
+			{
+				"id": "info",
+				"slot": "content",
+				"pattern": "molecules/SectionCard",
+				"uses": [
+					"SectionCard",
+					"InfoList"
+				],
+				"layout": {
+					"trailing_semantic": "value"
+				},
+				"content_role": "result-summary"
+			},
+			{
+				"id": "cta",
+				"slot": "bottom",
+				"pattern": "molecules/PrimaryCTABar",
+				"uses": [
+					"PrimaryCTABar",
+					"Button"
+				],
+				"content_role": "primary-action"
+			}
+		],
+		"design_system_contract": {
+			"templates": [
+				"AppScreen",
+				"AppScreenContent",
+				"ContentOutlet",
+				"ContentList",
+				"ContentSection"
+			],
+			"organisms": [
+				"global"
+			],
+			"molecules": [
+				"NoticeBlock",
+				"SectionCard",
+				"InfoList",
+				"PrimaryCTABar"
+			],
+			"atoms": [
+				"TextBlock"
+			],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{
+				"rule": "H-2",
+				"result": "pass",
+				"evidence": "SectionCard title=발급 정보, NoticeBlock과 의미 분리"
+			},
+			{
+				"rule": "H-7",
+				"result": "pass",
+				"evidence": "dead-end → close"
+			},
+			{
+				"rule": "H-10",
+				"result": "pass",
+				"evidence": "InfoList trailing=value"
+			},
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "route margin 없음"
+			}
+		]
+	}
+}

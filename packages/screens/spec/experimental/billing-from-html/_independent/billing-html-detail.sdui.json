@@ -1,0 +1,486 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-detail",
+		"name": "청구 상세 및 변동 사유",
+		"route": "/billing-html-detail",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html-independent"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"context": {
+			"billMonthLabel": "2026년 4월 청구",
+			"lineLabel": "내 휴대폰 010-****-1234",
+			"totalAmountText": "78,400원",
+			"comparedToPrevText": "전월 대비 +3,200원"
+		},
+		"itemBreakdown": {
+			"title": "항목별 금액",
+			"caption": "확정 청구 기준",
+			"items": [
+				{
+					"id": "base",
+					"title": "기본료",
+					"amountText": "55,000원",
+					"sub": null
+				},
+				{
+					"id": "addon",
+					"title": "부가서비스",
+					"amountText": "5,500원",
+					"sub": "데이터 안심 옵션"
+				},
+				{
+					"id": "device",
+					"title": "단말 할부금",
+					"amountText": "12,400원",
+					"sub": "12/24회"
+				},
+				{
+					"id": "discount",
+					"title": "할인",
+					"amountText": "-7,000원",
+					"sub": "결합 할인"
+				},
+				{
+					"id": "bundle",
+					"title": "결합 적용",
+					"amountText": "0원",
+					"sub": "가족 결합"
+				},
+				{
+					"id": "mobile-pay",
+					"title": "휴대폰 결제",
+					"amountText": "8,500원",
+					"sub": "이번 청구 반영"
+				},
+				{
+					"id": "content",
+					"title": "콘텐츠 이용료",
+					"amountText": "4,000원",
+					"sub": null
+				}
+			]
+		},
+		"changeReasons": {
+			"title": "전월 대비 변동 사유",
+			"caption": "왜 금액이 달라졌는지 안내",
+			"items": [
+				{
+					"id": "addon-new",
+					"title": "신규 부가서비스 가입",
+					"caption": "데이터 안심 옵션 4월 5일 가입 (일할 계산)",
+					"deltaText": "+5,500원",
+					"tone": "increase"
+				},
+				{
+					"id": "discount-end",
+					"title": "할인 종료",
+					"caption": "신규 가입 할인 종료",
+					"deltaText": "+2,000원",
+					"tone": "increase"
+				},
+				{
+					"id": "prepayment",
+					"title": "선결제 반영",
+					"caption": "휴대폰 결제 일부 선결제 차감",
+					"deltaText": "-4,300원",
+					"tone": "decrease"
+				}
+			]
+		},
+		"inquiry": {
+			"title": "청구가 이해되지 않으세요?",
+			"caption": "관련 항목을 기준으로 문의 또는 운영 확인을 요청할 수 있어요.",
+			"primaryAction": "문의하기",
+			"secondaryAction": "운영 확인 요청"
+		},
+		"notice": {
+			"badge": "안내",
+			"text": "개인정보·금융정보는 일부 마스킹되어 표시됩니다.",
+			"tone": "info"
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-html-detail",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top.detail",
+					"props": {
+						"title": "청구 상세",
+						"leading": "back"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "BillingDetailHeader",
+					"id": "area.context",
+					"props": {
+						"bind": "context",
+						"textPolicy": {
+							"amount": {
+								"variant": "displayTitle",
+								"overflow": "wrap"
+							},
+							"compared": {
+								"variant": "supportText",
+								"maxLines": 1,
+								"overflow": "truncate"
+							}
+						}
+					}
+				},
+				{
+					"type": "BillingItemBreakdown",
+					"id": "area.items",
+					"props": {
+						"bind": "itemBreakdown"
+					}
+				},
+				{
+					"type": "BillingChangeReasonList",
+					"id": "area.change-reasons",
+					"props": {
+						"bind": "changeReasons"
+					}
+				},
+				{
+					"type": "BillingInquiryActions",
+					"id": "area.inquiry",
+					"props": {
+						"bind": "inquiry"
+					}
+				},
+				{
+					"type": "NoticeBlock",
+					"id": "area.notice",
+					"props": {
+						"bind": "notice"
+					}
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/experimental/billing-from-html/_independent/_pagination/billing-html-chk.json",
+		"_canonical_hash": "d04ce66446bc5089992031407c934fed998e5ae5db08f81ae6bd65f51988098f",
+		"policy_id": "billing-html-chk",
+		"route_id": "billing-html-detail",
+		"use_case_id": "US-BIL-CHK-002",
+		"predecessor": "billing-html-summary",
+		"successor": null,
+		"step_fraction": null
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"US-BIL-CHK-002",
+				"PR-BIL-CHK-002-01",
+				"PR-BIL-CHK-002-02",
+				"PR-BIL-CHK-002-03",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html"
+			]
+		},
+		"evidence_refs": [
+			{
+				"field": "purpose",
+				"source_ref": "html#L1373-L1389 (PR-BIL-CHK-002 표 설명 행)",
+				"summary": "항목별 금액 조회 → 변동 사유 비교 → 이의·문의 후속 연결"
+			},
+			{
+				"field": "system_inputs_to_user",
+				"source_ref": "html#L1375 (PR-BIL-CHK-002-01 설명)",
+				"summary": "기본료, 부가서비스, 단말 할부, 할인, 결합, 휴대폰 결제, 콘텐츠 이용료 항목별 금액"
+			},
+			{
+				"field": "branches",
+				"source_ref": "html#L1382 (PR-BIL-CHK-002-02 설명)",
+				"summary": "전월 대비 증감, 신규/해지, 일할 계산, 할인 종료, 결합 변경, 선결제 반영"
+			},
+			{
+				"field": "branches/inquiry",
+				"source_ref": "html#L1389 (PR-BIL-CHK-002-03 설명)",
+				"summary": "이의·문의 또는 운영 확인 요청 진입"
+			},
+			{
+				"field": "exceptions",
+				"source_ref": "html#L1377 (PR-BIL-CHK-002-01 관련 정책)",
+				"summary": "개인정보·금융정보 보호 정책 — 마스킹 적용"
+			}
+		],
+		"process": {
+			"id": "PR-BIL-CHK-002-01",
+			"name": "청구 항목 상세 조회",
+			"cluster": "US-BIL-CHK-002 청구 상세 및 변동 사유 확인",
+			"actor": "청구 확인자, 연계 시스템",
+			"entry_condition": "청구 확인자가 특정 회선과 청구월의 상세 확인을 요청한 상태",
+			"exit_condition": "이의·문의 후속 연결까지 안내 완료",
+			"predecessor": ["PR-BIL-CHK-001-03"],
+			"successor": [],
+			"related_functions": [
+				"청구 대상·권한 조회",
+				"청구 항목 상세 조회",
+				"청구 변동 사유 산출",
+				"실시간·예상 요금 산출",
+				"개인정보·금융정보 마스킹",
+				"고객 안내·알림 발송",
+				"다음 행동·후속 경로 추천",
+				"수납 예외 건 조회·분류"
+			],
+			"related_policies": [
+				"청구·이용요금 노출 정책",
+				"청구 변동 사유 안내 정책",
+				"할인·결합 영향 안내 정책",
+				"개인정보·금융정보 보호 정책",
+				"운영 예외 처리 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"purpose": "선택한 청구월·회선의 항목별 금액을 보여주고, 전월 대비 변동 사유를 분명히 설명한다. 청구 금액이 이해되지 않거나 오류가 의심되면 문의·운영 확인 요청으로 연결한다.",
+		"system_inputs_to_user": [
+			"청구월·회선 컨텍스트",
+			"항목별 금액 (기본료, 부가서비스, 단말 할부, 할인, 결합, 휴대폰 결제, 콘텐츠 이용료)",
+			"전월 대비 증감 항목",
+			"신규·해지 서비스",
+			"일할 계산 결과",
+			"할인 종료 정보",
+			"결합 변경 정보",
+			"선결제 반영 정보"
+		],
+		"user_inputs": [
+			"항목 행 선택 (펼쳐 보기)",
+			"문의하기 진입",
+			"운영 확인 요청 진입"
+		],
+		"system_outputs": [
+			"항목 상세 데이터",
+			"변동 사유 데이터",
+			"문의/운영 후속 처리 진입점",
+			"이력·감사 로그"
+		],
+		"branches": [
+			"이의·문의 진입 (운영 예외 처리 정책)",
+			"운영 확인 요청 진입 (수납 예외 건 조회·분류)"
+		],
+		"exceptions": [
+			"개인정보·금융정보 항목 마스킹 표시",
+			"항목 데이터 누락 시 안내 후 운영 확인 요청 유도"
+		],
+		"design_signals": {
+			"primary_block": "항목별 금액 list + 변동 사유 list",
+			"hero_intent": "청구월·회선·총액·전월 대비 증감을 한눈에",
+			"info_box_intent": "마스킹/안내 메모",
+			"cta_intent": "이의·문의 후속 연결 (단일 강제 CTA 아님)"
+		}
+	},
+	"x_screenContract": {
+		"screen_contract": {
+			"shell": "AppScreen",
+			"slots": {
+				"top": {
+					"owner": "GlobalNavigationHeader",
+					"patterns": ["GlobalNavigationHeader"],
+					"flow": "reserved"
+				},
+				"content": {
+					"owner": "ContentList",
+					"patterns": [
+						"BillingDetailHeader",
+						"BillingItemBreakdown",
+						"BillingChangeReasonList",
+						"BillingInquiryActions",
+						"NoticeBlock"
+					]
+				}
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": [],
+			"content_rail_owner": "ContentRail"
+		},
+		"areas": [
+			{
+				"id": "context",
+				"slot": "content",
+				"pattern": "organisms/billing-html/BillingDetailHeader",
+				"uses": ["ContentSection", "TextBlock", "ContentRail"],
+				"layout": {
+					"section_inset": "inherit",
+					"amount_emphasis": "displayTitle",
+					"description_rail": "measure:body"
+				},
+				"content_role": "context-summary"
+			},
+			{
+				"id": "items",
+				"slot": "content",
+				"pattern": "organisms/billing-html/BillingItemBreakdown",
+				"uses": ["ContentSection", "SectionCard", "InfoList", "TextBlock"],
+				"layout": {
+					"section_inset": "inherit",
+					"trailing_semantic": "value"
+				},
+				"content_role": "primary-list"
+			},
+			{
+				"id": "change-reasons",
+				"slot": "content",
+				"pattern": "organisms/billing-html/BillingChangeReasonList",
+				"uses": ["ContentSection", "SectionCard", "InfoList", "TextBlock", "ContentBadge"],
+				"layout": {
+					"section_inset": "inherit",
+					"trailing_semantic": "value",
+					"value_tone": "delta"
+				},
+				"content_role": "explanation-list"
+			},
+			{
+				"id": "inquiry",
+				"slot": "content",
+				"pattern": "organisms/billing-html/BillingInquiryActions",
+				"uses": ["ContentSection", "SectionCard", "Button", "TextBlock"],
+				"layout": {
+					"section_inset": "inherit",
+					"button_layout": "inline-pair"
+				},
+				"content_role": "follow-up-action"
+			},
+			{
+				"id": "notice",
+				"slot": "content",
+				"pattern": "molecules/notice-block/NoticeBlock",
+				"uses": ["ContentSection", "NoticeBlock", "TextBlock"],
+				"layout": {
+					"section_inset": "inherit"
+				},
+				"content_role": "supporting-notice"
+			}
+		],
+		"design_system_contract": {
+			"templates": [
+				"AppScreen",
+				"AppScreenContent",
+				"ContentOutlet",
+				"ContentList",
+				"ContentSection",
+				"ContentRail"
+			],
+			"organisms": ["billing-html", "global"],
+			"molecules": ["SectionCard", "InfoList", "NoticeBlock"],
+			"atoms": ["TextBlock"],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": [
+				"organisms/billing-html (BillingDetailHeader, BillingItemBreakdown, BillingChangeReasonList, BillingInquiryActions)"
+			]
+		}
+	},
+	"x_interfacePlan": {
+		"genre": "detail",
+		"primary_task": "항목별 금액과 변동 사유를 이해하고 필요 시 문의/운영 확인",
+		"info_hierarchy": [
+			"context-summary (월·회선·총액·전월대비)",
+			"primary-list (항목별 금액)",
+			"explanation-list (변동 사유)",
+			"follow-up-action (문의/운영 확인)",
+			"supporting-notice (마스킹 안내)"
+		],
+		"cta_location": "inline",
+		"progress_location": "none",
+		"sectioning": "multi-card",
+		"copy_policy": {
+			"amount_emphasis": "displayTitle",
+			"caption_measure": "body",
+			"avoid_full_width_caption": true,
+			"row_caption_measure": "row"
+		},
+		"rail_policy": {
+			"owner": "ContentRail",
+			"route_margin": "forbidden",
+			"description_rail": "measure:body"
+		},
+		"selection_pattern": "passive list (탭 시 expand 또는 nav)",
+		"decision_log": [
+			{
+				"decision": "이의·문의(PR-002-03)을 별도 화면 분리 안 함",
+				"accepted": "본문 하단 BillingInquiryActions 섹션 inline pair Button",
+				"reason": "정책서 상 이의·문의는 detail의 후속 행동 권유. 별도 단계로 보면 detail 컨텍스트가 끊긴다."
+			},
+			{
+				"decision": "변동 사유를 단일 list (탭/필터 없이)",
+				"accepted": "InfoList row + delta value trailing",
+				"reason": "정책서 PR-002-02에서 6 종류 사유를 평면 비교 안내로 정의. 탭/필터 어휘는 정책 신호 없음."
+			}
+		]
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "n/a", "evidence": "genre=detail" },
+			{
+				"rule": "H-2",
+				"result": "pass",
+				"evidence": "BillingDetailHeader는 hero, 각 SectionCard는 다른 의미 — 헤더 의미 중복 없음"
+			},
+			{ "rule": "H-3", "result": "n/a", "evidence": "RadioGroup 미사용" },
+			{ "rule": "H-4", "result": "n/a", "evidence": "textarea 미사용" },
+			{ "rule": "H-5", "result": "n/a", "evidence": "form errorText 없음" },
+			{ "rule": "H-6", "result": "n/a", "evidence": "progress 없음" },
+			{ "rule": "H-7", "result": "pass", "evidence": "leading=back (드릴다운)" },
+			{
+				"rule": "H-8",
+				"result": "pass",
+				"evidence": "NoticeBlock은 list와 분리된 별도 ContentSection"
+			},
+			{ "rule": "H-9", "result": "n/a", "evidence": "form 아님" },
+			{
+				"rule": "H-10",
+				"result": "documented",
+				"evidence": "items=value, change-reasons=value(delta tone), inquiry=action으로 layout에 기록"
+			},
+			{ "rule": "H-11", "result": "pass", "evidence": "escape hatch 없음" },
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "route 보정 margin 없음. ContentSection inherit + ContentRail measure:body만 사용"
+			}
+		]
+	},
+	"x_benchmark": {
+		"criteria": [
+			"design.visualHierarchy",
+			"design.componentConsistency",
+			"design.wdsAdoption",
+			"planning.policyTraceability",
+			"planning.flowCompleteness",
+			"planning.edgeCases"
+		],
+		"guards": [
+			"guard.rawEscapeHatch",
+			"guard.screenOwnsChrome",
+			"guard.unexplainedNewVocabulary"
+		],
+		"notes": [
+			"experimental-html-independent: HTML 정책서만 보고 작성. active billing spec 미참조.",
+			"billing-html organism은 새 어휘 — header/breakdown/change-reasons/inquiry 4개 후보."
+		]
+	}
+}

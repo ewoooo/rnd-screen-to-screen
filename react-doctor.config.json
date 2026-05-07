@@ -1,0 +1,9 @@
+{
+  "ignore": {
+    "files": [
+      "artifacts/**",
+      "docs/**",
+      "tmp/**"
+    ]
+  }
+}

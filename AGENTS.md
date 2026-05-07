@@ -14,9 +14,8 @@
 
 ```
 .
-├── _deprecated_app/  DEPRECATED (2026-04-27). 새 코드 추가 금지 (참고용 보존)
 ├── apps/
-│   ├── mobile/       Active WDS 모바일 화면 렌더러 (구 `app/`)
+│   ├── mobile/       Active WDS 모바일 화면 렌더러
 │   └── preview/      shadcn 기반 브라우저 프리뷰 셸
 ├── packages/
 │   └── screens/      화면 registry + active screen spec SSOT
@@ -26,7 +25,7 @@
 └── CLAUDE.md         AGENTS.md symlink (Claude 도구 호환)
 ```
 
-**디렉터리 이름 이력**: 2026-04-29 옛 `app/` → `_deprecated_app/`, 옛 `app2/` → `app/`. 2026-04-30 `app/` → `apps/mobile/`, `apps/preview/` 추가. 본 문서는 모노레포형 새 이름 기준으로 작성됨.
+**디렉터리 이름 이력**: 2026-04-29 옛 `app2/`가 active 앱으로 승격되었고, 2026-04-30 `apps/mobile/`, `apps/preview/` 모노레포 구조로 정리됨. 2026-05-07 deprecated 앱 보존 디렉터리는 제거됨.
 
 `AGENTS.md`(이 문서)와 `DESIGN.md` 둘만이 SSOT다. 세부 README/LAYOUT 같은 추가 .md는 두지 않는다 — 시스템 분산을 막는다.
 
@@ -132,6 +131,47 @@
 - 페이지 로컬 mock/seed (TS): 각 화면 폴더의 `_mock.ts`
 - mock은 화면 재현용 임시 입력. API 연결 시 교체
 
+## 요구사항 기반 구현 원칙
+
+이 프로젝트의 프론트엔드 코드는 단순히 UI를 구현하는 것이 아니라, 요구사항을 어떤 구조로 이해했고 어떤 책임 단위로 나눴는지를 코드에 드러내야 한다. 좋은 코드는 요구사항이 적절한 추상화 레벨에서 읽히는 코드다.
+
+### 요구사항에서 출발한다
+- 구현 전에 먼저 요구사항만 보고 화면의 핵심 책임, 사용자의 주요 행동, 중요한 UI 개념, 코드에서 드러나야 하는 텍스트·라벨·액션·상태를 정리한다.
+- 기존 skeleton이나 현재 구현에서 바로 출발하지 않는다. 기존 구현은 참고 자료일 뿐이고, 화면 구조의 기준은 정책서/spec/요구사항이다.
+- 코드는 요구사항을 숨기지 않고, 적절한 추상화 레벨에서 드러내는 방향으로 작성한다.
+
+### 추상화는 재사용성이 아니라 책임에서 출발한다
+- 컴포넌트, 훅, 함수는 "나중에 재사용될 것 같아서" 분리하지 않는다.
+- 분리 기준은 독립적인 책임, 의미 있는 이름, 상위가 몰라도 되는 구현 세부, 사용처의 이해도 개선이다.
+- 재사용성은 좋은 책임 분리의 결과일 수 있지만 1차 목적이 아니다.
+
+### 컴포넌트 인터페이스는 화면 지도처럼 작성한다
+- page/screen 컴포넌트에서는 화면의 큰 구조와 책임이 읽혀야 한다.
+- 중요한 텍스트, 라벨, 액션, 상태는 적절히 드러내되, WDS 조합이나 DOM 세부는 하위 organism/molecule/template로 숨긴다.
+- 너무 자세해서 상위가 모든 구현을 알게 되는 구조와, 너무 추상화되어 요구사항이 보이지 않는 구조를 모두 피한다.
+
+### UI와 코드의 1:1 대응을 의식한다
+- 화면의 주요 섹션, 폼 라벨, 버튼 액션, 탭·필터·정렬 같은 view 상태, 사용자에게 보이는 핵심 텍스트, 정책서의 도메인 개념은 코드에서 찾을 수 있어야 한다.
+- 1:1 대응은 모든 DOM을 펼친다는 뜻이 아니다. UI 구조와 코드 구조가 같은 축척에서 대응되어야 한다는 뜻이다.
+
+### 상태는 구현이 아니라 개념으로 다룬다
+- 상태가 화면의 중요한 관점이거나 여러 UI 요소와 연결되거나 변경 규칙이 있으면, 문자열/boolean 구현값으로 흩뿌리지 말고 이름 붙일 만한 개념인지 검토한다.
+- 커스텀 훅은 구현을 숨기기 위한 장식이 아니라 상태의 의도를 드러낼 때 사용한다.
+- 상태 변경 규칙이 여러 컴포넌트에 흩어지면 책임 경계가 깨진 신호다.
+
+### optional과 fallback은 경계에서 처리한다
+- API/mock/spec의 `null`·`undefined`·optional 값은 가능한 한 변환 계층이나 screen 경계에서 처리한다.
+- 하위 component에는 UI에 필요한 fallback이 결정된 확정 값을 넘긴다.
+- `user?.profile?.imageUrl` 같은 방어 로직이 여러 곳에 반복되면 데이터 경계가 새고 있는 신호다.
+
+### 구현 리뷰 체크
+- 요구사항의 중요한 개념이 코드에서 보이는가?
+- 상위 컴포넌트가 적절한 축척의 지도처럼 보이는가?
+- 추상화가 책임 단위인가, 단순 재사용 예상인가?
+- 사용자에게 보이는 텍스트와 액션이 너무 깊이 숨어 있지 않은가?
+- optional 값, loading, error, empty 상태의 책임 위치가 명확한가?
+- 코드 줄 수를 줄이는 대신 요구사항의 구조를 잃어버리지는 않았는가?
+
 ## 컴포넌트 계층화 방향
 
 이 섹션은 `apps/mobile`의 컴포넌트 아키텍처 의도를 설명한다. Figma의 Atomic naming과 코드 구조를 맞추기 위해 2026-04-30부터 `atoms / molecules / organisms / templates` 구조를 사용한다.
@@ -143,6 +183,7 @@
 - 도메인/글로벌 화면 영역은 `organisms/`에 둔다.
 - 화면 슬롯, 상단 sticky/accessory 컨텍스트, 스크롤 컨텍스트, 포털 컨텍스트는 `templates/`에 둔다.
 - 새 도메인에서 반복되는 구조는 organisms에 복제하지 말고 먼저 molecules로 승격한다.
+- 컴포넌트 어휘 탐색은 `packages/screens/catalog/index.json`에서 시작한다. 이 catalog는 생성기나 토큰 SSOT가 아니라, 현재 코드베이스의 templates/atoms/molecules/organisms/pages 구조를 빠르게 파악하기 위한 사람이 읽는 색인이다.
 
 우리가 만들려는 것은 “variant만 계속 늘어나는 kit”이 아니다. 목표는 **조합 가능한 의미 축을 가진 시스템**이다.
 
@@ -394,11 +435,12 @@ templates + screen
 
 새 화면을 만들 때 판단 순서:
 
-1. 기존 organisms로 표현 가능한지 본다.
-2. organisms가 부족하면, 먼저 molecules 조합으로 표현 가능한지 본다.
-3. 같은 WDS 조합이 반복되면 molecules로 승격한다.
-4. 도메인 이름과 데이터 구조가 필요한 부분만 organisms에 둔다.
-5. 기존 컴포넌트에 새 variant나 slot을 추가하기 전에, 더 일반적인 molecule 축이 있는지 검토한다.
+1. `packages/screens/catalog/index.json`에서 현재 어휘와 페이지 패턴을 먼저 찾는다.
+2. 기존 organisms로 표현 가능한지 본다.
+3. organisms가 부족하면, 먼저 molecules 조합으로 표현 가능한지 본다.
+4. 같은 WDS 조합이 반복되면 molecules로 승격한다.
+5. 도메인 이름과 데이터 구조가 필요한 부분만 organisms에 둔다.
+6. 기존 컴포넌트에 새 variant나 slot을 추가하기 전에, 더 일반적인 molecule 축이 있는지 검토한다.
 
 ### product-detail에서 얻은 결론
 
@@ -460,12 +502,13 @@ product-detail/page.tsx
 ### `packages/screens/`
 - `packages/screens/src/index.ts` — preview/mobile이 공유하는 active screen registry. 화면 목록·label·group·route·spec path SSOT
 - `packages/screens/src/benchmark.ts` — screen generation benchmark SSOT. 디자인/기획 평가 항목, 관련 API, 1~5 scoring hint 정의
+- `packages/screens/catalog/index.json` — 생성기·토큰 제외 컴포넌트 catalog 진입점. templates/atoms/molecules/organisms/pages 어휘와 page pattern을 사람이 읽는 JSON으로 정리한다
 - `packages/screens/spec/active/<route-id>.json` — 렌더 가능한 화면의 screen contract SSOT. `screen_contract` / `areas` / `system_mapping` / `layout_tokens` / `system_fit` 중심
 - `packages/screens/spec/active/<route-id>.sdui.json` — 정책서 → 화면 요구사항 → SDUI 렌더 트리 파일럿. 현재 `product-detail`, `membership-terms-consent`가 운영 중이며, v2 screen contract를 대체하지 않고 검증용으로 병행한다
 - `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json` — 정책서 단위 화면 분할 SSOT. domain 버킷 안에 정책별로 둔다(예: `membership/_pagination/membership-join.json`, `membership/_pagination/membership-leave.json`, `nc-full/_pagination/nc-full.json`, `nc-simple/_pagination/nc-simple.json`). `policy_id` / `source_ref`(예: `docs/NC_정책서_Full_v1.0_확정본.md`) / `routes[]`(id, type, primary_task, predecessor, successor, step_fraction, split_reason) / `transitions[]`(from, to, trigger, guard)을 담는다. 각 route의 `.sdui.json`에 들어가는 `x_pagination` 슬라이스는 이 파일에서 derive되며, 슬라이스의 `_canonical_hash`(B 파일의 sha256)가 lint에서 검증된다. AI 세션은 `.sdui.json`만 읽어도 해당 route의 위치/전이를 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다
 - 구버전 imported/legacy/source-for-active spec은 레포 상위 백업 디렉토리 `../rnd-screen-to-screen-backup/packages/screens/spec/_deprecated/`에 보존한다. `packages/screens/spec/active/`와 active registry는 이 백업을 참조하지 않는다.
 
-### 정책서 → 화면 분할 → 인터페이스 설계 → 스펙/계약 → 렌더 생성
+### 정책서 → UX 단계 → 화면 분할 → 인터페이스 설계 → 스펙/계약 → 렌더 생성
 
 스크린 생성 전용 세션은 아래 순서만 따른다. 정책서 원문에서 바로 `children` 렌더 트리나 route JSX로 뛰지 않는다. 먼저 정책 내용을 구조화하고, 생성할 화면 단위를 나눈 뒤, **각 화면의 인터페이스 장르와 UX 구조를 설계한 다음** 화면 계약과 시스템 어휘를 고정하고, 마지막에 SDUI 트리와 모바일 렌더를 만든다.
 
@@ -473,17 +516,19 @@ product-detail/page.tsx
 
 흐름:
 1. **정책서 읽기** — `docs/`의 정책서 또는 사용자가 지정한 Notion 원문만 기준으로 삼는다. 레포 상위 백업의 deprecated spec은 읽지 않는다.
-2. **`x_pagination` 작성 (화면 단위 분할 SSOT)** — 정책 process, entry/exit condition, 주요 user action, branch/exception을 기준으로 route를 분할하고 화면 간 전이를 표현한다. 한 화면은 하나의 primary task와 하나의 primary CTA를 가져야 한다. **분할 단위는 use case (flow)** 다. 정책서가 여러 use case(예: 회원 가입 / 휴면 해제 / 회원 탈퇴 / 재가입)를 담고 있으면 use case당 1개 pagination 파일로 분리한다. 산출물은 두 곳에 둔다. (B) use case당 1개 SSOT — `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json`. `<policy-id>`는 `<doc>-<use-case>` 형식(예: `nc-full-join`, `nc-full-leave`). domain 버킷은 그릇이고 한 도메인에 여러 flow 파일이 있을 수 있다. 같은 정책서에서 파생된 flow 파일을 묶어보고 싶으면 `<domain>/_pagination/_index.json`에 source doc + flow 목록만 담는 얇은 색인 파일을 둘 수 있다(routes/transitions는 담지 않는다 — SSOT 충돌 방지). (A) 각 route의 `.sdui.json` 안 `x_pagination` 슬라이스 — B의 동일 정보 중 해당 route 부분만 denormalize. drift 방지를 위해 슬라이스에 B의 `_canonical_hash`(sha256)를 박고, lint에서 모든 슬라이스 hash가 B의 현재 hash와 일치하는지 검증한다. AI/세션은 A만 읽어도 predecessor/successor/step_fraction을 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다. **공유 화면 규칙**: 같은 UI(예: 본인인증)가 여러 flow에서 등장해도 route id는 flow별로 분리한다(`nc-join-auth`, `nc-rejoin-auth`처럼). 컴포넌트는 organism/molecule 레벨에서 재사용하고, pagination route는 흐름 단위로 별개로 유지한다 — 한 route에 여러 flow context가 동시에 들어가면 슬라이스 SSOT가 깨진다.
-3. **`x_policyExtract` 작성** — 정책서의 process, purpose, system/user input, output, branches, exceptions, design_signals를 추출한다. 정책 ID와 원문 ref를 반드시 남긴다. `source.refs`는 정책서/섹션 단위 출처를 보존하고, `evidence_refs`에는 각 process, branch, exception, user/system input이 어떤 원문 섹션·문장·표에서 왔는지 항목별 근거를 남긴다. 원문 근거 없이 요약만 만든 `x_policyExtract`는 화면 계약 근거로 쓰지 않는다.
-4. **`x_interfacePlan` 작성** — 화면 장르(`flow`/`browse`/`detail`/`form`/`result` 등), primary task, 사용자 결정/입력, 정보 위계, progress 위치, CTA 위치, 선택/입력 패턴, 텍스트 measure 정책을 먼저 정한다. 이 단계는 “어떤 컴포넌트를 쓸지”보다 “어떤 인터페이스 문법이 맞는지”를 결정한다.
-5. **Pattern Fit 점검** — `x_interfacePlan`을 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
-6. **`x_screenContract` 작성** — v2 `screen_contract` / `layout_contract` / `areas` / `design_system_contract`로 화면 슬롯, 레이아웃 소유권, 사용 컴포넌트 어휘를 고정한다. 이 단계에서 `AppScreen`/`BottomSheet`, `ContentSection`, molecule/organism 사용 여부를 결정하되, 결정 근거는 `x_interfacePlan`과 연결되어야 한다.
-7. **SDUI `data`와 `children` 작성** — `RenderableScreenSpecV1`의 `data`에는 화면 fixture를, `children`에는 공식 SDUI schema의 `SDUINode[]`에 가까운 렌더 트리를 둔다. `type`은 등록된 template/organism/molecule/atom 이름만 사용한다.
-8. **Heuristic Review** — 렌더 구현 전/후에 인터페이스 품질 체크를 수행한다. full-width caption 남용, 과도한 카드화, progress가 본문에 섞임, CTA가 required state와 분리됨, 선택지가 문서형 row로 평평해짐, primary task가 첫 viewport에서 보이지 않음 같은 문제를 확인한다.
-9. **active 파일 생성** — `packages/screens/spec/active/<route-id>.json`에는 `ScreenSpecV2` 계약을, `packages/screens/spec/active/<route-id>.sdui.json`에는 `RenderableScreenSpecV1`을 둔다. `.sdui.json`의 `x_screenContract`는 `.json` 계약과 같은 내용을 가져야 한다.
-10. **registry 등록** — `packages/screens/src/index.ts`의 `screens`에 route를 추가하고, `packages/screens/src/active-specs.ts`에 contract spec과 renderable spec을 import/export한다. `packages/screens/spec/active/_manifest.json`의 `screens`와 `render_spec_pilots`도 같이 갱신한다.
-11. **렌더 구현** — `apps/mobile/src/app/<route-id>/page.tsx`는 `activeRenderableScreenSpecs["<route-id>"]`를 읽고 route-local `_sdui-renderer.tsx` 또는 공용 renderer로 넘긴다. 필요한 도메인 UI는 `apps/mobile/src/components/organisms/<domain>/`에 두되, 반복 조합은 먼저 `molecules/` 후보인지 본다.
-12. **검증** — `npm run lint:mobile`, `npm run lint:preview`, `npm run build:mobile`, `npm run build:preview`를 통과시킨다. preview는 mobile iframe으로 확인한다.
+2. **`x_uxStage` 분류** — 각 use case와 각 route를 고객 여정 단계로 먼저 분류한다. 허용값은 `entry`(진입), `explore`(탐색), `search`(검색), `decision`(결정), `execution`(실행/구매), `complete`(완료), `support`(문제해결/CS)다. 한 화면이 여러 단계에 걸치면 primary 1개와 secondary N개를 기록한다. 이 분류는 이후 `x_interfacePlan`의 장르·톤·CTA·정보 위계를 결정하는 첫 단추다.
+3. **`x_pagination` 작성 (화면 단위 분할 SSOT)** — 정책 process, entry/exit condition, 주요 user action, branch/exception을 기준으로 route를 분할하고 화면 간 전이를 표현한다. 한 화면은 하나의 primary task와 하나의 primary CTA를 가져야 한다. **분할 단위는 use case (flow)** 다. 정책서가 여러 use case(예: 회원 가입 / 휴면 해제 / 회원 탈퇴 / 재가입)를 담고 있으면 use case당 1개 pagination 파일로 분리한다. 산출물은 두 곳에 둔다. (B) use case당 1개 SSOT — `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json`. `<policy-id>`는 `<doc>-<use-case>` 형식(예: `nc-full-join`, `nc-full-leave`). domain 버킷은 그릇이고 한 도메인에 여러 flow 파일이 있을 수 있다. 같은 정책서에서 파생된 flow 파일을 묶어보고 싶으면 `<domain>/_pagination/_index.json`에 source doc + flow 목록만 담는 얇은 색인 파일을 둘 수 있다(routes/transitions는 담지 않는다 — SSOT 충돌 방지). (A) 각 route의 `.sdui.json` 안 `x_pagination` 슬라이스 — B의 동일 정보 중 해당 route 부분만 denormalize. drift 방지를 위해 슬라이스에 B의 `_canonical_hash`(sha256)를 박고, lint에서 모든 슬라이스 hash가 B의 현재 hash와 일치하는지 검증한다. AI/세션은 A만 읽어도 predecessor/successor/step_fraction을 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다. **공유 화면 규칙**: 같은 UI(예: 본인인증)가 여러 flow에서 등장해도 route id는 flow별로 분리한다(`nc-join-auth`, `nc-rejoin-auth`처럼). 컴포넌트는 organism/molecule 레벨에서 재사용하고, pagination route는 흐름 단위로 별개로 유지한다 — 한 route에 여러 flow context가 동시에 들어가면 슬라이스 SSOT가 깨진다.
+4. **`x_policyExtract` 작성** — 정책서의 process, purpose, system/user input, output, branches, exceptions, design_signals를 추출한다. 정책 ID와 원문 ref를 반드시 남긴다. `source.refs`는 정책서/섹션 단위 출처를 보존하고, `evidence_refs`에는 각 process, branch, exception, user/system input이 어떤 원문 섹션·문장·표에서 왔는지 항목별 근거를 남긴다. 원문 근거 없이 요약만 만든 `x_policyExtract`는 화면 계약 근거로 쓰지 않는다. 정책 화면은 `legal_notices[]`에 필수/사용성 고지, 표시 위계, target area를 기록하고, 완료/처리 화면은 `output_mapping[]`에 정책 output이 어떤 결과 요약/카드/수치로 노출되는지 기록한다.
+5. **`x_interfacePlan` 작성** — 화면 장르(`flow`/`browse`/`detail`/`form`/`result` 등), primary task, 사용자 결정/입력, 정보 위계, `visual_order`, progress 위치, CTA 위치, 선택/입력 패턴, 텍스트 measure 정책을 먼저 정한다. 이 단계는 “어떤 컴포넌트를 쓸지”보다 “어떤 인터페이스 문법이 맞는지”를 결정한다.
+6. **상태·인터랙션 매트릭스 작성** — 선택/입력/분기/로딩이 있는 화면은 `x_stateMatrix`와 `x_interactions`를 작성한다. `x_interactions.tag` 허용값은 `tap`, `interactive`, `sync`, `enabled`, `loading`, `modal`, `state`, `nav`다. 예: 전체동의는 `interactive + sync`, CTA 활성 조건은 `enabled`, 약관 전문은 `tap + modal`, 처리중 화면은 `loading + nav`로 기록한다.
+7. **Pattern Fit 점검** — 먼저 `packages/screens/catalog/index.json`에서 기존 어휘와 page pattern을 확인한 뒤, `x_interfacePlan`과 상태/인터랙션 매트릭스를 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
+8. **`x_screenContract` 작성** — v2 `screen_contract` / `layout_contract` / `areas` / `design_system_contract`로 화면 슬롯, 레이아웃 소유권, 사용 컴포넌트 어휘를 고정한다. 이 단계에서 `AppScreen`/`BottomSheet`, `ContentSection`, molecule/organism 사용 여부를 결정하되, 결정 근거는 `x_uxStage`, `x_interfacePlan`, `x_stateMatrix`, `x_interactions`와 연결되어야 한다.
+9. **SDUI `data`와 `children` 작성** — `RenderableScreenSpecV1`의 `data`에는 화면 fixture를, `children`에는 공식 SDUI schema의 `SDUINode[]`에 가까운 렌더 트리를 둔다. `type`은 등록된 template/organism/molecule/atom 이름만 사용한다.
+10. **Heuristic/Audit Review** — 렌더 구현 전/후에 인터페이스 품질 체크를 수행한다. full-width caption 남용, 과도한 카드화, progress가 본문에 섞임, CTA가 required state와 분리됨, 선택지가 문서형 row로 평평해짐, primary task가 첫 viewport에서 보이지 않음, legal notice가 target area 없이 누락됨, `x_interactions`의 enabled 조건이 CTA 상태와 분리됨 같은 문제를 확인한다.
+11. **active 파일 생성** — `packages/screens/spec/active/<route-id>.json`에는 `ScreenSpecV2` 계약을, `packages/screens/spec/active/<route-id>.sdui.json`에는 `RenderableScreenSpecV1`을 둔다. `.sdui.json`의 `x_screenContract`는 `.json` 계약과 같은 내용을 가져야 한다.
+12. **registry 등록** — `packages/screens/src/index.ts`의 `screens`에 route를 추가하고, `packages/screens/src/active-specs.ts`에 contract spec과 renderable spec을 import/export한다. `packages/screens/spec/active/_manifest.json`의 `screens`와 `render_spec_pilots`도 같이 갱신한다.
+13. **렌더 구현** — `apps/mobile/src/app/<route-id>/page.tsx`는 `activeRenderableScreenSpecs["<route-id>"]`를 읽고 route-local `_sdui-renderer.tsx` 또는 공용 renderer로 넘긴다. 필요한 도메인 UI는 `apps/mobile/src/components/organisms/<domain>/`에 두되, 반복 조합은 먼저 `molecules/` 후보인지 본다.
+14. **검증** — `npm run lint:mobile`, `npm run lint:preview`, `npm run build:mobile`, `npm run build:preview`를 통과시킨다. preview는 mobile iframe으로 확인한다.
 
 `x_interfacePlan` 최소 예:
 
@@ -513,6 +558,52 @@ product-detail/page.tsx
 		"primary task visible in first viewport",
 		"bottom CTA is always reachable",
 		"progress is not mixed into body content"
+	]
+}
+```
+
+`x_uxStage` / 상태·인터랙션 최소 예:
+
+```json
+{
+	"x_uxStage": {
+		"primary": "execution",
+		"secondary": ["complete"],
+		"evidence": "사용자가 필수 동의 후 다음 단계로 진행하는 실행 단계이며, 완료 화면으로 이어짐",
+		"checkpoints": ["required input drives CTA", "single primary CTA"]
+	},
+	"x_stateMatrix": [
+		{
+			"state": "default",
+			"trigger": "screen enter",
+			"visual": "필수 항목 미동의, CTA disabled",
+			"action": "필수 동의 전까지 다음 단계 차단"
+		},
+		{
+			"state": "ready",
+			"trigger": "all required consents checked",
+			"visual": "CTA enabled",
+			"action": "tap CTA navigates to successor"
+		}
+	],
+	"x_interactions": [
+		{
+			"tag": "interactive",
+			"selector": "consent-all",
+			"description": "전체 동의 토글"
+		},
+		{
+			"tag": "sync",
+			"source": "consent-all",
+			"target": "required consent rows",
+			"description": "전체 동의 상태가 개별 필수 동의 상태를 갱신"
+		},
+		{
+			"tag": "enabled",
+			"selector": "primary-cta",
+			"condition": "all required consents checked",
+			"description": "필수 동의 완료 시 다음 CTA 활성"
+		}
 	]
 }
 ```
@@ -590,7 +681,7 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 
 | 날짜 | 변경 |
 |---|---|
-| 2026-04-29 | 디렉터리 이름 변경: `app/` → `_deprecated_app/`, `app2/` → `app/` |
+| 2026-04-29 | 디렉터리 이름 변경: `app2/` → active app |
 | 2026-04-29 | `system/layout/` 도입 — Box/Flex/HStack/VStack + 7 슬롯 semantic spacing 어휘 (`row/inline/stack/group/inset/block/section`) |
 | 2026-04-29 | `system/Divider` 도입 — orientation/inset/thickness, `role="separator"` |
 | 2026-04-29 | `home-kit/AiAnnotation` 흡수 — 4곳 반복되던 icon+ai-text+spacing-2 패턴 |
@@ -637,3 +728,4 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-05-04 | `x_pagination` 단계 신설 — 정책서와 `x_policyExtract` 사이에 화면 단위 분할 SSOT 단계를 명시화. 정책서당 1개 SSOT(`spec/active/<domain>/_pagination/<policy-id>.json`)와 각 route `.sdui.json`의 `x_pagination` 슬라이스(hybrid + hash guard 옵션 4) 운영. drift는 `_canonical_hash`로 lint 검증 |
 | 2026-05-04 | spec 버킷 도메인화 — `spec/active/` 평탄에서 도메인 버킷(`membership/`, `nc-full/`, `nc-simple/`)으로 그룹. 한 도메인에 복수 정책 가능(`membership/`은 join + leave 2 정책). NC는 Full/Simple 두 정책서 분리 운영(`docs/NC_정책서_Full_v1.0_확정본.md`, `docs/NC_정책서_간소화_v1.0_확정본.md`) |
 | 2026-05-04 | pagination 분할 단위 정정 — "정책서당 1개" → "use case(flow)당 1개". 정책서가 여러 flow(가입/휴면/탈퇴/재가입)를 담으면 flow별로 pagination 파일 분리. policy_id 형식 `<doc>-<use-case>`. 공유 화면(예: 본인인증)은 flow별 별도 route id로 분리 강제(`nc-join-auth`, `nc-rejoin-auth`). 컴포넌트는 organism 레벨에서 재사용 |
+| 2026-05-07 | deprecated 앱 보존 디렉터리 제거 |

@@ -10,11 +10,11 @@ import { useState, type ReactNode } from "react";
 
 import { SelectableList } from "@/components/molecules";
 import {
-	MembershipContinueBar,
-	MembershipHero,
-	MembershipNotice,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen, ContentSection } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -71,7 +71,7 @@ export function MembershipIdentityVerificationScreen({
 	return (
 		<AppScreen
 			top={
-				<MembershipTopBar
+				<ProgressTopBar
 					title={topbar.title}
 					progress={{
 						label: topbar.progressLabel,
@@ -80,7 +80,7 @@ export function MembershipIdentityVerificationScreen({
 				/>
 			}
 			bottom={
-				<MembershipContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -88,7 +88,7 @@ export function MembershipIdentityVerificationScreen({
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
+			<FlowHero {...hero} />
 			<ContentSection>
 				<SelectableList
 					name="identity-method"
@@ -98,7 +98,7 @@ export function MembershipIdentityVerificationScreen({
 					density="comfortable"
 				/>
 			</ContentSection>
-			<MembershipNotice {...notice} />
+			<FlowNotice {...notice} />
 		</AppScreen>
 	);
 }

@@ -3,13 +3,13 @@
 import { useMemo, useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcNotice,
-	NcPersonalInfoForm,
-	NcTopBar,
-	type NcPersonalField,
-} from "@/components/organisms/nc";
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	FlowPersonalInfoForm,
+	ProgressTopBar,
+	type FlowPersonalField,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -43,7 +43,7 @@ export function NcFullDormancyLoginScreen({
 	const notice = readData<NoticeData>(spec, "notice");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly NcPersonalField[]>(
+	const fields = useMemo<readonly FlowPersonalField[]>(
 		() =>
 			form.fields.map((f) => ({
 				id: f.id,
@@ -69,14 +69,14 @@ export function NcFullDormancyLoginScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="휴면 해제"
 					leading="close"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -84,8 +84,8 @@ export function NcFullDormancyLoginScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcPersonalInfoForm
+			<FlowHero {...hero} />
+			<FlowPersonalInfoForm
 				fields={fields}
 				values={values}
 				errors={errors}
@@ -93,7 +93,7 @@ export function NcFullDormancyLoginScreen({
 					setValues((current) => ({ ...current, [id]: value }))
 				}
 			/>
-			<NcNotice
+			<FlowNotice
 				badge={notice.badge}
 				text={notice.text}
 				action={notice.action ?? ""}

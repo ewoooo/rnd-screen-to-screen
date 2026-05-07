@@ -67,7 +67,9 @@ export function ContentSection({
 
 	return (
 		<Box as={as} style={{ ...bleedStyle, ...style }}>
-			<ContentLayoutContext.Provider value={{ inlineInset, sectionInset: inset }}>
+			<ContentLayoutContext.Provider
+				value={{ inlineInset, sectionInset: inset }}
+			>
 				{children}
 			</ContentLayoutContext.Provider>
 		</Box>

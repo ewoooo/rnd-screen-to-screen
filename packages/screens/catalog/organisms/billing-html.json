@@ -1,0 +1,15 @@
+{
+  "layer": "organism",
+  "domain": "billing-html",
+  "entries": [
+    {
+      "name": "BillingHtmlScreen",
+      "path": "apps/mobile/src/components/organisms/billing-html/BillingHtmlScreen.tsx",
+      "purpose": "Experimental billing policy HTML/spec viewer mapped into mobile AppScreen.",
+      "variants_or_axes": ["title", "processSteps", "policySummary", "cta"],
+      "absorbs": ["billing policy summary", "process step listing"],
+      "used_by": ["billing-html-* routes"],
+      "strain_notes": ["Experimental bridge. Do not treat as production WDS vocabulary until mapped into standard molecules/organisms."]
+    }
+  ]
+}

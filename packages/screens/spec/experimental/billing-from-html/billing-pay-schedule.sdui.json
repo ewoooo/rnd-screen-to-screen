@@ -1,0 +1,313 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-pay-schedule",
+		"name": "납부 예약·선납",
+		"route": "/billing-pay-schedule",
+		"domain": "billing",
+		"type": "page",
+		"status": "skeleton-from-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"_extraction_status": "skeleton",
+		"_hint": "Fixture는 HTML에서 자동 추출되지 않음. process step 기반으로 사람 작성."
+	},
+	"children": [
+		{
+			"type": "PLACEHOLDER",
+			"id": "billing-pay-schedule-placeholder-children",
+			"meta": {
+				"_extraction_status": "skeleton",
+				"_hint": "HTML 추출은 화면 children을 자동 생성하지 않음. 아래 process step을 기반으로 사람이 SDUI 트리 작성.",
+				"route_type": "form",
+				"primary_task": "예약·선납 가능 여부 확인 및 요청 접수",
+				"process_steps": [
+					{
+						"process_id": "PR-BIL-PAY-003-01",
+						"name": "예약·선납 가능 여부 확인",
+						"description": "납부 실행자가 납부 예약, 선납, 예약 변경, 예약 취소 가능 여부와 적용 가능 금액을 확인한다.",
+						"related_functions": [
+							"예약·선납 요청 관리",
+							"납부 대상·금액 확정",
+							"업무 상태·진입 조건 판정"
+						],
+						"related_policies": [
+							"예약·선납·선결제 정책",
+							"납부 가능 여부 판정 정책"
+						]
+					},
+					{
+						"process_id": "PR-BIL-PAY-003-02",
+						"name": "예약·선납 요청 접수",
+						"description": "납부 실행자가 납부 예정일, 납부수단, 납부 대상 금액을 확정하여 예약 또는 선납 요청을 접수한다.",
+						"related_functions": [
+							"예약·선납 요청 관리",
+							"납부수단 선택·유효성 검증",
+							"연계 요청·결과 수신",
+							"처리 이력·감사 로그 저장"
+						],
+						"related_policies": [
+							"예약·선납·선결제 정책",
+							"납부수단·인증 정책",
+							"알림·이력 저장 정책"
+						]
+					}
+				]
+			}
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/experimental/billing-from-html/_pagination/billing-pay.json",
+		"_canonical_hash": "b20999ce4147d3e6139e21f8cc269f4a58354253d75f9d0e906857e982af6c41",
+		"policy_id": "billing-pay",
+		"route_id": "billing-pay-schedule",
+		"step_fraction": "3/8",
+		"predecessor": null,
+		"successor": "billing-pay-schedule-result",
+		"transitions": [
+			{
+				"from": "billing-pay-schedule",
+				"to": "billing-pay-schedule-result",
+				"trigger": "primary_cta",
+				"guard": "schedule_request_submitted"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-PAY-003-01",
+				"PR-BIL-PAY-003-02",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#US-BIL-PAY-003"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-PAY-003-01,02",
+			"name": "예약·선납 가능 여부 확인 + 예약·선납 요청 접수",
+			"cluster": "US-BIL-PAY-003",
+			"actor": "납부 실행자",
+			"entry_condition": "납부 실행자가 납부 예약, 선납, 예약 변경, 예약 취소 가능 여부와 적용 가능 금액을 확인한다.",
+			"exit_condition": "납부 실행자가 납부 예정일, 납부수단, 납부 대상 금액을 확정하여 예약 또는 선납 요청을 접수한다.",
+			"predecessor": [],
+			"successor": [
+				"billing-pay-schedule-result"
+			],
+			"related_functions": [
+				"예약·선납 요청 관리",
+				"납부 대상·금액 확정",
+				"업무 상태·진입 조건 판정",
+				"납부수단 선택·유효성 검증",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			],
+			"related_policies": [
+				"예약·선납·선결제 정책",
+				"납부 가능 여부 판정 정책",
+				"납부수단·인증 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"purpose": "납부 실행자가 납부 예약, 선납, 예약 변경, 예약 취소 가능 여부와 적용 가능 금액을 확인한다.",
+		"system_inputs_to_user": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from related_functions and process step description. HTML structure does not encode this directly.",
+			"candidates": [
+				"예약·선납 요청 관리",
+				"납부 대상·금액 확정",
+				"업무 상태·진입 조건 판정",
+				"납부수단 선택·유효성 검증",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			]
+		},
+		"user_inputs": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from process step description and route.primary_task."
+		},
+		"system_outputs": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from process step + related_functions output side.",
+			"candidates": [
+				"예약·선납 요청 관리",
+				"납부 대상·금액 확정",
+				"업무 상태·진입 조건 판정",
+				"납부수단 선택·유효성 검증",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			]
+		},
+		"branches": {
+			"_extraction_status": "needs-cross-ref-section-6",
+			"_hint": "Branches/guards live in section 6. 정책 정의 entries referenced via related_policies.",
+			"seed_from_policies": [
+				"예약·선납·선결제 정책",
+				"납부 가능 여부 판정 정책",
+				"납부수단·인증 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"exceptions": {
+			"_extraction_status": "needs-cross-ref-section-6",
+			"_hint": "Exceptions live in section 6 policy entries (often POL-*-EXCEPTION rows).",
+			"seed_from_policies": [
+				"예약·선납·선결제 정책",
+				"납부 가능 여부 판정 정책",
+				"납부수단·인증 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"design_signals": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Derive from primary_task + route.type (browse/detail/selector/result).",
+			"route_type": "form"
+		},
+		"evidence_refs": [
+			{
+				"claim": "예약·선납 가능 여부 확인",
+				"process_id": "PR-BIL-PAY-003-01",
+				"uc_id": "US-BIL-PAY-003",
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-PAY-003-01",
+				"source_cell": {
+					"document": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+					"section": "4. 프로세스 정의 / 다. 프로세스 상세",
+					"use_case_heading": "11) 납부 예약 및 선납 실행 (US-BIL-PAY-003)",
+					"table": "프로세스 ID / 프로세스명 / 설명 / 관련 기능 / 관련 정책",
+					"row_id": "PR-BIL-PAY-003-01"
+				},
+				"related_functions": [
+					"예약·선납 요청 관리",
+					"납부 대상·금액 확정",
+					"업무 상태·진입 조건 판정"
+				],
+				"related_policies": [
+					"예약·선납·선결제 정책",
+					"납부 가능 여부 판정 정책"
+				],
+				"description": "납부 실행자가 납부 예약, 선납, 예약 변경, 예약 취소 가능 여부와 적용 가능 금액을 확인한다."
+			},
+			{
+				"claim": "예약·선납 요청 접수",
+				"process_id": "PR-BIL-PAY-003-02",
+				"uc_id": "US-BIL-PAY-003",
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-PAY-003-02",
+				"source_cell": {
+					"document": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+					"section": "4. 프로세스 정의 / 다. 프로세스 상세",
+					"use_case_heading": "11) 납부 예약 및 선납 실행 (US-BIL-PAY-003)",
+					"table": "프로세스 ID / 프로세스명 / 설명 / 관련 기능 / 관련 정책",
+					"row_id": "PR-BIL-PAY-003-02"
+				},
+				"related_functions": [
+					"예약·선납 요청 관리",
+					"납부수단 선택·유효성 검증",
+					"연계 요청·결과 수신",
+					"처리 이력·감사 로그 저장"
+				],
+				"related_policies": [
+					"예약·선납·선결제 정책",
+					"납부수단·인증 정책",
+					"알림·이력 저장 정책"
+				],
+				"description": "납부 실행자가 납부 예정일, 납부수단, 납부 대상 금액을 확정하여 예약 또는 선납 요청을 접수한다."
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"_extraction_status": "draft-from-route-type",
+		"_hint": "Route.type → genre 자동 매핑. Heuristic Review 통과 위해 사람 검수 필요.",
+		"genre": "form",
+		"primary_task": "예약·선납 가능 여부 확인 및 요청 접수",
+		"info_hierarchy": [
+			"hero",
+			"required-input",
+			"supporting",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card",
+		"copy_policy": {
+			"caption_measure": "short",
+			"avoid_full_width_caption": true
+		}
+	},
+	"x_screenContract": {
+		"_extraction_status": "draft-from-route-type",
+		"_hint": "기본 shell + slots + layout_contract. design_system_contract.allowed_components는 사람 검수 필수.",
+		"shell": {
+			"template": "AppScreen",
+			"leading": "back",
+			"has_top": true,
+			"has_bottom": true
+		},
+		"slots": {
+			"top": [
+				"GlobalNavigationHeader"
+			],
+			"content": [
+				"ContentList"
+			],
+			"bottom": [
+				"PrimaryCTABar"
+			]
+		},
+		"layout_contract": {
+			"content_inset": "default",
+			"vertical_rhythm": "ContentList var(--spacing-4)",
+			"bleed_allowed": false
+		},
+		"areas": [
+			{
+				"name": "primary",
+				"role": "primary-task-anchor",
+				"layout": {
+					"trailing_semantic": null
+				},
+				"note": "PLACEHOLDER — process step description 기반으로 사람 작성"
+			}
+		],
+		"design_system_contract": {
+			"allowed_components": [
+				"AppScreen",
+				"ContentList",
+				"ContentSection",
+				"InfoList",
+				"SectionCard",
+				"NoticeBlock",
+				"PromoBlock",
+				"PrimaryCTABar"
+			],
+			"allowed_escape_hatches": []
+		},
+		"_seed_evidence": {
+			"related_functions": [
+				"예약·선납 요청 관리",
+				"납부 대상·금액 확정",
+				"업무 상태·진입 조건 판정",
+				"납부수단 선택·유효성 검증",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			],
+			"related_policies": [
+				"예약·선납·선결제 정책",
+				"납부 가능 여부 판정 정책",
+				"납부수단·인증 정책",
+				"알림·이력 저장 정책"
+			]
+		}
+	},
+	"x_heuristicReview": {
+		"_extraction_status": "skeleton",
+		"_hint": "Heuristic Review는 사람이 작성한 children/screenContract 위에서만 의미 있음. skeleton 단계에서는 빈 상태.",
+		"applied_rules": []
+	}
+}

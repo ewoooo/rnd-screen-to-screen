@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcReasonForm,
-	NcTopBar,
-} from "@/components/organisms/nc";
+	FlowContinueBar,
+	FlowHero,
+	FlowReasonForm,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -44,14 +44,14 @@ export function NcFullLeaveReasonScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="회원 탈퇴"
 					leading="back"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -59,8 +59,8 @@ export function NcFullLeaveReasonScreen({
 				/>
 			}
 		>
-			<NcHero {...hero} />
-			<NcReasonForm
+			<FlowHero {...hero} />
+			<FlowReasonForm
 				items={form.reasons}
 				freeTextLabel="추가 의견 (선택)"
 				freeTextPlaceholder={form.detailsPlaceholder}

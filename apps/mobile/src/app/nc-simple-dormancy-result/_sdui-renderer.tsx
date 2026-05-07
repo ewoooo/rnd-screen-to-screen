@@ -1,10 +1,10 @@
 "use client";
 
 import {
-	MembershipHero,
-	MembershipResultActions,
-	MembershipTopBar,
-} from "@/components/organisms/membership";
+	FlowHero,
+	FlowResultActions,
+	ProgressTopBar,
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
@@ -24,15 +24,15 @@ export function NcSimpleDormancyResultScreen({
 
 	return (
 		<AppScreen
-			top={<MembershipTopBar title={topbar.title} leading="close" />}
+			top={<ProgressTopBar title={topbar.title} leading="close" />}
 			bottom={
-				<MembershipResultActions
+				<FlowResultActions
 					primaryLabel={actions.primaryLabel}
 					secondaryLabel={actions.secondaryLabel}
 				/>
 			}
 		>
-			<MembershipHero {...hero} />
+			<FlowHero {...hero} />
 		</AppScreen>
 	);
 }

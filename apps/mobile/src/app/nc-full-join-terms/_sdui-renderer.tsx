@@ -3,13 +3,13 @@
 import { useMemo, useState } from "react";
 
 import {
-	NcContinueBar,
-	NcHero,
-	NcNotice,
-	NcTopBar,
+	FlowContinueBar,
+	FlowHero,
+	FlowNotice,
+	ProgressTopBar,
 	TermsAgreementGroup,
 	type TermsAgreementItem,
-} from "@/components/organisms/nc";
+} from "@/components/organisms/global";
 import { AppScreen } from "@/components/templates/app-screen";
 
 import type { RenderableScreenSpecV1, SDUIJsonValue } from "@screen/screens";
@@ -81,14 +81,14 @@ export function NcFullJoinTermsScreen({
 	return (
 		<AppScreen
 			top={
-				<NcTopBar
+				<ProgressTopBar
 					title="회원가입"
 					leading="close"
 					progress={{ label: flow.progress, percent }}
 				/>
 			}
 			bottom={
-				<NcContinueBar
+				<FlowContinueBar
 					eyebrow={dynamicEyebrow}
 					primaryAction={continueData.primaryAction}
 					disabled={blocked}
@@ -96,7 +96,7 @@ export function NcFullJoinTermsScreen({
 				/>
 			}
 		>
-			<NcHero
+			<FlowHero
 				titleLines={hero.titleLines}
 				description={hero.description}
 			/>
@@ -108,7 +108,7 @@ export function NcFullJoinTermsScreen({
 				onStateChange={(s) => setMissingCount(s.missingRequiredCount)}
 			/>
 			{user.isMinor ? (
-				<NcNotice
+				<FlowNotice
 					badge={notice.badge}
 					text={notice.text}
 					action={notice.action ?? ""}
