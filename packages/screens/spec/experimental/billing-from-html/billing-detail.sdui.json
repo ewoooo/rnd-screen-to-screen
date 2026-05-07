@@ -1,0 +1,310 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-detail",
+		"name": "청구 상세 및 변동 사유",
+		"route": "/billing-detail",
+		"domain": "billing",
+		"type": "page",
+		"status": "skeleton-from-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"_extraction_status": "skeleton",
+		"_hint": "Fixture는 HTML에서 자동 추출되지 않음. process step 기반으로 사람 작성."
+	},
+	"children": [
+		{
+			"type": "PLACEHOLDER",
+			"id": "billing-detail-placeholder-children",
+			"meta": {
+				"_extraction_status": "skeleton",
+				"_hint": "HTML 추출은 화면 children을 자동 생성하지 않음. 아래 process step을 기반으로 사람이 SDUI 트리 작성.",
+				"route_type": "detail",
+				"primary_task": "청구 항목별 금액·이용기간·전월 대비 변동 사유 확인",
+				"process_steps": [
+					{
+						"process_id": "PR-BIL-CHK-002-01",
+						"name": "청구 항목 상세 조회",
+						"description": "청구 확인자가 청구월과 회선을 선택하면 기본료, 부가서비스, 단말 할부, 할인, 결합, 휴대폰 결제, 콘텐츠 이용료 등 항목별 금액을 조회한다.",
+						"related_functions": [
+							"청구 대상·권한 조회",
+							"청구 항목 상세 조회",
+							"개인정보·금융정보 마스킹"
+						],
+						"related_policies": [
+							"청구·이용요금 노출 정책",
+							"개인정보·금융정보 보호 정책"
+						]
+					},
+					{
+						"process_id": "PR-BIL-CHK-002-02",
+						"name": "청구 변동 사유 확인",
+						"description": "전월 대비 증감 항목, 신규·해지 서비스, 일할 계산, 할인 종료, 결합 변경, 선결제 반영 여부를 비교하여 변동 사유를 안내한다.",
+						"related_functions": [
+							"청구 항목 상세 조회",
+							"청구 변동 사유 산출",
+							"실시간·예상 요금 산출",
+							"고객 안내·알림 발송"
+						],
+						"related_policies": [
+							"청구 변동 사유 안내 정책",
+							"할인·결합 영향 안내 정책",
+							"청구·이용요금 노출 정책"
+						]
+					}
+				]
+			}
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screens/spec/experimental/billing-from-html/_pagination/billing-chk.json",
+		"_canonical_hash": "7db68f72452a020c65d70ba4f0c403fef93ca4a2a085cd934df7f27fd6ac258d",
+		"policy_id": "billing-chk",
+		"route_id": "billing-detail",
+		"step_fraction": "2/8",
+		"predecessor": "billing-summary",
+		"successor": null,
+		"transitions": [
+			{
+				"from": "billing-detail",
+				"to": "billing-realtime",
+				"trigger": "secondary_cta",
+				"guard": "view_realtime_or_forecast"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-CHK-002-01",
+				"PR-BIL-CHK-002-02",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#US-BIL-CHK-002"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-CHK-002-01,02",
+			"name": "청구 항목 상세 조회 + 청구 변동 사유 확인",
+			"cluster": "US-BIL-CHK-002",
+			"actor": "청구 확인자",
+			"entry_condition": "청구 확인자가 청구월과 회선을 선택하면 기본료, 부가서비스, 단말 할부, 할인, 결합, 휴대폰 결제, 콘텐츠 이용료 등 항목별 금액을 조회한다.",
+			"exit_condition": "전월 대비 증감 항목, 신규·해지 서비스, 일할 계산, 할인 종료, 결합 변경, 선결제 반영 여부를 비교하여 변동 사유를 안내한다.",
+			"predecessor": [
+				"billing-summary"
+			],
+			"successor": [],
+			"related_functions": [
+				"청구 대상·권한 조회",
+				"청구 항목 상세 조회",
+				"개인정보·금융정보 마스킹",
+				"청구 변동 사유 산출",
+				"실시간·예상 요금 산출",
+				"고객 안내·알림 발송"
+			],
+			"related_policies": [
+				"청구·이용요금 노출 정책",
+				"개인정보·금융정보 보호 정책",
+				"청구 변동 사유 안내 정책",
+				"할인·결합 영향 안내 정책"
+			]
+		},
+		"purpose": "청구 확인자가 청구월과 회선을 선택하면 기본료, 부가서비스, 단말 할부, 할인, 결합, 휴대폰 결제, 콘텐츠 이용료 등 항목별 금액을 조회한다.",
+		"system_inputs_to_user": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from related_functions and process step description. HTML structure does not encode this directly.",
+			"candidates": [
+				"청구 대상·권한 조회",
+				"청구 항목 상세 조회",
+				"개인정보·금융정보 마스킹",
+				"청구 변동 사유 산출",
+				"실시간·예상 요금 산출",
+				"고객 안내·알림 발송"
+			]
+		},
+		"user_inputs": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from process step description and route.primary_task."
+		},
+		"system_outputs": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from process step + related_functions output side.",
+			"candidates": [
+				"청구 대상·권한 조회",
+				"청구 항목 상세 조회",
+				"개인정보·금융정보 마스킹",
+				"청구 변동 사유 산출",
+				"실시간·예상 요금 산출",
+				"고객 안내·알림 발송"
+			]
+		},
+		"branches": {
+			"_extraction_status": "needs-cross-ref-section-6",
+			"_hint": "Branches/guards live in section 6. 정책 정의 entries referenced via related_policies.",
+			"seed_from_policies": [
+				"청구·이용요금 노출 정책",
+				"개인정보·금융정보 보호 정책",
+				"청구 변동 사유 안내 정책",
+				"할인·결합 영향 안내 정책"
+			]
+		},
+		"exceptions": {
+			"_extraction_status": "needs-cross-ref-section-6",
+			"_hint": "Exceptions live in section 6 policy entries (often POL-*-EXCEPTION rows).",
+			"seed_from_policies": [
+				"청구·이용요금 노출 정책",
+				"개인정보·금융정보 보호 정책",
+				"청구 변동 사유 안내 정책",
+				"할인·결합 영향 안내 정책"
+			]
+		},
+		"design_signals": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Derive from primary_task + route.type (browse/detail/selector/result).",
+			"route_type": "detail"
+		},
+		"evidence_refs": [
+			{
+				"claim": "청구 항목 상세 조회",
+				"process_id": "PR-BIL-CHK-002-01",
+				"uc_id": "US-BIL-CHK-002",
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-002-01",
+				"source_cell": {
+					"document": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+					"section": "4. 프로세스 정의 / 다. 프로세스 상세",
+					"use_case_heading": "2) 청구 상세 및 변동 사유 확인 (US-BIL-CHK-002)",
+					"table": "프로세스 ID / 프로세스명 / 설명 / 관련 기능 / 관련 정책",
+					"row_id": "PR-BIL-CHK-002-01"
+				},
+				"related_functions": [
+					"청구 대상·권한 조회",
+					"청구 항목 상세 조회",
+					"개인정보·금융정보 마스킹"
+				],
+				"related_policies": [
+					"청구·이용요금 노출 정책",
+					"개인정보·금융정보 보호 정책"
+				],
+				"description": "청구 확인자가 청구월과 회선을 선택하면 기본료, 부가서비스, 단말 할부, 할인, 결합, 휴대폰 결제, 콘텐츠 이용료 등 항목별 금액을 조회한다."
+			},
+			{
+				"claim": "청구 변동 사유 확인",
+				"process_id": "PR-BIL-CHK-002-02",
+				"uc_id": "US-BIL-CHK-002",
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-002-02",
+				"source_cell": {
+					"document": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+					"section": "4. 프로세스 정의 / 다. 프로세스 상세",
+					"use_case_heading": "2) 청구 상세 및 변동 사유 확인 (US-BIL-CHK-002)",
+					"table": "프로세스 ID / 프로세스명 / 설명 / 관련 기능 / 관련 정책",
+					"row_id": "PR-BIL-CHK-002-02"
+				},
+				"related_functions": [
+					"청구 항목 상세 조회",
+					"청구 변동 사유 산출",
+					"실시간·예상 요금 산출",
+					"고객 안내·알림 발송"
+				],
+				"related_policies": [
+					"청구 변동 사유 안내 정책",
+					"할인·결합 영향 안내 정책",
+					"청구·이용요금 노출 정책"
+				],
+				"description": "전월 대비 증감 항목, 신규·해지 서비스, 일할 계산, 할인 종료, 결합 변경, 선결제 반영 여부를 비교하여 변동 사유를 안내한다."
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"_extraction_status": "draft-from-route-type",
+		"_hint": "Route.type → genre 자동 매핑. Heuristic Review 통과 위해 사람 검수 필요.",
+		"genre": "detail",
+		"primary_task": "청구 항목별 금액·이용기간·전월 대비 변동 사유 확인",
+		"info_hierarchy": [
+			"summary",
+			"detail-list",
+			"supporting"
+		],
+		"cta_location": "none",
+		"progress_location": "none",
+		"sectioning": "multi-card",
+		"copy_policy": {
+			"caption_measure": "short",
+			"avoid_full_width_caption": true
+		}
+	},
+	"x_screenContract": {
+		"_extraction_status": "draft-from-route-type",
+		"_hint": "기본 shell + slots + layout_contract. design_system_contract.allowed_components는 사람 검수 필수.",
+		"shell": {
+			"template": "AppScreen",
+			"leading": "back",
+			"has_top": true,
+			"has_bottom": false
+		},
+		"slots": {
+			"top": [
+				"GlobalNavigationHeader"
+			],
+			"content": [
+				"ContentList"
+			],
+			"bottom": []
+		},
+		"layout_contract": {
+			"content_inset": "default",
+			"vertical_rhythm": "ContentList var(--spacing-4)",
+			"bleed_allowed": false
+		},
+		"areas": [
+			{
+				"name": "primary",
+				"role": "primary-task-anchor",
+				"layout": {
+					"trailing_semantic": null
+				},
+				"note": "PLACEHOLDER — process step description 기반으로 사람 작성"
+			}
+		],
+		"design_system_contract": {
+			"allowed_components": [
+				"AppScreen",
+				"ContentList",
+				"ContentSection",
+				"InfoList",
+				"SectionCard",
+				"NoticeBlock",
+				"PromoBlock",
+				"PrimaryCTABar"
+			],
+			"allowed_escape_hatches": []
+		},
+		"_seed_evidence": {
+			"related_functions": [
+				"청구 대상·권한 조회",
+				"청구 항목 상세 조회",
+				"개인정보·금융정보 마스킹",
+				"청구 변동 사유 산출",
+				"실시간·예상 요금 산출",
+				"고객 안내·알림 발송"
+			],
+			"related_policies": [
+				"청구·이용요금 노출 정책",
+				"개인정보·금융정보 보호 정책",
+				"청구 변동 사유 안내 정책",
+				"할인·결합 영향 안내 정책"
+			]
+		}
+	},
+	"x_heuristicReview": {
+		"_extraction_status": "skeleton",
+		"_hint": "Heuristic Review는 사람이 작성한 children/screenContract 위에서만 의미 있음. skeleton 단계에서는 빈 상태.",
+		"applied_rules": []
+	}
+}

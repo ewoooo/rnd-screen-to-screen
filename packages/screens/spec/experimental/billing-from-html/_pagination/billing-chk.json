@@ -1,0 +1,296 @@
+{
+	"policy_id": "billing-chk",
+	"name": "청구·이용요금 확인",
+	"actor_group": "청구 확인자",
+	"source_ref": {
+		"docs": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+		"section": "4. Usecase별 상세 정의 / US-BIL-CHK-001 ~ US-BIL-CHK-008",
+		"flow_chart": "3.다. 유즈케이스 다이어그램 / G1·G2·G3·G6",
+		"extraction_method": "html-structured"
+	},
+	"actors": [
+		"청구 확인자",
+		"연계 시스템 (BSS)"
+	],
+	"entry_condition": "청구 확인자가 청구·요금 영역에 진입한 상태",
+	"exit_condition": "납부 필요 여부 또는 후속 행동(상세 확인, 납부 실행, 미납 해소, 증빙 발급 등)이 결정된 상태",
+	"routes": [
+		{
+			"id": "billing-summary",
+			"type": "browse",
+			"use_case_id": "US-BIL-CHK-001",
+			"process_id": "PR-BIL-CHK-001-02",
+			"primary_task": "당월 청구 요약과 납부 필요 여부 확인 및 다음 행동 분기",
+			"actor": "청구 확인자",
+			"predecessor": null,
+			"successor": "billing-detail",
+			"step_fraction": "1/8",
+			"split_reason": "UC-001 전체가 단일 화면(요약 + 상태 + 다음 행동 안내). PR-001-01(진입·대상 회선 확인)은 백그라운드 진입, PR-001-02가 본 화면, PR-001-03(다음 행동 분기)은 본 화면의 CTA로 흡수.",
+			"html_evidence": {
+				"use_case_heading": "1) 청구 요약 확인 (US-BIL-CHK-001)",
+				"process_steps": [
+					"PR-BIL-CHK-001-02"
+				]
+			}
+		},
+		{
+			"id": "billing-detail",
+			"type": "detail",
+			"use_case_id": "US-BIL-CHK-002",
+			"process_id": "PR-BIL-CHK-002-01,02",
+			"primary_task": "청구 항목별 금액·이용기간·전월 대비 변동 사유 확인",
+			"actor": "청구 확인자",
+			"predecessor": "billing-summary",
+			"successor": null,
+			"step_fraction": "2/8",
+			"split_reason": "UC-002는 상세+변동사유를 한 화면에 같이 노출하는 detail browse 화면. PR-002-03(이의·문의 후속 연결)은 본 화면의 inline link로 흡수.",
+			"html_evidence": {
+				"use_case_heading": "2) 청구 상세 및 변동 사유 확인 (US-BIL-CHK-002)",
+				"process_steps": [
+					"PR-BIL-CHK-002-01",
+					"PR-BIL-CHK-002-02"
+				]
+			}
+		},
+		{
+			"id": "billing-realtime",
+			"type": "browse",
+			"use_case_id": "US-BIL-CHK-003",
+			"process_id": "PR-BIL-CHK-003-01,02,03",
+			"primary_task": "실시간 이용요금·예상 청구 금액·MIRI 사전 안내 확인",
+			"actor": "청구 확인자",
+			"predecessor": null,
+			"successor": null,
+			"step_fraction": "3/8",
+			"split_reason": "UC-003은 확정 청구 전 단일 browse 화면. -01 실시간 + -02 예상 + -03 선제 조치는 같은 화면의 본문 + CTA(한도 변경, 선결제로 이동)로 통합.",
+			"html_evidence": {
+				"use_case_heading": "3) 실시간·예상 이용요금 확인 (US-BIL-CHK-003)",
+				"process_steps": [
+					"PR-BIL-CHK-003-01",
+					"PR-BIL-CHK-003-02",
+					"PR-BIL-CHK-003-03"
+				]
+			}
+		},
+		{
+			"id": "billing-msc-history",
+			"type": "browse",
+			"use_case_id": "US-BIL-CHK-004",
+			"process_id": "PR-BIL-CHK-004-01,02,03",
+			"primary_task": "휴대폰 결제·콘텐츠 이용내역 확인 및 선결제·한도 변경 진입",
+			"actor": "청구 확인자",
+			"predecessor": null,
+			"successor": null,
+			"step_fraction": "4/8",
+			"split_reason": "UC-004는 이용내역 list 단일 화면. -02 선결제 가능 여부와 -03 한도 변경은 list item 또는 footer CTA로 인접 flow(PAY-007 선결제, SET-004/005 한도)로 분기.",
+			"html_evidence": {
+				"use_case_heading": "4) 휴대폰 결제·콘텐츠 이용료 이용내역 확인 (US-BIL-CHK-004)",
+				"process_steps": [
+					"PR-BIL-CHK-004-01",
+					"PR-BIL-CHK-004-02",
+					"PR-BIL-CHK-004-03"
+				]
+			}
+		},
+		{
+			"id": "billing-statement",
+			"type": "browse",
+			"use_case_id": "US-BIL-CHK-005",
+			"process_id": "PR-BIL-CHK-005-01,02",
+			"primary_task": "요금안내서 조회 및 재발행 요청 시작",
+			"actor": "청구 확인자",
+			"predecessor": null,
+			"successor": "billing-statement-result",
+			"step_fraction": "5/8",
+			"split_reason": "UC-005는 조회(-01)와 재발행 요청(-02)을 한 화면에서 처리하지만 재발행은 인증 동반 + 비동기 결과 통보가 있어 결과 화면을 분리한다.",
+			"html_evidence": {
+				"use_case_heading": "5) 요금안내서 조회 및 재발행 (US-BIL-CHK-005)",
+				"process_steps": [
+					"PR-BIL-CHK-005-01",
+					"PR-BIL-CHK-005-02"
+				]
+			}
+		},
+		{
+			"id": "billing-statement-result",
+			"type": "result",
+			"use_case_id": "US-BIL-CHK-005",
+			"process_id": "PR-BIL-CHK-005-03",
+			"primary_task": "요금안내서 재발행 결과·수신 채널·재발행 가능 여부 확인",
+			"actor": "청구 확인자",
+			"predecessor": "billing-statement",
+			"successor": null,
+			"step_fraction": "5/8",
+			"split_reason": "PR-005-03은 발급 유형, 수신처, 재발행 가능 여부를 명시적으로 안내하는 별도 결과 화면 (POL-BIL-CUS-001-07 증빙 발급 결과 안내).",
+			"html_evidence": {
+				"use_case_heading": "5) 요금안내서 조회 및 재발행 (US-BIL-CHK-005)",
+				"process_steps": [
+					"PR-BIL-CHK-005-03"
+				]
+			}
+		},
+		{
+			"id": "billing-target-select",
+			"type": "selector",
+			"use_case_id": "US-BIL-CHK-006",
+			"process_id": "PR-BIL-CHK-006-01,02,03",
+			"primary_task": "납부 대상(당월/미납/회선/금액)과 금액 확정",
+			"actor": "청구 확인자",
+			"predecessor": "billing-summary",
+			"successor": "billing-pay-method",
+			"step_fraction": "6/8",
+			"split_reason": "UC-006은 납부 대상 선택 단일 selector 화면. -03 납부 실행 연결은 primary CTA로 PAY flow(billing-pay-method)로 진입.",
+			"html_evidence": {
+				"use_case_heading": "6) 납부 대상 선택 (US-BIL-CHK-006)",
+				"process_steps": [
+					"PR-BIL-CHK-006-01",
+					"PR-BIL-CHK-006-02",
+					"PR-BIL-CHK-006-03"
+				]
+			}
+		},
+		{
+			"id": "billing-payment-history",
+			"type": "browse",
+			"use_case_id": "US-BIL-CHK-007",
+			"process_id": "PR-BIL-CHK-007-01,02",
+			"primary_task": "납부 이력 조회 및 증빙 발급 가능 여부 확인",
+			"actor": "청구 확인자",
+			"predecessor": null,
+			"successor": "billing-receipt-result",
+			"step_fraction": "7/8",
+			"split_reason": "UC-007의 -01 이력 조회와 -02 증빙 가능 여부 확인은 list+detail로 한 화면. -03 증빙 재발행은 인증·연계 결과를 별도 result 화면으로 분리.",
+			"html_evidence": {
+				"use_case_heading": "7) 납부 이력 및 증빙 확인 (US-BIL-CHK-007)",
+				"process_steps": [
+					"PR-BIL-CHK-007-01",
+					"PR-BIL-CHK-007-02"
+				]
+			}
+		},
+		{
+			"id": "billing-receipt-result",
+			"type": "result",
+			"use_case_id": "US-BIL-CHK-007",
+			"process_id": "PR-BIL-CHK-007-03",
+			"primary_task": "증빙 재발행 결과(영수증·세금계산서 등) 및 수신처 확인",
+			"actor": "청구 확인자",
+			"predecessor": "billing-payment-history",
+			"successor": null,
+			"step_fraction": "7/8",
+			"split_reason": "증빙 재발행은 본인인증 동반 + 비동기 발급 + 수신처 안내를 포함해 별도 결과 화면으로 분리. POL-BIL-CUS-001-07 증빙 발급 결과 안내.",
+			"html_evidence": {
+				"use_case_heading": "7) 납부 이력 및 증빙 확인 (US-BIL-CHK-007)",
+				"process_steps": [
+					"PR-BIL-CHK-007-03"
+				]
+			}
+		},
+		{
+			"id": "billing-arrears-status",
+			"type": "result",
+			"use_case_id": "US-BIL-CHK-008",
+			"process_id": "PR-BIL-CHK-008-01,02,03",
+			"primary_task": "미납 해소·수납 반영·정지 해제 상태 확인 및 추가 조치 안내",
+			"actor": "청구 확인자",
+			"predecessor": null,
+			"successor": null,
+			"step_fraction": "8/8",
+			"split_reason": "UC-008은 납부 후 후속 상태 단일 result 화면. -01 해소 상태 + -02 정지해제 연계 + -03 추가 조치 안내를 한 화면에 통합하고, 추가 조치는 PAY/상담 flow로 분기.",
+			"html_evidence": {
+				"use_case_heading": "8) 미납 해소 및 후속 상태 확인 (US-BIL-CHK-008)",
+				"process_steps": [
+					"PR-BIL-CHK-008-01",
+					"PR-BIL-CHK-008-02",
+					"PR-BIL-CHK-008-03"
+				]
+			}
+		}
+	],
+	"transitions": [
+		{
+			"from": "billing-summary",
+			"to": "billing-detail",
+			"trigger": "primary_cta",
+			"guard": "user_taps_view_detail"
+		},
+		{
+			"from": "billing-summary",
+			"to": "billing-target-select",
+			"trigger": "primary_cta",
+			"guard": "next_action=pay_now OR pay_arrears"
+		},
+		{
+			"from": "billing-summary",
+			"to": "billing-arrears-status",
+			"trigger": "primary_cta",
+			"guard": "next_action=verify_arrears_resolution"
+		},
+		{
+			"from": "billing-detail",
+			"to": "billing-realtime",
+			"trigger": "secondary_cta",
+			"guard": "view_realtime_or_forecast"
+		},
+		{
+			"from": "billing-realtime",
+			"to": "billing-msc-history",
+			"trigger": "inline_link",
+			"guard": "msc_or_content_charges_present"
+		},
+		{
+			"from": "billing-realtime",
+			"to": "billing-set-msc-limit",
+			"trigger": "inline_link",
+			"guard": "user_chooses_change_limit",
+			"note": "cross_flow:billing-set"
+		},
+		{
+			"from": "billing-realtime",
+			"to": "billing-pay-prepay",
+			"trigger": "inline_link",
+			"guard": "user_chooses_prepay",
+			"note": "cross_flow:billing-pay"
+		},
+		{
+			"from": "billing-msc-history",
+			"to": "billing-pay-prepay",
+			"trigger": "row_action",
+			"guard": "prepay_eligible",
+			"note": "cross_flow:billing-pay"
+		},
+		{
+			"from": "billing-msc-history",
+			"to": "billing-set-msc-limit",
+			"trigger": "footer_cta",
+			"guard": "user_chooses_change_limit",
+			"note": "cross_flow:billing-set"
+		},
+		{
+			"from": "billing-statement",
+			"to": "billing-statement-result",
+			"trigger": "system",
+			"guard": "reissue_request_submitted"
+		},
+		{
+			"from": "billing-target-select",
+			"to": "billing-pay-method",
+			"trigger": "primary_cta",
+			"guard": "target_amount_confirmed",
+			"note": "cross_flow:billing-pay"
+		},
+		{
+			"from": "billing-payment-history",
+			"to": "billing-receipt-result",
+			"trigger": "system",
+			"guard": "receipt_reissue_request_submitted"
+		},
+		{
+			"from": "billing-arrears-status",
+			"to": "billing-pay-method",
+			"trigger": "primary_cta",
+			"guard": "arrears_remaining AND user_chooses_pay",
+			"note": "cross_flow:billing-pay"
+		}
+	]
+}
