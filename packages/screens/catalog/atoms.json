@@ -3,7 +3,7 @@
   "entries": [
     {
       "name": "TextBlock",
-      "path": "apps/mobile/src/components/atoms/typography/TextBlock.tsx",
+      "path": "packages/pxds-components/src/typography/TextBlock.tsx",
       "purpose": "WDS Typography primitive with mobile copy line-breaking, maxLines, and truncation policy.",
       "variants_or_axes": ["variant", "text | lines", "maxLines", "overflow"],
       "absorbs": ["intentional Korean phrase breaks", "dynamic text truncation", "role-based typography"],
@@ -11,17 +11,17 @@
       "strain_notes": ["New fontSize or raw typography in a screen is a vocabulary gap unless TextBlock cannot express the role."]
     },
     {
-      "name": "Box/Flex/HStack/VStack/Float",
-      "path": "apps/mobile/src/components/atoms/layout",
+      "name": "Box/Flex/Float/Grid/HStack/VStack",
+      "path": "packages/pxds-layout/src/primitives",
       "purpose": "Layout primitives that constrain spacing to the project semantic spacing vocabulary.",
-      "variants_or_axes": ["spacing tokens", "direction/alignment wrappers"],
+      "variants_or_axes": ["spacing tokens", "direction/alignment wrappers", "grid template props"],
       "absorbs": ["small local composition", "semantic spacing enforcement"],
       "used_by": ["molecules", "organisms"],
       "strain_notes": ["Use sparingly in routes; screen-level rhythm belongs to templates."]
     },
     {
       "name": "Divider",
-      "path": "apps/mobile/src/components/atoms/feedback/Divider.tsx",
+      "path": "packages/pxds-components/src/feedback/Divider.tsx",
       "purpose": "Inset-aware separator wrapper.",
       "variants_or_axes": ["orientation", "inset", "thickness"],
       "absorbs": ["row separation", "vertical menu separation"],
@@ -30,7 +30,7 @@
     },
     {
       "name": "Placeholder",
-      "path": "apps/mobile/src/components/atoms/feedback/Placeholder.tsx",
+      "path": "packages/pxds-components/src/feedback/Placeholder.tsx",
       "purpose": "WDS Thumbnail-based placeholder for unresolved image/icon slots.",
       "variants_or_axes": ["label", "ratio"],
       "absorbs": ["missing media", "temporary image placeholder"],

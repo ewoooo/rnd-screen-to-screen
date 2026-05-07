@@ -1,0 +1,23 @@
+{
+	"name": "@pxds/pxds-components",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"sideEffects": [
+		"./src/core/global.css"
+	],
+	"exports": {
+		".": "./src/index.ts",
+		"./core": "./src/core/index.ts",
+		"./core/global.css": "./src/core/global.css",
+		"./feedback": "./src/feedback/index.ts",
+		"./typography": "./src/typography/index.ts"
+	},
+	"dependencies": {
+		"@pxds/pxds-tokens": "0.1.0",
+		"@wanteddev/wds": "^3.5.0",
+		"@wanteddev/wds-icon": "^3.5.0",
+		"@wanteddev/wds-nextjs": "^3.5.0",
+		"react": "19.2.4"
+	}
+}

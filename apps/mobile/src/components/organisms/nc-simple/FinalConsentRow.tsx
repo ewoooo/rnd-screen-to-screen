@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@wanteddev/wds";
+import { Card, CardContent } from "@pxds/pxds-components/core";
 
 import { HStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";

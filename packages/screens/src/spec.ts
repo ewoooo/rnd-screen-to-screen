@@ -33,7 +33,6 @@ export type ScreenLayoutContract = {
 	content_gap_owner?: "ContentList";
 	top_bottom_flow: ScreenSpecFlow;
 	bleed_sections: readonly string[];
-	portal_context?: "frame";
 	sheet_edge?: "bottom";
 };
 
@@ -312,12 +311,6 @@ export function getScreenSpecIssues(spec: ScreenSpecV2): ScreenSpecIssue[] {
 					message: `bottom-sheet spec must define ${slot} slot contract.`,
 				});
 			}
-		}
-		if (spec.layout_contract.portal_context !== "frame") {
-			issues.push({
-				severity: "error",
-				message: "bottom-sheet spec must declare frame portal context.",
-			});
 		}
 	}
 

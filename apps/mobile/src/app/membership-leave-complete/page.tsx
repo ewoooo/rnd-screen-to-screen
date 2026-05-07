@@ -3,7 +3,7 @@ import {
 	IconCalendarPerson,
 	IconCheckThick,
 	IconCircleBlock,
-} from "@wanteddev/wds-icon";
+} from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import {

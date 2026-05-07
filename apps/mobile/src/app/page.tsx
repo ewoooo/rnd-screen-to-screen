@@ -50,7 +50,7 @@ export default function Home() {
 		<VStack as="main" p="block" gap="block">
 			<Box>
 				<h1 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
-					Screen-to-Screen · mobile
+					PXDX · mobile
 				</h1>
 				<p
 					style={{

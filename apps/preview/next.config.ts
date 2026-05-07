@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	devIndicators: false,
-	transpilePackages: ["@screen/screens"],
+	transpilePackages: ["@pxds/pxds-preview", "@screen/screens"],
 };
 
 export default nextConfig;

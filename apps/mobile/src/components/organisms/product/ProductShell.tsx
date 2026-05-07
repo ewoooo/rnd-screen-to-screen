@@ -1,5 +1,5 @@
-import { TopNavigation, TopNavigationButton } from "@wanteddev/wds";
-import { IconSearch } from "@wanteddev/wds-icon";
+import { TopNavigation, TopNavigationButton } from "@pxds/pxds-components/core";
+import { IconSearch } from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import { GlobalNavigationBar } from "@/components/organisms/global";

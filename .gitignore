@@ -4,6 +4,9 @@ node_modules/
 out/
 build/
 storybook-static/
+apps/figma-export/codetofigma-*
+artifacts/
+docs/*.zip
 *.tsbuildinfo
 .env*
 .vercel

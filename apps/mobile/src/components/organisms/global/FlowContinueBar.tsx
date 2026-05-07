@@ -1,4 +1,4 @@
-import { Button } from "@wanteddev/wds";
+import { Button } from "@pxds/pxds-components/core";
 
 import { Box, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";

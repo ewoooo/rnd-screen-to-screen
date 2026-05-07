@@ -1,10 +1,10 @@
-import { Card, CardContent, Chip, SectionMessage } from "@wanteddev/wds";
+import { Card, CardContent, Chip, SectionMessage } from "@pxds/pxds-components/core";
 import {
 	IconBell,
 	IconGlobe,
 	IconImage,
 	IconMobile,
-} from "@wanteddev/wds-icon";
+} from "@pxds/pxds-components/core";
 import type { CSSProperties, ReactNode } from "react";
 
 import { Placeholder } from "@/components/atoms/feedback";

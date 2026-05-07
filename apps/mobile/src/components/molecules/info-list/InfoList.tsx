@@ -1,4 +1,4 @@
-import { Chip, Thumbnail } from "@wanteddev/wds";
+import { Chip, Thumbnail } from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import { Box, HStack, VStack } from "@/components/atoms/layout";

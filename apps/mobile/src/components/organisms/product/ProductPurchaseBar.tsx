@@ -1,4 +1,4 @@
-import { IconBusinessBag } from "@wanteddev/wds-icon";
+import { IconBusinessBag } from "@pxds/pxds-components/core";
 
 import { StickyActionBar } from "@/components/molecules";
 

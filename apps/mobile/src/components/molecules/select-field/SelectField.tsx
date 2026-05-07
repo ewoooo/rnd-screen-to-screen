@@ -3,7 +3,7 @@ import {
 	OptionContent,
 	Select,
 	SelectContent,
-} from "@wanteddev/wds";
+} from "@pxds/pxds-components/core";
 
 export type SelectOption = string | { id: string; label: string };
 

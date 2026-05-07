@@ -6,7 +6,7 @@ import {
 	FormLabel,
 	FormMessage,
 	Typography,
-} from "@wanteddev/wds";
+} from "@pxds/pxds-components/core";
 
 type Props = {
 	label: string;

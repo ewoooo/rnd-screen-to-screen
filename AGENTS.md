@@ -1,4 +1,4 @@
-# rnd-screen-to-screen
+# pxdx
 
 ## 프로젝트 목표 — 디자인 시스템 strain test
 
@@ -18,7 +18,12 @@
 │   ├── mobile/       Active WDS 모바일 화면 렌더러
 │   └── preview/      shadcn 기반 브라우저 프리뷰 셸
 ├── packages/
-│   └── screens/      화면 registry + active screen spec SSOT
+│   ├── pxds-tokens/      `@pxds/pxds-tokens` — WDS theme 기반 토큰 SSOT
+│   ├── pxds-components/  `@pxds/pxds-components` — 순수 UI 컴포넌트 + `core/` WDS re-export
+│   ├── pxds-layout/      `@pxds/pxds-layout` — 화면/frame/layout runtime
+│   ├── pxds-preview/     `@pxds/pxds-preview` — 모바일 iframe preview/helper
+│   ├── pxds-figma/       `@pxds/pxds-figma` — Figma bridge/hooks/spec authoring
+│   └── screens/          화면 registry + active screen spec SSOT
 ├── registry/         WDS SSOT — 컴포넌트 / 아이콘 / 토큰 / 매핑
 ├── AGENTS.md         ← 이 파일 (운영 규약 + 시스템 메타)
 ├── DESIGN.md         디자인 스펙 (수치, 토큰, 어휘 variant SSOT)
@@ -32,14 +37,13 @@
 ## 시스템 어휘 (`apps/mobile` 현재 단계)
 
 ### 화면 셸
-- `AppScreen` (`templates/app-screen/`) — 합성 스크린 API. `top` / `content` / `bottom` 슬롯을 받아 `AppScreenRoot` + `AppScreenContent`를 조합
-- `AppScreenRoot` (`templates/app-screen/`) — 모바일 화면 내부 root + frame-scoped portal context. 디바이스 frame/radius/browser canvas는 `apps/preview`가 담당
-- `AppScreenContext` (`templates/app-screen/`) — `.mobile-frame` DOM 참조를 노출하는 context. WDS Modal portal container 등에 사용
-- `AppScreenContent` (`templates/app-screen/`) — `top` / scroll content / `bottom` 배치 책임. top/bottom chrome은 항상 layout flow를 차지하며 content만 가운데에서 스크롤
-- `ContentOutlet` (`templates/app-screen/`) — 스크롤 영역. 기본 좌우 inset은 `var(--spacing-12)`이며 `ContentSection`이 같은 inset context를 공유
-- `ContentList` (`templates/app-screen/`) — `AppScreenContent` 내부 전용 콘텐츠 리스트. 모든 direct content item 간 gap은 `var(--spacing-4)`로 고정
-- `ContentSection` (`templates/app-screen/`) — `ContentOutlet` 안의 섹션 경계. 일반 섹션은 Outlet padding을 상속하고, 가로 스크롤/bleed 영역만 `inset="bleed"`로 명시
-- `ContentRail` (`templates/app-screen/`) — bleed/full-width 배경 안에서 내부 콘텐츠 기준선을 다시 맞추는 rail API. `rail="inset"`은 본문 기준선, `rail="measure"`는 caption/body/title 행폭 제한, `rail="full"`은 예외적 전체 폭
+- `AppScreen` (`@pxds/pxds-layout/app-screen`) — 합성 스크린 API. `top` / `content` / `bottom` 슬롯을 받아 `AppScreenRoot` + `AppScreenContent`를 조합
+- `AppScreenRoot` (`@pxds/pxds-layout/app-screen`) — 모바일 화면 내부 root. 디바이스 frame/radius/browser canvas는 `apps/preview`가 담당
+- `AppScreenContent` (`@pxds/pxds-layout/app-screen`) — `top` / scroll content / `bottom` 배치 책임. top/bottom chrome은 항상 layout flow를 차지하며 content만 가운데에서 스크롤
+- `ContentOutlet` (`@pxds/pxds-layout/app-screen`) — 스크롤 영역. 기본 좌우 inset은 `var(--spacing-12)`이며 `ContentSection`이 같은 inset context를 공유
+- `ContentList` (`@pxds/pxds-layout/app-screen`) — `AppScreenContent` 내부 전용 콘텐츠 리스트. 모든 direct content item 간 gap은 `var(--spacing-4)`로 고정
+- `ContentSection` (`@pxds/pxds-layout/app-screen`) — `ContentOutlet` 안의 섹션 경계. 일반 섹션은 Outlet padding을 상속하고, 가로 스크롤/bleed 영역만 `inset="bleed"`로 명시
+- `ContentRail` (`@pxds/pxds-layout/app-screen`) — bleed/full-width 배경 안에서 내부 콘텐츠 기준선을 다시 맞추는 rail API. `rail="inset"`은 본문 기준선, `rail="measure"`는 caption/body/title 행폭 제한, `rail="full"`은 예외적 전체 폭
 
 ### 본문 흐름
 - 화면 본문 흐름은 도메인별 list wrapper가 아니라 `AppScreenContent` 내부 `ContentList`가 소유한다
@@ -77,8 +81,9 @@
 - `TextBlock` (`atoms/typography/`) — WDS `Typography` 기반 텍스트 primitive. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책 표현
 
 ### 토큰
-- **WDS 토큰** — `var(--semantic-*)` / `var(--atomic-*)` / `var(--spacing-*)` / `var(--opacity-*)` 직접 소비. SSOT는 [`registry/wds-token-registry.json`](./registry/wds-token-registry.json)
-- **자체 토큰** — `lib/brand-tokens.ts` (`organisms/home/tokens.ts` 경유 re-export). 잔존: `GNB_BORDER`/`CARD_*`/`OFFERING_*`/`BADGE_BG`/`FONT`. 후속 차수에 `semantic.surface.card.*`/`offering.*` 등으로 흡수 후보
+- **PXDS 토큰** — `@pxds/pxds-tokens`가 토큰 SSOT다. 값 계층은 `raw value -> elevation token -> semantic token` 3레이어를 따른다.
+- **WDS theme 병합** — WDS token/theme 값은 별도 alias 패키지로 분산하지 않고 `@pxds/pxds-tokens`에서 흡수·재노출한다. CSS 변수는 `var(--semantic-*)` / `var(--atomic-*)` / `var(--spacing-*)` / `var(--opacity-*)`를 직접 소비할 수 있다.
+- **자체 토큰** — 잔존 자체 토큰은 후속 차수에서 `@pxds/pxds-tokens`의 semantic 계층으로 흡수한다. 새 화면에서 inline token을 새로 만들면 strain 신호로 기록한다.
 - **브랜드 컬러** — 별도 프로젝트 토큰을 두지 않고 WDS `semantic.primary.*` / WDS `Button color="primary"` / `Typography color="semantic.primary.normal"` 로 소비
 - **`semantic.surface.page.*` (프로젝트 확장)** — `--semantic-surface-page-{normal,semi}` CSS var. `AppScreenContent` 페이지 배경. `semanticSurface.page.normal/semi` alias로 소비. SSOT 동일
 
@@ -110,18 +115,23 @@
 - `Banner` — variant 기반.
 
 ### WDS 사용 정책 (2026-04-29 forced migration 이후)
-- **WDS 컴포넌트 직접 사용을 1차로 한다**. `Button`/`Card`/`Chip`/`ContentBadge`/`Typography`/`Thumbnail`/`RadioGroup` 등을 화면·kit에서 직접 import. 자체 wrapper(StatBadge·PillChip·MyEditButton·Typography 등)는 호출 시그니처 보존을 위한 얇은 위임만 허용
+- **WDS 컴포넌트는 `@pxds/pxds-components/core`로 흡수한다**. 앱/패키지 코드는 `@wanteddev/wds`·`@wanteddev/wds-icon`을 직접 보기보다 `@pxds/pxds-components/core`를 우선 진입점으로 사용한다.
+- **패키지 의존 방향**: `@pxds/pxds-tokens` → `@pxds/pxds-components` → `@pxds/pxds-layout` / `@pxds/pxds-preview` → `apps/*`.
+- **레이아웃 runtime 분리**: AppScreen류 화면 셸, bottom-sheet, primitives는 `@pxds/pxds-layout`이 소유한다. iframe 기반 모바일 preview helper는 `@pxds/pxds-preview`가 소유한다.
+- **frame portal context 제거 기록**: `@pxds/pxds-layout`에는 deprecated frame portal runtime을 남기지 않는다. preview가 iframe으로 격리되고 AppScreen 안에 여러 frame/root를 둘 계획이 없으므로, BottomSheet는 별도 `container` 지정 없이 WDS Modal 기본 렌더링에 맡긴다. 나중에 body 기준 modal이 radius/clipping/scroll boundary를 실제로 깨뜨리거나, 한 document 안에 여러 AppScreenRoot가 동시에 필요해질 때만 git history에서 frame context 패턴을 복구 검토한다.
+- **Figma 기능 분리**: component-to-Figma capture, Figma URL 읽기, component spec authoring 같은 순수 bridge/hook 기능은 `@pxds/pxds-figma`가 소유한다. 별도 `figma-export` 앱은 두지 않는다.
+- **WDS 컴포넌트 사용 원칙**. `Button`/`Card`/`Chip`/`ContentBadge`/`Typography`/`Thumbnail`/`RadioGroup` 등을 화면·kit에서 사용할 때는 `@pxds/pxds-components/core`로 통과시킨다. 자체 wrapper(StatBadge·PillChip·MyEditButton·Typography 등)는 호출 시그니처 보존을 위한 얇은 위임만 허용
 - **예외 — 유지하는 자체 layer**:
-  - `atoms/layout/` (Box·Flex·HStack·VStack) — semantic spacing 어휘 강제용. WDS 가 동등 토큰-결합 layout primitive를 제공하지 않음
+  - `@pxds/pxds-layout/primitives` (Box·Flex·Float·Grid·HStack·VStack) — semantic spacing 어휘 강제용. WDS 가 동등 토큰-결합 layout primitive를 제공하지 않음
   - `atoms/feedback/Divider` — Seed 스타일 inset prop 강제용 wrapper
   - `atoms/typography/TextBlock` — WDS `Typography`에 line break/maxLines 정책을 더한 텍스트 primitive
-  - `templates/app-screen/` — frame, scroll, sticky, portal context 인프라
+  - `@pxds/pxds-layout/app-screen` — screen root, scroll, sticky 인프라
   - `molecules/` — 도메인 독립 조합 패턴. 내부에서 WDS 사용
   - `organisms/` — 도메인/글로벌 화면 영역. 내부에서 WDS와 molecules 사용
 - **버려진 정책 (이전)**: "와이어프레임 도메인이라 raw + 토큰 조합이 명세 충실성에 더 부합" — Figma 픽셀 충실성을 우선으로 인라인 raw style을 허용하던 규칙. 2026-04-29부로 폐기. 픽셀 단위 충실성을 포기하고 WDS 컴포넌트 모양을 그대로 수용
 - 토큰: `var(--semantic-*)` 직접 소비도 가능하나 가능하면 WDS prop(`color="semantic.label.normal"`)으로 통과. SSOT는 `registry/wds-token-registry.json`
-- `@wanteddev/*` 패키지 import 위치: `apps/mobile/` 내부만. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만
-- `apps/preview/`는 shadcn/Tailwind 프리뷰 도구다. WDS 모바일 화면을 직접 import하지 않고 iframe(`NEXT_PUBLIC_MOBILE_ORIGIN`, 기본 `http://localhost:3001`)으로 띄운다.
+- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-tokens`, WDS global CSS/Next adapter 같은 패키지 경계에서만 허용한다. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
+- `apps/preview/`는 shadcn/Tailwind 프리뷰 도구다. WDS 모바일 화면을 직접 import하지 않고 `@pxds/pxds-preview`의 iframe helper로 띄운다. iframe origin은 `NEXT_PUBLIC_MOBILE_ORIGIN`(기본 `http://localhost:3001`)이다.
 
 ### Mock / 데이터 배치
 - 프로젝트 수준 screen registry: `packages/screens/src/index.ts`
@@ -226,10 +236,13 @@ templates + screen
 더 쪼개면 의미가 사라지는 최소 부품과 토큰 강제용 primitive다. 도메인 의미를 갖지 않는다.
 
 현재 atoms:
-- `atoms/layout` — Box, Flex, HStack, VStack, Float. spacing prop은 7 슬롯 SpacingToken만 받음 (DESIGN.md 참조)
+- `@pxds/pxds-layout/primitives` — Box, Flex, Float, Grid, HStack, VStack. spacing prop은 7 슬롯 SpacingToken만 받음 (DESIGN.md 참조)
 - `atoms/feedback` — Divider, Placeholder
 - `atoms/icon` — Logo, StatusBattery, StatusSignal, StatusWifi
 - `atoms/typography` — TextBlock. 도메인 의미 없이 모바일 카피 줄바꿈과 maxLines/truncate 정책만 담당
+- `@pxds/pxds-components/feedback` — Divider, Placeholder의 실제 구현 위치. `apps/mobile/src/components/atoms/feedback`은 호환 shim
+- `@pxds/pxds-components/typography` — TextBlock의 실제 구현 위치. `apps/mobile/src/components/atoms/typography`는 호환 shim
+- `@pxds/pxds-components/core` — WDS component/icon re-export. 앱에서 WDS primitive가 필요하면 이 경로를 사용한다.
 
 판단 기준:
 - Figma의 `atom/*`와 직접 대응하거나, WDS primitive 위에 아주 얇은 규칙만 얹으면 atoms 후보
@@ -282,22 +295,21 @@ templates + screen
 화면 슬롯과 렌더링 컨텍스트를 관리하는 계층이다. Atomic Design의 page template에 해당하며, 도메인 의미를 갖지 않는다.
 
 현재 templates:
-- `templates/app-screen/AppScreen`
-- `templates/app-screen/AppScreenRoot`
-- `templates/app-screen/AppScreenContext`
-- `templates/app-screen/AppScreenContent`
-- `templates/app-screen/ContentOutlet`
-- `templates/app-screen/ContentList` — 내부 전용 content flow, direct item gap `var(--spacing-4)`
-- `templates/app-screen/ContentRail` — full/bleed 표면 안의 내용 기준선과 readable measure
-- `templates/app-screen/StatusBar`
-- `templates/bottom-sheet/BottomSheetRoot` — WDS Modal open state, focus trap, scroll lock
-- `templates/bottom-sheet/BottomSheetBackdrop` — WDS ModalDimmer 기반 dimmer/backdrop
-- `templates/bottom-sheet/BottomSheetContent` — frame portal + bottom container + sheet content
-- `templates/bottom-sheet/BottomSheet` — Root + Backdrop + Content 합성 단축 API
+- `@pxds/pxds-layout/app-screen/AppScreen`
+- `@pxds/pxds-layout/app-screen/AppScreenRoot`
+- `@pxds/pxds-layout/app-screen/AppScreenContent`
+- `@pxds/pxds-layout/app-screen/ContentOutlet`
+- `@pxds/pxds-layout/app-screen/ContentList` — 내부 전용 content flow, direct item gap `var(--spacing-4)`
+- `@pxds/pxds-layout/app-screen/ContentRail` — full/bleed 표면 안의 내용 기준선과 readable measure
+- `@pxds/pxds-layout/app-screen/StatusBar`
+- `@pxds/pxds-layout/bottom-sheet/BottomSheetRoot` — WDS Modal open state, focus trap, scroll lock
+- `@pxds/pxds-layout/bottom-sheet/BottomSheetBackdrop` — WDS ModalDimmer 기반 dimmer/backdrop
+- `@pxds/pxds-layout/bottom-sheet/BottomSheetContent` — bottom container + sheet content
+- `@pxds/pxds-layout/bottom-sheet/BottomSheet` — Root + Backdrop + Content 합성 단축 API
 
 판단 기준:
 - top / content / bottom 같은 슬롯 계약을 관리하면 templates 후보
-- scroll context, portal context, frame boundary를 다루면 templates 후보
+- scroll context와 screen root boundary를 다루면 templates 후보
 - 바텀시트처럼 별도 렌더 컨텍스트가 필요하면 `BottomSheetRoot` / `BottomSheetBackdrop` / `BottomSheetContent`로 계약을 드러낸다. 화면에서는 보통 합성 단축 API인 `BottomSheet`를 사용한다
 
 ### Templates API 사용 규칙
@@ -333,11 +345,11 @@ templates + screen
 - 검색 탭처럼 상단에 붙는 영역은 global chrome organism 안에서 함께 조합한다. 예: `GlobalSearch`가 `GlobalSearchTopBar`와 `SearchResultTabs`를 `top` 슬롯에 함께 배치
 - 구매 바처럼 하단 navigation 위에 붙는 영역은 `bottom` 안에서 함께 조합한다. 예: `<><ProductPurchaseBar /><GlobalNavigationBar /></>`
 - page route에서 `position: fixed` / `absolute bottom: 0`로 직접 chrome을 만들지 않는다. 필요한 경우 `top` 또는 `bottom` 조합으로 올린다
-- `AppScreenRoot`는 frame portal이 필요한 특수 화면이나 합성 template 내부에서만 직접 사용한다
+- `AppScreenRoot`는 표준 `AppScreen` flow 없이 화면 root만 필요한 특수 화면이나 합성 template 내부에서만 직접 사용한다
 
 #### `BottomSheet`
 
-바텀시트 route는 `AppScreenRoot`로 frame context를 만든 뒤 `BottomSheet` 합성 API를 사용한다.
+바텀시트 route는 `AppScreenRoot`로 화면 root를 만든 뒤 `BottomSheet` 합성 API를 사용한다.
 
 ```tsx
 <AppScreenRoot>
@@ -361,14 +373,14 @@ templates + screen
 역할:
 - `BottomSheetRoot` — WDS `Modal`의 open state, focus trap, scroll lock
 - `BottomSheetBackdrop` — WDS `ModalDimmer` 기반 dimmer/backdrop
-- `BottomSheetContent` — frame portal, bottom container, sheet padding/gap
+- `BottomSheetContent` — bottom container, sheet padding/gap
 - `BottomSheet` — Root + Backdrop + Content 합성 단축 API
 
 사용 규칙:
 - `Backdrop` 철자를 사용한다. `Backdroup` 같은 오타 alias는 만들지 않는다
 - 바텀시트 backdrop을 page에서 별도 absolute layer로 만들지 않는다. `BottomSheetBackdrop` 또는 `BottomSheetContent.backdrop`으로 통과시킨다
-- sheet content 내부의 도메인 구조는 organisms/molecules가 맡고, portal/container/dimmer 책임은 templates가 맡는다
-- WDS `ModalContainer`를 route에서 직접 쓰지 않는다. frame portal 계약이 누락되기 쉽다
+- sheet content 내부의 도메인 구조는 organisms/molecules가 맡고, modal/container/dimmer 책임은 templates가 맡는다
+- WDS `ModalContainer`를 route에서 직접 쓰지 않는다. bottom-sheet 계약이 분산되기 쉽다
 
 #### `screen`
 
@@ -419,7 +431,7 @@ templates + screen
 ```
 
 허용 import:
-- screen → templates, organisms, atoms/layout
+- screen → templates, organisms, `@pxds/pxds-layout/primitives`
 - templates → atoms, organisms(global slot은 props로 주입)
 - organisms → molecules, atoms, WDS
 - molecules → atoms, WDS
@@ -683,6 +695,12 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 |---|---|
 | 2026-04-29 | 디렉터리 이름 변경: `app2/` → active app |
 | 2026-04-29 | `system/layout/` 도입 — Box/Flex/HStack/VStack + 7 슬롯 semantic spacing 어휘 (`row/inline/stack/group/inset/block/section`) |
+| 2026-05-07 | layout primitive 패키지 승격 — Box/Flex/Float/Grid/HStack/VStack + spacing token helper를 `@pxds/pxds-layout/primitives`로 이동. `apps/mobile/src/components/atoms/layout`은 re-export shim으로 유지 |
+| 2026-05-07 | primitive atom 패키지 승격 — TextBlock을 `@pxds/pxds-components/typography`, Divider/Placeholder를 `@pxds/pxds-components/feedback`으로 이동. 앱 atoms 경로는 re-export shim으로 유지 |
+| 2026-05-07 | WDS core 흡수 — WDS component/icon re-export를 `@pxds/pxds-components/core`로 분리하고 앱의 WDS component import를 core 진입점으로 전환 |
+| 2026-05-07 | `apps/figma-export` 제거 — Figma bridge/hook 기능은 `@pxds/pxds-figma` 패키지에 보존하고 실행 앱은 폐기 |
+| 2026-05-07 | preview helper 패키지 분리 — `MobileViewFrame`/`MobilePreviewFrame`을 `@pxds/pxds-preview`로 이동하고 `@pxds/pxds-layout`은 실제 화면 layout runtime만 소유 |
+| 2026-05-07 | `@pxds/pxds-layout` frame portal context 제거 — iframe preview boundary를 공식 격리 경계로 보고, deprecated runtime 대신 AGENTS 기록과 git history로 복구 가능성만 남김 |
 | 2026-04-29 | `system/Divider` 도입 — orientation/inset/thickness, `role="separator"` |
 | 2026-04-29 | `home-kit/AiAnnotation` 흡수 — 4곳 반복되던 icon+ai-text+spacing-2 패턴 |
 | 2026-04-29 | dead code 삭제: `home-kit/card/` (Card·CardHeader), `home-kit/wrapper/` (CardList) — HomeBlock으로 흡수 완료 |
@@ -693,7 +711,7 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-29 | 자체 브랜드 컬러 토큰 폐기 — 브랜드 컬러를 WDS `semantic.primary.*` 로 수렴. CTA는 WDS `Button color="primary"`, 텍스트는 `Typography color="semantic.primary.normal"` 사용 |
 | 2026-04-29 | `PAGE_BG`/`PAGE_BG_SEMI` 자체 토큰 폐기 — `--semantic-surface-page-{normal,semi}` CSS var + `semanticSurface.page.*` alias 도입. frame shell 소비처 재작성. registry에 `semantic.surface` (`_project_extension`) 추가 |
 | 2026-04-29 | frame shell patterns → system 승격 후 `AppScreenContent`로 명칭 정리 — 4 도메인(홈/검색/제품/TU) 공유 frame infrastructure 으로 layer 정합화 |
-| 2026-04-29 | `AppScreen` 합성 API 도입 — 일반 라우트는 `AppScreen` 사용, 바텀시트/포털 화면은 `AppScreenRoot` 직접 사용. frame ref는 `AppScreenContext`로 노출 |
+| 2026-04-29 | `AppScreen` 합성 API 도입 — 일반 라우트는 `AppScreen` 사용, 바텀시트 화면은 `AppScreenRoot` 직접 사용 |
 | 2026-04-30 | `AppScreenContent` raw padding/gap prop 제거 — scroll context를 상위 셸에서 결정 |
 | 2026-04-30 | `patterns/Surface` 제거 — WDS `Card`를 직접 사용하고, 실제 반복 구조는 `InfoList`/`PromoBlock`/`StickyActionBar` 같은 패턴에 남김 |
 | 2026-04-30 | 컴포넌트 디렉토리 Atomic 재정렬 — `atoms/`(layout·feedback·icon), `molecules/`, `organisms/`, `templates/app-screen/` 구조로 이동 |
@@ -707,7 +725,7 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-30 | screen generation benchmark SSOT 추가 — `packages/screens/src/benchmark.ts`에 디자인/기획 평가 항목, API refs, 1~5 scoring hint 정의 |
 | 2026-04-30 | `atoms/typography/TextBlock` 추가 — WDS Typography 기반 `text`/`lines`, `maxLines`, `overflow="truncate"` 지원. home-guest hero copy를 의미 단위 line break로 전환 |
 | 2026-04-30 | 홈 텍스트 전면 TextBlock 적용 후 기본 역할 variant로 승격 — `displayTitle`/`sectionLabel`/`contentTitle`/`listTitle`/`supportText`/`meta`/`assistive`/`price`/`rating`/`promo*`를 WDS Typography 조합으로 고정하고 raw banner font/letter-spacing 제거 |
-| 2026-04-30 | bottom-sheet template API 도입 — `BottomSheetRoot`/`BottomSheetBackdrop`/`BottomSheetContent`/`BottomSheet`로 WDS Modal, dimmer, frame portal, content 책임을 분리. 기존 `organisms/global`의 Backdrop/BottomSheet 제거 |
+| 2026-04-30 | bottom-sheet template API 도입 — `BottomSheetRoot`/`BottomSheetBackdrop`/`BottomSheetContent`/`BottomSheet`로 WDS Modal, dimmer, content 책임을 분리. 기존 `organisms/global`의 Backdrop/BottomSheet 제거 |
 | 2026-04-30 | AppScreen flow-only 계약으로 단순화 — `topAccessory`/`bottomAccessory`/`contentInset`/`topBehavior`/`contentLayout` 제거. top/bottom chrome은 항상 layout flow를 차지하고, 검색 탭·구매 바는 각각 `top`/`bottom` 조합 안에서 표현 |
 | 2026-04-30 | `ContentList` 전역화 — `AppScreenContent` 내부에서 모든 scroll content direct item gap을 `var(--spacing-4)`로 통일. 도메인별 `HomeBlockList` 제거 |
 | 2026-04-30 | `SearchShell`을 `organisms/global/GlobalSearch`로 이동 — 검색 상단 chrome 조합은 global organism이 소유하고, 검색 도메인은 결과 탭/콘텐츠 섹션만 유지 |

@@ -1,4 +1,4 @@
-import { Chip } from "@wanteddev/wds";
+import { Chip } from "@pxds/pxds-components/core";
 
 import { Flex } from "@/components/atoms/layout";
 

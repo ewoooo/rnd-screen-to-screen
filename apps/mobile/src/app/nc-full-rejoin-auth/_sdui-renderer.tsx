@@ -1,6 +1,6 @@
 "use client";
 
-import { IconLock, IconMessage, IconMobile } from "@wanteddev/wds-icon";
+import { IconLock, IconMessage, IconMobile } from "@pxds/pxds-components/core";
 import { useState, type ReactNode } from "react";
 
 import { SelectableList } from "@/components/molecules";

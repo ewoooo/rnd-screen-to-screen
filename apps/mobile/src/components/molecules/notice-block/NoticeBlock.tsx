@@ -1,4 +1,4 @@
-import { Button, Card, ContentBadge } from "@wanteddev/wds";
+import { Button, Card, ContentBadge } from "@pxds/pxds-components/core";
 
 import { VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";

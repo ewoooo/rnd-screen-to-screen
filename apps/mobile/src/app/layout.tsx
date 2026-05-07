@@ -1,15 +1,15 @@
-import { ThemeProvider } from "@wanteddev/wds";
-import { AppRouterCacheProvider } from "@wanteddev/wds-nextjs";
+import { ThemeProvider } from "@pxds/pxds-components/core";
+import { AppRouterCacheProvider } from "@pxds/pxds-components/core";
 import type { PropsWithChildren } from "react";
 
-import "@wanteddev/wds/global.css";
+import "@pxds/pxds-components/core/global.css";
 import "./wds-tokens.css";
 import "./globals.css";
 
 const RootLayout = ({ children }: PropsWithChildren) => (
 	<html lang="ko" suppressHydrationWarning>
 		<head>
-			<title>Screen-to-Screen · mobile</title>
+			<title>PXDX · mobile</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<link rel="preconnect" href="https://cdn.jsdelivr.net" />
 			<link

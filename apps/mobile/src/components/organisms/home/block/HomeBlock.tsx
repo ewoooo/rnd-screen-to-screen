@@ -1,4 +1,4 @@
-import { Button, Card } from "@wanteddev/wds";
+import { Button, Card } from "@pxds/pxds-components/core";
 import type { CSSProperties, ReactNode } from "react";
 
 import { HStack, VStack } from "@/components/atoms/layout";

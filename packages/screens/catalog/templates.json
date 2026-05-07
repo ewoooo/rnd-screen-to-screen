@@ -3,7 +3,7 @@
   "entries": [
     {
       "name": "AppScreen",
-      "path": "apps/mobile/src/components/templates/app-screen/AppScreen.tsx",
+      "path": "packages/pxds-layout/src/app-screen/AppScreen.tsx",
       "purpose": "Primary mobile page shell. Owns top/content/bottom slot composition through AppScreenRoot and AppScreenContent.",
       "slots": ["top", "children", "bottom"],
       "absorbs": ["standard page flow", "top chrome", "bottom chrome", "scroll content"],
@@ -12,16 +12,16 @@
     },
     {
       "name": "AppScreenRoot",
-      "path": "apps/mobile/src/components/templates/app-screen/AppScreenRoot.tsx",
-      "purpose": "Frame-scoped root and portal context for special screens and composed templates.",
+      "path": "packages/pxds-layout/src/app-screen/AppScreenRoot.tsx",
+      "purpose": "Mobile screen root for special screens and composed templates.",
       "slots": ["children"],
-      "absorbs": ["mobile frame context", "portal container context"],
+      "absorbs": ["mobile screen root boundary"],
       "used_by": ["AppScreen", "BottomSheet"],
-      "strain_notes": ["Use directly only when a route needs frame portal behavior without the standard AppScreen flow."]
+      "strain_notes": ["Use directly only when a route needs the mobile screen root without the standard AppScreen flow."]
     },
     {
       "name": "ContentOutlet",
-      "path": "apps/mobile/src/components/templates/app-screen/ContentOutlet.tsx",
+      "path": "packages/pxds-layout/src/app-screen/ContentOutlet.tsx",
       "purpose": "Scroll content viewport and default horizontal inset owner.",
       "variants_or_axes": ["inlineInset"],
       "absorbs": ["default content inset", "scrollable content area"],
@@ -30,7 +30,7 @@
     },
     {
       "name": "ContentList",
-      "path": "apps/mobile/src/components/templates/app-screen/ContentList.tsx",
+      "path": "packages/pxds-layout/src/app-screen/ContentList.tsx",
       "purpose": "Direct content flow owner inside AppScreenContent.",
       "absorbs": ["direct item vertical rhythm"],
       "used_by": ["AppScreenContent"],
@@ -38,7 +38,7 @@
     },
     {
       "name": "ContentSection",
-      "path": "apps/mobile/src/components/templates/app-screen/ContentLayout.tsx",
+      "path": "packages/pxds-layout/src/app-screen/ContentLayout.tsx",
       "purpose": "Section boundary and inset exception marker inside ContentOutlet.",
       "variants_or_axes": ["inset: inherit | bleed"],
       "absorbs": ["normal sections", "full-bleed or edge-to-edge sections"],
@@ -47,7 +47,7 @@
     },
     {
       "name": "ContentRail",
-      "path": "apps/mobile/src/components/templates/app-screen/ContentLayout.tsx",
+      "path": "packages/pxds-layout/src/app-screen/ContentLayout.tsx",
       "purpose": "Restores readable rails inside bleed/full-width surfaces.",
       "variants_or_axes": ["rail: inset | measure | full", "measure: caption | body | title"],
       "absorbs": ["bleed inner inset", "caption/body/title measure limits"],
@@ -56,8 +56,8 @@
     },
     {
       "name": "BottomSheet",
-      "path": "apps/mobile/src/components/templates/bottom-sheet/BottomSheet.tsx",
-      "purpose": "Composed bottom-sheet API over WDS Modal with frame portal/backdrop/content contracts.",
+      "path": "packages/pxds-layout/src/bottom-sheet/BottomSheet.tsx",
+      "purpose": "Composed bottom-sheet API over WDS Modal with backdrop/content contracts.",
       "slots": ["children"],
       "absorbs": ["modal root", "backdrop", "bottom sheet content"],
       "used_by": ["bottom-sheet screens", "modal branches"],

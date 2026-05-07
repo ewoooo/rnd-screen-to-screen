@@ -2,8 +2,8 @@ import {
 	ProgressIndicator,
 	TopNavigation,
 	TopNavigationButton,
-} from "@wanteddev/wds";
-import { IconArrowLeft, IconClose } from "@wanteddev/wds-icon";
+} from "@pxds/pxds-components/core";
+import { IconArrowLeft, IconClose } from "@pxds/pxds-components/core";
 
 import { Box, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";

@@ -7,7 +7,7 @@ import {
 	RadioGroup,
 	RadioGroupItem,
 	Typography,
-} from "@wanteddev/wds";
+} from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import { HStack } from "@/components/atoms/layout";

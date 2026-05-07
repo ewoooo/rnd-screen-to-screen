@@ -1,4 +1,4 @@
-import { Button } from "@wanteddev/wds";
+import { Button } from "@pxds/pxds-components/core";
 
 import { Box } from "@/components/atoms/layout";
 import { semanticSurface } from "@/lib/brand-tokens";

@@ -1,2 +1,1 @@
-export { Divider } from "./Divider";
-export { Placeholder } from "./Placeholder";
+export * from "@pxds/pxds-components/feedback";

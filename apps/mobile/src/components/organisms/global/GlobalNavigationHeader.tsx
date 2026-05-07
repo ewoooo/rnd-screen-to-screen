@@ -1,11 +1,11 @@
-import { TopNavigation, TopNavigationButton } from "@wanteddev/wds";
+import { TopNavigation, TopNavigationButton } from "@pxds/pxds-components/core";
 import {
 	IconBusinessBag,
 	IconCode,
 	IconClose,
 	IconMenu,
 	IconSearch,
-} from "@wanteddev/wds-icon";
+} from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/atoms/icon";

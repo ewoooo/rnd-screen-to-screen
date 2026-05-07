@@ -1,5 +1,5 @@
 {
-  "name": "rnd-screen-to-screen",
+  "name": "pxdx",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
@@ -10,13 +10,8 @@
     "dev": "concurrently -n mobile,preview -c cyan,magenta \"npm:dev:mobile\" \"npm:dev:preview\"",
     "dev:mobile": "npm run dev -w @screen/mobile",
     "dev:preview": "npm run dev -w @screen/preview",
-    "dev:figma-export": "npm run dev -w @screen/figma-export",
-    "dev:storybook": "npm run dev -w @screen/storybook",
     "build:mobile": "npm run build -w @screen/mobile",
     "build:preview": "npm run build -w @screen/preview",
-    "build:figma-export": "npm run build -w @screen/figma-export",
-    "build:storybook": "npm run build -w @screen/storybook",
-    "chromatic:storybook": "npm run chromatic -w @screen/storybook",
     "doctor": "react-doctor . --yes",
     "doctor:verbose": "react-doctor . --yes --verbose",
     "lint:mobile": "npm run lint -w @screen/mobile",

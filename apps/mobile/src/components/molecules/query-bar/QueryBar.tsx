@@ -1,4 +1,4 @@
-import { SearchField } from "@wanteddev/wds";
+import { SearchField } from "@pxds/pxds-components/core";
 
 type Props = {
 	value: string;

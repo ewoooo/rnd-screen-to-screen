@@ -5,7 +5,7 @@ import {
 	IconLock,
 	IconMessage,
 	IconMobile,
-} from "@wanteddev/wds-icon";
+} from "@pxds/pxds-components/core";
 import { useState, type ReactNode } from "react";
 
 import { SelectableList } from "@/components/molecules";

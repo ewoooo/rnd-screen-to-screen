@@ -1,10 +1,10 @@
-import { BottomNavigation, BottomNavigationItem } from "@wanteddev/wds";
+import { BottomNavigation, BottomNavigationItem } from "@pxds/pxds-components/core";
 import {
 	IconBusinessBag,
 	IconBusinessBagFill,
 	IconHomeFill,
 	IconSearch,
-} from "@wanteddev/wds-icon";
+} from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import { Box } from "@/components/atoms/layout";

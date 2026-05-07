@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-import { Card, CardContent, CardTitle } from "@wanteddev/wds";
+import { Card, CardContent, CardTitle } from "@pxds/pxds-components/core";
 
 import { HStack, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";

@@ -1,4 +1,4 @@
-import { Button, TextButton } from "@wanteddev/wds";
+import { Button, TextButton } from "@pxds/pxds-components/core";
 
 import { Checkbox } from "@/components/molecules";
 import {

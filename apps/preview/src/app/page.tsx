@@ -2,6 +2,7 @@
 
 import { AlertTriangleIcon, CheckCircle2Icon, ExternalLinkIcon } from "lucide-react";
 import { useMemo, useState } from "react";
+import { MobilePreviewFrame } from "@pxds/pxds-preview";
 import {
 	activeScreenSpecs,
 	benchmarkCriteria,
@@ -36,6 +37,7 @@ const GROUP_ORDER = [
 	"nc-full",
 	"nc-simple",
 	"billing",
+	"billing-html",
 ] as const satisfies readonly ScreenGroup[];
 type RegistryScreen = (typeof screens)[number];
 
@@ -272,14 +274,7 @@ export default function PreviewPage() {
 							<CardDescription>{iframeSrc}</CardDescription>
 						</CardHeader>
 						<CardContent className="p-0">
-							<div className="overflow-hidden rounded-[28px] border bg-background">
-								<iframe
-									key={iframeSrc}
-									title={selected.label}
-									src={iframeSrc}
-									className="block h-[812px] w-[375px] border-0 bg-white"
-								/>
-							</div>
+							<MobilePreviewFrame src={iframeSrc} title={selected.label} />
 						</CardContent>
 					</Card>
 				</div>

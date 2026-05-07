@@ -1,4 +1,4 @@
-import { Chip, ContentBadge } from "@wanteddev/wds";
+import { Chip, ContentBadge } from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 /**

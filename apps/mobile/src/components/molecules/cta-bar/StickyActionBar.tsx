@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@wanteddev/wds";
+import { Button, IconButton } from "@pxds/pxds-components/core";
 import type { ReactNode } from "react";
 
 import { Box, HStack, VStack } from "@/components/atoms/layout";

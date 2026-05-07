@@ -11,7 +11,7 @@ import {
 	TextField,
 	TextFieldButton,
 	TextFieldContent,
-} from "@wanteddev/wds";
+} from "@pxds/pxds-components/core";
 
 export {
 	Checkbox,
