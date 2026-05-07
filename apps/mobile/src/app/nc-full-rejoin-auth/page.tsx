@@ -1,4 +1,4 @@
-import { activeRenderableScreenSpecs } from "@screen/screens";
+import { activeRenderableScreenSpecs } from "@screen/specs";
 
 import { NcFullRejoinAuthScreen } from "./_sdui-renderer";
 

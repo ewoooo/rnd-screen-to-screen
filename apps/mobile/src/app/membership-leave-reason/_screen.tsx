@@ -11,7 +11,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type LeaveReasonData = {
 	hero: {

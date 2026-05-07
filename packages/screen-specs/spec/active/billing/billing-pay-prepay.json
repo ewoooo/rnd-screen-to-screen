@@ -1,0 +1,29 @@
+{
+	"meta": { "schema_version": 2, "status": "active", "route": "/billing-pay-prepay", "source": "policy-driven", "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.md", "policy_section": "4. US-BIL-PAY-007 / PR-BIL-PAY-007-01,02", "pagination_ref": "packages/screen-specs/spec/active/billing/_pagination/billing-pay.json" },
+	"screen": { "id": "billing-pay-prepay", "name": "선결제", "domain": "billing", "use_case": "US-BIL-PAY-007", "process_id": "PR-BIL-PAY-007-01,02", "step_fraction": "7/8", "type": "page" },
+	"x_interfacePlan": { "genre": "form", "primary_task": "선결제 분류·항목 선택 + 요청", "info_hierarchy": ["hero", "category-tabs", "selector (다중)", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat", "copy_policy": { "description_measure": "body", "avoid_full_width_caption": true }, "rail_policy": { "owner": "ContentRail", "route_margin": "forbidden" } },
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "patterns": ["GlobalNavigationHeader"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["ContentSection", "TextBlock", "Tab", "SelectableList"] },
+			"bottom": { "owner": "StickyActionBar", "patterns": ["StickyActionBar"], "flow": "reserved" }
+		}
+	},
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"areas": [
+		{ "id": "top-progress", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["TopNavigation", "ProgressIndicator"], "layout": { "flow": "reserved", "leading": "back" }, "content_role": "flow-progress" },
+		{ "id": "hero", "slot": "content", "pattern": "ContentSection + TextBlock", "uses": ["ContentSection", "ContentRail", "TextBlock"], "content_role": "primary-copy" },
+		{ "id": "tabs", "slot": "content", "pattern": "WDS Tab", "uses": ["ContentSection", "Tab"], "content_role": "category-tabs" },
+		{ "id": "items", "slot": "content", "pattern": "molecules/SelectableList", "uses": ["ContentSection", "SelectableList", "TextBlock"], "layout": { "section_inset": "inherit", "selectionMode": "multi", "trailing_semantic": "value" }, "content_role": "primary-choice" },
+		{ "id": "continue", "slot": "bottom", "pattern": "molecules/StickyActionBar", "uses": ["Box", "Button", "TextBlock"], "content_role": "primary-action", "state_binding": { "primary_disabled_when": "items.selectedCount == 0" } }
+	],
+	"design_system_contract": {
+		"templates": ["AppScreen", "ContentList", "ContentSection", "ContentRail"],
+		"organisms": ["global"],
+		"molecules": ["SelectableList", "StickyActionBar"],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

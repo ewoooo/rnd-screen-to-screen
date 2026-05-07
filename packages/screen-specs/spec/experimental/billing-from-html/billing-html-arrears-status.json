@@ -1,0 +1,146 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "experimental-html",
+		"route": "/billing-html-arrears-status",
+		"source": "policy-driven",
+		"policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+		"policy_section": "4. US-BIL-CHK-008 / PR-BIL-CHK-008-01,02,03",
+		"pagination_ref": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-html-chk.json"
+	},
+	"screen": {
+		"id": "billing-html-arrears-status",
+		"name": "미납 해소·후속 상태",
+		"domain": "billing-html",
+		"use_case": "US-BIL-CHK-008",
+		"process_id": "PR-BIL-CHK-008-01,02,03",
+		"step_fraction": "8/8",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "미납 해소·정지 해제 상태 확인 및 후속 조치",
+		"info_hierarchy": [
+			"result-message (해소 상태)",
+			"result-summary (후속 조치 InfoList)",
+			"action (잔액 납부 또는 확인)"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card",
+		"rail_policy": {
+			"owner": "ContentRail",
+			"route_margin": "forbidden"
+		}
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"GlobalNavigationHeader"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"NoticeBlock",
+					"SectionCard",
+					"InfoList"
+				]
+			},
+			"bottom": {
+				"owner": "PrimaryCTABar",
+				"patterns": [
+					"PrimaryCTABar"
+				],
+				"flow": "reserved"
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": [],
+		"content_rail_owner": "ContentRail"
+	},
+	"areas": [
+		{
+			"id": "top",
+			"slot": "top",
+			"pattern": "organisms/global/GlobalNavigationHeader",
+			"uses": [
+				"GlobalNavigationHeader"
+			],
+			"layout": {
+				"leading": "close",
+				"title": "미납 해소 상태"
+			},
+			"content_role": "chrome"
+		},
+		{
+			"id": "status",
+			"slot": "content",
+			"pattern": "molecules/NoticeBlock",
+			"uses": [
+				"NoticeBlock"
+			],
+			"content_role": "result-message"
+		},
+		{
+			"id": "follow-up",
+			"slot": "content",
+			"pattern": "molecules/SectionCard",
+			"uses": [
+				"SectionCard",
+				"InfoList"
+			],
+			"layout": {
+				"trailing_semantic": "status"
+			},
+			"content_role": "follow-up-list"
+		},
+		{
+			"id": "cta",
+			"slot": "bottom",
+			"pattern": "molecules/PrimaryCTABar",
+			"uses": [
+				"PrimaryCTABar",
+				"Button"
+			],
+			"content_role": "primary-action",
+			"state_binding": {
+				"primary_label_when_remaining": "잔액 납부하기",
+				"primary_label_when_resolved": "확인"
+			}
+		}
+	],
+	"design_system_contract": {
+		"templates": [
+			"AppScreen",
+			"AppScreenContent",
+			"ContentOutlet",
+			"ContentList",
+			"ContentSection"
+		],
+		"organisms": [
+			"global"
+		],
+		"molecules": [
+			"NoticeBlock",
+			"SectionCard",
+			"InfoList",
+			"PrimaryCTABar"
+		],
+		"atoms": [
+			"TextBlock"
+		],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

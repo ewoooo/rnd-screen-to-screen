@@ -1,4 +1,4 @@
-import { activeRenderableScreenSpecs } from "@screen/screens";
+import { activeRenderableScreenSpecs } from "@screen/specs";
 
 import { BillingStatementResultScreen } from "./_sdui-renderer";
 

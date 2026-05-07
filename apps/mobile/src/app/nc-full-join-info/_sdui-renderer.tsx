@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -11,7 +11,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type SpecField = {
 	id: string;
@@ -38,22 +38,15 @@ export function NcFullJoinInfoScreen({
 	const form = readData<FormData>(spec, "form");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly FlowPersonalField[]>(
-		() =>
-			form.fields.map((f) => ({
-				id: f.id,
-				label: f.label,
-				required: f.required,
-				placeholder: f.placeholder,
-				helperText: f.rule,
-				kind:
-					f.control === "select"
-						? ("selectable" as const)
-						: ("text" as const),
-				options: f.options?.map((value) => ({ id: value, title: value })),
-			})),
-		[form.fields],
-	);
+	const fields: readonly FlowPersonalField[] = form.fields.map((f) => ({
+		id: f.id,
+		label: f.label,
+		required: f.required,
+		placeholder: f.placeholder,
+		helperText: f.rule,
+		kind: f.control === "select" ? ("selectable" as const) : ("text" as const),
+		options: f.options?.map((value) => ({ id: value, title: value })),
+	}));
 
 	const [values, setValues] = useState<Record<string, string | undefined>>({});
 	const errors: Record<string, string | undefined> = {};

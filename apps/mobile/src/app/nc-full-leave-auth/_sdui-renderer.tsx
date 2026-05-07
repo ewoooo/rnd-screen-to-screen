@@ -12,7 +12,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen, ListContents } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type IconKind = "smartphone" | "shield-check" | "certificate";
 const ICON_MAP: Record<IconKind, ReactNode> = {

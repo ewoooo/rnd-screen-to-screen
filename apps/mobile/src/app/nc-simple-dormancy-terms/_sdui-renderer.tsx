@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -11,7 +11,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type TopbarData = {
 	title: string;
@@ -45,18 +45,15 @@ export function NcSimpleDormancyTermsScreen({
 	const terms = readData<TermsData>(spec, "terms");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const termsItems = useMemo<readonly TermsAgreementItem[]>(
-		() =>
-			[...terms.required, ...terms.optional].map((item) => ({
-				id: item.id,
-				title: item.changeBadge
-					? `${item.title} (${item.changeBadge})`
-					: item.title,
-				caption: item.caption ?? "",
-				required: item.required,
-			})),
-		[terms.optional, terms.required],
-	);
+	const termsItems: readonly TermsAgreementItem[] = [
+		...terms.required,
+		...terms.optional,
+	].map((item) => ({
+		id: item.id,
+		title: item.changeBadge ? `${item.title} (${item.changeBadge})` : item.title,
+		caption: item.caption ?? "",
+		required: item.required,
+	}));
 	const [missing, setMissing] = useState(terms.required.length);
 	const blocked = missing > 0;
 	const dynamicEyebrow = blocked

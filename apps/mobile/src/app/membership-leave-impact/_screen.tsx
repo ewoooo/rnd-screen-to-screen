@@ -15,7 +15,7 @@ import { HStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/typography";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type LeaveImpactData = {
 	topbar: { title: string; progressLabel: string; progressPercent: number };

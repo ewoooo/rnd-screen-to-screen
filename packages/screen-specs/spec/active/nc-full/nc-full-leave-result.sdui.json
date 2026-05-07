@@ -1,0 +1,54 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-full-leave-result", "name": "탈퇴 결과 안내", "route": "/nc-full-leave-result", "domain": "nc-full", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-003", "name": "회원 탈퇴", "step": 5, "total": 5, "progress": "회원 탈퇴 5/5" },
+		"hero": { "titleLines": ["탈퇴가 처리됐어요", "그동안 함께해 주셔서 감사해요"], "description": "30일 이내에 같은 정보로 로그인하면 탈퇴를 철회할 수 있어요." },
+		"summary": {
+			"title": "탈퇴 정보",
+			"items": [
+				{ "id": "withdrawnAt", "label": "탈퇴 일시", "value": "2026-05-04 14:32" },
+				{ "id": "graceUntil", "label": "철회 가능 기한", "value": "2026-06-03" },
+				{ "id": "memberId", "label": "회원번호", "value": "M-2026-000123" }
+			]
+		},
+		"withdrawNotice": { "badge": "안내", "text": "유예 기간 후에는 회원 정보가 영구 삭제되며, 동일 정보로 즉시 재가입할 수 없을 수 있어요.", "action": null, "tone": "info" },
+		"actions": {
+			"primary": { "id": "go-home", "label": "홈으로 가기" },
+			"secondary": { "id": "cancel-withdraw", "label": "탈퇴 철회 안내" }
+		}
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-full-leave-result", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원 탈퇴", "leadingIcon": "close", "progressVisible": false } },
+				"bottom": { "type": "NcResultActions", "id": "area.actions", "props": { "bind": "actions" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } } } },
+				{ "type": "NcSummaryCard", "id": "area.summary", "props": { "bind": "summary", "textPolicy": { "label": { "variant": "supportText" }, "value": { "variant": "listTitle", "maxLines": 1, "overflow": "truncate" } } } },
+				{ "type": "NcNotice", "id": "area.withdraw-notice", "props": { "bind": "withdrawNotice", "tone": "default" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screen-specs/spec/active/nc-full/_pagination/nc-full-leave.json", "_canonical_hash": "TBD", "policy_id": "nc-full-leave", "route_id": "nc-full-leave-result", "step_fraction": "5/5", "predecessor": "nc-full-leave-confirm", "successor": null, "transitions": [{ "to": "external:home", "trigger": "primary_action" }, { "to": "external:withdraw-cancel-info", "trigger": "secondary_action" }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-003-05", "PR-MBR-CS-003-06", "docs/NC_정책서_Full_v1.0_확정본.md#탈퇴-결과-안내-pr-mbr-cs-003-06"] },
+		"process": { "id": "PR-MBR-CS-003-06", "name": "탈퇴 결과 안내", "cluster": "US-MBR-CS-003 회원 탈퇴 5/5", "actor": "고객, BSS", "entry_condition": "탈퇴 처리 완료", "exit_condition": "탈퇴 결과 및 유예 기간 안내 완료", "predecessor": ["PR-MBR-CS-003-05"], "successor": [], "related_functions": ["탈퇴 완료 및 철회 안내", "처리 이력 및 알림 처리", "업무 결과 재조회 및 이력 확인"], "related_policies": ["탈퇴 결과 안내 기준 정책"] },
+		"purpose": "탈퇴 완료를 안내하고 유예 기간 내 철회 경로를 제시한다.",
+		"system_inputs_to_user": ["탈퇴 일시", "유예 기간 만료일", "회원번호", "철회 안내 경로"],
+		"user_inputs": ["다음 행동 선택 (홈/철회 안내)"],
+		"system_outputs": ["다음 진입 화면"],
+		"branches": ["홈으로 → 비회원 메인", "탈퇴 철회 안내 → 별도 안내 화면"],
+		"exceptions": ["알림 발송 실패 → 비동기 재시도, 화면은 정상 진입"],
+		"design_signals": { "primary_block": "탈퇴 정보 카드 + 철회 안내", "hero_intent": "감사 인사 + 철회 가능 안내", "cta_intent": "홈으로 / 탈퇴 철회 안내" }
+	},
+	"x_interfacePlan": { "genre": "result", "primary_task": "결과 인지 + 다음 행동", "info_hierarchy": ["hero", "result-summary", "supporting-notice", "actions"], "cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "one-card" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-2", "result": "pass", "evidence": "SummaryCard title='탈퇴 정보'와 hero 의미 중복 없음" },
+		{ "rule": "H-7", "result": "pass", "evidence": "dead-end → close" },
+		{ "rule": "H-10", "result": "documented", "evidence": "InfoList trailing_semantic=value" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

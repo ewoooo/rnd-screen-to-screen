@@ -1,0 +1,29 @@
+{
+	"meta": { "schema_version": 2, "status": "active", "route": "/nc-full-leave-result", "source": "policy-driven", "policy_doc": "docs/NC_정책서_Full_v1.0_확정본.md", "policy_section": "4.다.17) PR-MBR-CS-003-06", "pagination_ref": "packages/screen-specs/spec/active/nc-full/_pagination/nc-full-leave.json" },
+	"screen": { "id": "nc-full-leave-result", "name": "탈퇴 결과 안내", "domain": "nc-full", "use_case": "US-MBR-CS-003", "process_id": "PR-MBR-CS-003-06", "step_fraction": "5/5", "type": "page" },
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "탈퇴 완료 인지 + 유예 기간 안내 + 다음 행동",
+		"info_hierarchy": ["hero (완료)", "result-summary (탈퇴 일자 + 유예 종료일)", "supporting-notice (철회 안내)", "actions (홈으로 / 탈퇴 철회)"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card"
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "NcShell", "patterns": ["NcTopBar"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["NcHero", "NcSummaryCard", "NcNotice"] },
+			"bottom": { "owner": "NcShell", "patterns": ["NcResultActions"], "flow": "reserved" }
+		}
+	},
+	"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+	"areas": [
+		{ "id": "top-progress", "slot": "top", "pattern": "organisms/nc/NcTopBar", "uses": ["StatusBar", "TopNavigation"], "layout": { "flow": "reserved", "leading": "close", "progress_visible": false }, "content_role": "flow-progress" },
+		{ "id": "hero", "slot": "content", "pattern": "organisms/nc/NcHero", "uses": ["ContentSection", "TextBlock", "ContentRail"], "layout": { "section_inset": "inherit", "description_rail": "measure:body", "block_padding_top": "spacing-16", "block_padding_bottom": "spacing-32" }, "content_role": "primary-copy" },
+		{ "id": "summary", "slot": "content", "pattern": "organisms/nc/NcSummaryCard", "uses": ["ContentSection", "SummaryCard", "InfoList", "TextBlock"], "layout": { "section_inset": "inherit", "trailing_semantic": "value" }, "content_role": "result-summary" },
+		{ "id": "withdraw-notice", "slot": "content", "pattern": "organisms/nc/NcNotice", "uses": ["ContentSection", "NoticeBlock", "TextBlock"], "layout": { "section_inset": "inherit" }, "content_role": "supporting-notice" },
+		{ "id": "actions", "slot": "bottom", "pattern": "organisms/nc/NcResultActions", "uses": ["Box", "Button"], "content_role": "primary-action", "layout": { "surface": "page-semi-gradient", "button_layout": "primary + secondary" } }
+	],
+	"design_system_contract": { "templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection", "ContentRail"], "organisms": ["nc"], "molecules": ["SummaryCard", "InfoList", "NoticeBlock"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": ["organisms/nc/NcResultActions", "organisms/nc/NcSummaryCard"] }
+}

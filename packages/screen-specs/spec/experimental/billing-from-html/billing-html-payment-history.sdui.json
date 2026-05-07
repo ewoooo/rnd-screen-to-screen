@@ -1,0 +1,349 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-payment-history",
+		"name": "납부 이력 및 증빙",
+		"route": "/billing-html-payment-history",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"history": {
+			"title": "최근 납부",
+			"rows": [
+				{
+					"id": "p1",
+					"title": "2026-04-25 14:02",
+					"sub": "신한카드 ****1234 · 승인 12345",
+					"trailingLabel": "73,420원"
+				},
+				{
+					"id": "p2",
+					"title": "2026-03-25 13:55",
+					"sub": "자동납부 · 신한카드",
+					"trailingLabel": "68,200원"
+				},
+				{
+					"id": "p3",
+					"title": "2026-02-25 13:48",
+					"sub": "자동납부 · 신한카드",
+					"trailingLabel": "71,500원"
+				}
+			]
+		},
+		"receiptTypes": {
+			"title": "발급 가능한 증빙",
+			"chips": [
+				{
+					"id": "receipt",
+					"label": "납부영수증",
+					"selected": true
+				},
+				{
+					"id": "statement",
+					"label": "납부내역서",
+					"selected": false
+				},
+				{
+					"id": "cash",
+					"label": "현금영수증",
+					"selected": false
+				},
+				{
+					"id": "tax",
+					"label": "세금계산서",
+					"selected": false
+				}
+			]
+		},
+		"cta": {
+			"primary": {
+				"id": "reissue",
+				"label": "선택한 증빙 재발행"
+			}
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-payment-history",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top",
+					"props": {
+						"title": "납부 이력",
+						"leading": "back"
+					}
+				},
+				"bottom": {
+					"type": "PrimaryCTABar",
+					"id": "area.cta",
+					"props": {
+						"bind": "cta"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "InfoList",
+					"id": "area.history",
+					"props": {
+						"bind": "history",
+						"trailingSemantic": "value"
+					}
+				},
+				{
+					"type": "SectionCard",
+					"id": "area.receipt-types",
+					"props": {
+						"bind": "receiptTypes"
+					},
+					"children": [
+						{
+							"type": "ChipGroup",
+							"id": "area.receipt-types.chips",
+							"props": {
+								"bind": "receiptTypes.chips"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-html-pay.json",
+		"_canonical_hash": "b7deeccee388ab32e2b74a2b3069a0bc0bc2681fe26caa70b1fdc229f3b5368b",
+		"policy_id": "billing-html-pay",
+		"route_id": "billing-html-payment-history",
+		"step_fraction": "7/8",
+		"predecessor": null,
+		"successor": "billing-html-receipt-result",
+		"transitions": [
+			{
+				"to": "billing-html-receipt-result",
+				"trigger": "system",
+				"guard": "receipt_reissue_request_submitted"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-CHK-007-01",
+				"PR-BIL-CHK-007-02",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-007-01"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-CHK-007-01,02",
+			"name": "납부 이력 조회 + 증빙 발급 가능 여부 확인",
+			"cluster": "US-BIL-CHK-007",
+			"actor": "청구 확인자, 연계 시스템",
+			"entry_condition": "납부 이력 진입",
+			"exit_condition": "이력 + 증빙 가능 여부 확인",
+			"predecessor": [],
+			"successor": [
+				"PR-BIL-CHK-007-03"
+			],
+			"related_functions": [
+				"FN-BIL-CHK-007 납부 이력·수납 상태 조회",
+				"FN-BIL-CHK-009 증빙 발급"
+			],
+			"related_policies": [
+				"PG-BIL-LOG-001 알림·이력 저장 정책",
+				"PG-BIL-CUS-001 고객 안내 정책"
+			]
+		},
+		"purpose": "납부 이력과 발급 가능한 증빙 종류를 확인한다.",
+		"system_inputs_to_user": [
+			"납부 일시",
+			"금액",
+			"납부수단",
+			"승인번호",
+			"발급 가능 증빙 유형"
+		],
+		"user_inputs": [
+			"증빙 유형 선택",
+			"재발행 요청"
+		],
+		"system_outputs": [
+			"증빙 재발행 요청"
+		],
+		"branches": [
+			"발급 가능 → result",
+			"보관기간 초과 → 발급 제한"
+		],
+		"exceptions": [
+			"조회 권한 없음 → 접근 제한 안내"
+		],
+		"design_signals": {
+			"primary_block": "납부 이력 InfoList + 증빙 ChipGroup + 재발행 CTA"
+		},
+		"evidence_refs": [
+			{
+				"claim": "이력 보관 기간 (금융 5년)",
+				"policy": [
+					"POL-BIL-LOG-001-07"
+				],
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=POL-BIL-LOG-001-07"
+			},
+			{
+				"claim": "고객 조회 가능 12개월",
+				"policy": [
+					"POL-BIL-LOG-001-08"
+				],
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=POL-BIL-LOG-001-08"
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "browse",
+		"primary_task": "이력 조회 + 증빙 선택",
+		"info_hierarchy": [
+			"list",
+			"selector",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "flat"
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"GlobalNavigationHeader"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"InfoList",
+					"SectionCard",
+					"ChipGroup"
+				]
+			},
+			"bottom": {
+				"owner": "PrimaryCTABar",
+				"patterns": [
+					"PrimaryCTABar"
+				],
+				"flow": "reserved"
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": [],
+			"content_rail_owner": "ContentRail"
+		},
+		"areas": [
+			{
+				"id": "top",
+				"slot": "top",
+				"pattern": "organisms/global/GlobalNavigationHeader",
+				"uses": [
+					"GlobalNavigationHeader"
+				],
+				"layout": {
+					"leading": "back",
+					"title": "납부 이력"
+				},
+				"content_role": "chrome"
+			},
+			{
+				"id": "history",
+				"slot": "content",
+				"pattern": "molecules/InfoList",
+				"uses": [
+					"InfoList"
+				],
+				"layout": {
+					"trailing_semantic": "value"
+				},
+				"content_role": "list"
+			},
+			{
+				"id": "receipt-types",
+				"slot": "content",
+				"pattern": "molecules/SectionCard",
+				"uses": [
+					"SectionCard",
+					"ChipGroup"
+				],
+				"content_role": "selector-group"
+			},
+			{
+				"id": "cta",
+				"slot": "bottom",
+				"pattern": "molecules/PrimaryCTABar",
+				"uses": [
+					"PrimaryCTABar",
+					"Button"
+				],
+				"content_role": "primary-action"
+			}
+		],
+		"design_system_contract": {
+			"templates": [
+				"AppScreen",
+				"AppScreenContent",
+				"ContentOutlet",
+				"ContentList",
+				"ContentSection"
+			],
+			"organisms": [
+				"global"
+			],
+			"molecules": [
+				"InfoList",
+				"SectionCard",
+				"ChipGroup",
+				"PrimaryCTABar"
+			],
+			"atoms": [
+				"TextBlock"
+			],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{
+				"rule": "H-7",
+				"result": "pass",
+				"evidence": "browse hub → back"
+			},
+			{
+				"rule": "H-10",
+				"result": "pass",
+				"evidence": "InfoList trailing=value (금액)"
+			},
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "route margin 없음"
+			}
+		]
+	}
+}

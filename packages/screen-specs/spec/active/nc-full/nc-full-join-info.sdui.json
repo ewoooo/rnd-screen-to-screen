@@ -1,0 +1,171 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "nc-full-join-info",
+		"name": "개인정보 입력",
+		"route": "/nc-full-join-info",
+		"domain": "nc-full",
+		"type": "page",
+		"status": "spec-only"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"flow": {
+			"useCase": "US-MBR-CS-001",
+			"name": "회원 가입",
+			"step": 2,
+			"total": 4,
+			"progress": "회원 가입 2/4"
+		},
+		"hero": {
+			"titleLines": ["가입에 필요한", "정보를 입력해 주세요"],
+			"description": "본인 확인과 회원 식별에 사용되며, 일부는 가입 후에도 변경할 수 있어요."
+		},
+		"form": {
+			"fields": [
+				{ "id": "name", "label": "이름", "control": "text", "required": true, "placeholder": "예: 홍길동", "rule": "한글/영문 2~30자" },
+				{ "id": "birthDate", "label": "생년월일", "control": "text", "required": true, "placeholder": "YYYYMMDD", "rule": "8자리 숫자" },
+				{ "id": "gender", "label": "성별", "control": "select", "required": true, "options": ["남성", "여성", "기타", "응답 안 함"] },
+				{ "id": "phone", "label": "휴대전화", "control": "text", "required": true, "placeholder": "010-0000-0000", "rule": "국내 휴대전화 번호 형식" },
+				{ "id": "email", "label": "이메일", "control": "text", "required": false, "placeholder": "선택 입력", "rule": "이메일 형식" }
+			]
+		},
+		"continue": {
+			"eyebrow": "입력 완료 시 본인인증으로 진행",
+			"primaryAction": "다음으로"
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-full-join-info",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "NcTopBar",
+					"id": "slot.top.nc-full-join-info",
+					"props": {
+						"title": "회원가입",
+						"leadingIcon": "back",
+						"progressBind": "flow.progress",
+						"progressTotal": 4,
+						"progressStep": 2
+					}
+				},
+				"bottom": {
+					"type": "NcContinueBar",
+					"id": "area.continue",
+					"props": { "bind": "continue" }
+				}
+			},
+			"children": [
+				{
+					"type": "NcHero",
+					"id": "area.hero",
+					"props": {
+						"bind": "hero",
+						"textPolicy": {
+							"title": { "variant": "displayTitle", "overflow": "wrap" },
+							"description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" }
+						}
+					}
+				},
+				{
+					"type": "NcPersonalInfoForm",
+					"id": "area.form",
+					"props": {
+						"bind": "form",
+						"textPolicy": {
+							"label": { "variant": "label1" },
+							"errorText": { "variant": "caption1" }
+						}
+					}
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/active/nc-full/_pagination/nc-full-join.json",
+		"_canonical_hash": "TBD",
+		"policy_id": "nc-full-join",
+		"route_id": "nc-full-join-info",
+		"step_fraction": "2/4",
+		"predecessor": "nc-full-join-terms",
+		"successor": "nc-full-join-auth",
+		"transitions": [
+			{ "to": "nc-full-join-auth", "trigger": "primary_cta", "guard": "personal_info_validated" }
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": ["PR-MBR-CS-001-02", "docs/NC_정책서_Full_v1.0_확정본.md#개인정보-입력-pr-mbr-cs-001-02"]
+		},
+		"process": {
+			"id": "PR-MBR-CS-001-02",
+			"name": "개인정보 입력",
+			"cluster": "US-MBR-CS-001 회원 가입 2/4",
+			"actor": "고객",
+			"entry_condition": "약관 동의 완료",
+			"exit_condition": "회원 기본 정보 입력 및 형식 검증 완료",
+			"predecessor": ["PR-MBR-CS-001-01"],
+			"successor": ["PR-MBR-CS-001-03"],
+			"related_functions": ["회원정보 입력 및 검증"],
+			"related_policies": [
+				"회원 정보 입력 항목 기준 정책",
+				"회원 정보 입력값 검증 기준 정책",
+				"회원 식별정보 중복 확인 기준 정책"
+			]
+		},
+		"purpose": "회원 가입에 필요한 기본 정보를 입력받고 형식·중복을 검증한다.",
+		"system_inputs_to_user": ["입력 항목 정의", "필수/선택 구분", "각 항목의 형식 규칙", "중복 확인 결과"],
+		"user_inputs": ["이름", "생년월일", "성별", "휴대전화", "이메일(선택)"],
+		"system_outputs": ["입력값 검증 결과", "중복 여부", "다음 이동 경로"],
+		"branches": [
+			"형식·중복 모두 통과 → 본인인증으로 진행",
+			"필수 항목 미입력/형식 오류 → 진행 제한"
+		],
+		"exceptions": [
+			"형식 오류 → 필드 errorText 표시",
+			"식별정보 중복 → 안내 후 입력 수정 유도",
+			"입력 저장 실패 → 재시도 안내"
+		],
+		"design_signals": {
+			"primary_block": "필수 입력 폼 (label + 단일 row control)",
+			"hero_intent": "가입 2/4 맥락, 입력 항목 사용 목적 안내",
+			"cta_intent": "다음으로"
+		}
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "필수 정보 입력 + 검증",
+		"info_hierarchy": ["hero", "required-input (필수 폼)", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat",
+		"copy_policy": { "description_measure": "body", "avoid_full_width_caption": true }
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0개 (flat sectioning, form 장르)" },
+			{ "rule": "H-2", "result": "n/a", "evidence": "SectionCard 미사용" },
+			{ "rule": "H-3", "result": "n/a", "evidence": "SelectableList 미사용" },
+			{ "rule": "H-4", "result": "n/a", "evidence": "textarea 미사용" },
+			{ "rule": "H-5", "result": "pass", "evidence": "errorText는 FormField 단일, eyebrow는 빈 상태 안내만" },
+			{ "rule": "H-6", "result": "pass", "evidence": "TopBar progress label만" },
+			{ "rule": "H-7", "result": "pass", "evidence": "step flow 중간 → back" },
+			{ "rule": "H-8", "result": "pass", "evidence": "form 장르에 NoticeBlock 미사용" },
+			{ "rule": "H-9", "result": "pass", "evidence": "required는 CTA 상태로 대체, * 마크 미사용" },
+			{ "rule": "H-10", "result": "n/a", "evidence": "InfoList 미사용" },
+			{ "rule": "H-11", "result": "n/a", "evidence": "escape hatch 없음" },
+			{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+		]
+	}
+}

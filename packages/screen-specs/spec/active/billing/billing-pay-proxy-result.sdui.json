@@ -1,0 +1,132 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "billing-pay-proxy-result", "name": "대리 납부 결과", "route": "/billing-pay-proxy-result", "domain": "billing", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-BIL-PAY-005", "name": "대리 납부", "step": 5, "total": 8, "progress": "대리 납부 5/8" },
+		"hero": { "titleLines": ["대리 납부가 완료됐어요"], "description": "위임자와 실행자 모두에게 납부 결과가 분리 기록돼 알림으로 안내돼요." },
+		"executorCard": {
+			"title": "납부 실행자 기록",
+			"items": [
+				{ "id": "executor", "label": "실행자", "value": "본인" },
+				{ "id": "method", "label": "사용 수단", "value": "신용카드 (****-****-****-1234)" },
+				{ "id": "executedAt", "label": "실행 일시", "value": "2026-05-06 11:02" }
+			]
+		},
+		"targetCard": {
+			"title": "청구 회선 기록",
+			"items": [
+				{ "id": "delegator", "label": "위임자(청구 회선 명의)", "value": "김** 고객" },
+				{ "id": "lines", "label": "납부 회선", "value": "010-1234-5678 외 1건" },
+				{ "id": "amount", "label": "납부 금액", "value": "127,900원" },
+				{ "id": "status", "label": "결과", "value": "수납 완료" }
+			]
+		},
+		"actions": {
+			"primary": { "id": "go-home", "label": "홈으로 가기" },
+			"secondary": { "id": "view-history", "label": "납부 이력 보기" }
+		}
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.billing-pay-proxy-result", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "GlobalNavigationHeader", "id": "slot.top", "props": { "title": "대리 납부 결과", "leading": "close", "progressVisible": false } },
+				"bottom": { "type": "StickyActionBar", "id": "area.actions", "props": { "bind": "actions", "layout": "primary_secondary" } }
+			},
+			"children": [
+				{ "type": "ContentSection", "id": "area.hero", "children": [
+					{ "type": "TextBlock", "id": "hero.title", "props": { "bind": "hero.titleLines", "variant": "displayTitle", "overflow": "wrap" } },
+					{ "type": "ContentRail", "id": "hero.description.rail", "props": { "rail": "measure", "measure": "body" }, "children": [
+						{ "type": "TextBlock", "id": "hero.description", "props": { "bind": "hero.description", "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } }
+					] }
+				] },
+				{ "type": "ContentSection", "id": "area.executor", "children": [
+					{ "type": "SectionCard", "id": "executor.card", "props": { "header": { "title": "executorCard.title" }, "bind": "executorCard" }, "children": [
+						{ "type": "InfoList", "id": "executor.list", "props": { "bind": "executorCard", "trailingSemantic": "value" } }
+					] }
+				] },
+				{ "type": "ContentSection", "id": "area.target", "children": [
+					{ "type": "SectionCard", "id": "target.card", "props": { "header": { "title": "targetCard.title" }, "bind": "targetCard" }, "children": [
+						{ "type": "InfoList", "id": "target.list", "props": { "bind": "targetCard", "trailingSemantic": "value" } }
+					] }
+				] }
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/active/billing/_pagination/billing-pay.json",
+		"_canonical_hash": "d3a099698e95beeaf0f5e2e00d3b1d875602fa12e9974510e51afeef4f6a64d3",
+		"policy_id": "billing-pay", "route_id": "billing-pay-proxy-result", "step_fraction": "5/8",
+		"predecessor": "billing-pay-proxy-execute", "successor": null,
+		"transitions": [
+			{ "to": "external:home", "trigger": "primary_action" },
+			{ "to": "external:history", "trigger": "secondary_action" }
+		]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-BIL-PAY-005-03", "docs/정책서-Full-청구관리및요금수납_정책서.md#L7306-L7520"] },
+		"process": {
+			"id": "PR-BIL-PAY-005-03", "name": "대리 납부 결과 분리 기록", "cluster": "US-BIL-PAY-005 5/8",
+			"actor": "납부 실행자, BSS", "entry_condition": "대리 납부 요청 송신 완료", "exit_condition": "분리 기록 + 결과 안내 완료",
+			"predecessor": ["PR-BIL-PAY-005-02"], "successor": [],
+			"related_functions": ["FN-BIL-COM-007 마스킹"],
+			"related_policies": [
+				"POL-BIL-AUTH-001-07 명의 확인",
+				"POL-BIL-SEC-001-02 마스킹 대상 금융정보",
+				"POL-BIL-CUS-001-04 납부 실패 안내"
+			]
+		},
+		"purpose": "대리 납부 결과를 실행자/대상 회선/납부수단 기준으로 분리 기록하고 양쪽 모두 확인할 수 있게 표시한다.",
+		"system_inputs_to_user": ["실행자 정보", "위임자(청구 회선) 정보", "사용 수단 마스킹", "결과"],
+		"user_inputs": ["다음 행동 선택"], "system_outputs": ["다음 라우팅"],
+		"branches": ["성공 → 분리 기록 표시", "실패 → PAY-008 failure"],
+		"exceptions": ["기록 누락 → 운영자 확인"],
+		"design_signals": { "primary_block": "SectionCard 2개 (실행자 / 청구 회선)", "hero_intent": "분리 기록 인지", "cta_intent": "홈 / 이력" },
+		"evidence_refs": [
+			{ "claim": "process entry/exit", "policy": "PR-BIL-PAY-005-03", "doc_line": "L7306-L7320" },
+			{ "claim": "마스킹 적용", "policy": "POL-BIL-SEC-001-02", "doc_line": "L4618" }
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "result", "primary_task": "분리 기록 인지 + 다음 행동",
+		"user_decision": "홈 vs 이력",
+		"hierarchy": { "top": "title_only", "lead": "result_title", "body": "two_record_cards", "bottom": "primary_secondary_actions" },
+		"copy_policy": { "title_style": "result_announcement", "description_measure": "body", "avoid_full_width_caption": true },
+		"interaction_pattern": { "main_control": "passive_review", "cta_position": "bottom_chrome", "progress_position": "none" },
+		"info_hierarchy": ["hero", "executor-record", "target-record", "actions"],
+		"cta_location": "bottom-sticky", "progress_location": "none", "sectioning": "multi-card",
+		"quality_checks": ["실행자/청구 회선 카드가 시각적으로 분리됨", "PAY-002 result와 다른 카드 구조"]
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["ContentSection", "TextBlock", "SectionCard", "InfoList"] },
+			"bottom": { "owner": "StickyActionBar", "flow": "reserved" }
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+		"areas": [
+			{ "id": "top", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["TopNavigation"], "layout": { "leading": "close", "progress_visible": false }, "content_role": "result-chrome" },
+			{ "id": "hero", "slot": "content", "pattern": "ContentSection + TextBlock", "uses": ["ContentSection", "ContentRail", "TextBlock"], "content_role": "primary-copy" },
+			{ "id": "executor", "slot": "content", "pattern": "molecules/SectionCard + InfoList", "uses": ["ContentSection", "SectionCard", "InfoList"], "layout": { "trailing_semantic": "value" }, "content_role": "executor-record" },
+			{ "id": "target", "slot": "content", "pattern": "molecules/SectionCard + InfoList", "uses": ["ContentSection", "SectionCard", "InfoList"], "layout": { "trailing_semantic": "value" }, "content_role": "target-record" },
+			{ "id": "actions", "slot": "bottom", "pattern": "molecules/StickyActionBar", "uses": ["Button"], "content_role": "primary-secondary-action" }
+		],
+		"design_system_contract": {
+			"templates": ["AppScreen", "ContentList", "ContentSection", "ContentRail"],
+			"organisms": ["global"],
+			"molecules": ["SectionCard", "InfoList", "StickyActionBar"],
+			"atoms": ["TextBlock"],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-2", "result": "pass", "evidence": "각 SectionCard title이 hero와 의미 중복 없음 (분리 기록의 두 축)" },
+			{ "rule": "H-7", "result": "pass", "evidence": "result dead-end → close" },
+			{ "rule": "H-10", "result": "pass", "evidence": "InfoList trailing=value 양쪽 카드 모두" },
+			{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+		]
+	}
+}

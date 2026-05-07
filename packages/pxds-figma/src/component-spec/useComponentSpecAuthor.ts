@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import { validateComponentSpec } from "./validation";
 
@@ -90,9 +90,9 @@ export function useComponentSpecAuthor(initialDraft?: Partial<ComponentSpecDraft
 		},
 	});
 
-	const validation = useMemo(() => validateComponentSpec(draft), [draft]);
+	const validation = validateComponentSpec(draft);
 
-	const updateDraft = useCallback((patch: Partial<ComponentSpecDraft>) => {
+	const updateDraft = (patch: Partial<ComponentSpecDraft>) => {
 		setDraft((current) => ({
 			...current,
 			...patch,
@@ -103,15 +103,15 @@ export function useComponentSpecAuthor(initialDraft?: Partial<ComponentSpecDraft
 					}
 				: current.base,
 		}));
-	}, []);
+	};
 
-	const resetDraft = useCallback(() => {
+	const resetDraft = () => {
 		setDraft(EMPTY_DRAFT);
-	}, []);
+	};
 
-	const exportJson = useCallback(() => {
+	const exportJson = () => {
 		return JSON.stringify(draft, null, 2);
-	}, [draft]);
+	};
 
 	return {
 		draft,

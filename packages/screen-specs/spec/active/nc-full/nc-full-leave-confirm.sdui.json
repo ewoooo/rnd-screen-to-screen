@@ -1,0 +1,50 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-full-leave-confirm", "name": "탈퇴 최종 동의", "route": "/nc-full-leave-confirm", "domain": "nc-full", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-003", "name": "회원 탈퇴", "step": 4, "total": 5, "progress": "회원 탈퇴 4/5" },
+		"hero": { "titleLines": ["정말 탈퇴하시겠어요?"], "description": "탈퇴 후 30일 유예 기간 내 철회하지 않으면 회원 정보가 영구 삭제되고 동일 정보로 즉시 재가입할 수 없을 수 있어요." },
+		"confirm": {
+			"title": "확인 항목",
+			"items": [
+				{ "id": "loss", "title": "보유 포인트·쿠폰·구독 혜택 소멸을 이해했어요", "required": true, "defaultChecked": false },
+				{ "id": "grace", "title": "30일 유예 기간 후 영구 삭제되는 것을 이해했어요", "required": true, "defaultChecked": false },
+				{ "id": "rejoin", "title": "동일 정보로 즉시 재가입이 어려울 수 있음을 이해했어요", "required": true, "defaultChecked": false }
+			]
+		},
+		"continue": { "eyebrow": "모든 항목 확인 시 탈퇴가 진행돼요", "primaryAction": "탈퇴하기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-full-leave-confirm", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "회원 탈퇴", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 5, "progressStep": 4 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue", "primaryTone": "destructive" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 4, "overflow": "wrap" } } } },
+				{ "type": "NcLeaveConfirmList", "id": "area.confirm", "props": { "bind": "confirm", "selectionMode": "multi", "textPolicy": { "itemTitle": { "variant": "listTitle", "maxLines": 2, "overflow": "wrap" } } } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screen-specs/spec/active/nc-full/_pagination/nc-full-leave.json", "_canonical_hash": "TBD", "policy_id": "nc-full-leave", "route_id": "nc-full-leave-confirm", "step_fraction": "4/5", "predecessor": "nc-full-leave-notice", "successor": "nc-full-leave-result", "transitions": [{ "to": "nc-full-leave-result", "trigger": "primary_cta", "guard": "final_consent_confirmed AND withdrawal_processed" }], "branches": [{ "condition": "NOT final_consent_confirmed", "behavior": "탈퇴 중단. 이전 화면 또는 마이페이지로 이탈." }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-003-04", "docs/NC_정책서_Full_v1.0_확정본.md#탈퇴-최종-동의-pr-mbr-cs-003-04"] },
+		"process": { "id": "PR-MBR-CS-003-04", "name": "탈퇴 최종 동의", "cluster": "US-MBR-CS-003 회원 탈퇴 4/5", "actor": "고객", "entry_condition": "탈퇴 전 안내 확인 완료", "exit_condition": "최종 탈퇴 의사 확정 완료", "predecessor": ["PR-MBR-CS-003-03"], "successor": ["PR-MBR-CS-003-05"], "related_functions": ["탈퇴 최종 동의 처리"], "related_policies": ["탈퇴 확정 및 철회 유예 적용 기준 정책"] },
+		"purpose": "회복 불가성을 인지시키고 최종 의사를 확정한다.",
+		"system_inputs_to_user": ["회복 불가 사항 요약", "유예 기간 안내"],
+		"user_inputs": ["확인 항목 동의", "탈퇴하기 CTA"],
+		"system_outputs": ["최종 동의 결과", "탈퇴 처리 트리거"],
+		"branches": ["모두 동의 + CTA → 탈퇴 처리 → 결과", "미동의 또는 이탈 → 탈퇴 중단"],
+		"exceptions": ["네트워크 오류 → 동일 화면 재시도"],
+		"design_signals": { "primary_block": "다중 필수 동의 체크", "hero_intent": "회복 불가성 강조", "cta_intent": "탈퇴하기 (destructive)" }
+	},
+	"x_interfacePlan": { "genre": "form", "primary_task": "확인 체크 후 탈퇴 확정", "info_hierarchy": ["hero", "required-input", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "flat" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
+		{ "rule": "H-7", "result": "pass", "evidence": "이전 화면 복귀 가능 → back" },
+		{ "rule": "H-9", "result": "pass", "evidence": "required는 ConsentList + CTA disabled로 대체" },
+		{ "rule": "H-11", "result": "documented", "evidence": "ConsentList minHeight + Button destructive tone" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

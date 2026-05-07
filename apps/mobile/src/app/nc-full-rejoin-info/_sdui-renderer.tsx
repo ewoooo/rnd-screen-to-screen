@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -13,7 +13,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type SpecField = {
 	id: string;
@@ -46,35 +46,25 @@ export function NcFullRejoinInfoScreen({
 	const terms = readData<TermsData>(spec, "terms");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly FlowPersonalField[]>(
-		() =>
-			form.fields.map((f) => ({
-				id: f.id,
-				label: f.label,
-				required: f.required,
-				placeholder: f.placeholder,
-				helperText: f.prefilled ? "기존 정보로 채워졌어요" : undefined,
-				kind:
-					f.control === "select" ? ("selectable" as const) : ("text" as const),
-				options: f.options?.map((value) => ({ id: value, title: value })),
-			})),
-		[form.fields],
-	);
+	const fields: readonly FlowPersonalField[] = form.fields.map((f) => ({
+		id: f.id,
+		label: f.label,
+		required: f.required,
+		placeholder: f.placeholder,
+		helperText: f.prefilled ? "기존 정보로 채워졌어요" : undefined,
+		kind: f.control === "select" ? ("selectable" as const) : ("text" as const),
+		options: f.options?.map((value) => ({ id: value, title: value })),
+	}));
 
-	const initialValues = useMemo<Record<string, string | undefined>>(
-		() =>
-			Object.fromEntries(form.fields.map((f) => [f.id, f.value ?? undefined])),
-		[form.fields],
+	const initialValues: Record<string, string | undefined> = Object.fromEntries(
+		form.fields.map((f) => [f.id, f.value ?? undefined]),
 	);
 	const [values, setValues] = useState(initialValues);
 	const errors: Record<string, string | undefined> = {};
 
-	const initialMissing = useMemo(
-		() =>
-			terms.items.filter((item) => item.required && !item.defaultChecked)
-				.length,
-		[terms.items],
-	);
+	const initialMissing = terms.items.filter(
+		(item) => item.required && !item.defaultChecked,
+	).length;
 	const [missingTerms, setMissingTerms] = useState(initialMissing);
 
 	const missingFields = fields.filter(

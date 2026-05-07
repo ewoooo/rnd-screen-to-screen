@@ -1,4 +1,4 @@
-// Spec: packages/screens/spec/active/tu-dsp-main-mo-02-pg-001-2.json
+// Spec: packages/screen-specs/spec/active/tu-dsp-main-mo-02-pg-001-2.json
 // 발견_case2_로그인 (case1_비로그인의 로그인 변형)
 // SPEC-MAIN-10 바코드 / -11 개인화 인사 / -12 인기 베스트 / -13 빅배너 / -14 인기 OTT / -15 일반 배너
 

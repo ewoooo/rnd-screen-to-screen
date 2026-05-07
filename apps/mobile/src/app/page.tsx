@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { screens, type ScreenEntry, type ScreenGroup } from "@screen/screens";
+import { screens, type ScreenEntry, type ScreenGroup } from "@screen/registry";
 
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 

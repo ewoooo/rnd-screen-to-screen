@@ -1,0 +1,84 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-rejoin-blocked", "name": "재가입 - 제한 안내", "route": "/nc-simple-rejoin-blocked", "domain": "nc-simple", "type": "page", "status": "active" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"topbar": { "title": "재가입 안내", "showProgressLabel": false },
+		"hero": { "titleLines": ["지금은", "재가입할 수 없어요"], "description": "확인된 사유와 다음 가능 시점을 안내해 드릴게요." },
+		"summary": {
+			"label": "제한 사유",
+			"items": [
+				{ "id": "reason", "title": "사유", "trailingLabel": "탈퇴 후 7일 미경과" },
+				{ "id": "available-at", "title": "재가입 가능일", "trailingLabel": "2026-05-08" },
+				{ "id": "ref", "title": "참고", "trailingLabel": "POL-MBR-REJOIN-002-03" }
+			]
+		},
+		"notice": { "badge": "문의 안내", "text": "사유에 대한 상세 확인이 필요하면 고객센터 또는 1:1 문의를 이용해 주세요.", "tone": "info", "action": "고객센터 연결" },
+		"actions": { "primaryLabel": "홈으로 가기", "secondaryLabel": "1:1 문의" }
+	},
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/active/nc-simple/_pagination/nc-simple-rejoin.json",
+		"_canonical_hash": "c522ede1a4719acbc1844df936c7d538835e10470754cef80023f0e86517140f",
+		"policy_id": "nc-simple-rejoin",
+		"use_case_id": "US-MBR-CS-004",
+		"route": { "id": "nc-simple-rejoin-blocked", "type": "result", "primary_task": "재가입 제한 사유와 후속 경로 안내", "predecessor": "nc-simple-rejoin-auth", "successor": null, "step_fraction": null },
+		"transitions": [{ "from": "nc-simple-rejoin-auth", "to": "nc-simple-rejoin-blocked", "trigger": "BSS 제한 판정", "guard": "POL-MBR-REJOIN-003 또는 MBR_REJOIN_BLOCKED" }]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["docs/NC_정책서_간소화_v1.0_확정본.md §4.가.4) PR-MBR-CS-004-02/03", "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.39-41) PG-MBR-REJOIN-001/002/003"] },
+		"process": { "id": "PR-MBR-CS-004-02+03 (분기)", "name": "재가입 제한 안내", "cluster": "US-MBR-CS-004 재가입 분기", "actor": "BSS, 고객", "entry_condition": "본인인증 SUCCESS + 제한 판정", "exit_condition": "안내 후 종료", "predecessor": ["PR-MBR-CS-004-01"], "successor": [], "related_policies": ["PG-MBR-REJOIN-001", "PG-MBR-REJOIN-002", "PG-MBR-REJOIN-003"] },
+		"purpose": "제한 사유 + 종료일 + 후속 경로 안내",
+		"system_inputs_to_user": ["사유", "종료일", "문의 경로"],
+		"user_inputs": ["홈으로", "문의"],
+		"system_outputs": ["판정 이력"],
+		"branches": ["7일 미경과", "가입제한/부정이용/위반", "예외 승인 시 happy path로 분기 (이 화면 외)"],
+		"exceptions": ["BSS 판정 실패 → 오류 안내"],
+		"design_signals": { "primary_block": "hero + summary + notice", "tone": "neutral_blocked" }
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "사유 인지",
+		"info_hierarchy": ["hero", "summary", "notice", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card"
+	},
+	"x_screenContract": {
+		"screen_contract": {
+			"shell": "AppScreen",
+			"slots": {
+				"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+				"content": { "owner": "ContentList", "patterns": ["MembershipHero", "MembershipSummaryCard", "MembershipNotice"] },
+				"bottom": { "owner": "MembershipShell", "patterns": ["MembershipResultActions"], "flow": "reserved" }
+			}
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [] },
+		"areas": [
+			{ "id": "hero", "slot": "content", "pattern": "organisms/membership/MembershipHero", "uses": ["TextBlock"], "content_role": "primary-copy" },
+			{ "id": "summary", "slot": "content", "pattern": "organisms/membership/MembershipSummaryCard", "uses": ["SectionCard", "InfoList"], "content_role": "supporting" },
+			{ "id": "support-notice", "slot": "content", "pattern": "organisms/membership/MembershipNotice", "uses": ["NoticeBlock"], "content_role": "supporting" },
+			{ "id": "actions", "slot": "bottom", "pattern": "organisms/membership/MembershipResultActions", "uses": ["Button"], "content_role": "primary-action" }
+		],
+		"design_system_contract": { "templates": ["AppScreen", "ContentList"], "organisms": ["membership"], "molecules": ["SectionCard", "InfoList", "NoticeBlock"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": [] }
+	},
+	"x_heuristicReview": { "applied_rules": [{ "rule": "H-1", "result": "pass", "evidence": "card 1" }, { "rule": "H-6", "result": "pass", "evidence": "progress label 숨김 (happy path 외)" }, { "rule": "H-7", "result": "pass", "evidence": "close" }, { "rule": "H-8", "result": "pass", "evidence": "Notice 분리" }, { "rule": "H-10", "result": "documented", "evidence": "trailing=value" }] },
+	"x_benchmark": { "criteria": ["planning.flowCompleteness", "design.stateClarity"], "guards": ["guard.specImplementationMismatch"] },
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-simple-rejoin-blocked",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "MembershipTopBar", "id": "slot.top", "props": { "bind": "topbar", "leading": "close" } },
+				"bottom": { "type": "MembershipResultActions", "id": "area.actions", "props": { "bind": "actions" } }
+			},
+			"children": [
+				{ "type": "MembershipHero", "id": "area.hero", "props": { "bind": "hero" } },
+				{ "type": "MembershipSummaryCard", "id": "area.summary", "props": { "bind": "summary" } },
+				{ "type": "MembershipNotice", "id": "area.support-notice", "props": { "bind": "notice" } }
+			]
+		}
+	]
+}

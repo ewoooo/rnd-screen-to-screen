@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Divider } from "@pxds/pxds-components/feedback";
 import { HStack, VStack } from "@pxds/pxds-layout/primitives";
@@ -37,9 +37,8 @@ export function LeaveImpactChecklist({
 	const [checked, setChecked] = useState<Record<string, boolean>>(() =>
 		Object.fromEntries(items.map((item) => [item.id, false])),
 	);
-	const requiredUnchecked = useMemo(
-		() => items.filter((item) => item.required && !checked[item.id]),
-		[checked, items],
+	const requiredUnchecked = items.filter(
+		(item) => item.required && !checked[item.id],
 	);
 
 	useEffect(() => {

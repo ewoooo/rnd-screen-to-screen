@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 
 type MobilePreviewViewportSize = number | string;
 
@@ -20,19 +20,13 @@ export function useMobilePreviewViewport({
 	height,
 	style,
 }: UseMobilePreviewViewportOptions = {}) {
-	const frameStyle = useMemo(
-		() =>
-			({
-				...(width
-					? { "--pxds-device-mobile-view-width": toCssSize(width) }
-					: null),
-				...(height
-					? { "--pxds-device-mobile-view-height": toCssSize(height) }
-					: null),
-				...style,
-			}) as CSSProperties,
-		[height, style, width],
-	);
+	const frameStyle = {
+		...(width ? { "--pxds-device-mobile-view-width": toCssSize(width) } : null),
+		...(height
+			? { "--pxds-device-mobile-view-height": toCssSize(height) }
+			: null),
+		...style,
+	} as CSSProperties;
 
 	return {
 		frameStyle,

@@ -1,0 +1,215 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "experimental-html",
+		"route": "/billing-html-set-statement",
+		"source": "policy-driven",
+		"policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+		"policy_section": "4. US-BIL-SET-001 / PR-BIL-SET-001-01,02,03",
+		"pagination_ref": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-html-set.json"
+	},
+	"screen": {
+		"id": "billing-html-set-statement",
+		"name": "요금안내서 수신 설정",
+		"domain": "billing-html",
+		"use_case": "US-BIL-SET-001",
+		"process_id": "PR-BIL-SET-001-01,02,03",
+		"step_fraction": "1/6",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "요금안내서 수신 방식·수신처·알림 변경",
+		"info_hierarchy": [
+			"hero",
+			"required-input (수신 방식 + 수신처)",
+			"supporting (적용 시점 안내)",
+			"action"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "flat",
+		"copy_policy": {
+			"description_measure": "body",
+			"avoid_full_width_caption": true
+		},
+		"rail_policy": {
+			"owner": "ContentRail",
+			"route_margin": "forbidden"
+		}
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"TopNavigation"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"Hero",
+					"ChannelRadioGroup",
+					"ContactField",
+					"AlertSwitch",
+					"EffectiveNotice"
+				]
+			},
+			"bottom": {
+				"owner": "StickyActionBar",
+				"patterns": [
+					"PrimaryCTA"
+				],
+				"flow": "reserved"
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": [],
+		"content_rail_owner": "ContentRail"
+	},
+	"areas": [
+		{
+			"id": "top",
+			"slot": "top",
+			"pattern": "organisms/global/GlobalNavigationHeader",
+			"uses": [
+				"TopNavigation"
+			],
+			"layout": {
+				"leading": "back",
+				"title": "요금안내서 수신 설정"
+			},
+			"content_role": "navigation"
+		},
+		{
+			"id": "hero",
+			"slot": "content",
+			"pattern": "molecules/Hero",
+			"uses": [
+				"ContentSection",
+				"TextBlock",
+				"ContentRail"
+			],
+			"layout": {
+				"section_inset": "inherit",
+				"description_rail": "measure:body"
+			},
+			"content_role": "primary-copy"
+		},
+		{
+			"id": "channel",
+			"slot": "content",
+			"pattern": "molecules/FormField",
+			"uses": [
+				"ContentSection",
+				"FormField",
+				"RadioGroup"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "required-input",
+			"state_binding": {
+				"field_required": [
+					"channel"
+				],
+				"validation_owner": "FormField (errorText)"
+			}
+		},
+		{
+			"id": "contact",
+			"slot": "content",
+			"pattern": "molecules/FormField",
+			"uses": [
+				"ContentSection",
+				"FormField",
+				"TextField"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "required-input",
+			"state_binding": {
+				"visible_when": "channel IN (sms, email, mail)",
+				"validation_owner": "FormField (errorText)"
+			}
+		},
+		{
+			"id": "alert",
+			"slot": "content",
+			"pattern": "molecules/FormField",
+			"uses": [
+				"ContentSection",
+				"FormField",
+				"Switch"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "optional-input"
+		},
+		{
+			"id": "effective",
+			"slot": "content",
+			"pattern": "molecules/NoticeBlock",
+			"uses": [
+				"ContentSection",
+				"NoticeBlock"
+			],
+			"layout": {
+				"section_inset": "inherit"
+			},
+			"content_role": "supporting-notice"
+		},
+		{
+			"id": "continue",
+			"slot": "bottom",
+			"pattern": "molecules/StickyActionBar",
+			"uses": [
+				"Box",
+				"Button",
+				"TextBlock"
+			],
+			"content_role": "primary-action",
+			"state_binding": {
+				"primary_disabled_when": "form.invalidCount > 0 OR form.missingRequiredCount > 0",
+				"eyebrow_when_blocked": "수신 방식과 수신처를 입력해 주세요",
+				"eyebrow_when_ready": "변경 시 적용 시점은 안내를 따릅니다"
+			}
+		}
+	],
+	"design_system_contract": {
+		"templates": [
+			"AppScreen",
+			"AppScreenContent",
+			"ContentOutlet",
+			"ContentList",
+			"ContentSection",
+			"ContentRail"
+		],
+		"organisms": [
+			"global"
+		],
+		"molecules": [
+			"FormField",
+			"form-controls (RadioGroup, TextField, Switch)",
+			"NoticeBlock",
+			"StickyActionBar"
+		],
+		"atoms": [
+			"TextBlock",
+			"Box"
+		],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

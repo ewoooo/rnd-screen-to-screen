@@ -1,0 +1,342 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-set-auto-prepay",
+		"name": "자동 선결제 설정",
+		"route": "/billing-html-set-auto-prepay",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"top": {
+			"title": "자동 선결제",
+			"leading": "back"
+		},
+		"hero": {
+			"titleLines": [
+				"자동 선결제를",
+				"설정할 수 있어요"
+			],
+			"description": "잔액·이용액이 임계 금액에 도달하면 등록된 결제수단으로 자동 선결제가 실행돼요. 미지원 회선·요금제는 설정이 제한될 수 있어요."
+		},
+		"form": {
+			"enable": {
+				"id": "enable",
+				"label": "자동 선결제 사용",
+				"required": true,
+				"control": "switch",
+				"value": false,
+				"helperText": "끄면 신청·변경된 자동 선결제가 해지돼요"
+			},
+			"threshold": {
+				"id": "threshold",
+				"label": "실행 임계 금액",
+				"required": true,
+				"control": "text",
+				"placeholder": "10,000~500,000원",
+				"helperText": "10,000원 단위, 도달 시 자동 선결제 실행",
+				"visibleWhen": "enable = true",
+				"validation": {
+					"errorMessage": "10,000원 단위로 10,000~500,000원 입력"
+				}
+			},
+			"targets": {
+				"id": "targets",
+				"label": "적용 대상",
+				"required": true,
+				"control": "selectable",
+				"selectionMode": "multi",
+				"value": [
+					"msc"
+				],
+				"visibleWhen": "enable = true",
+				"options": [
+					{
+						"id": "msc",
+						"title": "휴대폰 결제 한도"
+					},
+					{
+						"id": "content",
+						"title": "콘텐츠 이용료 한도"
+					}
+				]
+			}
+		},
+		"effective": {
+			"tone": "info",
+			"text": "자동 선결제는 등록된 결제수단으로 실행돼요. 미지원 회선·요금제는 신청 불가 안내와 함께 수동 선결제로 안내됩니다.",
+			"refs": [
+				"POL-BIL-SET-001-08",
+				"PAY-007 수동 선결제"
+			]
+		},
+		"continue": {
+			"eyebrow": "변경 시 적용 시점은 안내를 따릅니다",
+			"primaryAction": "저장"
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-set-auto-prepay",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top",
+					"props": {
+						"bind": "top"
+					}
+				},
+				"bottom": {
+					"type": "StickyActionBar",
+					"id": "area.continue",
+					"props": {
+						"bind": "continue"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "Hero",
+					"id": "area.hero",
+					"props": {
+						"bind": "hero"
+					}
+				},
+				{
+					"type": "FormField",
+					"id": "area.enable",
+					"props": {
+						"bind": "form.enable",
+						"layout": "row-trailing"
+					},
+					"children": [
+						{
+							"type": "Switch",
+							"id": "area.enable.control",
+							"props": {
+								"bind": "form.enable"
+							}
+						}
+					]
+				},
+				{
+					"type": "FormField",
+					"id": "area.threshold",
+					"props": {
+						"bind": "form.threshold"
+					},
+					"children": [
+						{
+							"type": "TextField",
+							"id": "area.threshold.control",
+							"props": {
+								"bind": "form.threshold"
+							}
+						}
+					]
+				},
+				{
+					"type": "FormField",
+					"id": "area.target",
+					"props": {
+						"bind": "form.targets"
+					},
+					"children": [
+						{
+							"type": "SelectableList",
+							"id": "area.target.control",
+							"props": {
+								"bind": "form.targets",
+								"selectionMode": "multi"
+							}
+						}
+					]
+				},
+				{
+					"type": "NoticeBlock",
+					"id": "area.effective",
+					"props": {
+						"bind": "effective"
+					}
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-html-set.json",
+		"_canonical_hash": "f6e544593a372fc9e5a02053817e21e831b2f30c1d2f52b3d6209f68a0fb47f9",
+		"policy_id": "billing-html-set",
+		"route_id": "billing-html-set-auto-prepay",
+		"step_fraction": "6/6",
+		"predecessor": null,
+		"successor": null,
+		"transitions": [],
+		"branches": [
+			{
+				"condition": "자동 선결제 미지원 회선·요금제",
+				"behavior": "신청 불가 안내 + 대체 안내(수동 선결제 PAY-007)로 분기"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"US-BIL-SET-006",
+				"PR-BIL-SET-006-01",
+				"PR-BIL-SET-006-02",
+				"PR-BIL-SET-006-03",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#L11901-L12260"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-SET-006-01,02,03",
+			"name": "자동 선결제 신청·변경·해지",
+			"cluster": "US-BIL-SET-006 6/6",
+			"actor": "요금·납부 설정자",
+			"entry_condition": "자동 선결제 영역 진입",
+			"exit_condition": "자동 선결제 적용 대상·실행 조건·해지 여부 확인 완료",
+			"predecessor": [],
+			"successor": [],
+			"related_functions": [
+				"FN-BIL-SET-007 자동 선결제 설정",
+				"FN-BIL-SET-008 설정 변경 결과 반영"
+			],
+			"related_policies": [
+				"POL-BIL-SET-001-08",
+				"POL-BIL-SET-001-09"
+			]
+		},
+		"purpose": "자동 선결제 조건을 신청·변경·해지하고 적용 시점과 미지원 사유를 안내한다.",
+		"system_inputs_to_user": [
+			"현재 활성 여부",
+			"임계 금액",
+			"적용 대상",
+			"결제수단",
+			"지원 여부"
+		],
+		"user_inputs": [
+			"사용 토글",
+			"임계 금액 입력",
+			"적용 대상 선택",
+			"저장 CTA"
+		],
+		"system_outputs": [
+			"변경 결과",
+			"적용 시점",
+			"미지원 사유"
+		],
+		"branches": [
+			"사용=on → 임계/대상 입력 노출",
+			"사용=off → 해지 처리",
+			"미지원 → 수동 선결제(PAY-007) 안내"
+		],
+		"exceptions": [
+			"인증 실패",
+			"결제수단 미등록 → 등록 유도"
+		],
+		"design_signals": {
+			"primary_block": "Switch + 조건부 TextField + SelectableList(multi)",
+			"hero_intent": "자동 선결제 사용 결정",
+			"cta_intent": "저장"
+		},
+		"evidence_refs": [
+			{
+				"for": "자동 선결제 함수 군",
+				"ref": "L11901+ FN-BIL-SET-007"
+			},
+			{
+				"for": "적용 시점",
+				"ref": "L9207 POL-BIL-SET-001-08"
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "자동 선결제 활성/비활성 + 조건 설정",
+		"user_decision": "사용 여부, 임계 금액, 적용 대상",
+		"hierarchy": {
+			"top": "title-only",
+			"lead": "short_action_title",
+			"body": "switch_then_conditional_inputs",
+			"bottom": "primary_cta"
+		},
+		"copy_policy": {
+			"title_style": "short_action",
+			"caption_measure": "body",
+			"avoid_full_width_caption": true
+		},
+		"interaction_pattern": {
+			"main_control": "switch_with_conditional_form",
+			"cta_position": "bottom_chrome",
+			"progress_position": "none"
+		},
+		"quality_checks": [
+			"Switch off 시 하위 폼 숨김",
+			"임계/대상 의존성 명시",
+			"미지원 분기 명시"
+		]
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": [
+			"top",
+			"content",
+			"bottom"
+		],
+		"top": "GlobalNavigationHeader (back, '자동 선결제')",
+		"content": [
+			"Hero",
+			"FormField/Switch",
+			"FormField/TextField (visibleWhen)",
+			"FormField/SelectableList (multi, visibleWhen)",
+			"NoticeBlock"
+		],
+		"bottom": "StickyActionBar (PrimaryCTA '저장')"
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{
+				"rule": "H-1",
+				"result": "pass",
+				"evidence": "form 장르, SectionCard 0개"
+			},
+			{
+				"rule": "H-5",
+				"result": "pass",
+				"evidence": "errorText는 FormField 단일"
+			},
+			{
+				"rule": "H-7",
+				"result": "pass",
+				"evidence": "back"
+			},
+			{
+				"rule": "H-8",
+				"result": "pass",
+				"evidence": "NoticeBlock(적용 시점/미지원)은 폼 supporting"
+			},
+			{
+				"rule": "H-9",
+				"result": "pass",
+				"evidence": "required는 CTA 상태로 대체"
+			},
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "route margin 보정 없음"
+			}
+		]
+	}
+}

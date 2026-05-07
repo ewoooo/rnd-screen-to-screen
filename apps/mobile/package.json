@@ -13,8 +13,9 @@
     "@pxds/pxds-icons": "0.1.0",
     "@pxds/pxds-layout": "0.1.0",
     "@pxds/pxds-tokens": "0.1.0",
-    "@screen/screens": "0.1.0",
-    "next": "16.2.4",
+    "@screen/registry": "0.1.0",
+    "@screen/specs": "0.1.0",
+    "next": "^16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

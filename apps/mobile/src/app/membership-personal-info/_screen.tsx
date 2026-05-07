@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -11,7 +11,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type PersonalInfoData = {
 	topbar: { title: string; progressLabel: string; progressPercent: number };
@@ -30,7 +30,7 @@ export function MembershipPersonalInfoScreen({
 
 	const [values, setValues] = useState<Record<string, string | undefined>>({});
 
-	const errors = useMemo(() => {
+	const errors = (() => {
 		const next: Record<string, string | undefined> = {};
 		for (const field of form.fields) {
 			const value = values[field.id]?.trim() ?? "";
@@ -45,7 +45,7 @@ export function MembershipPersonalInfoScreen({
 			}
 		}
 		return next;
-	}, [form.fields, values]);
+	})();
 
 	const missingRequired = form.fields.filter(
 		(f) => f.required && !(values[f.id]?.trim()),

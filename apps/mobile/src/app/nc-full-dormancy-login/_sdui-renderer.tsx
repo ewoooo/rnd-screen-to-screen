@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -12,7 +12,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type SpecField = {
 	id: string;
@@ -43,17 +43,13 @@ export function NcFullDormancyLoginScreen({
 	const notice = readData<NoticeData>(spec, "notice");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const fields = useMemo<readonly FlowPersonalField[]>(
-		() =>
-			form.fields.map((f) => ({
-				id: f.id,
-				label: f.label,
-				required: f.required,
-				placeholder: f.placeholder,
-				kind: "text" as const,
-			})),
-		[form.fields],
-	);
+	const fields: readonly FlowPersonalField[] = form.fields.map((f) => ({
+		id: f.id,
+		label: f.label,
+		required: f.required,
+		placeholder: f.placeholder,
+		kind: "text" as const,
+	}));
 
 	const [values, setValues] = useState<Record<string, string | undefined>>({});
 	const errors: Record<string, string | undefined> = {};

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const COMPONENT_TO_FIGMA_SCRIPT_ID = "component-to-figma-capture";
 export const COMPONENT_TO_FIGMA_SCRIPT_SRC =
@@ -23,39 +23,42 @@ export function useComponentToFigma() {
 		useState<ComponentToFigmaCaptureStatus>("idle");
 	const didCaptureRef = useRef(false);
 
-	const runCaptureFromHash = useCallback(async () => {
-		if (didCaptureRef.current || !window.location.hash.includes("figmacapture")) {
-			return;
-		}
-
-		const capture = window.figma?.captureForDesign;
-		if (!capture) {
-			return;
-		}
-
-		didCaptureRef.current = true;
-		setCaptureStatus("capturing");
-
-		const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-		const selector = params.get("figmaselector") ?? "body";
-		const delay = Number(params.get("figmadelay") ?? 0);
-
-		if (delay > 0) {
-			await new Promise((resolve) => window.setTimeout(resolve, delay));
-		}
-
-		try {
-			await capture({ selector });
-			setCaptureStatus("captured");
-			console.info("[component-to-figma] capture completed", { selector });
-		} catch (error) {
-			didCaptureRef.current = false;
-			setCaptureStatus("error");
-			console.error("[component-to-figma] capture failed", error);
-		}
-	}, []);
-
 	useEffect(() => {
+		const runCaptureFromHash = async () => {
+			if (
+				didCaptureRef.current ||
+				!window.location.hash.includes("figmacapture")
+			) {
+				return;
+			}
+
+			const capture = window.figma?.captureForDesign;
+			if (!capture) {
+				return;
+			}
+
+			didCaptureRef.current = true;
+			setCaptureStatus("capturing");
+
+			const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+			const selector = params.get("figmaselector") ?? "body";
+			const delay = Number(params.get("figmadelay") ?? 0);
+
+			if (delay > 0) {
+				await new Promise((resolve) => window.setTimeout(resolve, delay));
+			}
+
+			try {
+				await capture({ selector });
+				setCaptureStatus("captured");
+				console.info("[component-to-figma] capture completed", { selector });
+			} catch (error) {
+				didCaptureRef.current = false;
+				setCaptureStatus("error");
+				console.error("[component-to-figma] capture failed", error);
+			}
+		};
+
 		let script = document.getElementById(
 			COMPONENT_TO_FIGMA_SCRIPT_ID,
 		) as HTMLScriptElement | null;
@@ -100,7 +103,7 @@ export function useComponentToFigma() {
 			script?.removeEventListener("load", handleLoad);
 			script?.removeEventListener("error", handleError);
 		};
-	}, [runCaptureFromHash]);
+	}, []);
 
 	return {
 		status,

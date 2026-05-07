@@ -10,7 +10,7 @@ import {
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type TopData = { title: string; leading: "back" | "close" };
 type HeroData = { titleLines: readonly string[]; description: string };

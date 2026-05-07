@@ -1,0 +1,61 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-full-rejoin-info", "name": "재가입 정보 입력", "route": "/nc-full-rejoin-info", "domain": "nc-full", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-MBR-CS-004", "name": "재가입", "step": 2, "total": 3, "progress": "재가입 2/3" },
+		"hero": { "titleLines": ["기존 정보를 확인하고", "약관에 동의해 주세요"], "description": "이전 가입 정보 중 일부는 자동으로 채워뒀어요. 변경이 필요한 항목만 수정하세요." },
+		"form": {
+			"fields": [
+				{ "id": "name", "label": "이름", "control": "text", "required": true, "value": "홍길동", "prefilled": true },
+				{ "id": "birthDate", "label": "생년월일", "control": "text", "required": true, "value": "19900101", "prefilled": true },
+				{ "id": "gender", "label": "성별", "control": "select", "required": true, "options": ["남성", "여성", "기타", "응답 안 함"], "value": "남성", "prefilled": true },
+				{ "id": "phone", "label": "휴대전화", "control": "text", "required": true, "placeholder": "010-0000-0000", "prefilled": false },
+				{ "id": "email", "label": "이메일", "control": "text", "required": false, "placeholder": "선택 입력", "prefilled": false }
+			]
+		},
+		"terms": {
+			"title": "약관 재동의",
+			"allLabel": "전체 동의",
+			"items": [
+				{ "id": "service", "title": "서비스 이용약관", "caption": "v1.0", "required": true, "defaultChecked": false },
+				{ "id": "privacy", "title": "개인정보 수집·이용 동의", "caption": "v1.0", "required": true, "defaultChecked": false },
+				{ "id": "marketing", "title": "혜택·이벤트 정보 수신 동의", "caption": "동의하지 않아도 가입 가능", "required": false, "defaultChecked": false }
+			]
+		},
+		"continue": { "eyebrow": "입력과 동의 완료 시 재가입이 처리돼요", "primaryAction": "재가입하기" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.nc-full-rejoin-info", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "NcTopBar", "id": "slot.top", "props": { "title": "재가입", "leadingIcon": "back", "progressBind": "flow.progress", "progressTotal": 3, "progressStep": 2 } },
+				"bottom": { "type": "NcContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "NcHero", "id": "area.hero", "props": { "bind": "hero", "textPolicy": { "title": { "variant": "displayTitle", "overflow": "wrap" }, "description": { "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } } } },
+				{ "type": "NcPersonalInfoForm", "id": "area.form", "props": { "bind": "form" } },
+				{ "type": "TermsAgreementGroup", "id": "area.terms", "props": { "bind": "terms", "selectionMode": "multi" } }
+			]
+		}
+	],
+	"x_pagination": { "_canonical": "packages/screen-specs/spec/active/nc-full/_pagination/nc-full-rejoin.json", "_canonical_hash": "TBD", "policy_id": "nc-full-rejoin", "route_id": "nc-full-rejoin-info", "step_fraction": "2/3", "predecessor": "nc-full-rejoin-auth", "successor": "nc-full-rejoin-complete", "transitions": [{ "to": "nc-full-rejoin-complete", "trigger": "primary_cta", "guard": "personal_info_validated AND all_required_consents_checked AND rejoin_processed" }] },
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-MBR-CS-004-04", "docs/NC_정책서_Full_v1.0_확정본.md#개인정보-입력-pr-mbr-cs-004-04"] },
+		"process": { "id": "PR-MBR-CS-004-04", "name": "개인정보 입력", "cluster": "US-MBR-CS-004 재가입 2/3", "actor": "고객", "entry_condition": "재가입 가능 상태로 판정됨", "exit_condition": "재가입 필요 정보 입력 완료", "predecessor": ["PR-MBR-CS-004-03"], "successor": ["PR-MBR-CS-004-05"], "related_functions": ["재가입 정보 입력 및 약관 동의", "약관 동의 처리", "법정대리인 동의 처리"], "related_policies": ["재가입 정보 입력 및 기존 정보 재사용 기준 정책"] },
+		"purpose": "기존 정보를 재사용 가능한 범위에서 자동 채우고, 부족한 정보를 입력받으며 약관을 재동의받는다.",
+		"system_inputs_to_user": ["기존 정보 prefill 여부", "필수 입력 항목", "재동의 대상 약관"],
+		"user_inputs": ["수정 정보", "약관 동의값"],
+		"system_outputs": ["입력 검증 결과", "다음 이동 경로"],
+		"branches": ["검증 + 동의 완료 → 재가입 처리 → 완료", "필수 미충족 → 진행 제한"],
+		"exceptions": ["저장 실패 → 재시도", "약관 버전 불일치 → 최신 약관으로 재요청"],
+		"design_signals": { "primary_block": "prefilled 폼 + 재동의 그룹", "hero_intent": "기존 정보 재사용 안내", "cta_intent": "재가입하기" }
+	},
+	"x_interfacePlan": { "genre": "form", "primary_task": "정보 입력 + 약관 재동의", "info_hierarchy": ["hero", "required-input form", "required-input consent", "action"], "cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "one-card" },
+	"x_heuristicReview": { "applied_rules": [
+		{ "rule": "H-1", "result": "fail-by-design", "evidence": "form 장르에 카드 1개(약관 그룹)는 정책상 폼+동의가 한 화면에 결합되어야 하므로 허용. design_signals 근거" },
+		{ "rule": "H-5", "result": "pass", "evidence": "errorText는 FormField/ConsentList 자체" },
+		{ "rule": "H-7", "result": "pass", "evidence": "step flow 중간 → back" },
+		{ "rule": "H-9", "result": "pass", "evidence": "required CTA disabled로 대체" },
+		{ "rule": "H-12", "result": "pass", "evidence": "route margin 보정 없음" }
+	] }
+}

@@ -14,7 +14,7 @@ import {
 } from "@/components/organisms/nc-simple";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type TopbarData = {
 	title: string;

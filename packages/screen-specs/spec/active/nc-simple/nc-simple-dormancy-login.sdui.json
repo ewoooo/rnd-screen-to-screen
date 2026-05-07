@@ -1,0 +1,88 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": { "id": "nc-simple-dormancy-login", "name": "휴면 해제 - 로그인 시도", "route": "/nc-simple-dormancy-login", "domain": "nc-simple", "type": "page", "status": "active" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"topbar": { "title": "로그인", "progressLabel": "1/4", "progressPercent": 25, "showProgressLabel": false },
+		"hero": { "titleLines": ["로그인하고", "이어서 이용해 주세요"], "description": "휴면 상태가 감지되면 본인인증 후 정상 이용으로 복원할 수 있어요." },
+		"login": {
+			"fields": [
+				{ "id": "userId", "label": "아이디", "placeholder": "아이디 입력", "type": "text", "required": true },
+				{ "id": "password", "label": "비밀번호", "placeholder": "비밀번호 입력", "type": "password", "required": true }
+			]
+		},
+		"notice": { "badge": "휴면 안내", "text": "휴면 상태입니다. 본인인증 후 다시 이용할 수 있습니다.", "tone": "info" },
+		"continue": { "primaryActionInitial": "로그인", "primaryActionDormancy": "본인인증으로 이동" }
+	},
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/active/nc-simple/_pagination/nc-simple-dormancy.json",
+		"_canonical_hash": "35aaa9eff61c5ddba492c2e147f7d549bf905798cf1b909e078b97cfd9f9a0f7",
+		"policy_id": "nc-simple-dormancy",
+		"use_case_id": "US-MBR-CS-002",
+		"route": { "id": "nc-simple-dormancy-login", "type": "form", "primary_task": "로그인 + 휴면 안내", "predecessor": null, "successor": "nc-simple-dormancy-auth", "step_fraction": "1/4" },
+		"transitions": [{ "from": null, "to": "nc-simple-dormancy-login", "trigger": "휴면 회원이 로그인 시도", "guard": "MBR_DORMANT 상태 가능성" }, { "from": "nc-simple-dormancy-login", "to": "nc-simple-dormancy-auth", "trigger": "BSS 휴면 판정", "guard": "POL-MBR-LOGIN-001-06 + POL-MBR-DORM-001-01" }]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["docs/NC_정책서_간소화_v1.0_확정본.md §4.가.2) PR-MBR-CS-002-01/02", "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.20) PG-MBR-LOGIN-001"] },
+		"process": { "id": "PR-MBR-CS-002-01", "name": "로그인 + 휴면 안내", "cluster": "US-MBR-CS-002 휴면 해제 1/4", "actor": "고객, BSS", "entry_condition": "로그인 진입", "exit_condition": "휴면 판정 후 인증 진입", "predecessor": [], "successor": ["PR-MBR-CS-002-03"], "related_policies": ["PG-MBR-LOGIN-001", "PG-MBR-STAT-001"] },
+		"purpose": "로그인 시도 후 휴면 상태를 감지하고 휴면 해제 흐름의 시작점으로 안내한다.",
+		"system_inputs_to_user": ["로그인 폼", "휴면 안내 메시지"],
+		"user_inputs": ["아이디", "비밀번호"],
+		"system_outputs": ["회원 상태 코드", "로그인 결과 코드"],
+		"branches": ["정상 → 일반 로그인", "휴면 → 인증 이동", "탈퇴 → 재가입 안내", "가입제한 → 불가"],
+		"exceptions": ["로그인 실패 5회", "BSS 조회 실패"],
+		"design_signals": { "primary_block": "FormField 2개 + 결과 상태 NoticeBlock", "cta_intent": "로그인 → 본인인증" }
+	},
+	"x_interfacePlan": {
+		"genre": "form",
+		"primary_task": "로그인 → 휴면 안내 → 인증 진입",
+		"info_hierarchy": ["hero", "login-form", "notice(conditional)", "action"],
+		"cta_location": "bottom-sticky",
+		"progress_location": "top-bar-thin",
+		"sectioning": "flat"
+	},
+	"x_screenContract": {
+		"screen_contract": {
+			"shell": "AppScreen",
+			"slots": {
+				"top": { "owner": "MembershipShell", "patterns": ["MembershipTopBar"], "flow": "reserved" },
+				"content": { "owner": "ContentList", "patterns": ["MembershipHero", "LoginForm", "MembershipNotice"] },
+				"bottom": { "owner": "MembershipShell", "patterns": ["MembershipContinueBar"], "flow": "reserved" }
+			}
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [] },
+		"areas": [
+			{ "id": "hero", "slot": "content", "pattern": "organisms/membership/MembershipHero", "uses": ["TextBlock"], "content_role": "primary-copy" },
+			{ "id": "login", "slot": "content", "pattern": "molecules/FormField", "uses": ["FormField", "TextField"], "content_role": "required-input" },
+			{ "id": "dormancy-notice", "slot": "content", "pattern": "organisms/membership/MembershipNotice", "uses": ["NoticeBlock"], "content_role": "supporting" },
+			{ "id": "continue", "slot": "bottom", "pattern": "organisms/membership/MembershipContinueBar", "uses": ["Button"], "content_role": "primary-action" }
+		],
+		"design_system_contract": { "templates": ["AppScreen", "ContentList", "ContentSection"], "organisms": ["membership"], "molecules": ["FormField", "TextField", "NoticeBlock"], "atoms": ["TextBlock"], "allowed_escape_hatches": [], "new_vocabulary_required": ["organisms/nc/LoginForm"] }
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "card 0개" },
+			{ "rule": "H-7", "result": "pass", "evidence": "back" },
+			{ "rule": "H-8", "result": "pass", "evidence": "Notice 분리" }
+		]
+	},
+	"x_benchmark": { "criteria": ["design.stateClarity", "planning.flowCompleteness"], "guards": ["guard.unexplainedNewVocabulary"] },
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.nc-simple-dormancy-login",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "MembershipTopBar", "id": "slot.top", "props": { "bind": "topbar", "leading": "back" } },
+				"bottom": { "type": "MembershipContinueBar", "id": "area.continue", "props": { "bind": "continue" } }
+			},
+			"children": [
+				{ "type": "MembershipHero", "id": "area.hero", "props": { "bind": "hero" } },
+				{ "type": "FormField", "id": "area.login", "props": { "bind": "login" } },
+				{ "type": "MembershipNotice", "id": "area.dormancy-notice", "props": { "bind": "notice", "visibilityBind": "state.dormancyDetected" } }
+			]
+		}
+	]
+}

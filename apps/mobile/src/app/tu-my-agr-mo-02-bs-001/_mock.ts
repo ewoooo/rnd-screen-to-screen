@@ -1,4 +1,4 @@
-// Spec: packages/screens/spec/active/tu-my-agr-mo-02-bs-001.json
+// Spec: packages/screen-specs/spec/active/tu-my-agr-mo-02-bs-001.json
 // 혜택 및 이벤트 약관동의 (발견_case2_로그인 위에 떠 있는 바텀시트)
 // SPEC-AGR-01 동의 항목 리스트 / SPEC-AGR-02 바텀시트 닫힘 (30일 미노출)
 

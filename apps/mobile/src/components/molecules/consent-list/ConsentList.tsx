@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Checkbox } from "@pxds/pxds-components/patterns";
 import { Divider } from "@pxds/pxds-components/feedback";
@@ -37,9 +37,8 @@ export function ConsentList({
 		Object.fromEntries(items.map((item) => [item.id, Boolean(item.defaultChecked)])),
 	);
 	const allChecked = items.every((item) => checked[item.id]);
-	const requiredUnchecked = useMemo(
-		() => items.filter((item) => item.required && !checked[item.id]),
-		[checked, items],
+	const requiredUnchecked = items.filter(
+		(item) => item.required && !checked[item.id],
 	);
 
 	useEffect(() => {

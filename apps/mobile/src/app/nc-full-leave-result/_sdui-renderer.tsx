@@ -9,7 +9,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type HeroData = { titleLines: readonly string[]; description: string };
 type SummaryItem = { id: string; label: string; value: string };

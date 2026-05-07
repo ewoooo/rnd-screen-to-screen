@@ -1,0 +1,141 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "experimental-html",
+		"route": "/billing-html-statement",
+		"source": "policy-driven",
+		"policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+		"policy_section": "4. US-BIL-CHK-005 / PR-BIL-CHK-005-01,02",
+		"pagination_ref": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-html-chk.json"
+	},
+	"screen": {
+		"id": "billing-html-statement",
+		"name": "요금안내서 조회",
+		"domain": "billing-html",
+		"use_case": "US-BIL-CHK-005",
+		"process_id": "PR-BIL-CHK-005-01,02",
+		"step_fraction": "5/8",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "browse",
+		"primary_task": "요금안내서 조회 및 재발행 요청",
+		"info_hierarchy": [
+			"list (안내서 InfoList)",
+			"action (재발행 요청)"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "flat",
+		"rail_policy": {
+			"owner": "ContentRail",
+			"route_margin": "forbidden"
+		}
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"patterns": [
+					"GlobalNavigationHeader"
+				],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"InfoList",
+					"NoticeBlock"
+				]
+			},
+			"bottom": {
+				"owner": "PrimaryCTABar",
+				"patterns": [
+					"PrimaryCTABar"
+				],
+				"flow": "reserved"
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": [],
+		"content_rail_owner": "ContentRail"
+	},
+	"areas": [
+		{
+			"id": "top",
+			"slot": "top",
+			"pattern": "organisms/global/GlobalNavigationHeader",
+			"uses": [
+				"GlobalNavigationHeader"
+			],
+			"layout": {
+				"leading": "back",
+				"title": "요금안내서"
+			},
+			"content_role": "chrome"
+		},
+		{
+			"id": "list",
+			"slot": "content",
+			"pattern": "molecules/InfoList",
+			"uses": [
+				"InfoList"
+			],
+			"layout": {
+				"trailing_semantic": "action"
+			},
+			"content_role": "list"
+		},
+		{
+			"id": "permission",
+			"slot": "content",
+			"pattern": "molecules/NoticeBlock",
+			"uses": [
+				"NoticeBlock"
+			],
+			"content_role": "supporting-notice",
+			"state_binding": {
+				"visible_when": "재발행 권한 부재 OR 보관기간 초과"
+			}
+		},
+		{
+			"id": "cta",
+			"slot": "bottom",
+			"pattern": "molecules/PrimaryCTABar",
+			"uses": [
+				"PrimaryCTABar",
+				"Button"
+			],
+			"content_role": "primary-action"
+		}
+	],
+	"design_system_contract": {
+		"templates": [
+			"AppScreen",
+			"AppScreenContent",
+			"ContentOutlet",
+			"ContentList",
+			"ContentSection"
+		],
+		"organisms": [
+			"global"
+		],
+		"molecules": [
+			"InfoList",
+			"NoticeBlock",
+			"PrimaryCTABar"
+		],
+		"atoms": [
+			"TextBlock"
+		],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

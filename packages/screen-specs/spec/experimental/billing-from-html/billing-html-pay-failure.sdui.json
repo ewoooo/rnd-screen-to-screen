@@ -1,0 +1,487 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-html-pay-failure",
+		"name": "납부 실패·후속",
+		"route": "/billing-html-pay-failure",
+		"domain": "billing-html",
+		"type": "page",
+		"status": "experimental-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"flow": {
+			"useCase": "US-BIL-PAY-008",
+			"name": "납부 실패",
+			"step": 8,
+			"total": 8,
+			"progress": "납부 실패 8/8"
+		},
+		"hero": {
+			"titleLines": [
+				"납부가 완료되지 않았어요"
+			],
+			"description": "결제 승인이 거절됐거나 처리가 지연됐어요. 사유를 확인하고 재시도, 다른 수단, 환불·상계 중에서 다음 행동을 정해주세요."
+		},
+		"notice": {
+			"tone": "critical",
+			"title": "실패 사유",
+			"body": "카드사 응답: 한도 초과 또는 일시 사용 제한. 같은 카드로 재시도 시 동일하게 거절될 수 있어요. 다른 수단 사용을 권장해요."
+		},
+		"info": {
+			"label": "납부 시도 정보",
+			"items": [
+				{
+					"id": "attemptedAt",
+					"label": "시도 일시",
+					"value": "2026-05-06 11:08"
+				},
+				{
+					"id": "method",
+					"label": "납부수단",
+					"value": "신용카드 (****-****-****-1234)"
+				},
+				{
+					"id": "amount",
+					"label": "납부 금액",
+					"value": "78,400원"
+				},
+				{
+					"id": "status",
+					"label": "상태",
+					"value": "승인 거절"
+				}
+			]
+		},
+		"actions": {
+			"primary": {
+				"id": "retry",
+				"label": "다시 시도"
+			},
+			"secondary": {
+				"id": "alt-method",
+				"label": "다른 수단으로"
+			},
+			"tertiary": {
+				"id": "support",
+				"label": "상담 연결"
+			}
+		}
+	},
+	"children": [
+		{
+			"type": "AppScreen",
+			"id": "screen.billing-pay-failure",
+			"componentVersion": "0.1.0",
+			"props": {
+				"top": {
+					"type": "GlobalNavigationHeader",
+					"id": "slot.top",
+					"props": {
+						"title": "납부 실패",
+						"leading": "close",
+						"progressVisible": false
+					}
+				},
+				"bottom": {
+					"type": "StickyActionBar",
+					"id": "area.actions",
+					"props": {
+						"bind": "actions",
+						"layout": "primary_secondary_tertiary"
+					}
+				}
+			},
+			"children": [
+				{
+					"type": "ContentSection",
+					"id": "area.hero",
+					"children": [
+						{
+							"type": "TextBlock",
+							"id": "hero.title",
+							"props": {
+								"bind": "hero.titleLines",
+								"variant": "displayTitle",
+								"overflow": "wrap"
+							}
+						},
+						{
+							"type": "ContentRail",
+							"id": "hero.description.rail",
+							"props": {
+								"rail": "measure",
+								"measure": "body"
+							},
+							"children": [
+								{
+									"type": "TextBlock",
+									"id": "hero.description",
+									"props": {
+										"bind": "hero.description",
+										"variant": "bodySubtle",
+										"maxLines": 4,
+										"overflow": "wrap"
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "ContentSection",
+					"id": "area.notice",
+					"children": [
+						{
+							"type": "NoticeBlock",
+							"id": "notice.block",
+							"props": {
+								"bind": "notice",
+								"tone": "critical"
+							}
+						}
+					]
+				},
+				{
+					"type": "ContentSection",
+					"id": "area.info",
+					"children": [
+						{
+							"type": "TextBlock",
+							"id": "info.label",
+							"props": {
+								"bind": "info.label",
+								"variant": "sectionLabel"
+							}
+						},
+						{
+							"type": "InfoList",
+							"id": "info.list",
+							"props": {
+								"bind": "info",
+								"trailingSemantic": "value"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-html-pay.json",
+		"_canonical_hash": "b7deeccee388ab32e2b74a2b3069a0bc0bc2681fe26caa70b1fdc229f3b5368b",
+		"policy_id": "billing-html-pay",
+		"route_id": "billing-html-pay-failure",
+		"step_fraction": "8/8",
+		"predecessor": null,
+		"successor": null,
+		"transitions": [
+			{
+				"to": "billing-html-pay-confirm",
+				"trigger": "primary_cta",
+				"guard": "user_chooses_retry"
+			},
+			{
+				"to": "billing-html-pay-method",
+				"trigger": "secondary_cta",
+				"guard": "user_chooses_alternate_method"
+			},
+			{
+				"to": "external:support",
+				"trigger": "tertiary_cta"
+			}
+		],
+		"branches": [
+			{
+				"condition": "환불·상계 필요",
+				"behavior": "OP-002 운영자 flow로 이관 (BO 범위 외)"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-PAY-008-01",
+				"PR-BIL-PAY-008-02",
+				"PR-BIL-PAY-008-03",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#L8628-L9168"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-PAY-008-01,02,03",
+			"name": "실패·중복·과오납 후속 조치",
+			"cluster": "US-BIL-PAY-008 8/8",
+			"actor": "납부 실행자",
+			"entry_condition": "납부 결과 = 실패/대기/중복",
+			"exit_condition": "재시도/대체/환불 후속 결정 완료",
+			"predecessor": [
+				"PR-BIL-PAY-002-02"
+			],
+			"successor": [],
+			"related_functions": [
+				"FN-BIL-PAY-002 검증"
+			],
+			"related_policies": [
+				"POL-BIL-CUS-001-04 납부 실패 안내",
+				"POL-BIL-PAY-002-05 중복 납부 차단",
+				"POL-BIL-PAY-002-06 수납대기 처리",
+				"POL-BIL-PAY-002-09 상담 전환",
+				"POL-BIL-SEC-001-02 마스킹"
+			]
+		},
+		"purpose": "실패·중복·과오납 상태를 사용자에게 안내하고 재시도/대체 수단/환불·상계 후속을 분기시킨다.",
+		"system_inputs_to_user": [
+			"실패 사유",
+			"재시도 가능 여부",
+			"대체 수단 옵션",
+			"상담 연결 조건"
+		],
+		"user_inputs": [
+			"다음 행동 선택 (재시도/대체/상담)"
+		],
+		"system_outputs": [
+			"다음 라우팅 결정"
+		],
+		"branches": [
+			"재시도 → confirm 회귀",
+			"대체 수단 → method 재선택",
+			"환불·상계 필요 → OP-002 (BO 범위 외)",
+			"상담 → 외부 상담 연결"
+		],
+		"exceptions": [
+			"재시도 5회 초과 → 추가 재시도 차단",
+			"중복 납부 → 기존 결과 우선 표시"
+		],
+		"design_signals": {
+			"primary_block": "Critical NoticeBlock + InfoList(시도 정보) + 다중 CTA",
+			"hero_intent": "실패 인지 + 다음 행동 결정",
+			"cta_intent": "다시 시도 / 다른 수단 / 상담"
+		},
+		"evidence_refs": [
+			{
+				"claim": "process entry/exit",
+				"policy": "PR-BIL-PAY-008-01",
+				"doc_line": "L8631-L8645"
+			},
+			{
+				"claim": "재시도·대체 납부",
+				"policy": "PR-BIL-PAY-008-02",
+				"doc_line": "L8800-L8815"
+			},
+			{
+				"claim": "환불·상계 후속",
+				"policy": "PR-BIL-PAY-008-03",
+				"doc_line": "L9015-L9030"
+			},
+			{
+				"claim": "납부 실패 안내 정책",
+				"policy": "POL-BIL-CUS-001-04",
+				"doc_line": "L4312"
+			},
+			{
+				"claim": "상담 전환 기준",
+				"policy": "POL-BIL-PAY-002-09",
+				"doc_line": "L4597"
+			},
+			{
+				"claim": "중복 납부 차단",
+				"policy": "POL-BIL-PAY-002-05",
+				"doc_line": "L4593"
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "실패 사유 인지 + 다음 행동 결정",
+		"user_decision": "재시도 / 다른 수단 / 상담 / 환불 이관",
+		"hierarchy": {
+			"top": "title_only",
+			"lead": "result_title",
+			"body": "critical_notice + attempt_info",
+			"bottom": "primary_secondary_tertiary_actions"
+		},
+		"copy_policy": {
+			"title_style": "result_announcement",
+			"description_measure": "body",
+			"avoid_full_width_caption": true
+		},
+		"interaction_pattern": {
+			"main_control": "passive_review_with_action_hub",
+			"cta_position": "bottom_chrome",
+			"progress_position": "none"
+		},
+		"info_hierarchy": [
+			"hero",
+			"critical-notice",
+			"attempt-info",
+			"actions"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "flat",
+		"quality_checks": [
+			"primary action이 실패 사유에 따라 변동 가능(POL-BIL-CUS-001-04)",
+			"마스킹 준수",
+			"환불·상계는 외부 flow로 안내만"
+		]
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "GlobalNavigationHeader",
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"ContentSection",
+					"TextBlock",
+					"NoticeBlock",
+					"InfoList"
+				]
+			},
+			"bottom": {
+				"owner": "StickyActionBar",
+				"flow": "reserved"
+			}
+		},
+		"layout_contract": {
+			"content_outlet_inline_inset": "spacing-12",
+			"section_inset": "inherit",
+			"content_gap": "spacing-4",
+			"content_gap_owner": "ContentList",
+			"top_bottom_flow": "reserved",
+			"bleed_sections": [],
+			"content_rail_owner": "ContentRail"
+		},
+		"areas": [
+			{
+				"id": "top",
+				"slot": "top",
+				"pattern": "organisms/global/GlobalNavigationHeader",
+				"uses": [
+					"TopNavigation"
+				],
+				"layout": {
+					"leading": "close",
+					"progress_visible": false
+				},
+				"content_role": "result-chrome"
+			},
+			{
+				"id": "hero",
+				"slot": "content",
+				"pattern": "ContentSection + TextBlock",
+				"uses": [
+					"ContentSection",
+					"ContentRail",
+					"TextBlock"
+				],
+				"content_role": "primary-copy"
+			},
+			{
+				"id": "notice",
+				"slot": "content",
+				"pattern": "molecules/NoticeBlock",
+				"uses": [
+					"ContentSection",
+					"NoticeBlock"
+				],
+				"layout": {
+					"tone": "critical"
+				},
+				"content_role": "critical-notice"
+			},
+			{
+				"id": "info",
+				"slot": "content",
+				"pattern": "molecules/InfoList",
+				"uses": [
+					"ContentSection",
+					"InfoList",
+					"TextBlock"
+				],
+				"layout": {
+					"trailing_semantic": "value"
+				},
+				"content_role": "attempt-info"
+			},
+			{
+				"id": "actions",
+				"slot": "bottom",
+				"pattern": "molecules/StickyActionBar",
+				"uses": [
+					"Button"
+				],
+				"content_role": "action-hub"
+			}
+		],
+		"design_system_contract": {
+			"templates": [
+				"AppScreen",
+				"ContentList",
+				"ContentSection",
+				"ContentRail"
+			],
+			"organisms": [
+				"global"
+			],
+			"molecules": [
+				"NoticeBlock",
+				"InfoList",
+				"StickyActionBar"
+			],
+			"atoms": [
+				"TextBlock"
+			],
+			"allowed_escape_hatches": [
+				{
+					"location": "area.actions",
+					"kind": "tertiary_action_slot",
+					"value": "primary_secondary_tertiary layout",
+					"reason": "POL-BIL-CUS-001-04에 따라 재시도/대체수단/상담 3개 후속을 함께 노출",
+					"owner": "StickyActionBar"
+				}
+			],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{
+				"rule": "H-7",
+				"result": "pass",
+				"evidence": "result/dead-end-action-hub → close"
+			},
+			{
+				"rule": "H-9",
+				"result": "pass",
+				"evidence": "* 미사용"
+			},
+			{
+				"rule": "H-10",
+				"result": "pass",
+				"evidence": "InfoList trailing=value (시도 정보 값)"
+			},
+			{
+				"rule": "H-11",
+				"result": "documented",
+				"evidence": "StickyActionBar tertiary CTA 슬롯 사용 (정책 요구)"
+			},
+			{
+				"rule": "H-12",
+				"result": "pass",
+				"evidence": "route margin 보정 없음"
+			}
+		]
+	}
+}

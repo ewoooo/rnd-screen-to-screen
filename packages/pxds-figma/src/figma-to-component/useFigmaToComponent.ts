@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import { parseFigmaSource, type FigmaToComponentSource } from "./source";
 
@@ -11,7 +11,7 @@ export function useFigmaToComponent() {
 	const [source, setSource] = useState<FigmaToComponentSource | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
-	const readSource = useCallback((input: string) => {
+	const readSource = (input: string) => {
 		const nextSource = parseFigmaSource(input);
 
 		if (!nextSource) {
@@ -25,9 +25,9 @@ export function useFigmaToComponent() {
 		setError(null);
 		setSource(nextSource);
 		return nextSource;
-	}, []);
+	};
 
-	const readFromClipboard = useCallback(async () => {
+	const readFromClipboard = async () => {
 		setStatus("reading");
 		setError(null);
 
@@ -41,7 +41,7 @@ export function useFigmaToComponent() {
 			console.error("[figma-to-component] clipboard read failed", clipboardError);
 			return null;
 		}
-	}, [readSource]);
+	};
 
 	return {
 		status,

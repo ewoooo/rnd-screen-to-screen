@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -12,7 +12,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1, SDUIJsonValue } from "@screen/screens";
+import type { RenderableScreenSpecV1, SDUIJsonValue } from "@screen/specs";
 
 type JsonObject = Record<string, SDUIJsonValue>;
 
@@ -53,12 +53,9 @@ export function MembershipTermsConsentScreen({
 	const continueData = readData<ContinueData>(spec, "continue");
 	const progress = parseStepProgress(hero.eyebrow);
 
-	const initialMissing = useMemo(
-		() =>
-			terms.items.filter((item) => item.required && !item.defaultChecked)
-				.length,
-		[terms.items],
-	);
+	const initialMissing = terms.items.filter(
+		(item) => item.required && !item.defaultChecked,
+	).length;
 	const [missingCount, setMissingCount] = useState(initialMissing);
 	const blocked = missingCount > 0;
 	const dynamicEyebrow = blocked

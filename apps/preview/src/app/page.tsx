@@ -1,18 +1,16 @@
 "use client";
 
 import { AlertTriangleIcon, CheckCircle2Icon, ExternalLinkIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { MobilePreviewFrame } from "@pxds/pxds-preview";
+import { benchmarkCriteria } from "@screen/evaluation";
+import { screens, type ScreenGroup, type ScreenPath } from "@screen/registry";
 import {
 	activeScreenSpecs,
-	benchmarkCriteria,
 	getScreenSpecIssues,
-	screens,
-	type ScreenGroup,
-	type ScreenPath,
 	type ScreenSpecIssue,
 	type ScreenSpecV2,
-} from "@screen/screens";
+} from "@screen/specs";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -203,10 +201,7 @@ export default function PreviewPage() {
 		},
 		{},
 	);
-	const iframeSrc = useMemo(
-		() => `${MOBILE_ORIGIN}${selected.path}`,
-		[selected.path],
-	);
+	const iframeSrc = `${MOBILE_ORIGIN}${selected.path}`;
 
 	return (
 		<main className="grid min-h-dvh grid-cols-1 bg-transparent sm:grid-cols-[260px_minmax(390px,1fr)_340px] xl:grid-cols-[300px_minmax(420px,1fr)_380px]">

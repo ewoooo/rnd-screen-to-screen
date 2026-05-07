@@ -1,0 +1,137 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "active",
+		"route": "/nc-full-join-complete",
+		"source": "policy-driven",
+		"policy_doc": "docs/NC_정책서_Full_v1.0_확정본.md",
+		"policy_section": "4.다.5) PR-MBR-CS-001-05 (종료 안내 부분)",
+		"pagination_ref": "packages/screen-specs/spec/active/nc-full/_pagination/nc-full-join.json"
+	},
+	"screen": {
+		"id": "nc-full-join-complete",
+		"name": "가입 완료",
+		"domain": "nc-full",
+		"use_case": "US-MBR-CS-001",
+		"process_id": "PR-MBR-CS-001-05",
+		"step_fraction": "4/4",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "result",
+		"primary_task": "가입 결과 확인 + 다음 행동 선택",
+		"info_hierarchy": [
+			"hero (완료 환영)",
+			"result-summary (가입 정보 카드)",
+			"supporting-notice (혜택/세션 안내)",
+			"actions (홈으로 / 내 정보)"
+		],
+		"cta_location": "bottom-sticky",
+		"progress_location": "none",
+		"sectioning": "one-card",
+		"copy_policy": {
+			"description_measure": "body",
+			"avoid_full_width_caption": true
+		}
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": {
+				"owner": "NcShell",
+				"patterns": ["NcTopBar"],
+				"flow": "reserved"
+			},
+			"content": {
+				"owner": "ContentList",
+				"patterns": ["NcHero", "NcSummaryCard", "NcNotice"]
+			},
+			"bottom": {
+				"owner": "NcShell",
+				"patterns": ["NcResultActions"],
+				"flow": "reserved"
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": [],
+		"content_rail_owner": "ContentRail"
+	},
+	"areas": [
+		{
+			"id": "top-progress",
+			"slot": "top",
+			"pattern": "organisms/nc/NcTopBar",
+			"uses": ["StatusBar", "TopNavigation"],
+			"layout": {
+				"flow": "reserved",
+				"leading": "close",
+				"progress_visible": false
+			},
+			"content_role": "flow-progress"
+		},
+		{
+			"id": "hero",
+			"slot": "content",
+			"pattern": "organisms/nc/NcHero",
+			"uses": ["ContentSection", "TextBlock", "ContentRail"],
+			"layout": {
+				"section_inset": "inherit",
+				"description_rail": "measure:body",
+				"block_padding_top": "spacing-16",
+				"block_padding_bottom": "spacing-32"
+			},
+			"content_role": "primary-copy"
+		},
+		{
+			"id": "summary",
+			"slot": "content",
+			"pattern": "organisms/nc/NcSummaryCard",
+			"uses": ["ContentSection", "SummaryCard", "InfoList", "TextBlock"],
+			"layout": {
+				"section_inset": "inherit",
+				"trailing_semantic": "value"
+			},
+			"content_role": "result-summary"
+		},
+		{
+			"id": "benefit-notice",
+			"slot": "content",
+			"pattern": "organisms/nc/NcNotice",
+			"uses": ["ContentSection", "NoticeBlock", "TextBlock"],
+			"layout": { "section_inset": "inherit" },
+			"content_role": "supporting-notice"
+		},
+		{
+			"id": "actions",
+			"slot": "bottom",
+			"pattern": "organisms/nc/NcResultActions",
+			"uses": ["Box", "Button"],
+			"content_role": "primary-action",
+			"layout": {
+				"surface": "page-semi-gradient",
+				"button_layout": "primary + secondary"
+			}
+		}
+	],
+	"design_system_contract": {
+		"templates": [
+			"AppScreen",
+			"AppScreenContent",
+			"ContentOutlet",
+			"ContentList",
+			"ContentSection",
+			"ContentRail"
+		],
+		"organisms": ["nc"],
+		"molecules": ["SummaryCard", "InfoList", "NoticeBlock"],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": ["organisms/nc/NcSummaryCard", "organisms/nc/NcResultActions"]
+	}
+}

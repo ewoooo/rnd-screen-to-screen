@@ -24,7 +24,12 @@
 │   ├── pxds-layout/      `@pxds/pxds-layout` — 화면/frame/layout runtime
 │   ├── pxds-preview/     `@pxds/pxds-preview` — 모바일 iframe preview/helper
 │   ├── pxds-figma/       `@pxds/pxds-figma` — Figma bridge/hooks/spec authoring
-│   └── screens/          화면 registry + active screen spec SSOT
+│   ├── policy-core/      `@policy/core` — Policy / UseCase 순수 문서 도메인
+│   ├── policy-authoring/ `@policy/authoring` — 문서/정책서 → Screen 도출 추적
+│   ├── screen-registry/  `@screen/registry` — 순수 Screen registry
+│   ├── screen-specs/     `@screen/specs` — ScreenSpec / RenderableSpec + spec JSON
+│   ├── screen-evaluation/`@screen/evaluation` — benchmark / audit / strain test
+│   └── screen-catalog/   `@screen/catalog` — component vocabulary catalog
 ├── registry/         WDS/PXDS registry index — 컴포넌트 / 매핑 진입점
 ├── AGENTS.md         ← 이 파일 (운영 규약 + 시스템 메타)
 ├── DESIGN.md         디자인 스펙 (수치, 토큰, 어휘 variant SSOT)
@@ -135,14 +140,16 @@
   - `organisms/` — 도메인/글로벌 화면 영역. 내부에서 WDS와 molecules 사용
 - **버려진 정책 (이전)**: "와이어프레임 도메인이라 raw + 토큰 조합이 명세 충실성에 더 부합" — Figma 픽셀 충실성을 우선으로 인라인 raw style을 허용하던 규칙. 2026-04-29부로 폐기. 픽셀 단위 충실성을 포기하고 WDS 컴포넌트 모양을 그대로 수용
 - 토큰: `var(--semantic-*)` 직접 소비도 가능하나 가능하면 WDS prop(`color="semantic.label.normal"`)으로 통과. SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`
-- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-icons`, `@pxds/pxds-tokens`, WDS reset/Next adapter 같은 패키지 경계에서만 허용한다. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
+- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-icons`, `@pxds/pxds-tokens`, WDS reset/Next adapter 같은 패키지 경계에서만 허용한다. `@screen/*`·`@policy/*`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
 - `apps/preview/`는 shadcn/Tailwind 프리뷰 도구다. WDS 모바일 화면을 직접 import하지 않고 `@pxds/pxds-preview`의 iframe helper로 띄운다. iframe origin은 `NEXT_PUBLIC_MOBILE_ORIGIN`(기본 `http://localhost:3001`)이다.
 
 ### Mock / 데이터 배치
-- 프로젝트 수준 screen registry: `packages/screens/src/index.ts`
-- 프로젝트 수준 screen generation benchmark: `packages/screens/src/benchmark.ts`
-- 프로젝트 수준 spec(JSON SSOT): `packages/screens/spec/active/<route-id>.json`
-- 구버전/deprecated spec: 레포 상위 백업 디렉토리 `../rnd-screen-to-screen-backup/packages/screens/spec/_deprecated/`로 이동. active 화면 조립 근거로 사용하지 않는다.
+- 정책서/Use Case 순수 모델: `@policy/core` (`packages/policy-core/src/index.ts`)
+- 문서/정책서 → screen 추적: `@policy/authoring` (`packages/policy-authoring/src/index.ts`)
+- 프로젝트 수준 pure screen registry: `@screen/registry` (`packages/screen-registry/src/index.ts`)
+- 프로젝트 수준 screen generation benchmark/audit: `@screen/evaluation` (`packages/screen-evaluation/src/index.ts`)
+- 프로젝트 수준 spec(JSON SSOT): `packages/screen-specs/spec/active/<route-id>.json`
+- 구버전/deprecated spec: 레포 상위 백업 디렉토리 `../rnd-screen-to-screen-backup/packages/screen-specs/spec/_deprecated/`로 이동. active 화면 조립 근거로 사용하지 않는다.
 - 페이지 로컬 mock/seed (TS): 각 화면 폴더의 `_mock.ts`
 - mock은 화면 재현용 임시 입력. API 연결 시 교체
 
@@ -173,6 +180,7 @@
 - 상태가 화면의 중요한 관점이거나 여러 UI 요소와 연결되거나 변경 규칙이 있으면, 문자열/boolean 구현값으로 흩뿌리지 말고 이름 붙일 만한 개념인지 검토한다.
 - 커스텀 훅은 구현을 숨기기 위한 장식이 아니라 상태의 의도를 드러낼 때 사용한다.
 - 상태 변경 규칙이 여러 컴포넌트에 흩어지면 책임 경계가 깨진 신호다.
+- `useMemo` / `useCallback`은 기본 금지다. 렌더 비용이나 참조 안정성이 문제가 되면 먼저 컴포넌트 경계, state 위치, 데이터 변환 위치, props 계약을 조정한다. 필요한 예외는 시스템 규칙 변경으로 명시적으로 논의한다.
 
 ### optional과 fallback은 경계에서 처리한다
 - API/mock/spec의 `null`·`undefined`·optional 값은 가능한 한 변환 계층이나 screen 경계에서 처리한다.
@@ -198,7 +206,7 @@
 - 도메인/글로벌 화면 영역은 `organisms/`에 둔다.
 - 화면 슬롯, 상단 sticky/accessory 컨텍스트, 스크롤 컨텍스트, 포털 컨텍스트는 `templates/`에 둔다.
 - 새 도메인에서 반복되는 구조는 organisms에 복제하지 말고 먼저 molecules로 승격한다.
-- 컴포넌트 어휘 탐색은 `packages/screens/catalog/index.json`에서 시작한다. 이 catalog는 생성기나 토큰 SSOT가 아니라, 현재 코드베이스의 templates/atoms/molecules/organisms/pages 구조를 빠르게 파악하기 위한 사람이 읽는 색인이다.
+- 컴포넌트 어휘 탐색은 `packages/screen-catalog/catalog/index.json`에서 시작한다. 이 catalog는 생성기나 토큰 SSOT가 아니라, 현재 코드베이스의 templates/atoms/molecules/organisms/pages 구조를 빠르게 파악하기 위한 사람이 읽는 색인이다.
 
 우리가 만들려는 것은 “variant만 계속 늘어나는 kit”이 아니다. 목표는 **조합 가능한 의미 축을 가진 시스템**이다.
 
@@ -450,7 +458,7 @@ templates + screen
 
 새 화면을 만들 때 판단 순서:
 
-1. `packages/screens/catalog/index.json`에서 현재 어휘와 페이지 패턴을 먼저 찾는다.
+1. `packages/screen-catalog/catalog/index.json`에서 현재 어휘와 페이지 패턴을 먼저 찾는다.
 2. 기존 organisms로 표현 가능한지 본다.
 3. organisms가 부족하면, 먼저 molecules 조합으로 표현 가능한지 본다.
 4. 같은 WDS 조합이 반복되면 molecules로 승격한다.
@@ -514,14 +522,18 @@ product-detail/page.tsx
 3. 컴포넌트별 prop enum → `node_modules/@wanteddev/wds/dist/components/<name>/types.d.ts`
 4. **이 문서나 다른 메모에 수치 표 베이크 금지** — stale 위험 (실 사례: title2를 20px로 잘못 외우고 작성 → 런타임 28px)
 
-### `packages/screens/`
-- `packages/screens/src/index.ts` — preview/mobile이 공유하는 active screen registry. 화면 목록·label·group·route·spec path SSOT
-- `packages/screens/src/benchmark.ts` — screen generation benchmark SSOT. 디자인/기획 평가 항목, 관련 API, 1~5 scoring hint 정의
-- `packages/screens/catalog/index.json` — 생성기·토큰 제외 컴포넌트 catalog 진입점. templates/atoms/molecules/organisms/pages 어휘와 page pattern을 사람이 읽는 JSON으로 정리한다
-- `packages/screens/spec/active/<route-id>.json` — 렌더 가능한 화면의 screen contract SSOT. `screen_contract` / `areas` / `system_mapping` / `layout_tokens` / `system_fit` 중심
-- `packages/screens/spec/active/<route-id>.sdui.json` — 정책서 → 화면 요구사항 → SDUI 렌더 트리 파일럿. 현재 `product-detail`, `membership-terms-consent`가 운영 중이며, v2 screen contract를 대체하지 않고 검증용으로 병행한다
-- `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json` — 정책서 단위 화면 분할 SSOT. domain 버킷 안에 정책별로 둔다(예: `membership/_pagination/membership-join.json`, `membership/_pagination/membership-leave.json`, `nc-full/_pagination/nc-full.json`, `nc-simple/_pagination/nc-simple.json`). `policy_id` / `source_ref`(예: `docs/NC_정책서_Full_v1.0_확정본.md`) / `routes[]`(id, type, primary_task, predecessor, successor, step_fraction, split_reason) / `transitions[]`(from, to, trigger, guard)을 담는다. 각 route의 `.sdui.json`에 들어가는 `x_pagination` 슬라이스는 이 파일에서 derive되며, 슬라이스의 `_canonical_hash`(B 파일의 sha256)가 lint에서 검증된다. AI 세션은 `.sdui.json`만 읽어도 해당 route의 위치/전이를 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다
-- 구버전 imported/legacy/source-for-active spec은 레포 상위 백업 디렉토리 `../rnd-screen-to-screen-backup/packages/screens/spec/_deprecated/`에 보존한다. `packages/screens/spec/active/`와 active registry는 이 백업을 참조하지 않는다.
+### `@policy/*` / `@screen/*`
+- `packages/policy-core/` (`@policy/core`) — Policy, UseCase, PolicySource, PolicySection, EvidenceRef 순수 문서 도메인. Screen을 모른다.
+- `packages/policy-authoring/` (`@policy/authoring`) — 문서/정책서 → Screen 도출 추적. `PolicySourceRef`, `PolicyToScreenTrace`, `policyToScreenTraces`를 소유한다. `policy_doc`, `policy_section`, `pagination_ref`, `x_policyExtract` 같은 출처 정보는 이 레이어에서 해석한다.
+- `packages/screen-registry/` (`@screen/registry`) — pure Screen registry. 화면 id, route, label, group, lifecycle status, spec/renderSpec id만 소유한다. 정책서 출처나 도출 근거를 품지 않는다.
+- `packages/screen-specs/` (`@screen/specs`) — ScreenSpecV2, RenderableScreenSpecV1, active spec import, spec validation, spec JSON 저장소를 소유한다.
+- `packages/screen-evaluation/` (`@screen/evaluation`) — screen generation benchmark/audit SSOT. 디자인/기획 평가 항목, 관련 API, 1~5 scoring hint, audit formatter를 소유한다.
+- `packages/screen-catalog/` (`@screen/catalog`) — 생성기·토큰 제외 컴포넌트 catalog. templates/atoms/molecules/organisms/pages 어휘와 page pattern을 사람이 읽는 JSON으로 정리한다.
+- `packages/screen-catalog/catalog/index.json` — 생성기·토큰 제외 컴포넌트 catalog 진입점. templates/atoms/molecules/organisms/pages 어휘와 page pattern을 사람이 읽는 JSON으로 정리한다
+- `packages/screen-specs/spec/active/<route-id>.json` — 렌더 가능한 화면의 screen contract SSOT. `screen_contract` / `areas` / `system_mapping` / `layout_tokens` / `system_fit` 중심
+- `packages/screen-specs/spec/active/<route-id>.sdui.json` — 정책서 → 화면 요구사항 → SDUI 렌더 트리 파일럿. 현재 `product-detail`, `membership-terms-consent`가 운영 중이며, v2 screen contract를 대체하지 않고 검증용으로 병행한다
+- `packages/screen-specs/spec/active/<domain>/_pagination/<policy-id>.json` — 정책서 단위 화면 분할 SSOT. domain 버킷 안에 정책별로 둔다(예: `membership/_pagination/membership-join.json`, `membership/_pagination/membership-leave.json`, `nc-full/_pagination/nc-full.json`, `nc-simple/_pagination/nc-simple.json`). `policy_id` / `source_ref`(예: `docs/NC_정책서_Full_v1.0_확정본.md`) / `routes[]`(id, type, primary_task, predecessor, successor, step_fraction, split_reason) / `transitions[]`(from, to, trigger, guard)을 담는다. 각 route의 `.sdui.json`에 들어가는 `x_pagination` 슬라이스는 이 파일에서 derive되며, 슬라이스의 `_canonical_hash`(B 파일의 sha256)가 lint에서 검증된다. AI 세션은 `.sdui.json`만 읽어도 해당 route의 위치/전이를 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다
+- 구버전 imported/legacy/source-for-active spec은 레포 상위 백업 디렉토리 `../rnd-screen-to-screen-backup/packages/screen-specs/spec/_deprecated/`에 보존한다. `packages/screen-specs/spec/active/`와 active registry는 이 백업을 참조하지 않는다.
 
 ### 정책서 → UX 단계 → 화면 분할 → 인터페이스 설계 → 스펙/계약 → 렌더 생성
 
@@ -532,16 +544,16 @@ product-detail/page.tsx
 흐름:
 1. **정책서 읽기** — `docs/`의 정책서 또는 사용자가 지정한 Notion 원문만 기준으로 삼는다. 레포 상위 백업의 deprecated spec은 읽지 않는다.
 2. **`x_uxStage` 분류** — 각 use case와 각 route를 고객 여정 단계로 먼저 분류한다. 허용값은 `entry`(진입), `explore`(탐색), `search`(검색), `decision`(결정), `execution`(실행/구매), `complete`(완료), `support`(문제해결/CS)다. 한 화면이 여러 단계에 걸치면 primary 1개와 secondary N개를 기록한다. 이 분류는 이후 `x_interfacePlan`의 장르·톤·CTA·정보 위계를 결정하는 첫 단추다.
-3. **`x_pagination` 작성 (화면 단위 분할 SSOT)** — 정책 process, entry/exit condition, 주요 user action, branch/exception을 기준으로 route를 분할하고 화면 간 전이를 표현한다. 한 화면은 하나의 primary task와 하나의 primary CTA를 가져야 한다. **분할 단위는 use case (flow)** 다. 정책서가 여러 use case(예: 회원 가입 / 휴면 해제 / 회원 탈퇴 / 재가입)를 담고 있으면 use case당 1개 pagination 파일로 분리한다. 산출물은 두 곳에 둔다. (B) use case당 1개 SSOT — `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json`. `<policy-id>`는 `<doc>-<use-case>` 형식(예: `nc-full-join`, `nc-full-leave`). domain 버킷은 그릇이고 한 도메인에 여러 flow 파일이 있을 수 있다. 같은 정책서에서 파생된 flow 파일을 묶어보고 싶으면 `<domain>/_pagination/_index.json`에 source doc + flow 목록만 담는 얇은 색인 파일을 둘 수 있다(routes/transitions는 담지 않는다 — SSOT 충돌 방지). (A) 각 route의 `.sdui.json` 안 `x_pagination` 슬라이스 — B의 동일 정보 중 해당 route 부분만 denormalize. drift 방지를 위해 슬라이스에 B의 `_canonical_hash`(sha256)를 박고, lint에서 모든 슬라이스 hash가 B의 현재 hash와 일치하는지 검증한다. AI/세션은 A만 읽어도 predecessor/successor/step_fraction을 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다. **공유 화면 규칙**: 같은 UI(예: 본인인증)가 여러 flow에서 등장해도 route id는 flow별로 분리한다(`nc-join-auth`, `nc-rejoin-auth`처럼). 컴포넌트는 organism/molecule 레벨에서 재사용하고, pagination route는 흐름 단위로 별개로 유지한다 — 한 route에 여러 flow context가 동시에 들어가면 슬라이스 SSOT가 깨진다.
+3. **`x_pagination` 작성 (화면 단위 분할 SSOT)** — 정책 process, entry/exit condition, 주요 user action, branch/exception을 기준으로 route를 분할하고 화면 간 전이를 표현한다. 한 화면은 하나의 primary task와 하나의 primary CTA를 가져야 한다. **분할 단위는 use case (flow)** 다. 정책서가 여러 use case(예: 회원 가입 / 휴면 해제 / 회원 탈퇴 / 재가입)를 담고 있으면 use case당 1개 pagination 파일로 분리한다. 산출물은 두 곳에 둔다. (B) use case당 1개 SSOT — `packages/screen-specs/spec/active/<domain>/_pagination/<policy-id>.json`. `<policy-id>`는 `<doc>-<use-case>` 형식(예: `nc-full-join`, `nc-full-leave`). domain 버킷은 그릇이고 한 도메인에 여러 flow 파일이 있을 수 있다. 같은 정책서에서 파생된 flow 파일을 묶어보고 싶으면 `<domain>/_pagination/_index.json`에 source doc + flow 목록만 담는 얇은 색인 파일을 둘 수 있다(routes/transitions는 담지 않는다 — SSOT 충돌 방지). (A) 각 route의 `.sdui.json` 안 `x_pagination` 슬라이스 — B의 동일 정보 중 해당 route 부분만 denormalize. drift 방지를 위해 슬라이스에 B의 `_canonical_hash`(sha256)를 박고, lint에서 모든 슬라이스 hash가 B의 현재 hash와 일치하는지 검증한다. AI/세션은 A만 읽어도 predecessor/successor/step_fraction을 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다. **공유 화면 규칙**: 같은 UI(예: 본인인증)가 여러 flow에서 등장해도 route id는 flow별로 분리한다(`nc-join-auth`, `nc-rejoin-auth`처럼). 컴포넌트는 organism/molecule 레벨에서 재사용하고, pagination route는 흐름 단위로 별개로 유지한다 — 한 route에 여러 flow context가 동시에 들어가면 슬라이스 SSOT가 깨진다.
 4. **`x_policyExtract` 작성** — 정책서의 process, purpose, system/user input, output, branches, exceptions, design_signals를 추출한다. 정책 ID와 원문 ref를 반드시 남긴다. `source.refs`는 정책서/섹션 단위 출처를 보존하고, `evidence_refs`에는 각 process, branch, exception, user/system input이 어떤 원문 섹션·문장·표에서 왔는지 항목별 근거를 남긴다. 원문 근거 없이 요약만 만든 `x_policyExtract`는 화면 계약 근거로 쓰지 않는다. 정책 화면은 `legal_notices[]`에 필수/사용성 고지, 표시 위계, target area를 기록하고, 완료/처리 화면은 `output_mapping[]`에 정책 output이 어떤 결과 요약/카드/수치로 노출되는지 기록한다.
 5. **`x_interfacePlan` 작성** — 화면 장르(`flow`/`browse`/`detail`/`form`/`result` 등), primary task, 사용자 결정/입력, 정보 위계, `visual_order`, progress 위치, CTA 위치, 선택/입력 패턴, 텍스트 measure 정책을 먼저 정한다. 이 단계는 “어떤 컴포넌트를 쓸지”보다 “어떤 인터페이스 문법이 맞는지”를 결정한다.
 6. **상태·인터랙션 매트릭스 작성** — 선택/입력/분기/로딩이 있는 화면은 `x_stateMatrix`와 `x_interactions`를 작성한다. `x_interactions.tag` 허용값은 `tap`, `interactive`, `sync`, `enabled`, `loading`, `modal`, `state`, `nav`다. 예: 전체동의는 `interactive + sync`, CTA 활성 조건은 `enabled`, 약관 전문은 `tap + modal`, 처리중 화면은 `loading + nav`로 기록한다.
-7. **Pattern Fit 점검** — 먼저 `packages/screens/catalog/index.json`에서 기존 어휘와 page pattern을 확인한 뒤, `x_interfacePlan`과 상태/인터랙션 매트릭스를 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
+7. **Pattern Fit 점검** — 먼저 `packages/screen-catalog/catalog/index.json`에서 기존 어휘와 page pattern을 확인한 뒤, `x_interfacePlan`과 상태/인터랙션 매트릭스를 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
 8. **`x_screenContract` 작성** — v2 `screen_contract` / `layout_contract` / `areas` / `design_system_contract`로 화면 슬롯, 레이아웃 소유권, 사용 컴포넌트 어휘를 고정한다. 이 단계에서 `AppScreen`/`BottomSheet`, `ContentSection`, molecule/organism 사용 여부를 결정하되, 결정 근거는 `x_uxStage`, `x_interfacePlan`, `x_stateMatrix`, `x_interactions`와 연결되어야 한다.
 9. **SDUI `data`와 `children` 작성** — `RenderableScreenSpecV1`의 `data`에는 화면 fixture를, `children`에는 공식 SDUI schema의 `SDUINode[]`에 가까운 렌더 트리를 둔다. `type`은 등록된 template/organism/molecule/atom 이름만 사용한다.
 10. **Heuristic/Audit Review** — 렌더 구현 전/후에 인터페이스 품질 체크를 수행한다. full-width caption 남용, 과도한 카드화, progress가 본문에 섞임, CTA가 required state와 분리됨, 선택지가 문서형 row로 평평해짐, primary task가 첫 viewport에서 보이지 않음, legal notice가 target area 없이 누락됨, `x_interactions`의 enabled 조건이 CTA 상태와 분리됨 같은 문제를 확인한다.
-11. **active 파일 생성** — `packages/screens/spec/active/<route-id>.json`에는 `ScreenSpecV2` 계약을, `packages/screens/spec/active/<route-id>.sdui.json`에는 `RenderableScreenSpecV1`을 둔다. `.sdui.json`의 `x_screenContract`는 `.json` 계약과 같은 내용을 가져야 한다.
-12. **registry 등록** — `packages/screens/src/index.ts`의 `screens`에 route를 추가하고, `packages/screens/src/active-specs.ts`에 contract spec과 renderable spec을 import/export한다. `packages/screens/spec/active/_manifest.json`의 `screens`와 `render_spec_pilots`도 같이 갱신한다.
+11. **active 파일 생성** — `packages/screen-specs/spec/active/<route-id>.json`에는 `ScreenSpecV2` 계약을, `packages/screen-specs/spec/active/<route-id>.sdui.json`에는 `RenderableScreenSpecV1`을 둔다. `.sdui.json`의 `x_screenContract`는 `.json` 계약과 같은 내용을 가져야 한다.
+12. **registry 등록** — pure Screen 정보는 `@screen/registry`가 제공하는 Screen 모델(id/route/label/group/status/spec id)과 맞아야 한다. 화면 목록은 `packages/screen-registry/src/index.ts`에 등록하고, contract/renderable spec import는 `packages/screen-specs/src/active-spec-list.ts`에 추가한다. 문서/정책서 도출 정보는 Screen에 넣지 않고 `@policy/authoring`에서 추적한다. `packages/screen-specs/spec/active/_manifest.json`의 `screens`와 `render_spec_pilots`도 같이 갱신한다.
 13. **렌더 구현** — `apps/mobile/src/app/<route-id>/page.tsx`는 `activeRenderableScreenSpecs["<route-id>"]`를 읽고 route-local `_sdui-renderer.tsx` 또는 공용 renderer로 넘긴다. 필요한 도메인 UI는 `apps/mobile/src/components/organisms/<domain>/`에 두되, 반복 조합은 먼저 `molecules/` 후보인지 본다.
 14. **검증** — `npm run lint:mobile`, `npm run lint:preview`, `npm run build:mobile`, `npm run build:preview`를 통과시킨다. preview는 mobile iframe으로 확인한다.
 
@@ -659,12 +671,13 @@ Heuristic Review 룰 (적용 시 `x_heuristicReview.applied_rules`에 결과/근
 - 파일럿은 `RenderableScreenSpecV1` 타입과 `getRenderableScreenSpecIssues` 검증 함수를 통과해야 한다.
 
 생성 산출물 체크리스트:
-- `packages/screens/spec/active/<domain>/_pagination/<policy-id>.json` (정책서당 1회 작성·갱신, B-SSOT)
-- `packages/screens/spec/active/<route-id>.json`
-- `packages/screens/spec/active/<route-id>.sdui.json` (`x_pagination` 슬라이스 포함, `_canonical_hash` 박음)
-- `packages/screens/src/index.ts`
-- `packages/screens/src/active-specs.ts`
-- `packages/screens/spec/active/_manifest.json`
+- `packages/screen-specs/spec/active/<domain>/_pagination/<policy-id>.json` (정책서당 1회 작성·갱신, B-SSOT)
+- `packages/screen-specs/spec/active/<route-id>.json`
+- `packages/screen-specs/spec/active/<route-id>.sdui.json` (`x_pagination` 슬라이스 포함, `_canonical_hash` 박음)
+- `packages/screen-registry/src/index.ts`
+- `packages/policy-authoring/src/index.ts`
+- `packages/screen-specs/src/active-spec-list.ts`
+- `packages/screen-specs/spec/active/_manifest.json`
 - `apps/mobile/src/app/<route-id>/page.tsx`
 - 필요 시 `apps/mobile/src/app/<route-id>/_sdui-renderer.tsx`
 - 필요 시 `apps/mobile/src/components/organisms/<domain>/`
@@ -728,8 +741,9 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-30 | `Placeholder`를 WDS `Thumbnail` 기반으로 변경 — 기존 w/h/label 호출 시그니처는 유지하고 미정 이미지 자리도 Thumbnail 표면으로 표현 |
 | 2026-04-30 | TU 전용 tone island 흡수 — `handoff-tu-tone.css` 의존 제거, TU organisms를 WDS `Typography`/`Card`와 `SectionCard`/`InfoList`/`PromoBlock` 조합으로 재작성, 페이지 배경은 `semantic.surface.page.*`로 수렴 |
 | 2026-04-30 | preview/mobile 모노레포 1차 분리 — `apps/mobile`은 WDS 모바일 화면, `apps/preview`는 shadcn 프리뷰 셸로 분리. preview는 mobile을 iframe으로만 소비 |
-| 2026-04-30 | screen registry/spec SSOT 통합 — `packages/screens` 신설. active registry는 `src/index.ts`, active spec은 `spec/active/` 아래로 이동. mobile/preview 하드코딩 목록과 mobile generated registry 제거 |
-| 2026-04-30 | screen generation benchmark SSOT 추가 — `packages/screens/src/benchmark.ts`에 디자인/기획 평가 항목, API refs, 1~5 scoring hint 정의 |
+| 2026-04-30 | screen registry/spec SSOT 통합 — active registry와 active spec을 패키지 SSOT로 이동. mobile/preview 하드코딩 목록과 mobile generated registry 제거 |
+| 2026-05-07 | screens facade 제거. registry/spec/evaluation/catalog를 `@screen/registry`, `@screen/specs`, `@screen/evaluation`, `@screen/catalog`로 분리 |
+| 2026-04-30 | screen generation benchmark SSOT 추가 — `packages/screen-evaluation/src/benchmark.ts`에 디자인/기획 평가 항목, API refs, 1~5 scoring hint 정의 |
 | 2026-04-30 | `TextBlock` 추가 — WDS Typography 기반 `text`/`lines`, `maxLines`, `overflow="truncate"` 지원. 현재 공개 진입점은 `@pxds/pxds-components/typography` |
 | 2026-04-30 | 홈 텍스트 전면 TextBlock 적용 후 기본 역할 variant로 승격 — `displayTitle`/`sectionLabel`/`contentTitle`/`listTitle`/`supportText`/`meta`/`assistive`/`price`/`rating`/`promo*`를 WDS Typography 조합으로 고정하고 raw banner font/letter-spacing 제거 |
 | 2026-04-30 | bottom-sheet template API 도입 — `BottomSheetRoot`/`BottomSheetBackdrop`/`BottomSheetContent`/`BottomSheet`로 WDS Modal, dimmer, content 책임을 분리. 기존 `organisms/global`의 Backdrop/BottomSheet 제거 |

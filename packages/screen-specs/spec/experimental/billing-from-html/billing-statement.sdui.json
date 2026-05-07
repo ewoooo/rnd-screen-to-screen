@@ -1,0 +1,306 @@
+{
+	"version": "1.0.0",
+	"minRendererVersion": "0.1.0",
+	"minComponentsVersion": "0.1.0",
+	"metadata": {
+		"id": "billing-statement",
+		"name": "요금안내서 조회",
+		"route": "/billing-statement",
+		"domain": "billing",
+		"type": "page",
+		"status": "skeleton-from-html"
+	},
+	"theme": {
+		"color": {
+			"primary": "semantic.primary.normal",
+			"page": "semantic.surface.page.normal"
+		}
+	},
+	"data": {
+		"_extraction_status": "skeleton",
+		"_hint": "Fixture는 HTML에서 자동 추출되지 않음. process step 기반으로 사람 작성."
+	},
+	"children": [
+		{
+			"type": "PLACEHOLDER",
+			"id": "billing-statement-placeholder-children",
+			"meta": {
+				"_extraction_status": "skeleton",
+				"_hint": "HTML 추출은 화면 children을 자동 생성하지 않음. 아래 process step을 기반으로 사람이 SDUI 트리 작성.",
+				"route_type": "browse",
+				"primary_task": "요금안내서 조회 및 재발행 요청 시작",
+				"process_steps": [
+					{
+						"process_id": "PR-BIL-CHK-005-01",
+						"name": "요금안내서 조회",
+						"description": "청구 확인자가 청구월별 요금안내서를 조회하고 수신 여부, 발송일, 수신 방식, 열람 가능 상태를 확인한다.",
+						"related_functions": [
+							"청구 대상·권한 조회",
+							"요금안내서 조회·재발행",
+							"개인정보·금융정보 마스킹"
+						],
+						"related_policies": [
+							"요금안내서·증빙 발급 정책",
+							"개인정보·금융정보 보호 정책"
+						]
+					},
+					{
+						"process_id": "PR-BIL-CHK-005-02",
+						"name": "요금안내서 재발행 요청",
+						"description": "청구 확인자가 동일 청구월 또는 과거 청구월의 요금안내서 재발행을 요청하고 발급 가능 여부를 확인한다.",
+						"related_functions": [
+							"요금안내서 조회·재발행",
+							"인증·동의 처리",
+							"연계 요청·결과 수신",
+							"처리 이력·감사 로그 저장"
+						],
+						"related_policies": [
+							"요금안내서·증빙 발급 정책",
+							"개인정보·금융정보 보호 정책",
+							"알림·이력 저장 정책"
+						]
+					}
+				]
+			}
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/experimental/billing-from-html/_pagination/billing-chk.json",
+		"_canonical_hash": "7db68f72452a020c65d70ba4f0c403fef93ca4a2a085cd934df7f27fd6ac258d",
+		"policy_id": "billing-chk",
+		"route_id": "billing-statement",
+		"step_fraction": "5/8",
+		"predecessor": null,
+		"successor": "billing-statement-result",
+		"transitions": [
+			{
+				"from": "billing-statement",
+				"to": "billing-statement-result",
+				"trigger": "system",
+				"guard": "reissue_request_submitted"
+			}
+		]
+	},
+	"x_policyExtract": {
+		"source": {
+			"type": "policy",
+			"refs": [
+				"PR-BIL-CHK-005-01",
+				"PR-BIL-CHK-005-02",
+				"docs/정책서-Full-청구관리및요금수납_정책서.html#US-BIL-CHK-005"
+			]
+		},
+		"process": {
+			"id": "PR-BIL-CHK-005-01,02",
+			"name": "요금안내서 조회 + 요금안내서 재발행 요청",
+			"cluster": "US-BIL-CHK-005",
+			"actor": "청구 확인자",
+			"entry_condition": "청구 확인자가 청구월별 요금안내서를 조회하고 수신 여부, 발송일, 수신 방식, 열람 가능 상태를 확인한다.",
+			"exit_condition": "청구 확인자가 동일 청구월 또는 과거 청구월의 요금안내서 재발행을 요청하고 발급 가능 여부를 확인한다.",
+			"predecessor": [],
+			"successor": [
+				"billing-statement-result"
+			],
+			"related_functions": [
+				"청구 대상·권한 조회",
+				"요금안내서 조회·재발행",
+				"개인정보·금융정보 마스킹",
+				"인증·동의 처리",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			],
+			"related_policies": [
+				"요금안내서·증빙 발급 정책",
+				"개인정보·금융정보 보호 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"purpose": "청구 확인자가 청구월별 요금안내서를 조회하고 수신 여부, 발송일, 수신 방식, 열람 가능 상태를 확인한다.",
+		"system_inputs_to_user": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from related_functions and process step description. HTML structure does not encode this directly.",
+			"candidates": [
+				"청구 대상·권한 조회",
+				"요금안내서 조회·재발행",
+				"개인정보·금융정보 마스킹",
+				"인증·동의 처리",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			]
+		},
+		"user_inputs": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from process step description and route.primary_task."
+		},
+		"system_outputs": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Synthesize from process step + related_functions output side.",
+			"candidates": [
+				"청구 대상·권한 조회",
+				"요금안내서 조회·재발행",
+				"개인정보·금융정보 마스킹",
+				"인증·동의 처리",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			]
+		},
+		"branches": {
+			"_extraction_status": "needs-cross-ref-section-6",
+			"_hint": "Branches/guards live in section 6. 정책 정의 entries referenced via related_policies.",
+			"seed_from_policies": [
+				"요금안내서·증빙 발급 정책",
+				"개인정보·금융정보 보호 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"exceptions": {
+			"_extraction_status": "needs-cross-ref-section-6",
+			"_hint": "Exceptions live in section 6 policy entries (often POL-*-EXCEPTION rows).",
+			"seed_from_policies": [
+				"요금안내서·증빙 발급 정책",
+				"개인정보·금융정보 보호 정책",
+				"알림·이력 저장 정책"
+			]
+		},
+		"design_signals": {
+			"_extraction_status": "needs-synthesis",
+			"_hint": "Derive from primary_task + route.type (browse/detail/selector/result).",
+			"route_type": "browse"
+		},
+		"evidence_refs": [
+			{
+				"claim": "요금안내서 조회",
+				"process_id": "PR-BIL-CHK-005-01",
+				"uc_id": "US-BIL-CHK-005",
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-005-01",
+				"source_cell": {
+					"document": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+					"section": "4. 프로세스 정의 / 다. 프로세스 상세",
+					"use_case_heading": "5) 요금안내서 조회 및 재발행 (US-BIL-CHK-005)",
+					"table": "프로세스 ID / 프로세스명 / 설명 / 관련 기능 / 관련 정책",
+					"row_id": "PR-BIL-CHK-005-01"
+				},
+				"related_functions": [
+					"청구 대상·권한 조회",
+					"요금안내서 조회·재발행",
+					"개인정보·금융정보 마스킹"
+				],
+				"related_policies": [
+					"요금안내서·증빙 발급 정책",
+					"개인정보·금융정보 보호 정책"
+				],
+				"description": "청구 확인자가 청구월별 요금안내서를 조회하고 수신 여부, 발송일, 수신 방식, 열람 가능 상태를 확인한다."
+			},
+			{
+				"claim": "요금안내서 재발행 요청",
+				"process_id": "PR-BIL-CHK-005-02",
+				"uc_id": "US-BIL-CHK-005",
+				"html_anchor": "docs/정책서-Full-청구관리및요금수납_정책서.html#:~:text=PR-BIL-CHK-005-02",
+				"source_cell": {
+					"document": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+					"section": "4. 프로세스 정의 / 다. 프로세스 상세",
+					"use_case_heading": "5) 요금안내서 조회 및 재발행 (US-BIL-CHK-005)",
+					"table": "프로세스 ID / 프로세스명 / 설명 / 관련 기능 / 관련 정책",
+					"row_id": "PR-BIL-CHK-005-02"
+				},
+				"related_functions": [
+					"요금안내서 조회·재발행",
+					"인증·동의 처리",
+					"연계 요청·결과 수신",
+					"처리 이력·감사 로그 저장"
+				],
+				"related_policies": [
+					"요금안내서·증빙 발급 정책",
+					"개인정보·금융정보 보호 정책",
+					"알림·이력 저장 정책"
+				],
+				"description": "청구 확인자가 동일 청구월 또는 과거 청구월의 요금안내서 재발행을 요청하고 발급 가능 여부를 확인한다."
+			}
+		]
+	},
+	"x_interfacePlan": {
+		"_extraction_status": "draft-from-route-type",
+		"_hint": "Route.type → genre 자동 매핑. Heuristic Review 통과 위해 사람 검수 필요.",
+		"genre": "browse",
+		"primary_task": "요금안내서 조회 및 재발행 요청 시작",
+		"info_hierarchy": [
+			"hero",
+			"list",
+			"action"
+		],
+		"cta_location": "inline",
+		"progress_location": "none",
+		"sectioning": "multi-card",
+		"copy_policy": {
+			"caption_measure": "short",
+			"avoid_full_width_caption": true
+		}
+	},
+	"x_screenContract": {
+		"_extraction_status": "draft-from-route-type",
+		"_hint": "기본 shell + slots + layout_contract. design_system_contract.allowed_components는 사람 검수 필수.",
+		"shell": {
+			"template": "AppScreen",
+			"leading": "back",
+			"has_top": true,
+			"has_bottom": false
+		},
+		"slots": {
+			"top": [
+				"GlobalNavigationHeader"
+			],
+			"content": [
+				"ContentList"
+			],
+			"bottom": []
+		},
+		"layout_contract": {
+			"content_inset": "default",
+			"vertical_rhythm": "ContentList var(--spacing-4)",
+			"bleed_allowed": false
+		},
+		"areas": [
+			{
+				"name": "primary",
+				"role": "primary-task-anchor",
+				"layout": {
+					"trailing_semantic": null
+				},
+				"note": "PLACEHOLDER — process step description 기반으로 사람 작성"
+			}
+		],
+		"design_system_contract": {
+			"allowed_components": [
+				"AppScreen",
+				"ContentList",
+				"ContentSection",
+				"InfoList",
+				"SectionCard",
+				"NoticeBlock",
+				"PromoBlock",
+				"PrimaryCTABar"
+			],
+			"allowed_escape_hatches": []
+		},
+		"_seed_evidence": {
+			"related_functions": [
+				"청구 대상·권한 조회",
+				"요금안내서 조회·재발행",
+				"개인정보·금융정보 마스킹",
+				"인증·동의 처리",
+				"연계 요청·결과 수신",
+				"처리 이력·감사 로그 저장"
+			],
+			"related_policies": [
+				"요금안내서·증빙 발급 정책",
+				"개인정보·금융정보 보호 정책",
+				"알림·이력 저장 정책"
+			]
+		}
+	},
+	"x_heuristicReview": {
+		"_extraction_status": "skeleton",
+		"_hint": "Heuristic Review는 사람이 작성한 children/screenContract 위에서만 의미 있음. skeleton 단계에서는 빈 상태.",
+		"applied_rules": []
+	}
+}

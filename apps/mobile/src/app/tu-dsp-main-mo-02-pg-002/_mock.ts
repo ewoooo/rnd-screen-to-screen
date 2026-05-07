@@ -1,4 +1,4 @@
-// Spec: packages/screens/spec/active/tu-dsp-main-mo-02-pg-002.json
+// Spec: packages/screen-specs/spec/active/tu-dsp-main-mo-02-pg-002.json
 // 접근권한 안내 (앱 최초 실행 시 OS 권한 요청 전 안내 화면)
 // SPEC-MAIN-16 권한 항목 리스트 / SPEC-MAIN-17 페이지 닫힘 + 상태값 반영
 

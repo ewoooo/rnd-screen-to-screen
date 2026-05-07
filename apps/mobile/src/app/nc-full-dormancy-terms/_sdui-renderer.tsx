@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -12,7 +12,7 @@ import {
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type FlowData = { step: number; total: number; progress: string };
 type HeroData = { titleLines: readonly string[]; description: string };
@@ -40,12 +40,9 @@ export function NcFullDormancyTermsScreen({
 	const changeNotice = readData<NoticeData>(spec, "changeNotice");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const initialMissing = useMemo(
-		() =>
-			terms.items.filter((item) => item.required && !item.defaultChecked)
-				.length,
-		[terms.items],
-	);
+	const initialMissing = terms.items.filter(
+		(item) => item.required && !item.defaultChecked,
+	).length;
 	const [missing, setMissing] = useState(initialMissing);
 	const blocked = missing > 0;
 	const dynamicEyebrow = blocked

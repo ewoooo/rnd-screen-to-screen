@@ -1,0 +1,61 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "active",
+		"route": "/billing-detail",
+		"source": "policy-driven",
+		"policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.md",
+		"policy_section": "4. US-BIL-CHK-002 / PR-BIL-CHK-002-01,02",
+		"pagination_ref": "packages/screen-specs/spec/active/billing/_pagination/billing-chk.json"
+	},
+	"screen": {
+		"id": "billing-detail",
+		"name": "청구 상세 및 변동 사유",
+		"domain": "billing",
+		"use_case": "US-BIL-CHK-002",
+		"process_id": "PR-BIL-CHK-002-01,02",
+		"step_fraction": "2/8",
+		"type": "page"
+	},
+	"x_interfacePlan": {
+		"genre": "detail",
+		"primary_task": "청구 항목별 금액과 전월 대비 변동 사유 확인",
+		"info_hierarchy": ["summary (총액)", "detail (항목 InfoList)", "supporting (변동 사유 NoticeBlock)"],
+		"cta_location": "none",
+		"progress_location": "none",
+		"sectioning": "multi-card",
+		"copy_policy": { "caption_measure": "short", "avoid_full_width_caption": true },
+		"rail_policy": { "owner": "ContentRail", "route_margin": "forbidden" }
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "patterns": ["GlobalNavigationHeader"], "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["SummaryCard", "SectionCard", "InfoList", "NoticeBlock"] },
+			"bottom": { "owner": "none", "patterns": [], "flow": "none" }
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "spacing-4",
+		"content_gap_owner": "ContentList",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": [],
+		"content_rail_owner": "ContentRail"
+	},
+	"areas": [
+		{ "id": "top", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["GlobalNavigationHeader"], "layout": { "leading": "back", "title": "청구 상세" }, "content_role": "chrome" },
+		{ "id": "total", "slot": "content", "pattern": "molecules/SummaryCard", "uses": ["SummaryCard"], "content_role": "primary-summary" },
+		{ "id": "items", "slot": "content", "pattern": "molecules/SectionCard", "uses": ["SectionCard", "InfoList"], "layout": { "trailing_semantic": "value" }, "content_role": "detail-list" },
+		{ "id": "delta", "slot": "content", "pattern": "molecules/NoticeBlock", "uses": ["NoticeBlock"], "content_role": "supporting-notice" }
+	],
+	"design_system_contract": {
+		"templates": ["AppScreen", "AppScreenContent", "ContentOutlet", "ContentList", "ContentSection"],
+		"organisms": ["global"],
+		"molecules": ["SummaryCard", "SectionCard", "InfoList", "NoticeBlock"],
+		"atoms": ["TextBlock"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

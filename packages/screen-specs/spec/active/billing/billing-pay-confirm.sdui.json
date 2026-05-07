@@ -1,0 +1,122 @@
+{
+	"version": "1.0.0", "minRendererVersion": "0.1.0", "minComponentsVersion": "0.1.0",
+	"metadata": { "id": "billing-pay-confirm", "name": "즉시 납부 확인", "route": "/billing-pay-confirm", "domain": "billing", "type": "page", "status": "spec-only" },
+	"theme": { "color": { "primary": "semantic.primary.normal", "page": "semantic.surface.page.normal" } },
+	"data": {
+		"flow": { "useCase": "US-BIL-PAY-002", "name": "납부", "step": 2, "total": 8, "progress": "납부 2/8" },
+		"hero": { "titleLines": ["이대로 납부할까요?"], "description": "결제 승인을 요청하면 변경할 수 없어요. 금액·납부수단을 다시 한 번 확인해 주세요." },
+		"summary": { "title": "납부 정보", "line": "010-1234-5678", "period": "2026년 4월 청구", "amount": "78,400원" },
+		"info": {
+			"label": "납부수단·명의",
+			"items": [
+				{ "id": "method", "label": "납부수단", "value": "신용카드 (****-****-****-1234)" },
+				{ "id": "owner", "label": "명의자", "value": "본인 명의" },
+				{ "id": "approval", "label": "승인 한도", "value": "정상 사용 가능" }
+			]
+		},
+		"continue": { "eyebrow": "결제 승인을 요청하면 결과가 안내돼요", "primaryAction": "결제 확인" }
+	},
+	"children": [
+		{ "type": "AppScreen", "id": "screen.billing-pay-confirm", "componentVersion": "0.1.0",
+			"props": {
+				"top": { "type": "GlobalNavigationHeader", "id": "slot.top", "props": { "title": "납부 확인", "leading": "back", "progressBind": "flow.progress", "progressTotal": 8, "progressStep": 2 } },
+				"bottom": { "type": "StickyActionBar", "id": "area.continue", "props": { "bind": "continue", "primaryDisabledWhen": "submission.inflight == true" } }
+			},
+			"children": [
+				{ "type": "ContentSection", "id": "area.hero", "children": [
+					{ "type": "TextBlock", "id": "hero.title", "props": { "bind": "hero.titleLines", "variant": "displayTitle", "overflow": "wrap" } },
+					{ "type": "ContentRail", "id": "hero.description.rail", "props": { "rail": "measure", "measure": "body" }, "children": [
+						{ "type": "TextBlock", "id": "hero.description", "props": { "bind": "hero.description", "variant": "bodySubtle", "maxLines": 3, "overflow": "wrap" } }
+					] }
+				] },
+				{ "type": "ContentSection", "id": "area.summary", "children": [
+					{ "type": "SummaryCard", "id": "summary.card", "props": { "bind": "summary", "layout": { "title": "summary.line", "meta": ["summary.period", "summary.amount"] } } }
+				] },
+				{ "type": "ContentSection", "id": "area.info", "children": [
+					{ "type": "TextBlock", "id": "info.label", "props": { "bind": "info.label", "variant": "sectionLabel" } },
+					{ "type": "InfoList", "id": "info.list", "props": { "bind": "info", "trailingSemantic": "value" } }
+				] }
+			]
+		}
+	],
+	"x_pagination": {
+		"_canonical": "packages/screen-specs/spec/active/billing/_pagination/billing-pay.json",
+		"_canonical_hash": "d3a099698e95beeaf0f5e2e00d3b1d875602fa12e9974510e51afeef4f6a64d3",
+		"policy_id": "billing-pay", "route_id": "billing-pay-confirm", "step_fraction": "2/8",
+		"predecessor": "billing-pay-method-auth", "successor": "billing-pay-result",
+		"transitions": [{ "to": "billing-pay-result", "trigger": "primary_cta", "guard": "approval_request_submitted" }]
+	},
+	"x_policyExtract": {
+		"source": { "type": "policy", "refs": ["PR-BIL-PAY-002-01", "docs/정책서-Full-청구관리및요금수납_정책서.md#L5060-L5275"] },
+		"process": {
+			"id": "PR-BIL-PAY-002-01", "name": "즉시 납부 요청", "cluster": "US-BIL-PAY-002 즉시 납부 실행 2/8",
+			"actor": "납부 실행자, 결제 기관",
+			"entry_condition": "납부수단 인증·동의 완료", "exit_condition": "결제 승인 요청 송신 완료",
+			"predecessor": ["PR-BIL-PAY-001-03"], "successor": ["PR-BIL-PAY-002-02"],
+			"related_functions": ["FN-BIL-PAY-001 납부 대상·금액 확정", "FN-BIL-PAY-002 납부수단 검증", "FN-BIL-COM-007 마스킹"],
+			"related_policies": [
+				"POL-BIL-PAY-001-09 납부 금액 변경 시 재산정",
+				"POL-BIL-PAY-002-05 중복 납부 진행 중 제한",
+				"POL-BIL-PAY-002-06 수납대기 상태 제한",
+				"POL-BIL-SEC-001-02 마스킹 대상 금융정보"
+			]
+		},
+		"purpose": "납부 대상·금액·수단·명의를 최종 확인한 뒤 결제 승인 요청을 송신한다.",
+		"system_inputs_to_user": ["납부 대상 회선/청구월/금액", "납부수단 마스킹", "명의자/승인 가능 상태"],
+		"user_inputs": ["내용 확인", "결제 확인 CTA"],
+		"system_outputs": ["결제 승인 요청 ID", "다음 라우팅"],
+		"branches": ["승인 요청 송신 → result", "재산정 필요 시 confirm 재진입"],
+		"exceptions": ["중복 납부 차단", "수납대기 상태 → 기존 결과 우선 확인", "금액 변경 → 재확인"],
+		"design_signals": { "primary_block": "SummaryCard + InfoList(납부수단 마스킹)", "hero_intent": "최종 확인", "cta_intent": "결제 확인" },
+		"evidence_refs": [
+			{ "claim": "process entry/exit", "policy": "PR-BIL-PAY-002-01", "doc_line": "L5063-L5075" },
+			{ "claim": "납부 금액 변경 시 재산정", "policy": "POL-BIL-PAY-001-09", "doc_line": "L4533" },
+			{ "claim": "중복 납부 진행 중 차단", "policy": "POL-BIL-PAY-002-05", "doc_line": "L4593" },
+			{ "claim": "카드 마스킹 끝 4자리", "policy": "POL-BIL-SEC-001-02", "doc_line": "L5267" }
+		]
+	},
+	"x_interfacePlan": {
+		"genre": "form", "primary_task": "납부 정보 최종 확인 후 승인 요청",
+		"user_decision": "확인 후 결제 진행 여부",
+		"hierarchy": { "top": "progress", "lead": "short_action_title", "body": "summary + masked_info", "bottom": "primary_cta" },
+		"copy_policy": { "title_style": "short_action", "description_measure": "body", "avoid_full_width_caption": true },
+		"interaction_pattern": { "main_control": "review_and_confirm", "cta_position": "bottom_chrome", "progress_position": "top_chrome" },
+		"info_hierarchy": ["hero", "summary", "method-info", "action"],
+		"cta_location": "bottom-sticky", "progress_location": "top-bar-thin", "sectioning": "one-card",
+		"quality_checks": ["primary task: 금액·수단이 첫 viewport에 보임", "errorText와 eyebrow 동시 사용 금지(H-5)", "카드 끝 4자리만 표시"]
+	},
+	"x_screenContract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "GlobalNavigationHeader", "flow": "reserved" },
+			"content": { "owner": "ContentList", "patterns": ["ContentSection", "TextBlock", "SummaryCard", "InfoList"] },
+			"bottom": { "owner": "StickyActionBar", "flow": "reserved" }
+		},
+		"layout_contract": { "content_outlet_inline_inset": "spacing-12", "section_inset": "inherit", "content_gap": "spacing-4", "content_gap_owner": "ContentList", "top_bottom_flow": "reserved", "bleed_sections": [], "content_rail_owner": "ContentRail" },
+		"areas": [
+			{ "id": "top-progress", "slot": "top", "pattern": "organisms/global/GlobalNavigationHeader", "uses": ["TopNavigation", "ProgressIndicator"], "layout": { "leading": "back" }, "content_role": "flow-progress" },
+			{ "id": "hero", "slot": "content", "pattern": "ContentSection + TextBlock", "uses": ["ContentSection", "ContentRail", "TextBlock"], "content_role": "primary-copy" },
+			{ "id": "summary", "slot": "content", "pattern": "molecules/SummaryCard", "uses": ["ContentSection", "SummaryCard"], "content_role": "review-summary" },
+			{ "id": "info", "slot": "content", "pattern": "molecules/InfoList", "uses": ["ContentSection", "InfoList", "TextBlock"], "layout": { "trailing_semantic": "value" }, "content_role": "method-info" },
+			{ "id": "continue", "slot": "bottom", "pattern": "molecules/StickyActionBar", "uses": ["Button", "TextBlock"], "content_role": "primary-action", "state_binding": { "primary_disabled_when": "submission.inflight == true", "eyebrow_when_ready": "data.continue.eyebrow" } }
+		],
+		"design_system_contract": {
+			"templates": ["AppScreen", "ContentList", "ContentSection", "ContentRail"],
+			"organisms": ["global"],
+			"molecules": ["SummaryCard", "InfoList", "StickyActionBar"],
+			"atoms": ["TextBlock"],
+			"allowed_escape_hatches": [],
+			"new_vocabulary_required": []
+		}
+	},
+	"x_heuristicReview": {
+		"applied_rules": [
+			{ "rule": "H-1", "result": "pass", "evidence": "form 장르, SummaryCard 1개" },
+			{ "rule": "H-5", "result": "pass", "evidence": "errorText는 inline 형식 검증 없음, eyebrow는 안내만" },
+			{ "rule": "H-7", "result": "pass", "evidence": "step flow 중간 → back" },
+			{ "rule": "H-9", "result": "pass", "evidence": "required * 미사용, CTA disabled로 inflight 상태 표현" },
+			{ "rule": "H-10", "result": "pass", "evidence": "InfoList trailing=value (수단/명의/한도 값)" },
+			{ "rule": "H-12", "result": "pass", "evidence": "ContentSection inset 사용, route margin 보정 없음" }
+		]
+	}
+}

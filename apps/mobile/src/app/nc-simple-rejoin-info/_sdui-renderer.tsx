@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
 	FlowContinueBar,
@@ -17,7 +17,7 @@ import {
 } from "@/components/organisms/nc-simple";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
-import type { RenderableScreenSpecV1 } from "@screen/screens";
+import type { RenderableScreenSpecV1 } from "@screen/specs";
 
 type TopbarData = {
 	title: string;
@@ -64,30 +64,25 @@ export function NcSimpleRejoinInfoScreen({
 	const form = readData<FormData>(spec, "form");
 	const continueData = readData<ContinueData>(spec, "continue");
 
-	const termsItems = useMemo<readonly TermsAgreementItem[]>(
-		() =>
-			[...terms.required, ...terms.optional].map((item) => ({
-				id: item.id,
-				title: item.title,
-				caption: item.caption ?? "",
-				required: item.required,
-			})),
-		[terms.optional, terms.required],
-	);
+	const termsItems: readonly TermsAgreementItem[] = [
+		...terms.required,
+		...terms.optional,
+	].map((item) => ({
+		id: item.id,
+		title: item.title,
+		caption: item.caption ?? "",
+		required: item.required,
+	}));
 	const initialMissing = terms.required.length;
 	const [missingTerms, setMissingTerms] = useState(initialMissing);
 
-	const fields = useMemo<readonly FlowPersonalField[]>(
-		() =>
-			form.fields.map((f) => ({
-				id: f.id,
-				label: f.label,
-				required: f.required,
-				placeholder: f.placeholder,
-				kind: "text" as const,
-			})),
-		[form.fields],
-	);
+	const fields: readonly FlowPersonalField[] = form.fields.map((f) => ({
+		id: f.id,
+		label: f.label,
+		required: f.required,
+		placeholder: f.placeholder,
+		kind: "text" as const,
+	}));
 	const [values, setValues] = useState<Record<string, string | undefined>>({});
 	const errors: Record<string, string | undefined> = {};
 	const missingFields = fields.filter(
