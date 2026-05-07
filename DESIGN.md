@@ -148,23 +148,25 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 
 기본 원칙: 배경은 필요하면 넓게 칠하되, 텍스트와 컨트롤의 시작점은 같은 rail에 맞춘다. 캡션/보조문구는 full-width를 기본으로 보지 않고 `measure` 또는 전용 copy molecule로 행폭을 제한한다.
 
-## 색 — 자체 토큰
+## 시각 토큰 — runtime SSOT
 
-WDS 토큰에 대응되지 않는 앱 표면 보조 토큰. 브랜드 컬러는 별도 토큰을 두지 않고 WDS `semantic.primary.*` 를 사용한다. SSOT는 `apps/mobile/src/lib/brand-tokens.ts`.
+`@pxds/pxds-tokens`가 컴포넌트 스타일링에 쓰이는 런타임 시각 토큰 값의 SSOT다. 원천은 `@pxds/pxds-tokens/registry/wds-token-registry.json`이며, CSS 소비 진입점은 `@pxds/pxds-tokens/tokens.css`다. 이 문서는 토큰 경로와 용도만 기록하고 raw 값은 베이크하지 않는다.
 
-| 상수 | 값 | 용도 |
+| 토큰 경로 / alias | CSS var | 용도 |
 |---|---|---|
-| `semantic.primary.*` | WDS primary | CTA, AI 텍스트, GNB active |
-| `semanticSurface.page.normal` | `#ffffff` | AppScreenContent 페이지 배경 |
-| `semanticSurface.page.semi` | `rgba(255, 255, 255, 0.95)` | sticky/overlay 반투명 배경 |
-| `GNB_BORDER` | `#ecf1ff` | GNB 상단 구분선 |
-| `CARD_BG` | `var(--semantic-background-normal-normal)` | 카드 |
-| `CARD_BORDER` | `var(--semantic-line-solid-alternative)` | 카드 테두리 |
-| `CARD_RADIUS` | `24` | 카드 radius |
-| `CARD_SHADOW` | `none` | 카드 shadow 제거 |
-| `OFFERING_BG` | `rgba(253, 253, 254, 0.5)` | offering banner |
-| `OFFERING_BORDER` | `rgba(255, 255, 255, 0.5)` | offering banner |
-| `BADGE_BG` | `#f4f5fa` | StatBadge / PillChip violet |
+| `semantic.primary.*` | `--semantic-primary-*` | CTA, AI 텍스트, GNB active |
+| `semantic.surface.page.normal` | `--semantic-surface-page-normal` | AppScreenContent 페이지 배경 |
+| `semantic.surface.page.semi` | `--semantic-surface-page-semi` | sticky/overlay 반투명 배경 |
+| `project.brand.tLogo` | `--pxds-brand-t-logo` | T logo fill |
+| `project.line.gnbBorder` | `--pxds-line-gnb-border` | GNB 상단 구분선 |
+| `project.surface.card.*` | `--pxds-surface-card-*` | home card 표면 |
+| `project.surface.offering.*` | `--pxds-surface-offering-*` | offering banner 표면 |
+| `project.surface.badge.background` | `--pxds-surface-badge-background` | StatBadge / PillChip 표면 |
+| `project.bottomSheet.backdrop` | `--pxds-bottom-sheet-backdrop` | BottomSheet dimmer |
+| `project.typography.statusBar.fontSize` | `--pxds-typography-status-bar-font-size` | StatusBar escape typography |
+| `project.typography.placeholderIcon.fontSize` | `--pxds-typography-placeholder-icon-font-size` | Placeholder icon escape typography |
+
+`@pxds/pxds-tokens/brand`의 `CARD_*`, `OFFERING_*`, `BADGE_BG`, `GNB_BORDER`, `FONT` 등은 기존 호출부 호환 alias다. 새 값은 registry에 먼저 추가하고 CSS var 또는 semantic/project token path로 소비한다.
 
 ## Layout primitive 어휘 — Box / Flex / HStack / VStack
 
@@ -184,7 +186,7 @@ WDS 토큰에 대응되지 않는 앱 표면 보조 토큰. 브랜드 컬러는 
 | `block` | 24 | 블록과 블록 사이 |
 | `section` | 32 | 큰 섹션 분할 |
 
-수치 SSOT는 `registry/wds-token-registry.json`의 `spacing` tier. 이 표는 매핑 alias이므로 px 값이 변하면 `system/layout/tokens.ts`만 갱신.
+수치 SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`의 `spacing` tier. 이 표는 의미 alias이므로 px 값이 변하면 registry를 먼저 갱신하고 generated CSS와 `packages/pxds-tokens/src/spacing.ts` alias를 동기화한다.
 
 ### 컴포넌트 prop
 
@@ -209,7 +211,7 @@ WDS 토큰에 대응되지 않는 앱 표면 보조 토큰. 브랜드 컬러는 
 
 ## WDS 토큰 — 직접 var() 소비
 
-수치 SSOT는 `registry/wds-token-registry.json`. 이 문서나 다른 메모에 **베이크 금지**.
+수치 SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`. 이 문서나 다른 메모에 **베이크 금지**.
 
 광범위 사용 예:
 - `var(--semantic-label-{normal, neutral, alternative})`

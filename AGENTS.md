@@ -50,7 +50,7 @@
 - 화면은 `Banner`, `HomeHeroBlock`, `HomeInfoBlock`, `SearchResultList` 같은 콘텐츠 항목을 `AppScreen` children으로 직접 나열한다
 
 ### 홈 블록 — compound + preset
-`HomeBlock`은 홈 도메인의 compound root다. WDS `Card`를 직접 쓰되, 홈 카드 표면 토큰(`CARD_*`)은 `organisms/home/tokens.ts` 경유로 공유한다.
+`HomeBlock`은 홈 도메인의 compound root다. WDS `Card`를 직접 쓰되, 홈 카드 표면 토큰은 `@pxds/pxds-tokens`의 semantic/project token 또는 legacy compatibility alias로 소비한다.
 
 - `HomeBlock.Root` — 홈 카드형 표면
 - `HomeBlock.Header` — label/title/sub 헤더 슬롯
@@ -81,10 +81,12 @@
 - `TextBlock` (`atoms/typography/`) — WDS `Typography` 기반 텍스트 primitive. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책 표현
 
 ### 토큰
-- **PXDS 토큰** — `@pxds/pxds-tokens`가 토큰 SSOT다. 값 계층은 `raw value -> elevation token -> semantic token` 3레이어를 따른다.
-- **WDS theme 병합** — WDS token/theme 값은 별도 alias 패키지로 분산하지 않고 `@pxds/pxds-tokens`에서 흡수·재노출한다. CSS 변수는 `var(--semantic-*)` / `var(--atomic-*)` / `var(--spacing-*)` / `var(--opacity-*)`를 직접 소비할 수 있다.
-- **자체 토큰** — 잔존 자체 토큰은 후속 차수에서 `@pxds/pxds-tokens`의 semantic 계층으로 흡수한다. 새 화면에서 inline token을 새로 만들면 strain 신호로 기록한다.
-- **브랜드 컬러** — 별도 프로젝트 토큰을 두지 않고 WDS `semantic.primary.*` / WDS `Button color="primary"` / `Typography color="semantic.primary.normal"` 로 소비
+- **PXDS 토큰** — `@pxds/pxds-tokens`가 컴포넌트 스타일링에 쓰이는 런타임 시각 토큰 값의 SSOT다. 여기에는 color, spacing, typography scale, radius, shadow, opacity, surface, project extension token이 포함된다. 컴포넌트 어휘/slot/variant 계약의 SSOT는 AGENTS.md/DESIGN.md와 각 컴포넌트 API다.
+- **레지스트리 원천** — 토큰 값의 원천은 `@pxds/pxds-tokens/registry/wds-token-registry.json`이다. generated CSS는 `@pxds/pxds-tokens/tokens.css`로 노출한다.
+- **WDS theme 흡수** — WDS token/theme 값은 별도 alias 패키지로 분산하지 않고 `@pxds/pxds-tokens`에서 흡수·재노출한다. CSS 변수는 `var(--semantic-*)` / `var(--atomic-*)` / `var(--spacing-*)` / `var(--opacity-*)`를 직접 소비할 수 있다.
+- **프로젝트 확장 토큰** — WDS에 없는 런타임 시각 값은 `tiers.project` 또는 `semantic` project extension으로 흡수한다. 앱/패키지 로컬 `*tokens.ts`나 CSS 토큰 파일을 새로 만들지 않는다.
+- **호환 alias** — `@pxds/pxds-tokens/brand`의 `CARD_*`, `OFFERING_*`, `BADGE_BG`, `GNB_BORDER`, `FONT` 등은 legacy compatibility export다. 새 코드는 가능한 CSS var/token path를 직접 사용한다.
+- **브랜드 컬러** — 일반 브랜드/CTA는 WDS `semantic.primary.*` / WDS `Button color="primary"` / `Typography color="semantic.primary.normal"` 로 소비한다. 로고처럼 WDS semantic으로 설명되지 않는 값만 project token으로 둔다.
 - **`semantic.surface.page.*` (프로젝트 확장)** — `--semantic-surface-page-{normal,semi}` CSS var. `AppScreenContent` 페이지 배경. `semanticSurface.page.normal/semi` alias로 소비. SSOT 동일
 
 ## 측정 신호 (strain test)
@@ -123,14 +125,15 @@
 - **WDS 컴포넌트 사용 원칙**. `Button`/`Card`/`Chip`/`ContentBadge`/`Typography`/`Thumbnail`/`RadioGroup` 등을 화면·kit에서 사용할 때는 `@pxds/pxds-components/core`로 통과시킨다. 자체 wrapper(StatBadge·PillChip·MyEditButton·Typography 등)는 호출 시그니처 보존을 위한 얇은 위임만 허용
 - **예외 — 유지하는 자체 layer**:
   - `@pxds/pxds-layout/primitives` (Box·Flex·Float·Grid·HStack·VStack) — semantic spacing 어휘 강제용. WDS 가 동등 토큰-결합 layout primitive를 제공하지 않음
-  - `atoms/feedback/Divider` — Seed 스타일 inset prop 강제용 wrapper
-  - `atoms/typography/TextBlock` — WDS `Typography`에 line break/maxLines 정책을 더한 텍스트 primitive
+  - `@pxds/pxds-components/feedback` — Divider/Placeholder 같은 최소 feedback atom
+  - `@pxds/pxds-components/typography` — WDS `Typography`에 line break/maxLines 정책을 더한 텍스트 primitive
+  - `@pxds/pxds-components/patterns` — 도메인 독립 WDS 조합 패턴. WDS/layout 외 의존이 없는 패턴부터 이곳으로 승격한다
   - `@pxds/pxds-layout/app-screen` — screen root, scroll, sticky 인프라
   - `molecules/` — 도메인 독립 조합 패턴. 내부에서 WDS 사용
   - `organisms/` — 도메인/글로벌 화면 영역. 내부에서 WDS와 molecules 사용
 - **버려진 정책 (이전)**: "와이어프레임 도메인이라 raw + 토큰 조합이 명세 충실성에 더 부합" — Figma 픽셀 충실성을 우선으로 인라인 raw style을 허용하던 규칙. 2026-04-29부로 폐기. 픽셀 단위 충실성을 포기하고 WDS 컴포넌트 모양을 그대로 수용
-- 토큰: `var(--semantic-*)` 직접 소비도 가능하나 가능하면 WDS prop(`color="semantic.label.normal"`)으로 통과. SSOT는 `registry/wds-token-registry.json`
-- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-tokens`, WDS global CSS/Next adapter 같은 패키지 경계에서만 허용한다. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
+- 토큰: `var(--semantic-*)` 직접 소비도 가능하나 가능하면 WDS prop(`color="semantic.label.normal"`)으로 통과. SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`
+- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-tokens`, WDS reset/Next adapter 같은 패키지 경계에서만 허용한다. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
 - `apps/preview/`는 shadcn/Tailwind 프리뷰 도구다. WDS 모바일 화면을 직접 import하지 않고 `@pxds/pxds-preview`의 iframe helper로 띄운다. iframe origin은 `NEXT_PUBLIC_MOBILE_ORIGIN`(기본 `http://localhost:3001`)이다.
 
 ### Mock / 데이터 배치
@@ -252,6 +255,8 @@ templates + screen
 #### `molecules/`
 
 도메인 독립적인 조합 패턴이다. WDS primitive와 atoms를 조합해서 반복 가능한 화면 구조를 만든다.
+
+WDS/layout 외 의존이 없는 공용 패턴은 `@pxds/pxds-components/patterns`가 소유한다. 앱의 `components/molecules/<name>/index.ts`는 점진적 이전을 위한 re-export shim으로만 남길 수 있다.
 
 현재 molecules:
 - `MediaBlock` — 이미지 / placeholder / skeleton이 들어갈 media 슬롯
@@ -502,11 +507,11 @@ product-detail/page.tsx
 - `index.json` — 매니페스트, 진입점
 - `wds-component-registry.json` — 84종
 - `wds-icon-registry.json` — 344개 (`entries[]`에서 `kebab` 또는 `name` 검색)
-- `wds-token-registry.json` — 색·간격·typography 수치 SSOT
+- `@pxds/pxds-tokens/registry/wds-token-registry.json` — 색·간격·typography 수치 SSOT
 - `wds-component-mapping-registry.json` / `wds-component-compound-layout-registry.json`
 
 ### 토큰 / 사이즈 조회 워크플로우
-1. WDS variant 사이즈 → `registry/wds-token-registry.json`의 `tiers.typography` grep
+1. WDS variant 사이즈 → `@pxds/pxds-tokens/registry/wds-token-registry.json`의 `tiers.typography` grep
 2. 색상 → 같은 레지스트리의 `atomic` / `semantic`
 3. 컴포넌트별 prop enum → `node_modules/@wanteddev/wds/dist/components/<name>/types.d.ts`
 4. **이 문서나 다른 메모에 수치 표 베이크 금지** — stale 위험 (실 사례: title2를 20px로 잘못 외우고 작성 → 런타임 28px)
@@ -698,6 +703,8 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-05-07 | layout primitive 패키지 승격 — Box/Flex/Float/Grid/HStack/VStack + spacing token helper를 `@pxds/pxds-layout/primitives`로 이동. `apps/mobile/src/components/atoms/layout`은 re-export shim으로 유지 |
 | 2026-05-07 | primitive atom 패키지 승격 — TextBlock을 `@pxds/pxds-components/typography`, Divider/Placeholder를 `@pxds/pxds-components/feedback`으로 이동. 앱 atoms 경로는 re-export shim으로 유지 |
 | 2026-05-07 | WDS core 흡수 — WDS component/icon re-export를 `@pxds/pxds-components/core`로 분리하고 앱의 WDS component import를 core 진입점으로 전환 |
+| 2026-05-07 | 모바일 공용 패턴 1차 승격 — FilterTabs/FormControls/FormField/MediaBlock/QueryBar/SelectField를 `@pxds/pxds-components/patterns`로 이동하고 앱 molecules 경로는 re-export shim으로 유지 |
+| 2026-05-07 | 모바일 토큰 SSOT 승격 — 앱/패키지 로컬 런타임 토큰 shim을 제거하고 `@pxds/pxds-tokens/registry/wds-token-registry.json`, `@pxds/pxds-tokens/tokens.css`, `@pxds/pxds-tokens/brand`로 흡수 |
 | 2026-05-07 | `apps/figma-export` 제거 — Figma bridge/hook 기능은 `@pxds/pxds-figma` 패키지에 보존하고 실행 앱은 폐기 |
 | 2026-05-07 | preview helper 패키지 분리 — `MobileViewFrame`/`MobilePreviewFrame`을 `@pxds/pxds-preview`로 이동하고 `@pxds/pxds-layout`은 실제 화면 layout runtime만 소유 |
 | 2026-05-07 | `@pxds/pxds-layout` frame portal context 제거 — iframe preview boundary를 공식 격리 경계로 보고, deprecated runtime 대신 AGENTS 기록과 git history로 복구 가능성만 남김 |

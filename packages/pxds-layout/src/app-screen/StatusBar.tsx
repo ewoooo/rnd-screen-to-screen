@@ -1,3 +1,5 @@
+import { STATUS_BAR_FONT_SIZE } from "@pxds/pxds-tokens";
+
 import { StatusBattery, StatusSignal, StatusWifi } from "../status-icons";
 
 /**
@@ -15,7 +17,7 @@ export function StatusBar() {
 				height: 44,
 				paddingInline: "var(--spacing-12)",
 				background: "var(--semantic-background-normal-normal)",
-				fontSize: 15,
+				fontSize: STATUS_BAR_FONT_SIZE,
 				fontWeight: 600,
 				color: "var(--semantic-label-normal)",
 			}}

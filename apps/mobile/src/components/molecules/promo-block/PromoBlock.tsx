@@ -2,7 +2,7 @@ import { Button, ContentBadge } from "@pxds/pxds-components/core";
 
 import { Box, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";
-import { CARD_RADIUS, CARD_SHADOW } from "@/lib/brand-tokens";
+import { CARD_RADIUS, CARD_SHADOW } from "@pxds/pxds-tokens";
 
 import { MediaBlock } from "../media-block";
 

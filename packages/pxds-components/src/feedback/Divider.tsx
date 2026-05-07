@@ -1,27 +1,6 @@
 import { Divider as WdsDivider } from "../core";
+import { type SpacingToken, spacingVar } from "@pxds/pxds-tokens";
 import type { CSSProperties } from "react";
-
-export type SpacingToken =
-	| "row"
-	| "inline"
-	| "stack"
-	| "group"
-	| "inset"
-	| "block"
-	| "section";
-
-const SPACING_PX: Record<SpacingToken, number> = {
-	row: 4,
-	inline: 8,
-	stack: 12,
-	group: 16,
-	inset: 20,
-	block: 24,
-	section: 32,
-};
-
-const spacingVar = (token: SpacingToken): string =>
-	`var(--spacing-${SPACING_PX[token]})`;
 
 type Props = {
 	orientation?: "horizontal" | "vertical";

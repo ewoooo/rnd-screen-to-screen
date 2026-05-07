@@ -54,7 +54,7 @@ export default function Home() {
 				</h1>
 				<p
 					style={{
-						color: "#6b7280",
+						color: "var(--semantic-label-alternative)",
 						fontSize: 12,
 						margin: "4px 0 0",
 					}}
@@ -70,7 +70,7 @@ export default function Home() {
 							fontSize: 12,
 							fontWeight: 600,
 							margin: 0,
-							color: "#9ca3af",
+							color: "var(--semantic-label-assistive)",
 							textTransform: "uppercase",
 							letterSpacing: 0.5,
 						}}
@@ -85,8 +85,11 @@ export default function Home() {
 								style={{
 									padding: "12px 16px",
 									borderRadius: 10,
-									background: group === "tu" ? "#1f2937" : "#111827",
-									color: "#fff",
+									background:
+										group === "tu"
+											? "var(--atomic-coolNeutral-20)"
+											: "var(--atomic-coolNeutral-10)",
+									color: "var(--semantic-static-white)",
 									textDecoration: "none",
 									fontSize: 14,
 									fontWeight: 500,

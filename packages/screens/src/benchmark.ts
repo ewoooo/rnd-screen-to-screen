@@ -360,10 +360,10 @@ export const benchmarkCriteria = [
 		side: "design",
 		label: "Token 순응도",
 		question: "색, 간격, radius, typography가 시스템 토큰/alias로 설명되는가?",
-		apiRefs: ["TextBlockVariant", "SpacingToken", "semanticSurface", "brand-tokens", "wds-token-registry"],
+		apiRefs: ["TextBlockVariant", "SpacingToken", "semanticSurface", "@pxds/pxds-tokens", "wds-token-registry"],
 		evidence: [
 			"spacing uses SpacingToken or var(--spacing-*)",
-			"colors use WDS semantic tokens or documented project aliases",
+			"colors use @pxds/pxds-tokens semantic/project tokens",
 			"typography uses TextBlockVariant/WDS Typography variant+weight",
 			"raw radius/shadow/gradient values are either removed or recorded as escape hatches",
 		],

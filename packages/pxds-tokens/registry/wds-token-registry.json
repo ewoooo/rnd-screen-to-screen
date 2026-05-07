@@ -1,13 +1,13 @@
 {
 	"meta": {
-		"source": "@wanteddev/wds-theme@3.5.0",
-		"source_path": "app/node_modules/@wanteddev/wds-theme/dist/theme/",
-		"package": "@wanteddev/wds-theme",
+		"source": "wanteddev/montage-web packages/wds-theme, absorbed into PXDS",
+		"source_path": "https://github.com/wanteddev/montage-web/tree/main/packages/wds-theme",
+		"package": "@pxds/pxds-tokens",
 		"fetched_at": "2026-04-24",
 		"generator": "app/scripts/generate-token-registry.mjs",
-		"note": "node_modules 기반 자동 추출. 공식 소스(wanteddev/montage-web) 기준 교정 시 재실행.",
+		"note": "PXDS token registry SSOT. WDS 원본 값은 이 패키지로 흡수하고, project extension도 같은 registry에 둔다.",
 		"related_registries": {
-			"components": "./wds-component-registry.json"
+			"components": "../../../registry/wds-component-registry.json"
 		}
 	},
 	"tiers": {
@@ -693,7 +693,7 @@
 				},
 				"surface": {
 					"_project_extension": true,
-					"_note": "프로젝트 확장 — page-level chrome 표면 (Shell/ScreenChrome 배경). CSS var only. lib/brand-tokens.ts의 semanticSurface alias로 소비.",
+					"_note": "프로젝트 확장 — page-level chrome 표면 (Shell/ScreenChrome 배경). CSS var와 @pxds/pxds-tokens semanticSurface alias로 소비.",
 					"page": {
 						"normal": { "light": "#ffffff", "dark": "#ffffff" },
 						"semi": { "light": "rgba(255, 255, 255, 0.95)", "dark": "rgba(255, 255, 255, 0.95)" }
@@ -986,6 +986,56 @@
 				}
 			},
 			"note": "variant은 size/line-height/letter-spacing 세트. weights는 별도 composable modifier."
+		},
+		"project": {
+			"purpose": "PXDS runtime-only project tokens that are not part of the absorbed WDS token vocabulary.",
+			"css_prefix": "--pxds-",
+			"groups": {
+				"brand": {
+					"tLogo": "#3617CE"
+				},
+				"line": {
+					"gnbBorder": "#ecf1ff"
+				},
+				"surface": {
+					"card": {
+						"background": "var(--semantic-background-normal-normal)",
+						"border": "var(--semantic-line-solid-alternative)",
+						"radius": "24px",
+						"shadow": "none"
+					},
+					"offering": {
+						"background": "rgba(253, 253, 254, 0.5)",
+						"border": "rgba(255, 255, 255, 0.5)"
+					},
+					"badge": {
+						"background": "#f4f5fa"
+					}
+				},
+				"bottomSheet": {
+					"backdrop": "rgba(0, 0, 0, 0.42)"
+				},
+				"typography": {
+					"statusBar": {
+						"fontSize": "15px"
+					},
+					"placeholderIcon": {
+						"fontSize": "10px"
+					},
+					"statBadge": {
+						"fontSize": "11px",
+						"fontWeight": "700",
+						"letterSpacing": "-0.44px",
+						"lineHeight": "1.3"
+					},
+					"pillChip": {
+						"fontSize": "12px",
+						"fontWeight": "600",
+						"letterSpacing": "-0.6px",
+						"lineHeight": "1.3"
+					}
+				}
+			}
 		}
 	},
 	"usage_rules": {

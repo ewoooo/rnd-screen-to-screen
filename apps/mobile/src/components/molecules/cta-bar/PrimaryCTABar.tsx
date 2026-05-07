@@ -1,7 +1,7 @@
 import { Button } from "@pxds/pxds-components/core";
 
 import { Box } from "@/components/atoms/layout";
-import { semanticSurface } from "@/lib/brand-tokens";
+import { semanticSurface } from "@pxds/pxds-tokens";
 
 export type CtaTone = "default" | "destructive";
 

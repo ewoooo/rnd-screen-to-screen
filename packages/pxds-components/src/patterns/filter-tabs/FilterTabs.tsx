@@ -1,4 +1,4 @@
-import { Tab, TabList, TabListItem } from "@pxds/pxds-components/core";
+import { Tab, TabList, TabListItem } from "../../core";
 
 type FilterTab = {
 	id: string;

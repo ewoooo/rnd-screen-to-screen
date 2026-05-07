@@ -19,5 +19,5 @@ export {
 	GNB_BORDER,
 	OFFERING_BG,
 	OFFERING_BORDER,
-} from "./tokens";
-export type { FontStyle } from "./tokens";
+} from "@pxds/pxds-tokens";
+export type { FontStyle } from "@pxds/pxds-tokens";

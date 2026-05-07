@@ -3,14 +3,14 @@
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
+	"scripts": {
+		"generate:css": "node scripts/generate-css.mjs"
+	},
 	"sideEffects": ["./src/tokens.css"],
 	"exports": {
 		"./package.json": "./package.json",
 		".": "./src/index.ts",
+		"./registry/wds-token-registry.json": "./registry/wds-token-registry.json",
 		"./tokens.css": "./src/tokens.css"
-	},
-	"dependencies": {
-		"@wanteddev/wds-theme": "^3.5.0",
-		"object-path": "^0.11.8"
 	}
 }

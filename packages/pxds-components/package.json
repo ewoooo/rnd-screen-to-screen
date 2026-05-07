@@ -11,6 +11,7 @@
 		"./core": "./src/core/index.ts",
 		"./core/global.css": "./src/core/global.css",
 		"./feedback": "./src/feedback/index.ts",
+		"./patterns": "./src/patterns/index.ts",
 		"./typography": "./src/typography/index.ts"
 	},
 	"dependencies": {

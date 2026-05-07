@@ -1,3 +1,4 @@
+import { PLACEHOLDER_ICON_FONT_SIZE } from "@pxds/pxds-tokens";
 import type { CSSProperties } from "react";
 
 import { Thumbnail } from "../core";
@@ -50,7 +51,7 @@ export function Placeholder({ w, h, label, style }: Props) {
 							width: "100%",
 							height: "100%",
 							color: "var(--semantic-label-alternative)",
-							fontSize: 10,
+							fontSize: PLACEHOLDER_ICON_FONT_SIZE,
 							fontWeight: 500,
 							background: "var(--semantic-background-normal-alternative)",
 						}}

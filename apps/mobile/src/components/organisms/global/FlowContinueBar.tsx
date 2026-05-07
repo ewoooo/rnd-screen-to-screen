@@ -2,7 +2,7 @@ import { Button } from "@pxds/pxds-components/core";
 
 import { Box, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";
-import { semanticSurface } from "@/lib/brand-tokens";
+import { semanticSurface } from "@pxds/pxds-tokens";
 
 type Props = {
 	eyebrow: string;

@@ -1,1 +1,1 @@
-export { QueryBar } from "./QueryBar";
+export { QueryBar } from "@pxds/pxds-components/patterns";

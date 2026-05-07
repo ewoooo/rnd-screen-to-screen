@@ -11,4 +11,4 @@ export {
 	TextField,
 	TextFieldButton,
 	TextFieldContent,
-} from "@pxds/pxds-components/patterns";
+} from "./FormControls";

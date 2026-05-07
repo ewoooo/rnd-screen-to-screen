@@ -11,7 +11,7 @@ import {
 	TextField,
 	TextFieldButton,
 	TextFieldContent,
-} from "@pxds/pxds-components/core";
+} from "../../core";
 
 export {
 	Checkbox,

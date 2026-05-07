@@ -20,8 +20,8 @@ export function useIsolatedPreviewIframe({
 	referrerPolicy = "no-referrer",
 	...iframeProps
 }: UseIsolatedPreviewIframeOptions) {
+	const iframeKey = [src, sandbox, referrerPolicy].join("|");
 	const isolatedIframeProps = {
-		key: src,
 		title,
 		src,
 		sandbox,
@@ -29,10 +29,11 @@ export function useIsolatedPreviewIframe({
 		referrerPolicy,
 		style: iframeStyle,
 		...iframeProps,
-	} satisfies IframeHTMLAttributes<HTMLIFrameElement> & { key: string };
+	} satisfies IframeHTMLAttributes<HTMLIFrameElement>;
 
 	return {
 		src,
+		iframeKey,
 		iframeProps: isolatedIframeProps,
 	};
 }

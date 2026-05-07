@@ -8,7 +8,7 @@ import {
 	type TextBlockOverflow,
 	type TextBlockVariant,
 } from "@/components/atoms/typography";
-import { CARD_SHADOW } from "@/lib/brand-tokens";
+import { CARD_SHADOW } from "@pxds/pxds-tokens";
 
 import { MediaBlock } from "../media-block";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, IframeHTMLAttributes } from "react";
+import type { CSSProperties, IframeHTMLAttributes, Key } from "react";
 
 import { MobileViewFrame } from "./MobileViewFrame";
 import { useIsolatedPreviewIframe } from "./useIsolatedPreviewIframe";
@@ -40,13 +40,20 @@ export function MobilePreviewFrame({
 		src,
 		title,
 		iframeStyle,
+		sandbox: "allow-scripts allow-forms allow-popups allow-same-origin",
+		referrerPolicy: "strict-origin-when-cross-origin",
 		...iframeProps,
 	});
+	const { key: _ignoredKey, ...safeIframeProps } = isolated.iframeProps as
+		typeof isolated.iframeProps & {
+			key?: Key;
+		};
 
 	return (
 		<MobileViewFrame className={frameClassName} style={viewport.frameStyle}>
 			<iframe
-				{...isolated.iframeProps}
+				key={isolated.iframeKey}
+				{...safeIframeProps}
 				className={["mobile-preview-frame__iframe", iframeClassName]
 					.filter(Boolean)
 					.join(" ")}

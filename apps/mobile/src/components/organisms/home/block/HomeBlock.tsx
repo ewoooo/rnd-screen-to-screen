@@ -1,4 +1,5 @@
 import { Button, Card } from "@pxds/pxds-components/core";
+import { CARD_BG, CARD_BORDER, CARD_RADIUS, CARD_SHADOW } from "@pxds/pxds-tokens";
 import type { CSSProperties, ReactNode } from "react";
 
 import { HStack, VStack } from "@/components/atoms/layout";
@@ -6,7 +7,6 @@ import { Divider } from "@/components/atoms/feedback";
 import { TextBlock } from "@/components/atoms/typography";
 
 import { AiAnnotation } from "../AiAnnotation";
-import { CARD_BG, CARD_BORDER, CARD_RADIUS, CARD_SHADOW } from "../tokens";
 import { HomeBlockHeader } from "./HomeBlockHeader";
 
 /**

@@ -1,10 +1,9 @@
+import { OFFERING_BG, OFFERING_BORDER } from "@pxds/pxds-tokens";
 import type { CSSProperties } from "react";
 
 import { HStack } from "@/components/atoms/layout";
 import { Placeholder } from "@/components/atoms/feedback";
 import { TextBlock } from "@/components/atoms/typography";
-
-import { OFFERING_BG, OFFERING_BORDER } from "../tokens";
 
 type Variant = "top" | "offering";
 
@@ -34,7 +33,7 @@ const STYLES: Record<Variant, VariantStyle> = {
 		container: {
 			background: OFFERING_BG,
 			border: `1px solid ${OFFERING_BORDER}`,
-			borderRadius: 24,
+			borderRadius: "var(--pxds-surface-card-radius)",
 			height: 94,
 			padding: "0 var(--spacing-32)",
 			overflow: "hidden",

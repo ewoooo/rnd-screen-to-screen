@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { type SpacingToken, spacingVar } from "./tokens";
+import { type SpacingToken, spacingVar } from "@pxds/pxds-tokens";
 
 export type SpacingProps = {
 	p?: SpacingToken;

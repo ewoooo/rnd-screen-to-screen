@@ -4,7 +4,7 @@ import { Card, CardContent, CardTitle } from "@pxds/pxds-components/core";
 
 import { HStack, VStack } from "@/components/atoms/layout";
 import { TextBlock } from "@/components/atoms/typography";
-import { CARD_SHADOW } from "@/lib/brand-tokens";
+import { CARD_SHADOW } from "@pxds/pxds-tokens";
 
 type Props = {
 	label?: ReactNode;

@@ -1,1 +1,1 @@
-export { SelectField, type SelectOption } from "./SelectField";
+export { SelectField, type SelectOption } from "@pxds/pxds-components/patterns";

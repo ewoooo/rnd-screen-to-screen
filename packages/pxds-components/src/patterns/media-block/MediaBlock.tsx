@@ -1,4 +1,4 @@
-import { CardThumbnail, ContentBadge, Thumbnail } from "@pxds/pxds-components/core";
+import { CardThumbnail, ContentBadge, Thumbnail } from "../../core";
 import type { CSSProperties } from "react";
 import type { ReactNode } from "react";
 

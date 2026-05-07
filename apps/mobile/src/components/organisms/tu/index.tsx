@@ -17,7 +17,7 @@ import {
 	type InfoListItem,
 } from "@/components/molecules";
 import { ContentSection } from "@/components/templates/app-screen";
-import { CARD_SHADOW } from "@/lib/brand-tokens";
+import { CARD_SHADOW } from "@pxds/pxds-tokens";
 
 export function TuDisplay({
 	children,

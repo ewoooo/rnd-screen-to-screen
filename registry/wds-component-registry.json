@@ -8,7 +8,7 @@
 		"note": "카테고리는 컴포넌트명 기반 추정. MCP 연결 후 공식 카테고리로 교정 필요.",
 		"related_registries": {
 			"icons": "./wds-icon-registry.json",
-			"tokens": "./wds-token-registry.json"
+			"tokens": "../packages/pxds-tokens/registry/wds-token-registry.json"
 		}
 	},
 	"categories": {

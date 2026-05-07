@@ -1,1 +1,1 @@
-export { FormField } from "./FormField";
+export { FormField } from "@pxds/pxds-components/patterns";
