@@ -19,12 +19,13 @@
 │   └── preview/      shadcn 기반 브라우저 프리뷰 셸
 ├── packages/
 │   ├── pxds-tokens/      `@pxds/pxds-tokens` — WDS theme 기반 토큰 SSOT
-│   ├── pxds-components/  `@pxds/pxds-components` — 순수 UI 컴포넌트 + `core/` WDS re-export
+│   ├── pxds-icons/       `@pxds/pxds-icons` — WDS icon adapter + icon registry
+│   ├── pxds-components/  `@pxds/pxds-components` — 순수 UI 컴포넌트 + `core/` WDS component re-export
 │   ├── pxds-layout/      `@pxds/pxds-layout` — 화면/frame/layout runtime
 │   ├── pxds-preview/     `@pxds/pxds-preview` — 모바일 iframe preview/helper
 │   ├── pxds-figma/       `@pxds/pxds-figma` — Figma bridge/hooks/spec authoring
 │   └── screens/          화면 registry + active screen spec SSOT
-├── registry/         WDS SSOT — 컴포넌트 / 아이콘 / 토큰 / 매핑
+├── registry/         WDS/PXDS registry index — 컴포넌트 / 매핑 진입점
 ├── AGENTS.md         ← 이 파일 (운영 규약 + 시스템 메타)
 ├── DESIGN.md         디자인 스펙 (수치, 토큰, 어휘 variant SSOT)
 └── CLAUDE.md         AGENTS.md symlink (Claude 도구 호환)
@@ -77,7 +78,7 @@
 - `ListRow` (썸네일 + 타이틀/서브 + pill)
 - `MyEditButton` (footer ghost 버튼)
 - `Placeholder` (WDS `Thumbnail` 기반 미정 이미지·아이콘 자리)
-- `Logo` / `Status*` (`atoms/icon/`) — 현재 필요한 프레임 아이콘만 React SVG로 보존. 일반 아이콘은 WDS icon을 직접 사용
+- `Logo` / `Status*` (`@pxds/pxds-icons`) — 현재 필요한 프레임 아이콘만 React SVG로 보존. 일반 WDS icon도 같은 PXDS icon adapter로 소비
 - `TextBlock` (`atoms/typography/`) — WDS `Typography` 기반 텍스트 primitive. `text`/`lines`, `maxLines`, `overflow="truncate"`로 모바일 줄바꿈 정책 표현
 
 ### 토큰
@@ -117,8 +118,9 @@
 - `Banner` — variant 기반.
 
 ### WDS 사용 정책 (2026-04-29 forced migration 이후)
-- **WDS 컴포넌트는 `@pxds/pxds-components/core`로 흡수한다**. 앱/패키지 코드는 `@wanteddev/wds`·`@wanteddev/wds-icon`을 직접 보기보다 `@pxds/pxds-components/core`를 우선 진입점으로 사용한다.
-- **패키지 의존 방향**: `@pxds/pxds-tokens` → `@pxds/pxds-components` → `@pxds/pxds-layout` / `@pxds/pxds-preview` → `apps/*`.
+- **WDS 컴포넌트는 `@pxds/pxds-components/core`로 흡수한다**. 앱/패키지 코드는 `@wanteddev/wds`를 직접 보지 않고 `@pxds/pxds-components/core`를 우선 진입점으로 사용한다.
+- **WDS 아이콘은 `@pxds/pxds-icons`로 흡수한다**. 앱/패키지 코드는 `@wanteddev/wds-icon` 또는 `@pxds/pxds-components/core`를 통해 icon을 소비하지 않는다.
+- **패키지 의존 방향**: `@pxds/pxds-tokens` → `@pxds/pxds-icons`; `@pxds/pxds-tokens` → `@pxds/pxds-components`; `@pxds/pxds-tokens` / `@pxds/pxds-icons` / `@pxds/pxds-components` → `@pxds/pxds-layout`; `@pxds/pxds-tokens` → `@pxds/pxds-preview`; `apps/*`는 필요한 공개 패키지만 소비한다.
 - **레이아웃 runtime 분리**: AppScreen류 화면 셸, bottom-sheet, primitives는 `@pxds/pxds-layout`이 소유한다. iframe 기반 모바일 preview helper는 `@pxds/pxds-preview`가 소유한다.
 - **frame portal context 제거 기록**: `@pxds/pxds-layout`에는 deprecated frame portal runtime을 남기지 않는다. preview가 iframe으로 격리되고 AppScreen 안에 여러 frame/root를 둘 계획이 없으므로, BottomSheet는 별도 `container` 지정 없이 WDS Modal 기본 렌더링에 맡긴다. 나중에 body 기준 modal이 radius/clipping/scroll boundary를 실제로 깨뜨리거나, 한 document 안에 여러 AppScreenRoot가 동시에 필요해질 때만 git history에서 frame context 패턴을 복구 검토한다.
 - **Figma 기능 분리**: component-to-Figma capture, Figma URL 읽기, component spec authoring 같은 순수 bridge/hook 기능은 `@pxds/pxds-figma`가 소유한다. 별도 `figma-export` 앱은 두지 않는다.
@@ -133,7 +135,7 @@
   - `organisms/` — 도메인/글로벌 화면 영역. 내부에서 WDS와 molecules 사용
 - **버려진 정책 (이전)**: "와이어프레임 도메인이라 raw + 토큰 조합이 명세 충실성에 더 부합" — Figma 픽셀 충실성을 우선으로 인라인 raw style을 허용하던 규칙. 2026-04-29부로 폐기. 픽셀 단위 충실성을 포기하고 WDS 컴포넌트 모양을 그대로 수용
 - 토큰: `var(--semantic-*)` 직접 소비도 가능하나 가능하면 WDS prop(`color="semantic.label.normal"`)으로 통과. SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`
-- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-tokens`, WDS reset/Next adapter 같은 패키지 경계에서만 허용한다. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
+- `@wanteddev/*` 패키지 직접 import는 `@pxds/pxds-components/core`, `@pxds/pxds-icons`, `@pxds/pxds-tokens`, WDS reset/Next adapter 같은 패키지 경계에서만 허용한다. `packages/screens/`·`registry/`는 런타임 의존성 없는 JSON/TS 메타만 둔다.
 - `apps/preview/`는 shadcn/Tailwind 프리뷰 도구다. WDS 모바일 화면을 직접 import하지 않고 `@pxds/pxds-preview`의 iframe helper로 띄운다. iframe origin은 `NEXT_PUBLIC_MOBILE_ORIGIN`(기본 `http://localhost:3001`)이다.
 
 ### Mock / 데이터 배치
@@ -241,11 +243,12 @@ templates + screen
 현재 atoms:
 - `@pxds/pxds-layout/primitives` — Box, Flex, Float, Grid, HStack, VStack. spacing prop은 7 슬롯 SpacingToken만 받음 (DESIGN.md 참조)
 - `atoms/feedback` — Divider, Placeholder
-- `atoms/icon` — Logo, StatusBattery, StatusSignal, StatusWifi
+- `@pxds/pxds-icons` — Logo, StatusBattery, StatusSignal, StatusWifi와 WDS icon adapter
 - `atoms/typography` — TextBlock. 도메인 의미 없이 모바일 카피 줄바꿈과 maxLines/truncate 정책만 담당
 - `@pxds/pxds-components/feedback` — Divider, Placeholder의 실제 구현 위치. `apps/mobile/src/components/atoms/feedback`은 호환 shim
 - `@pxds/pxds-components/typography` — TextBlock의 실제 구현 위치. `apps/mobile/src/components/atoms/typography`는 호환 shim
-- `@pxds/pxds-components/core` — WDS component/icon re-export. 앱에서 WDS primitive가 필요하면 이 경로를 사용한다.
+- `@pxds/pxds-components/core` — WDS component re-export. 앱에서 WDS primitive가 필요하면 이 경로를 사용한다.
+- `@pxds/pxds-icons` — WDS icon adapter + PXDS-owned frame icons. 앱/패키지에서 icon이 필요하면 이 경로를 사용한다.
 
 판단 기준:
 - Figma의 `atom/*`와 직접 대응하거나, WDS primitive 위에 아주 얇은 규칙만 얹으면 atoms 후보
@@ -506,7 +509,7 @@ product-detail/page.tsx
 ### `registry/` (WDS SSOT)
 - `index.json` — 매니페스트, 진입점
 - `wds-component-registry.json` — 84종
-- `wds-icon-registry.json` — 344개 (`entries[]`에서 `kebab` 또는 `name` 검색)
+- `@pxds/pxds-icons/registry/wds-icon-registry.json` — 344개 (`entries[]`에서 `kebab` 또는 `name` 검색)
 - `@pxds/pxds-tokens/registry/wds-token-registry.json` — 색·간격·typography 수치 SSOT
 - `wds-component-mapping-registry.json` / `wds-component-compound-layout-registry.json`
 
@@ -681,7 +684,7 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
   - `TopNavigationButton.color`: 자체 enum (`"assistive"` 등) — 사용 가능
   - `IconButton.color` / `Typography.color`: `ThemeColorsToken` (deep dotted, 예: `"semantic.label.normal"`) — 단순 문자열 금지. 색 커스텀 필요하면 `sx`로 CSS var 직접 주입
 - **`Thumbnail.ratio`**: 콜론 표기 `"1:1"` (슬래시 ✗). 이미지 없을 땐 WDS `Thumbnail` 기반 `Placeholder` 사용
-- **아이콘명**: import 전 `wds-icon-registry.json`에서 검증. `IconAdd` 없음 → `IconPlus`
+- **아이콘명**: import 전 `@pxds/pxds-icons/registry/wds-icon-registry.json`에서 검증. `IconAdd` 없음 → `IconPlus`
 - **`TopNavigation.variant`**: `"floating"`이 gradient + backdrop-blur 내장. 단순 헤더는 `"normal"`
 
 ## Next.js 주의
@@ -702,7 +705,8 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-29 | `system/layout/` 도입 — Box/Flex/HStack/VStack + 7 슬롯 semantic spacing 어휘 (`row/inline/stack/group/inset/block/section`) |
 | 2026-05-07 | layout primitive 패키지 승격 — Box/Flex/Float/Grid/HStack/VStack + spacing token helper를 `@pxds/pxds-layout/primitives`로 이동. `apps/mobile/src/components/atoms/layout`은 re-export shim으로 유지 |
 | 2026-05-07 | primitive atom 패키지 승격 — TextBlock을 `@pxds/pxds-components/typography`, Divider/Placeholder를 `@pxds/pxds-components/feedback`으로 이동. 앱 atoms 경로는 re-export shim으로 유지 |
-| 2026-05-07 | WDS core 흡수 — WDS component/icon re-export를 `@pxds/pxds-components/core`로 분리하고 앱의 WDS component import를 core 진입점으로 전환 |
+| 2026-05-07 | WDS core 흡수 — WDS component re-export를 `@pxds/pxds-components/core`로 분리하고 앱의 WDS component import를 core 진입점으로 전환 |
+| 2026-05-07 | WDS/PXDS icon 흡수 — WDS icon adapter, icon registry, Logo/Status* frame icons를 `@pxds/pxds-icons`로 분리하고 앱/패키지의 icon import를 icons 진입점으로 전환 |
 | 2026-05-07 | 모바일 공용 패턴 1차 승격 — FilterTabs/FormControls/FormField/MediaBlock/QueryBar/SelectField를 `@pxds/pxds-components/patterns`로 이동하고 앱 molecules 경로는 re-export shim으로 유지 |
 | 2026-05-07 | 모바일 토큰 SSOT 승격 — 앱/패키지 로컬 런타임 토큰 shim을 제거하고 `@pxds/pxds-tokens/registry/wds-token-registry.json`, `@pxds/pxds-tokens/tokens.css`, `@pxds/pxds-tokens/brand`로 흡수 |
 | 2026-05-07 | `apps/figma-export` 제거 — Figma bridge/hook 기능은 `@pxds/pxds-figma` 패키지에 보존하고 실행 앱은 폐기 |
@@ -714,7 +718,7 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-29 | nova-* 36 페이지 + `patterns/modal/` + `patterns/screen-chrome/NovaTopBar` 삭제 |
 | 2026-04-29 | 화면 patterns/home-kit 14 파일 layout primitive 마이그레이션 — raw `style={{ display:'flex', gap:'Npx' }}` 다수 제거 |
 | 2026-04-29 | **WDS forced migration Phase 1** — Typography 6 변형은 WDS Typography(label1/title3/caption1·2)에 위임, `StatBadge`/`PillChip` → `ContentBadge`/`Chip` 위임, `MyEditButton`·`HomeBlock.Action`·home-guest Big Hero CTA → WDS `Button`. 픽셀 충실성 포기 |
-| 2026-04-29 | global/system/typography 차수 — `global/GlobalNavigationHeader`·`Bar` → WDS `TopNavigation`/`BottomNavigation` 직접; `system/Icon` 삭제 → `wds-icon` 직접; `system/Divider` → WDS `Divider` 위임(inset 어휘만 보존); `components/typography/` 삭제 → WDS `Typography` (variant+weight+color 트리플)로 재작성. `system/layout/Float` 도입(edge 프리셋) |
+| 2026-04-29 | global/system/typography 차수 — `global/GlobalNavigationHeader`·`Bar` → WDS `TopNavigation`/`BottomNavigation` 직접; `system/Icon` 삭제 → WDS icon 사용; `system/Divider` → WDS `Divider` 위임(inset 어휘만 보존); `components/typography/` 삭제 → WDS `Typography` (variant+weight+color 트리플)로 재작성. `system/layout/Float` 도입(edge 프리셋) |
 | 2026-04-29 | 자체 브랜드 컬러 토큰 폐기 — 브랜드 컬러를 WDS `semantic.primary.*` 로 수렴. CTA는 WDS `Button color="primary"`, 텍스트는 `Typography color="semantic.primary.normal"` 사용 |
 | 2026-04-29 | `PAGE_BG`/`PAGE_BG_SEMI` 자체 토큰 폐기 — `--semantic-surface-page-{normal,semi}` CSS var + `semanticSurface.page.*` alias 도입. frame shell 소비처 재작성. registry에 `semantic.surface` (`_project_extension`) 추가 |
 | 2026-04-29 | frame shell patterns → system 승격 후 `AppScreenContent`로 명칭 정리 — 4 도메인(홈/검색/제품/TU) 공유 frame infrastructure 으로 layer 정합화 |

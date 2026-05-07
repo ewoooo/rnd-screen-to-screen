@@ -1,7 +1,7 @@
 "use client";
 
-import { IconLock, IconMessage, IconMobile } from "@pxds/pxds-components/core";
-import { useState, type ReactNode } from "react";
+import { IconLock, IconMessage, IconMobile } from "@pxds/pxds-icons";
+import { type ReactNode, useState } from "react";
 
 import { SelectableList } from "@/components/molecules";
 import {
@@ -10,7 +10,7 @@ import {
 	FlowNotice,
 	ProgressTopBar,
 } from "@/components/organisms/global";
-import { AppScreen, ListContents } from "@/components/templates/app-screen";
+import { AppScreen, ListContents } from "@pxds/pxds-layout/app-screen";
 
 import type { RenderableScreenSpecV1 } from "@screen/screens";
 

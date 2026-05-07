@@ -39,7 +39,7 @@
     },
     {
       "name": "Logo/Status*",
-      "path": "apps/mobile/src/components/atoms/icon",
+      "path": "packages/pxds-icons/src",
       "purpose": "Frame-specific preserved React SVG icons.",
       "variants_or_axes": ["icon component"],
       "absorbs": ["status bar icons", "brand logo"],

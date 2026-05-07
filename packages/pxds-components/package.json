@@ -17,7 +17,6 @@
 	"dependencies": {
 		"@pxds/pxds-tokens": "0.1.0",
 		"@wanteddev/wds": "^3.5.0",
-		"@wanteddev/wds-icon": "^3.5.0",
 		"@wanteddev/wds-nextjs": "^3.5.0",
 		"react": "19.2.4"
 	}

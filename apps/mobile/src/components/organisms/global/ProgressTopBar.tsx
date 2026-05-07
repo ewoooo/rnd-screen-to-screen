@@ -3,11 +3,11 @@ import {
 	TopNavigation,
 	TopNavigationButton,
 } from "@pxds/pxds-components/core";
-import { IconArrowLeft, IconClose } from "@pxds/pxds-components/core";
+import { IconArrowLeft, IconClose } from "@pxds/pxds-icons";
 
-import { Box, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
-import { StatusBar } from "@/components/templates/app-screen";
+import { Box, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
+import { StatusBar } from "@pxds/pxds-layout/app-screen";
 
 export type ProgressTopBarLeading = "back" | "close";
 

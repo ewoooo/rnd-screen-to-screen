@@ -3,7 +3,7 @@ import {
 	IconBell,
 	IconCalendar,
 	IconPerson,
-} from "@pxds/pxds-components/core";
+} from "@pxds/pxds-icons";
 import type { ReactNode } from "react";
 
 import {
@@ -14,7 +14,7 @@ import {
 	ProgressTopBar,
 	type FlowSummaryItem,
 } from "@/components/organisms/global";
-import { AppScreen } from "@/components/templates/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
 const SUMMARY_MEDIA_ICON: Record<string, ReactNode> = {
 	id: <IconPerson width={24} height={24} />,

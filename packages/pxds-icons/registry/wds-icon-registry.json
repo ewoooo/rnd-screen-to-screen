@@ -2,12 +2,12 @@
 	"meta": {
 		"source": "wanteddev/montage-web",
 		"source_url": "https://github.com/wanteddev/montage-web/tree/main/packages/wds-icon",
-		"package": "@wanteddev/wds-icon",
+		"package": "@pxds/pxds-icons",
 		"version": "3.5.0",
 		"fetched_at": "2026-04-24",
 		"icon_count": 344,
 		"color_variant_count": 12,
-		"import_pattern": "import { IconName } from '@wanteddev/wds-icon';",
+		"import_pattern": "import { IconName } from '@pxds/pxds-icons';",
 		"usage_example": "<IconChevronLeft size={24} color=\"currentColor\" />",
 		"note": "카테고리는 이름 기반 휴리스틱 추정. 공식 분류가 있으면 교정 필요."
 	},

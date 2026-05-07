@@ -1,9 +1,9 @@
 import { TopNavigation, TopNavigationButton } from "@pxds/pxds-components/core";
-import { IconSearch } from "@pxds/pxds-components/core";
+import { IconSearch } from "@pxds/pxds-icons";
 import type { ReactNode } from "react";
 
 import { GlobalNavigationBar } from "@/components/organisms/global";
-import { AppScreen, StatusBar } from "@/components/templates/app-screen";
+import { AppScreen, StatusBar } from "@pxds/pxds-layout/app-screen";
 
 type Props = {
 	children: ReactNode;

@@ -1,11 +1,11 @@
 import { TopNavigation, TopNavigationButton } from "@pxds/pxds-components/core";
-import { IconSearch } from "@pxds/pxds-components/core";
+import { IconSearch } from "@pxds/pxds-icons";
 import type { ReactNode } from "react";
 
-import { Box } from "@/components/atoms/layout";
-import { QueryBar } from "@/components/molecules";
+import { Box } from "@pxds/pxds-layout/primitives";
+import { QueryBar } from "@pxds/pxds-components/patterns";
 import { SearchResultTabs } from "@/components/organisms/search/SearchResultTabs";
-import { AppScreen, StatusBar } from "@/components/templates/app-screen";
+import { AppScreen, StatusBar } from "@pxds/pxds-layout/app-screen";
 
 import { GlobalNavigationBar } from "./GlobalNavigationBar";
 

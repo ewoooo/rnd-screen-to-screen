@@ -5,7 +5,7 @@
 		"read_order_hint": [
 			"wds-component-registry.json",
 			"../packages/pxds-tokens/registry/wds-token-registry.json",
-			"wds-icon-registry.json",
+			"../packages/pxds-icons/registry/wds-icon-registry.json",
 			"wds-component-mapping-registry.json"
 		]
 	},
@@ -17,10 +17,10 @@
 			"package": "@wanteddev/wds + project"
 		},
 		"icons": {
-			"file": "./wds-icon-registry.json",
-			"purpose": "WDS 아이콘 344개의 이름/카테고리/variant 목록",
+			"file": "../packages/pxds-icons/registry/wds-icon-registry.json",
+			"purpose": "PXDS 아이콘 registry (WDS icon absorbed adapter)의 이름/카테고리/variant 목록",
 			"use_when": "아이콘 이름 찾기, 카테고리별 탐색, mono/color variant 확인",
-			"package": "@wanteddev/wds-icon"
+			"package": "@pxds/pxds-icons"
 		},
 		"tokens": {
 			"file": "../packages/pxds-tokens/registry/wds-token-registry.json",

@@ -4,19 +4,19 @@ import {
 	IconGlobe,
 	IconImage,
 	IconMobile,
-} from "@pxds/pxds-components/core";
+} from "@pxds/pxds-icons";
 import type { CSSProperties, ReactNode } from "react";
 
-import { Placeholder } from "@/components/atoms/feedback";
-import { Box, HStack, VStack } from "@/components/atoms/layout";
-import { TextBlock } from "@/components/atoms/typography";
+import { Placeholder } from "@pxds/pxds-components/feedback";
+import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { TextBlock } from "@pxds/pxds-components/typography";
 import {
 	InfoList,
+	type InfoListItem,
 	PromoBlock,
 	SectionCard,
-	type InfoListItem,
 } from "@/components/molecules";
-import { ContentSection } from "@/components/templates/app-screen";
+import { ContentSection } from "@pxds/pxds-layout/app-screen";
 import { CARD_SHADOW } from "@pxds/pxds-tokens";
 
 export function TuDisplay({

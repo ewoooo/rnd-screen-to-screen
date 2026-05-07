@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@pxds/pxds-components": "0.1.0",
+    "@pxds/pxds-icons": "0.1.0",
     "@pxds/pxds-layout": "0.1.0",
     "@pxds/pxds-tokens": "0.1.0",
     "@screen/screens": "0.1.0",

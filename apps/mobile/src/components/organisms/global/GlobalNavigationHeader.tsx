@@ -3,14 +3,14 @@ import {
 	IconBusinessBag,
 	IconCode,
 	IconClose,
+	Logo,
 	IconMenu,
 	IconSearch,
-} from "@pxds/pxds-components/core";
+} from "@pxds/pxds-icons";
 import type { ReactNode } from "react";
 
-import { Logo } from "@/components/atoms/icon";
-import { Box } from "@/components/atoms/layout";
-import { StatusBar } from "@/components/templates/app-screen";
+import { Box } from "@pxds/pxds-layout/primitives";
+import { StatusBar } from "@pxds/pxds-layout/app-screen";
 
 const ICON_SIZE = 24;
 
@@ -52,7 +52,7 @@ const LogoSlot = (
 /**
  * T 앱 글로벌 헤더 — StatusBar + WDS TopNavigation(floating).
  * forced migration(2026-04-29): 자체 absolute/blur 제거, WDS floating gradient 채택.
- * 아이콘은 wds-icon 패키지 직접 사용. 바코드는 WDS에 없어 IconCode 로 근사.
+ * 아이콘은 PXDS icon adapter를 사용. 바코드는 WDS에 없어 IconCode 로 근사.
  */
 export function GlobalNavigationHeader({
 	actions = DEFAULT_ACTIONS,

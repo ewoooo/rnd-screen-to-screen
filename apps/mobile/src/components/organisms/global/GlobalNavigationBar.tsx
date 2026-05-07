@@ -4,10 +4,10 @@ import {
 	IconBusinessBagFill,
 	IconHomeFill,
 	IconSearch,
-} from "@pxds/pxds-components/core";
+} from "@pxds/pxds-icons";
 import type { ReactNode } from "react";
 
-import { Box } from "@/components/atoms/layout";
+import { Box } from "@pxds/pxds-layout/primitives";
 
 type GnbKey = "my" | "search" | "shop";
 

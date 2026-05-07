@@ -1,6 +1,5 @@
 import { STATUS_BAR_FONT_SIZE } from "@pxds/pxds-tokens";
-
-import { StatusBattery, StatusSignal, StatusWifi } from "../status-icons";
+import { StatusBattery, StatusSignal, StatusWifi } from "@pxds/pxds-icons";
 
 /**
  * iOS 상태바 row — 시계 + 신호/WiFi/배터리.
