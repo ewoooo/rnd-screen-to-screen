@@ -2,6 +2,8 @@
 
 import type { ComponentRegistryEntry } from "@pxds/component-registry";
 
+import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
+import { ComponentExampleMissing } from "@/components/preview/render-view/component/ComponentExampleMissing";
 import { PreviewCanvas } from "@/components/preview/render-view/shared/PreviewCanvas";
 import { PreviewHeader } from "@/components/preview/render-view/shared/PreviewHeader";
 import { ComponentRender } from "@/components/preview/render-view/component/ComponentRender";
@@ -11,6 +13,8 @@ type ComponentPreviewProps = {
 };
 
 export function ComponentPreview({ component }: ComponentPreviewProps) {
+	const example = getComponentPreviewExample(component.id);
+
 	return (
 		<section className="flex min-w-0 flex-col">
 			<PreviewHeader
@@ -18,8 +22,12 @@ export function ComponentPreview({ component }: ComponentPreviewProps) {
 				title={component.name}
 				description={component.importPath}
 			/>
-			<PreviewCanvas layout="stack">
-				<ComponentRender component={component} />
+			<PreviewCanvas>
+				{example ? (
+					<ComponentRender component={component} />
+				) : (
+					<ComponentExampleMissing componentName={component.name} />
+				)}
 			</PreviewCanvas>
 		</section>
 	);
