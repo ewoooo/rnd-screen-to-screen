@@ -1,7 +1,7 @@
 "use client";
 
-import { PreviewCanvas } from "@/components/preview/render-view/PreviewCanvas";
-import { PreviewHeader } from "@/components/preview/render-view/PreviewHeader";
+import { PreviewCanvas } from "@/components/preview/render-view/shared/PreviewCanvas";
+import { PreviewHeader } from "@/components/preview/render-view/shared/PreviewHeader";
 import { useScreenSpecs } from "@/hooks/use-screen-specs";
 
 export function PolicyPreview() {

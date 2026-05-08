@@ -1,4 +1,4 @@
-import { PagePreview } from "@/components/preview/render-view/PagePreview";
+import { PagePreview } from "@/components/preview/render-view/page/PagePreview";
 import { PreviewSidePanel } from "@/components/preview/side-panel/PreviewSidePanel";
 import { PageRegistrySidePanel } from "@/components/preview/side-panel/pages/PageRegistrySidePanel";
 

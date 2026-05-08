@@ -4,10 +4,10 @@ import { Suspense } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { PreviewCanvas } from "@/components/preview/render-view/PreviewCanvas";
-import { PreviewHeader } from "@/components/preview/render-view/PreviewHeader";
-import { PreviewPageRenderItem } from "@/components/preview/render-view/PreviewPageRenderItem";
-import { PreviewSpinner } from "@/components/preview/render-view/PreviewSpinner";
+import { PreviewCanvas } from "@/components/preview/render-view/shared/PreviewCanvas";
+import { PreviewHeader } from "@/components/preview/render-view/shared/PreviewHeader";
+import { PreviewPageRenderItem } from "@/components/preview/render-view/page/PreviewPageRenderItem";
+import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
 import { usePageRegistry } from "@/contexts/page-registry-context";
 
 const MOBILE_ORIGIN =

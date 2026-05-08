@@ -1,8 +1,6 @@
 import {
 	Option,
-	OptionContent,
 	Select,
-	SelectContent,
 } from "../../core";
 
 export type SelectOption = string | { id: string; label: string };
@@ -36,16 +34,14 @@ export function SelectField({
 			onChange={onChange}
 			width={width}
 		>
-			<SelectContent>
-				{options.map((raw) => {
-					const { id, label } = normalize(raw);
-					return (
-						<Option key={id} value={id}>
-							<OptionContent>{label}</OptionContent>
-						</Option>
-					);
-				})}
-			</SelectContent>
+			{options.map((raw) => {
+				const { id, label } = normalize(raw);
+				return (
+					<Option key={id} value={id}>
+						{label}
+					</Option>
+				);
+			})}
 		</Select>
 	);
 }

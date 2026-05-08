@@ -20,7 +20,11 @@ export function PreviewNavigationRail() {
 						mode={item.id}
 						label={item.label}
 						href={item.href}
-						active={pathname === item.href}
+						active={
+							item.href === "/components"
+								? pathname.startsWith("/components")
+								: pathname === item.href
+						}
 					/>
 				))}
 			</div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { MobilePreviewFrame } from "@pxds/pxds-preview";
 
-import { PreviewSpinner } from "@/components/preview/render-view/PreviewSpinner";
+import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
 
 type PreviewPageRenderItemProps = {
 	src: string;
