@@ -1,4 +1,4 @@
-import type { ComponentSpecDraft, ComponentSpecValidation } from "./useComponentSpecAuthor";
+import type { ComponentSpecDraft, ComponentSpecValidation } from "./types";
 
 export function validateComponentSpec(
 	draft: ComponentSpecDraft,
@@ -17,10 +17,7 @@ export function validateComponentSpec(
 		errors.push("name should include a layer path, e.g. atom/icon-bubble.");
 	}
 
-	for (const child of draft.base.children ?? []) {
-		if (!child.id.trim()) errors.push("child.id is required.");
-		if (!child.component.trim()) errors.push("child.component is required.");
-	}
+	validateChildren(draft.base.children, errors);
 
 	for (const axis of draft.variants?.axes ?? []) {
 		if (!axis.name.trim()) errors.push("variant axis name is required.");
@@ -33,4 +30,22 @@ export function validateComponentSpec(
 		ok: errors.length === 0,
 		errors,
 	};
+}
+
+function validateChildren(
+	children: ComponentSpecDraft["base"]["children"],
+	errors: string[],
+) {
+	for (const child of children ?? []) {
+		if (!child.id.trim()) errors.push("child.id is required.");
+		if (child.kind === "ref" && !child.component.trim()) {
+			errors.push("ref child.component is required.");
+		}
+		if (child.kind === "text" && !child.content.trim()) {
+			errors.push("text child.content is required.");
+		}
+		if (child.kind === "group") {
+			validateChildren(child.children, errors);
+		}
+	}
 }

@@ -11,6 +11,7 @@
   "dependencies": {
     "@pxds/component-registry": "0.1.0",
     "@pxds/pxds-components": "^0.1.0",
+    "@pxds/pxds-figma": "0.1.0",
     "@pxds/pxds-preview": "0.1.0",
     "@pxds/pxds-tokens": "^0.1.0",
     "@screen/registry": "0.1.0",

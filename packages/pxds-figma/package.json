@@ -7,6 +7,8 @@
 		".": "./src/index.ts",
 		"./hooks": "./src/hooks/index.ts",
 		"./component-spec": "./src/component-spec/index.ts",
+		"./component-spec-registry": "./src/component-spec-registry/index.ts",
+		"./component-export": "./src/component-export/index.ts",
 		"./figma-to-component": "./src/figma-to-component/index.ts"
 	},
 	"dependencies": {

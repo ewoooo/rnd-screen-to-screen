@@ -23,7 +23,7 @@ export default async function ComponentRenderRoutePage({
 	const example = getComponentPreviewExample(component.id);
 
 	return (
-		<main className="grid min-h-dvh place-items-center bg-white p-8">
+		<main className="grid min-h-dvh place-items-center bg-transparent p-8">
 			{example ? (
 				example.render()
 			) : (

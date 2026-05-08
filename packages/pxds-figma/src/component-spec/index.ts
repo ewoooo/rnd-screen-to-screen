@@ -5,12 +5,15 @@ export type {
 	ComponentSpecCategory,
 	ComponentSpecChild,
 	ComponentSpecDraft,
+	ComponentSpecGroupChild,
 	ComponentSpecLayout,
 	ComponentSpecLayoutMode,
+	ComponentSpecRefChild,
 	ComponentSpecSizingMode,
+	ComponentSpecTextChild,
 	ComponentSpecValidation,
 	ComponentSpecValue,
 	ComponentSpecVariantAxis,
 	ComponentSpecVariantOverride,
 	ComponentSpecVisual,
-} from "./useComponentSpecAuthor";
+} from "./types";
