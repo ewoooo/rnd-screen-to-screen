@@ -6,7 +6,7 @@ type PreviewShellProps = {
 
 export function PreviewShell({ children }: PreviewShellProps) {
 	return (
-		<main className="grid min-h-dvh grid-cols-1 bg-transparent sm:grid-cols-[56px_260px_minmax(390px,1fr)] xl:grid-cols-[56px_300px_minmax(420px,1fr)]">
+		<main className="grid min-h-dvh grid-cols-1 bg-transparent sm:grid-cols-[56px_260px_minmax(390px,1fr)_56px] xl:grid-cols-[56px_300px_minmax(420px,1fr)_56px]">
 			{children}
 		</main>
 	);
