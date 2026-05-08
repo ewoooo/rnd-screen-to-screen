@@ -8,17 +8,23 @@ const CONTENT_BOTTOM_PADDING = "var(--spacing-16)";
 
 type Props = {
 	children: ReactNode;
-	top: ReactNode;
+	systemHeader?: ReactNode;
+	header?: ReactNode;
+	top?: ReactNode;
 	bottom?: ReactNode;
 	background?: string;
 };
 
 export function AppScreenContent({
 	children,
+	systemHeader,
+	header,
 	top,
 	bottom,
 	background = "var(--semantic-surface-page-normal)",
 }: Props) {
+	const appHeader = header ?? top;
+
 	return (
 		<div
 			style={{
@@ -30,14 +36,16 @@ export function AppScreenContent({
 				background,
 			}}
 		>
-			<section
-				style={{
-					flexShrink: 0,
-					background,
-				}}
-			>
-				{top}
-			</section>
+			{systemHeader ? (
+				<AppScreenChromeSlot background={background}>
+					{systemHeader}
+				</AppScreenChromeSlot>
+			) : null}
+			{appHeader ? (
+				<AppScreenChromeSlot background={background}>
+					{appHeader}
+				</AppScreenChromeSlot>
+			) : null}
 			<ContentOutlet
 				inlineInset={SCREEN_INLINE_INSET}
 				style={{
@@ -49,15 +57,27 @@ export function AppScreenContent({
 				<ContentList>{children}</ContentList>
 			</ContentOutlet>
 			{bottom ? (
-				<section
-					style={{
-						flexShrink: 0,
-						background,
-					}}
-				>
-					{bottom}
-				</section>
+				<AppScreenChromeSlot background={background}>{bottom}</AppScreenChromeSlot>
 			) : null}
 		</div>
+	);
+}
+
+function AppScreenChromeSlot({
+	children,
+	background,
+}: {
+	children: ReactNode;
+	background: string;
+}) {
+	return (
+		<section
+			style={{
+				flexShrink: 0,
+				background,
+			}}
+		>
+			{children}
+		</section>
 	);
 }
