@@ -476,7 +476,7 @@ export const benchmarkCriteria = [
 		side: "design",
 		label: "Preview 판독성",
 		question: "preview에서 화면 그룹, 생성일, 점수, iframe 상태를 명확히 확인할 수 있는가?",
-		apiRefs: ["@screen/registry", "apps/preview", "ScreenEntry"],
+		apiRefs: ["@screen/registry", "apps/preview", "ScreenRoute"],
 		scoringHint: "1=검수 어려움, 3=화면 선택 가능, 5=품질/상태 비교가 쉬움",
 	},
 	{
@@ -496,7 +496,7 @@ export const benchmarkCriteria = [
 		side: "planning",
 		label: "플로우 완결성",
 		question: "진입, 주요 액션, 종료/다음 단계까지 단절 없이 이어지는가?",
-		apiRefs: ["ScreenEntry", "ProductShell", "SearchShell", "BottomSheet"],
+		apiRefs: ["ScreenRoute", "ProductShell", "SearchShell", "BottomSheet"],
 		scoringHint: "1=화면 단편, 3=주요 흐름 존재, 5=전후 맥락이 명확함",
 	},
 	{

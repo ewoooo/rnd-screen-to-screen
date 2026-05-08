@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { screens, type ScreenEntry, type ScreenGroup } from "@screen/registry";
+import {
+	screenRoutes,
+	type ScreenGroup,
+	type ScreenRoute,
+} from "@screen/registry";
 
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 
@@ -28,7 +32,7 @@ const GROUP_LABEL: Record<ScreenGroup, string> = {
 };
 
 export default function Home() {
-	const grouped = screens.reduce<Record<ScreenGroup, ScreenEntry[]>>(
+	const grouped = screenRoutes.reduce<Record<ScreenGroup, ScreenRoute[]>>(
 		(acc, s) => {
 			(acc[s.group] ??= []).push(s);
 			return acc;
@@ -59,7 +63,7 @@ export default function Home() {
 						margin: "4px 0 0",
 					}}
 				>
-					총 {screens.length}개
+					총 {screenRoutes.length}개
 				</p>
 			</Box>
 
@@ -81,7 +85,7 @@ export default function Home() {
 						{grouped[group].map((s) => (
 							<Link
 								key={s.id}
-								href={s.path}
+								href={s.route}
 								style={{
 									padding: "12px 16px",
 									borderRadius: 10,

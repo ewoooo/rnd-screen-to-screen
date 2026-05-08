@@ -1,0 +1,11 @@
+{
+	"name": "@pxds/component-registry",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./crud": "./src/crud/index.ts",
+		"./registry": "./src/registry/index.ts"
+	}
+}

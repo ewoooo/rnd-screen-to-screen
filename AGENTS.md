@@ -21,6 +21,7 @@
 │   ├── pxds-tokens/      `@pxds/pxds-tokens` — WDS theme 기반 토큰 SSOT
 │   ├── pxds-icons/       `@pxds/pxds-icons` — WDS icon adapter + icon registry
 │   ├── pxds-components/  `@pxds/pxds-components` — 순수 UI 컴포넌트 + `core/` WDS component re-export
+│   ├── pxds-component-registry/ `@pxds/component-registry` — 순수 component vocabulary registry
 │   ├── pxds-layout/      `@pxds/pxds-layout` — 화면/frame/layout runtime
 │   ├── pxds-preview/     `@pxds/pxds-preview` — 모바일 iframe preview/helper
 │   ├── pxds-figma/       `@pxds/pxds-figma` — Figma bridge/hooks/spec authoring
@@ -28,8 +29,7 @@
 │   ├── policy-authoring/ `@policy/authoring` — 문서/정책서 → Screen 도출 추적
 │   ├── screen-registry/  `@screen/registry` — 순수 Screen registry
 │   ├── screen-specs/     `@screen/specs` — ScreenSpec / RenderableSpec + spec JSON
-│   ├── screen-evaluation/`@screen/evaluation` — benchmark / audit / strain test
-│   └── screen-catalog/   `@screen/catalog` — component vocabulary catalog
+│   └── screen-evaluation/`@screen/evaluation` — benchmark / audit / strain test
 ├── registry/         WDS/PXDS registry index — 컴포넌트 / 매핑 진입점
 ├── AGENTS.md         ← 이 파일 (운영 규약 + 시스템 메타)
 ├── DESIGN.md         디자인 스펙 (수치, 토큰, 어휘 variant SSOT)
@@ -206,7 +206,7 @@
 - 도메인/글로벌 화면 영역은 `organisms/`에 둔다.
 - 화면 슬롯, 상단 sticky/accessory 컨텍스트, 스크롤 컨텍스트, 포털 컨텍스트는 `templates/`에 둔다.
 - 새 도메인에서 반복되는 구조는 organisms에 복제하지 말고 먼저 molecules로 승격한다.
-- 컴포넌트 어휘 탐색은 `packages/screen-catalog/catalog/index.json`에서 시작한다. 이 catalog는 생성기나 토큰 SSOT가 아니라, 현재 코드베이스의 templates/atoms/molecules/organisms/pages 구조를 빠르게 파악하기 위한 사람이 읽는 색인이다.
+- 컴포넌트 어휘 탐색은 `@pxds/component-registry`의 `componentRegistry`에서 시작한다. 이 registry는 구현·props·variant·토큰·평가 노트를 품지 않고, 컴포넌트 id/name/layer/owner/importPath/group/status만 소유한다.
 
 우리가 만들려는 것은 “variant만 계속 늘어나는 kit”이 아니다. 목표는 **조합 가능한 의미 축을 가진 시스템**이다.
 
@@ -458,7 +458,7 @@ templates + screen
 
 새 화면을 만들 때 판단 순서:
 
-1. `packages/screen-catalog/catalog/index.json`에서 현재 어휘와 페이지 패턴을 먼저 찾는다.
+1. `@pxds/component-registry`에서 현재 컴포넌트 어휘와 소유 패키지를 먼저 찾는다.
 2. 기존 organisms로 표현 가능한지 본다.
 3. organisms가 부족하면, 먼저 molecules 조합으로 표현 가능한지 본다.
 4. 같은 WDS 조합이 반복되면 molecules로 승격한다.
@@ -525,11 +525,10 @@ product-detail/page.tsx
 ### `@policy/*` / `@screen/*`
 - `packages/policy-core/` (`@policy/core`) — Policy, UseCase, PolicySource, PolicySection, EvidenceRef 순수 문서 도메인. Screen을 모른다.
 - `packages/policy-authoring/` (`@policy/authoring`) — 문서/정책서 → Screen 도출 추적. `PolicySourceRef`, `PolicyToScreenTrace`, `policyToScreenTraces`를 소유한다. `policy_doc`, `policy_section`, `pagination_ref`, `x_policyExtract` 같은 출처 정보는 이 레이어에서 해석한다.
-- `packages/screen-registry/` (`@screen/registry`) — pure Screen registry. 화면 id, route, label, group, lifecycle status, spec/renderSpec id만 소유한다. 정책서 출처나 도출 근거를 품지 않는다.
+- `packages/screen-registry/` (`@screen/registry`) — pure Screen route registry. 화면 id, route, label, group, lifecycle status만 소유한다. spec/renderSpec 경로, 정책서 출처, 도출 근거를 품지 않는다.
 - `packages/screen-specs/` (`@screen/specs`) — ScreenSpecV2, RenderableScreenSpecV1, active spec import, spec validation, spec JSON 저장소를 소유한다.
 - `packages/screen-evaluation/` (`@screen/evaluation`) — screen generation benchmark/audit SSOT. 디자인/기획 평가 항목, 관련 API, 1~5 scoring hint, audit formatter를 소유한다.
-- `packages/screen-catalog/` (`@screen/catalog`) — 생성기·토큰 제외 컴포넌트 catalog. templates/atoms/molecules/organisms/pages 어휘와 page pattern을 사람이 읽는 JSON으로 정리한다.
-- `packages/screen-catalog/catalog/index.json` — 생성기·토큰 제외 컴포넌트 catalog 진입점. templates/atoms/molecules/organisms/pages 어휘와 page pattern을 사람이 읽는 JSON으로 정리한다
+- `packages/pxds-component-registry/` (`@pxds/component-registry`) — pure component vocabulary registry. 컴포넌트 id, name, layer, owner, importPath, group, lifecycle status만 소유한다. props/variant/token/evaluation/page usage를 품지 않는다.
 - `packages/screen-specs/spec/active/<route-id>.json` — 렌더 가능한 화면의 screen contract SSOT. `screen_contract` / `areas` / `system_mapping` / `layout_tokens` / `system_fit` 중심
 - `packages/screen-specs/spec/active/<route-id>.sdui.json` — 정책서 → 화면 요구사항 → SDUI 렌더 트리 파일럿. 현재 `product-detail`, `membership-terms-consent`가 운영 중이며, v2 screen contract를 대체하지 않고 검증용으로 병행한다
 - `packages/screen-specs/spec/active/<domain>/_pagination/<policy-id>.json` — 정책서 단위 화면 분할 SSOT. domain 버킷 안에 정책별로 둔다(예: `membership/_pagination/membership-join.json`, `membership/_pagination/membership-leave.json`, `nc-full/_pagination/nc-full.json`, `nc-simple/_pagination/nc-simple.json`). `policy_id` / `source_ref`(예: `docs/NC_정책서_Full_v1.0_확정본.md`) / `routes[]`(id, type, primary_task, predecessor, successor, step_fraction, split_reason) / `transitions[]`(from, to, trigger, guard)을 담는다. 각 route의 `.sdui.json`에 들어가는 `x_pagination` 슬라이스는 이 파일에서 derive되며, 슬라이스의 `_canonical_hash`(B 파일의 sha256)가 lint에서 검증된다. AI 세션은 `.sdui.json`만 읽어도 해당 route의 위치/전이를 알 수 있고, 더 깊은 컨텍스트가 필요하면 `_canonical` 경로로 B를 따라간다
@@ -548,12 +547,12 @@ product-detail/page.tsx
 4. **`x_policyExtract` 작성** — 정책서의 process, purpose, system/user input, output, branches, exceptions, design_signals를 추출한다. 정책 ID와 원문 ref를 반드시 남긴다. `source.refs`는 정책서/섹션 단위 출처를 보존하고, `evidence_refs`에는 각 process, branch, exception, user/system input이 어떤 원문 섹션·문장·표에서 왔는지 항목별 근거를 남긴다. 원문 근거 없이 요약만 만든 `x_policyExtract`는 화면 계약 근거로 쓰지 않는다. 정책 화면은 `legal_notices[]`에 필수/사용성 고지, 표시 위계, target area를 기록하고, 완료/처리 화면은 `output_mapping[]`에 정책 output이 어떤 결과 요약/카드/수치로 노출되는지 기록한다.
 5. **`x_interfacePlan` 작성** — 화면 장르(`flow`/`browse`/`detail`/`form`/`result` 등), primary task, 사용자 결정/입력, 정보 위계, `visual_order`, progress 위치, CTA 위치, 선택/입력 패턴, 텍스트 measure 정책을 먼저 정한다. 이 단계는 “어떤 컴포넌트를 쓸지”보다 “어떤 인터페이스 문법이 맞는지”를 결정한다.
 6. **상태·인터랙션 매트릭스 작성** — 선택/입력/분기/로딩이 있는 화면은 `x_stateMatrix`와 `x_interactions`를 작성한다. `x_interactions.tag` 허용값은 `tap`, `interactive`, `sync`, `enabled`, `loading`, `modal`, `state`, `nav`다. 예: 전체동의는 `interactive + sync`, CTA 활성 조건은 `enabled`, 약관 전문은 `tap + modal`, 처리중 화면은 `loading + nav`로 기록한다.
-7. **Pattern Fit 점검** — 먼저 `packages/screen-catalog/catalog/index.json`에서 기존 어휘와 page pattern을 확인한 뒤, `x_interfacePlan`과 상태/인터랙션 매트릭스를 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
+7. **Pattern Fit 점검** — 먼저 `@pxds/component-registry`에서 기존 컴포넌트 어휘와 소유 패키지를 확인한 뒤, `x_interfacePlan`과 상태/인터랙션 매트릭스를 기존 template/molecule/organism으로 표현 가능한지 검사한다. 예: 절차형 가입/탈퇴 화면은 일반 `AppScreen + ContentList`만으로 충분한지, 아니면 `FlowScreen`/`ChoiceList`/`FlowCTA` 같은 어휘가 필요한지 판단한다.
 8. **`x_screenContract` 작성** — v2 `screen_contract` / `layout_contract` / `areas` / `design_system_contract`로 화면 슬롯, 레이아웃 소유권, 사용 컴포넌트 어휘를 고정한다. 이 단계에서 `AppScreen`/`BottomSheet`, `ContentSection`, molecule/organism 사용 여부를 결정하되, 결정 근거는 `x_uxStage`, `x_interfacePlan`, `x_stateMatrix`, `x_interactions`와 연결되어야 한다.
 9. **SDUI `data`와 `children` 작성** — `RenderableScreenSpecV1`의 `data`에는 화면 fixture를, `children`에는 공식 SDUI schema의 `SDUINode[]`에 가까운 렌더 트리를 둔다. `type`은 등록된 template/organism/molecule/atom 이름만 사용한다.
 10. **Heuristic/Audit Review** — 렌더 구현 전/후에 인터페이스 품질 체크를 수행한다. full-width caption 남용, 과도한 카드화, progress가 본문에 섞임, CTA가 required state와 분리됨, 선택지가 문서형 row로 평평해짐, primary task가 첫 viewport에서 보이지 않음, legal notice가 target area 없이 누락됨, `x_interactions`의 enabled 조건이 CTA 상태와 분리됨 같은 문제를 확인한다.
 11. **active 파일 생성** — `packages/screen-specs/spec/active/<route-id>.json`에는 `ScreenSpecV2` 계약을, `packages/screen-specs/spec/active/<route-id>.sdui.json`에는 `RenderableScreenSpecV1`을 둔다. `.sdui.json`의 `x_screenContract`는 `.json` 계약과 같은 내용을 가져야 한다.
-12. **registry 등록** — pure Screen 정보는 `@screen/registry`가 제공하는 Screen 모델(id/route/label/group/status/spec id)과 맞아야 한다. 화면 목록은 `packages/screen-registry/src/index.ts`에 등록하고, contract/renderable spec import는 `packages/screen-specs/src/active-spec-list.ts`에 추가한다. 문서/정책서 도출 정보는 Screen에 넣지 않고 `@policy/authoring`에서 추적한다. `packages/screen-specs/spec/active/_manifest.json`의 `screens`와 `render_spec_pilots`도 같이 갱신한다.
+12. **registry 등록** — pure Screen route 정보는 `@screen/registry`가 제공하는 ScreenRoute 모델(id/route/label/group/status)과 맞아야 한다. 화면 route 목록은 `packages/screen-registry/src/index.ts`에 등록하고, contract/renderable spec import는 `packages/screen-specs/src/active-spec-list.ts`에 추가한다. spec 경로와 문서/정책서 도출 정보는 ScreenRoute에 넣지 않고 각각 `@screen/specs`, `@policy/authoring`에서 추적한다. `packages/screen-specs/spec/active/_manifest.json`의 `screens`와 `render_spec_pilots`도 같이 갱신한다.
 13. **렌더 구현** — `apps/mobile/src/app/<route-id>/page.tsx`는 `activeRenderableScreenSpecs["<route-id>"]`를 읽고 route-local `_sdui-renderer.tsx` 또는 공용 renderer로 넘긴다. 필요한 도메인 UI는 `apps/mobile/src/components/organisms/<domain>/`에 두되, 반복 조합은 먼저 `molecules/` 후보인지 본다.
 14. **검증** — `npm run lint:mobile`, `npm run lint:preview`, `npm run build:mobile`, `npm run build:preview`를 통과시킨다. preview는 mobile iframe으로 확인한다.
 
@@ -742,7 +741,8 @@ WDS 컴포넌트를 직접 사용할 일이 생기면 (예: 후속 production �
 | 2026-04-30 | TU 전용 tone island 흡수 — `handoff-tu-tone.css` 의존 제거, TU organisms를 WDS `Typography`/`Card`와 `SectionCard`/`InfoList`/`PromoBlock` 조합으로 재작성, 페이지 배경은 `semantic.surface.page.*`로 수렴 |
 | 2026-04-30 | preview/mobile 모노레포 1차 분리 — `apps/mobile`은 WDS 모바일 화면, `apps/preview`는 shadcn 프리뷰 셸로 분리. preview는 mobile을 iframe으로만 소비 |
 | 2026-04-30 | screen registry/spec SSOT 통합 — active registry와 active spec을 패키지 SSOT로 이동. mobile/preview 하드코딩 목록과 mobile generated registry 제거 |
-| 2026-05-07 | screens facade 제거. registry/spec/evaluation/catalog를 `@screen/registry`, `@screen/specs`, `@screen/evaluation`, `@screen/catalog`로 분리 |
+| 2026-05-07 | screens facade 제거. registry/spec/evaluation를 `@screen/registry`, `@screen/specs`, `@screen/evaluation`로 분리 |
+| 2026-05-08 | component catalog를 `@pxds/component-registry` route-table 방식의 얇은 컴포넌트 registry로 대체 |
 | 2026-04-30 | screen generation benchmark SSOT 추가 — `packages/screen-evaluation/src/benchmark.ts`에 디자인/기획 평가 항목, API refs, 1~5 scoring hint 정의 |
 | 2026-04-30 | `TextBlock` 추가 — WDS Typography 기반 `text`/`lines`, `maxLines`, `overflow="truncate"` 지원. 현재 공개 진입점은 `@pxds/pxds-components/typography` |
 | 2026-04-30 | 홈 텍스트 전면 TextBlock 적용 후 기본 역할 variant로 승격 — `displayTitle`/`sectionLabel`/`contentTitle`/`listTitle`/`supportText`/`meta`/`assistive`/`price`/`rating`/`promo*`를 WDS Typography 조합으로 고정하고 raw banner font/letter-spacing 제거 |

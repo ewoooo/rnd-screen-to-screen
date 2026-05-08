@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, SectionMessage } from "@pxds/pxds-components/core";
+import { Card, CardContent, SectionMessage } from "@pxds/pxds-components/core";
 import {
 	IconBell,
 	IconGlobe,
@@ -35,7 +35,7 @@ export function TuDisplay({
 	);
 }
 
-export function TuEyebrow({ children }: { children: string }) {
+function TuEyebrow({ children }: { children: string }) {
 	return (
 		<TextBlock
 			variant="sectionLabel"
@@ -52,14 +52,6 @@ export function TuSub({ children }: { children: string }) {
 			lines={children.split("\n")}
 			color="semantic.label.alternative"
 		/>
-	);
-}
-
-export function TuGroupLabel({ children }: { children: string }) {
-	return (
-		<Box pt="stack" pb="row">
-			<TextBlock variant="listTitle" text={children} />
-		</Box>
 	);
 }
 
@@ -118,7 +110,7 @@ export function TuSection({
 	);
 }
 
-export function TuAmount({
+function TuAmount({
 	num,
 	unit,
 	accent,
@@ -256,31 +248,6 @@ export function TuNotice({ children }: { children: ReactNode }) {
 	);
 }
 
-export type TuPermItem = {
-	id: string;
-	icon: string;
-	title: string;
-	sub: string;
-	required?: boolean;
-};
-
-export function TuPermGroup({ items }: { items: TuPermItem[] }) {
-	const listItems: InfoListItem[] = items.map((item) => ({
-		id: item.id,
-		title: item.title,
-		sub: item.sub,
-		trailingLabel: item.required ? "필수" : "선택",
-		mediaLabel: item.title,
-		mediaIcon: getPermissionIcon(item.id),
-	}));
-
-	return (
-		<SectionCard>
-			<InfoList items={listItems} />
-		</SectionCard>
-	);
-}
-
 export type PermissionListItem = {
 	id: string;
 	title: string;
@@ -347,14 +314,6 @@ export function PermissionNotice({ children }: { children: ReactNode }) {
 				}
 			/>
 		</ContentSection>
-	);
-}
-
-export function TuRequiredChip({ required }: { required?: boolean }) {
-	return (
-		<Chip size="small" variant={required ? "solid" : "outlined"}>
-			{required ? "필수" : "선택"}
-		</Chip>
 	);
 }
 

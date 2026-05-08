@@ -1,7 +1,7 @@
 /**
  * Stage 6: registry 일괄 등록
  *   - packages/screen-specs/src/active-spec-list.ts: 30 imports + 30 entries × 2 maps
- *   - packages/screen-registry/src/index.ts: 30 screens entries
+ *   - packages/screen-registry/src/index.ts: 30 screen route entries
  *
  * 멱등 (re-run 시 이미 추가된 라인은 건너뜀).
  * pilot(billing-html-detail)는 이미 추가됐다고 가정 — skip.
@@ -92,11 +92,10 @@ function buildScreenEntries(gens: Gen[]): string {
 	return gens
 		.map((g) => `	{
 		id: "${g.htmlId}",
-		path: "/${g.htmlId}",
+		route: "/${g.htmlId}",
 		label: "${labelOverride[g.htmlId] ?? `[HTML] ${g.route.primary_task.slice(0, 18)}`}",
 		group: "billing-html",
-		spec: "spec/experimental/billing-from-html/${g.htmlId}.json",
-		renderSpec: "spec/experimental/billing-from-html/${g.htmlId}.sdui.json",
+		status: "experimental",
 		createdAt: "2026-05-06",
 	},`)
 		.join("\n");
@@ -152,11 +151,10 @@ function injectIntoIndex(gens: Gen[]) {
 	// Replace pilot section with full block
 	const pilotMarker = `	{
 		id: "billing-html-detail",
-		path: "/billing-html-detail",
+		route: "/billing-html-detail",
 		label: "[HTML] 청구 상세 및 변동 사유",
 		group: "billing-html",
-		spec: "spec/experimental/billing-from-html/billing-html-detail.json",
-		renderSpec: "spec/experimental/billing-from-html/billing-html-detail.sdui.json",
+		status: "experimental",
 		createdAt: "2026-05-06",
 	},`;
 	if (!content.includes(pilotMarker)) {

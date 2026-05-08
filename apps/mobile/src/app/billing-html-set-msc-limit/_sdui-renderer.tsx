@@ -55,7 +55,7 @@ export function BillingSetMscLimitScreen({
 	return <BillingLimitScreen spec={spec} routeId="billing-set-msc-limit" />;
 }
 
-export function BillingLimitScreen({
+function BillingLimitScreen({
 	spec,
 	routeId,
 }: {
