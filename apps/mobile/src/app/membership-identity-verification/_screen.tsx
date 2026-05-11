@@ -2,7 +2,7 @@
 
 import { IconChat, IconLock, IconMessage, IconMobile } from "@pxds/pxds-icons";
 import { type ReactNode, useState } from "react";
-import { SelectableList } from "@pxds/pxds-components/shared";
+import { SelectableList } from "@pxds/pxds-components/molecules";
 import {
   FlowContinueBar,
   FlowHero,

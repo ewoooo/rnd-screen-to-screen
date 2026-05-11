@@ -1,6 +1,6 @@
 import { Button, TextButton } from "@pxds/pxds-components/core";
 
-import { Checkbox } from "@pxds/pxds-components/shared";
+import { Checkbox } from "@pxds/pxds-components/molecules";
 import {
   DiscoveryActions,
   GlobalNavigationHeader,

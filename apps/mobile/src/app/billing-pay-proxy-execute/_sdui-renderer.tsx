@@ -5,7 +5,7 @@ import {
   type InfoListItem,
   SectionCard,
   StickyActionBar,
-} from "@pxds/pxds-components/shared";
+} from "@pxds/pxds-components/molecules";
 import { FlowHero, ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";

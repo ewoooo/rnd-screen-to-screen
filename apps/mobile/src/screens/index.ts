@@ -32,6 +32,8 @@ import membershipPersonalInfoRenderableSpec from "../app/membership-personal-inf
 import { screenRoute as membershipTermsConsentRoute } from "../app/membership-terms-consent/registry";
 import membershipTermsConsentSpec from "../app/membership-terms-consent/spec.json";
 import membershipTermsConsentRenderableSpec from "../app/membership-terms-consent/sdui.json";
+import { screenRoute as novaMbrPg0020Route } from "../app/NOVA-MBR-PG-002-0/registry";
+import novaMbrPg0020Spec from "../app/NOVA-MBR-PG-002-0/spec.json";
 import { screenRoute as ncFullDormancyAuthRoute } from "../app/nc-full-dormancy-auth/registry";
 import ncFullDormancyAuthSpec from "../app/nc-full-dormancy-auth/spec.json";
 import ncFullDormancyAuthRenderableSpec from "../app/nc-full-dormancy-auth/sdui.json";
@@ -353,6 +355,7 @@ export const screenRoutes = [
 	membershipLeaveReasonRoute,
 	membershipPersonalInfoRoute,
 	membershipTermsConsentRoute,
+	novaMbrPg0020Route,
 	ncFullDormancyAuthRoute,
 	ncFullDormancyLoginRoute,
 	ncFullDormancyResultRoute,
@@ -473,6 +476,7 @@ export const activeScreenSpecs = {
 	"membership-leave-reason": asScreenSpec(membershipLeaveReasonSpec),
 	"membership-personal-info": asScreenSpec(membershipPersonalInfoSpec),
 	"membership-terms-consent": asScreenSpec(membershipTermsConsentSpec),
+	"NOVA-MBR-PG-002-0": asScreenSpec(novaMbrPg0020Spec),
 	"nc-full-dormancy-auth": asScreenSpec(ncFullDormancyAuthSpec),
 	"nc-full-dormancy-login": asScreenSpec(ncFullDormancyLoginSpec),
 	"nc-full-dormancy-result": asScreenSpec(ncFullDormancyResultSpec),

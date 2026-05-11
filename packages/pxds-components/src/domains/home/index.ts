@@ -1,4 +1,4 @@
-export { AiAnnotation } from "./AiAnnotation";
+export { AiAnnotation } from "./ai-annotation";
 export { Banner } from "./banner";
 export {
 	HomeActionPairBlock,
@@ -7,6 +7,7 @@ export {
 	HomeHeroBlock,
 	HomeInfoBlock,
 } from "./block";
-export { ListRow } from "./ListRow";
-export { MyEditButton } from "./MyEditButton";
-export { PillChip, StatBadge } from "./Badges";
+export { ListRow } from "./list-row";
+export { MyEditButton } from "./my-edit-button";
+export { PillChip, StatBadge } from "./badges";
+export { homeRegistryEntries } from "./home.registry";

@@ -1,12 +1,12 @@
 "use client";
 
-import { FilterTabs } from "@pxds/pxds-components/shared";
+import { FilterTabs } from "@pxds/pxds-components/molecules";
 import {
   InfoList,
   type InfoListItem,
   SectionCard,
   StickyActionBar,
-} from "@pxds/pxds-components/shared";
+} from "@pxds/pxds-components/molecules";
 import { FlowHero, ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";

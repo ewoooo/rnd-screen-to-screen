@@ -44,7 +44,7 @@
 - `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component/policy registry 탐색, Figma export 요청, spec 조회 UI를 소유한다.
 - `@pxds/pxds-tokens` — 런타임 시각 token 값의 SSOT. WDS theme 값을 흡수하고 CSS/token export를 제공한다.
 - `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry.
-- `@pxds/pxds-components` — WDS core re-export, atoms/typography, atoms/feedback, shared/global/domain 컴포넌트, 구현 세부 없는 component vocabulary registry. 모바일 화면에서 쓰는 컴포넌트 어휘는 이 패키지가 소유한다.
+- `@pxds/pxds-components` — WDS core re-export, atoms/typography, atoms/feedback, molecules, shared/global/domain 컴포넌트, 구현 세부 없는 component vocabulary registry. 모바일 화면에서 쓰는 컴포넌트 어휘는 이 패키지가 소유한다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge.
 - `@pxds/pxds-preview` — 모바일 iframe/view frame helper. 실제 화면 layout runtime을 소유하지 않는다.
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma capture/hooks/spec authoring.
@@ -60,7 +60,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
 - WDS icon은 `@pxds/pxds-icons`를 통해 소비한다.
 - token 값은 `@pxds/pxds-tokens`와 generated CSS를 통해 소비한다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
-- `apps/mobile` 아래에 `src/components`를 두지 않는다. 화면 route는 `@pxds/pxds-components/shared`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-layout/*`를 직접 소비한다.
+- `apps/mobile` 아래에 `src/components`를 두지 않는다. 화면 route는 `@pxds/pxds-components/molecules`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-layout/*`를 직접 소비한다.
 - `@pxds/pxds-components`는 모바일 shared/domain 구현을 위해 `@pxds/pxds-layout`을 의존할 수 있다.
 - `@screen/mobile/screens`, `@policy/*`, `registry/`는 런타임 UI 의존성 없는 메타/문서 도메인을 유지한다.
 

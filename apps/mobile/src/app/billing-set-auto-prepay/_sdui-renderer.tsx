@@ -1,14 +1,14 @@
 "use client";
 
-import { FormField, Switch, TextField } from "@pxds/pxds-components/shared";
+import { FormField, Switch, TextField } from "@pxds/pxds-components/molecules";
 import { VStack } from "@pxds/pxds-layout/primitives";
 import {
   type ChipItem,
   NoticeBlock,
   SectionCard,
   StickyActionBar,
-} from "@pxds/pxds-components/shared";
-import { ChipGroup } from "@pxds/pxds-components/shared";
+} from "@pxds/pxds-components/molecules";
+import { ChipGroup } from "@pxds/pxds-components/molecules";
 import { FlowHero, ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import { evalVisibleWhen } from "@/lib/visible-when";

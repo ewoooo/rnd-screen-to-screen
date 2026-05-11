@@ -1,6 +1,6 @@
 "use client";
 
-import { Switch, TextField } from "@pxds/pxds-components/shared";
+import { Switch, TextField } from "@pxds/pxds-components/molecules";
 import { VStack } from "@pxds/pxds-layout/primitives";
 import {
   NoticeBlock,
@@ -8,8 +8,8 @@ import {
   type SelectableItem,
   SelectableList,
   StickyActionBar,
-} from "@pxds/pxds-components/shared";
-import { FormField } from "@pxds/pxds-components/shared";
+} from "@pxds/pxds-components/molecules";
+import { FormField } from "@pxds/pxds-components/molecules";
 import { FlowHero, ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import { evalVisibleWhen } from "@/lib/visible-when";

@@ -3,13 +3,34 @@ import {
 	placeholderRegistryEntry,
 } from "./atoms/feedback/shared.registry";
 import {
+	checkListRegistryEntry,
+	chipGroupRegistryEntry,
+	consentListRegistryEntry,
+	descriptionListRegistryEntry,
 	filterTabsRegistryEntry,
 	formControlsRegistryEntry,
 	formFieldRegistryEntry,
+	infoListRegistryEntry,
+	infoSectionRegistryEntry,
 	mediaBlockRegistryEntry,
+	noticeBlockRegistryEntry,
+	primaryCtaBarRegistryEntry,
+	promoBlockRegistryEntry,
 	queryBarRegistryEntry,
+	sectionCardRegistryEntry,
 	selectFieldRegistryEntry,
-} from "./domains/shared/shared.registry";
+	selectableListRegistryEntry,
+	stickyActionBarRegistryEntry,
+	summaryCardRegistryEntry,
+	textFieldListRegistryEntry,
+} from "./molecules/molecules.registry";
+import { globalRegistryEntries } from "./domains/shared/global/global.registry";
+import { homeRegistryEntries } from "./domains/home/home.registry";
+import { mbrRegistryEntries } from "./domains/mbr/mbr.registry";
+import { ncSimpleRegistryEntries } from "./domains/nc-simple/nc-simple.registry";
+import { productRegistryEntries } from "./domains/product/product.registry";
+import { searchRegistryEntries } from "./domains/search/search.registry";
+import { tuRegistryEntries } from "./domains/tu/tu.registry";
 import { textBlockRegistryEntry } from "./atoms/typography/text-block/text-block.registry";
 import { wdsCoreRegistryEntries } from "./core/core.registry";
 
@@ -43,6 +64,10 @@ export type ComponentGroup =
 	| "nc-simple"
 	| "tu";
 
+export type PolicySlotBinding =
+	| "policy.copy.requirement"
+	| "policy.copy.error";
+
 /**
  * Component-level vocabulary record.
  *
@@ -59,6 +84,22 @@ export type ComponentRegistryEntry = {
 	group: ComponentGroup;
 	status: ComponentLifecycleStatus;
 	createdAt: `${number}-${number}-${number}`;
+	/**
+	 * Major atom/core/molecule component ids used to judge whether a component can
+	 * be reused. This is intentionally not a full implementation graph.
+	 */
+	composedOf?: readonly string[];
+	/**
+	 * External vocabulary aliases — Storyboard/Montage component names that map
+	 * to this entry. Used by the SB importer to resolve incoming part references.
+	 */
+	sbAliases?: readonly string[];
+	/**
+	 * Declares which slots of the component are automatically filled by policy
+	 * copy. The slot key matches the prop the component exposes (e.g. `hint`,
+	 * `error`); the value names the policy field bound to it.
+	 */
+	policySlots?: Readonly<Record<string, PolicySlotBinding>>;
 };
 
 export const componentRegistry = [
@@ -93,427 +134,27 @@ export const componentRegistry = [
 	selectFieldRegistryEntry,
 	formControlsRegistryEntry,
 	...wdsCoreRegistryEntries.filter((entry) => entry.layer === "molecule"),
-	{
-		id: "info-list",
-		name: "InfoList",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/info-list",
-		group: "layout",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "selectable-list",
-		name: "SelectableList",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/selectable-list",
-		group: "selection",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "consent-list",
-		name: "ConsentList",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/consent-list",
-		group: "selection",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "notice-block",
-		name: "NoticeBlock",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/notice-block",
-		group: "feedback",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "promo-block",
-		name: "PromoBlock",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/promo-block",
-		group: "media",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "section-card",
-		name: "SectionCard",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/section-card",
-		group: "layout",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "summary-card",
-		name: "SummaryCard",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/summary-card",
-		group: "layout",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "chip-group",
-		name: "ChipGroup",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/chip-group",
-		group: "selection",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "primary-cta-bar",
-		name: "PrimaryCTABar",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/cta-bar",
-		group: "navigation",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "sticky-action-bar",
-		name: "StickyActionBar",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/cta-bar",
-		group: "navigation",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
+	checkListRegistryEntry,
+	infoListRegistryEntry,
+	infoSectionRegistryEntry,
+	selectableListRegistryEntry,
+	consentListRegistryEntry,
+	descriptionListRegistryEntry,
+	noticeBlockRegistryEntry,
+	promoBlockRegistryEntry,
+	sectionCardRegistryEntry,
+	summaryCardRegistryEntry,
+	chipGroupRegistryEntry,
+	primaryCtaBarRegistryEntry,
+	stickyActionBarRegistryEntry,
+	textFieldListRegistryEntry,
 	...wdsCoreRegistryEntries.filter((entry) => entry.layer === "organism"),
-	{
-		id: "global-navigation-header",
-		name: "GlobalNavigationHeader",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "global-navigation-bar",
-		name: "GlobalNavigationBar",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "global-search",
-		name: "GlobalSearch",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "search",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "progress-top-bar",
-		name: "ProgressTopBar",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-hero",
-		name: "FlowHero",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-notice",
-		name: "FlowNotice",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-summary-card",
-		name: "FlowSummaryCard",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "terms-agreement-group",
-		name: "TermsAgreementGroup",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-personal-info-form",
-		name: "FlowPersonalInfoForm",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-reason-form",
-		name: "FlowReasonForm",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-continue-bar",
-		name: "FlowContinueBar",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "flow-result-actions",
-		name: "FlowResultActions",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/shared/global",
-		group: "global",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "home-block",
-		name: "HomeBlock",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/home",
-		group: "home",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "home-banner",
-		name: "Banner",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/home",
-		group: "home",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "home-list-row",
-		name: "ListRow",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/home",
-		group: "home",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "ai-annotation",
-		name: "AiAnnotation",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/home",
-		group: "home",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "my-edit-button",
-		name: "MyEditButton",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/home",
-		group: "home",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "product-shell",
-		name: "ProductShell",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/product",
-		group: "product",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "product-summary-card",
-		name: "ProductSummaryCard",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/product",
-		group: "product",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "product-option-selector",
-		name: "ProductOptionSelector",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/product",
-		group: "product",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "product-promo-banner",
-		name: "ProductPromoBanner",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/product",
-		group: "product",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "product-benefit-list",
-		name: "ProductBenefitList",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/product",
-		group: "product",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "product-purchase-bar",
-		name: "ProductPurchaseBar",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/product",
-		group: "product",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "search-result-tabs",
-		name: "SearchResultTabs",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/search",
-		group: "search",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "search-result-list",
-		name: "SearchResultList",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/search",
-		group: "search",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "search-promo-block",
-		name: "SearchPromoBlock",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/search",
-		group: "search",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "search-suggestion-chips",
-		name: "SearchSuggestionChips",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/search",
-		group: "search",
-		status: "active",
-		createdAt: "2026-04-30",
-	},
-	{
-		id: "auth-method-selector",
-		name: "AuthMethodSelector",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/nc-simple",
-		group: "nc-simple",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "login-form",
-		name: "LoginForm",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/nc-simple",
-		group: "nc-simple",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "leave-impact-checklist",
-		name: "LeaveImpactChecklist",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/nc-simple",
-		group: "nc-simple",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "final-consent-row",
-		name: "FinalConsentRow",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/nc-simple",
-		group: "nc-simple",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
-	{
-		id: "reused-info-list",
-		name: "ReusedInfoList",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/nc-simple",
-		group: "nc-simple",
-		status: "active",
-		createdAt: "2026-05-07",
-	},
+	...globalRegistryEntries,
+	...homeRegistryEntries,
+	...productRegistryEntries,
+	...searchRegistryEntries,
+	...ncSimpleRegistryEntries,
+	...mbrRegistryEntries,
 	{
 		id: "billing-html-screen",
 		name: "BillingHtmlScreen",
@@ -524,16 +165,7 @@ export const componentRegistry = [
 		status: "experimental",
 		createdAt: "2026-05-07",
 	},
-	{
-		id: "tu-domain",
-		name: "tu",
-		layer: "organism",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/tu",
-		group: "tu",
-		status: "experimental",
-		createdAt: "2026-04-30",
-	},
+	...tuRegistryEntries,
 	{
 		id: "app-screen",
 		name: "AppScreen",
@@ -613,6 +245,70 @@ export const componentCount = componentRegistry.length;
 
 export type ComponentRegistry = readonly ComponentRegistryEntry[];
 export type ComponentRegistryPatch = Partial<Omit<ComponentRegistryEntry, "id">>;
+export type ComponentReferenceRegistryEntry = {
+	id: ComponentId;
+	referencedBy: readonly ComponentId[];
+};
+
+export type ComponentReferenceRegistry =
+	readonly ComponentReferenceRegistryEntry[];
+
+export function createComponentReferenceRegistry(
+	registry: ComponentRegistry,
+): ComponentReferenceRegistry {
+	const componentIds = new Set(registry.map((component) => component.id));
+	const referencedBy = new Map<string, ComponentId[]>();
+
+	for (const component of registry) {
+		for (const referenceId of component.composedOf ?? []) {
+			if (!componentIds.has(referenceId)) continue;
+
+			const references = referencedBy.get(referenceId) ?? [];
+			if (!references.includes(component.id as ComponentId)) {
+				references.push(component.id as ComponentId);
+			}
+			referencedBy.set(referenceId, references);
+		}
+	}
+
+	return [...referencedBy.entries()].map(([id, references]) => ({
+		id: id as ComponentId,
+		referencedBy: references,
+	}));
+}
+
+export const componentReferenceRegistry =
+	createComponentReferenceRegistry(componentRegistry);
+
+export function findComponentBySbAlias(
+	registry: ComponentRegistry,
+	alias: string,
+) {
+	return registry.find((component) =>
+		component.sbAliases?.includes(alias),
+	);
+}
+
+export function getComponentBySbAlias(alias: string) {
+	return findComponentBySbAlias(componentRegistry, alias);
+}
+
+function assertUniqueSbAliases(registry: ComponentRegistry) {
+	const seen = new Map<string, string>();
+	for (const component of registry) {
+		for (const alias of component.sbAliases ?? []) {
+			const existing = seen.get(alias);
+			if (existing && existing !== component.id) {
+				throw new Error(
+					`SB alias "${alias}" is claimed by both "${existing}" and "${component.id}"`,
+				);
+			}
+			seen.set(alias, component.id);
+		}
+	}
+}
+
+assertUniqueSbAliases(componentRegistry);
 
 function assertUniqueComponent(
 	registry: ComponentRegistry,
@@ -655,6 +351,15 @@ export function findComponentsByOwner(
 	return registry.filter((component) => component.owner === owner);
 }
 
+export function findComponentsReferencing(
+	registry: ComponentRegistry,
+	componentId: ComponentId | string,
+) {
+	return registry.filter((component) =>
+		component.composedOf?.includes(componentId),
+	);
+}
+
 export function getComponentById(id: ComponentId | string) {
 	return findComponentById(componentRegistry, id);
 }
@@ -669,6 +374,10 @@ export function getComponentsByGroup(group: ComponentGroup) {
 
 export function getComponentsByOwner(owner: ComponentOwner) {
 	return findComponentsByOwner(componentRegistry, owner);
+}
+
+export function getComponentsReferencing(componentId: ComponentId | string) {
+	return findComponentsReferencing(componentRegistry, componentId);
 }
 
 export function createComponent(

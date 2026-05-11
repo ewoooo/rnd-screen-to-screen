@@ -1,4 +1,5 @@
-export { SearchPromoBlock } from "./SearchPromoBlock";
-export { SearchResultList } from "./SearchResultList";
-export { SearchResultTabs } from "./SearchResultTabs";
-export { SearchSuggestionChips } from "./SearchSuggestionChips";
+export { SearchPromoBlock } from "./search-promo-block";
+export { SearchResultList } from "./search-result-list";
+export { SearchResultTabs } from "./search-result-tabs";
+export { SearchSuggestionChips } from "./search-suggestion-chips";
+export { searchRegistryEntries } from "./search.registry";

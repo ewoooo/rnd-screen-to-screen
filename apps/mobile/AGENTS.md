@@ -42,29 +42,30 @@ WDS primitive
   ↓
 atoms
   ↓
-domains/shared + domains/<domain>
+molecules + domains/shared/global + domains/<domain>
   ↓
 templates + screen
 ```
 
 - `atoms` — 도메인 없는 최소 부품. `@pxds/pxds-layout/primitives`, `@pxds/pxds-components/atoms/feedback`, `@pxds/pxds-components/atoms/typography`, `@pxds/pxds-components/core`, `@pxds/pxds-icons`.
-- `domains/shared` — 도메인 독립 조합 패턴. `InfoList`, `SelectableList`, `ConsentList`, `PromoBlock`, `NoticeBlock`, `SectionCard`, `SummaryCard`, `ChipGroup`, `PrimaryCTABar`, `StickyActionBar` 등은 `@pxds/pxds-components/shared`가 소유한다.
+- `molecules` — 도메인 독립 조합 패턴. `InfoList`, `SelectableList`, `ConsentList`, `PromoBlock`, `NoticeBlock`, `SectionCard`, `SummaryCard`, `ChipGroup`, `PrimaryCTABar`, `StickyActionBar` 등은 `@pxds/pxds-components/molecules`가 소유한다.
 - `domains/shared/global` — 여러 화면이 공유하는 전역 chrome/flow section. `@pxds/pxds-components/shared/global`가 소유한다.
 - `domains/<domain>` — 화면 영역 단위 도메인 wrapper. `home`, `product`, `search`, `tu` 등은 `@pxds/pxds-components/<domain>`가 소유한다.
 - `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/pxds-layout/app-screen`, `@pxds/pxds-layout/bottom-sheet`.
 
 허용 import:
 
-- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-components/shared`
-- domain → shared, atoms, WDS core
-- shared → atoms, WDS core
+- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-components/molecules`
+- domain → molecules, shared/global, atoms, WDS core
+- molecules → atoms, WDS core
+- shared/global → molecules, atoms, WDS core
 - atoms → WDS core 가능하지만 최소화
 
 금지 import:
 
-- shared → domain
+- molecules → domain
 - home ↔ product 같은 도메인 교차 import
-- atoms → shared / domain / templates
+- atoms → molecules / shared/global / domain / templates
 - 앱 아래에 `src/components` 또는 component shim을 다시 만들기
 - screen에서 WDS primitive를 직접 대량 사용
 
@@ -89,7 +90,7 @@ templates + screen
 1. `@pxds/pxds-components/registry`에서 현재 어휘와 소유 패키지를 확인한다.
 2. 기존 domain 컴포넌트로 표현 가능한지 본다.
 3. 부족하면 먼저 molecules 조합으로 표현 가능한지 본다.
-4. 같은 WDS 조합이 반복되면 `@pxds/pxds-components/shared`로 승격한다.
+4. 같은 WDS 조합이 반복되면 `@pxds/pxds-components/molecules`로 승격한다.
 5. 도메인 이름과 데이터 구조가 필요한 부분만 해당 domain에 둔다.
 6. 기존 컴포넌트에 새 variant/slot을 추가하기 전에 더 일반적인 molecule 축이 있는지 검토한다.
 

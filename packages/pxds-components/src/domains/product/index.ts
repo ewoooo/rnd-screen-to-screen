@@ -1,7 +1,8 @@
-export { ProductBenefitList } from "./ProductBenefitList";
-export { ProductOptionSelector } from "./ProductOptionSelector";
-export { ProductPromoBanner } from "./ProductPromoBanner";
-export { ProductPurchaseBar } from "./ProductPurchaseBar";
-export { ProductShell } from "./ProductShell";
-export { ProductSummaryCard } from "./ProductSummaryCard";
+export { ProductBenefitList } from "./product-benefit-list";
+export { ProductOptionSelector } from "./product-option-selector";
+export { ProductPromoBanner } from "./product-promo-banner";
+export { ProductPurchaseBar } from "./product-purchase-bar";
+export { ProductShell } from "./product-shell";
+export { ProductSummaryCard } from "./product-summary-card";
 export type { ProductTextPolicy, ProductTextPolicyMap } from "./types";
+export { productRegistryEntries } from "./product.registry";

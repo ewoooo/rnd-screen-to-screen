@@ -5,7 +5,7 @@ import {
 	mediaBlockFigmaSpec as mediaBlockComponentFigmaSpec,
 	queryBarFigmaSpec as queryBarComponentFigmaSpec,
 	selectFieldFigmaSpec as selectFieldComponentFigmaSpec,
-} from "@pxds/pxds-components/shared";
+} from "@pxds/pxds-components/molecules";
 
 export const infoListRowFigmaSpec = {
 	$schema: "component-spec-v1",

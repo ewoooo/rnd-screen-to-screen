@@ -1,4 +1,4 @@
-import { PrimaryCTABar } from "@pxds/pxds-components/shared";
+import { PrimaryCTABar } from "@pxds/pxds-components/molecules";
 import { GlobalCloseHeader } from "@pxds/pxds-components/shared/global";
 import {
   PermissionIntro,

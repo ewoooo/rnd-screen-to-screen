@@ -34,3 +34,12 @@ export type EvidenceRef = {
 	summary: string;
 };
 
+export {
+	definePolicy,
+	assertPolicyDrift,
+	type PolicyCopy,
+	type PolicyDefinition,
+	type PolicyDriftReport,
+	type PolicySourceRefShape,
+} from "./policy";
+

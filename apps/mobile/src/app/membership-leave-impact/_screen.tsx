@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Checkbox } from "@pxds/pxds-components/shared";
+import { Checkbox } from "@pxds/pxds-components/molecules";
 import {
   FlowContinueBar,
   FlowHero,

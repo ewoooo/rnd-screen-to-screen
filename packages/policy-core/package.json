@@ -4,6 +4,10 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./policies": "./policies/index.ts"
+	},
+	"scripts": {
+		"check:compliance": "node scripts/compliance-check.mjs"
 	}
 }

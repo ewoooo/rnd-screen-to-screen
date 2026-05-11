@@ -1,0 +1,22 @@
+export const tuDomainRegistryEntry = {
+	id: "tu-domain",
+	name: "tu",
+	layer: "organism",
+	owner: "@pxds/pxds-components",
+	importPath: "@pxds/pxds-components/tu",
+	group: "tu",
+	status: "experimental",
+	createdAt: "2026-04-30",
+	composedOf: [
+		"content-section",
+		"section-card",
+		"info-list",
+		"notice-block",
+		"promo-block",
+		"wds-card",
+		"wds-card-content",
+		"placeholder",
+		"text-block",
+		"layout-primitives",
+	],
+} as const;

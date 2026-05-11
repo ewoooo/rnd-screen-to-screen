@@ -1,4 +1,4 @@
-import { Card, CardContent, SectionMessage } from "@pxds/pxds-components/core";
+import { Card, CardContent } from "@pxds/pxds-components/core";
 import {
 	IconBell,
 	IconGlobe,
@@ -12,11 +12,14 @@ import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import {
 	InfoList,
+	NoticeBlock,
 	type InfoListItem,
 	PromoBlock,
 	SectionCard,
-} from "../shared";
+} from "../../molecules";
 import { ContentSection } from "@pxds/pxds-layout/app-screen";
+
+export { tuRegistryEntries } from "./tu.registry";
 
 export function TuDisplay({
 	children,
@@ -232,16 +235,7 @@ export function TuNotice({ children }: { children: ReactNode }) {
 	return (
 		<ContentSection>
 			<Box pb="section">
-				<SectionMessage
-					variant="info"
-					description={
-						<TextBlock
-							variant="caption"
-							text={String(children)}
-							color="semantic.label.alternative"
-						/>
-					}
-				/>
+				<NoticeBlock text={String(children)} tone="info" />
 			</Box>
 		</ContentSection>
 	);
@@ -302,16 +296,7 @@ export function PermissionList({
 export function PermissionNotice({ children }: { children: ReactNode }) {
 	return (
 		<ContentSection>
-			<SectionMessage
-				variant="info"
-				description={
-					<TextBlock
-						variant="caption"
-						text={String(children)}
-						color="semantic.label.alternative"
-					/>
-				}
-			/>
+			<NoticeBlock text={String(children)} tone="info" />
 		</ContentSection>
 	);
 }

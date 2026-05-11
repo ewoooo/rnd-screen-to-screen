@@ -5,7 +5,7 @@ import { HStack, VStack } from "@pxds/pxds-layout/primitives";
 import { Divider } from "@pxds/pxds-components/atoms/feedback";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 
-import { AiAnnotation } from "../AiAnnotation";
+import { AiAnnotation } from "../ai-annotation";
 import { HomeBlockHeader } from "./HomeBlockHeader";
 
 /**
