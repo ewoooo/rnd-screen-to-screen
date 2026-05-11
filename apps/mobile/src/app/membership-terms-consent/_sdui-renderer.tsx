@@ -10,7 +10,7 @@ import {
   type TermsAgreementItem,
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1, SDUIJsonValue } from "@screen/specs";
+import type { RenderableScreenSpecV1, SDUIJsonValue } from "@/screens";
 type JsonObject = Record<string, SDUIJsonValue>;
 type HeroData = {
   eyebrow: string;

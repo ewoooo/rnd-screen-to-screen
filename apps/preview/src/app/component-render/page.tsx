@@ -1,4 +1,4 @@
-import { componentRegistry } from "@pxds/component-registry";
+import { componentRegistry } from "@pxds/pxds-components/registry";
 import { redirect } from "next/navigation";
 
 export default function ComponentRenderRoutePage() {

@@ -1,4 +1,4 @@
-import { activeRenderableScreenSpecs } from "@screen/specs";
+import { activeRenderableScreenSpecs } from "@/screens";
 
 import { NcSimpleDormancyAuthScreen } from "./_sdui-renderer";
 

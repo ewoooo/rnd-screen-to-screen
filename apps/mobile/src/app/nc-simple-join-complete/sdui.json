@@ -1,0 +1,296 @@
+{
+  "version": "1.0.0",
+  "minRendererVersion": "0.1.0",
+  "minComponentsVersion": "0.1.0",
+  "metadata": {
+    "id": "nc-simple-join-complete",
+    "name": "회원 가입 - 완료",
+    "route": "/nc-simple-join-complete",
+    "domain": "nc-simple",
+    "type": "page",
+    "status": "active"
+  },
+  "theme": {
+    "color": {
+      "primary": "semantic.primary.normal",
+      "page": "semantic.surface.page.normal"
+    }
+  },
+  "data": {
+    "topbar": {
+      "title": "가입 완료",
+      "progressLabel": "4/4",
+      "progressPercent": 100,
+      "showProgressLabel": false
+    },
+    "hero": {
+      "titleLines": [
+        "회원 가입이",
+        "완료되었습니다"
+      ],
+      "description": "지금부터 모든 서비스를 이용하실 수 있어요."
+    },
+    "summary": {
+      "label": "가입 정보",
+      "items": [
+        {
+          "id": "joined-at",
+          "title": "가입 일시",
+          "trailingLabel": "2026-04-30 19:24"
+        },
+        {
+          "id": "channel",
+          "title": "가입 채널",
+          "trailingLabel": "앱"
+        },
+        {
+          "id": "id",
+          "title": "아이디",
+          "trailingLabel": "···"
+        }
+      ]
+    },
+    "actions": {
+      "primaryLabel": "홈으로 시작하기",
+      "secondaryLabel": "내 정보 보기"
+    }
+  },
+  "x_pagination": {
+    "_canonical": "apps/mobile/src/screens/spec-source/active/nc-simple/_pagination/nc-simple-join.json",
+    "_canonical_hash": "3cbe13f2495b0385d29e0f7a97faaa46d15d26685493cd9ae2b613bd576b63c7",
+    "policy_id": "nc-simple-join",
+    "use_case_id": "US-MBR-CS-001",
+    "route": {
+      "id": "nc-simple-join-complete",
+      "type": "result",
+      "primary_task": "가입 완료 안내",
+      "predecessor": "nc-simple-join-auth",
+      "successor": null,
+      "step_fraction": "4/4"
+    },
+    "transitions": [
+      {
+        "from": "nc-simple-join-auth",
+        "to": "nc-simple-join-complete",
+        "trigger": "BSS 가입 처리 성공",
+        "guard": "POL-MBR-ACCT-001-09 + POL-MBR-SESS-001"
+      }
+    ]
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "docs/NC_정책서_간소화_v1.0_확정본.md §4.가.1) PR-MBR-CS-001-04/05",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.15-19)"
+      ]
+    },
+    "process": {
+      "id": "PR-MBR-CS-001-05",
+      "name": "가입 처리 + 결과 안내",
+      "cluster": "US-MBR-CS-001 회원 가입 4/4",
+      "actor": "BSS, 고객",
+      "entry_condition": "본인인증 SUCCESS + 가입 가능 판정",
+      "exit_condition": "정회원 세션 생성 + 화면 안내",
+      "predecessor": [
+        "PR-MBR-CS-001-03"
+      ],
+      "successor": [],
+      "related_policies": [
+        "PG-MBR-JOIN-001",
+        "PG-MBR-ACCT-001",
+        "PG-MBR-PROF-001",
+        "PG-MBR-SESS-001"
+      ]
+    },
+    "purpose": "BSS 처리 결과를 안내하고 정회원 세션으로 전환한다.",
+    "system_inputs_to_user": [
+      "완료 메시지",
+      "가입 일시",
+      "후속 이동 경로"
+    ],
+    "user_inputs": [
+      "홈으로 이동"
+    ],
+    "system_outputs": [
+      "세션 토큰",
+      "가입 이력"
+    ],
+    "branches": [
+      "가입 가능 → 정회원 세션 진입"
+    ],
+    "exceptions": [
+      "계정 생성 실패 → 롤백/재시도",
+      "세션 생성 실패 → 재로그인 유도"
+    ],
+    "design_signals": {
+      "primary_block": "hero + summary + 1차/2차 CTA",
+      "cta_intent": "홈으로 시작하기"
+    }
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "완료 확인 + 홈 진입",
+    "info_hierarchy": [
+      "hero",
+      "summary",
+      "action"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card"
+  },
+  "x_screenContract": {
+    "screen_contract": {
+      "shell": "AppScreen",
+      "slots": {
+        "top": {
+          "owner": "MembershipShell",
+          "patterns": [
+            "MembershipTopBar"
+          ],
+          "flow": "reserved"
+        },
+        "content": {
+          "owner": "ContentList",
+          "patterns": [
+            "MembershipHero",
+            "MembershipSummaryCard"
+          ]
+        },
+        "bottom": {
+          "owner": "MembershipShell",
+          "patterns": [
+            "MembershipResultActions"
+          ],
+          "flow": "reserved"
+        }
+      }
+    },
+    "layout_contract": {
+      "content_outlet_inline_inset": "spacing-12",
+      "section_inset": "inherit",
+      "content_gap": "spacing-4",
+      "content_gap_owner": "ContentList",
+      "top_bottom_flow": "reserved",
+      "bleed_sections": []
+    },
+    "areas": [
+      {
+        "id": "hero",
+        "slot": "content",
+        "pattern": "organisms/membership/MembershipHero",
+        "uses": [
+          "TextBlock"
+        ],
+        "content_role": "primary-copy"
+      },
+      {
+        "id": "summary",
+        "slot": "content",
+        "pattern": "organisms/membership/MembershipSummaryCard",
+        "uses": [
+          "SectionCard",
+          "InfoList"
+        ],
+        "content_role": "supporting"
+      },
+      {
+        "id": "actions",
+        "slot": "bottom",
+        "pattern": "organisms/membership/MembershipResultActions",
+        "uses": [
+          "Button"
+        ],
+        "content_role": "primary-action"
+      }
+    ],
+    "design_system_contract": {
+      "templates": [
+        "AppScreen",
+        "ContentList",
+        "ContentSection"
+      ],
+      "organisms": [
+        "membership"
+      ],
+      "molecules": [
+        "SectionCard",
+        "InfoList"
+      ],
+      "atoms": [
+        "TextBlock"
+      ],
+      "allowed_escape_hatches": [],
+      "new_vocabulary_required": []
+    }
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "pass",
+        "evidence": "card 1개"
+      },
+      {
+        "rule": "H-2",
+        "result": "pass",
+        "evidence": "hero/summary 의미 분리"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "dead-end → leading=close"
+      }
+    ]
+  },
+  "x_benchmark": {
+    "criteria": [
+      "design.componentConsistency",
+      "planning.flowCompleteness"
+    ],
+    "guards": [
+      "guard.specImplementationMismatch"
+    ]
+  },
+  "children": [
+    {
+      "type": "AppScreen",
+      "id": "screen.nc-simple-join-complete",
+      "componentVersion": "0.1.0",
+      "props": {
+        "top": {
+          "type": "MembershipTopBar",
+          "id": "slot.top",
+          "props": {
+            "bind": "topbar",
+            "leading": "close"
+          }
+        },
+        "bottom": {
+          "type": "MembershipResultActions",
+          "id": "area.actions",
+          "props": {
+            "bind": "actions"
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "MembershipHero",
+          "id": "area.hero",
+          "props": {
+            "bind": "hero"
+          }
+        },
+        {
+          "type": "MembershipSummaryCard",
+          "id": "area.summary",
+          "props": {
+            "bind": "summary"
+          }
+        }
+      ]
+    }
+  ]
+}

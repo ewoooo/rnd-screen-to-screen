@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getComponentById } from "@pxds/component-registry";
+import { getComponentById } from "@pxds/pxds-components/registry";
 
 import { ComponentExampleMissing } from "@/components/preview/render-view/component/ComponentExampleMissing";
 import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";

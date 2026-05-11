@@ -1,0 +1,496 @@
+{
+  "version": "1.0.0",
+  "minRendererVersion": "0.1.0",
+  "minComponentsVersion": "0.1.0",
+  "metadata": {
+    "id": "billing-pay-third-party-consent",
+    "name": "타인 명의 납부수단 동의",
+    "route": "/billing-pay-third-party-consent",
+    "domain": "billing",
+    "type": "page",
+    "status": "spec-only"
+  },
+  "theme": {
+    "color": {
+      "primary": "semantic.primary.normal",
+      "page": "semantic.surface.page.normal"
+    }
+  },
+  "data": {
+    "flow": {
+      "useCase": "US-BIL-PAY-006",
+      "name": "타인 명의 동의",
+      "step": 6,
+      "total": 8,
+      "progress": "타인 명의 동의 6/8"
+    },
+    "hero": {
+      "titleLines": [
+        "명의자 동의가 필요해요"
+      ],
+      "description": "선택한 납부수단이 본인 명의가 아니라 명의자에게 동의를 받아야 해요. 동의가 확인되면 납부 단계로 다시 돌아가요."
+    },
+    "notice": {
+      "tone": "warning",
+      "title": "타인 명의 사용 안내",
+      "body": "명의자 동의 없이 결제하면 결제기관이 결제를 차단하거나 추후 분쟁으로 이어질 수 있어요. 명의자 본인이 직접 동의 인증을 진행해 주세요."
+    },
+    "info": {
+      "label": "사용할 납부수단",
+      "items": [
+        {
+          "id": "method",
+          "label": "납부수단",
+          "value": "신용카드 (****-****-****-9876)"
+        },
+        {
+          "id": "owner",
+          "label": "명의자",
+          "value": "박** (***-1234)"
+        },
+        {
+          "id": "scope",
+          "label": "동의 범위",
+          "value": "1회 결제, 24시간 이내"
+        }
+      ]
+    },
+    "consents": {
+      "selectionMode": "multi",
+      "items": [
+        {
+          "id": "ownerCheck",
+          "title": "명의자 본인이 직접 동의 절차를 진행해요",
+          "required": true,
+          "defaultChecked": false
+        },
+        {
+          "id": "scopeCheck",
+          "title": "이번 결제 1회에 한해 사용한다는 점을 이해했어요",
+          "required": true,
+          "defaultChecked": false
+        },
+        {
+          "id": "logCheck",
+          "title": "동의 증적이 저장된다는 점을 이해했어요",
+          "required": true,
+          "defaultChecked": false
+        }
+      ]
+    },
+    "continue": {
+      "eyebrow": "모든 항목 확인 시 명의자 인증으로 이동",
+      "primaryAction": "명의자 인증"
+    }
+  },
+  "children": [
+    {
+      "type": "AppScreen",
+      "id": "screen.billing-pay-third-party-consent",
+      "componentVersion": "0.1.0",
+      "props": {
+        "top": {
+          "type": "GlobalNavigationHeader",
+          "id": "slot.top",
+          "props": {
+            "title": "타인 명의 동의",
+            "leading": "back",
+            "progressBind": "flow.progress",
+            "progressTotal": 8,
+            "progressStep": 6
+          }
+        },
+        "bottom": {
+          "type": "StickyActionBar",
+          "id": "area.continue",
+          "props": {
+            "bind": "continue",
+            "primaryDisabledWhen": "consents.allChecked == false"
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "ContentSection",
+          "id": "area.hero",
+          "children": [
+            {
+              "type": "TextBlock",
+              "id": "hero.title",
+              "props": {
+                "bind": "hero.titleLines",
+                "variant": "displayTitle",
+                "overflow": "wrap"
+              }
+            },
+            {
+              "type": "ContentRail",
+              "id": "hero.description.rail",
+              "props": {
+                "rail": "measure",
+                "measure": "body"
+              },
+              "children": [
+                {
+                  "type": "TextBlock",
+                  "id": "hero.description",
+                  "props": {
+                    "bind": "hero.description",
+                    "variant": "bodySubtle",
+                    "maxLines": 3,
+                    "overflow": "wrap"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ContentSection",
+          "id": "area.notice",
+          "children": [
+            {
+              "type": "NoticeBlock",
+              "id": "notice.block",
+              "props": {
+                "bind": "notice",
+                "tone": "warning"
+              }
+            }
+          ]
+        },
+        {
+          "type": "ContentSection",
+          "id": "area.info",
+          "children": [
+            {
+              "type": "TextBlock",
+              "id": "info.label",
+              "props": {
+                "bind": "info.label",
+                "variant": "sectionLabel"
+              }
+            },
+            {
+              "type": "InfoList",
+              "id": "info.list",
+              "props": {
+                "bind": "info",
+                "trailingSemantic": "value"
+              }
+            }
+          ]
+        },
+        {
+          "type": "ContentSection",
+          "id": "area.consents",
+          "children": [
+            {
+              "type": "ConsentList",
+              "id": "consents.list",
+              "props": {
+                "bind": "consents",
+                "selectionMode": "multi"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "x_pagination": {
+    "_canonical": "apps/mobile/src/screens/spec-source/active/billing/_pagination/billing-pay.json",
+    "_canonical_hash": "d3a099698e95beeaf0f5e2e00d3b1d875602fa12e9974510e51afeef4f6a64d3",
+    "policy_id": "billing-pay",
+    "route_id": "billing-pay-third-party-consent",
+    "step_fraction": "6/8",
+    "predecessor": null,
+    "successor": null,
+    "transitions": [
+      {
+        "to": "billing-pay-confirm",
+        "trigger": "system",
+        "guard": "consent_granted"
+      }
+    ]
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "PR-BIL-PAY-006-01",
+        "PR-BIL-PAY-006-02",
+        "PR-BIL-PAY-006-03",
+        "docs/정책서-Full-청구관리및요금수납_정책서.md#L7522-L8040"
+      ]
+    },
+    "process": {
+      "id": "PR-BIL-PAY-006-01,02,03",
+      "name": "타인 명의 확인 + 동의 요청 + 결과 반영",
+      "cluster": "US-BIL-PAY-006 6/8",
+      "actor": "납부 실행자, 납부수단 명의자",
+      "entry_condition": "타인 명의 납부수단 사용 의도 감지",
+      "exit_condition": "동의 결과 반영 + 다음 단계 라우팅",
+      "predecessor": [],
+      "successor": [
+        "PR-BIL-PAY-001-03"
+      ],
+      "related_functions": [
+        "FN-BIL-PAY-003 인증·동의"
+      ],
+      "related_policies": [
+        "POL-BIL-AUTH-001-07 명의 확인",
+        "POL-BIL-AUTH-001-08 고위험 추가 인증",
+        "POL-BIL-SEC-001-04 민감정보 재확인 인증",
+        "POL-BIL-SEC-001-02 마스킹"
+      ]
+    },
+    "purpose": "타인 명의 납부수단 사용 시 명의자 동의·인증을 받고 동의 결과를 반영해 다음 단계로 진행한다.",
+    "system_inputs_to_user": [
+      "수단 마스킹",
+      "명의자 마스킹",
+      "동의 범위",
+      "동의 항목"
+    ],
+    "user_inputs": [
+      "필수 동의 체크 (명의자가 직접)",
+      "명의자 인증 CTA"
+    ],
+    "system_outputs": [
+      "동의 증적",
+      "다음 라우팅"
+    ],
+    "branches": [
+      "전 항목 동의 + 인증 통과 → confirm",
+      "거부/실패 → method 재선택"
+    ],
+    "exceptions": [
+      "명의자 인증 실패",
+      "동의 증적 저장 실패"
+    ],
+    "design_signals": {
+      "primary_block": "NoticeBlock + InfoList(수단/명의자) + ConsentList",
+      "hero_intent": "동의 필요 인지",
+      "cta_intent": "명의자 인증"
+    },
+    "evidence_refs": [
+      {
+        "claim": "process entry/exit",
+        "policy": "PR-BIL-PAY-006-01",
+        "doc_line": "L7525-L7540"
+      },
+      {
+        "claim": "동의 요청",
+        "policy": "PR-BIL-PAY-006-02",
+        "doc_line": "L7657-L7670"
+      },
+      {
+        "claim": "결과 반영",
+        "policy": "PR-BIL-PAY-006-03",
+        "doc_line": "L7871-L7880"
+      },
+      {
+        "claim": "타인 명의 동의 필수",
+        "policy": "POL-BIL-AUTH-001-07",
+        "doc_line": "L4577"
+      },
+      {
+        "claim": "민감정보 재확인 인증",
+        "policy": "POL-BIL-SEC-001-04",
+        "doc_line": "L4620"
+      }
+    ]
+  },
+  "x_interfacePlan": {
+    "genre": "form",
+    "primary_task": "명의자 동의 항목 체크 + 인증 진입",
+    "user_decision": "명의자 동의를 진행할지",
+    "hierarchy": {
+      "top": "progress",
+      "lead": "short_action_title",
+      "body": "warning_notice + masked_info + consent_list",
+      "bottom": "primary_cta"
+    },
+    "copy_policy": {
+      "title_style": "short_action",
+      "description_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "interaction_pattern": {
+      "main_control": "consent_list_multi",
+      "cta_position": "bottom_chrome",
+      "progress_position": "top_chrome"
+    },
+    "info_hierarchy": [
+      "hero",
+      "warning-notice",
+      "context-info",
+      "consent (필수)",
+      "primary-action"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "flat",
+    "quality_checks": [
+      "명의자 마스킹",
+      "필수 동의 미체크 시 CTA 비활성",
+      "warning 안내가 폼 위에 있음(H-8)"
+    ]
+  },
+  "x_screenContract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "ContentSection",
+          "TextBlock",
+          "NoticeBlock",
+          "InfoList",
+          "ConsentList"
+        ]
+      },
+      "bottom": {
+        "owner": "StickyActionBar",
+        "flow": "reserved"
+      }
+    },
+    "layout_contract": {
+      "content_outlet_inline_inset": "spacing-12",
+      "section_inset": "inherit",
+      "content_gap": "spacing-4",
+      "content_gap_owner": "ContentList",
+      "top_bottom_flow": "reserved",
+      "bleed_sections": [],
+      "content_rail_owner": "ContentRail"
+    },
+    "areas": [
+      {
+        "id": "top-progress",
+        "slot": "top",
+        "pattern": "organisms/global/GlobalNavigationHeader",
+        "uses": [
+          "TopNavigation",
+          "ProgressIndicator"
+        ],
+        "layout": {
+          "leading": "back"
+        },
+        "content_role": "flow-progress"
+      },
+      {
+        "id": "hero",
+        "slot": "content",
+        "pattern": "ContentSection + TextBlock",
+        "uses": [
+          "ContentSection",
+          "ContentRail",
+          "TextBlock"
+        ],
+        "content_role": "primary-copy"
+      },
+      {
+        "id": "notice",
+        "slot": "content",
+        "pattern": "molecules/NoticeBlock",
+        "uses": [
+          "ContentSection",
+          "NoticeBlock"
+        ],
+        "content_role": "warning-notice"
+      },
+      {
+        "id": "info",
+        "slot": "content",
+        "pattern": "molecules/InfoList",
+        "uses": [
+          "ContentSection",
+          "InfoList",
+          "TextBlock"
+        ],
+        "layout": {
+          "trailing_semantic": "value"
+        },
+        "content_role": "context-info"
+      },
+      {
+        "id": "consents",
+        "slot": "content",
+        "pattern": "molecules/ConsentList",
+        "uses": [
+          "ContentSection",
+          "ConsentList"
+        ],
+        "content_role": "required-input"
+      },
+      {
+        "id": "continue",
+        "slot": "bottom",
+        "pattern": "molecules/StickyActionBar",
+        "uses": [
+          "Button",
+          "TextBlock"
+        ],
+        "content_role": "primary-action",
+        "state_binding": {
+          "primary_disabled_when": "consents.allChecked == false"
+        }
+      }
+    ],
+    "design_system_contract": {
+      "templates": [
+        "AppScreen",
+        "ContentList",
+        "ContentSection",
+        "ContentRail"
+      ],
+      "organisms": [
+        "global"
+      ],
+      "molecules": [
+        "NoticeBlock",
+        "InfoList",
+        "ConsentList",
+        "StickyActionBar"
+      ],
+      "atoms": [
+        "TextBlock"
+      ],
+      "allowed_escape_hatches": [],
+      "new_vocabulary_required": []
+    }
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "step flow → back"
+      },
+      {
+        "rule": "H-8",
+        "result": "pass",
+        "evidence": "NoticeBlock은 폼 위 별도 영역, 폼 안에는 미사용"
+      },
+      {
+        "rule": "H-9",
+        "result": "pass",
+        "evidence": "* 미사용, ConsentList + CTA disabled로 표현"
+      },
+      {
+        "rule": "H-10",
+        "result": "pass",
+        "evidence": "InfoList trailing=value (수단·명의자·범위)"
+      },
+      {
+        "rule": "H-12",
+        "result": "pass",
+        "evidence": "ContentSection inset 사용"
+      }
+    ]
+  }
+}

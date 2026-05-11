@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getComponentById } from "@pxds/component-registry";
+import { getComponentById } from "@pxds/pxds-components/registry";
 
 import { ComponentPreview } from "@/components/preview/render-view/component/ComponentPreview";
 import { PreviewSidePanel } from "@/components/preview/side-panel/PreviewSidePanel";

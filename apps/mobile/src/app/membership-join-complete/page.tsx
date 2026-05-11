@@ -1,4 +1,4 @@
-import { activeRenderableScreenSpecs } from "@screen/specs";
+import { activeRenderableScreenSpecs } from "@/screens";
 import { IconBell, IconCalendar, IconPerson } from "@pxds/pxds-icons";
 import type { ReactNode } from "react";
 import {

@@ -12,7 +12,9 @@
 		"./core/global.css": "./src/core/global.css",
 		"./feedback": "./src/feedback/index.ts",
 		"./patterns": "./src/patterns/index.ts",
-		"./typography": "./src/typography/index.ts"
+		"./registry": "./src/registry.ts",
+		"./typography": "./src/typography/index.ts",
+		"./typography/text-block": "./src/typography/text-block/index.ts"
 	},
 	"dependencies": {
 		"@pxds/pxds-tokens": "0.1.0",

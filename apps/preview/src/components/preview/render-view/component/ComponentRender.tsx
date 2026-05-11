@@ -1,7 +1,7 @@
 "use client";
 
 import { lazy, Suspense } from "react";
-import type { ComponentRegistryEntry } from "@pxds/component-registry";
+import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
 
 import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
 

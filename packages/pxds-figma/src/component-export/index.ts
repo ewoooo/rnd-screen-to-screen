@@ -3,7 +3,11 @@ export {
 	createComponentFigmaExportPayload,
 	normalizeComponentFigmaExportSpecs,
 } from "./plugin-build-code";
-export { createPxdsFigmaTokens } from "./pxds-token-adapter";
+export {
+	createPxdsFigmaTokenTree,
+	createPxdsFigmaTokens,
+} from "./pxds-token-adapter";
+export type { PxdsFigmaTokenTree } from "./pxds-token-adapter";
 export type {
 	ComponentFigmaBuildCodeOptions,
 	ComponentFigmaExportPayload,

@@ -11,7 +11,7 @@ import {
   type AuthMethodItem,
 } from "@/components/organisms/nc-simple";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type TopbarData = {
   title: string;
   progressLabel?: string;

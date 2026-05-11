@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import type { ScreenRoute } from "@screen/registry";
+import type { ScreenRoute } from "@screen/mobile/screens";
 
 import { usePageGroups } from "@/hooks/use-page-groups";
 import type { PageGroups } from "@/utils/page-groups";
@@ -24,7 +24,7 @@ export function PageRegistryProvider({ children }: { children: ReactNode }) {
 		usePageGroups();
 	const [selectedRoutePath, setSelectedRoutePath] = useState<
 		ScreenRoute["route"]
-	>(defaultPage.route);
+	>(() => getInitialSelectedRoutePath(defaultPage.route, getPageByRoute));
 	const selectedRoute = getPageByRoute(selectedRoutePath) ?? defaultPage;
 
 	return (
@@ -43,6 +43,18 @@ export function PageRegistryProvider({ children }: { children: ReactNode }) {
 			{children}
 		</PageRegistryContext.Provider>
 	);
+}
+
+function getInitialSelectedRoutePath(
+	defaultRoute: ScreenRoute["route"],
+	getPageByRoute: (route: ScreenRoute["route"]) => ScreenRoute | undefined,
+) {
+	if (typeof window === "undefined") return defaultRoute;
+
+	const route = new URLSearchParams(window.location.search).get("route");
+	if (!route?.startsWith("/")) return defaultRoute;
+
+	return getPageByRoute(route as ScreenRoute["route"])?.route ?? defaultRoute;
 }
 
 export function usePageRegistry() {

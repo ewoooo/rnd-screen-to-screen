@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/membership-leave-impact",
+    "source": "implemented-page"
+  },
+  "screen": {
+    "id": "membership-leave-impact",
+    "name": "탈퇴 영향 안내",
+    "domain": "membership",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "notice",
+    "primary_task": "탈퇴 시 영향(소멸/해지/보관)과 미납 여부를 확인하고 이해 동의 체크",
+    "info_hierarchy": [
+      "hero (위험 톤)",
+      "impact-list (소멸/해지/보관 항목)",
+      "unpaid-notice (미납 발생 시 critical)",
+      "confirm-row (이해했어요 체크)",
+      "action (다음으로)"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card",
+    "copy_policy": {
+      "description_measure": "body"
+    },
+    "rail_policy": {
+      "description": "measure:body",
+      "notice": "measure:body"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipTopBar"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "MembershipHero",
+          "MembershipSummaryCard",
+          "MembershipNotice",
+          "ConsentRow"
+        ]
+      },
+      "bottom": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipContinueBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipHero",
+      "uses": [
+        "ContentSection",
+        "TextBlock",
+        "ContentRail"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "description_rail": "measure:body"
+      },
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "impact-summary",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipSummaryCard",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "trailing_semantic": "status"
+      },
+      "content_role": "result-summary"
+    },
+    {
+      "id": "unpaid-notice",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipNotice",
+      "uses": [
+        "ContentSection",
+        "NoticeBlock",
+        "TextBlock",
+        "ContentRail"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "text_rail": "measure:body",
+        "tone": "critical"
+      },
+      "content_role": "supporting-notice",
+      "conditional": "data.unpaid != null"
+    },
+    {
+      "id": "confirm-row",
+      "slot": "content",
+      "pattern": "inline (HStack + Checkbox + TextBlock)",
+      "uses": [
+        "ContentSection",
+        "HStack",
+        "Checkbox",
+        "TextBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "required-input",
+      "strain_signal": "1행 confirm 체크 어휘 부재 — 후속에 ConfirmRow molecule 후보"
+    },
+    {
+      "id": "continue",
+      "slot": "bottom",
+      "pattern": "organisms/membership/MembershipContinueBar",
+      "uses": [
+        "Box",
+        "Button",
+        "TextBlock"
+      ],
+      "content_role": "primary-action",
+      "layout": {
+        "surface": "page-semi-gradient"
+      },
+      "state_binding": {
+        "primary_disabled_when": "confirm 미체크",
+        "eyebrow_when_blocked": "위 내용을 확인했는지 체크해주세요",
+        "eyebrow_when_ready": "data.continue.eyebrow"
+      }
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection",
+      "ContentRail"
+    ],
+    "organisms": [
+      "membership"
+    ],
+    "molecules": [
+      "InfoList",
+      "NoticeBlock",
+      "SectionCard",
+      "Checkbox"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [
+      {
+        "location": "molecules/info-list/InfoList.tsx",
+        "kind": "raw-border",
+        "value": "borderBottom: 1px solid var(--semantic-line-solid-alternative)",
+        "reason": "row separator. WDS Divider로 흡수 검토 후보",
+        "owner": "molecule"
+      }
+    ],
+    "new_vocabulary_required": [
+      "molecules/ConfirmRow (후속 차수에 1행 confirm checkbox 패턴 흡수 후보)"
+    ]
+  }
+}

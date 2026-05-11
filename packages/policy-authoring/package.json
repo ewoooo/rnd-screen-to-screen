@@ -8,6 +8,6 @@
 	},
 	"dependencies": {
 		"@policy/core": "0.1.0",
-		"@screen/specs": "0.1.0"
+		"@screen/mobile": "0.1.0"
 	}
 }

@@ -10,7 +10,7 @@ import {
   ProgressTopBar,
 } from "@/components/organisms/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type MethodIcon = "chat" | "mobile" | "message" | "lock";
 const METHOD_ICON: Record<MethodIcon, ReactNode> = {
   chat: <IconChat width={28} height={28} />,

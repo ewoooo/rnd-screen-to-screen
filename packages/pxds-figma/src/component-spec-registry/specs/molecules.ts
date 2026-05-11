@@ -14,9 +14,9 @@ export const mediaBlockFigmaSpec = {
 			height: "168px",
 		},
 		visual: {
-			fill: "{semantic.background.elevated.alternative}",
+			fill: "{color.semantic.background.elevated.alternative}",
 			stroke: {
-				color: "{semantic.line.normal.normal}",
+				color: "{color.semantic.line.normal.normal}",
 				weight: 1,
 			},
 			cornerRadius: "{spacing.12}",
@@ -35,7 +35,7 @@ export const mediaBlockFigmaSpec = {
 					paddingRight: "{spacing.8}",
 				},
 				visual: {
-					fill: "{semantic.primary.normal}",
+					fill: "{color.semantic.primary.normal}",
 					cornerRadius: "{spacing.8}",
 				},
 				layoutPositioning: "ABSOLUTE",
@@ -65,7 +65,7 @@ export const queryBarFigmaSpec = {
 	name: "mol/query-bar",
 	category: "mol",
 	description: "Read-only search/query input pattern.",
-	widthFallback: "{foundation.dimension.size.screen-content-width}",
+	widthFallback: "{dimension.size.screen-content-width}",
 	base: {
 		layout: {
 			mode: "HORIZONTAL",
@@ -81,9 +81,9 @@ export const queryBarFigmaSpec = {
 			height: "48px",
 		},
 		visual: {
-			fill: "{semantic.background.elevated.normal}",
+			fill: "{color.semantic.background.elevated.normal}",
 			stroke: {
-				color: "{semantic.line.normal.normal}",
+				color: "{color.semantic.line.normal.normal}",
 				weight: 1,
 			},
 			cornerRadius: "{spacing.12}",
@@ -94,7 +94,7 @@ export const queryBarFigmaSpec = {
 				id: "value",
 				content: "디자인 시스템",
 				textStyle: "{typography.body1.regular}",
-				color: "{semantic.label.alternative}",
+				color: "{color.semantic.label.alternative}",
 				layoutGrow: 1,
 				autoResize: "HEIGHT",
 				exposeAs: "value",
@@ -108,7 +108,7 @@ export const selectFieldFigmaSpec = {
 	name: "mol/select-field",
 	category: "mol",
 	description: "Select control pattern with normalized options.",
-	widthFallback: "{foundation.dimension.size.screen-content-width}",
+	widthFallback: "{dimension.size.screen-content-width}",
 	base: {
 		layout: {
 			mode: "HORIZONTAL",
@@ -122,9 +122,9 @@ export const selectFieldFigmaSpec = {
 			height: "48px",
 		},
 		visual: {
-			fill: "{semantic.background.elevated.normal}",
+			fill: "{color.semantic.background.elevated.normal}",
 			stroke: {
-				color: "{semantic.line.normal.normal}",
+				color: "{color.semantic.line.normal.normal}",
 				weight: 1,
 			},
 			cornerRadius: "{spacing.8}",
@@ -135,7 +135,7 @@ export const selectFieldFigmaSpec = {
 				id: "value",
 				content: "기본 옵션",
 				textStyle: "{typography.body1.regular}",
-				color: "{semantic.label.normal}",
+				color: "{color.semantic.label.normal}",
 				layoutGrow: 1,
 				autoResize: "HEIGHT",
 				exposeAs: "value",
@@ -145,7 +145,7 @@ export const selectFieldFigmaSpec = {
 				id: "indicator",
 				content: "⌄",
 				textStyle: "{typography.body1.medium}",
-				color: "{semantic.label.assistive}",
+				color: "{color.semantic.label.assistive}",
 			},
 		],
 	},
@@ -156,7 +156,7 @@ export const formFieldFigmaSpec = {
 	name: "mol/form-field",
 	category: "mol",
 	description: "Label, helper, and field composition boundary.",
-	widthFallback: "{foundation.dimension.size.screen-content-width}",
+	widthFallback: "{dimension.size.screen-content-width}",
 	base: {
 		layout: {
 			mode: "VERTICAL",
@@ -171,7 +171,7 @@ export const formFieldFigmaSpec = {
 				id: "label",
 				content: "옵션",
 				textStyle: "{typography.label1.medium}",
-				color: "{semantic.label.normal}",
+				color: "{color.semantic.label.normal}",
 				exposeAs: "label",
 			},
 			{
@@ -189,9 +189,9 @@ export const formFieldFigmaSpec = {
 					height: "48px",
 				},
 				visual: {
-					fill: "{semantic.background.elevated.normal}",
+					fill: "{color.semantic.background.elevated.normal}",
 					stroke: {
-						color: "{semantic.line.normal.normal}",
+						color: "{color.semantic.line.normal.normal}",
 						weight: 1,
 					},
 					cornerRadius: "{spacing.8}",
@@ -203,7 +203,7 @@ export const formFieldFigmaSpec = {
 						id: "value",
 						content: "기본 옵션",
 						textStyle: "{typography.body1.regular}",
-						color: "{semantic.label.normal}",
+						color: "{color.semantic.label.normal}",
 						layoutGrow: 1,
 						autoResize: "HEIGHT",
 						exposeAs: "value",
@@ -213,7 +213,7 @@ export const formFieldFigmaSpec = {
 						id: "indicator",
 						content: "⌄",
 						textStyle: "{typography.body1.medium}",
-						color: "{semantic.label.assistive}",
+						color: "{color.semantic.label.assistive}",
 					},
 				],
 			},
@@ -222,7 +222,7 @@ export const formFieldFigmaSpec = {
 				id: "helper",
 				content: "선택 가능한 값을 확인합니다.",
 				textStyle: "{typography.caption1.regular}",
-				color: "{semantic.label.alternative}",
+				color: "{color.semantic.label.alternative}",
 				exposeAs: "helperText",
 			},
 		],
@@ -262,7 +262,7 @@ export const filterTabsFigmaSpec = {
 						id: "label",
 						content: "전체",
 						textStyle: "{typography.headline2.medium}",
-						color: "{semantic.label.strong}",
+						color: "{color.semantic.label.strong}",
 						exposeAs: "label",
 					},
 					{
@@ -274,7 +274,7 @@ export const filterTabsFigmaSpec = {
 							height: "{spacing.2}",
 						},
 						visual: {
-							fill: "{semantic.label.strong}",
+							fill: "{color.semantic.label.strong}",
 						},
 					},
 				],
@@ -296,7 +296,7 @@ export const filterTabsFigmaSpec = {
 						id: "label",
 						content: "인기",
 						textStyle: "{typography.headline2.medium}",
-						color: "{semantic.label.assistive}",
+						color: "{color.semantic.label.assistive}",
 						exposeAs: "label",
 					},
 					{
@@ -308,7 +308,7 @@ export const filterTabsFigmaSpec = {
 							height: "{spacing.2}",
 						},
 						visual: {
-							fill: "{semantic.label.strong}",
+							fill: "{color.semantic.label.strong}",
 						},
 						visible: false,
 					},
@@ -331,7 +331,7 @@ export const filterTabsFigmaSpec = {
 						id: "label",
 						content: "최신",
 						textStyle: "{typography.headline2.medium}",
-						color: "{semantic.label.assistive}",
+						color: "{color.semantic.label.assistive}",
 						exposeAs: "label",
 					},
 					{
@@ -343,7 +343,7 @@ export const filterTabsFigmaSpec = {
 							height: "{spacing.2}",
 						},
 						visual: {
-							fill: "{semantic.label.strong}",
+							fill: "{color.semantic.label.strong}",
 						},
 						visible: false,
 					},

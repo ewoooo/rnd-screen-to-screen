@@ -3,7 +3,7 @@ import {
   screenRoutes,
   type ScreenGroup,
   type ScreenRoute,
-} from "@screen/registry";
+} from "@/screens";
 
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 

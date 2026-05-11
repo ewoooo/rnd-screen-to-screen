@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "experimental-html",
+    "route": "/billing-html-msc-history",
+    "source": "policy-driven",
+    "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+    "policy_section": "4. US-BIL-CHK-004 / PR-BIL-CHK-004-01,02,03",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/experimental/billing-from-html/_pagination/billing-html-chk.json"
+  },
+  "screen": {
+    "id": "billing-html-msc-history",
+    "name": "휴대폰결제·콘텐츠 이용내역",
+    "domain": "billing-html",
+    "use_case": "US-BIL-CHK-004",
+    "process_id": "PR-BIL-CHK-004-01,02,03",
+    "step_fraction": "4/8",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "browse",
+    "primary_task": "휴대폰결제·콘텐츠 이용내역 조회 및 선결제·한도 변경 진입",
+    "info_hierarchy": [
+      "filter (탭)",
+      "list (이용내역 InfoList)",
+      "action (footer CTA: 한도 변경)"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "none",
+    "sectioning": "flat",
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "patterns": [
+          "GlobalNavigationHeader"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "FilterTabs",
+          "InfoList"
+        ]
+      },
+      "bottom": {
+        "owner": "PrimaryCTABar",
+        "patterns": [
+          "PrimaryCTABar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [
+      "filter"
+    ],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalNavigationHeader",
+      "uses": [
+        "GlobalNavigationHeader"
+      ],
+      "layout": {
+        "leading": "back",
+        "title": "이용내역"
+      },
+      "content_role": "chrome"
+    },
+    {
+      "id": "filter",
+      "slot": "content",
+      "pattern": "molecules/FilterTabs",
+      "uses": [
+        "FilterTabs"
+      ],
+      "layout": {
+        "section_inset": "bleed"
+      },
+      "content_role": "filter"
+    },
+    {
+      "id": "list",
+      "slot": "content",
+      "pattern": "molecules/InfoList",
+      "uses": [
+        "InfoList"
+      ],
+      "layout": {
+        "trailing_semantic": "value"
+      },
+      "content_role": "list"
+    },
+    {
+      "id": "cta",
+      "slot": "bottom",
+      "pattern": "molecules/PrimaryCTABar",
+      "uses": [
+        "PrimaryCTABar",
+        "Button"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "global"
+    ],
+    "molecules": [
+      "FilterTabs",
+      "InfoList",
+      "PrimaryCTABar"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

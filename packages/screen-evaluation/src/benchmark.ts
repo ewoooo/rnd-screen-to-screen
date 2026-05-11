@@ -476,7 +476,7 @@ export const benchmarkCriteria = [
 		side: "design",
 		label: "Preview 판독성",
 		question: "preview에서 화면 그룹, 생성일, 점수, iframe 상태를 명확히 확인할 수 있는가?",
-		apiRefs: ["@screen/registry", "apps/preview", "ScreenRoute"],
+		apiRefs: ["@screen/mobile/screens", "apps/preview", "ScreenRoute"],
 		scoringHint: "1=검수 어려움, 3=화면 선택 가능, 5=품질/상태 비교가 쉬움",
 	},
 	{
@@ -484,7 +484,7 @@ export const benchmarkCriteria = [
 		side: "planning",
 		label: "정책서 반영",
 		question: "정책서의 요구사항이 화면 spec과 mock에 누락 없이 반영되었는가?",
-		apiRefs: ["packages/screen-specs/spec/active", "screen_contract", "areas"],
+		apiRefs: ["apps/mobile/src/app/<page-id>/spec.json", "screen_contract", "areas"],
 		scoringHint: "1=핵심 요구 누락, 3=주요 정책 반영, 5=정책 근거까지 추적 가능",
 		failureSignals: [
 			"정책 요구는 있지만 area/mock/status/state fixture에 연결되지 않음",
@@ -535,7 +535,7 @@ export const benchmarkCriteria = [
 		side: "planning",
 		label: "현상 재현율",
 		question: "배치마다 콘텐츠 아웃풋과 화면 구조가 일관되게 재현되는가?",
-		apiRefs: ["@screen/registry", "spec/active", "mocks", "preview iframe"],
+		apiRefs: ["@screen/mobile/screens", "spec/active", "mocks", "preview iframe"],
 		scoringHint: "1=매번 구조가 달라짐, 3=대표 화면 재현, 5=registry/spec/mock 기준으로 재현 안정",
 	},
 ] as const satisfies readonly BenchmarkCriterion[];

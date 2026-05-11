@@ -5,8 +5,7 @@ const nextConfig: NextConfig = {
 	transpilePackages: [
 		"@pxds/pxds-preview",
 		"@screen/evaluation",
-		"@screen/registry",
-		"@screen/specs",
+		"@screen/mobile",
 	],
 };
 

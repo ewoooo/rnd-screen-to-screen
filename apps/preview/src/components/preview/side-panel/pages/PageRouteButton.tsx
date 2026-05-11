@@ -1,4 +1,4 @@
-import type { ScreenRoute } from "@screen/registry";
+import type { ScreenRoute } from "@screen/mobile/screens";
 
 import type { SidePanelRouteSelectHandler } from "@/components/preview/side-panel/types";
 import { Badge } from "@/components/ui/badge";

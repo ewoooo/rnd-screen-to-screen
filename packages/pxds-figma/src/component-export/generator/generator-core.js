@@ -28,6 +28,61 @@ function tokenPathOf(ref) {
   return m ? m[1] : null;
 }
 
+function parseTokenPath(path) {
+  const parts = [];
+  let current = "";
+  for (let i = 0; i < path.length; i++) {
+    const char = path[i];
+    if (char === ".") {
+      if (current) parts.push(current);
+      current = "";
+      continue;
+    }
+    if (char === "[") {
+      if (current) {
+        parts.push(current);
+        current = "";
+      }
+      const quote = path[i + 1];
+      if (quote !== "\"" && quote !== "'") throw new Error("Invalid token path: " + path);
+      i += 2;
+      let bracketValue = "";
+      for (; i < path.length; i++) {
+        const bracketChar = path[i];
+        if (bracketChar === "\\" && i + 1 < path.length) {
+          bracketValue += path[i + 1];
+          i++;
+          continue;
+        }
+        if (bracketChar === quote && path[i + 1] === "]") {
+          i++;
+          break;
+        }
+        bracketValue += bracketChar;
+      }
+      parts.push(bracketValue);
+      continue;
+    }
+    current += char;
+  }
+  if (current) parts.push(current);
+  return parts;
+}
+
+function getTokenNode(tokens, path) {
+  return getTokenNodeByParts(tokens, parseTokenPath(path)) || getTokenNodeByParts(tokens, parseTokenPath(toColorTokenPath(path)));
+}
+
+function getTokenNodeByParts(tokens, parts) {
+  return parts.reduce((o, k) => (o == null ? o : o[k]), tokens);
+}
+
+function toColorTokenPath(path) {
+  if (path.indexOf("semantic.") === 0) return "color." + path;
+  if (path.indexOf("atomic.") === 0) return "color." + path;
+  return path;
+}
+
 function resolveToken(tokens, ref, seen) {
   if (!seen) seen = new Set();
   if (typeof ref !== "string") return ref;
@@ -36,7 +91,7 @@ function resolveToken(tokens, ref, seen) {
   const path = m[1];
   if (seen.has(path)) throw new Error("Token cycle: " + path);
   seen.add(path);
-  const dsNode = path.split(".").reduce((o, k) => (o == null ? o : o[k]), tokens);
+  const dsNode = getTokenNode(tokens, path);
   if (!dsNode) throw new Error("Token missing: " + path);
   const v = dsNode.value !== undefined ? dsNode.value : dsNode;
   if (typeof v === "string" && /^\{.+\}$/.test(v)) return resolveToken(tokens, v, seen);
@@ -56,6 +111,7 @@ function resolveToken(tokens, ref, seen) {
     const fs = resolveToken(tokens, v.fontSize, new Set());
     const lh = resolveToken(tokens, v.lineHeight, new Set());
     const fw = resolveToken(tokens, v.fontWeight, new Set());
+    const fwn = v.fontWeightName ? resolveToken(tokens, v.fontWeightName, new Set()) : null;
     const ls = resolveToken(tokens, v.letterSpacing, new Set());
     // lineHeight 는 PIXELS 또는 PERCENT — unit 정보 보존
     let lineHeightObj;
@@ -73,6 +129,7 @@ function resolveToken(tokens, ref, seen) {
       fontSize: fs.px != null ? fs.px : parseFloat(fs),
       lineHeight: lineHeightObj,
       fontWeight: Number(fw.px != null ? fw : fw),
+      fontWeightName: typeof fwn === "string" ? fwn : null,
       letterSpacing: ls.px != null ? ls.px : parseFloat(ls || 0),
       // 각 필드가 참조하는 토큰 경로 (Variable 바인딩에 쓰임)
       bindings: {
@@ -143,7 +200,7 @@ function validateSpec(spec, tokens) {
   const refs = collectTokenRefs(spec);
   const missing = [];
   for (const r of refs) {
-    const dsNode = r.split(".").reduce((o, k) => (o == null ? o : o[k]), tokens);
+    const dsNode = getTokenNode(tokens, r);
     if (!dsNode) missing.push(r);
   }
   if (missing.length) throw new Error("Missing tokens:\n  - " + Array.from(new Set(missing)).join("\n  - "));
@@ -176,6 +233,7 @@ function variantFigmaName(combo) {
 
 // ---------- 5. Figma node builders ----------
 function toFontStyle(weight) {
+  if (typeof weight === "string" && weight) return weight;
   if (weight >= 700) return "Bold";
   if (weight >= 600) return "SemiBold";
   if (weight >= 500) return "Medium";
@@ -258,7 +316,7 @@ async function ensureVariableObjects() {
 function findVariable(path) {
   if (!_varObjCache) return null;
   const varMap = getVariableMap();
-  const id = varMap[path];
+  const id = varMap[path] || varMap[toColorTokenPath(path)];
   if (!id) return null;
   return _varObjCache[id] || null;
 }
@@ -279,10 +337,45 @@ function setFloatField(tgt, field, ref, tokens) {
 
 function buildSolidPaint(rgbColor, variableId) {
   const paint = { type: "SOLID", color: { r: rgbColor.r, g: rgbColor.g, b: rgbColor.b } };
-  if (variableId) {
+  if (variableId && variableColorMatchesRaw(variableId, rgbColor)) {
     paint.boundVariables = { color: { type: "VARIABLE_ALIAS", id: variableId } };
   }
   return paint;
+}
+
+function colorValueOfVariable(variableId, seen) {
+  if (!variableId || !_varObjCache) return null;
+  if (!seen) seen = new Set();
+  if (seen.has(variableId)) return null;
+  seen.add(variableId);
+  const variable = _varObjCache[variableId];
+  if (!variable || !variable.valuesByMode) return null;
+  const modeIds = Object.keys(variable.valuesByMode);
+  for (let i = 0; i < modeIds.length; i++) {
+    const value = variable.valuesByMode[modeIds[i]];
+    if (!value) continue;
+    if (value.type === "VARIABLE_ALIAS") {
+      const aliased = colorValueOfVariable(value.id, seen);
+      if (aliased) return aliased;
+    }
+    if (typeof value.r === "number" && typeof value.g === "number" && typeof value.b === "number") {
+      return value;
+    }
+  }
+  return null;
+}
+
+function variableColorMatchesRaw(variableId, rawColor) {
+  const value = colorValueOfVariable(variableId);
+  if (!value) return true;
+  const matches =
+    Math.abs(value.r - rawColor.r) < 0.01 &&
+    Math.abs(value.g - rawColor.g) < 0.01 &&
+    Math.abs(value.b - rawColor.b) < 0.01;
+  if (!matches) {
+    console.warn("skip color variable binding: variable value differs from raw fallback", variableId);
+  }
+  return matches;
 }
 
 function applyFills(tgt, resolvedColor, variableId) {
@@ -294,7 +387,8 @@ function applyFillsRef(tgt, fillRef, tokens) {
   if (fillRef == null) { tgt.fills = []; return; }
   const resolvedColor = resolveToken(tokens, fillRef);
   const path = tokenPathOf(fillRef);
-  const vid = path ? (getVariableMap()[path] || null) : null;
+  const varMap = getVariableMap();
+  const vid = path ? (varMap[path] || varMap[toColorTokenPath(path)] || null) : null;
   applyFills(tgt, resolvedColor, vid);
 }
 
@@ -302,7 +396,8 @@ function applyStrokeResolved(tgt, strokeSpec, tokens) {
   if (!strokeSpec) { tgt.strokes = []; return; }
   const c = resolveToken(tokens, strokeSpec.color);
   const path = tokenPathOf(strokeSpec.color);
-  const vid = path ? (getVariableMap()[path] || null) : null;
+  const varMap = getVariableMap();
+  const vid = path ? (varMap[path] || varMap[toColorTokenPath(path)] || null) : null;
   tgt.strokes = [buildSolidPaint(c.rgb, vid)];
   // strokeWeight: bind if possible (usually a raw number in spec)
   const w = strokeSpec.weight != null ? strokeSpec.weight : 1;
@@ -343,16 +438,16 @@ function buildText(childSpec, tokens, loadedFonts) {
   const t = figma.createText();
   t.name = childSpec.id || "text";
   const ts = resolveToken(tokens, childSpec.textStyle);
-  const font = pickFont(childSpec.content || "", ts.fontWeight, loadedFonts);
+  const font = pickFont(childSpec.content || "", ts.fontWeightName || ts.fontWeight, loadedFonts);
   t.fontName = font;
   t.characters = childSpec.content || "";
 
-  // fontFamily Variable 바인딩 — DS 의 foundation.typography.fontFamily.primary/fallback 에 묶음.
+  // fontFamily Variable 바인딩 — DS 의 typography.fontFamily.primary/fallback 에 묶음.
   // pickFont 가 선택한 family 에 맞는 Variable 로 연결 (Pretendard → primary, Inter → fallback).
   // style suffix 차이 (Pretendard "SemiBold" vs Inter "Semi Bold") 때문에 각자 매칭 필수.
   const familyVarPath = font.family === "Pretendard"
-    ? "foundation.typography.fontFamily.primary"
-    : "foundation.typography.fontFamily.fallback";
+    ? "typography.fontFamily.primary"
+    : "typography.fontFamily.fallback";
   const familyVar = findVariable(familyVarPath);
   if (familyVar) {
     try { t.setBoundVariable("fontFamily", familyVar); }
@@ -483,7 +578,7 @@ function buildFrame(spec, variantName, tokens, loadedFonts) {
       try { f.layoutSizingHorizontal = "FILL"; filled = true; }
       catch (e) { /* top-level — fallback below */ }
       if (!filled) {
-        const fbToken = spec.widthFallback || "{foundation.dimension.size.screen-content-width}";
+        const fbToken = spec.widthFallback || "{dimension.size.screen-content-width}";
         const fb = resolveToken(tokens, fbToken);
         if (fb && fb.px != null) {
           f.resize(fb.px, f.height);
@@ -1013,8 +1108,11 @@ async function generateComponentSet(spec, tokens) {
   const pageName = pageMap[category];
   if (!pageName) throw new Error("Unknown category: " + category);
 
-  const targetPage = figma.root.children.find((p) => p.name === pageName);
-  if (!targetPage) throw new Error("페이지 없음: " + pageName);
+  let targetPage = figma.root.children.find((p) => p.name === pageName);
+  if (!targetPage) {
+    targetPage = figma.createPage();
+    targetPage.name = pageName;
+  }
   await figma.setCurrentPageAsync(targetPage);
 
   // 기존 같은 이름 Component/Set 찾기 (섹션 안에 있든, 페이지 직접 자식이든)

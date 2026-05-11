@@ -7,6 +7,6 @@
 		".": "./src/index.ts"
 	},
 	"dependencies": {
-		"@screen/specs": "0.1.0"
+		"@screen/mobile": "0.1.0"
 	}
 }

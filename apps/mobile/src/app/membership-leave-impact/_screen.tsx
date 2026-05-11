@@ -13,7 +13,7 @@ import {
 import { HStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/typography";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type LeaveImpactData = {
   topbar: {
     title: string;

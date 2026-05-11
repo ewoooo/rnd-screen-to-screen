@@ -9,7 +9,7 @@ import {
 } from "@/components/molecules";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type FlowData = {
   progress: string;
   step: number;

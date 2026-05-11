@@ -1,0 +1,13 @@
+{
+	"name": "@pxds/pxds-figma-renderer",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"@pxds/pxds-components": "0.1.0",
+		"@pxds/pxds-tokens": "0.1.0"
+	}
+}

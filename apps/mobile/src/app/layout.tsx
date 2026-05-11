@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@pxds/pxds-components/core";
 import { AppRouterCacheProvider } from "@pxds/pxds-components/core";
+import { ScreenExportBridge } from "@pxds/pxds-layout/screen-export";
 import type { PropsWithChildren } from "react";
 
 import "@pxds/pxds-components/core/global.css";
@@ -24,11 +25,22 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 				crossOrigin="anonymous"
 				href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
 			/>
+			<script
+				src="https://mcp.figma.com/mcp/html-to-design/capture.js"
+				async
+			/>
+			<script
+				dangerouslySetInnerHTML={{
+					__html:
+						"if(location.hash.includes('figmacapture'))document.documentElement.classList.add('figma-capture-mobile-frame');",
+				}}
+			/>
 		</head>
 		<body>
 			<ThemeProvider>
 				<AppRouterCacheProvider>
 					<main>{children}</main>
+					<ScreenExportBridge />
 				</AppRouterCacheProvider>
 			</ThemeProvider>
 		</body>

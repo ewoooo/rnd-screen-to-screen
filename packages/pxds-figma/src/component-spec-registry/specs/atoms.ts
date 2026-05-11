@@ -17,7 +17,7 @@ export const textBlockFigmaSpec = {
 				id: "text",
 				content: "멤버십 혜택을 한눈에 확인하세요",
 				textStyle: "{typography.body1.medium}",
-				color: "{semantic.label.normal}",
+				color: "{color.semantic.label.normal}",
 				autoResize: "WIDTH_AND_HEIGHT",
 				exposeAs: "text",
 			},
@@ -33,11 +33,11 @@ export const dividerFigmaSpec = {
 	base: {
 		layout: {
 			mode: "VERTICAL",
-			width: "{foundation.dimension.size.screen-content-width}",
+			width: "{dimension.size.screen-content-width}",
 			height: "{spacing.1}",
 		},
 		visual: {
-			fill: "{semantic.line.normal.normal}",
+			fill: "{color.semantic.line.normal.normal}",
 		},
 	},
 } satisfies ComponentSpecDraft;
@@ -58,9 +58,9 @@ export const placeholderFigmaSpec = {
 			height: "104px",
 		},
 		visual: {
-			fill: "{semantic.background.elevated.normal}",
+			fill: "{color.semantic.background.elevated.normal}",
 			stroke: {
-				color: "{semantic.line.normal.normal}",
+				color: "{color.semantic.line.normal.normal}",
 				weight: 1,
 			},
 			cornerRadius: "{spacing.12}",
@@ -71,7 +71,7 @@ export const placeholderFigmaSpec = {
 				id: "label",
 				content: "IMG",
 				textStyle: "{typography.body2.medium}",
-				color: "{semantic.label.assistive}",
+				color: "{color.semantic.label.assistive}",
 				exposeAs: "label",
 			},
 		],

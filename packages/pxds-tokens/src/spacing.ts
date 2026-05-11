@@ -1,8 +1,8 @@
 /**
  * PXDS semantic spacing vocabulary.
  *
- * WDS exposes atomic spacing values (`theme.spacing` / `--spacing-N`).
- * PXDS keeps this smaller intent-based layer so screens choose spacing by
+ * Values live in the registry SSOT under `semantic.spacing.{token}` and emit
+ * as `--semantic-spacing-{token}` CSS vars. Screens choose spacing by
  * responsibility, not by raw pixel keys.
  */
 export type SpacingToken =
@@ -14,15 +14,5 @@ export type SpacingToken =
 	| "block" //  24px — block-to-block separation
 	| "section"; // 32px — large section separation
 
-export const spacingPx = {
-	row: 4,
-	inline: 8,
-	stack: 12,
-	group: 16,
-	inset: 20,
-	block: 24,
-	section: 32,
-} as const satisfies Record<SpacingToken, number>;
-
 export const spacingVar = (token: SpacingToken): string =>
-	`var(--spacing-${spacingPx[token]})`;
+	`var(--semantic-spacing-${token})`;

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { createScreenExportAttributes } from "../screen-export";
 import { ContentList } from "./ContentList";
 import { ContentOutlet } from "./ContentOutlet";
 
@@ -27,6 +28,10 @@ export function AppScreenContent({
 
 	return (
 		<div
+			{...createScreenExportAttributes({
+				type: "AppScreenContent",
+				props: { background },
+			})}
 			style={{
 				display: "flex",
 				flexDirection: "column",
@@ -42,7 +47,7 @@ export function AppScreenContent({
 				</AppScreenChromeSlot>
 			) : null}
 			{appHeader ? (
-				<AppScreenChromeSlot background={background}>
+				<AppScreenChromeSlot background={background} slot="header">
 					{appHeader}
 				</AppScreenChromeSlot>
 			) : null}
@@ -57,7 +62,9 @@ export function AppScreenContent({
 				<ContentList>{children}</ContentList>
 			</ContentOutlet>
 			{bottom ? (
-				<AppScreenChromeSlot background={background}>{bottom}</AppScreenChromeSlot>
+				<AppScreenChromeSlot background={background} slot="bottom">
+					{bottom}
+				</AppScreenChromeSlot>
 			) : null}
 		</div>
 	);
@@ -66,12 +73,19 @@ export function AppScreenContent({
 function AppScreenChromeSlot({
 	children,
 	background,
+	slot = "systemHeader",
 }: {
 	children: ReactNode;
 	background: string;
+	slot?: "systemHeader" | "header" | "bottom";
 }) {
 	return (
 		<section
+			{...createScreenExportAttributes({
+				type: "AppScreenChromeSlot",
+				slot,
+				props: { background },
+			})}
 			style={{
 				flexShrink: 0,
 				background,

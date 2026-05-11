@@ -3,13 +3,13 @@ import {
 	activeScreenSpecs,
 	type ActiveRenderableScreenSpecId,
 	type ActiveScreenSpecId,
-} from "@screen/specs";
+} from "@screen/mobile/screens";
 import type {
 	PolicyExtract,
 	RenderableScreenSpecV1,
 	ScreenSpecV2,
 	SDUIJsonValue,
-} from "@screen/specs";
+} from "@screen/mobile/screens";
 import type { EvidenceRef, PolicySourceKind } from "@policy/core";
 
 export type { EvidenceRef, PolicySourceKind } from "@policy/core";

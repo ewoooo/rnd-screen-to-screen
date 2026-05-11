@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from "lucide-react";
-import type { ScreenGroup, ScreenRoute } from "@screen/registry";
+import type { ScreenGroup, ScreenRoute } from "@screen/mobile/screens";
 
 import { PageRouteButton } from "@/components/preview/side-panel/pages/PageRouteButton";
 import type { SidePanelRouteSelectHandler } from "@/components/preview/side-panel/types";

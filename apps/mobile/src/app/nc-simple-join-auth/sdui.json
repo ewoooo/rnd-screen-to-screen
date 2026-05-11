@@ -1,0 +1,359 @@
+{
+  "version": "1.0.0",
+  "minRendererVersion": "0.1.0",
+  "minComponentsVersion": "0.1.0",
+  "metadata": {
+    "id": "nc-simple-join-auth",
+    "name": "회원 가입 - 본인인증",
+    "route": "/nc-simple-join-auth",
+    "domain": "nc-simple",
+    "type": "page",
+    "status": "active"
+  },
+  "theme": {
+    "color": {
+      "primary": "semantic.primary.normal",
+      "page": "semantic.surface.page.normal"
+    }
+  },
+  "data": {
+    "topbar": {
+      "title": "본인인증",
+      "progressLabel": "3/4",
+      "progressPercent": 75
+    },
+    "hero": {
+      "titleLines": [
+        "본인인증을",
+        "진행해 주세요"
+      ],
+      "description": "휴대폰 또는 PASS, 공동인증서로 빠르게 확인할 수 있어요."
+    },
+    "method": {
+      "label": "인증수단",
+      "items": [
+        {
+          "id": "phone",
+          "title": "휴대폰 본인인증",
+          "sub": "통신사 SMS로 인증번호를 받아요"
+        },
+        {
+          "id": "pass",
+          "title": "PASS 인증",
+          "sub": "PASS 앱으로 빠르게"
+        },
+        {
+          "id": "cert",
+          "title": "공동인증서",
+          "sub": "기존 인증서로 인증"
+        }
+      ]
+    },
+    "code": {
+      "label": "인증번호 (6자리)",
+      "placeholder": "숫자 6자리",
+      "helperText": "유효시간 3분",
+      "resend": {
+        "label": "재요청",
+        "cooldownSeconds": 60,
+        "maxAttempts": 5
+      },
+      "failureLockout": {
+        "maxAttempts": 5,
+        "lockoutMinutes": 10
+      }
+    },
+    "continue": {
+      "eyebrow": "인증 정보 확인",
+      "primaryActionStep1": "인증요청",
+      "primaryActionStep2": "확인"
+    }
+  },
+  "x_pagination": {
+    "_canonical": "apps/mobile/src/screens/spec-source/active/nc-simple/_pagination/nc-simple-join.json",
+    "_canonical_hash": "3cbe13f2495b0385d29e0f7a97faaa46d15d26685493cd9ae2b613bd576b63c7",
+    "policy_id": "nc-simple-join",
+    "use_case_id": "US-MBR-CS-001",
+    "route": {
+      "id": "nc-simple-join-auth",
+      "type": "form",
+      "primary_task": "본인인증 SUCCESS",
+      "predecessor": "nc-simple-join-info",
+      "successor": "nc-simple-join-complete",
+      "step_fraction": "3/4"
+    },
+    "transitions": [
+      {
+        "from": "nc-simple-join-info",
+        "to": "nc-simple-join-auth",
+        "trigger": "필수 입력 검증 통과",
+        "guard": "POL-MBR-INFO-002-* + POL-MBR-INFO-003-*"
+      },
+      {
+        "from": "nc-simple-join-auth",
+        "to": "nc-simple-join-complete",
+        "trigger": "본인인증 SUCCESS + BSS 가입 가능 + 계정 생성",
+        "guard": "POL-MBR-AUTH-006-01 + POL-MBR-JOIN-001-01 + POL-MBR-ACCT-001-09"
+      },
+      {
+        "from": "nc-simple-join-auth",
+        "to": "nc-simple-join-info",
+        "trigger": "BSS 가입 불가 재시도",
+        "guard": "POL-MBR-JOIN-001-12"
+      }
+    ]
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "docs/NC_정책서_간소화_v1.0_확정본.md §4.가.1) PR-MBR-CS-001-03",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.7-13) PG-MBR-AUTH-001~007"
+      ]
+    },
+    "process": {
+      "id": "PR-MBR-CS-001-03",
+      "name": "본인인증",
+      "cluster": "US-MBR-CS-001 회원 가입 3/4",
+      "actor": "고객, 외부 인증기관",
+      "entry_condition": "필수 정보 입력 완료",
+      "exit_condition": "외부 SUCCESS + CI 수신",
+      "predecessor": [
+        "PR-MBR-CS-001-02"
+      ],
+      "successor": [
+        "PR-MBR-CS-001-04"
+      ],
+      "related_policies": [
+        "PG-MBR-AUTH-001~007"
+      ]
+    },
+    "purpose": "외부 인증기관 본인인증으로 CI/DI를 가입에 연결한다.",
+    "system_inputs_to_user": [
+      "인증수단 선택지",
+      "인증번호 입력 폼",
+      "유효시간/쿨다운 카운트"
+    ],
+    "user_inputs": [
+      "인증수단",
+      "인증정보(이름/생년월일/휴대폰)",
+      "인증번호 6자리"
+    ],
+    "system_outputs": [
+      "결과 코드",
+      "CI/DI",
+      "인증 이력"
+    ],
+    "branches": [
+      "SUCCESS → 다음",
+      "FAIL 5회 → 10분 잠금",
+      "TIMEOUT/ERROR → 재시도",
+      "CANCEL → 인증수단 선택 복귀"
+    ],
+    "exceptions": [
+      "인증번호 만료(3분)",
+      "재요청 60초 미경과",
+      "재요청 5회 초과",
+      "외부 장애 시 실패 횟수 미포함"
+    ],
+    "design_signals": {
+      "primary_block": "method → code-input single-screen 2-step",
+      "cta_intent": "인증요청 → 확인"
+    }
+  },
+  "x_interfacePlan": {
+    "genre": "form",
+    "primary_task": "본인인증 성공",
+    "info_hierarchy": [
+      "hero",
+      "method",
+      "code-input(after select)",
+      "action"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "flat",
+    "interaction_pattern": {
+      "two_step_single_screen": true,
+      "cta_label_dynamic": true
+    }
+  },
+  "x_screenContract": {
+    "screen_contract": {
+      "shell": "AppScreen",
+      "slots": {
+        "top": {
+          "owner": "MembershipShell",
+          "patterns": [
+            "MembershipTopBar"
+          ],
+          "flow": "reserved"
+        },
+        "content": {
+          "owner": "ContentList",
+          "patterns": [
+            "MembershipHero",
+            "AuthMethodSelector"
+          ]
+        },
+        "bottom": {
+          "owner": "MembershipShell",
+          "patterns": [
+            "MembershipContinueBar"
+          ],
+          "flow": "reserved"
+        }
+      }
+    },
+    "layout_contract": {
+      "content_outlet_inline_inset": "spacing-12",
+      "section_inset": "inherit",
+      "content_gap": "spacing-4",
+      "content_gap_owner": "ContentList",
+      "top_bottom_flow": "reserved",
+      "bleed_sections": []
+    },
+    "areas": [
+      {
+        "id": "hero",
+        "slot": "content",
+        "pattern": "organisms/membership/MembershipHero",
+        "uses": [
+          "TextBlock"
+        ],
+        "content_role": "primary-copy"
+      },
+      {
+        "id": "method",
+        "slot": "content",
+        "pattern": "molecules/SelectableList",
+        "uses": [
+          "SelectableList",
+          "RadioGroup"
+        ],
+        "content_role": "required-input"
+      },
+      {
+        "id": "code",
+        "slot": "content",
+        "pattern": "molecules/FormField",
+        "uses": [
+          "FormField",
+          "TextField"
+        ],
+        "content_role": "required-input"
+      },
+      {
+        "id": "continue",
+        "slot": "bottom",
+        "pattern": "organisms/membership/MembershipContinueBar",
+        "uses": [
+          "Button"
+        ],
+        "content_role": "primary-action"
+      }
+    ],
+    "design_system_contract": {
+      "templates": [
+        "AppScreen",
+        "ContentList",
+        "ContentSection"
+      ],
+      "organisms": [
+        "membership"
+      ],
+      "molecules": [
+        "SelectableList",
+        "FormField",
+        "TextField"
+      ],
+      "atoms": [
+        "TextBlock"
+      ],
+      "allowed_escape_hatches": [],
+      "new_vocabulary_required": [
+        "organisms/nc/AuthMethodSelector"
+      ]
+    }
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "pass",
+        "evidence": "card 0개"
+      },
+      {
+        "rule": "H-5",
+        "result": "pass",
+        "evidence": "errorText FormField"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "back"
+      }
+    ]
+  },
+  "x_benchmark": {
+    "criteria": [
+      "design.componentConsistency",
+      "planning.policyCoverage",
+      "design.stateClarity"
+    ],
+    "guards": [
+      "guard.unexplainedNewVocabulary"
+    ],
+    "notes": [
+      "AuthMethodSelector를 organism으로 승격할지 후속 차수에 결정"
+    ]
+  },
+  "children": [
+    {
+      "type": "AppScreen",
+      "id": "screen.nc-simple-join-auth",
+      "componentVersion": "0.1.0",
+      "props": {
+        "top": {
+          "type": "MembershipTopBar",
+          "id": "slot.top",
+          "props": {
+            "bind": "topbar",
+            "leading": "back"
+          }
+        },
+        "bottom": {
+          "type": "MembershipContinueBar",
+          "id": "area.continue",
+          "props": {
+            "bind": "continue"
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "MembershipHero",
+          "id": "area.hero",
+          "props": {
+            "bind": "hero"
+          }
+        },
+        {
+          "type": "SelectableList",
+          "id": "area.method",
+          "props": {
+            "bind": "method"
+          }
+        },
+        {
+          "type": "FormField",
+          "id": "area.code",
+          "props": {
+            "bind": "code",
+            "visibilityBind": "method.value"
+          }
+        }
+      ]
+    }
+  ]
+}

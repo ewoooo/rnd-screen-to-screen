@@ -1,0 +1,242 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/nc-simple-leave-result",
+    "source": "implemented-page",
+    "source_ref": "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.38) PG-MBR-LEAVE-012"
+  },
+  "screen": {
+    "id": "nc-simple-leave-result",
+    "name": "회원 탈퇴 - 결과 안내",
+    "domain": "nc-simple",
+    "type": "page"
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "docs/NC_정책서_간소화_v1.0_확정본.md §4.가.3) PR-MBR-CS-003-05/06",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.34) PG-MBR-LEAVE-008",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.37) PG-MBR-LEAVE-011",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.38) PG-MBR-LEAVE-012"
+      ]
+    },
+    "process": {
+      "id": "PR-MBR-CS-003-06",
+      "name": "탈퇴 결과 안내",
+      "cluster": "US-MBR-CS-003 회원 탈퇴 4/4",
+      "actor": "BSS, 고객",
+      "entry_condition": "BSS 탈퇴 처리 성공 (탈퇴유예 상태 진입)",
+      "exit_condition": "결과 안내 노출 + 세션 종료 후 안내 화면",
+      "predecessor": [
+        "PR-MBR-CS-003-04"
+      ],
+      "successor": [],
+      "related_policies": [
+        "PG-MBR-LEAVE-008",
+        "PG-MBR-LEAVE-009",
+        "PG-MBR-LEAVE-010",
+        "PG-MBR-LEAVE-011",
+        "PG-MBR-LEAVE-012"
+      ]
+    },
+    "purpose": "탈퇴 요청 완료와 7일 철회 유예 기간을 안내한다.",
+    "system_inputs_to_user": [
+      "탈퇴 요청 완료 메시지 (POL-MBR-LEAVE-012-12)",
+      "유예 기간 7일 (POL-MBR-LEAVE-011-01) + 종료일",
+      "철회 경로",
+      "데이터 보관·파기 기준",
+      "재가입 기준",
+      "후속 문의 경로"
+    ],
+    "user_inputs": [
+      "홈으로 (로그아웃 상태)",
+      "철회 방법 보기"
+    ],
+    "system_outputs": [
+      "결과 안내 이력",
+      "탈퇴유예 상태"
+    ],
+    "branches": [
+      "성공 → 안내 노출 + 세션 종료",
+      "유예 만료 → 탈퇴 확정 (이 화면 외)"
+    ],
+    "exceptions": [
+      "발송 실패 → 화면 안내 유지 (POL-MBR-LEAVE-012-09)"
+    ],
+    "design_signals": {
+      "primary_block": "hero + 처리 정보 SummaryCard + 철회 안내 NoticeBlock + 1차/2차 CTA",
+      "hero_intent": "탈퇴 요청 완료 — 회원 탈퇴 요청이 완료되었습니다",
+      "cta_intent": "홈으로 + 보조: 철회 방법"
+    },
+    "evidence_refs": [
+      {
+        "field": "system_inputs_to_user.유예",
+        "source_ref": "§6.나.37) POL-MBR-LEAVE-011-01/03",
+        "summary": "유예 기간 7일, 종료 시점 = 시작 + 7일"
+      },
+      {
+        "field": "system_inputs_to_user.철회",
+        "source_ref": "§6.나.37) POL-MBR-LEAVE-011-07/09",
+        "summary": "철회 가능 조건 = 유예 내 + 본인인증, 채널 = 앱/웹"
+      }
+    ]
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "탈퇴 요청 완료 안내 + 철회 경로 인지",
+    "info_hierarchy": [
+      "hero (요청 완료)",
+      "summary (처리 정보)",
+      "notice (철회 안내)",
+      "action"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card",
+    "interaction_pattern": {
+      "no_input": true,
+      "primary_secondary_actions": true,
+      "destructive_done": "탈퇴 요청 완료 — 축하가 아닌 차분한 톤"
+    },
+    "copy_policy": {
+      "title_style": "neutral_done",
+      "avoid_full_width_caption": true
+    },
+    "quality_checks": [
+      "H-7: dead-end → leading=close",
+      "hero 톤은 join-complete의 축하와 달리 중립/차분",
+      "철회 안내는 NoticeBlock으로 분리 (H-8) — 사용자가 가장 먼저 인지해야 함"
+    ]
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipTopBar"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "MembershipHero",
+          "MembershipSummaryCard",
+          "MembershipNotice"
+        ]
+      },
+      "bottom": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipResultActions"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": []
+  },
+  "areas": [
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipHero",
+      "uses": [
+        "TextBlock"
+      ],
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "summary",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipSummaryCard",
+      "uses": [
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "trailing_semantic": "value"
+      },
+      "content_role": "supporting"
+    },
+    {
+      "id": "withdraw-notice",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipNotice",
+      "uses": [
+        "NoticeBlock"
+      ],
+      "layout": {
+        "tone": "info"
+      },
+      "content_role": "supporting"
+    },
+    {
+      "id": "actions",
+      "slot": "bottom",
+      "pattern": "organisms/membership/MembershipResultActions",
+      "uses": [
+        "Button"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "membership"
+    ],
+    "molecules": [
+      "SectionCard",
+      "InfoList",
+      "NoticeBlock"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "pass",
+        "evidence": "card 1개 (summary)"
+      },
+      {
+        "rule": "H-2",
+        "result": "pass",
+        "evidence": "hero/summary/notice 의미 분리"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "dead-end → leading=close"
+      },
+      {
+        "rule": "H-8",
+        "result": "pass",
+        "evidence": "철회 NoticeBlock 분리"
+      },
+      {
+        "rule": "H-10",
+        "result": "documented",
+        "evidence": "InfoList trailing_semantic=value"
+      }
+    ]
+  }
+}

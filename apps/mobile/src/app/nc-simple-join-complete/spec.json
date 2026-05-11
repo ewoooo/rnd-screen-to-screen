@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/nc-simple-join-complete",
+    "source": "implemented-page",
+    "source_ref": "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.15-19) PG-MBR-JOIN/ACCT/PROF/SESS-001"
+  },
+  "screen": {
+    "id": "nc-simple-join-complete",
+    "name": "회원 가입 - 완료",
+    "domain": "nc-simple",
+    "type": "page"
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "docs/NC_정책서_간소화_v1.0_확정본.md §4.가.1) PR-MBR-CS-001-04/05",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.15) PG-MBR-JOIN-001",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.17) PG-MBR-ACCT-001",
+        "docs/NC_정책서_간소화_v1.0_확정본.md §6.나.19) PG-MBR-SESS-001"
+      ]
+    },
+    "process": {
+      "id": "PR-MBR-CS-001-05",
+      "name": "가입 처리 + 결과 안내",
+      "cluster": "US-MBR-CS-001 회원 가입 4/4",
+      "actor": "BSS, 고객",
+      "entry_condition": "본인인증 SUCCESS + BSS 가입 가능 판정",
+      "exit_condition": "회원 계정 생성 완료 + 정회원 세션 생성 + 화면 안내 노출",
+      "predecessor": [
+        "PR-MBR-CS-001-03"
+      ],
+      "successor": [],
+      "related_functions": [
+        "회원 계정 생성",
+        "가입 완료 처리",
+        "세션 생성 및 전환"
+      ],
+      "related_policies": [
+        "PG-MBR-JOIN-001",
+        "PG-MBR-ACCT-001",
+        "PG-MBR-PROF-001",
+        "PG-MBR-SESS-001"
+      ]
+    },
+    "purpose": "BSS의 회원 검증 및 가입 처리 결과를 고객에게 안내하고 정회원 세션으로 전환한다.",
+    "system_inputs_to_user": [
+      "가입 완료 메시지",
+      "가입 일시",
+      "후속 이동 경로 (홈/내 정보)"
+    ],
+    "user_inputs": [
+      "홈으로 이동",
+      "내 정보 보기"
+    ],
+    "system_outputs": [
+      "정회원 세션 토큰",
+      "가입 이력"
+    ],
+    "branches": [
+      "가입 가능 → 정회원 세션 진입",
+      "가입 불가 → 가입제한/재가입 안내 (이 화면이 아닌 분기)"
+    ],
+    "exceptions": [
+      "계정 생성 실패 시 롤백 후 재시도 안내",
+      "세션 생성 실패 시 재로그인 유도"
+    ],
+    "design_signals": {
+      "primary_block": "성공 hero + 1차/2차 CTA",
+      "hero_intent": "축하/완료 인사 — 가입이 완료되었습니다",
+      "cta_intent": "홈으로 시작하기 + 보조: 내 정보 보기"
+    },
+    "evidence_refs": [
+      {
+        "field": "exit_condition",
+        "source_ref": "§6.나.19) POL-MBR-SESS-001",
+        "summary": "정회원 세션 생성 후 가입 완료"
+      },
+      {
+        "field": "system_inputs_to_user",
+        "source_ref": "§4.나 BPMN 가입 완료 화면",
+        "summary": "가입 처리 결과를 고객에게 안내"
+      }
+    ]
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "가입 완료 확인 + 다음 행동 선택 (홈 진입)",
+    "info_hierarchy": [
+      "hero (성공 메시지)",
+      "supporting (가입 정보 요약)",
+      "action (홈으로)"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card",
+    "interaction_pattern": {
+      "main_control": "primary + secondary action",
+      "no_input": true
+    },
+    "copy_policy": {
+      "title_style": "celebratory_short",
+      "avoid_full_width_caption": true
+    },
+    "quality_checks": [
+      "dead-end → leading=close (H-7)",
+      "progress label 100% 노출 또는 숨김 결정",
+      "secondary action은 ghost로"
+    ]
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipTopBar"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "MembershipHero",
+          "MembershipSummaryCard"
+        ]
+      },
+      "bottom": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipResultActions"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": []
+  },
+  "areas": [
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipHero",
+      "uses": [
+        "TextBlock"
+      ],
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "summary",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipSummaryCard",
+      "uses": [
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "trailing_semantic": "value"
+      },
+      "content_role": "supporting"
+    },
+    {
+      "id": "actions",
+      "slot": "bottom",
+      "pattern": "organisms/membership/MembershipResultActions",
+      "uses": [
+        "Button"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "membership"
+    ],
+    "molecules": [
+      "SectionCard",
+      "InfoList"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "pass",
+        "evidence": "card 1개 (summary)"
+      },
+      {
+        "rule": "H-2",
+        "result": "pass",
+        "evidence": "hero='완료', SummaryCard='가입 정보' 의미 분리"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "result(dead-end) → leading=close"
+      },
+      {
+        "rule": "H-10",
+        "result": "documented",
+        "evidence": "InfoList trailing_semantic=value"
+      }
+    ]
+  }
+}

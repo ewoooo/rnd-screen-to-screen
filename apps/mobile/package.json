@@ -1,8 +1,11 @@
 {
   "name": "@screen/mobile",
   "version": "0.1.0",
-  "private": true,
-  "scripts": {
+	"private": true,
+	"exports": {
+		"./screens": "./src/screens/index.ts"
+	},
+	"scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
@@ -10,12 +13,10 @@
   },
   "dependencies": {
     "@pxds/pxds-components": "0.1.0",
-    "@pxds/pxds-icons": "0.1.0",
-    "@pxds/pxds-layout": "0.1.0",
-    "@pxds/pxds-tokens": "0.1.0",
-    "@screen/registry": "0.1.0",
-    "@screen/specs": "0.1.0",
-    "next": "^16.2.4",
+		"@pxds/pxds-icons": "0.1.0",
+		"@pxds/pxds-layout": "0.1.0",
+		"@pxds/pxds-tokens": "0.1.0",
+		"next": "^16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

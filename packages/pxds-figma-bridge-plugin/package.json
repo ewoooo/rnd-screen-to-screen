@@ -1,0 +1,16 @@
+{
+	"name": "@pxds/pxds-figma-bridge-plugin",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./manifest.json": "./manifest.json",
+		"./code.js": "./code.js",
+		"./ui.html": "./ui.html"
+	},
+	"files": ["manifest.json", "code.js", "ui.html"],
+	"dependencies": {
+		"@pxds/pxds-figma": "0.1.0",
+		"@pxds/pxds-tokens": "0.1.0"
+	}
+}

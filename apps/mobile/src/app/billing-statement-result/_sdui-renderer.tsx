@@ -9,7 +9,7 @@ import {
 } from "@/components/molecules";
 import { ProgressTopBar } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type ResultTone = "success" | "info" | "warning" | "critical";
 type ResultData = {
   tone: ResultTone;

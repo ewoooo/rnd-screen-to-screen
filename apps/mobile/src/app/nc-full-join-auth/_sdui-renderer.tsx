@@ -10,7 +10,7 @@ import {
   ProgressTopBar,
 } from "@/components/organisms/global";
 import { AppScreen, ListContents } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type IconKind = "smartphone" | "shield-check" | "certificate";
 const ICON_MAP: Record<IconKind, ReactNode> = {
   smartphone: <IconMobile width={28} height={28} />,

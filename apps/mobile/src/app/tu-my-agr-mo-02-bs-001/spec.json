@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/tu-my-agr-mo-02-bs-001",
+    "source": "implemented-page"
+  },
+  "screen": {
+    "id": "TU-MY-AGR-MO-02-BS-001",
+    "name": "혜택·이벤트 약관동의 BS",
+    "domain": "tu",
+    "type": "bottom-sheet"
+  },
+  "screen_contract": {
+    "shell": "AppScreenRoot + BottomSheet",
+    "slots": {
+      "background": {
+        "owner": "AgreementBackgroundSilhouette",
+        "patterns": [
+          "GlobalNavigationHeader",
+          "TuDisplay"
+        ],
+        "flow": "overlay"
+      },
+      "backdrop": {
+        "owner": "BottomSheetBackdrop",
+        "patterns": [
+          "BottomSheetBackdrop"
+        ],
+        "flow": "overlay"
+      },
+      "sheet": {
+        "owner": "BottomSheetContent",
+        "patterns": [
+          "BottomSheetContent",
+          "AgreementList"
+        ],
+        "flow": "overlay"
+      }
+    }
+  },
+  "layout_contract": {
+    "portal_context": "frame",
+    "sheet_edge": "bottom",
+    "content_gap": "stack",
+    "content_outlet_inline_inset": null,
+    "section_inset": "sheet-owned",
+    "top_bottom_flow": "overlay",
+    "bleed_sections": []
+  },
+  "areas": [
+    {
+      "id": "background",
+      "slot": "background",
+      "pattern": "templates/app-screen/AppScreenRoot silhouette",
+      "uses": [
+        "AppScreenRoot",
+        "GlobalNavigationHeader",
+        "TuDisplay"
+      ],
+      "layout": {
+        "section_inset": "custom-silhouette"
+      },
+      "content_role": "context-background"
+    },
+    {
+      "id": "backdrop",
+      "slot": "backdrop",
+      "pattern": "templates/bottom-sheet/BottomSheetBackdrop",
+      "uses": [
+        "BottomSheetBackdrop"
+      ],
+      "content_role": "modal-backdrop"
+    },
+    {
+      "id": "agreement-sheet",
+      "slot": "sheet",
+      "pattern": "templates/bottom-sheet/BottomSheetContent",
+      "uses": [
+        "BottomSheet",
+        "BottomSheetContent"
+      ],
+      "layout": {
+        "section_inset": "sheet-owned"
+      },
+      "content_role": "modal-content"
+    },
+    {
+      "id": "agreement-list",
+      "slot": "sheet",
+      "pattern": "organisms/tu/AgreementList",
+      "uses": [
+        "Checkbox"
+      ],
+      "content_role": "selection"
+    },
+    {
+      "id": "dismiss",
+      "slot": "sheet",
+      "pattern": "WDS TextButton",
+      "uses": [
+        "TextButton"
+      ],
+      "content_role": "secondary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreenRoot",
+      "AppScreenContext",
+      "BottomSheetRoot",
+      "BottomSheetBackdrop",
+      "BottomSheetContent",
+      "BottomSheet"
+    ],
+    "organisms": [
+      "global",
+      "tu"
+    ],
+    "molecules": [
+      "Checkbox"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [
+      {
+        "id": "background-silhouette",
+        "reason": "Bottom sheet context background intentionally mirrors parent screen with custom offset.",
+        "owner": "route"
+      }
+    ],
+    "new_vocabulary_required": [
+      "bottom-sheet action row normalization"
+    ]
+  }
+}

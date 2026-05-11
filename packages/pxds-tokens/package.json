@@ -11,6 +11,7 @@
 		"./package.json": "./package.json",
 		".": "./src/index.ts",
 		"./registry/wds-token-registry.json": "./registry/wds-token-registry.json",
+		"./tokens-studio": "./src/tokens-studio/index.ts",
 		"./tokens.css": "./src/tokens.css"
 	}
 }

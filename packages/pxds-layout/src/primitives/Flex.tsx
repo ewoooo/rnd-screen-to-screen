@@ -4,6 +4,7 @@ import {
 	type ReactNode,
 	forwardRef,
 } from "react";
+import { createScreenExportAttributes } from "../screen-export";
 import {
 	type CommonLayoutProps,
 	type FlexShorthandProps,
@@ -78,6 +79,33 @@ export const Flex = forwardRef<HTMLElement, FlexProps>(function Flex(
 		<As
 			ref={ref}
 			className={className}
+			{...createScreenExportAttributes({
+				type:
+					direction === "column"
+						? "VStack"
+						: direction === "row"
+							? "HStack"
+							: "Flex",
+				props: {
+					as: typeof As === "string" ? As : undefined,
+					p,
+					px,
+					py,
+					pt,
+					pr,
+					pb,
+					pl,
+					gap,
+					direction,
+					wrap,
+					align,
+					justify,
+					width,
+					height,
+					background,
+					borderRadius,
+				},
+			})}
 			style={{
 				display: display ?? "flex",
 				...flexStyle({ direction, wrap, align, justify, grow, shrink }),

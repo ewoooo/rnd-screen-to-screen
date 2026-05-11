@@ -4,7 +4,7 @@ import { createContext, useContext, type ReactNode } from "react";
 import {
 	componentRegistry,
 	type ComponentRegistryEntry,
-} from "@pxds/component-registry";
+} from "@pxds/pxds-components/registry";
 
 import {
 	getComponentGroups,

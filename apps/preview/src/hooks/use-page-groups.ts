@@ -1,4 +1,4 @@
-import { screenRoutes } from "@screen/registry";
+import { screenRoutes } from "@screen/mobile/screens";
 
 import { getPageGroups, groupPagesByGroup } from "@/utils/page-groups";
 

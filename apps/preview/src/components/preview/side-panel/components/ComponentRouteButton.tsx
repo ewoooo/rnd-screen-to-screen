@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ComponentRegistryEntry } from "@pxds/component-registry";
+import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
 
 type ComponentRouteButtonProps = {
 	component: ComponentRegistryEntry;

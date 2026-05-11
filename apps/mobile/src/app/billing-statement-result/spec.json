@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/billing-statement-result",
+    "source": "policy-driven",
+    "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.md",
+    "policy_section": "4. US-BIL-CHK-005 / PR-BIL-CHK-005-03",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/active/billing/_pagination/billing-chk.json"
+  },
+  "screen": {
+    "id": "billing-statement-result",
+    "name": "요금안내서 재발행 결과",
+    "domain": "billing",
+    "use_case": "US-BIL-CHK-005",
+    "process_id": "PR-BIL-CHK-005-03",
+    "step_fraction": "5/8",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "재발행 결과·수신 채널·재발행 가능 여부 확인",
+    "info_hierarchy": [
+      "hero (결과 메시지)",
+      "summary (안내서 SectionCard)",
+      "supporting (재발행 가능 여부 NoticeBlock)",
+      "action (확인)"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "none",
+    "sectioning": "one-card",
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "patterns": [
+          "GlobalNavigationHeader"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "NoticeBlock",
+          "SectionCard",
+          "InfoList"
+        ]
+      },
+      "bottom": {
+        "owner": "PrimaryCTABar",
+        "patterns": [
+          "PrimaryCTABar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalNavigationHeader",
+      "uses": [
+        "GlobalNavigationHeader"
+      ],
+      "layout": {
+        "leading": "close",
+        "title": "재발행 결과"
+      },
+      "content_role": "chrome"
+    },
+    {
+      "id": "result",
+      "slot": "content",
+      "pattern": "molecules/NoticeBlock",
+      "uses": [
+        "NoticeBlock"
+      ],
+      "content_role": "result-message"
+    },
+    {
+      "id": "info",
+      "slot": "content",
+      "pattern": "molecules/SectionCard",
+      "uses": [
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "trailing_semantic": "value"
+      },
+      "content_role": "result-summary"
+    },
+    {
+      "id": "cta",
+      "slot": "bottom",
+      "pattern": "molecules/PrimaryCTABar",
+      "uses": [
+        "PrimaryCTABar",
+        "Button"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "global"
+    ],
+    "molecules": [
+      "NoticeBlock",
+      "SectionCard",
+      "InfoList",
+      "PrimaryCTABar"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

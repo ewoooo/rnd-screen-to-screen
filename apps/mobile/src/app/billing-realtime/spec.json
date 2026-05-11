@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/billing-realtime",
+    "source": "policy-driven",
+    "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.md",
+    "policy_section": "4. US-BIL-CHK-003 / PR-BIL-CHK-003-01,02,03",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/active/billing/_pagination/billing-chk.json"
+  },
+  "screen": {
+    "id": "billing-realtime",
+    "name": "실시간·예상 이용요금",
+    "domain": "billing",
+    "use_case": "US-BIL-CHK-003",
+    "process_id": "PR-BIL-CHK-003-01,02,03",
+    "step_fraction": "3/8",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "browse",
+    "primary_task": "실시간 이용요금·예상 청구·MIRI 사전 안내 확인",
+    "info_hierarchy": [
+      "summary (예상 청구)",
+      "supporting (잔여이용요금 InfoList)",
+      "supporting (MIRI 안내 NoticeBlock)"
+    ],
+    "cta_location": "none",
+    "progress_location": "none",
+    "sectioning": "one-card",
+    "copy_policy": {
+      "caption_measure": "short",
+      "avoid_full_width_caption": true
+    },
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "patterns": [
+          "GlobalNavigationHeader"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "SummaryCard",
+          "InfoList",
+          "NoticeBlock"
+        ]
+      },
+      "bottom": {
+        "owner": "none",
+        "patterns": [],
+        "flow": "none"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalNavigationHeader",
+      "uses": [
+        "GlobalNavigationHeader"
+      ],
+      "layout": {
+        "leading": "back",
+        "title": "실시간·예상 요금"
+      },
+      "content_role": "chrome"
+    },
+    {
+      "id": "forecast",
+      "slot": "content",
+      "pattern": "molecules/SummaryCard",
+      "uses": [
+        "SummaryCard"
+      ],
+      "content_role": "primary-summary"
+    },
+    {
+      "id": "remaining",
+      "slot": "content",
+      "pattern": "molecules/InfoList",
+      "uses": [
+        "InfoList"
+      ],
+      "layout": {
+        "trailing_semantic": "value"
+      },
+      "content_role": "supporting-list"
+    },
+    {
+      "id": "miri",
+      "slot": "content",
+      "pattern": "molecules/NoticeBlock",
+      "uses": [
+        "NoticeBlock"
+      ],
+      "content_role": "supporting-notice"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "global"
+    ],
+    "molecules": [
+      "SummaryCard",
+      "InfoList",
+      "NoticeBlock"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

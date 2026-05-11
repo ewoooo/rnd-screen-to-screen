@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "experimental-html",
+    "route": "/billing-html-set-method-cancel-result",
+    "source": "policy-driven",
+    "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+    "policy_section": "4. US-BIL-SET-003 / PR-BIL-SET-003-03",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/experimental/billing-from-html/_pagination/billing-html-set.json"
+  },
+  "screen": {
+    "id": "billing-html-set-method-cancel-result",
+    "name": "납부방법 해지 결과",
+    "domain": "billing-html",
+    "use_case": "US-BIL-SET-003",
+    "process_id": "PR-BIL-SET-003-03",
+    "step_fraction": "3/6",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "해지 결과·당월 처리·대체 납부 인지",
+    "info_hierarchy": [
+      "hero",
+      "result-summary (해지 정보)",
+      "supporting (대체 납부)",
+      "actions"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "none",
+    "sectioning": "one-card",
+    "copy_policy": {
+      "description_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "patterns": [
+          "TopNavigation"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "Hero",
+          "ResultSummaryCard",
+          "AlternateNotice"
+        ]
+      },
+      "bottom": {
+        "owner": "StickyActionBar",
+        "patterns": [
+          "PrimaryCTA",
+          "SecondaryCTA"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalNavigationHeader",
+      "uses": [
+        "TopNavigation"
+      ],
+      "layout": {
+        "leading": "close",
+        "title": "해지 결과"
+      },
+      "content_role": "navigation"
+    },
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "molecules/Hero",
+      "uses": [
+        "ContentSection",
+        "TextBlock",
+        "ContentRail"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "summary",
+      "slot": "content",
+      "pattern": "molecules/SectionCard",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "trailing_semantic": "value"
+      },
+      "content_role": "result-summary"
+    },
+    {
+      "id": "alternate",
+      "slot": "content",
+      "pattern": "molecules/NoticeBlock",
+      "uses": [
+        "ContentSection",
+        "NoticeBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "supporting-notice"
+    },
+    {
+      "id": "actions",
+      "slot": "bottom",
+      "pattern": "molecules/StickyActionBar",
+      "uses": [
+        "Box",
+        "Button",
+        "TextBlock"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection",
+      "ContentRail"
+    ],
+    "organisms": [
+      "global"
+    ],
+    "molecules": [
+      "SectionCard",
+      "InfoList",
+      "NoticeBlock",
+      "StickyActionBar"
+    ],
+    "atoms": [
+      "TextBlock",
+      "Box"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

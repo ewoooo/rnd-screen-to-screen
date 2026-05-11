@@ -3,7 +3,7 @@ import type {
 	ScreenAreaContract,
 	ScreenSpecV2,
 	SDUINode,
-} from "@screen/specs";
+} from "@screen/mobile/screens";
 
 export type AuditJudgement =
 	| "OK"

@@ -3,4 +3,7 @@ export {
 	type TextBlockOverflow,
 	type TextBlockProps,
 	type TextBlockVariant,
-} from "./TextBlock";
+	textBlockFigmaSpec,
+	textBlockPreviewMocks,
+	textBlockRegistryEntry,
+} from "./text-block";

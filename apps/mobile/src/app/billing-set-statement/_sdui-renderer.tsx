@@ -13,7 +13,7 @@ import { FormField } from "@pxds/pxds-components/patterns";
 import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import { evalVisibleWhen } from "@/lib/visible-when";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type TopData = {
   title: string;
   leading: "back" | "close";

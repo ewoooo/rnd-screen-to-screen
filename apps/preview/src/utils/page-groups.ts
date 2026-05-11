@@ -1,4 +1,4 @@
-import type { ScreenGroup, ScreenRoute } from "@screen/registry";
+import type { ScreenGroup, ScreenRoute } from "@screen/mobile/screens";
 
 export const PAGE_GROUP_ORDER = [
 	"home",

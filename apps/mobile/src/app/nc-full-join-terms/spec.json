@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/nc-full-join-terms",
+    "source": "policy-driven",
+    "policy_doc": "docs/NC_정책서_Full_v1.0_확정본.md",
+    "policy_section": "4.다.1) PR-MBR-CS-001-01",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/active/nc-full/_pagination/nc-full-join.json"
+  },
+  "screen": {
+    "id": "nc-full-join-terms",
+    "name": "약관 동의",
+    "domain": "nc-full",
+    "use_case": "US-MBR-CS-001",
+    "process_id": "PR-MBR-CS-001-01",
+    "step_fraction": "1/4",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "selector",
+    "primary_task": "필수·선택 약관 동의",
+    "info_hierarchy": [
+      "hero (가입 1/4 맥락)",
+      "required-input (필수+선택 약관 그룹)",
+      "conditional-notice (미성년 법정대리인 안내)",
+      "action (동의하고 계속하기)"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card",
+    "copy_policy": {
+      "description_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden",
+      "bleed_restore": "ContentRail rail=inset"
+    },
+    "spacing_policy": {
+      "hero_to_input": "NcHero pb=section; ContentList gap remains spacing-4"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "NcShell",
+        "patterns": [
+          "NcTopBar"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "NcHero",
+          "TermsAgreementGroup",
+          "NcNotice"
+        ]
+      },
+      "bottom": {
+        "owner": "NcShell",
+        "patterns": [
+          "NcContinueBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top-progress",
+      "slot": "top",
+      "pattern": "organisms/nc/NcTopBar",
+      "uses": [
+        "StatusBar",
+        "TopNavigation",
+        "ProgressIndicator"
+      ],
+      "layout": {
+        "flow": "reserved",
+        "progress_source": "data.flow.progress",
+        "leading": "close"
+      },
+      "content_role": "flow-progress"
+    },
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "organisms/nc/NcHero",
+      "uses": [
+        "ContentSection",
+        "TextBlock",
+        "ContentRail"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "description_rail": "measure:body",
+        "block_padding_top": "spacing-16",
+        "block_padding_bottom": "spacing-32"
+      },
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "terms",
+      "slot": "content",
+      "pattern": "organisms/nc/TermsAgreementGroup",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "ConsentList",
+        "TextBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "card_label_omitted": true,
+        "card_title_only": true
+      },
+      "content_role": "required-input"
+    },
+    {
+      "id": "guardian-notice",
+      "slot": "content",
+      "pattern": "organisms/nc/NcNotice",
+      "uses": [
+        "ContentSection",
+        "NoticeBlock",
+        "TextBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "conditional-notice",
+      "state_binding": {
+        "visible_when": "data.user.isMinor === true"
+      }
+    },
+    {
+      "id": "continue",
+      "slot": "bottom",
+      "pattern": "organisms/nc/NcContinueBar",
+      "uses": [
+        "Box",
+        "Button",
+        "TextBlock"
+      ],
+      "content_role": "primary-action",
+      "layout": {
+        "surface": "page-semi-gradient"
+      },
+      "state_binding": {
+        "primary_disabled_when": "terms.missingRequiredCount > 0",
+        "eyebrow_when_blocked": "필수 약관 N개 동의가 남았어요",
+        "eyebrow_when_ready": "data.continue.eyebrow"
+      }
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection",
+      "ContentRail"
+    ],
+    "organisms": [
+      "nc"
+    ],
+    "molecules": [
+      "ConsentList",
+      "NoticeBlock",
+      "SectionCard",
+      "ProgressIndicator"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [
+      {
+        "location": "molecules/consent-list/ConsentList.tsx",
+        "kind": "raw-min-height",
+        "value": "minHeight: 60 / 64",
+        "reason": "터치 타깃 (WDS ListCell verticalPadding=medium 대응)",
+        "owner": "molecule"
+      }
+    ],
+    "new_vocabulary_required": [
+      "organisms/nc (NcShell, NcTopBar, NcHero, NcNotice, NcContinueBar, TermsAgreementGroup)"
+    ]
+  }
+}

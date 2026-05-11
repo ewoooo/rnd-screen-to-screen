@@ -14,7 +14,7 @@ import type {
   RenderableScreenSpecV1,
   SDUIJsonValue,
   SDUINode,
-} from "@screen/specs";
+} from "@/screens";
 import type { ProductTextPolicyMap } from "@/components/organisms/product/types";
 type JsonObject = Record<string, SDUIJsonValue>;
 type ProductData = {

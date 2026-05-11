@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { componentRegistry } from "@pxds/component-registry";
+import { componentRegistry } from "@pxds/pxds-components/registry";
 
 export default function ComponentsPreviewRoutePage() {
 	const firstComponent = componentRegistry[0];

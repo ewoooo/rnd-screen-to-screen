@@ -1,0 +1,404 @@
+{
+  "version": "1.0.0",
+  "minRendererVersion": "0.1.0",
+  "minComponentsVersion": "0.1.0",
+  "metadata": {
+    "id": "membership-leave-complete",
+    "name": "탈퇴 결과 안내",
+    "route": "/membership-leave-complete",
+    "domain": "membership",
+    "type": "page",
+    "status": "pilot"
+  },
+  "theme": {
+    "color": {
+      "primary": "semantic.primary.normal",
+      "page": "semantic.surface.page.normal"
+    }
+  },
+  "data": {
+    "topbar": {
+      "title": "탈퇴 완료",
+      "progressLabel": "회원 탈퇴 6/6",
+      "progressPercent": 100
+    },
+    "hero": {
+      "titleLines": [
+        "탈퇴 처리가",
+        "완료되었습니다"
+      ],
+      "description": "30일 이내에 다시 가입하시면 일부 정보를 복원할 수 있어요. 그 이후엔 모두 파기됩니다."
+    },
+    "summary": {
+      "label": "처리 정보",
+      "title": "이 내용으로 처리됐어요",
+      "items": [
+        {
+          "id": "leave-at",
+          "title": "탈퇴 처리 시각",
+          "sub": "2026년 4월 30일 (수) 19:24",
+          "mediaLabel": "처리"
+        },
+        {
+          "id": "grace",
+          "title": "철회 가능 기간",
+          "sub": "5월 30일까지 (30일 유예)",
+          "trailingLabel": "철회 가능",
+          "mediaLabel": "유예"
+        },
+        {
+          "id": "purge",
+          "title": "개인정보 파기",
+          "sub": "유예 종료 시 자동 파기",
+          "mediaLabel": "파기"
+        }
+      ]
+    },
+    "notice": {
+      "badge": "철회 안내",
+      "text": "유예 기간 내 철회를 원하시면 탈퇴 시 사용한 본인인증으로 마이페이지에서 진행할 수 있어요.",
+      "action": "철회 방법",
+      "tone": "info"
+    },
+    "actions": {
+      "primaryLabel": "홈으로 가기",
+      "secondaryLabel": "철회하기"
+    }
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "PR-MBR-CS-003-06",
+        "FN-MBR-LEAVE-006",
+        "FN-MBR-COM-005",
+        "FN-MBR-COM-008",
+        "https://www.notion.so/NC-Full-352de7542a488080830af5e99130430d"
+      ]
+    },
+    "process": {
+      "id": "PR-MBR-CS-003-06",
+      "name": "탈퇴 결과 안내",
+      "cluster": "US-MBR-CS-003 회원 탈퇴 6/6",
+      "actor": "고객, BSS",
+      "entry_condition": "탈퇴 처리 완료",
+      "exit_condition": "탈퇴 결과 및 유예 기간 안내 완료",
+      "predecessor": [
+        "PR-MBR-CS-003-05"
+      ],
+      "successor": [],
+      "related_functions": [
+        "FN-MBR-LEAVE-006",
+        "FN-MBR-COM-005",
+        "FN-MBR-COM-008"
+      ],
+      "related_policies": [
+        "탈퇴 결과 안내 기준 정책"
+      ]
+    },
+    "purpose": "탈퇴 처리 결과와 유예 기간 정보를 안내한다.",
+    "system_inputs_to_user": [
+      "탈퇴 처리 시각",
+      "유예 종료일",
+      "철회 가능 여부",
+      "파기 일정"
+    ],
+    "user_inputs": [
+      "홈으로 이동",
+      "철회 시작"
+    ],
+    "system_outputs": [
+      "결과확인이력"
+    ],
+    "branches": [
+      "유예 기간 적용 → 철회 CTA 노출",
+      "즉시 탈퇴(유예 미적용) → 철회 CTA 미노출"
+    ],
+    "exceptions": [
+      "알림 발송 실패 시 화면 안내 유지",
+      "세션 정리 후 게스트 상태 진입"
+    ],
+    "design_signals": {
+      "primary_block": "result hero + 처리 정보 카드 + 철회 안내 + 홈/철회 CTA",
+      "hero_intent": "탈퇴 완료 사실 + 유예 기간 강조",
+      "info_box_intent": "철회 절차 안내",
+      "cta_intent": "홈으로 가기 / 철회하기 (유예 시)"
+    }
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "탈퇴 처리 결과 + 유예 기간/철회 안내",
+    "info_hierarchy": [
+      "hero",
+      "result-summary",
+      "supporting-notice",
+      "actions"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card",
+    "copy_policy": {
+      "description_measure": "body"
+    },
+    "rail_policy": {
+      "description": "measure:body",
+      "notice": "measure:body"
+    }
+  },
+  "x_screenContract": {
+    "screen_contract": {
+      "shell": "AppScreen",
+      "slots": {
+        "top": {
+          "owner": "MembershipShell",
+          "patterns": [
+            "MembershipTopBar"
+          ],
+          "flow": "reserved"
+        },
+        "content": {
+          "owner": "ContentList",
+          "patterns": [
+            "MembershipHero",
+            "MembershipSummaryCard",
+            "MembershipNotice"
+          ]
+        },
+        "bottom": {
+          "owner": "MembershipShell",
+          "patterns": [
+            "MembershipResultActions"
+          ],
+          "flow": "reserved"
+        }
+      }
+    },
+    "layout_contract": {
+      "content_outlet_inline_inset": "spacing-12",
+      "section_inset": "inherit",
+      "content_gap": "spacing-4",
+      "content_gap_owner": "ContentList",
+      "top_bottom_flow": "reserved",
+      "bleed_sections": [],
+      "content_rail_owner": "ContentRail"
+    },
+    "areas": [
+      {
+        "id": "hero",
+        "slot": "content",
+        "pattern": "organisms/membership/MembershipHero",
+        "uses": [
+          "ContentSection",
+          "TextBlock",
+          "ContentRail"
+        ],
+        "layout": {
+          "section_inset": "inherit",
+          "description_rail": "measure:body"
+        },
+        "content_role": "primary-copy"
+      },
+      {
+        "id": "summary",
+        "slot": "content",
+        "pattern": "organisms/membership/MembershipSummaryCard",
+        "uses": [
+          "ContentSection",
+          "SectionCard",
+          "InfoList"
+        ],
+        "layout": {
+          "section_inset": "inherit",
+          "trailing_semantic": "status"
+        },
+        "content_role": "result-summary"
+      },
+      {
+        "id": "withdrawal-notice",
+        "slot": "content",
+        "pattern": "organisms/membership/MembershipNotice",
+        "uses": [
+          "ContentSection",
+          "NoticeBlock",
+          "TextBlock",
+          "ContentRail"
+        ],
+        "layout": {
+          "section_inset": "inherit",
+          "text_rail": "measure:body"
+        },
+        "content_role": "supporting-notice"
+      },
+      {
+        "id": "actions",
+        "slot": "bottom",
+        "pattern": "organisms/membership/MembershipResultActions",
+        "uses": [
+          "PrimaryCTABar",
+          "Button"
+        ],
+        "content_role": "primary-action",
+        "layout": {
+          "surface": "page-semi-gradient"
+        }
+      }
+    ],
+    "design_system_contract": {
+      "templates": [
+        "AppScreen",
+        "AppScreenContent",
+        "ContentOutlet",
+        "ContentList",
+        "ContentSection",
+        "ContentRail"
+      ],
+      "organisms": [
+        "membership"
+      ],
+      "molecules": [
+        "InfoList",
+        "NoticeBlock",
+        "PrimaryCTABar",
+        "SectionCard"
+      ],
+      "atoms": [
+        "TextBlock"
+      ],
+      "allowed_escape_hatches": [
+        {
+          "location": "molecules/info-list/InfoList.tsx",
+          "kind": "raw-border",
+          "value": "borderBottom: 1px solid var(--semantic-line-solid-alternative)",
+          "reason": "row separator. WDS Divider 흡수 후보",
+          "owner": "molecule"
+        }
+      ],
+      "new_vocabulary_required": []
+    }
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "pass",
+        "evidence": "card 1개 (summary)"
+      },
+      {
+        "rule": "H-2",
+        "result": "pass",
+        "evidence": "hero='완료' / SummaryCard='처리 정보' 의미 분리"
+      },
+      {
+        "rule": "H-3",
+        "result": "n/a",
+        "evidence": "RadioGroup 미사용"
+      },
+      {
+        "rule": "H-4",
+        "result": "n/a",
+        "evidence": "textarea 미사용"
+      },
+      {
+        "rule": "H-5",
+        "result": "pass",
+        "evidence": "에러 없음"
+      },
+      {
+        "rule": "H-6",
+        "result": "pass",
+        "evidence": "TopBar progress label 숨김"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "result(dead-end) → leading=close 명시 override"
+      },
+      {
+        "rule": "H-8",
+        "result": "pass",
+        "evidence": "Notice 별도 ContentSection"
+      },
+      {
+        "rule": "H-9",
+        "result": "n/a",
+        "evidence": "FormField 미사용"
+      },
+      {
+        "rule": "H-10",
+        "result": "documented",
+        "evidence": "InfoList trailing_semantic='status'"
+      },
+      {
+        "rule": "H-11",
+        "result": "documented",
+        "evidence": "InfoList raw-border escape hatch 기록"
+      }
+    ]
+  },
+  "x_benchmark": {
+    "criteria": [
+      "design.visualHierarchy",
+      "design.informationGrouping",
+      "design.ctaPriority",
+      "design.componentConsistency",
+      "design.escapeHatchHonesty",
+      "planning.policyCoverage",
+      "planning.flowCompleteness"
+    ],
+    "guards": [
+      "guard.rawEscapeHatch",
+      "guard.specImplementationMismatch"
+    ],
+    "notes": [
+      "즉시 탈퇴(유예 없음) variant fixture 후속에 추가 — 철회 CTA 미노출 케이스 검증.",
+      "join-complete와 구조 동일 → result 장르 일관성 확인됨."
+    ]
+  },
+  "children": [
+    {
+      "type": "AppScreen",
+      "id": "screen.membership-leave-complete",
+      "componentVersion": "0.1.0",
+      "props": {
+        "top": {
+          "type": "MembershipTopBar",
+          "id": "slot.top.membership-leave-complete",
+          "props": {
+            "bind": "topbar",
+            "leading": "close"
+          }
+        },
+        "bottom": {
+          "type": "MembershipResultActions",
+          "id": "area.actions",
+          "props": {
+            "bind": "actions"
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "MembershipHero",
+          "id": "area.hero",
+          "props": {
+            "bind": "hero"
+          }
+        },
+        {
+          "type": "MembershipSummaryCard",
+          "id": "area.summary",
+          "props": {
+            "bind": "summary"
+          }
+        },
+        {
+          "type": "MembershipNotice",
+          "id": "area.withdrawal-notice",
+          "props": {
+            "bind": "notice"
+          }
+        }
+      ]
+    }
+  ]
+}

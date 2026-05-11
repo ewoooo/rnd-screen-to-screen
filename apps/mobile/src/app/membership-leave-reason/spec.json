@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/membership-leave-reason",
+    "source": "implemented-page"
+  },
+  "screen": {
+    "id": "membership-leave-reason",
+    "name": "탈퇴 사유 입력",
+    "domain": "membership",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "form",
+    "primary_task": "표준 사유 1개 선택 + 선택적 자유 의견 입력",
+    "info_hierarchy": [
+      "hero (질문 + 1줄 helper)",
+      "required-input (radio compact + textarea optional)",
+      "action (다음으로)"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "flat",
+    "copy_policy": {
+      "description_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden",
+      "choice_list": "inherit section rail",
+      "free_text": "measure:body"
+    },
+    "spacing_policy": {
+      "hero_to_input": "MembershipHero pb=section; ContentList gap remains spacing-4"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipTopBar"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "MembershipHero",
+          "MembershipReasonForm"
+        ]
+      },
+      "bottom": {
+        "owner": "MembershipShell",
+        "patterns": [
+          "MembershipContinueBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipHero",
+      "uses": [
+        "ContentSection",
+        "TextBlock",
+        "ContentRail"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "description_rail": "measure:body",
+        "block_padding_top": "spacing-16",
+        "block_padding_bottom": "spacing-32",
+        "after_spacing_owner": "MembershipHero"
+      },
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "reason",
+      "slot": "content",
+      "pattern": "organisms/membership/MembershipReasonForm",
+      "uses": [
+        "ContentSection",
+        "SelectableList",
+        "FormField",
+        "TextArea",
+        "ContentRail"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "sectioning": "flat",
+        "selectable_density": "compact",
+        "free_text_visibility": "always",
+        "free_text_required": false,
+        "free_text_rail": "measure:body",
+        "selectable_rail": "inherit"
+      },
+      "content_role": "required-input"
+    },
+    {
+      "id": "continue",
+      "slot": "bottom",
+      "pattern": "organisms/membership/MembershipContinueBar",
+      "uses": [
+        "Box",
+        "Button",
+        "TextBlock"
+      ],
+      "content_role": "primary-action",
+      "layout": {
+        "surface": "page-semi-gradient"
+      },
+      "state_binding": {
+        "primary_disabled_when": "reason.value 미선택 || freeText.length > freeTextMaxLength",
+        "eyebrow_when_blocked": "탈퇴 사유를 선택해주세요",
+        "eyebrow_when_ready": "data.continue.eyebrow",
+        "error_message_owner": "form.errorText (CTA 위 중복 금지)"
+      }
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection",
+      "ContentRail"
+    ],
+    "organisms": [
+      "membership"
+    ],
+    "molecules": [
+      "FormField",
+      "SelectableList",
+      "TextArea"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [
+      {
+        "location": "molecules/form-field/FormField.tsx",
+        "kind": "raw-margin",
+        "value": "marginLeft: var(--spacing-2)",
+        "reason": "required * mark과 label 사이 미세 간격. 본 화면은 required 미사용이라 미발동",
+        "owner": "molecule"
+      }
+    ],
+    "new_vocabulary_required": []
+  }
+}

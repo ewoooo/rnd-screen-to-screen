@@ -9,7 +9,7 @@ import {
   type FlowReasonItem,
 } from "@/components/organisms/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type LeaveReasonData = {
   hero: {
     titleLines: readonly string[];

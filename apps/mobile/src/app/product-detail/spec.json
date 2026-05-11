@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/product-detail",
+    "source": "implemented-page"
+  },
+  "screen": {
+    "id": "product-detail",
+    "name": "상품 상세",
+    "domain": "product",
+    "type": "page"
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "ProductShell",
+        "patterns": [
+          "ProductTopBar"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "ProductSummaryCard",
+          "ProductOptionSelector",
+          "ProductPromoBanner",
+          "ProductBenefitList"
+        ]
+      },
+      "bottom": {
+        "owner": "ProductShell",
+        "patterns": [
+          "ProductPurchaseBar",
+          "GlobalNavigationBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_gap_owner": "ContentList"
+  },
+  "areas": [
+    {
+      "id": "summary",
+      "slot": "content",
+      "pattern": "organisms/product/ProductSummaryCard",
+      "uses": [
+        "ContentSection",
+        "SummaryCard",
+        "MediaBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "summary"
+    },
+    {
+      "id": "options",
+      "slot": "content",
+      "pattern": "organisms/product/ProductOptionSelector",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "SelectableList"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "selection"
+    },
+    {
+      "id": "promo",
+      "slot": "content",
+      "pattern": "organisms/product/ProductPromoBanner",
+      "uses": [
+        "ContentSection",
+        "PromoBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "promotion"
+    },
+    {
+      "id": "benefits",
+      "slot": "content",
+      "pattern": "organisms/product/ProductBenefitList",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "supporting-content"
+    },
+    {
+      "id": "purchase",
+      "slot": "bottom",
+      "pattern": "organisms/product/ProductPurchaseBar",
+      "uses": [
+        "StickyActionBar"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "global",
+      "product"
+    ],
+    "molecules": [
+      "PromoBlock",
+      "SectionCard",
+      "SelectableList",
+      "StickyActionBar",
+      "SummaryCard",
+      "MediaBlock",
+      "InfoList"
+    ],
+    "atoms": [
+      "TextBlock",
+      "Placeholder"
+    ],
+    "allowed_escape_hatches": [
+      {
+        "id": "commerce-card-shadow",
+        "reason": "SummaryCard, SectionCard, PromoBlock still consume CARD_SHADOW while product card surface token is being normalized.",
+        "owner": "molecules"
+      },
+      {
+        "id": "commerce-card-radius",
+        "reason": "PromoBlock still consumes CARD_RADIUS before promotion surface radius is absorbed into a WDS/project alias.",
+        "owner": "molecules/promo-block"
+      },
+      {
+        "id": "sticky-action-secondary-width",
+        "reason": "StickyActionBar keeps a fixed 96px secondary action column to preserve purchase CTA priority.",
+        "owner": "molecules/cta-bar"
+      }
+    ],
+    "new_vocabulary_required": []
+  }
+}

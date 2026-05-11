@@ -7,6 +7,7 @@ import {
 	type ReactNode,
 	useContext,
 } from "react";
+import { createScreenExportAttributes } from "../screen-export";
 
 export type ContentLayoutMode = "legacy" | "screen";
 export type ContentSectionInset = "inherit" | "bleed";
@@ -64,7 +65,14 @@ export function ContentSection({
 			: null;
 
 	return (
-		<Element as={as} style={{ ...bleedStyle, ...style }}>
+		<Element
+			as={as}
+			exportAttributes={createScreenExportAttributes({
+				type: "ContentSection",
+				props: { inset },
+			})}
+			style={{ ...bleedStyle, ...style }}
+		>
 			<ContentLayoutContext.Provider
 				value={{ inlineInset, sectionInset: inset }}
 			>
@@ -105,6 +113,10 @@ export function ContentRail({
 	return (
 		<Element
 			as={as}
+			exportAttributes={createScreenExportAttributes({
+				type: "ContentRail",
+				props: { rail, measure },
+			})}
 			style={{
 				boxSizing: "border-box",
 				width: "100%",
@@ -122,10 +134,16 @@ function Element({
 	as: As,
 	children,
 	style,
+	exportAttributes,
 }: {
 	as: ElementType;
 	children: ReactNode;
 	style?: CSSProperties;
+	exportAttributes?: Record<string, string>;
 }) {
-	return <As style={style}>{children}</As>;
+	return (
+		<As style={style} {...exportAttributes}>
+			{children}
+		</As>
+	);
 }

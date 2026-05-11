@@ -5,7 +5,7 @@ import {
 	getScreenSpecIssues,
 	type RenderableScreenSpecV1,
 	type ScreenSpecV2,
-} from "@screen/specs";
+} from "@screen/mobile/screens";
 
 const screenSpecsById = activeScreenSpecs as Record<string, ScreenSpecV2>;
 const renderableScreenSpecsById = activeRenderableScreenSpecs as Record<

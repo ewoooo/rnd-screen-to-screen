@@ -1,0 +1,359 @@
+{
+  "version": "1.0.0",
+  "minRendererVersion": "0.1.0",
+  "minComponentsVersion": "0.1.0",
+  "metadata": {
+    "id": "billing-set-statement",
+    "name": "요금안내서 수신 설정",
+    "route": "/billing-set-statement",
+    "domain": "billing",
+    "type": "page",
+    "status": "spec-only"
+  },
+  "theme": {
+    "color": {
+      "primary": "semantic.primary.normal",
+      "page": "semantic.surface.page.normal"
+    }
+  },
+  "data": {
+    "top": {
+      "title": "요금안내서 수신 설정",
+      "leading": "back"
+    },
+    "hero": {
+      "titleLines": [
+        "요금안내서를",
+        "어떻게 받으시겠어요?"
+      ],
+      "description": "선택한 수신 방식으로 매월 청구서가 전달돼요. 수신처 변경은 인증 후 적용됩니다."
+    },
+    "form": {
+      "channel": {
+        "id": "channel",
+        "label": "수신 방식",
+        "required": true,
+        "control": "radio",
+        "value": "email",
+        "options": [
+          {
+            "id": "app",
+            "title": "앱 알림"
+          },
+          {
+            "id": "sms",
+            "title": "문자(SMS)"
+          },
+          {
+            "id": "email",
+            "title": "이메일"
+          },
+          {
+            "id": "mail",
+            "title": "우편"
+          }
+        ]
+      },
+      "contact": {
+        "id": "contact",
+        "label": "수신처",
+        "required": true,
+        "control": "text",
+        "placeholder": "이메일/휴대전화/주소",
+        "helperText": "수신처 변경 시 본인 또는 수신처 인증이 필요해요",
+        "visibleWhen": "channel IN (sms, email, mail)"
+      },
+      "alert": {
+        "id": "alert",
+        "label": "발행 알림 받기",
+        "required": false,
+        "control": "switch",
+        "value": true
+      }
+    },
+    "effective": {
+      "tone": "info",
+      "text": "청구 확정 전 변경은 당월부터, 확정 후 변경은 익월 또는 BSS 적용 예정일부터 적용돼요. 자동납부·예약 납부에 영향이 있는 경우 변경 전 안내가 표시됩니다.",
+      "refs": [
+        "POL-BIL-SET-001-08",
+        "POL-BIL-SET-001-09"
+      ]
+    },
+    "continue": {
+      "eyebrow": "변경",
+      "primaryAction": "변경"
+    }
+  },
+  "children": [
+    {
+      "type": "AppScreen",
+      "id": "screen.billing-set-statement",
+      "componentVersion": "0.1.0",
+      "props": {
+        "top": {
+          "type": "GlobalNavigationHeader",
+          "id": "slot.top",
+          "props": {
+            "bind": "top"
+          }
+        },
+        "bottom": {
+          "type": "StickyActionBar",
+          "id": "area.continue",
+          "props": {
+            "bind": "continue"
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "Hero",
+          "id": "area.hero",
+          "props": {
+            "bind": "hero",
+            "textPolicy": {
+              "title": {
+                "variant": "displayTitle"
+              },
+              "description": {
+                "variant": "bodySubtle",
+                "maxLines": 3
+              }
+            }
+          }
+        },
+        {
+          "type": "FormField",
+          "id": "area.channel",
+          "props": {
+            "bind": "form.channel"
+          },
+          "children": [
+            {
+              "type": "RadioGroup",
+              "id": "area.channel.control",
+              "props": {
+                "bind": "form.channel"
+              }
+            }
+          ]
+        },
+        {
+          "type": "FormField",
+          "id": "area.contact",
+          "props": {
+            "bind": "form.contact"
+          },
+          "children": [
+            {
+              "type": "TextField",
+              "id": "area.contact.control",
+              "props": {
+                "bind": "form.contact"
+              }
+            }
+          ]
+        },
+        {
+          "type": "FormField",
+          "id": "area.alert",
+          "props": {
+            "bind": "form.alert",
+            "layout": "row-trailing"
+          },
+          "children": [
+            {
+              "type": "Switch",
+              "id": "area.alert.control",
+              "props": {
+                "bind": "form.alert"
+              }
+            }
+          ]
+        },
+        {
+          "type": "NoticeBlock",
+          "id": "area.effective",
+          "props": {
+            "bind": "effective"
+          }
+        }
+      ]
+    }
+  ],
+  "x_pagination": {
+    "_canonical": "apps/mobile/src/screens/spec-source/active/billing/_pagination/billing-set.json",
+    "_canonical_hash": "db6480e40b0534921349cbc8bf2fff2031c18b78b01d6b0df8cdcd308e120f5e",
+    "policy_id": "billing-set",
+    "route_id": "billing-set-statement",
+    "step_fraction": "1/6",
+    "predecessor": null,
+    "successor": null,
+    "transitions": []
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "US-BIL-SET-001",
+        "PR-BIL-SET-001-01",
+        "PR-BIL-SET-001-02",
+        "PR-BIL-SET-001-03",
+        "docs/정책서-Full-청구관리및요금수납_정책서.md#L9168-L9667"
+      ]
+    },
+    "process": {
+      "id": "PR-BIL-SET-001-01,02,03",
+      "name": "요금안내서 수신 설정 변경",
+      "cluster": "US-BIL-SET-001 1/6",
+      "actor": "요금·납부 설정자",
+      "entry_condition": "설정 영역에서 요금안내서 항목 진입",
+      "exit_condition": "변경 결과와 적용 시점이 안내된 상태",
+      "predecessor": [],
+      "successor": [],
+      "related_functions": [
+        "FN-BIL-SET-001 요금안내서 수신 설정 관리",
+        "FN-BIL-SET-008 설정 변경 결과 반영"
+      ],
+      "related_policies": [
+        "POL-BIL-SET-001-01",
+        "POL-BIL-SET-001-02",
+        "POL-BIL-SET-001-08",
+        "POL-BIL-SET-001-09",
+        "POL-BIL-SET-001-10"
+      ]
+    },
+    "purpose": "요금안내서 수신 방식·수신처·알림 방식을 신청·변경하고 적용 시점을 확인한다.",
+    "system_inputs_to_user": [
+      "현재 수신 방식",
+      "현재 수신처",
+      "알림 설정",
+      "변경 적용 예정일",
+      "당월 영향 안내"
+    ],
+    "user_inputs": [
+      "수신 방식 선택",
+      "수신처 입력",
+      "알림 토글",
+      "변경 CTA"
+    ],
+    "system_outputs": [
+      "변경 결과",
+      "적용 예정일",
+      "이력 저장(POL-BIL-SET-001-10)"
+    ],
+    "branches": [
+      "채널=app → 수신처 입력 생략",
+      "채널=sms/email/mail → 수신처 인증 필요(POL-BIL-SET-001-02)"
+    ],
+    "exceptions": [
+      "수신처 형식 오류 → FormField errorText",
+      "인증 실패 → 변경 미적용 안내"
+    ],
+    "design_signals": {
+      "primary_block": "RadioGroup + 조건부 TextField + Switch",
+      "hero_intent": "수신 방식 결정",
+      "cta_intent": "변경"
+    },
+    "evidence_refs": [
+      {
+        "for": "수신 방식 4종",
+        "ref": "L9200 POL-BIL-SET-001-01"
+      },
+      {
+        "for": "수신처 인증",
+        "ref": "L9201 POL-BIL-SET-001-02"
+      },
+      {
+        "for": "적용 예정일",
+        "ref": "L9207 POL-BIL-SET-001-08"
+      },
+      {
+        "for": "당월 영향 안내",
+        "ref": "L9208 POL-BIL-SET-001-09"
+      },
+      {
+        "for": "변경 이력",
+        "ref": "L9210 POL-BIL-SET-001-10"
+      }
+    ]
+  },
+  "x_interfacePlan": {
+    "genre": "form",
+    "primary_task": "수신 방식·수신처·알림 변경",
+    "user_decision": "어떤 채널로 받을지, 수신처 무엇을 쓸지",
+    "hierarchy": {
+      "top": "title-only",
+      "lead": "short_action_title",
+      "body": "radio + conditional_text + switch",
+      "bottom": "primary_cta"
+    },
+    "copy_policy": {
+      "title_style": "short_action",
+      "caption_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "interaction_pattern": {
+      "main_control": "radio_group_then_text_field",
+      "cta_position": "bottom_chrome",
+      "progress_position": "none"
+    },
+    "quality_checks": [
+      "caption does not span full viewport",
+      "primary task visible in first viewport",
+      "bottom CTA reachable",
+      "channel/contact 의존성 명시"
+    ]
+  },
+  "x_screenContract": {
+    "shell": "AppScreen",
+    "slots": [
+      "top",
+      "content",
+      "bottom"
+    ],
+    "top": "GlobalNavigationHeader (back, title)",
+    "content": [
+      "Hero",
+      "FormField/RadioGroup",
+      "FormField/TextField (conditional)",
+      "FormField/Switch",
+      "NoticeBlock"
+    ],
+    "bottom": "StickyActionBar (primary CTA '변경')"
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "pass",
+        "evidence": "form 장르, SectionCard 0개"
+      },
+      {
+        "rule": "H-5",
+        "result": "pass",
+        "evidence": "errorText는 FormField 단일, eyebrow는 미입력 안내만"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "step flow가 아닌 진입형 form → back"
+      },
+      {
+        "rule": "H-8",
+        "result": "pass",
+        "evidence": "NoticeBlock(적용 시점)은 폼 아래 supporting 위치, errorText와 충돌 없음"
+      },
+      {
+        "rule": "H-9",
+        "result": "pass",
+        "evidence": "required는 CTA 상태로 대체"
+      },
+      {
+        "rule": "H-12",
+        "result": "pass",
+        "evidence": "route margin 보정 없음"
+      }
+    ]
+  }
+}

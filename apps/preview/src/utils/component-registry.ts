@@ -2,7 +2,7 @@ import type {
 	ComponentGroup,
 	ComponentLayer,
 	ComponentRegistryEntry,
-} from "@pxds/component-registry";
+} from "@pxds/pxds-components/registry";
 
 export const COMPONENT_LAYER_ORDER = [
 	"atom",

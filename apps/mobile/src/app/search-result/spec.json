@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/search-result",
+    "source": "implemented-page"
+  },
+  "screen": {
+    "id": "search-result",
+    "name": "검색 결과",
+    "domain": "search",
+    "type": "page"
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalSearch",
+        "patterns": [
+          "GlobalSearchTopBar",
+          "SearchResultTabs"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "SearchSuggestionChips",
+          "SearchPromoBlock",
+          "SearchResultList"
+        ]
+      },
+      "bottom": {
+        "owner": "GlobalNavigationBar",
+        "patterns": [
+          "GlobalNavigationBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_gap_owner": "ContentList"
+  },
+  "areas": [
+    {
+      "id": "query",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalSearch",
+      "uses": [
+        "GlobalSearch",
+        "QueryBar",
+        "TopNavigation"
+      ],
+      "content_role": "search-control"
+    },
+    {
+      "id": "result-tabs",
+      "slot": "top",
+      "pattern": "organisms/search/SearchResultTabs",
+      "uses": [
+        "FilterTabs"
+      ],
+      "content_role": "category-navigation",
+      "semantics": "exclusive result category switcher, not dropdown filter buttons"
+    },
+    {
+      "id": "suggestions",
+      "slot": "content",
+      "pattern": "organisms/search/SearchSuggestionChips",
+      "uses": [
+        "ContentSection",
+        "ChipGroup"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "suggestions"
+    },
+    {
+      "id": "promo",
+      "slot": "content",
+      "pattern": "organisms/search/SearchPromoBlock",
+      "uses": [
+        "ContentSection",
+        "PromoBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "promotion"
+    },
+    {
+      "id": "results",
+      "slot": "content",
+      "pattern": "organisms/search/SearchResultList",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "results"
+    },
+    {
+      "id": "navigation",
+      "slot": "bottom",
+      "pattern": "organisms/global/GlobalNavigationBar",
+      "uses": [
+        "GlobalNavigationBar"
+      ],
+      "content_role": "navigation"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "global",
+      "search"
+    ],
+    "molecules": [
+      "ChipGroup",
+      "FilterTabs",
+      "InfoList",
+      "PromoBlock",
+      "QueryBar",
+      "SectionCard"
+    ],
+    "atoms": [
+      "TextBlock",
+      "Placeholder"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

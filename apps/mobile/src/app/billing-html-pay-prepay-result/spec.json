@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "experimental-html",
+    "route": "/billing-html-pay-prepay-result",
+    "source": "policy-driven",
+    "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+    "policy_section": "4. US-BIL-PAY-007 / PR-BIL-PAY-007-03",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/experimental/billing-from-html/_pagination/billing-html-pay.json"
+  },
+  "screen": {
+    "id": "billing-html-pay-prepay-result",
+    "name": "선결제 결과",
+    "domain": "billing-html",
+    "use_case": "US-BIL-PAY-007",
+    "process_id": "PR-BIL-PAY-007-03",
+    "step_fraction": "7/8",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "result",
+    "primary_task": "선결제 결과 + 차감 시점 인지",
+    "info_hierarchy": [
+      "hero",
+      "supporting-notice",
+      "result-summary",
+      "actions"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "none",
+    "sectioning": "one-card",
+    "copy_policy": {
+      "description_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "patterns": [
+          "GlobalNavigationHeader"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "ContentSection",
+          "TextBlock",
+          "NoticeBlock",
+          "SectionCard",
+          "InfoList"
+        ]
+      },
+      "bottom": {
+        "owner": "StickyActionBar",
+        "patterns": [
+          "StickyActionBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalNavigationHeader",
+      "uses": [
+        "TopNavigation"
+      ],
+      "layout": {
+        "flow": "reserved",
+        "leading": "close",
+        "progress_visible": false
+      },
+      "content_role": "result-chrome"
+    },
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "ContentSection + TextBlock",
+      "uses": [
+        "ContentSection",
+        "ContentRail",
+        "TextBlock"
+      ],
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "notice",
+      "slot": "content",
+      "pattern": "molecules/NoticeBlock",
+      "uses": [
+        "ContentSection",
+        "NoticeBlock"
+      ],
+      "content_role": "supporting-notice"
+    },
+    {
+      "id": "summary",
+      "slot": "content",
+      "pattern": "molecules/SectionCard + InfoList",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "trailing_semantic": "value"
+      },
+      "content_role": "result-summary"
+    },
+    {
+      "id": "actions",
+      "slot": "bottom",
+      "pattern": "molecules/StickyActionBar",
+      "uses": [
+        "Box",
+        "Button"
+      ],
+      "content_role": "primary-secondary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "ContentList",
+      "ContentSection",
+      "ContentRail"
+    ],
+    "organisms": [
+      "global"
+    ],
+    "molecules": [
+      "NoticeBlock",
+      "SectionCard",
+      "InfoList",
+      "StickyActionBar"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
 		"@pxds/pxds-icons",
 		"@pxds/pxds-layout",
 		"@pxds/pxds-tokens",
-		"@screen/registry",
-		"@screen/specs",
 	],
 };
 

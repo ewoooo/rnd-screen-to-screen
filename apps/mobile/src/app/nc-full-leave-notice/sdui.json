@@ -1,0 +1,260 @@
+{
+  "version": "1.0.0",
+  "minRendererVersion": "0.1.0",
+  "minComponentsVersion": "0.1.0",
+  "metadata": {
+    "id": "nc-full-leave-notice",
+    "name": "탈퇴 전 안내 확인",
+    "route": "/nc-full-leave-notice",
+    "domain": "nc-full",
+    "type": "page",
+    "status": "spec-only"
+  },
+  "theme": {
+    "color": {
+      "primary": "semantic.primary.normal",
+      "page": "semantic.surface.page.normal"
+    }
+  },
+  "data": {
+    "flow": {
+      "useCase": "US-MBR-CS-003",
+      "name": "회원 탈퇴",
+      "step": 3,
+      "total": 5,
+      "progress": "회원 탈퇴 3/5"
+    },
+    "hero": {
+      "titleLines": [
+        "탈퇴 시",
+        "이런 변화가 생겨요"
+      ],
+      "description": "탈퇴를 진행하기 전에 잃게 되는 자산과 유의사항을 한번 더 확인해 주세요."
+    },
+    "impact": {
+      "title": "잃게 되는 정보",
+      "items": [
+        {
+          "id": "points",
+          "label": "보유 포인트",
+          "value": "1,250 P"
+        },
+        {
+          "id": "coupons",
+          "label": "보유 쿠폰",
+          "value": "3장"
+        },
+        {
+          "id": "subscription",
+          "label": "구독 서비스",
+          "value": "프리미엄 (5월 12일까지)"
+        },
+        {
+          "id": "history",
+          "label": "이용 이력",
+          "value": "유예기간 후 파기"
+        }
+      ]
+    },
+    "cautions": {
+      "badge": "유의사항",
+      "text": "탈퇴 후 30일의 유예기간 동안만 철회 요청이 가능해요. 유예 종료 후에는 동일 정보로 즉시 재가입할 수 없을 수 있어요. 미납금이 있는 경우 정산 후 탈퇴가 진행돼요.",
+      "tone": "warning"
+    },
+    "continue": {
+      "eyebrow": "내용 확인 후 다음 단계로 진행",
+      "primaryAction": "확인하고 계속하기"
+    }
+  },
+  "children": [
+    {
+      "type": "AppScreen",
+      "id": "screen.nc-full-leave-notice",
+      "componentVersion": "0.1.0",
+      "props": {
+        "top": {
+          "type": "NcTopBar",
+          "id": "slot.top",
+          "props": {
+            "title": "회원 탈퇴",
+            "leadingIcon": "back",
+            "progressBind": "flow.progress",
+            "progressTotal": 5,
+            "progressStep": 3
+          }
+        },
+        "bottom": {
+          "type": "NcContinueBar",
+          "id": "area.continue",
+          "props": {
+            "bind": "continue"
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "NcHero",
+          "id": "area.hero",
+          "props": {
+            "bind": "hero",
+            "textPolicy": {
+              "title": {
+                "variant": "displayTitle",
+                "overflow": "wrap"
+              },
+              "description": {
+                "variant": "bodySubtle",
+                "maxLines": 3,
+                "overflow": "wrap"
+              }
+            }
+          }
+        },
+        {
+          "type": "NcImpactCard",
+          "id": "area.impact",
+          "props": {
+            "bind": "impact",
+            "textPolicy": {
+              "label": {
+                "variant": "supportText"
+              },
+              "value": {
+                "variant": "listTitle",
+                "maxLines": 1,
+                "overflow": "truncate"
+              }
+            }
+          }
+        },
+        {
+          "type": "NcNotice",
+          "id": "area.cautions",
+          "props": {
+            "bind": "cautions",
+            "tone": "warning",
+            "bodyPolicy": {
+              "variant": "body2",
+              "maxLines": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "x_pagination": {
+    "_canonical": "apps/mobile/src/screens/spec-source/active/nc-full/_pagination/nc-full-leave.json",
+    "_canonical_hash": "TBD",
+    "policy_id": "nc-full-leave",
+    "route_id": "nc-full-leave-notice",
+    "step_fraction": "3/5",
+    "predecessor": "nc-full-leave-reason",
+    "successor": "nc-full-leave-confirm",
+    "transitions": [
+      {
+        "to": "nc-full-leave-confirm",
+        "trigger": "primary_cta",
+        "guard": "notice_acknowledged"
+      }
+    ]
+  },
+  "x_policyExtract": {
+    "source": {
+      "type": "policy",
+      "refs": [
+        "PR-MBR-CS-003-03",
+        "docs/NC_정책서_Full_v1.0_확정본.md#탈퇴-전-안내-확인-pr-mbr-cs-003-03"
+      ]
+    },
+    "process": {
+      "id": "PR-MBR-CS-003-03",
+      "name": "탈퇴 전 안내 확인",
+      "cluster": "US-MBR-CS-003 회원 탈퇴 3/5",
+      "actor": "고객, BSS",
+      "entry_condition": "탈퇴 사유 입력 완료",
+      "exit_condition": "미납·혜택·유의사항 확인 완료",
+      "predecessor": [
+        "PR-MBR-CS-003-02"
+      ],
+      "successor": [
+        "PR-MBR-CS-003-04"
+      ],
+      "related_functions": [
+        "탈퇴 가능 여부 판정",
+        "탈퇴 영향 안내"
+      ],
+      "related_policies": [
+        "탈퇴 전 영향 안내 기준 정책"
+      ]
+    },
+    "purpose": "탈퇴 시 잃게 되는 자산·서비스와 미납·유의사항을 확인시킨다.",
+    "system_inputs_to_user": [
+      "보유 포인트/쿠폰/혜택",
+      "구독 종료 정보",
+      "미납금 여부",
+      "유예 기간 안내"
+    ],
+    "user_inputs": [
+      "내용 확인 후 다음 단계 진행"
+    ],
+    "system_outputs": [
+      "다음 이동 경로"
+    ],
+    "branches": [
+      "확인 후 최종 동의로 진행",
+      "이탈 시 마이페이지 복귀(spec 범위 외)"
+    ],
+    "exceptions": [
+      "미납금 있음 → 정산 안내 후 진행",
+      "탈퇴 영향 조회 실패 → 재시도 안내"
+    ],
+    "design_signals": {
+      "primary_block": "영향 항목 카드 + 유의사항 본문",
+      "hero_intent": "탈퇴 영향 인지",
+      "info_box_intent": "유예 기간/미납 정책",
+      "cta_intent": "확인하고 계속하기"
+    }
+  },
+  "x_interfacePlan": {
+    "genre": "notice",
+    "primary_task": "영향 인지 + 다음 단계 진행",
+    "info_hierarchy": [
+      "hero",
+      "result-summary",
+      "supporting-notice",
+      "action"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "one-card"
+  },
+  "x_heuristicReview": {
+    "applied_rules": [
+      {
+        "rule": "H-1",
+        "result": "n/a",
+        "evidence": "form 장르 아님"
+      },
+      {
+        "rule": "H-2",
+        "result": "pass",
+        "evidence": "ImpactCard title='잃게 되는 정보'와 hero 의미 중복 없음"
+      },
+      {
+        "rule": "H-7",
+        "result": "pass",
+        "evidence": "step flow 중간 → back"
+      },
+      {
+        "rule": "H-10",
+        "result": "documented",
+        "evidence": "InfoList trailing_semantic=value"
+      },
+      {
+        "rule": "H-12",
+        "result": "pass",
+        "evidence": "route margin 보정 없음, body는 ContentRail measure:body"
+      }
+    ]
+  }
+}

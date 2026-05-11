@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "experimental-html",
+    "route": "/billing-html-pay-schedule",
+    "source": "policy-driven",
+    "policy_doc": "docs/정책서-Full-청구관리및요금수납_정책서.html",
+    "policy_section": "4. US-BIL-PAY-003 / PR-BIL-PAY-003-01,02",
+    "pagination_ref": "apps/mobile/src/screens/spec-source/experimental/billing-from-html/_pagination/billing-html-pay.json"
+  },
+  "screen": {
+    "id": "billing-html-pay-schedule",
+    "name": "납부 예약·선납",
+    "domain": "billing-html",
+    "use_case": "US-BIL-PAY-003",
+    "process_id": "PR-BIL-PAY-003-01,02",
+    "step_fraction": "3/8",
+    "type": "page"
+  },
+  "x_interfacePlan": {
+    "genre": "form",
+    "primary_task": "예약·선납 실행일·금액·대상 입력",
+    "info_hierarchy": [
+      "hero",
+      "required-input",
+      "selector (대상)",
+      "action"
+    ],
+    "cta_location": "bottom-sticky",
+    "progress_location": "top-bar-thin",
+    "sectioning": "flat",
+    "copy_policy": {
+      "description_measure": "body",
+      "avoid_full_width_caption": true
+    },
+    "rail_policy": {
+      "owner": "ContentRail",
+      "route_margin": "forbidden"
+    }
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalNavigationHeader",
+        "patterns": [
+          "GlobalNavigationHeader"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "ContentSection",
+          "TextBlock",
+          "FormField",
+          "SelectableList"
+        ]
+      },
+      "bottom": {
+        "owner": "StickyActionBar",
+        "patterns": [
+          "StickyActionBar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "content_gap_owner": "ContentList",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_rail_owner": "ContentRail"
+  },
+  "areas": [
+    {
+      "id": "top-progress",
+      "slot": "top",
+      "pattern": "organisms/global/GlobalNavigationHeader",
+      "uses": [
+        "TopNavigation",
+        "ProgressIndicator"
+      ],
+      "layout": {
+        "flow": "reserved",
+        "leading": "back"
+      },
+      "content_role": "flow-progress"
+    },
+    {
+      "id": "hero",
+      "slot": "content",
+      "pattern": "ContentSection + TextBlock",
+      "uses": [
+        "ContentSection",
+        "ContentRail",
+        "TextBlock"
+      ],
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "form",
+      "slot": "content",
+      "pattern": "molecules/FormField",
+      "uses": [
+        "ContentSection",
+        "FormField",
+        "TextField",
+        "Select"
+      ],
+      "content_role": "required-input"
+    },
+    {
+      "id": "targets",
+      "slot": "content",
+      "pattern": "molecules/SelectableList",
+      "uses": [
+        "ContentSection",
+        "SelectableList"
+      ],
+      "layout": {
+        "section_inset": "inherit",
+        "selectionMode": "multi",
+        "trailing_semantic": "value"
+      },
+      "content_role": "primary-choice"
+    },
+    {
+      "id": "continue",
+      "slot": "bottom",
+      "pattern": "molecules/StickyActionBar",
+      "uses": [
+        "Box",
+        "Button",
+        "TextBlock"
+      ],
+      "content_role": "primary-action",
+      "state_binding": {
+        "primary_disabled_when": "form.invalidCount > 0 OR targets.selectedCount == 0"
+      }
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "ContentList",
+      "ContentSection",
+      "ContentRail"
+    ],
+    "organisms": [
+      "global"
+    ],
+    "molecules": [
+      "FormField",
+      "form-controls",
+      "SelectableList",
+      "StickyActionBar"
+    ],
+    "atoms": [
+      "TextBlock"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}

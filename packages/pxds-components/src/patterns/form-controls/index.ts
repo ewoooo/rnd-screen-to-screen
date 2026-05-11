@@ -12,3 +12,4 @@ export {
 	TextFieldButton,
 	TextFieldContent,
 } from "./FormControls";
+export { formControlsRegistryEntry } from "./form-controls.registry";

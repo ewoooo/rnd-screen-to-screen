@@ -8,7 +8,7 @@ import {
 } from "@/components/molecules";
 import { ProgressTopBar } from "@/components/organisms/global";
 import { AppScreen, TabsContents } from "@pxds/pxds-layout/app-screen";
-import type { RenderableScreenSpecV1 } from "@screen/specs";
+import type { RenderableScreenSpecV1 } from "@/screens";
 type FilterData = {
   items: readonly {
     id: string;

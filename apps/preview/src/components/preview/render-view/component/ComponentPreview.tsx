@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentRegistryEntry } from "@pxds/component-registry";
+import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
 
 import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
 import { ComponentExampleMissing } from "@/components/preview/render-view/component/ComponentExampleMissing";

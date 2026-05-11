@@ -1,7 +1,7 @@
 import type {
 	ComponentLayer,
 	ComponentRegistryEntry,
-} from "@pxds/component-registry";
+} from "@pxds/pxds-components/registry";
 
 import { ComponentLayerGroup } from "@/components/preview/side-panel/components/ComponentLayerGroup";
 

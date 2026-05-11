@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ScreenGroup, ScreenRoute } from "@screen/registry";
+import type { ScreenGroup, ScreenRoute } from "@screen/mobile/screens";
 
 import { PageRouteGroup } from "@/components/preview/side-panel/pages/PageRouteGroup";
 import type { SidePanelRouteSelectHandler } from "@/components/preview/side-panel/types";

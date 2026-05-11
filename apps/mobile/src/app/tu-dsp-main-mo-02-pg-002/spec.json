@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "status": "active",
+    "route": "/tu-dsp-main-mo-02-pg-002",
+    "source": "implemented-page"
+  },
+  "screen": {
+    "id": "TU-DSP-MAIN-MO-02-PG-002",
+    "name": "접근권한 안내",
+    "domain": "tu",
+    "type": "page"
+  },
+  "screen_contract": {
+    "shell": "AppScreen",
+    "slots": {
+      "top": {
+        "owner": "GlobalCloseHeader",
+        "patterns": [
+          "GlobalCloseHeader"
+        ],
+        "flow": "reserved"
+      },
+      "content": {
+        "owner": "ContentList",
+        "patterns": [
+          "PermissionIntro",
+          "PermissionList",
+          "PermissionNotice"
+        ]
+      },
+      "bottom": {
+        "owner": "PrimaryCTABar",
+        "patterns": [
+          "PrimaryCTABar"
+        ],
+        "flow": "reserved"
+      }
+    }
+  },
+  "layout_contract": {
+    "content_outlet_inline_inset": "spacing-12",
+    "section_inset": "inherit",
+    "content_gap": "spacing-4",
+    "top_bottom_flow": "reserved",
+    "bleed_sections": [],
+    "content_gap_owner": "ContentList"
+  },
+  "areas": [
+    {
+      "id": "intro",
+      "slot": "content",
+      "pattern": "organisms/tu/PermissionIntro",
+      "uses": [
+        "ContentSection",
+        "TextBlock"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "primary-copy"
+    },
+    {
+      "id": "required-permissions",
+      "slot": "content",
+      "pattern": "organisms/tu/PermissionList",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "required-permissions"
+    },
+    {
+      "id": "optional-permissions",
+      "slot": "content",
+      "pattern": "organisms/tu/PermissionList",
+      "uses": [
+        "ContentSection",
+        "SectionCard",
+        "InfoList"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "optional-permissions"
+    },
+    {
+      "id": "notice",
+      "slot": "content",
+      "pattern": "organisms/tu/PermissionNotice",
+      "uses": [
+        "ContentSection"
+      ],
+      "layout": {
+        "section_inset": "inherit"
+      },
+      "content_role": "notice"
+    },
+    {
+      "id": "confirm",
+      "slot": "bottom",
+      "pattern": "molecules/PrimaryCTABar",
+      "uses": [
+        "PrimaryCTABar"
+      ],
+      "content_role": "primary-action"
+    }
+  ],
+  "design_system_contract": {
+    "templates": [
+      "AppScreen",
+      "AppScreenContent",
+      "ContentOutlet",
+      "ContentList",
+      "ContentSection"
+    ],
+    "organisms": [
+      "global",
+      "tu"
+    ],
+    "molecules": [
+      "PrimaryCTABar",
+      "SectionCard",
+      "InfoList"
+    ],
+    "atoms": [
+      "TextBlock",
+      "Placeholder"
+    ],
+    "allowed_escape_hatches": [],
+    "new_vocabulary_required": []
+  }
+}
