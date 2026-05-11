@@ -3,18 +3,18 @@ import { wdsCorePreviewExamples } from "@pxds/pxds-components/core";
 import {
 	dividerPreviewExample,
 	placeholderPreviewExample,
-} from "@pxds/pxds-components/feedback";
+} from "@pxds/pxds-components/atoms/feedback";
 import {
 	filterTabsPreviewExample,
 	formFieldPreviewExample,
 	mediaBlockPreviewExample,
 	queryBarPreviewExample,
 	selectFieldPreviewExample,
-} from "@pxds/pxds-components/patterns";
+} from "@pxds/pxds-components/shared";
 import {
 	TextBlock,
 	textBlockPreviewMocks,
-} from "@pxds/pxds-components/typography";
+} from "@pxds/pxds-components/atoms/typography";
 
 export type ComponentPreviewExample = {
 	componentId: string;

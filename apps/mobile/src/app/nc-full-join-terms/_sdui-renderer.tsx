@@ -8,7 +8,7 @@ import {
   ProgressTopBar,
   TermsAgreementGroup,
   type TermsAgreementItem,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1, SDUIJsonValue } from "@/screens";
 type JsonObject = Record<string, SDUIJsonValue>;

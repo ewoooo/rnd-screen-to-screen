@@ -1,10 +1,10 @@
-import { PrimaryCTABar } from "@/components/molecules";
-import { GlobalCloseHeader } from "@/components/organisms/global";
+import { PrimaryCTABar } from "@pxds/pxds-components/shared";
+import { GlobalCloseHeader } from "@pxds/pxds-components/shared/global";
 import {
   PermissionIntro,
   PermissionList,
   PermissionNotice,
-} from "@/components/organisms/tu";
+} from "@pxds/pxds-components/tu";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import { permissionGuideFixture } from "./_mock";
 

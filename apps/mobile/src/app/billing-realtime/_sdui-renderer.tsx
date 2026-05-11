@@ -5,8 +5,8 @@ import {
   type InfoListItem,
   NoticeBlock,
   SummaryCard,
-} from "@/components/molecules";
-import { ProgressTopBar } from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared";
+import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type ForecastData = {

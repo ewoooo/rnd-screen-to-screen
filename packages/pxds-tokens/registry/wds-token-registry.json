@@ -1603,8 +1603,8 @@
 				"source_path": "https://github.com/wanteddev/montage-web/tree/main/packages/wds-theme",
 				"package": "@pxds/pxds-tokens",
 				"fetched_at": "2026-04-24",
-				"generator": "app/scripts/generate-token-registry.mjs",
-				"note": "PXDS token registry SSOT. WDS 원본 값은 이 패키지로 흡수하고, project extension도 같은 registry에 둔다.",
+				"format": "Tokens Studio single-file (foundation/semantic/project Sets, DTCG $type/$value, {set.path} aliases)",
+				"note": "PXDS token registry SSOT. WDS 원본 값은 이 패키지로 흡수하고, project extension도 같은 registry에 둔다. light only — dark는 추후 semantic-dark set으로 분리 예정.",
 				"related_registries": {
 					"components": "../../../registry/wds-component-registry.json"
 				}
@@ -1612,12 +1612,11 @@
 			"usage_rules": {
 				"override_order": [
 					"1. semantic.{group}.{path}가 있으면 그것만 사용",
-					"2. 없으면 atomic.{family}[{tone}]에서 가장 가까운 값 선택 + 사유를 커밋 메시지에 기록",
+					"2. 없으면 foundation.atomic.{family}.{tone}에서 가장 가까운 값 선택 + 사유를 커밋 메시지에 기록",
 					"3. Figma hex 원값을 코드에 박지 말 것"
 				],
-				"dark_mode_contract": "semantic만 자동 전환. atomic은 tone 선택을 수동으로 바꿔야 함.",
-				"css_var_pattern": "var(--semantic-primary-normal)",
-				"ts_pattern": "theme.light.semantic.primary.normal"
+				"css_var_pattern": "var(--semantic-primary-normal) — Set 이름은 prefix에 박지 않는다",
+				"alias_format": "{foundation.atomic.blue.50}, {semantic.background.normal.normal}"
 			}
 		}
 	}

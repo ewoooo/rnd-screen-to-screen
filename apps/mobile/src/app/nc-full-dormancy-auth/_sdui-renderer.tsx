@@ -2,13 +2,13 @@
 
 import { IconLock, IconMessage, IconMobile } from "@pxds/pxds-icons";
 import { type ReactNode, useState } from "react";
-import { SelectableList } from "@/components/molecules";
+import { SelectableList } from "@pxds/pxds-components/shared";
 import {
   FlowContinueBar,
   FlowHero,
   FlowNotice,
   ProgressTopBar,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import { AppScreen, ListContents } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type IconKind = "smartphone" | "shield-check" | "certificate";

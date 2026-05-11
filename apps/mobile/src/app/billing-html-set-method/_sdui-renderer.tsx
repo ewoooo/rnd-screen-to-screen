@@ -1,6 +1,6 @@
 "use client";
 
-import { TextField } from "@pxds/pxds-components/patterns";
+import { TextField } from "@pxds/pxds-components/shared";
 import { VStack } from "@pxds/pxds-layout/primitives";
 import {
   InfoList,
@@ -10,9 +10,9 @@ import {
   type SelectableItem,
   SelectableList,
   StickyActionBar,
-} from "@/components/molecules";
-import { FormField } from "@pxds/pxds-components/patterns";
-import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared";
+import { FormField } from "@pxds/pxds-components/shared";
+import { FlowHero, ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type TopData = {

@@ -6,10 +6,12 @@
 		"./screens": "./src/screens/index.ts"
 	},
 	"scripts": {
-    "dev": "next dev -p 3001",
-    "build": "next build",
-    "start": "next start -p 3001",
-    "lint": "eslint"
+		"dev": "next dev -p 3001",
+		"build": "next build",
+		"start": "next start -p 3001",
+		"lint": "eslint",
+		"generate:screens": "node scripts/generate-screen-index.mjs",
+		"check:screens": "node scripts/generate-screen-index.mjs --check"
   },
   "dependencies": {
     "@pxds/pxds-components": "0.1.0",

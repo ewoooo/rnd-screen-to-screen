@@ -1,14 +1,14 @@
 import { Button, TextButton } from "@pxds/pxds-components/core";
 
-import { Checkbox } from "@pxds/pxds-components/patterns";
+import { Checkbox } from "@pxds/pxds-components/shared";
 import {
   DiscoveryActions,
   GlobalNavigationHeader,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 import { AppScreenRoot } from "@pxds/pxds-layout/app-screen";
 import { BottomSheet } from "@pxds/pxds-layout/bottom-sheet";
-import { TuDisplay, TuSub } from "@/components/organisms/tu";
+import { TuDisplay, TuSub } from "@pxds/pxds-components/tu";
 
 import { agreementBottomSheetFixture } from "./_mock";
 

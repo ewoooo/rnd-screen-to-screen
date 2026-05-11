@@ -1,17 +1,17 @@
 import {
   GlobalNavigationBar,
   GlobalNavigationHeader,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import {
   Banner,
   HomeHeroBlock,
   HomeInfoBlock,
   ListRow,
   MyEditButton,
-} from "@/components/organisms/home";
+} from "@pxds/pxds-components/home";
 import { HStack, VStack } from "@pxds/pxds-layout/primitives";
-import { Placeholder } from "@pxds/pxds-components/feedback";
-import { TextBlock } from "@pxds/pxds-components/typography";
+import { Placeholder } from "@pxds/pxds-components/atoms/feedback";
+import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import { homeBenefitFixture } from "./_mock";
 export default function HomeBenefitPage() {

@@ -1,14 +1,14 @@
 "use client";
 
-import { TextBlock } from "@pxds/pxds-components/typography";
+import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import {
   InfoList,
   type InfoListItem,
   NoticeBlock,
   SectionCard,
   StickyActionBar,
-} from "@/components/molecules";
-import { FlowHero, ProgressTopBar } from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared";
+import { FlowHero, ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type FlowData = {

@@ -1,6 +1,6 @@
 # apps/mobile
 
-Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 layout/chrome/scroll 계약은 `@pxds/pxds-layout`, primitive UI는 `@pxds/pxds-components`, icon은 `@pxds/pxds-icons`, token은 `@pxds/pxds-tokens`를 통과한다.
+Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 layout/chrome/scroll 계약은 `@pxds/pxds-layout`, 컴포넌트 어휘는 `@pxds/pxds-components`, icon은 `@pxds/pxds-icons`, token은 `@pxds/pxds-tokens`를 통과한다. 앱은 로컬 `src/components`를 소유하지 않는다.
 
 ## 화면 구조
 
@@ -28,7 +28,7 @@ Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실�
 </AppScreen>
 ```
 
-- route는 fixture/spec을 읽고 templates와 organisms를 배치한다.
+- route는 fixture/spec을 읽고 `@pxds/pxds-layout` templates와 `@pxds/pxds-components/<domain>`를 배치한다.
 - screen에서 WDS `Card`, `Button`, `Chip`, `Typography` 등을 직접 대량 조합하지 않는다.
 - route에서 `position: fixed`, `absolute bottom: 0`로 chrome을 만들지 않는다. 상단은 `Header`, 하단은 `Bottom`에 올린다.
 - scroll content는 `AppScreen.Content`가 소유한다. 화면별 별도 scroll container를 만들지 않는다.
@@ -42,30 +42,30 @@ WDS primitive
   ↓
 atoms
   ↓
-molecules
-  ↓
-organisms
+domains/shared + domains/<domain>
   ↓
 templates + screen
 ```
 
-- `atoms` — 도메인 없는 최소 부품. layout primitives, feedback, typography, core WDS, icons.
-- `molecules` — 도메인 독립 조합 패턴. `InfoList`, `SelectableList`, `ConsentList`, `PromoBlock`, `NoticeBlock`, `SectionCard`, `SummaryCard`, `ChipGroup`, `PrimaryCTABar`, `StickyActionBar`.
-- `organisms` — 화면 영역 단위 도메인 wrapper. `global`, `home`, `product`, `search`, `tu` 등.
-- `templates` — 화면 슬롯과 렌더링 컨텍스트. 현재 실체는 `@pxds/pxds-layout/app-screen`, `@pxds/pxds-layout/bottom-sheet`.
+- `atoms` — 도메인 없는 최소 부품. `@pxds/pxds-layout/primitives`, `@pxds/pxds-components/atoms/feedback`, `@pxds/pxds-components/atoms/typography`, `@pxds/pxds-components/core`, `@pxds/pxds-icons`.
+- `domains/shared` — 도메인 독립 조합 패턴. `InfoList`, `SelectableList`, `ConsentList`, `PromoBlock`, `NoticeBlock`, `SectionCard`, `SummaryCard`, `ChipGroup`, `PrimaryCTABar`, `StickyActionBar` 등은 `@pxds/pxds-components/shared`가 소유한다.
+- `domains/shared/global` — 여러 화면이 공유하는 전역 chrome/flow section. `@pxds/pxds-components/shared/global`가 소유한다.
+- `domains/<domain>` — 화면 영역 단위 도메인 wrapper. `home`, `product`, `search`, `tu` 등은 `@pxds/pxds-components/<domain>`가 소유한다.
+- `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/pxds-layout/app-screen`, `@pxds/pxds-layout/bottom-sheet`.
 
 허용 import:
 
-- screen → templates, organisms, `@pxds/pxds-layout/primitives`
-- organisms → molecules, atoms/package-owned patterns, WDS core
-- molecules → atoms, WDS core
+- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-components/shared`
+- domain → shared, atoms, WDS core
+- shared → atoms, WDS core
 - atoms → WDS core 가능하지만 최소화
 
 금지 import:
 
-- molecules → organisms
-- organisms/home ↔ organisms/product 같은 도메인 교차 import
-- atoms → molecules / organisms / templates
+- shared → domain
+- home ↔ product 같은 도메인 교차 import
+- atoms → shared / domain / templates
+- 앱 아래에 `src/components` 또는 component shim을 다시 만들기
 - screen에서 WDS primitive를 직접 대량 사용
 
 ## 홈 어휘
@@ -87,10 +87,10 @@ templates + screen
 ## 승격 규칙
 
 1. `@pxds/pxds-components/registry`에서 현재 어휘와 소유 패키지를 확인한다.
-2. 기존 organisms로 표현 가능한지 본다.
+2. 기존 domain 컴포넌트로 표현 가능한지 본다.
 3. 부족하면 먼저 molecules 조합으로 표현 가능한지 본다.
-4. 같은 WDS 조합이 반복되면 molecules 또는 `@pxds/pxds-components/patterns`로 승격한다.
-5. 도메인 이름과 데이터 구조가 필요한 부분만 organisms에 둔다.
+4. 같은 WDS 조합이 반복되면 `@pxds/pxds-components/shared`로 승격한다.
+5. 도메인 이름과 데이터 구조가 필요한 부분만 해당 domain에 둔다.
 6. 기존 컴포넌트에 새 variant/slot을 추가하기 전에 더 일반적인 molecule 축이 있는지 검토한다.
 
 ## Figma capture

@@ -1,3 +1,5 @@
 export * from "./core";
+export * from "./domains";
 export * from "./registry";
-export * from "./typography";
+export * from "./atoms/feedback";
+export * from "./atoms/typography";

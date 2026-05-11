@@ -12,7 +12,7 @@ import {
   FlowSummaryCard,
   ProgressTopBar,
   type FlowSummaryItem,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 const SUMMARY_MEDIA_ICON: Record<string, ReactNode> = {
   "leave-at": <IconCheckThick width={24} height={24} />,

@@ -3,7 +3,7 @@ import {
   GlobalNavigationBar,
   GlobalNavigationHeader,
   type GnbTab,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import {
   TuCarousel,
@@ -12,7 +12,7 @@ import {
   TuNotice,
   TuPromo,
   TuSection,
-} from "@/components/organisms/tu";
+} from "@pxds/pxds-components/tu";
 import { mo01LoginFixture } from "./_mock";
 const PAGE_BG_SEMI = "var(--semantic-surface-page-semi)";
 const tabs: GnbTab[] = [

@@ -1,9 +1,9 @@
-import { GlobalSearch } from "@/components/organisms/global";
+import { GlobalSearch } from "@pxds/pxds-components/shared/global";
 import {
 	SearchPromoBlock,
 	SearchResultList,
 	SearchSuggestionChips,
-} from "@/components/organisms/search";
+} from "@pxds/pxds-components/search";
 
 import { searchResultFixture } from "./_mock";
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { FilterTabs } from "@pxds/pxds-components/patterns";
+import { FilterTabs } from "@pxds/pxds-components/shared";
 import {
   InfoList,
   type InfoListItem,
   PrimaryCTABar,
-} from "@/components/molecules";
-import { ProgressTopBar } from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared";
+import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen, TabsContents } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type FilterData = {

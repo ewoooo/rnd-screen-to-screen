@@ -1,7 +1,6 @@
 "use client";
 
 import { ModalDimmer } from "@pxds/pxds-components/core";
-import { BOTTOM_SHEET_BACKDROP } from "@pxds/pxds-tokens";
 import type { CSSProperties } from "react";
 
 type Props = {
@@ -9,7 +8,7 @@ type Props = {
 };
 
 export function BottomSheetBackdrop({
-	background = BOTTOM_SHEET_BACKDROP,
+	background = "var(--pxds-bottom-sheet-backdrop)",
 }: Props) {
 	return (
 		<ModalDimmer

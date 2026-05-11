@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Checkbox } from "@pxds/pxds-components/patterns";
+import { Checkbox } from "@pxds/pxds-components/shared";
 import {
   FlowContinueBar,
   FlowHero,
@@ -9,9 +9,9 @@ import {
   FlowSummaryCard,
   ProgressTopBar,
   type FlowSummaryItem,
-} from "@/components/organisms/global";
+} from "@pxds/pxds-components/shared/global";
 import { HStack } from "@pxds/pxds-layout/primitives";
-import { TextBlock } from "@pxds/pxds-components/typography";
+import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import { AppScreen, ContentSection } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type LeaveImpactData = {

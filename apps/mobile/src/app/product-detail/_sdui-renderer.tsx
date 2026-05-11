@@ -7,15 +7,15 @@ import {
   ProductPromoBanner,
   ProductPurchaseBar,
   ProductSummaryCard,
-} from "@/components/organisms/product";
-import { GlobalNavigationBar } from "@/components/organisms/global";
+} from "@pxds/pxds-components/product";
+import { GlobalNavigationBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import type {
   RenderableScreenSpecV1,
   SDUIJsonValue,
   SDUINode,
 } from "@/screens";
-import type { ProductTextPolicyMap } from "@/components/organisms/product/types";
+import type { ProductTextPolicyMap } from "@pxds/pxds-components/product/types";
 type JsonObject = Record<string, SDUIJsonValue>;
 type ProductData = {
   label: string;

@@ -6,8 +6,8 @@ import {
   FlowHero,
   FlowNotice,
   ProgressTopBar,
-} from "@/components/organisms/global";
-import { LoginForm, type LoginField } from "@/components/organisms/nc-simple";
+} from "@pxds/pxds-components/shared/global";
+import { LoginForm, type LoginField } from "@pxds/pxds-components/nc-simple";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import type { RenderableScreenSpecV1 } from "@/screens";
 type TopbarData = {
