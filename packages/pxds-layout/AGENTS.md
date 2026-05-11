@@ -2,6 +2,8 @@
 
 화면/frame/layout runtime을 소유한다. `apps/mobile`의 screen root, scroll, sticky chrome, bottom-sheet, primitive layout, screen export bridge는 이 패키지 경계 안에 둔다. iframe 기반 preview helper는 `@pxds/pxds-preview` 소유다.
 
+`@pxds/pxds-layout`은 `@pxds/pxds-components`를 의존하지 않는다. bottom-sheet처럼 layout runtime 자체에 필요한 WDS primitive는 이 패키지 경계에서 직접 흡수해서 `@pxds/pxds-components ↔ @pxds/pxds-layout` 순환을 만들지 않는다.
+
 ## AppScreen compound API
 
 `AppScreen`은 모바일 화면의 물리적 레이어 순서를 코드에 드러내는 compound API를 기본 사용한다. 새 화면과 리팩터 대상은 `top` / `bottom` prop보다 아래 구조를 우선한다.

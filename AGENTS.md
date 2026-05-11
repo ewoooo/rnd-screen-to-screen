@@ -29,8 +29,6 @@
 │   ├── pxds-figma/       Figma bridge/hooks/spec authoring
 │   ├── policy-core/      Policy / UseCase 순수 문서 도메인
 │   ├── policy-authoring/ 문서/정책서 → Screen 도출 추적
-│   ├── screen-registry/  순수 Screen route registry
-│   ├── screen-specs/     ScreenSpec / RenderableSpec + spec JSON
 │   └── screen-evaluation/ benchmark / audit / strain test
 ├── registry/         WDS/PXDS registry index
 ├── AGENTS.md         루트 운영 방향
@@ -58,7 +56,7 @@
 
 WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
 
-- WDS component는 `@pxds/pxds-components/core`를 통해 소비한다.
+- WDS component는 `@pxds/pxds-components/core`를 통해 소비한다. 단, `@pxds/pxds-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수한다.
 - WDS icon은 `@pxds/pxds-icons`를 통해 소비한다.
 - token 값은 `@pxds/pxds-tokens`와 generated CSS를 통해 소비한다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
@@ -115,4 +113,4 @@ apps/mobile/src/app/<page-id> → @screen/mobile/screens → apps/preview, @scre
 - 2026-05-08: component catalog를 얇은 component vocabulary registry로 대체.
 - 2026-05-11: 별도 `@pxds/component-registry` 패키지를 제거하고 `@pxds/pxds-components/registry`로 흡수.
 - 2026-05-11: 하위 앱/패키지별 `AGENTS.md`로 운영 규약 분리. 루트는 개요와 방향만 유지.
-- 2026-05-11: `apps/mobile/src/components`를 제거하고 모바일 domains를 `@pxds/pxds-components`로 흡수.
+- 2026-05-11: 모바일 앱 로컬 컴포넌트 계층을 제거하고 모바일 domains를 `@pxds/pxds-components`로 흡수.

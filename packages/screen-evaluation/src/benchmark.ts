@@ -516,7 +516,7 @@ export const benchmarkCriteria = [
 		side: "planning",
 		label: "Spec/구현 계약 일치",
 		question: "active spec의 shell, slot, area pattern, system_mapping이 실제 route/component 구조와 일치하는가?",
-		apiRefs: ["screen_contract", "areas", "system_mapping", "apps/mobile/src/app", "apps/mobile/src/components"],
+		apiRefs: ["screen_contract", "areas", "system_mapping", "apps/mobile/src/app", "@pxds/pxds-components", "@pxds/pxds-layout"],
 		scoringHint: "1=spec이 구현을 과장/오표기, 3=큰 구조는 맞지만 일부 pattern 불일치, 5=spec만 보고 구현 구조를 재현 가능",
 			failureSignals: [
 				"spec에 적힌 molecule/organism이 실제 import/render tree에 없음",

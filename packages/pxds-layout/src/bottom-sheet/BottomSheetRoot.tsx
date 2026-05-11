@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal, NoSsr } from "@pxds/pxds-components/core";
+import { Modal, NoSsr } from "@wanteddev/wds";
 import type { ReactNode } from "react";
 
 type Props = {

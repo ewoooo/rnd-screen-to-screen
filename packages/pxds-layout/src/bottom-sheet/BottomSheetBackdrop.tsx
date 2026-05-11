@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalDimmer } from "@pxds/pxds-components/core";
+import { ModalDimmer } from "@wanteddev/wds";
 import type { CSSProperties } from "react";
 
 type Props = {

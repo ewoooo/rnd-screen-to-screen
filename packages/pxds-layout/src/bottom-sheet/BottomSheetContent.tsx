@@ -1,6 +1,6 @@
 "use client";
 
-import { ModalContainer, ModalContent } from "@pxds/pxds-components/core";
+import { ModalContainer, ModalContent } from "@wanteddev/wds";
 import type { CSSProperties, ReactNode } from "react";
 
 import { BottomSheetBackdrop } from "./BottomSheetBackdrop";

@@ -53,7 +53,7 @@ Figma 노드 `0:606 Card/List` 기준:
 
 ### TextBlock variant
 
-텍스트 SSOT는 `apps/mobile/src/components/atoms/typography/TextBlock.tsx`다. TextBlock은 WDS `Typography` 위에 줄바꿈 정책(`lines`, `maxLines`, `overflow`)을 얹은 atom이다. 수치를 새로 만들지 않고 WDS `variant + weight` 조합으로만 표현한다.
+텍스트 SSOT는 `@pxds/pxds-components/atoms/typography`의 `TextBlock`이다. TextBlock은 WDS `Typography` 위에 줄바꿈 정책(`lines`, `maxLines`, `overflow`)을 얹은 atom이다. 수치를 새로 만들지 않고 WDS `variant + weight` 조합으로만 표현한다.
 
 | TextBlock variant | WDS Typography | 기존 역할 |
 |---|---|---|
@@ -80,7 +80,7 @@ API: `<TextBlock variant text? lines? color? align? maxLines? overflow? balance?
 
 ### HomeBlock preset (3)
 
-수치 SSOT는 `apps/mobile/src/components/organisms/home/block/HomeBlock.tsx`. compound root + 3개 preset 형태로 노출되며, `level={1|2|3}` 같은 숫자형 API는 사용하지 않는다.
+수치 SSOT는 `@pxds/pxds-components/home`의 `HomeBlock` compound와 preset이다. compound root + 3개 preset 형태로 노출되며, `level={1|2|3}` 같은 숫자형 API는 사용하지 않는다.
 
 | preset | 높이 | layout | 슬롯 |
 |---|---|---|---|
@@ -98,7 +98,7 @@ API: `<TextBlock variant text? lines? color? align? maxLines? overflow? balance?
 
 ### Banner variant (2)
 
-수치 SSOT는 `apps/mobile/src/components/organisms/home/banner/Banner.tsx`.
+수치 SSOT는 `@pxds/pxds-components/home`의 `Banner`다.
 
 | variant | h | 텍스트 | 컨테이너 |
 |---|---|---|---|
@@ -170,9 +170,9 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 
 ## Layout primitive 어휘 — Box / Flex / HStack / VStack
 
-`apps/mobile/src/components/atoms/layout/`. Seed Design React의 `Box`/`Flex`/`HStack`/`VStack` API를 차용하되, **gap·padding 계열 prop은 semantic spacing 토큰만 받게** 좁힘. 화면 코드에서 raw px·`var(--spacing-N)` 직접 입력을 줄여 spacing strain 신호를 선명하게 한다.
+`@pxds/pxds-layout/primitives`. Seed Design React의 `Box`/`Flex`/`HStack`/`VStack` API를 차용하되, **gap·padding 계열 prop은 semantic spacing 토큰만 받게** 좁힘. 화면 코드에서 raw px·`var(--spacing-N)` 직접 입력을 줄여 spacing strain 신호를 선명하게 한다.
 
-`Divider`는 `apps/mobile/src/components/atoms/feedback/Divider.tsx`에 위치 — `orientation`/`thickness`/`color`/`inset` prop. `inset`은 `SpacingToken`을 받아 양 끝 margin 적용.
+`Divider`는 `@pxds/pxds-components/atoms/feedback`에 위치 — `orientation`/`thickness`/`inset` prop. `inset`은 `SpacingToken`을 받아 양 끝 margin 적용.
 
 ### spacing 토큰 — 7 슬롯 (의미축)
 
