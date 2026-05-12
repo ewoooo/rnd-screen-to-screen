@@ -3,6 +3,7 @@
 import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 import { ConsentList, type ConsentListItem } from "../../../molecules/consent-list";
+import type { ComponentRenderReact } from "../../../render-react";
 
 const DEFAULT_ITEMS: readonly ConsentListItem[] = [
 	{
@@ -51,3 +52,7 @@ export function CheckboxTerms({ items = DEFAULT_ITEMS }: Props) {
 		</ContentSection>
 	);
 }
+
+export const checkboxTermsRenderReact: ComponentRenderReact = () => (
+	<CheckboxTerms />
+);

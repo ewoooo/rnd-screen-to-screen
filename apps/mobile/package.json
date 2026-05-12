@@ -12,7 +12,7 @@
 		"lint": "eslint",
 		"generate:screens": "node scripts/generate-screen-index.mjs",
 		"check:screens": "node scripts/generate-screen-index.mjs --check",
-		"check:render-spec": "node scripts/check-render-spec.mjs",
+		"check:render-spec": "npm exec -- tsx scripts/check-render-spec.ts",
 		"check:sdui": "node scripts/check-sdui.mjs"
   },
   "dependencies": {

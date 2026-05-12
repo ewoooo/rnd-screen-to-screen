@@ -7,6 +7,7 @@ import { Button } from "../../../core";
 import { TextField } from "../../../molecules/form-controls";
 import { FormField } from "../../../molecules/form-field";
 import { partPolicyTexts, type OgnPart } from "../../../ogn-spec";
+import type { ComponentRenderReact } from "../../../render-react";
 import { textFieldMemberInfoSpec } from "./spec";
 
 type SnapshotState = "default" | "error" | "blocked";
@@ -79,6 +80,14 @@ export function TextFieldMemberInfo({
 		</ContentSection>
 	);
 }
+
+export const textFieldMemberInfoRenderReact: ComponentRenderReact = ({
+	node,
+}) => (
+	<TextFieldMemberInfo
+		state={node.props?.state === "error" ? "error" : "default"}
+	/>
+);
 
 function FormFieldForPart({
 	part,

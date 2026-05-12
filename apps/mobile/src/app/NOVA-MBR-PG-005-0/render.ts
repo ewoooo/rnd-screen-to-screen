@@ -1,8 +1,6 @@
 import {
-	actionAreaTermsRender,
-	checkboxTermsRender,
 	sectionHeaderPageRender,
-	textFieldGuardianRequestRender,
+	sectionMessageJoinCompleteViewRender,
 } from "@pxds/pxds-components/mbr";
 
 import {
@@ -13,20 +11,18 @@ import {
 const RENDER_CONTRACT = {
 	schemaVersion: "screen-render-contract-v1",
 	screen: {
-		id: "NOVA-MBR-PG-001-0",
-		name: "약관 동의",
-		route: "/NOVA-MBR-PG-001-0",
+		id: "NOVA-MBR-PG-005-0",
+		name: "가입 완료",
+		route: "/NOVA-MBR-PG-005-0",
 		type: "page",
 	},
 	source: {
 		useCaseIds: ["UC-MBR-JOIN"],
 		ognSpecIds: [
 			"ogn-MBR-section-header-page",
-			"ogn-MBR-checkbox-terms",
-			"ogn-MBR-text-field-guardian-request",
-			"ogn-MBR-action-area-terms",
+			"ogn-MBR-section-message-join-complete-view",
 		],
-		policyRefs: ["PG-MBR-TERM-001", "PG-MBR-TERM-002"],
+		policyRefs: ["PG-MBR-COMPLETE-001"],
 	},
 	slots: {
 		systemHeader: true,
@@ -36,8 +32,8 @@ const RENDER_CONTRACT = {
 				title: "회원 가입",
 				leading: "back",
 				progress: {
-					label: "1 / 5",
-					percent: 20,
+					label: "5 / 5",
+					percent: 100,
 					showLabel: true,
 				},
 			},
@@ -48,29 +44,23 @@ const RENDER_CONTRACT = {
 				render: sectionHeaderPageRender,
 				section: { inset: "inherit" },
 				props: {
-					title: "약관 동의",
+					title: "가입 완료",
 				},
 			},
 			{
-				component: "ogn-mbr-checkbox-terms",
-				render: checkboxTermsRender,
-				section: { inset: "inherit" },
-			},
-			{
-				component: "ogn-mbr-text-field-guardian-request",
-				render: textFieldGuardianRequestRender,
+				component: "ogn-mbr-section-message-join-complete-view",
+				render: sectionMessageJoinCompleteViewRender,
 				section: { inset: "inherit" },
 				props: {
-					visible: false,
+					slot: "content",
 				},
 			},
 		],
 		bottom: [
 			{
-				component: "ogn-mbr-action-area-terms",
-				render: actionAreaTermsRender,
+				component: "primary-cta-bar",
 				props: {
-					disabled: true,
+					primaryLabel: "홈으로 이동",
 				},
 			},
 		],

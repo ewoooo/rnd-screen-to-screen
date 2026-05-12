@@ -1,9 +1,6 @@
-import { RenderSpecScreen } from "../_render-spec-screen";
-import renderSpec from "./render.json";
-import type { RenderScreenSpec } from "@/screens/render-spec";
-
-const spec = renderSpec as unknown as RenderScreenSpec;
+import { RenderScreen } from "../_render-screen";
+import { RENDER_SPEC } from "./render";
 
 export default function NovaMbrPg0050Page() {
-	return <RenderSpecScreen spec={spec} />;
+	return <RenderScreen spec={RENDER_SPEC} />;
 }

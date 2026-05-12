@@ -1,6 +1,7 @@
 "use client";
 
 import { PrimaryCTABar } from "../../../molecules/cta-bar";
+import { renderBoolean, type ComponentRenderReact } from "../../../render-react";
 import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
 
 type Props = {
@@ -25,3 +26,7 @@ export function ActionAreaTerms({ disabled = true }: Props) {
 		</div>
 	);
 }
+
+export const actionAreaTermsRenderReact: ComponentRenderReact = ({ node }) => (
+	<ActionAreaTerms disabled={renderBoolean(node.props?.disabled, true)} />
+);

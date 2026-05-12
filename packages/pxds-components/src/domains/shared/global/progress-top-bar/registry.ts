@@ -1,3 +1,4 @@
+import { progressTopBarRenderReact } from ".";
 import { progressTopBarFigmaSpec } from "./figma";
 
 export const progressTopBarRegistryEntry = {
@@ -10,6 +11,7 @@ export const progressTopBarRegistryEntry = {
 	status: "active",
 	createdAt: "2026-05-07",
 	figmaSpec: () => progressTopBarFigmaSpec,
+	renderReact: progressTopBarRenderReact,
 	composedOf: [
 		"wds-top-navigation",
 		"wds-top-navigation-button",

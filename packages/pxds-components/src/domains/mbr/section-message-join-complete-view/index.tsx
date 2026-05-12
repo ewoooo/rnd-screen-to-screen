@@ -6,6 +6,7 @@ import { ContentSection } from "@pxds/pxds-layout/app-screen";
 import { SectionMessage } from "../../../core";
 import { TextBlock } from "../../../atoms/typography";
 import { PrimaryCTABar } from "../../../molecules/cta-bar";
+import type { ComponentRenderReact } from "../../../render-react";
 
 type SlotFilter = "content" | "bottom";
 
@@ -52,3 +53,11 @@ export function SectionMessageJoinCompleteView({
 		</ContentSection>
 	);
 }
+
+export const sectionMessageJoinCompleteViewRenderReact: ComponentRenderReact = ({
+	node,
+}) => (
+	<SectionMessageJoinCompleteView
+		slot={node.props?.slot === "bottom" ? "bottom" : "content"}
+	/>
+);

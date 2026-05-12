@@ -8,6 +8,12 @@ import { IconArrowLeft, IconClose } from "@pxds/pxds-icons";
 import { Box, VStack } from "@pxds/pxds-layout/primitives";
 import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
+import {
+	renderBoolean,
+	renderRecord,
+	renderString,
+	type ComponentRenderReact,
+} from "../../../../render-react";
 
 export type ProgressTopBarLeading = "back" | "close";
 
@@ -82,3 +88,22 @@ export function ProgressTopBar({ title, leading = "back", progress }: Props) {
     </div>
   );
 }
+
+export const progressTopBarRenderReact: ComponentRenderReact = ({ node }) => {
+  const progress = renderRecord(node.props?.progress);
+  return (
+    <ProgressTopBar
+      title={renderString(node.props?.title) ?? ""}
+      leading={node.props?.leading === "close" ? "close" : "back"}
+      progress={
+        progress
+          ? {
+              label: renderString(progress.label) ?? "",
+              percent: typeof progress.percent === "number" ? progress.percent : 0,
+              showLabel: renderBoolean(progress.showLabel, true),
+            }
+          : undefined
+      }
+    />
+  );
+};

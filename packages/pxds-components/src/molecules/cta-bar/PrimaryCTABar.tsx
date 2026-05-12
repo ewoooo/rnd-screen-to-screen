@@ -3,6 +3,11 @@ import { Button } from "@pxds/pxds-components/core";
 import { Box } from "@pxds/pxds-layout/primitives";
 import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
 import { semanticSurface } from "@pxds/pxds-tokens";
+import {
+	renderBoolean,
+	renderString,
+	type ComponentRenderReact,
+} from "../../render-react";
 
 export type CtaTone = "default" | "destructive";
 
@@ -101,3 +106,13 @@ export function PrimaryCTABar({
 		</Box>
 	);
 }
+
+export const primaryCtaBarRenderReact: ComponentRenderReact = ({ node }) => (
+	<PrimaryCTABar
+		primaryLabel={renderString(node.props?.primaryLabel) ?? ""}
+		secondaryLabel={renderString(node.props?.secondaryLabel)}
+		tertiaryLabel={renderString(node.props?.tertiaryLabel)}
+		disabled={renderBoolean(node.props?.disabled, false)}
+		tone={node.props?.tone === "destructive" ? "destructive" : "default"}
+	/>
+);

@@ -38,13 +38,7 @@ export type ScreenRenderContract = {
 	};
 };
 
-export function defineScreenRenderContract<T extends ScreenRenderContract>(
-	contract: T,
-): T {
-	return contract;
-}
-
-export function createRenderScreenSpec(
+export function createRenderTree(
 	contract: ScreenRenderContract,
 ): RenderScreenSpec {
 	return {
@@ -61,22 +55,6 @@ export function createRenderScreenSpec(
 				: contract.slots.bottom,
 		},
 	};
-}
-
-export function collectScreenRenderContracts(
-	contract: ScreenRenderContract,
-): ComponentRenderContract[] {
-	const contracts: ComponentRenderContract[] = [];
-	const visit = (node: ScreenRenderNodeContract) => {
-		if (node.render) contracts.push(node.render);
-		for (const child of node.children ?? []) visit(child);
-	};
-	if (contract.slots.header) visit(contract.slots.header);
-	for (const node of contract.slots.content ?? []) visit(node);
-	if (Array.isArray(contract.slots.bottom)) {
-		for (const node of contract.slots.bottom) visit(node);
-	}
-	return contracts;
 }
 
 function toRenderSpecNode(node: ScreenRenderNodeContract): RenderSpecNode {

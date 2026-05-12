@@ -32,22 +32,14 @@ import membershipPersonalInfoRenderableSpec from "../app/membership-personal-inf
 import { screenRoute as membershipTermsConsentRoute } from "../app/membership-terms-consent/registry";
 import membershipTermsConsentSpec from "../app/membership-terms-consent/spec.json";
 import membershipTermsConsentRenderableSpec from "../app/membership-terms-consent/sdui.json";
-import { screenRoute as novaMbrPg0010Route } from "../app/NOVA-MBR-PG-001-0/registry";
 import novaMbrPg0010Spec from "../app/NOVA-MBR-PG-001-0/spec.json";
-import { novaMbrPg0010RenderSpec } from "../app/NOVA-MBR-PG-001-0/render";
-import novaMbrPg0010RenderableSpec from "../app/NOVA-MBR-PG-001-0/sdui.json";
-import { screenRoute as novaMbrPg0020Route } from "../app/NOVA-MBR-PG-002-0/registry";
+import { RENDER_SPEC as novaMbrPg0010RenderSpec } from "../app/NOVA-MBR-PG-001-0/render";
 import novaMbrPg0020Spec from "../app/NOVA-MBR-PG-002-0/spec.json";
-import novaMbrPg0020RenderSpec from "../app/NOVA-MBR-PG-002-0/render.json";
-import novaMbrPg0020RenderableSpec from "../app/NOVA-MBR-PG-002-0/sdui.json";
-import { screenRoute as novaMbrPg0030Route } from "../app/NOVA-MBR-PG-003-0/registry";
+import { RENDER_SPEC as novaMbrPg0020RenderSpec } from "../app/NOVA-MBR-PG-002-0/render";
 import novaMbrPg0030Spec from "../app/NOVA-MBR-PG-003-0/spec.json";
-import novaMbrPg0030RenderSpec from "../app/NOVA-MBR-PG-003-0/render.json";
-import novaMbrPg0030RenderableSpec from "../app/NOVA-MBR-PG-003-0/sdui.json";
-import { screenRoute as novaMbrPg0050Route } from "../app/NOVA-MBR-PG-005-0/registry";
+import { RENDER_SPEC as novaMbrPg0030RenderSpec } from "../app/NOVA-MBR-PG-003-0/render";
 import novaMbrPg0050Spec from "../app/NOVA-MBR-PG-005-0/spec.json";
-import novaMbrPg0050RenderSpec from "../app/NOVA-MBR-PG-005-0/render.json";
-import novaMbrPg0050RenderableSpec from "../app/NOVA-MBR-PG-005-0/sdui.json";
+import { RENDER_SPEC as novaMbrPg0050RenderSpec } from "../app/NOVA-MBR-PG-005-0/render";
 import { screenRoute as ncFullDormancyAuthRoute } from "../app/nc-full-dormancy-auth/registry";
 import ncFullDormancyAuthSpec from "../app/nc-full-dormancy-auth/spec.json";
 import ncFullDormancyAuthRenderableSpec from "../app/nc-full-dormancy-auth/sdui.json";
@@ -333,6 +325,40 @@ import { screenRoute as billingHtmlTargetSelectRoute } from "../app/billing-html
 import billingHtmlTargetSelectSpec from "../app/billing-html-target-select/spec.json";
 import billingHtmlTargetSelectRenderableSpec from "../app/billing-html-target-select/sdui.json";
 
+const novaMbrPg0010Route = {
+	id: "NOVA-MBR-PG-001-0",
+	route: "/NOVA-MBR-PG-001-0",
+	label: "MBR 가입 1·약관 동의",
+	group: "membership",
+	status: "active",
+	createdAt: "2026-05-11",
+} as const;
+const novaMbrPg0020Route = {
+	id: "NOVA-MBR-PG-002-0",
+	route: "/NOVA-MBR-PG-002-0",
+	label: "MBR 가입 2·개인정보 입력",
+	group: "membership",
+	status: "active",
+	createdAt: "2026-05-11",
+} as const;
+const novaMbrPg0030Route = {
+	id: "NOVA-MBR-PG-003-0",
+	route: "/NOVA-MBR-PG-003-0",
+	label: "MBR 가입 3·본인인증",
+	group: "membership",
+	status: "active",
+	createdAt: "2026-05-11",
+} as const;
+const novaMbrPg0050Route = {
+	id: "NOVA-MBR-PG-005-0",
+	route: "/NOVA-MBR-PG-005-0",
+	label: "MBR 가입 5·가입 완료",
+	group: "membership",
+	status: "active",
+	createdAt: "2026-05-11",
+} as const;
+
+
 export type ScreenGroup =
 	| "home"
 	| "product"
@@ -481,7 +507,7 @@ import type { SduiScreen } from "./sdui";
 const asScreenSpec = (spec: unknown) => spec as ScreenSpecV2;
 const asRenderableScreenSpec = (spec: unknown) => spec as RenderableScreenSpecV1;
 const asRenderScreenSpec = (spec: unknown) => spec as RenderScreenSpec;
-const asSduiScreenSpec = (spec: unknown) => spec as SduiScreen;
+
 
 export const activeScreenSpecs = {
 	"home-benefit": asScreenSpec(homeBenefitSpec),
@@ -703,10 +729,7 @@ export const activeRenderableScreenSpecs = {
 } as const satisfies Partial<Record<ScreenId, RenderableScreenSpecV1>>;
 
 export const activeSduiScreenSpecs = {
-	"NOVA-MBR-PG-001-0": asSduiScreenSpec(novaMbrPg0010RenderableSpec),
-	"NOVA-MBR-PG-002-0": asSduiScreenSpec(novaMbrPg0020RenderableSpec),
-	"NOVA-MBR-PG-003-0": asSduiScreenSpec(novaMbrPg0030RenderableSpec),
-	"NOVA-MBR-PG-005-0": asSduiScreenSpec(novaMbrPg0050RenderableSpec),
+
 } as const satisfies Partial<Record<ScreenId, SduiScreen>>;
 
 export const activeRenderScreenSpecs = {

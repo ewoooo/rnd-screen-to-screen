@@ -6,6 +6,7 @@ import { ContentSection } from "@pxds/pxds-layout/app-screen";
 import { Button, SectionMessage } from "../../../core";
 import { TextField } from "../../../molecules/form-controls";
 import { FormField } from "../../../molecules/form-field";
+import { renderBoolean, type ComponentRenderReact } from "../../../render-react";
 
 type Props = {
 	visible?: boolean;
@@ -46,3 +47,9 @@ export function TextFieldGuardianRequest({ visible = false }: Props) {
 		</ContentSection>
 	);
 }
+
+export const textFieldGuardianRequestRenderReact: ComponentRenderReact = ({
+	node,
+}) => (
+	<TextFieldGuardianRequest visible={renderBoolean(node.props?.visible, false)} />
+);

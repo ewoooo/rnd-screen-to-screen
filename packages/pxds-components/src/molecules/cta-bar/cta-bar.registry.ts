@@ -1,4 +1,5 @@
 import { primaryCtaBarFigmaSpec } from "./cta-bar.figma";
+import { primaryCtaBarRenderReact } from "./PrimaryCTABar";
 
 export const primaryCtaBarRegistryEntry = {
 	id: "primary-cta-bar",
@@ -10,6 +11,7 @@ export const primaryCtaBarRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	figmaSpec: () => primaryCtaBarFigmaSpec,
+	renderReact: primaryCtaBarRenderReact,
 	composedOf: [
 		"wds-button",
 		"layout-primitives",

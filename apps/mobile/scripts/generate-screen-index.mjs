@@ -24,6 +24,19 @@ const preferredGroupOrder = [
 ];
 
 function readScreenRoute(routeFolder) {
+	const metaPath = path.join(routeDir, routeFolder, "meta.json");
+	if (existsSync(metaPath)) {
+		const meta = readJson(metaPath);
+		return {
+			id: meta.id,
+			route: meta.route,
+			label: meta.name,
+			group: meta.group ?? meta.domain,
+			status: meta.status,
+			createdAt: meta.createdAt,
+		};
+	}
+
 	const registryPath = path.join(routeDir, routeFolder, "registry.ts");
 	const source = readFileSync(registryPath, "utf8");
 	const match = source.match(/export\s+const\s+screenRoute\s*=\s*(\{[\s\S]*?\})\s*as\s+const\s*;/);
@@ -82,12 +95,20 @@ function getScreenEntries() {
 	const entries = readdirSync(routeDir, { withFileTypes: true })
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => entry.name)
-		.filter((folder) => existsSync(path.join(routeDir, folder, "registry.ts")))
+		.filter(
+			(folder) =>
+				existsSync(path.join(routeDir, folder, "registry.ts")) ||
+				existsSync(path.join(routeDir, folder, "meta.json")),
+		)
 		.map((folder) => {
+			const hasMeta = existsSync(path.join(routeDir, folder, "meta.json"));
 			const route = readScreenRoute(folder);
 			const specPath = path.join(routeDir, folder, "spec.json");
 			const renderablePath = path.join(routeDir, folder, "sdui.json");
+			const renderTsPath = path.join(routeDir, folder, "render.ts");
+			const renderJsonPath = path.join(routeDir, folder, "render.json");
 			const renderableSpec = existsSync(renderablePath) ? readJson(renderablePath) : undefined;
+			const hasRenderSpec = existsSync(renderTsPath) || existsSync(renderJsonPath);
 			if (route.id !== folder) {
 				throw new Error(`Screen route id must match folder name: ${folder} received ${route.id}`);
 			}
@@ -103,11 +124,15 @@ function getScreenEntries() {
 			return {
 				folder,
 				route,
+				hasMeta,
 				hasRenderableSpec: Boolean(renderableSpec),
 				isSduiScreenSpec: renderableSpec ? isCompactSduiScreenSpec(renderableSpec) : false,
 				routeName: toIdentifier(route.id, "Route"),
 				specName: toIdentifier(route.id, "Spec"),
 				renderableName: toIdentifier(route.id, "RenderableSpec"),
+				renderName: toIdentifier(route.id, "RenderSpec"),
+				renderImportKind: existsSync(renderTsPath) ? "named" : "default",
+				hasRenderSpec,
 			};
 		});
 
@@ -128,15 +153,35 @@ function renderIndex(entries) {
 	const groups = [...new Set(entries.map((entry) => entry.route.group))];
 	const statuses = [...new Set(entries.map((entry) => entry.route.status))];
 	const imports = entries.flatMap((entry) => {
-		const lines = [
-			`import { screenRoute as ${entry.routeName} } from "../app/${entry.folder}/registry";`,
-			`import ${entry.specName} from "../app/${entry.folder}/spec.json";`,
-		];
+		const lines = [`import ${entry.specName} from "../app/${entry.folder}/spec.json";`];
+		if (!entry.hasMeta) {
+			lines.unshift(`import { screenRoute as ${entry.routeName} } from "../app/${entry.folder}/registry";`);
+		}
 		if (entry.hasRenderableSpec) {
 			lines.push(`import ${entry.renderableName} from "../app/${entry.folder}/sdui.json";`);
 		}
+		if (entry.hasRenderSpec) {
+			if (entry.renderImportKind === "named") {
+				lines.push(`import { RENDER_SPEC as ${entry.renderName} } from "../app/${entry.folder}/render";`);
+			} else {
+				lines.push(`import ${entry.renderName} from "../app/${entry.folder}/render.json";`);
+			}
+		}
 		return lines;
 	});
+	const routeDeclarations = entries
+		.filter((entry) => entry.hasMeta)
+		.map(
+			(entry) => `const ${entry.routeName} = {
+\tid: ${quote(entry.route.id)},
+\troute: ${quote(entry.route.route)},
+\tlabel: ${quote(entry.route.label)},
+\tgroup: ${quote(entry.route.group)},
+\tstatus: ${quote(entry.route.status)},
+\tcreatedAt: ${quote(entry.route.createdAt)},
+} as const;`,
+		)
+		.join("\n");
 
 	const routeItems = entries.map((entry) => `\t${entry.routeName},`).join("\n");
 	const specItems = entries
@@ -150,8 +195,13 @@ function renderIndex(entries) {
 		.filter((entry) => entry.isSduiScreenSpec)
 		.map((entry) => `\t${quote(entry.route.id)}: asSduiScreenSpec(${entry.renderableName}),`)
 		.join("\n");
+	const renderItems = entries
+		.filter((entry) => entry.hasRenderSpec)
+		.map((entry) => `\t${quote(entry.route.id)}: asRenderScreenSpec(${entry.renderName}),`)
+		.join("\n");
 
 	return `${imports.join("\n")}
+${routeDeclarations ? `\n${routeDeclarations}\n` : ""}
 
 export type ScreenGroup =
 ${groups.map((group) => `\t| ${quote(group)}`).join("\n")};
@@ -176,10 +226,12 @@ export type ScreenRoutePath = (typeof screenRoutes)[number]["route"];
 export const screenCount = screenRoutes.length;
 
 import type { RenderableScreenSpecV1, ScreenSpecV2 } from "./spec";
+import type { RenderScreenSpec } from "./render-spec";
 import type { SduiScreen } from "./sdui";
 const asScreenSpec = (spec: unknown) => spec as ScreenSpecV2;
 const asRenderableScreenSpec = (spec: unknown) => spec as RenderableScreenSpecV1;
-const asSduiScreenSpec = (spec: unknown) => spec as SduiScreen;
+const asRenderScreenSpec = (spec: unknown) => spec as RenderScreenSpec;
+${sduiItems ? "const asSduiScreenSpec = (spec: unknown) => spec as SduiScreen;" : ""}
 
 export const activeScreenSpecs = {
 ${specItems}
@@ -193,8 +245,26 @@ export const activeSduiScreenSpecs = {
 ${sduiItems}
 } as const satisfies Partial<Record<ScreenId, SduiScreen>>;
 
+export const activeRenderScreenSpecs = {
+${renderItems}
+} as const satisfies Partial<Record<ScreenId, RenderScreenSpec>>;
+
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;
 export type ActiveRenderableScreenSpecId = keyof typeof activeRenderableScreenSpecs;
+export type ActiveRenderScreenSpecId = keyof typeof activeRenderScreenSpecs;
+
+export type {
+\tRenderComponentId,
+\tRenderPropValue,
+\tRenderScreenSpec,
+\tRenderScreenSpecIssue,
+\tRenderSpecNode,
+} from "./render-spec";
+export {
+\tcollectRenderSpecNodes,
+\tisRenderScreenSpec,
+\tvalidateRenderScreenSpec,
+} from "./render-spec";
 
 export type ScreenRouteRegistry = readonly ScreenRoute[];
 export type ScreenRoutePatch = Partial<Omit<ScreenRoute, "id">>;

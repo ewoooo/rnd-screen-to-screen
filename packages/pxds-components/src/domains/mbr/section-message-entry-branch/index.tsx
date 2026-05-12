@@ -2,6 +2,7 @@ import { VStack } from "@pxds/pxds-layout/primitives";
 import { ContentSection } from "@pxds/pxds-layout/app-screen";
 
 import { Button, SectionMessage } from "../../../core";
+import { renderBoolean, type ComponentRenderReact } from "../../../render-react";
 
 export type EntryBranchKind =
 	| "existing-member"
@@ -62,4 +63,19 @@ export function SectionMessageEntryBranch({
 			</VStack>
 		</ContentSection>
 	);
+}
+
+export const sectionMessageEntryBranchRenderReact: ComponentRenderReact = ({
+	node,
+}) => (
+	<SectionMessageEntryBranch
+		visible={renderBoolean(node.props?.visible, true)}
+		kind={entryBranchKind(node.props?.kind)}
+	/>
+);
+
+function entryBranchKind(value: unknown): EntryBranchKind {
+	if (value === "dormant" || value === "retry") return "dormant";
+	if (value === "rejoin-blocked") return "rejoin-blocked";
+	return "existing-member";
 }

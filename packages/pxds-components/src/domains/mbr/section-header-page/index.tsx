@@ -1,6 +1,7 @@
 import { Box, VStack } from "@pxds/pxds-layout/primitives";
 import { ContentSection } from "@pxds/pxds-layout/app-screen";
 import { TextBlock } from "../../../atoms/typography";
+import { renderString, type ComponentRenderReact } from "../../../render-react";
 
 type Props = {
 	title: string;
@@ -26,3 +27,7 @@ export function SectionHeaderPage({ title }: Props) {
 		</ContentSection>
 	);
 }
+
+export const sectionHeaderPageRenderReact: ComponentRenderReact = ({ node }) => (
+	<SectionHeaderPage title={renderString(node.props?.title) ?? ""} />
+);

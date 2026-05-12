@@ -19,6 +19,7 @@ import {
 } from "../../../molecules/selectable-list";
 import { TextBlock } from "../../../atoms/typography";
 import { PrimaryCTABar } from "../../../molecules/cta-bar";
+import type { ComponentRenderReact } from "../../../render-react";
 
 type SnapshotState = "default" | "loading" | "error" | "blocked";
 type SlotFilter = "content" | "bottom";
@@ -126,4 +127,32 @@ export function ListCellAuthMethod({
 			</ContentRail>
 		</ContentSection>
 	);
+}
+
+export const listCellAuthMethodRenderReact: ComponentRenderReact = ({ node }) => (
+	<ListCellAuthMethod
+		state={authState(node.props?.state)}
+		slot={node.props?.slot === "bottom" ? "bottom" : "content"}
+		section={
+			node.section
+				? {
+						inset: node.section.inset,
+						rail: node.section.rail === "none" ? undefined : node.section.rail,
+						measure: node.section.measure,
+					}
+				: undefined
+		}
+	/>
+);
+
+function authState(value: unknown): SnapshotState {
+	if (
+		value === "loading" ||
+		value === "error" ||
+		value === "blocked" ||
+		value === "default"
+	) {
+		return value;
+	}
+	return "default";
 }

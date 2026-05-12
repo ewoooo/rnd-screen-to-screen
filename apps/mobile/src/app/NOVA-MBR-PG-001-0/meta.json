@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../schema/page-meta.schema.json",
+  "id": "NOVA-MBR-PG-001-0",
+  "name": "MBR 가입 1·약관 동의",
+  "route": "/NOVA-MBR-PG-001-0",
+  "type": "page",
+  "status": "active",
+  "domain": "mbr",
+  "group": "membership",
+  "createdAt": "2026-05-11",
+  "sourceRefs": ["NOVA-MBR"],
+  "policyRefs": ["PG-MBR-TERM-001", "PG-MBR-TERM-002"],
+  "useCaseIds": ["UC-MBR-JOIN"],
+  "componentRefs": [
+    "progress-top-bar",
+    "ogn-mbr-section-header-page",
+    "ogn-mbr-checkbox-terms",
+    "ogn-mbr-text-field-guardian-request",
+    "ogn-mbr-action-area-terms"
+  ],
+  "tags": ["mbr", "join", "terms"]
+}

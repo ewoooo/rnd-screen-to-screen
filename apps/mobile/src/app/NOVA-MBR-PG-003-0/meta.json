@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../schema/page-meta.schema.json",
+  "id": "NOVA-MBR-PG-003-0",
+  "name": "MBR 가입 3·본인인증",
+  "route": "/NOVA-MBR-PG-003-0",
+  "type": "page",
+  "status": "active",
+  "domain": "mbr",
+  "group": "membership",
+  "createdAt": "2026-05-11",
+  "sourceRefs": ["NOVA-MBR"],
+  "useCaseIds": ["UC-MBR-JOIN"],
+  "componentRefs": [
+    "progress-top-bar",
+    "ogn-mbr-section-header-page",
+    "ogn-mbr-list-cell-auth-method",
+    "primary-cta-bar"
+  ],
+  "tags": ["mbr", "join", "auth"]
+}

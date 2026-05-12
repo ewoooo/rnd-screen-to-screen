@@ -1,8 +1,7 @@
 import {
-	actionAreaTermsRender,
-	checkboxTermsRender,
 	sectionHeaderPageRender,
-	textFieldGuardianRequestRender,
+	sectionMessageEntryBranchRender,
+	textFieldMemberInfoRender,
 } from "@pxds/pxds-components/mbr";
 
 import {
@@ -13,20 +12,19 @@ import {
 const RENDER_CONTRACT = {
 	schemaVersion: "screen-render-contract-v1",
 	screen: {
-		id: "NOVA-MBR-PG-001-0",
-		name: "약관 동의",
-		route: "/NOVA-MBR-PG-001-0",
+		id: "NOVA-MBR-PG-002-0",
+		name: "개인정보 입력",
+		route: "/NOVA-MBR-PG-002-0",
 		type: "page",
 	},
 	source: {
 		useCaseIds: ["UC-MBR-JOIN"],
 		ognSpecIds: [
 			"ogn-MBR-section-header-page",
-			"ogn-MBR-checkbox-terms",
-			"ogn-MBR-text-field-guardian-request",
-			"ogn-MBR-action-area-terms",
+			"ogn-MBR-text-field-member-info",
+			"ogn-MBR-section-message-entry-branch",
 		],
-		policyRefs: ["PG-MBR-TERM-001", "PG-MBR-TERM-002"],
+		policyRefs: ["PG-MBR-INFO-001", "PG-MBR-INFO-002"],
 	},
 	slots: {
 		systemHeader: true,
@@ -36,8 +34,8 @@ const RENDER_CONTRACT = {
 				title: "회원 가입",
 				leading: "back",
 				progress: {
-					label: "1 / 5",
-					percent: 20,
+					label: "2 / 5",
+					percent: 40,
 					showLabel: true,
 				},
 			},
@@ -48,32 +46,27 @@ const RENDER_CONTRACT = {
 				render: sectionHeaderPageRender,
 				section: { inset: "inherit" },
 				props: {
-					title: "약관 동의",
+					title: "개인정보 입력",
 				},
 			},
 			{
-				component: "ogn-mbr-checkbox-terms",
-				render: checkboxTermsRender,
+				component: "ogn-mbr-text-field-member-info",
+				render: textFieldMemberInfoRender,
 				section: { inset: "inherit" },
+				props: {
+					state: "default",
+				},
 			},
 			{
-				component: "ogn-mbr-text-field-guardian-request",
-				render: textFieldGuardianRequestRender,
+				component: "ogn-mbr-section-message-entry-branch",
+				render: sectionMessageEntryBranchRender,
 				section: { inset: "inherit" },
 				props: {
 					visible: false,
 				},
 			},
 		],
-		bottom: [
-			{
-				component: "ogn-mbr-action-area-terms",
-				render: actionAreaTermsRender,
-				props: {
-					disabled: true,
-				},
-			},
-		],
+		bottom: false,
 	},
 } as const satisfies ScreenRenderContract;
 

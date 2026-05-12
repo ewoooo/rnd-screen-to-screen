@@ -41,6 +41,7 @@
 		"./schema": "./src/schema/index.ts",
 		"./tu": "./src/domains/tu/index.tsx",
 		"./registry": "./src/registry.ts",
+		"./render-react": "./src/render-react.tsx",
 		"./atoms/typography": "./src/atoms/typography/index.ts",
 		"./atoms/typography/text-block": "./src/atoms/typography/text-block/index.ts",
 		"./mbr": "./src/domains/mbr/index.ts",

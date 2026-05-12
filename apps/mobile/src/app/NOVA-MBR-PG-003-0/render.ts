@@ -1,8 +1,6 @@
 import {
-	actionAreaTermsRender,
-	checkboxTermsRender,
+	listCellAuthMethodRender,
 	sectionHeaderPageRender,
-	textFieldGuardianRequestRender,
 } from "@pxds/pxds-components/mbr";
 
 import {
@@ -13,20 +11,18 @@ import {
 const RENDER_CONTRACT = {
 	schemaVersion: "screen-render-contract-v1",
 	screen: {
-		id: "NOVA-MBR-PG-001-0",
-		name: "약관 동의",
-		route: "/NOVA-MBR-PG-001-0",
+		id: "NOVA-MBR-PG-003-0",
+		name: "본인인증",
+		route: "/NOVA-MBR-PG-003-0",
 		type: "page",
 	},
 	source: {
 		useCaseIds: ["UC-MBR-JOIN"],
 		ognSpecIds: [
 			"ogn-MBR-section-header-page",
-			"ogn-MBR-checkbox-terms",
-			"ogn-MBR-text-field-guardian-request",
-			"ogn-MBR-action-area-terms",
+			"ogn-MBR-list-cell-auth-method",
 		],
-		policyRefs: ["PG-MBR-TERM-001", "PG-MBR-TERM-002"],
+		policyRefs: ["PG-MBR-AUTH-001"],
 	},
 	slots: {
 		systemHeader: true,
@@ -36,8 +32,8 @@ const RENDER_CONTRACT = {
 				title: "회원 가입",
 				leading: "back",
 				progress: {
-					label: "1 / 5",
-					percent: 20,
+					label: "3 / 5",
+					percent: 60,
 					showLabel: true,
 				},
 			},
@@ -48,28 +44,27 @@ const RENDER_CONTRACT = {
 				render: sectionHeaderPageRender,
 				section: { inset: "inherit" },
 				props: {
-					title: "약관 동의",
+					title: "본인인증",
 				},
 			},
 			{
-				component: "ogn-mbr-checkbox-terms",
-				render: checkboxTermsRender,
-				section: { inset: "inherit" },
-			},
-			{
-				component: "ogn-mbr-text-field-guardian-request",
-				render: textFieldGuardianRequestRender,
-				section: { inset: "inherit" },
+				component: "ogn-mbr-list-cell-auth-method",
+				render: listCellAuthMethodRender,
+				section: {
+					inset: "bleed",
+					rail: "inset",
+				},
 				props: {
-					visible: false,
+					state: "default",
+					slot: "content",
 				},
 			},
 		],
 		bottom: [
 			{
-				component: "ogn-mbr-action-area-terms",
-				render: actionAreaTermsRender,
+				component: "primary-cta-bar",
 				props: {
+					primaryLabel: "인증 완료",
 					disabled: true,
 				},
 			},

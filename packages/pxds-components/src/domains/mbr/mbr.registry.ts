@@ -1,19 +1,86 @@
-import { actionAreaTermsRegistryEntry } from "./action-area-terms/registry";
-import { checkboxTermsRegistryEntry } from "./checkbox-terms/registry";
-import { listCellAuthMethodRegistryEntry } from "./list-cell-auth-method/registry";
-import { sectionHeaderPageRegistryEntry } from "./section-header-page/registry";
-import { sectionMessageEntryBranchRegistryEntry } from "./section-message-entry-branch/registry";
-import { sectionMessageJoinCompleteViewRegistryEntry } from "./section-message-join-complete-view/registry";
-import { textFieldGuardianRequestRegistryEntry } from "./text-field-guardian-request/registry";
-import { textFieldMemberInfoRegistryEntry } from "./text-field-member-info/registry";
+import {
+	actionAreaTermsRenderReact,
+	checkboxTermsRenderReact,
+	listCellAuthMethodRenderReact,
+	sectionHeaderPageRenderReact,
+	sectionMessageEntryBranchRenderReact,
+	sectionMessageJoinCompleteViewRenderReact,
+	textFieldGuardianRequestRenderReact,
+	textFieldMemberInfoRenderReact,
+} from ".";
+import { actionAreaTermsFigmaSpec } from "./action-area-terms/figma";
+import actionAreaTermsMeta from "./action-area-terms/meta.json";
+import { actionAreaTermsRender } from "./action-area-terms/render";
+import { checkboxTermsFigmaSpec } from "./checkbox-terms/figma";
+import checkboxTermsMeta from "./checkbox-terms/meta.json";
+import { checkboxTermsRender } from "./checkbox-terms/render";
+import { listCellAuthMethodFigmaSpec } from "./list-cell-auth-method/figma";
+import listCellAuthMethodMeta from "./list-cell-auth-method/meta.json";
+import { listCellAuthMethodRender } from "./list-cell-auth-method/render";
+import { asMbrComponentMeta } from "./registry-meta";
+import { sectionHeaderPageFigmaSpec } from "./section-header-page/figma";
+import sectionHeaderPageMeta from "./section-header-page/meta.json";
+import { sectionHeaderPageRender } from "./section-header-page/render";
+import { sectionMessageEntryBranchFigmaSpec } from "./section-message-entry-branch/figma";
+import sectionMessageEntryBranchMeta from "./section-message-entry-branch/meta.json";
+import { sectionMessageEntryBranchRender } from "./section-message-entry-branch/render";
+import { sectionMessageJoinCompleteViewFigmaSpec } from "./section-message-join-complete-view/figma";
+import sectionMessageJoinCompleteViewMeta from "./section-message-join-complete-view/meta.json";
+import { sectionMessageJoinCompleteViewRender } from "./section-message-join-complete-view/render";
+import { textFieldGuardianRequestFigmaSpec } from "./text-field-guardian-request/figma";
+import textFieldGuardianRequestMeta from "./text-field-guardian-request/meta.json";
+import { textFieldGuardianRequestRender } from "./text-field-guardian-request/render";
+import { textFieldMemberInfoFigmaSpec } from "./text-field-member-info/figma";
+import textFieldMemberInfoMeta from "./text-field-member-info/meta.json";
+import { textFieldMemberInfoRender } from "./text-field-member-info/render";
 
 export const mbrRegistryEntries = [
-	sectionHeaderPageRegistryEntry,
-	checkboxTermsRegistryEntry,
-	actionAreaTermsRegistryEntry,
-	textFieldGuardianRequestRegistryEntry,
-	textFieldMemberInfoRegistryEntry,
-	listCellAuthMethodRegistryEntry,
-	sectionMessageEntryBranchRegistryEntry,
-	sectionMessageJoinCompleteViewRegistryEntry,
+	{
+		...asMbrComponentMeta(sectionHeaderPageMeta),
+		render: () => sectionHeaderPageRender,
+		figmaSpec: () => sectionHeaderPageFigmaSpec,
+		renderReact: sectionHeaderPageRenderReact,
+	},
+	{
+		...asMbrComponentMeta(checkboxTermsMeta),
+		render: () => checkboxTermsRender,
+		figmaSpec: () => checkboxTermsFigmaSpec,
+		renderReact: checkboxTermsRenderReact,
+	},
+	{
+		...asMbrComponentMeta(actionAreaTermsMeta),
+		render: () => actionAreaTermsRender,
+		figmaSpec: () => actionAreaTermsFigmaSpec,
+		renderReact: actionAreaTermsRenderReact,
+	},
+	{
+		...asMbrComponentMeta(textFieldGuardianRequestMeta),
+		render: () => textFieldGuardianRequestRender,
+		figmaSpec: () => textFieldGuardianRequestFigmaSpec,
+		renderReact: textFieldGuardianRequestRenderReact,
+	},
+	{
+		...asMbrComponentMeta(textFieldMemberInfoMeta),
+		render: () => textFieldMemberInfoRender,
+		figmaSpec: () => textFieldMemberInfoFigmaSpec,
+		renderReact: textFieldMemberInfoRenderReact,
+	},
+	{
+		...asMbrComponentMeta(listCellAuthMethodMeta),
+		render: () => listCellAuthMethodRender,
+		figmaSpec: () => listCellAuthMethodFigmaSpec,
+		renderReact: listCellAuthMethodRenderReact,
+	},
+	{
+		...asMbrComponentMeta(sectionMessageEntryBranchMeta),
+		render: () => sectionMessageEntryBranchRender,
+		figmaSpec: () => sectionMessageEntryBranchFigmaSpec,
+		renderReact: sectionMessageEntryBranchRenderReact,
+	},
+	{
+		...asMbrComponentMeta(sectionMessageJoinCompleteViewMeta),
+		render: () => sectionMessageJoinCompleteViewRender,
+		figmaSpec: () => sectionMessageJoinCompleteViewFigmaSpec,
+		renderReact: sectionMessageJoinCompleteViewRenderReact,
+	},
 ] as const;

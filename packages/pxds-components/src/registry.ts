@@ -43,6 +43,7 @@ import type {
 	ComponentRegistryExportMode,
 	ComponentRenderContract,
 } from "./schema";
+import type { ComponentRenderReact } from "./render-react";
 
 export type ComponentLayer = "atom" | "molecule" | "organism" | "template";
 
@@ -128,6 +129,11 @@ export type ComponentRegistryEntry = {
 	 * instance contracts.
 	 */
 	render?: () => ComponentRenderContract;
+	/**
+	 * Optional React renderer owned by the component folder. The screen renderer
+	 * calls this without knowing component-specific props.
+	 */
+	renderReact?: ComponentRenderReact;
 };
 
 export const componentRegistry = [
