@@ -1,13 +1,3 @@
-import {
-	actionAreaTermsRenderReact,
-	checkboxTermsRenderReact,
-	listCellAuthMethodRenderReact,
-	sectionHeaderPageRenderReact,
-	sectionMessageEntryBranchRenderReact,
-	sectionMessageJoinCompleteViewRenderReact,
-	textFieldGuardianRequestRenderReact,
-	textFieldMemberInfoRenderReact,
-} from ".";
 import { actionAreaTermsFigmaSpec } from "./action-area-terms/figma";
 import actionAreaTermsMeta from "./action-area-terms/meta.json";
 import { actionAreaTermsRender } from "./action-area-terms/render";
@@ -39,48 +29,40 @@ export const mbrRegistryEntries = [
 		...asMbrComponentMeta(sectionHeaderPageMeta),
 		render: () => sectionHeaderPageRender,
 		figmaSpec: () => sectionHeaderPageFigmaSpec,
-		renderReact: sectionHeaderPageRenderReact,
 	},
 	{
 		...asMbrComponentMeta(checkboxTermsMeta),
 		render: () => checkboxTermsRender,
 		figmaSpec: () => checkboxTermsFigmaSpec,
-		renderReact: checkboxTermsRenderReact,
 	},
 	{
 		...asMbrComponentMeta(actionAreaTermsMeta),
 		render: () => actionAreaTermsRender,
 		figmaSpec: () => actionAreaTermsFigmaSpec,
-		renderReact: actionAreaTermsRenderReact,
 	},
 	{
 		...asMbrComponentMeta(textFieldGuardianRequestMeta),
 		render: () => textFieldGuardianRequestRender,
 		figmaSpec: () => textFieldGuardianRequestFigmaSpec,
-		renderReact: textFieldGuardianRequestRenderReact,
 	},
 	{
 		...asMbrComponentMeta(textFieldMemberInfoMeta),
 		render: () => textFieldMemberInfoRender,
 		figmaSpec: () => textFieldMemberInfoFigmaSpec,
-		renderReact: textFieldMemberInfoRenderReact,
 	},
 	{
 		...asMbrComponentMeta(listCellAuthMethodMeta),
 		render: () => listCellAuthMethodRender,
 		figmaSpec: () => listCellAuthMethodFigmaSpec,
-		renderReact: listCellAuthMethodRenderReact,
 	},
 	{
 		...asMbrComponentMeta(sectionMessageEntryBranchMeta),
 		render: () => sectionMessageEntryBranchRender,
 		figmaSpec: () => sectionMessageEntryBranchFigmaSpec,
-		renderReact: sectionMessageEntryBranchRenderReact,
 	},
 	{
 		...asMbrComponentMeta(sectionMessageJoinCompleteViewMeta),
 		render: () => sectionMessageJoinCompleteViewRender,
 		figmaSpec: () => sectionMessageJoinCompleteViewFigmaSpec,
-		renderReact: sectionMessageJoinCompleteViewRenderReact,
 	},
 ] as const;

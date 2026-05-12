@@ -1,5 +1,9 @@
 import { Typography } from "../../../core";
 import type { CSSProperties, ComponentProps } from "react";
+import {
+	renderString,
+	type ComponentRenderReact,
+} from "../../../render-react";
 
 type TypographyProps = ComponentProps<typeof Typography>;
 
@@ -109,6 +113,50 @@ export function TextBlock({
 			{content}
 		</Typography>
 	);
+}
+
+export const textBlockRenderReact: ComponentRenderReact = ({ node }) => {
+	const variant = textBlockVariant(node.props?.variant);
+	const text =
+		renderString(node.props?.text) ??
+		renderString(node.props?.title) ??
+		renderString(node.props?.label) ??
+		"";
+	const color = renderString(node.props?.color) as TypographyProps["color"];
+
+	return (
+		<TextBlock
+			variant={variant}
+			text={text}
+			color={color || undefined}
+		/>
+	);
+};
+
+function textBlockVariant(value: unknown): TextBlockVariant {
+	if (
+		value === "displayTitle" ||
+		value === "hero" ||
+		value === "headline" ||
+		value === "sectionTitle" ||
+		value === "cardTitle" ||
+		value === "body" ||
+		value === "bodySubtle" ||
+		value === "caption" ||
+		value === "sectionLabel" ||
+		value === "contentTitle" ||
+		value === "listTitle" ||
+		value === "supportText" ||
+		value === "meta" ||
+		value === "assistive" ||
+		value === "price" ||
+		value === "rating" ||
+		value === "promoLabel" ||
+		value === "promoText"
+	) {
+		return value;
+	}
+	return "body";
 }
 
 function getTextBlockStyle({

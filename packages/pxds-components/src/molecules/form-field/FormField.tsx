@@ -7,6 +7,12 @@ import {
 	FormMessage,
 	Typography,
 } from "../../core";
+import { TextField } from "../form-controls";
+import {
+	renderBoolean,
+	renderString,
+	type ComponentRenderReact,
+} from "../../render-react";
 
 type Props = {
 	label: string;
@@ -58,3 +64,22 @@ export function FormField({
 		</WdsFormField>
 	);
 }
+
+export const formFieldRenderReact: ComponentRenderReact = ({
+	node,
+	renderChildren,
+}) => {
+	const children = renderChildren();
+	const placeholder = renderString(node.props?.placeholder);
+
+	return (
+		<FormField
+			label={renderString(node.props?.label) ?? ""}
+			required={renderBoolean(node.props?.required, false)}
+			helperText={renderString(node.props?.helperText)}
+			errorText={renderString(node.props?.errorText)}
+		>
+			{children ?? <TextField value="" placeholder={placeholder} readOnly />}
+		</FormField>
+	);
+};

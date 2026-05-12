@@ -58,7 +58,8 @@ export function createRenderTree(
 }
 
 function toRenderSpecNode(node: ScreenRenderNodeContract): RenderSpecNode {
-	const children = node.children?.map(toRenderSpecNode) ?? renderChildren(node.render);
+	const children =
+		node.children?.map(toRenderSpecNode) ?? renderChildren(node.render, node.props);
 	return {
 		component: node.component,
 		section: node.section,
@@ -69,16 +70,25 @@ function toRenderSpecNode(node: ScreenRenderNodeContract): RenderSpecNode {
 
 function renderChildren(
 	render: ComponentRenderContract | undefined,
+	parentProps: Readonly<Record<string, RenderPropValue>> | undefined,
 ): RenderSpecNode[] | undefined {
 	if (!render?.children || render.children.length === 0) return undefined;
-	return render.children.map(renderChildToRenderSpecNode);
+	return render.children.map((child) =>
+		renderChildToRenderSpecNode(child, parentProps),
+	);
 }
 
-function renderChildToRenderSpecNode(child: RenderChildContract): RenderSpecNode {
+function renderChildToRenderSpecNode(
+	child: RenderChildContract,
+	parentProps: Readonly<Record<string, RenderPropValue>> | undefined,
+): RenderSpecNode {
 	return {
 		component: child.component,
 		section: toRenderSectionLayout(child.layout),
-		props: toRenderProps(child.props),
+		props: toRenderProps({
+			...(child.variant ? { variant: child.variant } : null),
+			...child.props,
+		}, parentProps),
 	};
 }
 
@@ -101,17 +111,24 @@ function toRenderSectionLayout(
 
 function toRenderProps(
 	props: Readonly<Record<string, unknown>> | undefined,
+	parentProps?: Readonly<Record<string, RenderPropValue>>,
 ): Readonly<Record<string, RenderPropValue>> | undefined {
 	if (!props) return undefined;
 	return Object.fromEntries(
 		Object.entries(props).flatMap(([key, value]) => {
-			const renderValue = toRenderPropValue(value);
+			const renderValue = toRenderPropValue(value, parentProps);
 			return renderValue === undefined ? [] : [[key, renderValue]];
 		}),
 	);
 }
 
-function toRenderPropValue(value: unknown): RenderPropValue | undefined {
+function toRenderPropValue(
+	value: unknown,
+	parentProps?: Readonly<Record<string, RenderPropValue>>,
+): RenderPropValue | undefined {
+	if (typeof value === "string" && value.startsWith("$props.")) {
+		return parentProps?.[value.slice("$props.".length)];
+	}
 	if (
 		value === null ||
 		typeof value === "string" ||
@@ -122,13 +139,13 @@ function toRenderPropValue(value: unknown): RenderPropValue | undefined {
 	}
 	if (Array.isArray(value)) {
 		return value
-			.map(toRenderPropValue)
+			.map((item) => toRenderPropValue(item, parentProps))
 			.filter((item): item is RenderPropValue => item !== undefined);
 	}
 	if (value && typeof value === "object") {
 		return Object.fromEntries(
 			Object.entries(value).flatMap(([key, nested]) => {
-				const renderValue = toRenderPropValue(nested);
+				const renderValue = toRenderPropValue(nested, parentProps);
 				return renderValue === undefined ? [] : [[key, renderValue]];
 			}),
 		);

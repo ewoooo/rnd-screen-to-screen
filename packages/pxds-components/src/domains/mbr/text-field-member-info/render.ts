@@ -22,7 +22,11 @@ export const textFieldMemberInfoRender = defineComponentRender({
 		{
 			id: "text-field-user-id",
 			component: "form-field",
-			props: { label: "아이디", placeholder: "영문, 숫자 6~20자" },
+			props: {
+				label: "아이디",
+				placeholder: "영문, 숫자 6~20자",
+				helperText: "영문 소문자 또는 숫자 6~20자",
+			},
 		},
 		{
 			id: "button-id-duplicate-check",
@@ -36,6 +40,7 @@ export const textFieldMemberInfoRender = defineComponentRender({
 			props: {
 				label: "비밀번호",
 				placeholder: "영문/숫자/특수문자 조합 10~20자",
+				helperText: "영문/숫자/특수문자를 조합해 주세요.",
 			},
 		},
 		{

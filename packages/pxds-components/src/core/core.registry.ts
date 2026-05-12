@@ -1,3 +1,8 @@
+import {
+	wdsButtonRenderReact,
+	wdsSectionMessageRenderReact,
+} from "./core-render-react";
+
 export const wdsCoreRegistryEntries = [
 	{
 		id: "wds-typography",
@@ -19,6 +24,7 @@ export const wdsCoreRegistryEntries = [
 		status: "active",
 		createdAt: "2026-05-11",
 		sbAliases: ["button"],
+		renderReact: wdsButtonRenderReact,
 	},
 	{
 		id: "wds-icon-button",
@@ -371,6 +377,7 @@ export const wdsCoreRegistryEntries = [
 		status: "active",
 		createdAt: "2026-05-11",
 		sbAliases: ["section-message"],
+		renderReact: wdsSectionMessageRenderReact,
 	},
 	{
 		id: "wds-top-navigation",

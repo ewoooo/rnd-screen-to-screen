@@ -1,5 +1,6 @@
 export {
 	ConsentList,
+	consentListRenderReact,
 	type ConsentListItem,
 	type ConsentListState,
 } from "./ConsentList";

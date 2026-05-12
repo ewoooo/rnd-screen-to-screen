@@ -11,6 +11,11 @@ import {
 import type { ReactNode } from "react";
 
 import { HStack } from "@pxds/pxds-layout/primitives";
+import {
+	renderString,
+	type ComponentRenderReact,
+	type RenderReactPropValue,
+} from "../../render-react";
 
 export type SelectableDensity = "comfortable" | "compact";
 export type SelectionMode = "single" | "multi";
@@ -217,4 +222,38 @@ export function SelectableList(props: Props) {
 			</List>
 		</RadioGroup>
 	);
+}
+
+const DEFAULT_ITEMS: readonly SelectableItem[] = [
+	{ id: "phone", title: "휴대폰 인증" },
+	{ id: "pass", title: "PASS 인증" },
+	{ id: "cert", title: "공동인증서" },
+];
+
+export const selectableListRenderReact: ComponentRenderReact = ({ node }) => (
+	<SelectableList
+		name={renderString(node.props?.name) ?? "selectable-list"}
+		items={renderSelectableItems(node.props?.items)}
+		value={renderString(node.props?.value) ?? "phone"}
+		density={node.props?.density === "compact" ? "compact" : "comfortable"}
+		onChange={() => undefined}
+	/>
+);
+
+function renderSelectableItems(
+	value: RenderReactPropValue | undefined,
+): readonly SelectableItem[] {
+	if (!Array.isArray(value)) return DEFAULT_ITEMS;
+	const items = value.flatMap((item) => {
+		if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+		return [
+			{
+				id: renderString(item.id) ?? "",
+				title: renderString(item.title) ?? "",
+				sub: renderString(item.sub),
+				trailingLabel: renderString(item.trailingLabel),
+			},
+		];
+	});
+	return items.length > 0 ? items : DEFAULT_ITEMS;
 }

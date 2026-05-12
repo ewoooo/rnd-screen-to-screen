@@ -1,5 +1,6 @@
 export {
 	SelectableList,
+	selectableListRenderReact,
 	type SelectableDensity,
 	type SelectableItem,
 	type SelectionMode,

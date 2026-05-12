@@ -1,4 +1,5 @@
 import { selectableListFigmaSpec } from "./selectable-list.figma";
+import { selectableListRenderReact } from "./SelectableList";
 
 export const selectableListRegistryEntry = {
 	id: "selectable-list",
@@ -10,6 +11,7 @@ export const selectableListRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	figmaSpec: () => selectableListFigmaSpec,
+	renderReact: selectableListRenderReact,
 	composedOf: [
 		"wds-list",
 		"wds-list-cell",

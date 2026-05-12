@@ -19,7 +19,7 @@ export const actionAreaTermsRender = defineComponentRender({
 			component: "primary-cta-bar",
 			slot: "bottom",
 			variant: "strong",
-			props: { primaryLabel: "다음" },
+			props: { primaryLabel: "다음", disabled: "$props.disabled" },
 			layout: { sizing: { width: "fill", height: "hug" } },
 		},
 	],

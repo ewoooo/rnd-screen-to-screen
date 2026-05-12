@@ -1,4 +1,5 @@
 import { formFieldFigmaSpec } from "./form-field.figma";
+import { formFieldRenderReact } from "./FormField";
 
 export const formFieldRegistryEntry = {
 	id: "form-field",
@@ -10,6 +11,7 @@ export const formFieldRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	figmaSpec: () => formFieldFigmaSpec,
+	renderReact: formFieldRenderReact,
 	composedOf: [
 		"wds-form-field",
 		"wds-form-label",

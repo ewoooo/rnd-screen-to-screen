@@ -24,11 +24,16 @@ export const sectionMessageEntryBranchRender = defineComponentRender({
 			id: "section-message-entry-guide",
 			component: "wds-section-message",
 			variant: "cautionary",
+			props: {
+				title: "이미 가입된 회원",
+				description: "로그인 화면으로 이동해 주세요.",
+			},
 		},
 		{
 			id: "button-entry-action",
 			component: "wds-button",
 			variant: "outlined",
+			props: { label: "로그인하기" },
 		},
 	],
 } as const);

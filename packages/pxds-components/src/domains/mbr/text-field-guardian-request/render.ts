@@ -19,6 +19,11 @@ export const textFieldGuardianRequestRender = defineComponentRender({
 			id: "section-message-guardian-info",
 			component: "wds-section-message",
 			variant: "info",
+			props: {
+				title: "법정대리인 동의 안내",
+				description:
+					"만 14세 미만 고객의 가입은 법정대리인 동의가 필요합니다.",
+			},
 		},
 		{
 			id: "text-field-guardian-name",
@@ -34,6 +39,7 @@ export const textFieldGuardianRequestRender = defineComponentRender({
 			props: {
 				label: "법정대리인 연락처",
 				placeholder: "법정대리인 연락처",
+				helperText: "동의 요청 유효시간 24시간",
 			},
 		},
 		{

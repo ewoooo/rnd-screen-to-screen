@@ -6,7 +6,12 @@ import {
 	type ComponentRegistryEntry,
 } from "@pxds/pxds-components/registry";
 import type { RenderReactNode } from "@pxds/pxds-components/render-react";
-import { AppScreen } from "@pxds/pxds-layout/app-screen";
+import {
+	AppScreen,
+	ContentRail,
+	ContentSection,
+} from "@pxds/pxds-layout/app-screen";
+import { VStack } from "@pxds/pxds-layout/primitives";
 
 import type { RenderScreenSpec, RenderSpecNode } from "@/screens/render-spec";
 import { normalizeComponentId } from "@/screens/render-spec";
@@ -50,7 +55,19 @@ function renderNode(node: RenderSpecNode, key: string): ReactNode {
 	const entry = componentById.get(componentId);
 
 	if (!entry?.renderReact) {
-		throw new Error(`Component has no React renderer: ${node.component}`);
+		if (node.props?.visible === false) return null;
+		if (!node.children || node.children.length === 0) {
+			throw new Error(`Component has no React renderer: ${node.component}`);
+		}
+
+		return (
+			<Fragment key={key}>
+				{renderTreeNode(
+					node,
+					node.children.map((child, index) => renderNode(child, `${key}-${index}`)),
+				)}
+			</Fragment>
+		);
 	}
 
 	return (
@@ -62,4 +79,23 @@ function renderNode(node: RenderSpecNode, key: string): ReactNode {
 			})}
 		</Fragment>
 	);
+}
+
+function renderTreeNode(node: RenderSpecNode, children: ReactNode) {
+	const content = node.section ? (
+		<ContentSection inset={node.section.inset}>
+			<ContentRail
+				rail={node.section.rail === "none" ? undefined : node.section.rail}
+				measure={node.section.measure}
+			>
+				<VStack gap="block">{children}</VStack>
+			</ContentRail>
+		</ContentSection>
+	) : (
+		<VStack gap="block" style={{ width: "100%" }}>
+			{children}
+		</VStack>
+	);
+
+	return content;
 }

@@ -19,6 +19,7 @@ export const sectionHeaderPageRender = defineComponentRender({
 			id: "section-header-title",
 			component: "text-block",
 			variant: "displayTitle",
+			props: { text: "$props.title" },
 			layout: { sizing: { width: "fill", height: "hug" } },
 		},
 	],

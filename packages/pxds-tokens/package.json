@@ -4,14 +4,22 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"generate:css": "node scripts/generate-css.mjs"
+		"generate:css": "node scripts/generate-css.mjs",
+		"check:value-index": "node scripts/check-token-value-index.mjs"
 	},
-	"sideEffects": ["./src/tokens.css"],
+	"sideEffects": [
+		"./src/tokens.css"
+	],
 	"exports": {
 		"./package.json": "./package.json",
 		".": "./src/index.ts",
 		"./registry/wds-token-registry.json": "./registry/wds-token-registry.json",
 		"./tokens-studio": "./src/tokens-studio/index.ts",
 		"./tokens.css": "./src/tokens.css"
+	},
+	"devDependencies": {
+		"@tokens-studio/sd-transforms": "^2.0.3",
+		"css-tree": "^3.2.1",
+		"style-dictionary": "^5.4.0"
 	}
 }
