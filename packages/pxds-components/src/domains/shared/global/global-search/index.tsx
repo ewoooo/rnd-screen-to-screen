@@ -47,7 +47,7 @@ function GlobalSearchTopBar({ query }: { query: string }) {
         </TopNavigationButton>
       }
       toolbar={
-        <Box px="inset" pb="stack">
+        <Box px="var(--semantic-spacing-inset)" pb="var(--semantic-spacing-stack)">
           <QueryBar value={query} placeholder="상품, 혜택, 서비스를 검색" />
         </Box>
       }

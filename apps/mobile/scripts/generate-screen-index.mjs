@@ -74,9 +74,6 @@ function getScreenEntries() {
 			if (route.route !== `/${folder}`) {
 				throw new Error(`Screen route path must match folder name: ${folder} received ${route.route}`);
 			}
-			if (!hasRenderSpec) {
-				throw new Error(`Missing screen render source: ${path.relative(appDir, renderTsPath)}`);
-			}
 			return {
 				folder,
 				route,
@@ -104,8 +101,6 @@ function renderIndex(entries) {
 	const groups = [...new Set(entries.map((entry) => entry.route.group))];
 	const statuses = [...new Set(entries.map((entry) => entry.route.status))];
 	const imports = [
-		`import { mbrRegistryEntries } from "../organisms/mbr/module.registry";`,
-		`import { membershipRegistryEntries } from "../organisms/membership/module.registry";`,
 		...entries.flatMap((entry) => {
 		const lines = [];
 		if (entry.hasRenderSpec) {
@@ -134,7 +129,7 @@ function renderIndex(entries) {
 	const routeItems = entries.map((entry) => `\t${entry.routeName},`).join("\n");
 	const renderItems = entries
 		.filter((entry) => entry.hasRenderSpec)
-		.map((entry) => `\t${quote(entry.route.id)}: asRenderScreenSpec(${entry.renderName}),`)
+		.map((entry) => `\t${quote(entry.route.id)}: ${entry.renderName} as RenderScreenSpec,`)
 		.join("\n");
 
 	return `${imports.join("\n")}
@@ -189,7 +184,6 @@ import {
 \ttype ScreenRoutePatch as GenericScreenRoutePatch,
 \ttype ScreenRouteRegistry as GenericScreenRouteRegistry,
 } from "../scripts/registry";
-const asRenderScreenSpec = (spec: unknown) => spec as RenderScreenSpec;
 
 export type SDUIJsonValue =
 \t| string
@@ -255,8 +249,6 @@ ${renderItems}
 } as const satisfies Partial<Record<ScreenId, RenderScreenSpec>>;
 
 export const screenRenderRegistry = [
-\t...mbrRegistryEntries,
-\t...membershipRegistryEntries,
 ] as const;
 
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;

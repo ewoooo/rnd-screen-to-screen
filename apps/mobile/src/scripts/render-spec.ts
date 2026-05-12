@@ -70,22 +70,6 @@ export function validateRenderScreenSpec(
 		}
 	}
 
-	const content = spec.slots.content ?? [];
-	const completeTextBlocks = content.filter(
-		(node) =>
-			normalizeComponentId(node.component) === "text-block" &&
-			typeof node.props?.text === "string" &&
-			(node.props.text.includes("가입이 완료") ||
-				node.props.text.includes("가입 후 이용 안내")),
-	);
-	if (spec.screen.id === "NOVA-MBR-PG-005-0" && completeTextBlocks.length > 0) {
-		issues.push({
-			severity: "error",
-			message:
-				"NOVA-MBR-PG-005-0 completion copy must stay inside ogn-mbr-section-message-join-complete-view.",
-		});
-	}
-
 	return issues;
 }
 

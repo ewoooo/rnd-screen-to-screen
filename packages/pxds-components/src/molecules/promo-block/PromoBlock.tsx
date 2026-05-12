@@ -28,13 +28,13 @@ export function PromoBlock({ text, badge, action, mediaLabel }: Props) {
 		>
 			<Box
 				display="grid"
-				gap="group"
+				gap="var(--semantic-spacing-group)"
 				style={{
 					gridTemplateColumns: "1fr auto",
 					alignItems: "center",
 				}}
 			>
-				<VStack gap="inline" minWidth={0}>
+				<VStack gap="var(--semantic-spacing-inline)" minWidth={0}>
 					<ContentBadge size="small" color="accent" variant="outlined">
 						{badge}
 					</ContentBadge>

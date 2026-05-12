@@ -1,6 +1,6 @@
 # @pxds/pxds-components
 
-WDS component re-export, PXDS-owned atoms/molecules/domains, component vocabulary registry를 소유한다. Page/organism render-tree 계약은 앱이 소유하며, 이 패키지는 실제 인스턴스로 렌더링되는 atom/molecule/domain 컴포넌트에 집중한다.
+WDS component re-export, PXDS-owned atoms/molecules/domains, component vocabulary registry를 소유한다. Page/organism React DOM 조립은 앱이 소유하며, 이 패키지는 실제 인스턴스로 렌더링되는 atom/molecule/domain 컴포넌트에 집중한다.
 
 ## 책임
 
@@ -18,7 +18,7 @@ WDS component re-export, PXDS-owned atoms/molecules/domains, component vocabular
 - 자체 wrapper는 호출 시그니처 보존이나 PXDS 정책 추가가 있을 때만 둔다.
 - 반복되는 WDS 조합은 앱 로컬 shim 대신 이 패키지 `molecules`와 `@pxds/pxds-components/molecules` 공개 진입점으로 승격한다.
 - 전역 chrome/flow section은 domain이 아니라 `domains/shared/global`와 `@pxds/pxds-components/shared/global` 공개 진입점으로 둔다.
-- 실제 인스턴스로 재사용되는 모바일 화면 영역 컴포넌트는 이 패키지 `domains/<domain>`와 `@pxds/pxds-components/<domain>` 공개 진입점으로 승격한다. Page/OGN render-tree 계약은 컴포넌트 인스턴스가 아니므로 앱에 둔다.
+- 실제 인스턴스로 재사용되는 모바일 화면 영역 컴포넌트는 이 패키지 `domains/<domain>`와 `@pxds/pxds-components/<domain>` 공개 진입점으로 승격한다. Page/OGN React DOM 조립은 앱에 둔다.
 - domain 구현은 `@pxds/pxds-layout` primitives/app-screen을 의존할 수 있다.
 
 ## WDS prop 참고

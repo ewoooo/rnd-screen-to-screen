@@ -38,7 +38,7 @@ export function TextFieldList({
 	onChange,
 }: Props) {
 	return (
-		<VStack gap="block">
+		<VStack gap="var(--semantic-spacing-block)">
 			{fields.map((field) => {
 				const errorText = field.errorText ?? errors[field.id];
 

@@ -2,7 +2,6 @@ import { Button } from "@pxds/pxds-components/core";
 
 import { Box, VStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
-import { semanticSurface } from "@pxds/pxds-tokens";
 
 type Props = {
 	eyebrow: string;
@@ -20,11 +19,11 @@ export function FlowContinueBar({
 	const blocked = state === "blocked";
 	return (
 		<Box
-			px="stack"
-			py="stack"
-			background={semanticSurface.page.normal}
+			px="var(--semantic-spacing-stack)"
+			py="var(--semantic-spacing-stack)"
+			background="var(--semantic-surface-page-normal)"
 		>
-			<VStack gap="stack">
+			<VStack gap="var(--semantic-spacing-stack)">
 				<TextBlock
 					variant="assistive"
 					text={eyebrow}

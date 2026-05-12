@@ -72,8 +72,8 @@ export function TuHero({
 		<ContentSection>
 			<VStack
 				as="header"
-				gap="inline"
-				pb="section"
+				gap="var(--semantic-spacing-inline)"
+				pb="var(--semantic-spacing-section)"
 				style={style}
 			>
 				{eyebrow ? <TuEyebrow>{eyebrow}</TuEyebrow> : null}
@@ -95,8 +95,8 @@ export function TuSection({
 }) {
 	return (
 		<ContentSection>
-			<VStack gap="group" pb="section">
-				<HStack align="baseline" justify="space-between" gap="inline">
+			<VStack gap="var(--semantic-spacing-group)" pb="var(--semantic-spacing-section)">
+				<HStack align="baseline" justify="space-between" gap="var(--semantic-spacing-inline)">
 					<TextBlock variant="cardTitle" text={title} />
 					{more ? (
 						<TextBlock
@@ -122,7 +122,7 @@ function TuAmount({
 	accent?: boolean;
 }) {
 	return (
-		<HStack as="span" align="baseline" gap="row">
+		<HStack as="span" align="baseline" gap="var(--semantic-spacing-row)">
 			<TextBlock
 				variant="listTitle"
 				text={String(num)}
@@ -151,7 +151,7 @@ export function TuCarousel({ items }: { items: TuCardItem[] }) {
 	return (
 		<ContentSection inset="bleed">
 			<HStack
-				gap="stack"
+				gap="var(--semantic-spacing-stack)"
 				style={{
 					overflowX: "auto",
 					padding: "4px var(--content-inline-inset, var(--spacing-12))",
@@ -168,7 +168,7 @@ export function TuCarousel({ items }: { items: TuCardItem[] }) {
 					>
 						<Placeholder w="100%" h={132} label={`${item.rank}`} />
 						<CardContent gap="var(--spacing-12)">
-							<VStack gap="row">
+							<VStack gap="var(--semantic-spacing-row)">
 								<TextBlock
 									variant="listTitle"
 									text={item.title}
@@ -219,7 +219,7 @@ export function TuList({ items }: { items: TuRowItem[] }) {
 export function TuPromo({ title, sub }: { title: string; sub: string }) {
 	return (
 		<ContentSection>
-			<Box pb="section">
+			<Box pb="var(--semantic-spacing-section)">
 				<PromoBlock
 					badge="혜택"
 					text={title}
@@ -234,7 +234,7 @@ export function TuPromo({ title, sub }: { title: string; sub: string }) {
 export function TuNotice({ children }: { children: ReactNode }) {
 	return (
 		<ContentSection>
-			<Box pb="section">
+			<Box pb="var(--semantic-spacing-section)">
 				<NoticeBlock text={String(children)} tone="info" />
 			</Box>
 		</ContentSection>
@@ -257,7 +257,7 @@ export function PermissionIntro({
 }) {
 	return (
 		<ContentSection>
-			<VStack as="header" gap="inline" pb="section">
+			<VStack as="header" gap="var(--semantic-spacing-inline)" pb="var(--semantic-spacing-section)">
 				<TuDisplay size="lg">{title}</TuDisplay>
 				<TuSub>{description}</TuSub>
 			</VStack>
@@ -283,7 +283,7 @@ export function PermissionList({
 
 	return (
 		<ContentSection>
-			<VStack gap="row">
+			<VStack gap="var(--semantic-spacing-row)">
 				<TextBlock variant="listTitle" text={label} />
 				<SectionCard>
 					<InfoList items={listItems} />

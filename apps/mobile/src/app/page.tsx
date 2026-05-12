@@ -26,7 +26,7 @@ const sections = [
 
 export default function Home() {
   return (
-    <VStack as="main" p="block" gap="block">
+    <VStack as="main" p="var(--semantic-spacing-block)" gap="var(--semantic-spacing-block)">
       <Box>
         <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
           PXDX · mobile
@@ -44,7 +44,7 @@ export default function Home() {
       </Box>
 
       {sections.map((section) => (
-        <VStack as="section" key={section.id} gap="inline">
+        <VStack as="section" key={section.id} gap="var(--semantic-spacing-inline)">
           <h2
             style={{
               fontSize: 12,
@@ -57,7 +57,7 @@ export default function Home() {
           >
             {section.label}
           </h2>
-          <VStack as="nav" gap="inline">
+          <VStack as="nav" gap="var(--semantic-spacing-inline)">
             {section.routes.map((s) => (
               <Link
                 key={s.id}
@@ -72,7 +72,7 @@ export default function Home() {
                   fontWeight: 500,
                 }}
               >
-                <HStack justify="space-between" gap="stack">
+                <HStack justify="space-between" gap="var(--semantic-spacing-stack)">
                   <span>{s.label}</span>
                   <span
                     style={{

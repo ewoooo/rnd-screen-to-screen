@@ -9,7 +9,7 @@
   "group": "membership",
   "createdAt": "2026-05-12",
   "sourceRefs": [
-    "LEGACY-MBR-PG-004-0/render-tree.ts"
+    "LEGACY-MBR-PG-004-0/page.tsx"
   ],
   "useCaseIds": [
     "UC-MBR-LEAVE"

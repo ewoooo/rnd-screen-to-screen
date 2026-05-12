@@ -21,7 +21,7 @@ export function AiAnnotation({ icon, text, multiline }: Props) {
 	return (
 		<HStack
 			align={multiline ? "flex-start" : "center"}
-			gap="row"
+			gap="var(--semantic-spacing-row)"
 		>
 			{icon}
 			{multiline ? (

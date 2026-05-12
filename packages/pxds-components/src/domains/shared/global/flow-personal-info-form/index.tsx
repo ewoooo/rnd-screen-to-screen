@@ -46,7 +46,7 @@ export function FlowPersonalInfoForm({
 }: Props) {
 	return (
 		<ContentSection>
-			<VStack gap="block">
+			<VStack gap="var(--semantic-spacing-block)">
 				{fields.map((field) => (
 					<Fragment key={field.id}>
 						<FormField

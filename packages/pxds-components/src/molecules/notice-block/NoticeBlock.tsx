@@ -64,7 +64,7 @@ export function NoticeBlock({ badge, text, action, tone = "info" }: Props) {
 				boxShadow: "none",
 			}}
 		>
-			<VStack gap="inline">
+			<VStack gap="var(--semantic-spacing-inline)">
 				{badge ? (
 					<ContentBadge size="small" color={toneStyle.badgeColor} variant="outlined">
 						{badge}

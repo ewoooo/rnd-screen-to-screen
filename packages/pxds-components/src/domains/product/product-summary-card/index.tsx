@@ -41,8 +41,8 @@ export function ProductSummaryCard({
 				mediaAlt={imageLabel}
 				mediaBadge={<MediaBadge text={discount} />}
 			>
-				<VStack gap="row">
-					<HStack gap="inline" wrap align="baseline">
+				<VStack gap="var(--semantic-spacing-row)">
+					<HStack gap="var(--semantic-spacing-inline)" wrap align="baseline">
 						<TextBlock
 							variant={textPolicy?.price?.variant ?? "contentTitle"}
 							text={price}
@@ -56,7 +56,7 @@ export function ProductSummaryCard({
 							style={{ textDecoration: "line-through" }}
 						/>
 					</HStack>
-					<HStack align="center" gap="inline">
+					<HStack align="center" gap="var(--semantic-spacing-inline)">
 						<TextBlock
 							variant="rating"
 							text={`★ ${rating}`}

@@ -1,4 +1,4 @@
-/* Generated from @pxds/pxds-tokens/registry/wds-token-registry.json. */
+/* Generated from @pxds/pxds-tokens/registry/tokens.original.json. */
 /* Do not edit token values here by hand. */
 
 :root {
@@ -513,7 +513,14 @@
 	--pxds-surface-offering-background: rgba(253, 253, 254, 0.5);
 	--pxds-surface-offering-border: rgba(255, 255, 255, 0.5);
 	--pxds-surface-badge-background: #f4f5fa;
+	--pxds-surface-canvas: var(--atomic-coolNeutral-98);
 	--pxds-bottom-sheet-backdrop: rgba(0, 0, 0, 0.42);
+	--pxds-device-mobile-view-width: 375px;
+	--pxds-device-mobile-view-height: 812px;
+	--pxds-device-mobile-view-radius: 28px;
+	--pxds-device-mobile-view-background: var(--atomic-common-100);
+	--pxds-device-mobile-view-border-color: var(--atomic-coolNeutral-96);
+	--pxds-device-mobile-view-shadow: 0 8px 24px rgb(15 23 42 / 8%);
 	--pxds-typography-status-bar-font-size: 15px;
 	--pxds-typography-placeholder-icon-font-size: 10px;
 	--pxds-typography-stat-badge-font-size: 11px;
@@ -524,15 +531,6 @@
 	--pxds-typography-pill-chip-font-weight: 600;
 	--pxds-typography-pill-chip-letter-spacing: -0.6px;
 	--pxds-typography-pill-chip-line-height: 1.3;
-
-	/* preview/device */
-	--pxds-device-mobile-view-width: 375px;
-	--pxds-device-mobile-view-height: 812px;
-	--pxds-device-mobile-view-radius: 28px;
-	--pxds-device-mobile-view-background: #ffffff;
-	--pxds-device-mobile-view-border-color: #e1e2e4;
-	--pxds-device-mobile-view-shadow: 0 8px 24px rgb(15 23 42 / 8%);
-	--pxds-surface-canvas: #f4f4f5;
 }
 
 /* typography utility fallback. Prefer WDS Typography when possible. */

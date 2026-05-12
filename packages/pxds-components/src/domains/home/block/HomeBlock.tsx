@@ -93,7 +93,7 @@ function Root({ children, style }: RootProps) {
 
 function Header({ label, title, sub, gap, children }: HeaderProps) {
 	return (
-		<HStack align="center" justify="space-between" gap="inline">
+		<HStack align="center" justify="space-between" gap="var(--semantic-spacing-inline)">
 			<HomeBlockHeader label={label} title={title} sub={sub} gap={gap} />
 			{children}
 		</HStack>
@@ -134,7 +134,7 @@ export function HomeActionPairBlock({ left, right, style }: ActionPairProps) {
 			}}
 		>
 			<L1Slot {...left} />
-			<Divider orientation="vertical" inset="block" />
+			<Divider orientation="vertical" inset="var(--semantic-spacing-block)" />
 			<L1Slot {...right} />
 		</HomeBlock.Root>
 	);
@@ -146,7 +146,7 @@ function L1Slot({ icon, label }: Slot) {
 			align="center"
 			justify="center"
 			grow={1}
-			gap="row"
+			gap="var(--semantic-spacing-row)"
 		>
 			{icon}
 			<TextBlock
@@ -173,7 +173,7 @@ export function HomeInfoBlock({ label, title, badge, body, aside, style }: InfoP
 					...style,
 				}}
 			>
-				<VStack gap="row">
+				<VStack gap="var(--semantic-spacing-row)">
 					<TextBlock
 						variant="sectionLabel"
 						text={label}
@@ -181,7 +181,7 @@ export function HomeInfoBlock({ label, title, badge, body, aside, style }: InfoP
 						maxLines={1}
 						overflow="truncate"
 					/>
-					<HStack align="center" gap="inline">
+					<HStack align="center" gap="var(--semantic-spacing-inline)">
 						{title !== undefined ? (
 							<TextBlock
 								variant="contentTitle"
@@ -213,7 +213,7 @@ export function HomeHeroBlock({ label, title, ai, cta, style }: HeroProps) {
 				...style,
 			}}
 		>
-			<VStack gap="group" width="100%">
+			<VStack gap="var(--semantic-spacing-group)" width="100%">
 				<HomeBlockHeader label={label} title={title} gap={8} />
 				{ai ? <AiAnnotation icon={ai.icon} text={ai.text} /> : null}
 			</VStack>

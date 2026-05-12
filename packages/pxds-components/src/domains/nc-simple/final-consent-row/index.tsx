@@ -24,7 +24,7 @@ export function FinalConsentRow({
 		<ContentSection>
 			<Card>
 				<CardContent>
-					<HStack gap="row" align="center">
+					<HStack gap="var(--semantic-spacing-row)" align="center">
 						<Checkbox
 							checked={checked}
 							defaultChecked={defaultChecked}

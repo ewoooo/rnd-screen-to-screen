@@ -1537,12 +1537,44 @@
 					"$type": "color",
 					"$value": "#f4f5fa"
 				}
+			},
+			"canvas": {
+				"$type": "color",
+				"$value": "{foundation.atomic.coolNeutral.98}"
 			}
 		},
 		"bottomSheet": {
 			"backdrop": {
 				"$type": "color",
 				"$value": "rgba(0, 0, 0, 0.42)"
+			}
+		},
+		"device": {
+			"mobileView": {
+				"width": {
+					"$type": "sizing",
+					"$value": "375px"
+				},
+				"height": {
+					"$type": "sizing",
+					"$value": "812px"
+				},
+				"radius": {
+					"$type": "borderRadius",
+					"$value": "28px"
+				},
+				"background": {
+					"$type": "color",
+					"$value": "{foundation.atomic.common.100}"
+				},
+				"borderColor": {
+					"$type": "color",
+					"$value": "{foundation.atomic.coolNeutral.96}"
+				},
+				"shadow": {
+					"$type": "boxShadow",
+					"$value": "0 8px 24px rgb(15 23 42 / 8%)"
+				}
 			}
 		},
 		"typography": {

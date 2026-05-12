@@ -4,7 +4,7 @@
 		"updated_at": "2026-04-24",
 		"read_order_hint": [
 			"wds-component-registry.json",
-			"../packages/pxds-tokens/registry/wds-token-registry.json",
+			"../packages/pxds-tokens/registry/tokens.original.json",
 			"../packages/pxds-icons/registry/wds-icon-registry.json",
 			"wds-component-mapping-registry.json"
 		]
@@ -23,7 +23,7 @@
 			"package": "@pxds/pxds-icons"
 		},
 		"tokens": {
-			"file": "../packages/pxds-tokens/registry/wds-token-registry.json",
+			"file": "../packages/pxds-tokens/registry/tokens.original.json",
 			"purpose": "PXDS 디자인 토큰 (WDS absorbed atomic/semantic color, spacing, typography, breakpoint, opacity, z-index, project extension)",
 			"use_when": "색·간격·타이포를 고를 때. semantic을 먼저 검색하고, 없으면 atomic에서 최근접 tone을 선택",
 			"package": "@pxds/pxds-tokens"

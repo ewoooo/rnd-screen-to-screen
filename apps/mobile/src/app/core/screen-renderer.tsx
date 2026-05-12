@@ -18,7 +18,6 @@ import type {
 	RenderSpecNode,
 } from "@/scripts/render-spec";
 import { normalizeComponentId } from "@/scripts/render-spec";
-import { mbrRegistryEntries } from "@/organisms/mbr/module.registry";
 import type { RenderableRegistryEntry } from "@/type/organism-registry";
 
 type Props = {
@@ -26,10 +25,10 @@ type Props = {
 };
 
 const componentById = new Map(
-	[
-		...(componentRegistry as readonly RenderableRegistryEntry[]),
-		...(mbrRegistryEntries as readonly RenderableRegistryEntry[]),
-	].map((entry) => [normalizeComponentId(entry.id), entry]),
+	(componentRegistry as readonly RenderableRegistryEntry[]).map((entry) => [
+		normalizeComponentId(entry.id),
+		entry,
+	]),
 );
 
 export function RenderScreen({ spec }: Props) {
@@ -103,11 +102,11 @@ function renderTreeNode(node: RenderSpecNode, children: ReactNode) {
 				rail={node.section.rail === "none" ? undefined : node.section.rail}
 				measure={node.section.measure}
 			>
-				<VStack gap="block">{children}</VStack>
+				<VStack gap="var(--semantic-spacing-block)">{children}</VStack>
 			</ContentRail>
 		</ContentSection>
 	) : (
-		<VStack gap="block" style={{ width: "100%" }}>
+		<VStack gap="var(--semantic-spacing-block)" style={{ width: "100%" }}>
 			{children}
 		</VStack>
 	);

@@ -15,9 +15,9 @@ type Props = {
 export function FlowHero({ titleLines, description }: Props) {
 	return (
 		<ContentSection>
-			<Box pt="group" pb="section">
-				<VStack gap="stack">
-					<VStack gap="inline">
+			<Box pt="var(--semantic-spacing-group)" pb="var(--semantic-spacing-section)">
+				<VStack gap="var(--semantic-spacing-stack)">
+					<VStack gap="var(--semantic-spacing-inline)">
 						<TextBlock variant="displayTitle" lines={titleLines} />
 					</VStack>
 					<ContentRail rail="measure" measure="body">

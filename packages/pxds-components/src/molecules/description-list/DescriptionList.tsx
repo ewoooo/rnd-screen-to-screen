@@ -20,7 +20,7 @@ type Props = {
 
 export function DescriptionList({ label, items, onActionClick }: Props) {
 	return (
-		<VStack gap="stack">
+		<VStack gap="var(--semantic-spacing-stack)">
 			{label ? (
 				<TextBlock
 					variant="sectionLabel"
@@ -32,12 +32,12 @@ export function DescriptionList({ label, items, onActionClick }: Props) {
 				{items.map((item, index) => (
 					<VStack key={item.id}>
 						<HStack
-							gap="row"
+							gap="var(--semantic-spacing-row)"
 							align="center"
 							justify="space-between"
-							py="stack"
+							py="var(--semantic-spacing-stack)"
 						>
-							<VStack gap="inline">
+							<VStack gap="var(--semantic-spacing-inline)">
 								<TextBlock
 									variant="caption"
 									color="semantic.label.alternative"

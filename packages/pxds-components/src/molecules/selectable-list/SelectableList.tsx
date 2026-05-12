@@ -107,7 +107,7 @@ export function SelectableList(props: Props) {
 							}
 							trailingContent={
 								<ListCellContent variant="custom">
-									<HStack align="center" gap="inline">
+									<HStack align="center" gap="var(--semantic-spacing-inline)">
 										{item.trailingLabel ? (
 											<Chip
 												size="small"
@@ -196,7 +196,7 @@ export function SelectableList(props: Props) {
 							}
 							trailingContent={
 								<ListCellContent variant="custom">
-									<HStack align="center" gap="inline">
+									<HStack align="center" gap="var(--semantic-spacing-inline)">
 										{item.trailingLabel ? (
 											<Chip
 												size="small"

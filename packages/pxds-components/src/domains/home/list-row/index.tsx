@@ -23,16 +23,16 @@ export function ListRow({ thumb, title, sub, pill, trailing }: Props) {
 		<HStack
 			align="center"
 			width="100%"
-			gap="stack"
+			gap="var(--semantic-spacing-stack)"
 		>
 			<HStack
 				align="center"
 				grow={1}
 				minWidth={0}
-				gap="stack"
+				gap="var(--semantic-spacing-stack)"
 			>
 				<Placeholder w={thumb.w} h={thumb.h} label={thumb.label} />
-				<VStack grow={1} minWidth={0} gap="row">
+				<VStack grow={1} minWidth={0} gap="var(--semantic-spacing-row)">
 					<TextBlock
 						variant="listTitle"
 						text={title}

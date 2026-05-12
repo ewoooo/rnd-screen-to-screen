@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, "..");
-const inputPath = path.join(packageRoot, "registry", "wds-token-registry.json");
+const inputPath = path.join(packageRoot, "registry", "tokens.original.json");
 const outputPath = inputPath;
 
 const legacy = JSON.parse(fs.readFileSync(inputPath, "utf8"));
@@ -179,7 +179,7 @@ for (const [name, w] of Object.entries(typo.weights)) {
 	};
 }
 
-// semantic.spacing (NEW — PXDS intent-based spacing previously hardcoded in src/spacing.ts)
+// semantic.spacing (PXDS intent-based spacing)
 semantic.spacing = {
 	row: { $type: "spacing", $value: "{foundation.spacing.4}" },
 	inline: { $type: "spacing", $value: "{foundation.spacing.8}" },

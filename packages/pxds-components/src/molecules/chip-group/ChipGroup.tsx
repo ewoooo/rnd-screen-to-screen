@@ -23,7 +23,7 @@ export function ChipGroup({
 }: Props) {
 	const selectedSet = new Set(selectedIds ?? []);
 	return (
-		<Flex wrap gap="inline">
+		<Flex wrap gap="var(--semantic-spacing-inline)">
 			{items.map((raw) => {
 				const { id, label } = normalize(raw);
 				return (

@@ -85,7 +85,7 @@ export function ConsentList({
 				</VStack>
 			))}
 			{requiredUnchecked.length > 0 ? (
-				<VStack pt="inline">
+				<VStack pt="var(--semantic-spacing-inline)">
 					<TextBlock
 						variant="assistive"
 						text={`${requiredUnchecked.length}개의 필수 약관 동의가 필요합니다.`}
@@ -166,7 +166,7 @@ function ConsentRow({
 	return (
 		<HStack
 			align="center"
-			gap="stack"
+			gap="var(--semantic-spacing-stack)"
 			style={{
 				minHeight: emphasis ? 60 : 64,
 			}}
@@ -176,7 +176,7 @@ function ConsentRow({
 				invalid={invalid}
 				onCheckedChange={onCheckedChange}
 			/>
-			<VStack minWidth={0} gap="row">
+			<VStack minWidth={0} gap="var(--semantic-spacing-row)">
 				<TextBlock
 					variant={emphasis ? "cardTitle" : "listTitle"}
 					text={title}

@@ -45,7 +45,7 @@ export function SummaryCard({
 		>
 			<MediaBlock alt={mediaAlt} ratio="1:1" badge={mediaBadge} />
 			<CardContent gap="var(--spacing-12)">
-				<VStack gap="row">
+				<VStack gap="var(--semantic-spacing-row)">
 					<TextBlock
 						variant={labelPolicy?.variant ?? "meta"}
 						text={String(label)}

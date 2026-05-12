@@ -42,9 +42,9 @@ export function StickyActionBar({
 				borderTop: "1px solid var(--semantic-line-solid-alternative)",
 			}}
 		>
-			<VStack gap="stack">
-				<HStack gap="stack" justify="space-between" align="center">
-					<VStack minWidth={0} gap="row">
+			<VStack gap="var(--semantic-spacing-stack)">
+				<HStack gap="var(--semantic-spacing-stack)" justify="space-between" align="center">
+					<VStack minWidth={0} gap="var(--semantic-spacing-row)">
 						<TextBlock
 							variant={textPolicy?.eyebrow?.variant ?? "assistive"}
 							text={eyebrow}
@@ -67,7 +67,7 @@ export function StickyActionBar({
 				</HStack>
 				<Box
 					display="grid"
-					gap="inline"
+					gap="var(--semantic-spacing-inline)"
 					style={{ gridTemplateColumns: "96px 1fr" }}
 				>
 					<Button size="large" variant="outlined" color="assistive" fullWidth>

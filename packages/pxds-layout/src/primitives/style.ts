@@ -1,15 +1,14 @@
 import type { CSSProperties } from "react";
-import { type SpacingToken, spacingVar } from "@pxds/pxds-tokens";
 
 export type SpacingProps = {
-	p?: SpacingToken;
-	px?: SpacingToken;
-	py?: SpacingToken;
-	pt?: SpacingToken;
-	pr?: SpacingToken;
-	pb?: SpacingToken;
-	pl?: SpacingToken;
-	gap?: SpacingToken;
+	p?: CSSProperties["padding"];
+	px?: CSSProperties["paddingInline"];
+	py?: CSSProperties["paddingBlock"];
+	pt?: CSSProperties["paddingTop"];
+	pr?: CSSProperties["paddingRight"];
+	pb?: CSSProperties["paddingBottom"];
+	pl?: CSSProperties["paddingLeft"];
+	gap?: CSSProperties["gap"];
 };
 
 export type FlexShorthandProps = {
@@ -62,20 +61,20 @@ export type CommonLayoutProps = {
 
 export function spacingStyle(p: SpacingProps): CSSProperties {
 	const s: CSSProperties = {};
-	if (p.p) s.padding = spacingVar(p.p);
+	if (p.p) s.padding = p.p;
 	if (p.px) {
-		s.paddingLeft = spacingVar(p.px);
-		s.paddingRight = spacingVar(p.px);
+		s.paddingLeft = p.px;
+		s.paddingRight = p.px;
 	}
 	if (p.py) {
-		s.paddingTop = spacingVar(p.py);
-		s.paddingBottom = spacingVar(p.py);
+		s.paddingTop = p.py;
+		s.paddingBottom = p.py;
 	}
-	if (p.pt) s.paddingTop = spacingVar(p.pt);
-	if (p.pr) s.paddingRight = spacingVar(p.pr);
-	if (p.pb) s.paddingBottom = spacingVar(p.pb);
-	if (p.pl) s.paddingLeft = spacingVar(p.pl);
-	if (p.gap) s.gap = spacingVar(p.gap);
+	if (p.pt) s.paddingTop = p.pt;
+	if (p.pr) s.paddingRight = p.pr;
+	if (p.pb) s.paddingBottom = p.pb;
+	if (p.pl) s.paddingLeft = p.pl;
+	if (p.gap) s.gap = p.gap;
 	return s;
 }
 

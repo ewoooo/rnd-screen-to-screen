@@ -13,7 +13,7 @@ type Props = {
  */
 export function MyEditButton({ children = "MY 편집", onClick }: Props) {
 	return (
-		<HStack justify="center" pt="inset">
+		<HStack justify="center" pt="var(--semantic-spacing-inset)">
 			<Button size="small" variant="outlined" color="assistive" onClick={onClick}>
 				{children}
 			</Button>

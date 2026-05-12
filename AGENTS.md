@@ -38,11 +38,11 @@
 
 ## 패키지 책임
 
-- `apps/mobile` — 실제 모바일 화면 route와 WDS/PXDS 화면 조립. 앱은 인스턴스 컴포넌트를 소유하지 않고, page와 organism처럼 render-tree로 표현되는 화면 계약을 소유한다. 현재 reference는 MBR(`NOVA-MBR-PG-*`, `src/organisms/mbr`)이며, membership legacy(`LEGACY-MBR-PG-*`, `src/organisms/membership`)는 보존된 비교군이다. 그 외 legacy route는 삭제 대상이다. 화면/OGN registry/spec를 `@screen/mobile/screens`로 재노출한다.
+- `apps/mobile` — 실제 모바일 화면 route와 WDS/PXDS 화면 조립. MBR(`NOVA-MBR-PG-*`, `src/organisms/mbr`)과 membership legacy(`LEGACY-MBR-PG-*`, `src/organisms/membership`) 모두 page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. 그 외 legacy route는 삭제 대상이다. 화면 route/spec를 `@screen/mobile/screens`로 재노출한다.
 - `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component/policy registry 탐색, Figma export 요청, spec 조회 UI, iframe preview helper를 소유한다.
 - `@pxds/pxds-tokens` — 런타임 시각 token 값의 SSOT. WDS theme 값을 흡수하고 CSS/token export를 제공한다.
 - `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry.
-- `@pxds/pxds-components` — WDS core re-export, atoms/typography, atoms/feedback, molecules, shared/global/domain 인스턴스 컴포넌트, 구현 세부 없는 component vocabulary registry. Page/OGN render-tree 계약은 `apps/mobile`이 소유한다.
+- `@pxds/pxds-components` — WDS core re-export, atoms/typography, atoms/feedback, molecules, shared/global/domain 인스턴스 컴포넌트, 구현 세부 없는 component vocabulary registry. Current page/OGN은 `apps/mobile`의 React DOM 조립이 SOT다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge.
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring.
 - `@policy/core` — Policy / UseCase 순수 문서 도메인. Screen을 모른다.

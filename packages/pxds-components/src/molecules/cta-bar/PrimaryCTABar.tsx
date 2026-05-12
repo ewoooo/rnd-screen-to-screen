@@ -2,7 +2,6 @@ import { Button } from "@pxds/pxds-components/core";
 
 import { Box } from "@pxds/pxds-layout/primitives";
 import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
-import { semanticSurface } from "@pxds/pxds-tokens";
 import {
 	renderBoolean,
 	renderString,
@@ -57,12 +56,12 @@ export function PrimaryCTABar({
 				},
 			})}
 			display="grid"
-			gap="inline"
+			gap="var(--semantic-spacing-inline)"
 			style={{
 				padding: hasTertiary
 					? "var(--spacing-12) var(--spacing-16) var(--spacing-12)"
 					: "var(--spacing-12) var(--spacing-16) var(--spacing-20)",
-				background: semanticSurface.page.normal,
+				background: "var(--semantic-surface-page-normal)",
 				gridTemplateColumns: hasSecondary ? "1fr 2fr" : "1fr",
 			}}
 		>

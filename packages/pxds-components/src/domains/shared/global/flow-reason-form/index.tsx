@@ -44,7 +44,7 @@ export function FlowReasonForm({
 	return (
 		<>
 			<ListContents>
-				<VStack gap="block">
+				<VStack gap="var(--semantic-spacing-block)">
 					<SelectableList
 						items={items}
 						value={value}

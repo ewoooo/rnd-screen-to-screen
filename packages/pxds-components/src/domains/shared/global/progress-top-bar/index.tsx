@@ -65,8 +65,8 @@ export function ProgressTopBar({ title, leading = "back", progress }: Props) {
       </TopNavigation>
       {progress ? (
         showProgressLabel ? (
-          <Box px="inset" pb="stack">
-            <VStack gap="row">
+          <Box px="var(--semantic-spacing-inset)" pb="var(--semantic-spacing-stack)">
+            <VStack gap="var(--semantic-spacing-row)">
               <TextBlock
                 variant="sectionLabel"
                 text={progress.label}

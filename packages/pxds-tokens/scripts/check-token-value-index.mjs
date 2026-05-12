@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 
 import { generate, parse } from "css-tree";
 
-const REGISTRY_FILE = new URL("../registry/wds-token-registry.json", import.meta.url);
+const REGISTRY_FILE = new URL("../registry/tokens.original.json", import.meta.url);
 const registry = JSON.parse(await readFile(REGISTRY_FILE, "utf8"));
 const tokens = collectTokens(registry);
 const valueIndex = new Map();

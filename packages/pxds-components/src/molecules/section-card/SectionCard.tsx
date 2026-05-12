@@ -48,7 +48,7 @@ export function SectionCard({
 		>
 			<CardContent gap={contentGap}>
 				{hasHeader ? (
-					<VStack gap="row">
+					<VStack gap="var(--semantic-spacing-row)">
 						{label ? (
 							<CardTitle
 								variant="caption1"
@@ -59,7 +59,7 @@ export function SectionCard({
 							</CardTitle>
 						) : null}
 						{title || trailingNode ? (
-							<HStack align="baseline" justify="space-between" gap="stack">
+							<HStack align="baseline" justify="space-between" gap="var(--semantic-spacing-stack)">
 								{title ? (
 									<CardTitle variant="headline1" weight="bold">
 										{title}

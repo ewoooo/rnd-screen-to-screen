@@ -19,7 +19,7 @@ for (const [screenId, spec] of entries) {
 	issues.push(
 		...validateRenderScreenSpec(spec, renderRegistry).map((issue) => ({
 			...issue,
-			file: `src/app/${screenId}/render-tree.ts`,
+			file: `src/app/${screenId}/page.tsx`,
 		})),
 	);
 }

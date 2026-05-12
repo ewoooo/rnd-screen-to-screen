@@ -11,7 +11,7 @@ import {
 	useFigmaPluginExport,
 	useTokensStudioExport,
 } from "@pxds/pxds-figma";
-import tokenRegistry from "@pxds/pxds-tokens/registry/wds-token-registry.json";
+import tokenRegistry from "@pxds/pxds-tokens/registry/tokens.original.json";
 import { createPxdsTokensStudioJson } from "@pxds/pxds-tokens/tokens-studio";
 
 import { useScreenRegistry } from "@/contexts/screen-registry-context";
@@ -30,7 +30,14 @@ import { ActionRailButton } from "./ActionRailButton";
 const figmaTokenTree = createPxdsFigmaTokenTree(tokenRegistry);
 const tokensStudioJson = createPxdsTokensStudioJson(tokenRegistry);
 type ScreenExportComponentSpecEntry = (typeof componentFigmaSpecRegistry)[number];
-const screenFigmaSpecRegistry = screenRenderRegistry.map((entry) => ({
+type ScreenRenderRegistryEntry = {
+	id: string;
+	exportMode: ScreenExportComponentSpecEntry["exportMode"];
+	render?: () => ScreenExportComponentSpecEntry["render"];
+};
+const screenFigmaSpecRegistry = (
+	screenRenderRegistry as readonly ScreenRenderRegistryEntry[]
+).map((entry) => ({
 	componentId: entry.id,
 	exportMode: entry.exportMode,
 	render: entry.render?.(),

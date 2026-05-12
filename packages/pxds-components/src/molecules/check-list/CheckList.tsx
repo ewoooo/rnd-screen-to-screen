@@ -51,13 +51,13 @@ export function CheckList({ items, onActionClick, onStateChange }: Props) {
 		<VStack>
 			{items.map((item, index) => (
 				<VStack key={item.id}>
-					<HStack gap="row" align="flex-start" justify="space-between">
-						<HStack gap="row" align="flex-start">
+					<HStack gap="var(--semantic-spacing-row)" align="flex-start" justify="space-between">
+						<HStack gap="var(--semantic-spacing-row)" align="flex-start">
 							<Checkbox
 								checked={Boolean(checked[item.id])}
 								onCheckedChange={(next) => setItem(item.id, next)}
 							/>
-							<VStack gap="inline">
+							<VStack gap="var(--semantic-spacing-inline)">
 								<TextBlock variant="body" text={item.title} />
 								<TextBlock
 									variant="caption"

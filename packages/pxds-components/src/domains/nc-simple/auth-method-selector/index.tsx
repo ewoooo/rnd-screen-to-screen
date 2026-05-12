@@ -61,7 +61,7 @@ export function AuthMethodSelector({
 
 	return (
 		<ContentSection inset="bleed">
-			<VStack gap="block">
+			<VStack gap="var(--semantic-spacing-block)">
 				<ContentRail rail="inset">
 					<FormField label={methodLabel}>
 						<></>

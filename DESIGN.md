@@ -150,7 +150,7 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 
 ## 시각 토큰 — runtime SSOT
 
-`@pxds/pxds-tokens`가 컴포넌트 스타일링에 쓰이는 런타임 시각 토큰 값의 SSOT다. 원천은 `@pxds/pxds-tokens/registry/wds-token-registry.json`이며, CSS 소비 진입점은 `@pxds/pxds-tokens/tokens.css`다. 이 문서는 토큰 경로와 용도만 기록하고 raw 값은 베이크하지 않는다.
+`@pxds/pxds-tokens`가 컴포넌트 스타일링에 쓰이는 런타임 시각 토큰 값의 SSOT다. 원천은 `@pxds/pxds-tokens/registry/tokens.original.json`이며, CSS 소비 진입점은 `@pxds/pxds-tokens/tokens.css`다. 이 문서는 토큰 경로와 용도만 기록하고 raw 값은 베이크하지 않는다.
 
 | 토큰 경로 / alias | CSS var | 용도 |
 |---|---|---|
@@ -162,7 +162,9 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 | `project.surface.card.*` | `--pxds-surface-card-*` | home card 표면 |
 | `project.surface.offering.*` | `--pxds-surface-offering-*` | offering banner 표면 |
 | `project.surface.badge.background` | `--pxds-surface-badge-background` | StatBadge / PillChip 표면 |
+| `project.surface.canvas` | `--pxds-surface-canvas` | preview canvas 표면 |
 | `project.bottomSheet.backdrop` | `--pxds-bottom-sheet-backdrop` | BottomSheet dimmer |
+| `project.device.mobileView.*` | `--pxds-device-mobile-view-*` | mobile viewport preview frame |
 | `project.typography.statusBar.fontSize` | `--pxds-typography-status-bar-font-size` | StatusBar escape typography |
 | `project.typography.placeholderIcon.fontSize` | `--pxds-typography-placeholder-icon-font-size` | Placeholder icon escape typography |
 
@@ -172,7 +174,7 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 
 `@pxds/pxds-layout/primitives`. Seed Design React의 `Box`/`Flex`/`HStack`/`VStack` API를 차용하되, **gap·padding 계열 prop은 semantic spacing 토큰만 받게** 좁힘. 화면 코드에서 raw px·`var(--spacing-N)` 직접 입력을 줄여 spacing strain 신호를 선명하게 한다.
 
-`Divider`는 `@pxds/pxds-components/atoms/feedback`에 위치 — `orientation`/`thickness`/`inset` prop. `inset`은 `SpacingToken`을 받아 양 끝 margin 적용.
+`Divider`는 `@pxds/pxds-components/atoms/feedback`에 위치 — `orientation`/`thickness`/`inset` prop. `inset`은 CSS var 값을 받아 양 끝 margin 적용.
 
 ### spacing 토큰 — 7 슬롯 (의미축)
 
@@ -186,12 +188,12 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 | `block` | 24 | 블록과 블록 사이 |
 | `section` | 32 | 큰 섹션 분할 |
 
-수치 SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`의 `spacing` tier. 이 표는 의미 alias이므로 px 값이 변하면 registry를 먼저 갱신하고 generated CSS와 `packages/pxds-tokens/src/spacing.ts` alias를 동기화한다.
+수치 SSOT는 `@pxds/pxds-tokens/registry/tokens.original.json`의 `spacing` tier. 이 표는 의미 alias이므로 px 값이 변하면 registry를 먼저 갱신하고 generated CSS를 동기화한다.
 
 ### 컴포넌트 prop
 
 공통 (`Box` 포함 전부):
-- 간격: `p` / `px` / `py` / `pt` / `pr` / `pb` / `pl` / `gap` — 모두 `SpacingToken`
+- 간격: `p` / `px` / `py` / `pt` / `pr` / `pb` / `pl` / `gap` — 모두 CSS var 직접 소비
 - 사이즈: `width` / `height` / `min*` / `max*`
 - `display` / `position` / `overflow` / `overflowX` / `overflowY`
 - `as` (다형 element), `className`, `style`
@@ -211,7 +213,7 @@ SVG wrapper. props: `src` (StaticImageData), `width?`, `height?` (미지정 시 
 
 ## WDS 토큰 — 직접 var() 소비
 
-수치 SSOT는 `@pxds/pxds-tokens/registry/wds-token-registry.json`. 이 문서나 다른 메모에 **베이크 금지**.
+수치 SSOT는 `@pxds/pxds-tokens/registry/tokens.original.json`. 이 문서나 다른 메모에 **베이크 금지**.
 
 광범위 사용 예:
 - `var(--semantic-label-{normal, neutral, alternative})`

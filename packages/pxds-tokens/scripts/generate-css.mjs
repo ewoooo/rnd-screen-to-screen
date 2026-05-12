@@ -1,47 +1,49 @@
 /**
- * Generate src/tokens.css from registry/wds-token-registry.json.
+ * Generate src/tokens.css from registry/tokens.original.json.
  *
- * Registry is a Tokens Studio single-file JSON with 3 Sets:
- *   foundation / semantic / project + $metadata + $extensions.
- *
- * CSS var naming follows WDS conventions (the Set name is NOT in the prefix):
- *   foundation.atomic.{family}.{key}  → --atomic-{family}-{key}
- *   foundation.spacing.{key}          → --spacing-{key}
- *   foundation.opacity.{key}          → --opacity-{key}
- *   foundation.breakpoint.{key}       → --breakpoint-{key}
- *   foundation.zIndex.{key}           → --z-index-{key}
- *   semantic.{group}.{...path}        → --semantic-{group}-{...path}
- *   semantic.spacing.{token}          → --semantic-spacing-{token}
- *   project.{group}.{...path}         → --pxds-{group}-{...path}
- *
- * Aliases ({foundation.atomic.blue.50}) are resolved to var(--…) in CSS.
- * Light values only — dark fields were dropped from SSOT 2026-05-11.
+ * Style Dictionary owns token loading/build orchestration. This package keeps
+ * only the PXDS/WDS-specific CSS variable naming and compatibility output.
  */
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { register as registerTokensStudioTransforms } from "@tokens-studio/sd-transforms";
+import StyleDictionary from "style-dictionary";
+import { transformTypes } from "style-dictionary/enums";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const packageRoot = path.resolve(__dirname, "..");
-const registryPath = path.join(
-	packageRoot,
-	"registry",
-	"wds-token-registry.json",
-);
-const outputPath = path.join(packageRoot, "src", "tokens.css");
+const SOURCE_FILE = "registry/tokens.original.json";
+const OUTPUT_FILE = "tokens.css";
 
-const registry = JSON.parse(fs.readFileSync(registryPath, "utf8"));
-const foundation = registry.foundation ?? {};
-const semantic = registry.semantic ?? {};
-const project = registry.project ?? {};
+const isTokenType = (token, type) => (token.$type ?? token.type) === type;
 
-const isTokenLeaf = (node) =>
-	node && typeof node === "object" && Object.hasOwn(node, "$value");
+const getRawValue = (token) => token.original?.$value ?? token.original?.value;
 
 const kebab = (value) =>
-	value.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+	value.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
 
 const escapeKey = (key) => key.replace(".", "\\.");
+
+const cssVarNameFromPath = (path) => {
+	const [setName, ...rest] = path;
+	if (setName === "foundation") {
+		const [tier, ...parts] = rest;
+		if (tier === "atomic") return `atomic-${parts.join("-")}`;
+		if (tier === "spacing") return `spacing-${escapeKey(parts.join("."))}`;
+		if (tier === "opacity") return `opacity-${parts.join("-")}`;
+		if (tier === "breakpoint") return `breakpoint-${parts.join("-")}`;
+		if (tier === "zIndex") return `z-index-${parts.join("-")}`;
+		return null;
+	}
+	if (setName === "semantic") return `semantic-${rest.join("-")}`;
+	if (setName === "project") {
+		return `pxds-${rest.map((part) => kebab(part)).join("-")}`;
+	}
+	return null;
+};
+
+const aliasToVar = (alias) => {
+	const match = alias.match(/^\{([^}]+)\}$/);
+	if (!match) return null;
+	const name = cssVarNameFromPath(match[1].split("."));
+	return name ? `--${name}` : null;
+};
 
 const colorToRgb = (value) => {
 	if (typeof value !== "string") return undefined;
@@ -60,195 +62,164 @@ const colorToRgb = (value) => {
 	return `${Number(rgba[1])}, ${Number(rgba[2])}, ${Number(rgba[3])}`;
 };
 
-const aliasToVar = (alias) => {
-	// "{foundation.atomic.blue.50}" → "--atomic-blue-50"
-	// "{semantic.background.normal.normal}" → "--semantic-background-normal-normal"
+const createTokenLookup = (tokens) =>
+	new Map(tokens.map((token) => [token.path.join("."), token]));
+
+const resolveAliasValue = (alias, tokenLookup) => {
 	const match = alias.match(/^\{([^}]+)\}$/);
 	if (!match) return null;
-	const [setName, ...rest] = match[1].split(".");
-	if (setName === "foundation") {
-		const [tier, ...path] = rest;
-		if (tier === "atomic") return `--atomic-${path.join("-")}`;
-		if (tier === "spacing") return `--spacing-${path.join("-")}`;
-		if (tier === "opacity") return `--opacity-${path.join("-")}`;
-		if (tier === "breakpoint") return `--breakpoint-${path.join("-")}`;
-		if (tier === "zIndex") return `--z-index-${path.join("-")}`;
-		return null;
-	}
-	if (setName === "semantic") return `--semantic-${rest.join("-")}`;
-	if (setName === "project") return `--pxds-${rest.join("-")}`;
-	return null;
+	const token = tokenLookup.get(match[1]);
+	if (!token) return null;
+	const rawValue = getRawValue(token);
+	return typeof rawValue === "string" && rawValue.startsWith("{")
+		? resolveAliasValue(rawValue, tokenLookup)
+		: rawValue;
 };
 
-const resolveAliasToHex = (alias) => {
-	// Look up alias in registry — used for emitting raw hex for atomic-referencing
-	// semantic colors so the `-rgb` sibling can be computed without trusting cascade.
-	const match = alias.match(/^\{([^}]+)\}$/);
-	if (!match) return null;
-	const segments = match[1].split(".");
-	let node = registry;
-	for (const segment of segments) {
-		if (!node || typeof node !== "object") return null;
-		node = node[segment];
-	}
-	if (isTokenLeaf(node) && typeof node.$value === "string") {
-		return node.$value.startsWith("{") ? resolveAliasToHex(node.$value) : node.$value;
-	}
-	return null;
-};
-
-const pushColorVar = (lines, name, rawValue) => {
-	let cssValue = rawValue;
-	let rgbSource = rawValue;
-
+const toCssValue = (rawValue) => {
 	if (typeof rawValue === "string" && rawValue.startsWith("{")) {
 		const varRef = aliasToVar(rawValue);
-		if (varRef) cssValue = `var(${varRef})`;
-		const resolved = resolveAliasToHex(rawValue);
-		if (resolved) rgbSource = resolved;
+		if (varRef) return `var(${varRef})`;
 	}
+	return rawValue;
+};
 
-	lines.push(`\t--${name}: ${cssValue};`);
+const pushVar = (lines, token, tokenLookup, { withRgb = false } = {}) => {
+	const name = cssVarNameFromPath(token.path);
+	if (!name) return;
+	const rawValue = getRawValue(token);
+	lines.push(`\t--${name}: ${toCssValue(rawValue)};`);
+	if (!withRgb) return;
+	const rgbSource =
+		typeof rawValue === "string" && rawValue.startsWith("{")
+			? resolveAliasValue(rawValue, tokenLookup)
+			: rawValue;
 	const rgb = colorToRgb(rgbSource);
 	if (rgb) lines.push(`\t--${name}-rgb: ${rgb};`);
 };
 
-const pushPlainVar = (lines, name, rawValue) => {
-	let cssValue = rawValue;
-	if (typeof rawValue === "string" && rawValue.startsWith("{")) {
-		const varRef = aliasToVar(rawValue);
-		if (varRef) cssValue = `var(${varRef})`;
-	}
-	lines.push(`\t--${name}: ${cssValue};`);
-};
+const isPath = (token, prefix) =>
+	prefix.every((part, index) => token.path[index] === part);
 
-// ----- foundation -----
-
-const walkAtomic = (lines) => {
-	for (const [family, tones] of Object.entries(foundation.atomic ?? {})) {
-		for (const [key, leaf] of Object.entries(tones)) {
-			if (!isTokenLeaf(leaf)) continue;
-			pushColorVar(lines, `atomic-${family}-${key}`, leaf.$value);
-		}
-	}
-};
-
-const walkScalarMap = (lines, prefix, map) => {
-	for (const [key, leaf] of Object.entries(map ?? {})) {
-		if (!isTokenLeaf(leaf)) continue;
-		lines.push(`\t--${prefix}-${escapeKey(key)}: ${leaf.$value};`);
-	}
-};
-
-// ----- semantic -----
-
-const SEMANTIC_SKIP_GROUPS = new Set(["platform", "elevation", "typography"]);
-
-const walkSemanticColors = (lines) => {
-	for (const [group, node] of Object.entries(semantic)) {
-		if (SEMANTIC_SKIP_GROUPS.has(group)) continue;
-		if (group === "spacing") continue; // emitted separately
-		walkSemanticNode(lines, node, [group]);
-	}
-};
-
-const walkSemanticNode = (lines, node, pathParts) => {
-	if (!node || typeof node !== "object") return;
-	if (isTokenLeaf(node)) {
-		if (node.$type === "color") {
-			pushColorVar(lines, `semantic-${pathParts.join("-")}`, node.$value);
-		}
-		return;
-	}
-	for (const [key, child] of Object.entries(node)) {
-		walkSemanticNode(lines, child, [...pathParts, key]);
-	}
-};
-
-const walkSemanticSpacing = (lines) => {
-	for (const [token, leaf] of Object.entries(semantic.spacing ?? {})) {
-		if (!isTokenLeaf(leaf)) continue;
-		pushPlainVar(lines, `semantic-spacing-${token}`, leaf.$value);
-	}
-};
-
-// ----- project -----
-
-const walkProject = (lines) => {
-	const walk = (node, pathParts) => {
-		if (!node || typeof node !== "object") return;
-		if (isTokenLeaf(node)) {
-			pushPlainVar(lines, `pxds-${pathParts.join("-")}`, node.$value);
-			return;
-		}
-		for (const [key, child] of Object.entries(node)) {
-			walk(child, [...pathParts, kebab(key)]);
-		}
-	};
-	walk(project, []);
-};
-
-// ----- assemble -----
-
-const lines = [
-	"/* Generated from @pxds/pxds-tokens/registry/wds-token-registry.json. */",
-	"/* Do not edit token values here by hand. */",
-	"",
-	":root {",
-];
-
-walkAtomic(lines);
-walkSemanticColors(lines);
-lines.push("");
-lines.push("\t/* spacing */");
-walkScalarMap(lines, "spacing", foundation.spacing);
-lines.push("");
-lines.push("\t/* semantic spacing (intent-based) */");
-walkSemanticSpacing(lines);
-lines.push("");
-lines.push("\t/* opacity */");
-walkScalarMap(lines, "opacity", foundation.opacity);
-lines.push("");
-lines.push("\t/* breakpoint */");
-walkScalarMap(lines, "breakpoint", foundation.breakpoint);
-lines.push("");
-lines.push("\t/* z-index */");
-walkScalarMap(lines, "z-index", foundation.zIndex);
-lines.push("");
-lines.push("\t/* project */");
-walkProject(lines);
-lines.push("");
-lines.push("\t/* preview/device */");
-lines.push("\t--pxds-device-mobile-view-width: 375px;");
-lines.push("\t--pxds-device-mobile-view-height: 812px;");
-lines.push("\t--pxds-device-mobile-view-radius: 28px;");
-lines.push("\t--pxds-device-mobile-view-background: #ffffff;");
-lines.push("\t--pxds-device-mobile-view-border-color: #e1e2e4;");
-lines.push("\t--pxds-device-mobile-view-shadow: 0 8px 24px rgb(15 23 42 / 8%);");
-lines.push("\t--pxds-surface-canvas: #f4f4f5;");
-lines.push("}");
-lines.push("");
-lines.push(
-	"/* typography utility fallback. Prefer WDS Typography when possible. */",
-);
-
-for (const [variant, leaf] of Object.entries(semantic.typography ?? {})) {
-	if (!isTokenLeaf(leaf) || leaf.$type !== "typography") continue;
-	const v = leaf.$value;
+const pushSection = (lines, label, tokens, tokenLookup, options) => {
 	lines.push("");
-	lines.push(`.wds-${variant} {`);
-	lines.push(`\tfont-size: ${v.fontSize};`);
-	lines.push(`\tline-height: ${v.lineHeight};`);
-	lines.push(`\tletter-spacing: ${v.letterSpacing};`);
-	lines.push("}");
-}
+	lines.push(`\t/* ${label} */`);
+	for (const token of tokens) {
+		pushVar(lines, token, tokenLookup, options);
+	}
+};
 
-for (const [name, leaf] of Object.entries(semantic.typography?.weights ?? {})) {
-	if (!isTokenLeaf(leaf)) continue;
-	lines.push("");
-	lines.push(`.wds-${name} {`);
-	lines.push(`\tfont-weight: ${leaf.$value};`);
-	lines.push("}");
-}
+registerTokensStudioTransforms(StyleDictionary);
 
-fs.writeFileSync(outputPath, `${lines.join("\n")}\n`);
+StyleDictionary.registerTransform({
+	name: "pxds/name/from-path",
+	type: transformTypes.name,
+	transform: (token) => cssVarNameFromPath(token.path) ?? token.path.join("-"),
+});
+
+StyleDictionary.registerFormat({
+	name: "pxds/css-vars",
+	format: ({ dictionary }) => {
+		const tokens = dictionary.allTokens;
+		const tokenLookup = createTokenLookup(tokens);
+		const foundationAtomic = tokens.filter((token) =>
+			isPath(token, ["foundation", "atomic"]),
+		);
+		const semanticColors = tokens.filter(
+			(token) =>
+				token.path[0] === "semantic" &&
+				!["platform", "elevation", "typography", "spacing"].includes(
+					token.path[1],
+				) &&
+				isTokenType(token, "color"),
+		);
+		const foundationSpacing = tokens.filter((token) =>
+			isPath(token, ["foundation", "spacing"]),
+		);
+		const semanticSpacing = tokens.filter((token) =>
+			isPath(token, ["semantic", "spacing"]),
+		);
+		const foundationOpacity = tokens.filter((token) =>
+			isPath(token, ["foundation", "opacity"]),
+		);
+		const foundationBreakpoint = tokens.filter((token) =>
+			isPath(token, ["foundation", "breakpoint"]),
+		);
+		const foundationZIndex = tokens.filter((token) =>
+			isPath(token, ["foundation", "zIndex"]),
+		);
+		const project = tokens.filter((token) => token.path[0] === "project");
+		const typography = tokens.filter(
+			(token) => isPath(token, ["semantic", "typography"]) && isTokenType(token, "typography"),
+		);
+		const typographyWeights = tokens.filter((token) =>
+			isPath(token, ["semantic", "typography", "weights"]),
+		);
+
+		const lines = [
+			"/* Generated from @pxds/pxds-tokens/registry/tokens.original.json. */",
+			"/* Do not edit token values here by hand. */",
+			"",
+			":root {",
+		];
+
+		for (const token of foundationAtomic) {
+			pushVar(lines, token, tokenLookup, { withRgb: true });
+		}
+		for (const token of semanticColors) {
+			pushVar(lines, token, tokenLookup, { withRgb: true });
+		}
+		pushSection(lines, "spacing", foundationSpacing, tokenLookup);
+		pushSection(lines, "semantic spacing (intent-based)", semanticSpacing, tokenLookup);
+		pushSection(lines, "opacity", foundationOpacity, tokenLookup);
+		pushSection(lines, "breakpoint", foundationBreakpoint, tokenLookup);
+		pushSection(lines, "z-index", foundationZIndex, tokenLookup);
+		pushSection(lines, "project", project, tokenLookup);
+		lines.push("}");
+		lines.push("");
+		lines.push(
+			"/* typography utility fallback. Prefer WDS Typography when possible. */",
+		);
+
+		for (const token of typography) {
+			const value = getRawValue(token);
+			lines.push("");
+			lines.push(`.wds-${token.path.at(-1)} {`);
+			lines.push(`\tfont-size: ${value.fontSize};`);
+			lines.push(`\tline-height: ${value.lineHeight};`);
+			lines.push(`\tletter-spacing: ${value.letterSpacing};`);
+			lines.push("}");
+		}
+
+		for (const token of typographyWeights) {
+			lines.push("");
+			lines.push(`.wds-${token.path.at(-1)} {`);
+			lines.push(`\tfont-weight: ${getRawValue(token)};`);
+			lines.push("}");
+		}
+
+		return `${lines.join("\n")}\n`;
+	},
+});
+
+const styleDictionary = new StyleDictionary({
+	source: [SOURCE_FILE],
+	preprocessors: ["tokens-studio"],
+	log: {
+		warnings: "disabled",
+	},
+	platforms: {
+		css: {
+			transforms: ["pxds/name/from-path"],
+			buildPath: "src/",
+			files: [
+				{
+					destination: OUTPUT_FILE,
+					format: "pxds/css-vars",
+				},
+			],
+		},
+	},
+});
+
+await styleDictionary.buildAllPlatforms();

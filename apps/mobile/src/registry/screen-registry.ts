@@ -1,16 +1,4 @@
-import { mbrRegistryEntries } from "../organisms/mbr/module.registry";
-import { membershipRegistryEntries } from "../organisms/membership/module.registry";
-import { RENDER_TREE as legacyMbrPg0010RenderTree } from "../app/LEGACY-MBR-PG-001-0/render-tree";
-import { RENDER_TREE as legacyMbrPg0020RenderTree } from "../app/LEGACY-MBR-PG-002-0/render-tree";
-import { RENDER_TREE as legacyMbrPg0030RenderTree } from "../app/LEGACY-MBR-PG-003-0/render-tree";
-import { RENDER_TREE as legacyMbrPg0040RenderTree } from "../app/LEGACY-MBR-PG-004-0/render-tree";
-import { RENDER_TREE as legacyMbrPg0050RenderTree } from "../app/LEGACY-MBR-PG-005-0/render-tree";
-import { RENDER_TREE as legacyMbrPg0060RenderTree } from "../app/LEGACY-MBR-PG-006-0/render-tree";
-import { RENDER_TREE as legacyMbrPg0070RenderTree } from "../app/LEGACY-MBR-PG-007-0/render-tree";
-import { RENDER_TREE as novaMbrPg0010RenderTree } from "../app/NOVA-MBR-PG-001-0/render-tree";
-import { RENDER_TREE as novaMbrPg0020RenderTree } from "../app/NOVA-MBR-PG-002-0/render-tree";
-import { RENDER_TREE as novaMbrPg0030RenderTree } from "../app/NOVA-MBR-PG-003-0/render-tree";
-import { RENDER_TREE as novaMbrPg0050RenderTree } from "../app/NOVA-MBR-PG-005-0/render-tree";
+
 
 const legacyMbrPg0010Route = {
 	id: "LEGACY-MBR-PG-001-0",
@@ -161,7 +149,6 @@ import {
 	type ScreenRoutePatch as GenericScreenRoutePatch,
 	type ScreenRouteRegistry as GenericScreenRouteRegistry,
 } from "../scripts/registry";
-const asRenderScreenSpec = (spec: unknown) => spec as RenderScreenSpec;
 
 export type SDUIJsonValue =
 	| string
@@ -223,22 +210,10 @@ export const activeSduiScreenSpecs = {
 } as const satisfies Partial<Record<ScreenId, SduiScreen>>;
 
 export const activeRenderScreenSpecs = {
-	"LEGACY-MBR-PG-001-0": asRenderScreenSpec(legacyMbrPg0010RenderTree),
-	"LEGACY-MBR-PG-002-0": asRenderScreenSpec(legacyMbrPg0020RenderTree),
-	"LEGACY-MBR-PG-003-0": asRenderScreenSpec(legacyMbrPg0030RenderTree),
-	"LEGACY-MBR-PG-004-0": asRenderScreenSpec(legacyMbrPg0040RenderTree),
-	"LEGACY-MBR-PG-005-0": asRenderScreenSpec(legacyMbrPg0050RenderTree),
-	"LEGACY-MBR-PG-006-0": asRenderScreenSpec(legacyMbrPg0060RenderTree),
-	"LEGACY-MBR-PG-007-0": asRenderScreenSpec(legacyMbrPg0070RenderTree),
-	"NOVA-MBR-PG-001-0": asRenderScreenSpec(novaMbrPg0010RenderTree),
-	"NOVA-MBR-PG-002-0": asRenderScreenSpec(novaMbrPg0020RenderTree),
-	"NOVA-MBR-PG-003-0": asRenderScreenSpec(novaMbrPg0030RenderTree),
-	"NOVA-MBR-PG-005-0": asRenderScreenSpec(novaMbrPg0050RenderTree),
+
 } as const satisfies Partial<Record<ScreenId, RenderScreenSpec>>;
 
 export const screenRenderRegistry = [
-	...mbrRegistryEntries,
-	...membershipRegistryEntries,
 ] as const;
 
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;

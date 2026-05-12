@@ -47,8 +47,8 @@ export function InfoList({ items, selectedId, selectable = false }: Props) {
 						key={item.id}
 						role="listitem"
 						display="grid"
-						gap="stack"
-						py="stack"
+						gap="var(--semantic-spacing-stack)"
+						py="var(--semantic-spacing-stack)"
 						style={{
 							gridTemplateColumns: "48px minmax(0, 1fr) auto",
 							alignItems: "center",
@@ -78,7 +78,7 @@ export function InfoList({ items, selectedId, selectable = false }: Props) {
 								alt={item.mediaLabel ?? item.title}
 							/>
 						)}
-						<VStack gap="row" minWidth={0}>
+						<VStack gap="var(--semantic-spacing-row)" minWidth={0}>
 							<TextBlock
 								variant="listTitle"
 								text={item.title}
