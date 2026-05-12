@@ -29,12 +29,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 				src="https://mcp.figma.com/mcp/html-to-design/capture.js"
 				async
 			/>
-			<script
-				dangerouslySetInnerHTML={{
-					__html:
-						"if(location.hash.includes('figmacapture'))document.documentElement.classList.add('figma-capture-mobile-frame');",
-				}}
-			/>
+			<script src="/figma-capture-mobile-frame.js" />
 		</head>
 		<body>
 			<ThemeProvider>

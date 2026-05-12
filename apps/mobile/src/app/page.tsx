@@ -1,55 +1,30 @@
 import Link from "next/link";
 import {
-  screenRoutes,
-  type ScreenGroup,
+  legacyScreenRoutes,
+  referenceScreenRoutes,
   type ScreenRoute,
-} from "@/screens";
+} from "@/registry/screen-registry";
 
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 
-const GROUPS = [
-  "nc-full",
-  "nc-simple",
-  "membership",
-  "tu",
-  "product",
-  "search",
-  "billing",
-  "billing-html",
-  "home",
-] as const satisfies readonly ScreenGroup[];
-
-const GROUP_LABEL: Record<ScreenGroup, string> = {
-  home: "Home",
-  membership: "Membership",
-  product: "Product",
-  search: "Search",
-  billing: "Billing",
-  "billing-html": "BILLING-HTML",
-  tu: "TU",
-  "nc-full": "NC Full",
-  "nc-simple": "NC Simple",
-};
+const sections = [
+  {
+    id: "reference",
+    label: "MBR Reference",
+    routes: referenceScreenRoutes,
+  },
+  {
+    id: "legacy",
+    label: "Membership Legacy",
+    routes: legacyScreenRoutes,
+  },
+] as const satisfies readonly {
+  id: string;
+  label: string;
+  routes: readonly ScreenRoute[];
+}[];
 
 export default function Home() {
-  const grouped = screenRoutes.reduce<Record<ScreenGroup, ScreenRoute[]>>(
-    (acc, s) => {
-      (acc[s.group] ??= []).push(s);
-      return acc;
-    },
-    {
-      home: [],
-      membership: [],
-      product: [],
-      search: [],
-      billing: [],
-      "billing-html": [],
-      tu: [],
-      "nc-full": [],
-      "nc-simple": [],
-    },
-  );
-
   return (
     <VStack as="main" p="block" gap="block">
       <Box>
@@ -63,12 +38,13 @@ export default function Home() {
             margin: "4px 0 0",
           }}
         >
-          총 {screenRoutes.length}개
+          MBR {referenceScreenRoutes.length}개 · Membership{" "}
+          {legacyScreenRoutes.length}개
         </p>
       </Box>
 
-      {GROUPS.map((group) => (
-        <VStack as="section" key={group} gap="inline">
+      {sections.map((section) => (
+        <VStack as="section" key={section.id} gap="inline">
           <h2
             style={{
               fontSize: 12,
@@ -79,20 +55,17 @@ export default function Home() {
               letterSpacing: 0.5,
             }}
           >
-            {GROUP_LABEL[group]}
+            {section.label}
           </h2>
           <VStack as="nav" gap="inline">
-            {grouped[group].map((s) => (
+            {section.routes.map((s) => (
               <Link
                 key={s.id}
                 href={s.route}
                 style={{
                   padding: "12px 16px",
                   borderRadius: 10,
-                  background:
-                    group === "tu"
-                      ? "var(--atomic-coolNeutral-20)"
-                      : "var(--atomic-coolNeutral-10)",
+                  background: "var(--atomic-coolNeutral-10)",
                   color: "var(--semantic-static-white)",
                   textDecoration: "none",
                   fontSize: 14,

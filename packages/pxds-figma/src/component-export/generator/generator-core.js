@@ -293,7 +293,7 @@ function getVariableMap() {
   return _varMapCache;
 }
 
-// id → Variable 객체 cache (dynamic-page documentAccess 호환 위해 async init)
+// id → Variable 객체 cache (dynamic-screen documentAccess 호환 위해 async init)
 let _varObjCache = null;
 async function ensureVariableObjects() {
   if (_varObjCache !== null) return;
@@ -1030,10 +1030,10 @@ async function purgeExistingByName(scopeNode, name) {
 
 // ---------- 6.5 Instance swap (Figma 마스터·인스턴스 모델 보존) ----------
 // 컴포넌트 재생성 시: old 삭제하기 전에 모든 instance 의 mainComponent 를 new 로 swap.
-// → 인스턴스 살아있고 override 도 보존됨 → 이걸 ref 하는 ogn/page 의 instance 들도 끊기지 않음
+// → 인스턴스 살아있고 override 도 보존됨 → 이걸 ref 하는 ogn/screen 의 instance 들도 끊기지 않음
 // → cascade 재빌드 불필요 (구조 변경 외 visual-only edit 의 경우)
 //
-// ⚠️ Figma dynamic-page mode 대응: instance.mainComponent 동기 접근 금지 → getMainComponentAsync 사용.
+// ⚠️ Figma dynamic-screen mode 대응: instance.mainComponent 동기 접근 금지 → getMainComponentAsync 사용.
 async function swapInstancesToNewMaster(oldNodes, newNode) {
   if (!oldNodes || oldNodes.length === 0 || !newNode) return 0;
 
@@ -1064,7 +1064,7 @@ async function swapInstancesToNewMaster(oldNodes, newNode) {
   }
 
   // 파일 전체 instance 순회 → mainComponent 가 swapMap 에 있으면 swap
-  // findAllWithCriteria 는 모든 페이지 (loadAllPagesAsync 가 먼저 호출됨)
+  // findAllWithCriteria 는 모든 페이지 (loadAllScreensAsync 가 먼저 호출됨)
   const allInstances = (figma.root.findAllWithCriteria
     ? figma.root.findAllWithCriteria({ types: ["INSTANCE"] })
     : figma.root.findAll(function (n) { return n.type === "INSTANCE"; }));
@@ -1074,7 +1074,7 @@ async function swapInstancesToNewMaster(oldNodes, newNode) {
     const inst = allInstances[i];
     let oldMain = null;
     try {
-      // Figma 신 API — dynamic-page mode 강제
+      // Figma 신 API — dynamic-screen mode 강제
       oldMain = inst.getMainComponentAsync ? await inst.getMainComponentAsync() : inst.mainComponent;
     } catch (e) {
       continue;
@@ -1096,7 +1096,7 @@ async function swapInstancesToNewMaster(oldNodes, newNode) {
 async function generateComponentSet(spec, tokens) {
   validateSpec(spec, tokens);
 
-  if (figma.loadAllPagesAsync) await figma.loadAllPagesAsync();
+  if (figma.loadAllScreensAsync) await figma.loadAllScreensAsync();
   await ensureVariableObjects();
 
   // Variable map (if sync-tokens 이 실행된 적 있으면 채워짐)
@@ -1114,7 +1114,7 @@ async function generateComponentSet(spec, tokens) {
   }
 
   const category = spec.name.split("/")[0];
-  if (category === "page") {
+  if (category === "screen") {
     return generateScreen(spec, tokens, fontResult);
   }
   const pageMap = { atom: "Atom", mol: "Molecule", ogn: "Organism", sb: "SB" };
@@ -1231,7 +1231,7 @@ async function generateComponentSet(spec, tokens) {
 
   // ⭐ instance swap — old 의 마스터를 참조하던 모든 instance 를 new 로 redirect
   // 이게 핵심: old 가 삭제돼도 instance 들은 new 마스터를 가리키므로 끊기지 않음
-  // → ogn/page 들이 mol/* 을 ref 하고 있어도 cascade 재빌드 불필요 (visual-only 변경 시)
+  // → ogn/screen 들이 mol/* 을 ref 하고 있어도 cascade 재빌드 불필요 (visual-only 변경 시)
   let swappedInstances = 0;
   if (existing.length > 0) {
     swappedInstances = await swapInstancesToNewMaster(existing, resultNode);
@@ -1250,17 +1250,17 @@ async function generateComponentSet(spec, tokens) {
   return resultNode;
 }
 
-// ---------- 8. Screen/Page generator ----------
-// page/* category 를 위한 별도 경로. Component 가 아닌 일반 Frame 으로 생성해서
-// "Page" Figma 페이지에 top-level frame 으로 배치.
+// ---------- 8. Screen generator ----------
+// screen/* category 를 위한 별도 경로. Component 가 아닌 일반 Frame 으로 생성해서
+// "Screen" Figma 페이지에 top-level frame 으로 배치.
 async function generateScreen(spec, tokens, fontResult) {
   await ensureVariableObjects();
 
-  // "Page" Figma 페이지 찾기 or 생성
-  let targetPage = figma.root.children.find(function (p) { return p.name === "Page"; });
+  // "Screen" Figma 페이지 찾기 or 생성
+  let targetPage = figma.root.children.find(function (p) { return p.name === "Screen"; });
   if (!targetPage) {
     targetPage = figma.createPage();
-    targetPage.name = "Page";
+    targetPage.name = "Screen";
   }
   await figma.setCurrentPageAsync(targetPage);
 
@@ -1279,11 +1279,11 @@ async function generateScreen(spec, tokens, fontResult) {
       try { existing[i].remove(); } catch (err) {}
     }
   } else if (typeof spec._layout_col === "number" && typeof spec._layout_row === "number") {
-    // bundle.js 가 PAGE_FLOW_ORDER 로 _layout_col / _layout_row 주입한 경우 — UC × step grid 배치
+    // bundle.js 가 SCREEN_FLOW_ORDER 로 _layout_col / _layout_row 주입한 경우 — UC × step grid 배치
     // X 는 col, Y 는 row. 같은 col 의 다른 frame 들 폭 측정해서 X 정렬.
     useGridLayout = true;
   } else {
-    // 기본: 다른 Page 들이 있으면 오른쪽에 80px 간격으로 배치 (가로 한 줄)
+    // 기본: 다른 Screen 들이 있으면 오른쪽에 80px 간격으로 배치 (가로 한 줄)
     const allFrames = targetPage.children.filter(function (n) { return n.type === "FRAME"; });
     if (allFrames.length > 0) {
       let maxRight = 0;

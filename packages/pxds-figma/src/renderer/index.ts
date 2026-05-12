@@ -1,13 +1,13 @@
 export {
-	createPageComponentAssembly,
+	createScreenComponentAssembly,
 	type FigmaRendererComponentRegistry,
 	type FigmaRendererComponentRegistryEntry,
 	type FigmaRendererRenderChildContract,
 	type FigmaRendererRenderContract,
 	type FigmaRendererRenderLayoutContract,
-	type PageComponentAssembly,
-	type PageComponentAssemblyOptions,
-} from "./page-assembly";
+	type ScreenComponentAssembly,
+	type ScreenComponentAssemblyOptions,
+} from "./screen-assembly";
 export {
 	collectFigmaRendererTokenRefs,
 	validateFigmaRendererTokens,
@@ -20,7 +20,7 @@ export type {
 	ComponentSpecGroupChild,
 	ComponentSpecRefChild,
 	ComponentSpecTextChild,
-	PageFigmaExportSpec,
-	PageFigmaNodeSpec,
-	PageFigmaSlot,
+	ScreenFigmaExportSpec,
+	ScreenFigmaNodeSpec,
+	ScreenFigmaSlot,
 } from "./types";

@@ -1,7 +1,7 @@
 import type { ComponentLayer } from "./registry";
 import type { RenderLayoutContract, RenderSlot } from "./layout";
 
-export type RenderExportMode = "render-tree" | "instance";
+export type RenderTreeExportMode = "render-tree" | "instance";
 
 export type RenderPropType =
 	| "string"
@@ -11,7 +11,7 @@ export type RenderPropType =
 	| "object"
 	| "array";
 
-export type RenderPropContract = {
+export type RenderTreePropDefinition = {
 	type: RenderPropType;
 	required?: boolean;
 	defaultValue?: unknown;
@@ -19,7 +19,7 @@ export type RenderPropContract = {
 	description?: string;
 };
 
-export type RenderChildContract = {
+export type RenderTreeChild = {
 	id: string;
 	component: string;
 	slot?: RenderSlot;
@@ -28,19 +28,19 @@ export type RenderChildContract = {
 	layout?: RenderLayoutContract;
 };
 
-export type ComponentRenderContract = {
-	$schema: "pxds-render-contract-v1";
+export type ComponentRenderTree = {
+	$schema: "pxds-render-tree-v1";
 	componentId: string;
 	layer: ComponentLayer;
-	mode: RenderExportMode;
+	mode: RenderTreeExportMode;
 	layout?: RenderLayoutContract;
-	props?: Readonly<Record<string, RenderPropContract>>;
-	children?: readonly RenderChildContract[];
+	props?: Readonly<Record<string, RenderTreePropDefinition>>;
+	children?: readonly RenderTreeChild[];
 	notes?: readonly string[];
 };
 
-export function defineComponentRender<T extends ComponentRenderContract>(
-	contract: T,
+export function defineComponentRenderTree<T extends ComponentRenderTree>(
+	renderTree: T,
 ): T {
-	return contract;
+	return renderTree;
 }

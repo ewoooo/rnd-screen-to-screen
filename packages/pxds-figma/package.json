@@ -10,7 +10,7 @@
 		"./component-spec-registry": "./src/component-spec-registry/index.ts",
 		"./component-export": "./src/component-export/index.ts",
 		"./figma-to-component": "./src/figma-to-component/index.ts",
-		"./page-export": "./src/page-export/index.ts"
+		"./screen-export": "./src/screen-export/index.ts"
 	},
 	"dependencies": {
 		"@pxds/pxds-components": "0.1.0",

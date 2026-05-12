@@ -1,3 +1,5 @@
+import { textFieldListRenderReact } from "./TextFieldList";
+
 export const textFieldListRegistryEntry = {
 	id: "text-field-list",
 	name: "TextFieldList",
@@ -12,4 +14,5 @@ export const textFieldListRegistryEntry = {
 		"form-controls",
 		"layout-primitives",
 	],
+	renderReact: textFieldListRenderReact,
 } as const;

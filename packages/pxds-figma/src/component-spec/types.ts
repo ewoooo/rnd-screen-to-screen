@@ -5,7 +5,7 @@ export type ComponentSpecCategory =
 	| "template"
 	| "mol"
 	| "ogn"
-	| "page";
+	| "screen";
 export type ComponentSpecLayoutMode = "HORIZONTAL" | "VERTICAL" | "NONE";
 export type ComponentSpecSizingMode = "AUTO" | "FIXED" | "HUG" | "FILL";
 export type ComponentSpecAlignItems = "MIN" | "CENTER" | "MAX" | "SPACE_BETWEEN";

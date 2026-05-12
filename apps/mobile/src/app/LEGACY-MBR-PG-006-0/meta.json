@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../schema/page-meta.schema.json",
+  "id": "LEGACY-MBR-PG-006-0",
+  "name": "회원 가입 기본 정보",
+  "route": "/LEGACY-MBR-PG-006-0",
+  "type": "page",
+  "status": "active",
+  "domain": "membership",
+  "group": "membership",
+  "createdAt": "2026-05-12",
+  "sourceRefs": [
+    "LEGACY-MBR-PG-006-0/render-tree.ts"
+  ],
+  "useCaseIds": [
+    "UC-MBR-JOIN"
+  ],
+  "tags": [
+    "membership",
+    "join",
+    "personal-info"
+  ]
+}

@@ -1,3 +1,5 @@
+import { flowSummaryCardRenderReact } from ".";
+
 export const flowSummaryCardRegistryEntry = {
 	id: "flow-summary-card",
 	name: "FlowSummaryCard",
@@ -8,4 +10,5 @@ export const flowSummaryCardRegistryEntry = {
 	status: "active",
 	createdAt: "2026-05-07",
 	composedOf: ["info-section"],
+	renderReact: flowSummaryCardRenderReact,
 } as const;

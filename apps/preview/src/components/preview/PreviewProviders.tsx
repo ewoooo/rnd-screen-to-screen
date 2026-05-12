@@ -3,12 +3,12 @@
 import type { ReactNode } from "react";
 
 import { ComponentRegistryProvider } from "@/contexts/component-registry-context";
-import { PageRegistryProvider } from "@/contexts/page-registry-context";
+import { ScreenRegistryProvider } from "@/contexts/screen-registry-context";
 
 export function PreviewProviders({ children }: { children: ReactNode }) {
 	return (
-		<PageRegistryProvider>
+		<ScreenRegistryProvider>
 			<ComponentRegistryProvider>{children}</ComponentRegistryProvider>
-		</PageRegistryProvider>
+		</ScreenRegistryProvider>
 	);
 }

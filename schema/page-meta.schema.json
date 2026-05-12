@@ -60,7 +60,7 @@
     "useCaseIds": {
       "$ref": "#/$defs/stringList"
     },
-    "componentRefs": {
+    "ognSpecIds": {
       "$ref": "#/$defs/stringList"
     },
     "tags": {

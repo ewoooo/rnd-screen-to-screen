@@ -5,7 +5,7 @@ export type ComponentSpecCategory =
 	| "template"
 	| "mol"
 	| "ogn"
-	| "page";
+	| "screen";
 export type ComponentSpecLayoutMode = "HORIZONTAL" | "VERTICAL" | "NONE";
 export type ComponentSpecSizingMode = "AUTO" | "FIXED" | "HUG" | "FILL";
 export type ComponentSpecAlignItems = "MIN" | "CENTER" | "MAX" | "SPACE_BETWEEN";
@@ -114,21 +114,21 @@ export type ComponentSpecDraft = {
 	};
 };
 
-export type PageFigmaSlot = "top" | "content" | "bottom" | "background" | "sheet";
+export type ScreenFigmaSlot = "top" | "content" | "bottom" | "background" | "sheet";
 
-export type PageFigmaNodeSpec = {
+export type ScreenFigmaNodeSpec = {
 	id: string;
 	type: string;
 	componentId: string;
 	registered: boolean;
-	slot?: PageFigmaSlot;
+	slot?: ScreenFigmaSlot;
 	section?: Record<string, unknown>;
 	props?: Record<string, unknown>;
-	children?: readonly PageFigmaNodeSpec[];
+	children?: readonly ScreenFigmaNodeSpec[];
 };
 
-export type PageFigmaExportSpec = {
-	$schema: "page-figma-export-v1";
+export type ScreenFigmaExportSpec = {
+	$schema: "screen-figma-export-v1";
 	id: string;
 	name: string;
 	route: string;
@@ -141,5 +141,5 @@ export type PageFigmaExportSpec = {
 		inset: string;
 		gap: string;
 	};
-	root: PageFigmaNodeSpec;
+	root: ScreenFigmaNodeSpec;
 };

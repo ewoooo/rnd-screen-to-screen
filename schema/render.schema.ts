@@ -44,29 +44,25 @@ export type RenderNode = {
 	children?: readonly RenderNode[];
 };
 
-export type ComponentRenderContract = {
-	$schema: "component-render-v1";
+export type RenderTreePropDefinition = {
+	type: "string" | "number" | "boolean" | "enum" | "object" | "array";
+	required?: boolean;
+	defaultValue?: SchemaValue;
+	values?: readonly string[];
+	description?: string;
+};
+
+export type ComponentRenderTree = {
+	$schema: "pxds-render-tree-v1";
 	componentId: string;
 	layer: ComponentLayer;
 	layout?: RenderLayout;
-	props?: Readonly<Record<string, RenderPropContract>>;
+	props?: Readonly<Record<string, RenderTreePropDefinition>>;
 	children?: readonly RenderNode[];
 	notes?: readonly string[];
 };
 
-export type PageRenderContract = {
-	$schema: "page-render-v1";
-	screen: {
-		id: string;
-		name: string;
-		route: `/${string}`;
-		type: ScreenType;
-	};
-	source?: {
-		useCaseIds?: readonly string[];
-		ognSpecIds?: readonly string[];
-		policyRefs?: readonly string[];
-	};
+export type ScreenRenderTreeDefinition = {
 	slots: {
 		systemHeader?: boolean;
 		header?: RenderNode | false;
@@ -75,22 +71,14 @@ export type PageRenderContract = {
 	};
 };
 
-export type RenderPropContract = {
-	type: "string" | "number" | "boolean" | "enum" | "object" | "array";
-	required?: boolean;
-	defaultValue?: SchemaValue;
-	values?: readonly string[];
-	description?: string;
-};
-
-export function defineComponentRender<T extends ComponentRenderContract>(
-	contract: T,
+export function defineComponentRenderTree<T extends ComponentRenderTree>(
+	renderTree: T,
 ): T {
-	return contract;
+	return renderTree;
 }
 
-export function definePageRender<T extends PageRenderContract>(
-	contract: T,
+export function defineScreenRenderTree<T extends ScreenRenderTreeDefinition>(
+	renderTree: T,
 ): T {
-	return contract;
+	return renderTree;
 }

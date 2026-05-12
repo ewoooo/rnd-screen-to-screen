@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../schema/component-meta.schema.json",
+  "id": "ogn-mbr-section-header-page",
+  "name": "SectionHeaderPage",
+  "layer": "organism",
+  "owner": "@screen/mobile",
+  "importPath": "@screen/mobile/organisms/mbr",
+  "group": "mbr",
+  "status": "active",
+  "createdAt": "2026-05-11",
+  "exportMode": "render-tree"
+}

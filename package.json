@@ -14,11 +14,12 @@
     "build:preview": "npm run build -w @screen/preview",
     "doctor": "react-doctor . --yes",
     "doctor:verbose": "react-doctor . --yes --verbose",
-    "check:sdui": "npm run check:sdui -w @screen/mobile",
+    "lint": "npm run lint:mobile && npm run lint:preview",
     "lint:mobile": "npm run lint -w @screen/mobile",
     "lint:preview": "npm run lint -w @screen/preview"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
     "concurrently": "^9.2.1",
     "react-doctor": "^0.0.47"
   }

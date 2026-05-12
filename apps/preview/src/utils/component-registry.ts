@@ -32,7 +32,6 @@ export const COMPONENT_GROUP_ORDER = [
 	"search",
 	"tu",
 	"nc-simple",
-	"billing-html",
 ] as const satisfies readonly ComponentGroup[];
 
 export type ComponentLayerGroups = Partial<
@@ -94,7 +93,9 @@ export function groupComponentsByLayer(
 	components: readonly PreviewComponentRegistryEntry[],
 ) {
 	return components.reduce<ComponentLayerGroups>((acc, component) => {
-		(acc[component.layer] ??= []).push(component);
+		const layerComponents = acc[component.layer] ?? [];
+		acc[component.layer] = layerComponents;
+		layerComponents.push(component);
 		return acc;
 	}, {});
 }
@@ -103,7 +104,9 @@ export function groupComponentsByGroup(
 	components: readonly PreviewComponentRegistryEntry[],
 ) {
 	return components.reduce<ComponentGroups>((acc, component) => {
-		(acc[component.group] ??= []).push(component);
+		const groupComponents = acc[component.group] ?? [];
+		acc[component.group] = groupComponents;
+		groupComponents.push(component);
 		return acc;
 	}, {});
 }

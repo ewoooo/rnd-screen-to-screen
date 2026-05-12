@@ -1,3 +1,5 @@
+import { flowNoticeRenderReact } from ".";
+
 export const flowNoticeRegistryEntry = {
 	id: "flow-notice",
 	name: "FlowNotice",
@@ -8,4 +10,5 @@ export const flowNoticeRegistryEntry = {
 	status: "active",
 	createdAt: "2026-05-07",
 	composedOf: ["content-section", "notice-block"],
+	renderReact: flowNoticeRenderReact,
 } as const;

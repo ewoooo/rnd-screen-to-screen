@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../schema/component-meta.schema.json",
+  "id": "ogn-membership-form-section",
+  "name": "MembershipFormSection",
+  "layer": "organism",
+  "owner": "@screen/mobile",
+  "importPath": "@screen/mobile/organisms/membership",
+  "group": "mbr",
+  "status": "active",
+  "createdAt": "2026-05-12",
+  "exportMode": "render-tree"
+}

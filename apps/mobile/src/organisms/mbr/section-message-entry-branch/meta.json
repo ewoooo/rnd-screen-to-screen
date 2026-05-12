@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../schema/component-meta.schema.json",
+  "id": "ogn-mbr-section-message-entry-branch",
+  "name": "SectionMessageEntryBranch",
+  "layer": "organism",
+  "owner": "@screen/mobile",
+  "importPath": "@screen/mobile/organisms/mbr",
+  "group": "mbr",
+  "status": "experimental",
+  "createdAt": "2026-05-11",
+  "exportMode": "render-tree"
+}

@@ -13,6 +13,7 @@ import type { ReactNode } from "react";
 import { HStack } from "@pxds/pxds-layout/primitives";
 import {
 	renderString,
+	renderStringArray,
 	type ComponentRenderReact,
 	type RenderReactPropValue,
 } from "../../render-react";
@@ -230,15 +231,32 @@ const DEFAULT_ITEMS: readonly SelectableItem[] = [
 	{ id: "cert", title: "공동인증서" },
 ];
 
-export const selectableListRenderReact: ComponentRenderReact = ({ node }) => (
-	<SelectableList
-		name={renderString(node.props?.name) ?? "selectable-list"}
-		items={renderSelectableItems(node.props?.items)}
-		value={renderString(node.props?.value) ?? "phone"}
-		density={node.props?.density === "compact" ? "compact" : "comfortable"}
-		onChange={() => undefined}
-	/>
-);
+export const selectableListRenderReact: ComponentRenderReact = ({ node }) => {
+	const common = {
+		name: renderString(node.props?.name) ?? "selectable-list",
+		items: renderSelectableItems(node.props?.items),
+		density: node.props?.density === "compact" ? "compact" : "comfortable",
+	} as const;
+
+	if (node.props?.selectionMode === "multi") {
+		return (
+			<SelectableList
+				{...common}
+				selectionMode="multi"
+				selectedIds={renderStringArray(node.props?.selectedIds) ?? []}
+				onSelectionChange={() => undefined}
+			/>
+		);
+	}
+
+	return (
+		<SelectableList
+			{...common}
+			value={renderString(node.props?.value) ?? "phone"}
+			onChange={() => undefined}
+		/>
+	);
+};
 
 function renderSelectableItems(
 	value: RenderReactPropValue | undefined,

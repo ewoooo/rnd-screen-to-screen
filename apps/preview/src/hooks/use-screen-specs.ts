@@ -6,6 +6,7 @@ import {
 	getRenderableScreenSpecIssues,
 	getSduiScreenIssues,
 	getScreenSpecIssues,
+	screenRenderRegistry,
 	validateRenderScreenSpec,
 	type RenderScreenSpec,
 	type RenderableScreenSpecV1,
@@ -24,6 +25,7 @@ const renderScreenSpecsById = activeRenderScreenSpecs as Record<
 	string,
 	RenderScreenSpec
 >;
+const renderSpecRegistry = [...componentRegistry, ...screenRenderRegistry];
 type PreviewRenderableScreenSpec = RenderScreenSpec | RenderableScreenSpecV1 | SduiScreen;
 const previewRenderableScreenSpecsById: Record<string, PreviewRenderableScreenSpec> =
 	{
@@ -66,9 +68,7 @@ export function useScreenSpecs(options: UseScreenSpecsOptions = {}) {
 
 function getPreviewRenderableSpecIssues(spec: PreviewRenderableScreenSpec) {
 	if (isRenderScreenSpec(spec)) {
-		return validateRenderScreenSpec(spec, componentRegistry, {
-			requireFigmaSpec: true,
-		});
+		return validateRenderScreenSpec(spec, renderSpecRegistry);
 	}
 	return isSduiScreenSpec(spec)
 		? getSduiScreenIssues(spec)

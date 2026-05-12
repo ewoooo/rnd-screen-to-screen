@@ -43,9 +43,7 @@
 		"./registry": "./src/registry.ts",
 		"./render-react": "./src/render-react.tsx",
 		"./atoms/typography": "./src/atoms/typography/index.ts",
-		"./atoms/typography/text-block": "./src/atoms/typography/text-block/index.ts",
-		"./mbr": "./src/domains/mbr/index.ts",
-		"./ogn-spec": "./src/ogn-spec.ts"
+		"./atoms/typography/text-block": "./src/atoms/typography/text-block/index.ts"
 	},
 	"dependencies": {
 		"@policy/core": "0.1.0",

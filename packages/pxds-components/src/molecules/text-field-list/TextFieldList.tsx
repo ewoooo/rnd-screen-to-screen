@@ -5,6 +5,12 @@ import { Fragment } from "react";
 import { VStack } from "@pxds/pxds-layout/primitives";
 import { FormField } from "../form-field";
 import { TextField } from "../form-controls";
+import {
+	renderBoolean,
+	renderString,
+	type ComponentRenderReact,
+	type RenderReactPropValue,
+} from "../../render-react";
 
 export type TextFieldListField = {
 	id: string;
@@ -61,4 +67,37 @@ export function TextFieldList({
 			})}
 		</VStack>
 	);
+}
+
+export const textFieldListRenderReact: ComponentRenderReact = ({ node }) => (
+	<TextFieldList
+		fields={renderTextFieldListFields(node.props?.fields)}
+		values={{}}
+		onChange={() => undefined}
+	/>
+);
+
+function renderTextFieldListFields(
+	value: RenderReactPropValue | undefined,
+): readonly TextFieldListField[] {
+	if (!Array.isArray(value)) return [];
+	return value.flatMap((field) => {
+		if (!field || typeof field !== "object" || Array.isArray(field)) return [];
+		const id = renderString(field.id);
+		const label = renderString(field.label);
+		if (!id || !label) return [];
+		return [
+			{
+				id,
+				label,
+				placeholder: renderString(field.placeholder),
+				type: field.type === "password" ? "password" : "text",
+				required: renderBoolean(field.required, false),
+				helperText: renderString(field.helperText),
+				errorText: renderString(field.errorText),
+				maxLength:
+					typeof field.maxLength === "number" ? field.maxLength : undefined,
+			},
+		];
+	});
 }

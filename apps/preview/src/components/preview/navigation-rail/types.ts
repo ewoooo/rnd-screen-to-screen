@@ -1,5 +1,5 @@
 export type NavigationModeItem = {
-	id: "components" | "pages" | "policies";
+	id: "components" | "screens" | "policies";
 	label: string;
 	href: `/${string}`;
 };

@@ -1,6 +1,6 @@
-import { RenderScreen } from "../_render-screen";
-import { RENDER_SPEC } from "./render";
+import { RenderScreen } from "../core/screen-renderer";
+import { RENDER_TREE } from "./render-tree";
 
 export default function NovaMbrPg0020Page() {
-	return <RenderScreen spec={RENDER_SPEC} />;
+	return <RenderScreen spec={RENDER_TREE} />;
 }

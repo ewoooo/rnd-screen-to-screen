@@ -65,9 +65,6 @@
     "policyRefs": {
       "$ref": "#/$defs/stringList"
     },
-    "composedOf": {
-      "$ref": "#/$defs/stringList"
-    },
     "sbAliases": {
       "$ref": "#/$defs/stringList"
     },

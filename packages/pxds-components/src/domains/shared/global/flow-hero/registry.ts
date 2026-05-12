@@ -1,3 +1,5 @@
+import { flowHeroRenderReact } from ".";
+
 export const flowHeroRegistryEntry = {
 	id: "flow-hero",
 	name: "FlowHero",
@@ -13,4 +15,5 @@ export const flowHeroRegistryEntry = {
 		"text-block",
 		"layout-primitives",
 	],
+	renderReact: flowHeroRenderReact,
 } as const;

@@ -25,7 +25,7 @@ export {
 	useComponentToFigma,
 } from "./useComponentToFigma";
 export { useFigmaPluginExport } from "./useFigmaPluginExport";
-export { useFigmaPageExport } from "./useFigmaPageExport";
+export { useFigmaScreenExport } from "./useFigmaScreenExport";
 export { useTokensStudioExport } from "./useTokensStudioExport";
 export { useFigmaToComponent } from "../figma-to-component/useFigmaToComponent";
 export type { FigmaToComponentSource } from "../figma-to-component/source";

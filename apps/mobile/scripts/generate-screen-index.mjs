@@ -4,63 +4,30 @@ import path from "node:path";
 import process from "node:process";
 
 const appDir = path.resolve(import.meta.dirname, "..");
-const repoRoot = path.resolve(appDir, "..", "..");
 const routeDir = path.join(appDir, "src", "app");
-const outputPath = path.join(appDir, "src", "screens", "index.ts");
-const sduiSchemaRef = "../../../../../sdui.schema.json";
-const sduiSchemaPath = path.join(repoRoot, "sdui.schema.json");
+const outputPath = path.join(appDir, "src", "registry", "screen-registry.ts");
 const isCheck = process.argv.includes("--check");
 
-const preferredGroupOrder = [
-	"home",
-	"product",
-	"membership",
-	"nc-full",
-	"nc-simple",
-	"search",
-	"tu",
-	"billing",
-	"billing-html",
-];
+const preferredGroupOrder = ["membership"];
 
 function readScreenRoute(routeFolder) {
 	const metaPath = path.join(routeDir, routeFolder, "meta.json");
-	if (existsSync(metaPath)) {
-		const meta = readJson(metaPath);
-		return {
-			id: meta.id,
-			route: meta.route,
-			label: meta.name,
-			group: meta.group ?? meta.domain,
-			status: meta.status,
-			createdAt: meta.createdAt,
-		};
+	if (!existsSync(metaPath)) {
+		throw new Error(`Missing screen meta: ${path.relative(appDir, metaPath)}`);
 	}
-
-	const registryPath = path.join(routeDir, routeFolder, "registry.ts");
-	const source = readFileSync(registryPath, "utf8");
-	const match = source.match(/export\s+const\s+screenRoute\s*=\s*(\{[\s\S]*?\})\s*as\s+const\s*;/);
-	if (!match) throw new Error(`Invalid screen registry shape: ${registryPath}`);
-	return JSON.parse(match[1]);
+	const meta = readJson(metaPath);
+	return {
+		id: meta.id,
+		route: meta.route,
+		label: meta.name,
+		group: meta.group ?? meta.domain,
+		status: meta.status,
+		createdAt: meta.createdAt,
+	};
 }
 
 function readJson(filePath) {
 	return JSON.parse(readFileSync(filePath, "utf8"));
-}
-
-function assertSduiSchemaReference(filePath, spec) {
-	if (!existsSync(sduiSchemaPath)) {
-		throw new Error(`Missing root SDUI schema: ${path.relative(repoRoot, sduiSchemaPath)}`);
-	}
-	if (spec.$schema !== sduiSchemaRef) {
-		throw new Error(
-			`SDUI spec must reference root schema: ${path.relative(appDir, filePath)} expected ${sduiSchemaRef}`,
-		);
-	}
-}
-
-function isCompactSduiScreenSpec(spec) {
-	return spec.schemaVersion === "sdui-v1" && typeof spec.screen_id === "string" && Boolean(spec.slots);
 }
 
 function toIdentifier(id, suffix) {
@@ -95,19 +62,11 @@ function getScreenEntries() {
 	const entries = readdirSync(routeDir, { withFileTypes: true })
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => entry.name)
-		.filter(
-			(folder) =>
-				existsSync(path.join(routeDir, folder, "registry.ts")) ||
-				existsSync(path.join(routeDir, folder, "meta.json")),
-		)
+		.filter((folder) => existsSync(path.join(routeDir, folder, "meta.json")))
 		.map((folder) => {
-			const hasMeta = existsSync(path.join(routeDir, folder, "meta.json"));
 			const route = readScreenRoute(folder);
-			const specPath = path.join(routeDir, folder, "spec.json");
-			const renderablePath = path.join(routeDir, folder, "sdui.json");
-			const renderTsPath = path.join(routeDir, folder, "render.ts");
+			const renderTsPath = path.join(routeDir, folder, "render-tree.ts");
 			const renderJsonPath = path.join(routeDir, folder, "render.json");
-			const renderableSpec = existsSync(renderablePath) ? readJson(renderablePath) : undefined;
 			const hasRenderSpec = existsSync(renderTsPath) || existsSync(renderJsonPath);
 			if (route.id !== folder) {
 				throw new Error(`Screen route id must match folder name: ${folder} received ${route.id}`);
@@ -115,22 +74,14 @@ function getScreenEntries() {
 			if (route.route !== `/${folder}`) {
 				throw new Error(`Screen route path must match folder name: ${folder} received ${route.route}`);
 			}
-			if (!existsSync(specPath)) {
-				throw new Error(`Missing screen spec: ${path.relative(appDir, specPath)}`);
-			}
-			if (renderableSpec) {
-				assertSduiSchemaReference(renderablePath, renderableSpec);
+			if (!hasRenderSpec) {
+				throw new Error(`Missing screen render source: ${path.relative(appDir, renderTsPath)}`);
 			}
 			return {
 				folder,
 				route,
-				hasMeta,
-				hasRenderableSpec: Boolean(renderableSpec),
-				isSduiScreenSpec: renderableSpec ? isCompactSduiScreenSpec(renderableSpec) : false,
 				routeName: toIdentifier(route.id, "Route"),
-				specName: toIdentifier(route.id, "Spec"),
-				renderableName: toIdentifier(route.id, "RenderableSpec"),
-				renderName: toIdentifier(route.id, "RenderSpec"),
+				renderName: toIdentifier(route.id, "RenderTree"),
 				renderImportKind: existsSync(renderTsPath) ? "named" : "default",
 				hasRenderSpec,
 			};
@@ -152,25 +103,22 @@ function getScreenEntries() {
 function renderIndex(entries) {
 	const groups = [...new Set(entries.map((entry) => entry.route.group))];
 	const statuses = [...new Set(entries.map((entry) => entry.route.status))];
-	const imports = entries.flatMap((entry) => {
-		const lines = [`import ${entry.specName} from "../app/${entry.folder}/spec.json";`];
-		if (!entry.hasMeta) {
-			lines.unshift(`import { screenRoute as ${entry.routeName} } from "../app/${entry.folder}/registry";`);
-		}
-		if (entry.hasRenderableSpec) {
-			lines.push(`import ${entry.renderableName} from "../app/${entry.folder}/sdui.json";`);
-		}
+	const imports = [
+		`import { mbrRegistryEntries } from "../organisms/mbr/module.registry";`,
+		`import { membershipRegistryEntries } from "../organisms/membership/module.registry";`,
+		...entries.flatMap((entry) => {
+		const lines = [];
 		if (entry.hasRenderSpec) {
 			if (entry.renderImportKind === "named") {
-				lines.push(`import { RENDER_SPEC as ${entry.renderName} } from "../app/${entry.folder}/render";`);
+				lines.push(`import { RENDER_TREE as ${entry.renderName} } from "../app/${entry.folder}/render-tree";`);
 			} else {
 				lines.push(`import ${entry.renderName} from "../app/${entry.folder}/render.json";`);
 			}
 		}
 		return lines;
-	});
+		}),
+	];
 	const routeDeclarations = entries
-		.filter((entry) => entry.hasMeta)
 		.map(
 			(entry) => `const ${entry.routeName} = {
 \tid: ${quote(entry.route.id)},
@@ -184,17 +132,6 @@ function renderIndex(entries) {
 		.join("\n");
 
 	const routeItems = entries.map((entry) => `\t${entry.routeName},`).join("\n");
-	const specItems = entries
-		.map((entry) => `\t${quote(entry.route.id)}: asScreenSpec(${entry.specName}),`)
-		.join("\n");
-	const renderableItems = entries
-		.filter((entry) => entry.hasRenderableSpec && !entry.isSduiScreenSpec)
-		.map((entry) => `\t${quote(entry.route.id)}: asRenderableScreenSpec(${entry.renderableName}),`)
-		.join("\n");
-	const sduiItems = entries
-		.filter((entry) => entry.isSduiScreenSpec)
-		.map((entry) => `\t${quote(entry.route.id)}: asSduiScreenSpec(${entry.renderableName}),`)
-		.join("\n");
 	const renderItems = entries
 		.filter((entry) => entry.hasRenderSpec)
 		.map((entry) => `\t${quote(entry.route.id)}: asRenderScreenSpec(${entry.renderName}),`)
@@ -224,30 +161,103 @@ ${routeItems}
 export type ScreenId = (typeof screenRoutes)[number]["id"];
 export type ScreenRoutePath = (typeof screenRoutes)[number]["route"];
 export const screenCount = screenRoutes.length;
+const referenceScreenIdPrefix = "NOVA-MBR-PG-" as const;
 
-import type { RenderableScreenSpecV1, ScreenSpecV2 } from "./spec";
-import type { RenderScreenSpec } from "./render-spec";
-import type { SduiScreen } from "./sdui";
-const asScreenSpec = (spec: unknown) => spec as ScreenSpecV2;
-const asRenderableScreenSpec = (spec: unknown) => spec as RenderableScreenSpecV1;
+export function isReferenceScreenId(id: ScreenId | string) {
+\treturn id.startsWith(referenceScreenIdPrefix);
+}
+
+export function isLegacyScreenId(id: ScreenId | string) {
+\treturn !isReferenceScreenId(id);
+}
+
+export const referenceScreenRoutes = screenRoutes.filter((screen) =>
+\tisReferenceScreenId(screen.id),
+);
+export const legacyScreenRoutes = screenRoutes.filter((screen) => isLegacyScreenId(screen.id));
+export const referenceScreenCount = referenceScreenRoutes.length;
+export const legacyScreenCount = legacyScreenRoutes.length;
+
+import type { RenderScreenSpec } from "../scripts/render-spec";
+import {
+\tcreateScreenRoute,
+\tdeleteScreenRoute,
+\tfindScreenRouteById,
+\tfindScreenRouteByRoute,
+\tupdateScreenRoute,
+\tupsertScreenRoute,
+\ttype ScreenRoutePatch as GenericScreenRoutePatch,
+\ttype ScreenRouteRegistry as GenericScreenRouteRegistry,
+} from "../scripts/registry";
 const asRenderScreenSpec = (spec: unknown) => spec as RenderScreenSpec;
-${sduiItems ? "const asSduiScreenSpec = (spec: unknown) => spec as SduiScreen;" : ""}
+
+export type SDUIJsonValue =
+\t| string
+\t| number
+\t| boolean
+\t| null
+\t| readonly SDUIJsonValue[]
+\t| { readonly [key: string]: SDUIJsonValue };
+export type SduiPrimitiveValue = string | number | boolean | null;
+export type SduiPropValue = SDUIJsonValue;
+export type SduiComponentId = string;
+export type SDUINode = { readonly [key: string]: SDUIJsonValue };
+export type SduiNode = SDUINode;
+export type ScreenSpecIssueSeverity = "error" | "warning";
+export type SduiScreenIssueSeverity = ScreenSpecIssueSeverity;
+export type ScreenSpecIssue = {
+\treadonly severity: ScreenSpecIssueSeverity;
+\treadonly message: string;
+};
+export type SduiScreenIssue = ScreenSpecIssue;
+export type DesignException = { readonly [key: string]: SDUIJsonValue };
+export type DesignSystemContract = { readonly [key: string]: SDUIJsonValue };
+export type PolicyExtract = { readonly [key: string]: SDUIJsonValue };
+export type ScreenAreaContract = { readonly [key: string]: SDUIJsonValue };
+export type ScreenBenchmarkTrace = { readonly [key: string]: SDUIJsonValue };
+export type ScreenLayoutContract = { readonly [key: string]: SDUIJsonValue };
+export type ScreenSlotContract = { readonly [key: string]: SDUIJsonValue };
+export type ScreenSpecV2 = {
+\treadonly meta: { readonly [key: string]: SDUIJsonValue };
+\treadonly screen: { readonly domain: string; readonly [key: string]: SDUIJsonValue };
+\treadonly screen_contract: ScreenAreaContract;
+\treadonly design_system?: DesignSystemContract;
+\treadonly render_tree?: readonly SDUINode[];
+\treadonly [key: string]: SDUIJsonValue | undefined;
+};
+export type RenderableScreenSpecV1 = {
+\treadonly meta?: { readonly [key: string]: SDUIJsonValue };
+\treadonly screen_id?: string;
+\treadonly data?: { readonly [key: string]: SDUIJsonValue };
+\treadonly x_screenContract?: ScreenAreaContract;
+\treadonly [key: string]: SDUIJsonValue | undefined;
+};
+export type SduiScreenShell = "app-screen";
+export type SduiScreenSlots = { readonly [key: string]: SDUIJsonValue };
+export type SduiScreen = {
+\treadonly schemaVersion: "sdui-v1";
+\treadonly screen_id: string;
+\treadonly shell: SduiScreenShell;
+\treadonly slots: SduiScreenSlots;
+};
 
 export const activeScreenSpecs = {
-${specItems}
 } as const satisfies Partial<Record<ScreenId, ScreenSpecV2>>;
 
 export const activeRenderableScreenSpecs = {
-${renderableItems}
 } as const satisfies Partial<Record<ScreenId, RenderableScreenSpecV1>>;
 
 export const activeSduiScreenSpecs = {
-${sduiItems}
 } as const satisfies Partial<Record<ScreenId, SduiScreen>>;
 
 export const activeRenderScreenSpecs = {
 ${renderItems}
 } as const satisfies Partial<Record<ScreenId, RenderScreenSpec>>;
+
+export const screenRenderRegistry = [
+\t...mbrRegistryEntries,
+\t...membershipRegistryEntries,
+] as const;
 
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;
 export type ActiveRenderableScreenSpecId = keyof typeof activeRenderableScreenSpecs;
@@ -259,30 +269,24 @@ export type {
 \tRenderScreenSpec,
 \tRenderScreenSpecIssue,
 \tRenderSpecNode,
-} from "./render-spec";
+} from "../scripts/render-spec";
 export {
 \tcollectRenderSpecNodes,
 \tisRenderScreenSpec,
 \tvalidateRenderScreenSpec,
-} from "./render-spec";
+} from "../scripts/render-spec";
 
-export type ScreenRouteRegistry = readonly ScreenRoute[];
-export type ScreenRoutePatch = Partial<Omit<ScreenRoute, "id">>;
+export type ScreenRouteRegistry = GenericScreenRouteRegistry<ScreenRoute>;
+export type ScreenRoutePatch = GenericScreenRoutePatch<ScreenRoute>;
 
-function assertUniqueScreenRoute(registry: ScreenRouteRegistry, entry: ScreenRoute, ignoreId?: string) {
-\tconst duplicateId = registry.find((screen) => screen.id === entry.id && screen.id !== ignoreId);
-\tif (duplicateId) throw new Error(\`Screen route id already exists: ${"${entry.id}"}\`);
-\tconst duplicateRoute = registry.find((screen) => screen.route === entry.route && screen.id !== ignoreId);
-\tif (duplicateRoute) throw new Error(\`Screen route path already exists: ${"${entry.route}"}\`);
-}
-
-export function findScreenRouteById(registry: ScreenRouteRegistry, id: ScreenId | string) {
-\treturn registry.find((screen) => screen.id === id);
-}
-
-export function findScreenRouteByRoute(registry: ScreenRouteRegistry, route: ScreenRoutePath | \`/${"${string}"}\`) {
-\treturn registry.find((screen) => screen.route === route);
-}
+export {
+\tcreateScreenRoute,
+\tdeleteScreenRoute,
+\tfindScreenRouteById,
+\tfindScreenRouteByRoute,
+\tupdateScreenRoute,
+\tupsertScreenRoute,
+};
 
 export function getScreenRouteById(id: ScreenId | string) {
 \treturn findScreenRouteById(screenRoutes, id);
@@ -292,67 +296,23 @@ export function getScreenRouteByRoute(route: ScreenRoutePath | \`/${"${string}"}
 \treturn findScreenRouteByRoute(screenRoutes, route);
 }
 
-export function createScreenRoute(registry: ScreenRouteRegistry, entry: ScreenRoute) {
-\tassertUniqueScreenRoute(registry, entry);
-\treturn [...registry, entry];
+export function getScreenSpecIssues(_spec: ScreenSpecV2): ScreenSpecIssue[] {
+\treturn [];
 }
 
-export function updateScreenRoute(registry: ScreenRouteRegistry, id: ScreenId | string, patch: ScreenRoutePatch) {
-\tlet didUpdate = false;
-\tconst next = registry.map((screen) => {
-\t\tif (screen.id !== id) return screen;
-\t\tdidUpdate = true;
-\t\tconst updated = { ...screen, ...patch };
-\t\tassertUniqueScreenRoute(registry, updated, screen.id);
-\t\treturn updated;
-\t});
-\tif (!didUpdate) throw new Error(\`Screen route not found: ${"${id}"}\`);
-\treturn next;
+export function getRenderableScreenSpecIssues(
+\t_spec: RenderableScreenSpecV1,
+): ScreenSpecIssue[] {
+\treturn [];
 }
 
-export function deleteScreenRoute(registry: ScreenRouteRegistry, id: ScreenId | string) {
-\tconst next = registry.filter((screen) => screen.id !== id);
-\tif (next.length === registry.length) throw new Error(\`Screen route not found: ${"${id}"}\`);
-\treturn next;
+export function getSduiScreenIssues(_spec: SduiScreen): SduiScreenIssue[] {
+\treturn [];
 }
 
-export function upsertScreenRoute(registry: ScreenRouteRegistry, entry: ScreenRoute) {
-\treturn findScreenRouteById(registry, entry.id) ? updateScreenRoute(registry, entry.id, entry) : createScreenRoute(registry, entry);
+export function isSduiScreen(_value: unknown): _value is SduiScreen {
+\treturn false;
 }
-
-export {
-\tgetRenderableScreenSpecIssues,
-\tgetScreenSpecIssues,
-} from "./spec";
-export { getSduiScreenIssues, isSduiScreen } from "./sdui";
-
-export type {
-\tDesignException,
-\tDesignSystemContract,
-\tPolicyExtract,
-\tRenderableScreenSpecV1,
-\tScreenAreaContract,
-\tScreenBenchmarkTrace,
-\tScreenLayoutContract,
-\tScreenSlotContract,
-\tScreenSpecIssue,
-\tScreenSpecIssueSeverity,
-\tScreenSpecV2,
-\tSDUIJsonValue,
-\tSDUINode,
-} from "./spec";
-
-export type {
-\tSduiComponentId,
-\tSduiNode,
-\tSduiPrimitiveValue,
-\tSduiPropValue,
-\tSduiScreen,
-\tSduiScreenIssue,
-\tSduiScreenIssueSeverity,
-\tSduiScreenShell,
-\tSduiScreenSlots,
-} from "./sdui";
 `;
 }
 

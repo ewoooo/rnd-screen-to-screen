@@ -4,21 +4,22 @@ import { DatabaseIcon, LayoutTemplateIcon, UploadIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
 	createPxdsFigmaTokenTree,
-	createPageFigmaExportSpec,
+	createScreenFigmaExportSpec,
 	componentFigmaSpecRegistry,
 	getComponentFigmaSpec,
-	useFigmaPageExport,
+	useFigmaScreenExport,
 	useFigmaPluginExport,
 	useTokensStudioExport,
 } from "@pxds/pxds-figma";
 import tokenRegistry from "@pxds/pxds-tokens/registry/wds-token-registry.json";
 import { createPxdsTokensStudioJson } from "@pxds/pxds-tokens/tokens-studio";
 
-import { usePageRegistry } from "@/contexts/page-registry-context";
+import { useScreenRegistry } from "@/contexts/screen-registry-context";
 import {
 	activeRenderScreenSpecs,
 	activeRenderableScreenSpecs,
 	activeSduiScreenSpecs,
+	screenRenderRegistry,
 	type RenderScreenSpec,
 	type RenderableScreenSpecV1,
 	type SduiScreen,
@@ -28,11 +29,21 @@ import { ActionRailButton } from "./ActionRailButton";
 
 const figmaTokenTree = createPxdsFigmaTokenTree(tokenRegistry);
 const tokensStudioJson = createPxdsTokensStudioJson(tokenRegistry);
-const pageExportRegisteredComponentIds = componentFigmaSpecRegistry.map(
+type ScreenExportComponentSpecEntry = (typeof componentFigmaSpecRegistry)[number];
+const screenFigmaSpecRegistry = screenRenderRegistry.map((entry) => ({
+	componentId: entry.id,
+	exportMode: entry.exportMode,
+	render: entry.render?.(),
+})) satisfies readonly ScreenExportComponentSpecEntry[];
+const screenExportComponentSpecs = [
+	...componentFigmaSpecRegistry,
+	...screenFigmaSpecRegistry,
+] satisfies readonly ScreenExportComponentSpecEntry[];
+const screenExportRegisteredComponentIds = screenExportComponentSpecs.map(
 	(entry) => entry.componentId,
 );
-type PreviewPageExportSpec = RenderScreenSpec | RenderableScreenSpecV1 | SduiScreen;
-const pageExportSpecsById: Record<string, PreviewPageExportSpec> = {
+type PreviewScreenExportSpec = RenderScreenSpec | RenderableScreenSpecV1 | SduiScreen;
+const screenExportSpecsById: Record<string, PreviewScreenExportSpec> = {
 	...(activeRenderableScreenSpecs as Record<string, RenderableScreenSpecV1>),
 	...(activeSduiScreenSpecs as Record<string, SduiScreen>),
 	...(activeRenderScreenSpecs as Record<string, RenderScreenSpec>),
@@ -40,23 +51,23 @@ const pageExportSpecsById: Record<string, PreviewPageExportSpec> = {
 
 export function PreviewActionRail() {
 	const pathname = usePathname();
-	const { selectedRoute } = usePageRegistry();
+	const { selectedRoute } = useScreenRegistry();
 	const componentId = getComponentIdFromPath(pathname);
-	const pageId = getPageIdFromPath(pathname, selectedRoute.id);
+	const screenId = getScreenIdFromPath(pathname, selectedRoute.id);
 	const figmaSpec = getComponentFigmaSpec(componentId);
-	const renderablePageSpec = pageId ? (pageExportSpecsById[pageId] ?? null) : null;
-	const pageFigmaSpec = renderablePageSpec
-		? createPageFigmaExportSpec(renderablePageSpec, {
-				registeredComponentIds: pageExportRegisteredComponentIds,
+	const renderableScreenSpec = screenId ? (screenExportSpecsById[screenId] ?? null) : null;
+	const screenFigmaSpec = renderableScreenSpec
+		? createScreenFigmaExportSpec(renderableScreenSpec, {
+				registeredComponentIds: screenExportRegisteredComponentIds,
 			})
 		: null;
 	const componentExportLabel = figmaSpec
 		? "Figma 플러그인 코드 복사"
 		: "이 컴포넌트의 Figma 스펙이 아직 없습니다";
-	const canExportPage = pathname === "/pages";
-	const pageExportLabel = pageFigmaSpec
-		? "현재 페이지 Figma 코드 복사"
-		: "현재 페이지의 renderable spec이 없습니다";
+	const canExportScreen = pathname === "/screens";
+	const screenExportLabel = screenFigmaSpec
+		? "현재 스크린 Figma 코드 복사"
+		: "현재 스크린의 renderable spec이 없습니다";
 	const tokensStudioLabel = "Tokens Studio JSON 파일 생성";
 	const {
 		exportTokensStudioJson,
@@ -84,16 +95,16 @@ export function PreviewActionRail() {
 				: "PXDS preview",
 		});
 	const {
-		exportPageToFigma,
-		isCopying: isPageExportCopying,
-		isCopied: isPageExportCopied,
-		status: pageExportStatus,
-		error: pageExportError,
-	} = useFigmaPageExport({
-		spec: pageFigmaSpec,
+		exportScreenToFigma,
+		isCopying: isScreenExportCopying,
+		isCopied: isScreenExportCopied,
+		status: screenExportStatus,
+		error: screenExportError,
+	} = useFigmaScreenExport({
+		spec: screenFigmaSpec,
 		dsTokens: figmaTokenTree,
-		componentSpecs: componentFigmaSpecRegistry,
-		sourceLabel: pageId ? `PXDS preview page: ${pageId}` : "PXDS preview page",
+		componentSpecs: screenExportComponentSpecs,
+		sourceLabel: screenId ? `PXDS preview screen: ${screenId}` : "PXDS preview screen",
 	});
 
 	return (
@@ -116,11 +127,11 @@ export function PreviewActionRail() {
 			/>
 			<ActionRailButton
 				defaultIcon={LayoutTemplateIcon}
-				disabled={!canExportPage || !pageFigmaSpec || isPageExportCopying}
-				error={pageExportError}
-				label={pageExportLabel}
-				onClick={() => void exportPageToFigma()}
-				status={isPageExportCopied ? "copied" : pageExportStatus}
+				disabled={!canExportScreen || !screenFigmaSpec || isScreenExportCopying}
+				error={screenExportError}
+				label={screenExportLabel}
+				onClick={() => void exportScreenToFigma()}
+				status={isScreenExportCopied ? "copied" : screenExportStatus}
 			/>
 		</ActionRail>
 	);
@@ -131,7 +142,7 @@ function getComponentIdFromPath(pathname: string) {
 	return match?.[1] ?? null;
 }
 
-function getPageIdFromPath(pathname: string, selectedPageId: string) {
-	if (pathname !== "/pages") return null;
-	return selectedPageId;
+function getScreenIdFromPath(pathname: string, selectedScreenId: string) {
+	if (pathname !== "/screens") return null;
+	return selectedScreenId;
 }

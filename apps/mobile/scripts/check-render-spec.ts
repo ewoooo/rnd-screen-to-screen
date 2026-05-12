@@ -1,23 +1,25 @@
 import { componentRegistry } from "@pxds/pxds-components/registry";
 import {
 	activeRenderScreenSpecs,
+	screenRenderRegistry,
 	validateRenderScreenSpec,
 	type RenderScreenSpec,
 	type RenderScreenSpecIssue,
-} from "../src/screens";
+} from "../src/registry/screen-registry";
 
 type FileIssue = RenderScreenSpecIssue & {
 	file: string;
 };
 
 const entries = Object.entries(activeRenderScreenSpecs as Record<string, RenderScreenSpec>);
+const renderRegistry = [...componentRegistry, ...screenRenderRegistry];
 const issues: FileIssue[] = [];
 
 for (const [screenId, spec] of entries) {
 	issues.push(
-		...validateRenderScreenSpec(spec, componentRegistry).map((issue) => ({
+		...validateRenderScreenSpec(spec, renderRegistry).map((issue) => ({
 			...issue,
-			file: `src/app/${screenId}/render.ts`,
+			file: `src/app/${screenId}/render-tree.ts`,
 		})),
 	);
 }

@@ -31,6 +31,14 @@ export function renderString(value: RenderReactPropValue | undefined) {
 	return typeof value === "string" ? value : undefined;
 }
 
+export function renderStringArray(
+	value: RenderReactPropValue | undefined,
+): readonly string[] | undefined {
+	if (!Array.isArray(value)) return undefined;
+	const strings = value.filter((item): item is string => typeof item === "string");
+	return strings.length > 0 ? strings : undefined;
+}
+
 export function renderBoolean(
 	value: RenderReactPropValue | undefined,
 	fallback: boolean,

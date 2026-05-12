@@ -8,13 +8,22 @@
   "domain": "mbr",
   "group": "membership",
   "createdAt": "2026-05-11",
-  "sourceRefs": ["NOVA-MBR"],
-  "useCaseIds": ["UC-MBR-JOIN"],
-  "componentRefs": [
-    "progress-top-bar",
-    "ogn-mbr-section-header-page",
-    "ogn-mbr-section-message-join-complete-view",
-    "primary-cta-bar"
+  "sourceRefs": [
+    "NOVA-MBR"
   ],
-  "tags": ["mbr", "join", "complete"]
+  "policyRefs": [
+    "PG-MBR-COMPLETE-001"
+  ],
+  "useCaseIds": [
+    "UC-MBR-JOIN"
+  ],
+  "ognSpecIds": [
+    "ogn-MBR-section-header-page",
+    "ogn-MBR-section-message-join-complete-view"
+  ],
+  "tags": [
+    "mbr",
+    "join",
+    "complete"
+  ]
 }

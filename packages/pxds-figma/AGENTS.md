@@ -1,13 +1,13 @@
 # @pxds/pxds-figma
 
-Figma bridge, hooks, variables sync, component/page export, spec authoring을 소유한다. 별도 `figma-export` 앱을 두지 않고 순수 bridge/hook 기능은 이 패키지에 둔다.
+Figma bridge, hooks, variables sync, component/screen export, spec authoring을 소유한다. 별도 `figma-export` 앱을 두지 않고 순수 bridge/hook 기능은 이 패키지에 둔다.
 
 ## 책임
 
 - Figma Variables sync code 생성
 - Tokens Studio export hook
 - component spec registry와 component plugin build code
-- page export spec과 page build code
+- screen export spec과 screen build code
 - Figma capture helper hook
 - Figma URL → component source parsing
 
@@ -16,7 +16,7 @@ Figma bridge, hooks, variables sync, component/page export, spec authoring을 �
 - 브라우저 앱에서 Figma MCP를 직접 호출하지 않는다. preview 앱은 요청/코드 artifact를 만들고, Codex가 Figma MCP를 실행한다.
 - Figma plugin code는 가능한 독립 실행 가능한 JS로 생성한다.
 - `figma.notify` 등 Figma MCP `use_figma`에서 지원되지 않는 API를 MCP 실행 코드에 그대로 쓰지 않도록 주의한다. Figma plugin UI용 코드와 MCP 실행용 코드는 요구사항이 다를 수 있다.
-- component/page spec은 codebase vocabulary와 연결되어야 한다. raw pixel capture는 비교/레퍼런스이며 최종 구조화 export의 대체물이 아니다.
+- component/screen spec은 codebase vocabulary와 연결되어야 한다. raw pixel capture는 비교/레퍼런스이며 최종 구조화 export의 대체물이 아니다.
 
 ## Capture
 

@@ -26,7 +26,6 @@ import {
 } from "./molecules/molecules.registry";
 import { globalRegistryEntries } from "./domains/shared/global/global.registry";
 import { homeRegistryEntries } from "./domains/home/home.registry";
-import { mbrRegistryEntries } from "./domains/mbr/mbr.registry";
 import { ncSimpleRegistryEntries } from "./domains/nc-simple/nc-simple.registry";
 import { productRegistryEntries } from "./domains/product/product.registry";
 import { searchRegistryEntries } from "./domains/search/search.registry";
@@ -41,7 +40,7 @@ import {
 
 import type {
 	ComponentRegistryExportMode,
-	ComponentRenderContract,
+	ComponentRenderTree,
 } from "./schema";
 import type { ComponentRenderReact } from "./render-react";
 
@@ -55,8 +54,7 @@ export type ComponentLifecycleStatus =
 export type ComponentOwner =
 	| "@pxds/pxds-components"
 	| "@pxds/pxds-icons"
-	| "@pxds/pxds-layout"
-	| "@screen/mobile";
+	| "@pxds/pxds-layout";
 
 export type ComponentGroup =
 	| "feedback"
@@ -72,7 +70,6 @@ export type ComponentGroup =
 	| "selection"
 	| "template"
 	| "typography"
-	| "billing-html"
 	| "nc-simple"
 	| "tu";
 
@@ -84,7 +81,7 @@ export type PolicySlotBinding =
  * Component-level vocabulary record.
  *
  * The stable fields are for discovery and ownership. Optional export fields
- * connect the entry to a component-owned render contract without moving layout
+ * connect the entry to a component-owned render tree without moving layout
  * or instance details into the central registry table.
  */
 export type ComponentRegistryEntry = {
@@ -120,15 +117,15 @@ export type ComponentRegistryEntry = {
 	/**
 	 * Declares whether this component exports as a concrete instance or expands
 	 * into a render tree. Older entries omit this until their folder owns a
-	 * render.ts contract.
+	 * render-tree.ts definition.
 	 */
 	exportMode?: ComponentRegistryExportMode;
 	/**
-	 * Optional render contract owned by the component folder. Page/organism
+	 * Optional render tree owned by the component folder. Page/organism
 	 * entries typically expand through render-tree; molecule/atom entries can use
-	 * instance contracts.
+	 * instance definitions.
 	 */
-	render?: () => ComponentRenderContract;
+	render?: () => ComponentRenderTree;
 	/**
 	 * Optional React renderer owned by the component folder. The screen renderer
 	 * calls this without knowing component-specific props.
@@ -221,17 +218,6 @@ export const componentRegistry = [
 	...productRegistryEntries,
 	...searchRegistryEntries,
 	...ncSimpleRegistryEntries,
-	...mbrRegistryEntries,
-	{
-		id: "billing-html-screen",
-		name: "BillingHtmlScreen",
-		layer: "organism",
-		owner: "@screen/mobile",
-		importPath: "/mobile/app/billing-html",
-		group: "billing-html",
-		status: "experimental",
-		createdAt: "2026-05-07",
-	},
 	...tuRegistryEntries,
 	{
 		id: "app-screen",

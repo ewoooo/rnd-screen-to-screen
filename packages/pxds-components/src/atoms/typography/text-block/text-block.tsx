@@ -2,6 +2,7 @@ import { Typography } from "../../../core";
 import type { CSSProperties, ComponentProps } from "react";
 import {
 	renderString,
+	renderStringArray,
 	type ComponentRenderReact,
 } from "../../../render-react";
 
@@ -94,8 +95,8 @@ export function TextBlock({
 		style,
 	});
 	const content = lines
-		? lines.map((line, index) => (
-				<span key={`${line}-${index}`} style={{ display: "block" }}>
+		? lines.map((line) => (
+				<span key={line} style={{ display: "block" }}>
 					{line}
 				</span>
 			))
@@ -117,6 +118,7 @@ export function TextBlock({
 
 export const textBlockRenderReact: ComponentRenderReact = ({ node }) => {
 	const variant = textBlockVariant(node.props?.variant);
+	const lines = renderStringArray(node.props?.lines);
 	const text =
 		renderString(node.props?.text) ??
 		renderString(node.props?.title) ??
@@ -127,7 +129,7 @@ export const textBlockRenderReact: ComponentRenderReact = ({ node }) => {
 	return (
 		<TextBlock
 			variant={variant}
-			text={text}
+			{...(lines ? { lines } : { text })}
 			color={color || undefined}
 		/>
 	);

@@ -13,7 +13,7 @@ type NavigationModeId = NavigationModeItem["id"];
 
 const MODE_ICON: Record<NavigationModeId, LucideIcon> = {
 	components: ComponentIcon,
-	pages: PanelTopIcon,
+	screens: PanelTopIcon,
 	policies: BookOpenTextIcon,
 };
 
