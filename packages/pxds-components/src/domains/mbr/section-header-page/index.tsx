@@ -8,7 +8,16 @@ type Props = {
 
 export function SectionHeaderPage({ title }: Props) {
 	return (
-		<ContentSection>
+		<ContentSection
+			exportNode={{
+				type: "SectionHeaderPage",
+				id: "section-header-page",
+				props: {
+					componentId: "ogn-mbr-section-header-page",
+					title,
+				},
+			}}
+		>
 			<Box pt="group" pb="section">
 				<VStack gap="stack">
 					<TextBlock variant="displayTitle" lines={[title]} />

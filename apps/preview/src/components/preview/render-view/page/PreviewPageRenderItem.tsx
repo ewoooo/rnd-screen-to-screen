@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MobilePreviewFrame } from "@pxds/pxds-preview";
 
+import { MobilePreviewFrame } from "@/components/mobile-preview/MobilePreviewFrame";
 import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
 
 type PreviewPageRenderItemProps = {

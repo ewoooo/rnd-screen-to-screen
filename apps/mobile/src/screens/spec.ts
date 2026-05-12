@@ -58,6 +58,11 @@ export type DesignSystemContract = {
 	new_vocabulary_required: readonly string[];
 };
 
+/**
+ * @deprecated Page-rendering SSOT is the compact `SduiScreen` contract in
+ * `./sdui`. Keep this type only for legacy audit/spec artifacts during
+ * migration.
+ */
 export type ScreenSpecV2 = {
 	meta: {
 		schema_version: 2;
@@ -95,12 +100,23 @@ export type ScreenSpecV2 = {
 	design_system_contract: DesignSystemContract;
 };
 
+/**
+ * @deprecated Use `SduiPrimitiveValue` from `./sdui` for new renderable screens.
+ */
 export type SDUIPrimitiveValue = string | number | boolean | null;
+
+/**
+ * @deprecated Use `SduiPropValue` from `./sdui` for new renderable screens.
+ */
 export type SDUIJsonValue =
 	| SDUIPrimitiveValue
 	| readonly SDUIJsonValue[]
 	| { readonly [key: string]: SDUIJsonValue };
 
+/**
+ * @deprecated Use `SduiNode` from `./sdui`. This legacy node shape mixes
+ * implementation metadata, raw style escape hatches, and render tree concerns.
+ */
 export type SDUINode = {
 	type: string;
 	id: string;
@@ -240,6 +256,11 @@ export type ScreenBenchmarkTrace = {
 	notes?: readonly string[];
 };
 
+/**
+ * @deprecated Use compact `SduiScreen` from `./sdui` for new page rendering and
+ * Figma page export. This legacy type keeps policy extract, interface plan,
+ * screen contract, benchmark, data, and render tree in one document.
+ */
 export type RenderableScreenSpecV1 = {
 	version: "1.0.0";
 	minRendererVersion: string;
@@ -361,6 +382,9 @@ export function getScreenSpecIssues(spec: ScreenSpecV2): ScreenSpecIssue[] {
 	return issues;
 }
 
+/**
+ * @deprecated Use `getSduiScreenIssues` from `./sdui` for canonical SDUI.
+ */
 export function getRenderableScreenSpecIssues(
 	spec: RenderableScreenSpecV1,
 ): ScreenSpecIssue[] {

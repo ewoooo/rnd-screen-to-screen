@@ -48,11 +48,17 @@ export function ContentSection({
 	as = "section",
 	inset = "inherit",
 	children,
+	exportNode,
 	style,
 }: {
 	as?: ElementType;
 	inset?: ContentSectionInset;
 	children: ReactNode;
+	exportNode?: {
+		type: string;
+		id?: string;
+		props?: Record<string, unknown>;
+	};
 	style?: CSSProperties;
 }) {
 	const { inlineInset } = useContentInsetContext();
@@ -68,8 +74,9 @@ export function ContentSection({
 		<Element
 			as={as}
 			exportAttributes={createScreenExportAttributes({
-				type: "ContentSection",
-				props: { inset },
+				type: exportNode?.type ?? "ContentSection",
+				id: exportNode?.id,
+				props: { inset, ...(exportNode?.props ?? {}) },
 			})}
 			style={{ ...bleedStyle, ...style }}
 		>

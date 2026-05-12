@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "render-spec-v1",
+  "screen": {
+    "id": "NOVA-MBR-PG-002-0",
+    "name": "개인정보 입력",
+    "route": "/NOVA-MBR-PG-002-0",
+    "type": "page"
+  },
+  "slots": {
+    "systemHeader": true,
+    "header": {
+      "component": "progress-top-bar",
+      "props": {
+        "title": "회원 가입",
+        "leading": "back",
+        "progress": {
+          "label": "2 / 5",
+          "percent": 40,
+          "showLabel": true
+        }
+      }
+    },
+    "content": [
+      {
+        "component": "ogn-mbr-section-header-page",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "title": "개인정보 입력"
+        }
+      },
+      {
+        "component": "ogn-mbr-text-field-member-info",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "state": "default"
+        }
+      },
+      {
+        "component": "ogn-mbr-section-message-entry-branch",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "visible": false
+        }
+      }
+    ],
+    "bottom": false
+  }
+}

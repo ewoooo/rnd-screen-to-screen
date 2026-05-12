@@ -1,6 +1,7 @@
 import { Button } from "@pxds/pxds-components/core";
 
 import { Box } from "@pxds/pxds-layout/primitives";
+import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
 import { semanticSurface } from "@pxds/pxds-tokens";
 
 export type CtaTone = "default" | "destructive";
@@ -36,6 +37,20 @@ export function PrimaryCTABar({
 
 	return (
 		<Box
+			{...createScreenExportAttributes({
+				type: "PrimaryCTABar",
+				id: "primary-cta-bar",
+				props: {
+					componentId: "primary-cta-bar",
+					disabled,
+					hasSecondary,
+					hasTertiary,
+					primaryLabel,
+					secondaryLabel,
+					tertiaryLabel,
+					tone,
+				},
+			})}
 			display="grid"
 			gap="inline"
 			style={{

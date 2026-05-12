@@ -5,7 +5,7 @@ import {
 	createPageComponentAssembly,
 	type FigmaRendererComponentRegistry,
 	validateFigmaRendererTokens,
-} from "@pxds/pxds-figma-renderer";
+} from "../renderer";
 
 export type PageFigmaBuildCodeOptions = {
 	dsTokens?: unknown;
@@ -91,6 +91,7 @@ export function createPageFigmaBuildCode(
 		`// generated at: ${generatedAt}`,
 		"// Paste into Figma plugin JSON → Figma tab → Run",
 		"// Creates a PXDS page from registered component instances.",
+		"// Run PXDS Variables sync first to preserve token bindings; raw values are only fallbacks.",
 		"// =============================================",
 		"",
 	].join("\n");

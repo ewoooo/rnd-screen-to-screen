@@ -38,6 +38,7 @@
 		"./product": "./src/domains/product/index.ts",
 		"./product/types": "./src/domains/product/types.ts",
 		"./search": "./src/domains/search/index.ts",
+		"./schema": "./src/schema/index.ts",
 		"./tu": "./src/domains/tu/index.tsx",
 		"./registry": "./src/registry.ts",
 		"./atoms/typography": "./src/atoms/typography/index.ts",

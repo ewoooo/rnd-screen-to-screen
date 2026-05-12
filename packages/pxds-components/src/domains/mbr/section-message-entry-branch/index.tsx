@@ -43,7 +43,17 @@ export function SectionMessageEntryBranch({
 	if (!visible) return null;
 	const copy = COPY[kind];
 	return (
-		<ContentSection>
+		<ContentSection
+			exportNode={{
+				type: "SectionMessageEntryBranch",
+				id: "section-message-entry-branch",
+				props: {
+					componentId: "ogn-mbr-section-message-entry-branch",
+					kind,
+					visible,
+				},
+			}}
+		>
 			<VStack gap="block">
 				<SectionMessage variant="cautionary" description={copy.description}>
 					{copy.title}

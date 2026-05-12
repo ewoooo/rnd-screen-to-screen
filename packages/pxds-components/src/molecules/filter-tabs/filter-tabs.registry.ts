@@ -1,3 +1,5 @@
+import { filterTabsFigmaSpec } from "./filter-tabs.figma";
+
 export const filterTabsRegistryEntry = {
 	id: "filter-tabs",
 	name: "FilterTabs",
@@ -7,6 +9,7 @@ export const filterTabsRegistryEntry = {
 	group: "selection",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => filterTabsFigmaSpec,
 	composedOf: [
 		"wds-tab",
 		"wds-tab-list",

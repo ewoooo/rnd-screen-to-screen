@@ -338,8 +338,21 @@ function setFloatField(tgt, field, ref, tokens) {
 function buildSolidPaint(rgbColor, variableId) {
   const paint = { type: "SOLID", color: { r: rgbColor.r, g: rgbColor.g, b: rgbColor.b } };
   if (variableId && variableColorMatchesRaw(variableId, rgbColor)) {
-    paint.boundVariables = { color: { type: "VARIABLE_ALIAS", id: variableId } };
+    return bindPaintVariable(paint, variableId);
   }
+  return paint;
+}
+
+function bindPaintVariable(paint, variableId) {
+  const variable = _varObjCache ? _varObjCache[variableId] : null;
+  if (variable && figma.variables && typeof figma.variables.setBoundVariableForPaint === "function") {
+    try {
+      return figma.variables.setBoundVariableForPaint(paint, "color", variable);
+    } catch (e) {
+      console.warn("setBoundVariableForPaint failed:", variableId, e && e.message ? e.message : e);
+    }
+  }
+  paint.boundVariables = { color: { type: "VARIABLE_ALIAS", id: variableId } };
   return paint;
 }
 

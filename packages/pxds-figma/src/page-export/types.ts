@@ -6,6 +6,7 @@ export type PageFigmaNodeSpec = {
 	componentId: string;
 	registered: boolean;
 	slot?: PageFigmaSlot;
+	section?: Record<string, unknown>;
 	props?: Record<string, unknown>;
 	children?: readonly PageFigmaNodeSpec[];
 };

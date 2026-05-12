@@ -32,8 +32,22 @@ import membershipPersonalInfoRenderableSpec from "../app/membership-personal-inf
 import { screenRoute as membershipTermsConsentRoute } from "../app/membership-terms-consent/registry";
 import membershipTermsConsentSpec from "../app/membership-terms-consent/spec.json";
 import membershipTermsConsentRenderableSpec from "../app/membership-terms-consent/sdui.json";
+import { screenRoute as novaMbrPg0010Route } from "../app/NOVA-MBR-PG-001-0/registry";
+import novaMbrPg0010Spec from "../app/NOVA-MBR-PG-001-0/spec.json";
+import { novaMbrPg0010RenderSpec } from "../app/NOVA-MBR-PG-001-0/render";
+import novaMbrPg0010RenderableSpec from "../app/NOVA-MBR-PG-001-0/sdui.json";
 import { screenRoute as novaMbrPg0020Route } from "../app/NOVA-MBR-PG-002-0/registry";
 import novaMbrPg0020Spec from "../app/NOVA-MBR-PG-002-0/spec.json";
+import novaMbrPg0020RenderSpec from "../app/NOVA-MBR-PG-002-0/render.json";
+import novaMbrPg0020RenderableSpec from "../app/NOVA-MBR-PG-002-0/sdui.json";
+import { screenRoute as novaMbrPg0030Route } from "../app/NOVA-MBR-PG-003-0/registry";
+import novaMbrPg0030Spec from "../app/NOVA-MBR-PG-003-0/spec.json";
+import novaMbrPg0030RenderSpec from "../app/NOVA-MBR-PG-003-0/render.json";
+import novaMbrPg0030RenderableSpec from "../app/NOVA-MBR-PG-003-0/sdui.json";
+import { screenRoute as novaMbrPg0050Route } from "../app/NOVA-MBR-PG-005-0/registry";
+import novaMbrPg0050Spec from "../app/NOVA-MBR-PG-005-0/spec.json";
+import novaMbrPg0050RenderSpec from "../app/NOVA-MBR-PG-005-0/render.json";
+import novaMbrPg0050RenderableSpec from "../app/NOVA-MBR-PG-005-0/sdui.json";
 import { screenRoute as ncFullDormancyAuthRoute } from "../app/nc-full-dormancy-auth/registry";
 import ncFullDormancyAuthSpec from "../app/nc-full-dormancy-auth/spec.json";
 import ncFullDormancyAuthRenderableSpec from "../app/nc-full-dormancy-auth/sdui.json";
@@ -355,7 +369,10 @@ export const screenRoutes = [
 	membershipLeaveReasonRoute,
 	membershipPersonalInfoRoute,
 	membershipTermsConsentRoute,
+	novaMbrPg0010Route,
 	novaMbrPg0020Route,
+	novaMbrPg0030Route,
+	novaMbrPg0050Route,
 	ncFullDormancyAuthRoute,
 	ncFullDormancyLoginRoute,
 	ncFullDormancyResultRoute,
@@ -459,8 +476,12 @@ export type ScreenRoutePath = (typeof screenRoutes)[number]["route"];
 export const screenCount = screenRoutes.length;
 
 import type { RenderableScreenSpecV1, ScreenSpecV2 } from "./spec";
+import type { RenderScreenSpec } from "./render-spec";
+import type { SduiScreen } from "./sdui";
 const asScreenSpec = (spec: unknown) => spec as ScreenSpecV2;
 const asRenderableScreenSpec = (spec: unknown) => spec as RenderableScreenSpecV1;
+const asRenderScreenSpec = (spec: unknown) => spec as RenderScreenSpec;
+const asSduiScreenSpec = (spec: unknown) => spec as SduiScreen;
 
 export const activeScreenSpecs = {
 	"home-benefit": asScreenSpec(homeBenefitSpec),
@@ -476,7 +497,10 @@ export const activeScreenSpecs = {
 	"membership-leave-reason": asScreenSpec(membershipLeaveReasonSpec),
 	"membership-personal-info": asScreenSpec(membershipPersonalInfoSpec),
 	"membership-terms-consent": asScreenSpec(membershipTermsConsentSpec),
+	"NOVA-MBR-PG-001-0": asScreenSpec(novaMbrPg0010Spec),
 	"NOVA-MBR-PG-002-0": asScreenSpec(novaMbrPg0020Spec),
+	"NOVA-MBR-PG-003-0": asScreenSpec(novaMbrPg0030Spec),
+	"NOVA-MBR-PG-005-0": asScreenSpec(novaMbrPg0050Spec),
 	"nc-full-dormancy-auth": asScreenSpec(ncFullDormancyAuthSpec),
 	"nc-full-dormancy-login": asScreenSpec(ncFullDormancyLoginSpec),
 	"nc-full-dormancy-result": asScreenSpec(ncFullDormancyResultSpec),
@@ -678,8 +702,36 @@ export const activeRenderableScreenSpecs = {
 	"billing-html-target-select": asRenderableScreenSpec(billingHtmlTargetSelectRenderableSpec),
 } as const satisfies Partial<Record<ScreenId, RenderableScreenSpecV1>>;
 
+export const activeSduiScreenSpecs = {
+	"NOVA-MBR-PG-001-0": asSduiScreenSpec(novaMbrPg0010RenderableSpec),
+	"NOVA-MBR-PG-002-0": asSduiScreenSpec(novaMbrPg0020RenderableSpec),
+	"NOVA-MBR-PG-003-0": asSduiScreenSpec(novaMbrPg0030RenderableSpec),
+	"NOVA-MBR-PG-005-0": asSduiScreenSpec(novaMbrPg0050RenderableSpec),
+} as const satisfies Partial<Record<ScreenId, SduiScreen>>;
+
+export const activeRenderScreenSpecs = {
+	"NOVA-MBR-PG-001-0": asRenderScreenSpec(novaMbrPg0010RenderSpec),
+	"NOVA-MBR-PG-002-0": asRenderScreenSpec(novaMbrPg0020RenderSpec),
+	"NOVA-MBR-PG-003-0": asRenderScreenSpec(novaMbrPg0030RenderSpec),
+	"NOVA-MBR-PG-005-0": asRenderScreenSpec(novaMbrPg0050RenderSpec),
+} as const satisfies Partial<Record<ScreenId, RenderScreenSpec>>;
+
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;
 export type ActiveRenderableScreenSpecId = keyof typeof activeRenderableScreenSpecs;
+export type ActiveRenderScreenSpecId = keyof typeof activeRenderScreenSpecs;
+
+export type {
+	RenderComponentId,
+	RenderPropValue,
+	RenderScreenSpec,
+	RenderScreenSpecIssue,
+	RenderSpecNode,
+} from "./render-spec";
+export {
+	collectRenderSpecNodes,
+	isRenderScreenSpec,
+	validateRenderScreenSpec,
+} from "./render-spec";
 
 export type ScreenRouteRegistry = readonly ScreenRoute[];
 export type ScreenRoutePatch = Partial<Omit<ScreenRoute, "id">>;
@@ -739,6 +791,7 @@ export {
 	getRenderableScreenSpecIssues,
 	getScreenSpecIssues,
 } from "./spec";
+export { getSduiScreenIssues, isSduiScreen } from "./sdui";
 
 export type {
 	DesignException,
@@ -755,3 +808,15 @@ export type {
 	SDUIJsonValue,
 	SDUINode,
 } from "./spec";
+
+export type {
+	SduiComponentId,
+	SduiNode,
+	SduiPrimitiveValue,
+	SduiPropValue,
+	SduiScreen,
+	SduiScreenIssue,
+	SduiScreenIssueSeverity,
+	SduiScreenShell,
+	SduiScreenSlots,
+} from "./sdui";

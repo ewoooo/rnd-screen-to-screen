@@ -11,7 +11,9 @@
 		"start": "next start -p 3001",
 		"lint": "eslint",
 		"generate:screens": "node scripts/generate-screen-index.mjs",
-		"check:screens": "node scripts/generate-screen-index.mjs --check"
+		"check:screens": "node scripts/generate-screen-index.mjs --check",
+		"check:render-spec": "node scripts/check-render-spec.mjs",
+		"check:sdui": "node scripts/check-sdui.mjs"
   },
   "dependencies": {
     "@pxds/pxds-components": "0.1.0",

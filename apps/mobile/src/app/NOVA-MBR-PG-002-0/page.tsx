@@ -1,29 +1,9 @@
-"use client";
+import { RenderSpecScreen } from "../_render-spec-screen";
+import renderSpec from "./render.json";
+import type { RenderScreenSpec } from "@/screens/render-spec";
 
-import {
-	SectionHeaderPage,
-	SectionMessageEntryBranch,
-	TextFieldMemberInfo,
-} from "@pxds/pxds-components/mbr";
-import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
-import { AppScreen } from "@pxds/pxds-layout/app-screen";
+const spec = renderSpec as unknown as RenderScreenSpec;
 
 export default function NovaMbrPg0020Page() {
-	return (
-		<AppScreen>
-			<AppScreen.SystemHeader />
-			<AppScreen.Header>
-				<ProgressTopBar
-					title="회원 가입"
-					leading="back"
-					progress={{ label: "2 / 5", percent: 40, showLabel: true }}
-				/>
-			</AppScreen.Header>
-			<AppScreen.Content>
-				<SectionHeaderPage title="개인정보 입력" />
-				<TextFieldMemberInfo state="default" />
-				<SectionMessageEntryBranch visible={false} />
-			</AppScreen.Content>
-		</AppScreen>
-	);
+	return <RenderSpecScreen spec={spec} />;
 }

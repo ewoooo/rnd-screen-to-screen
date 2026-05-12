@@ -1,3 +1,5 @@
+import { selectableListFigmaSpec } from "./selectable-list.figma";
+
 export const selectableListRegistryEntry = {
 	id: "selectable-list",
 	name: "SelectableList",
@@ -7,6 +9,7 @@ export const selectableListRegistryEntry = {
 	group: "selection",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => selectableListFigmaSpec,
 	composedOf: [
 		"wds-list",
 		"wds-list-cell",

@@ -40,7 +40,16 @@ export function TextFieldMemberInfo({
 	);
 
 	return (
-		<ContentSection>
+		<ContentSection
+			exportNode={{
+				type: "TextFieldMemberInfo",
+				id: "text-field-member-info",
+				props: {
+					componentId: "ogn-mbr-text-field-member-info",
+					state,
+				},
+			}}
+		>
 			<VStack gap="block">
 				{idPart ? (
 					<HStack gap="inline" align="end">

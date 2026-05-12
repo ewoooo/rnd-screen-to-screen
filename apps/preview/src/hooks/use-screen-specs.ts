@@ -1,11 +1,36 @@
 import {
-	getRenderableScreenSpecById,
-	getRenderableScreenSpecEntries,
-	getRenderableScreenSpecIssueSummary,
-	getScreenSpecById,
-	getScreenSpecEntries,
-	getScreenSpecIssueSummary,
-} from "@/utils/screen-specs";
+	activeRenderableScreenSpecs,
+	activeRenderScreenSpecs,
+	activeScreenSpecs,
+	activeSduiScreenSpecs,
+	getRenderableScreenSpecIssues,
+	getSduiScreenIssues,
+	getScreenSpecIssues,
+	validateRenderScreenSpec,
+	type RenderScreenSpec,
+	type RenderableScreenSpecV1,
+	type ScreenSpecV2,
+	type SduiScreen,
+} from "@screen/mobile/screens";
+import { componentRegistry } from "@pxds/pxds-components/registry";
+
+const screenSpecsById = activeScreenSpecs as Record<string, ScreenSpecV2>;
+const renderableScreenSpecsById = activeRenderableScreenSpecs as Record<
+	string,
+	RenderableScreenSpecV1
+>;
+const sduiScreenSpecsById = activeSduiScreenSpecs as Record<string, SduiScreen>;
+const renderScreenSpecsById = activeRenderScreenSpecs as Record<
+	string,
+	RenderScreenSpec
+>;
+type PreviewRenderableScreenSpec = RenderScreenSpec | RenderableScreenSpecV1 | SduiScreen;
+const previewRenderableScreenSpecsById: Record<string, PreviewRenderableScreenSpec> =
+	{
+		...renderableScreenSpecsById,
+		...sduiScreenSpecsById,
+		...renderScreenSpecsById,
+	};
 
 type UseScreenSpecsOptions = {
 	selectedId?: string;
@@ -13,23 +38,49 @@ type UseScreenSpecsOptions = {
 
 export function useScreenSpecs(options: UseScreenSpecsOptions = {}) {
 	const selectedSpec = options.selectedId
-		? getScreenSpecById(options.selectedId)
+		? screenSpecsById[options.selectedId]
 		: undefined;
 	const selectedRenderableSpec = options.selectedId
-		? getRenderableScreenSpecById(options.selectedId)
+		? previewRenderableScreenSpecsById[options.selectedId]
 		: undefined;
 
+	const specEntries = Object.entries(screenSpecsById);
+	const renderableSpecEntries = Object.entries(previewRenderableScreenSpecsById);
+
 	return {
-		specEntries: getScreenSpecEntries(),
-		renderableSpecEntries: getRenderableScreenSpecEntries(),
-		specCount: getScreenSpecEntries().length,
-		renderableSpecCount: getRenderableScreenSpecEntries().length,
+		specEntries,
+		renderableSpecEntries,
+		specCount: specEntries.length,
+		renderableSpecCount: renderableSpecEntries.length,
 		selectedSpec,
 		selectedRenderableSpec,
-		selectedSpecIssues: getScreenSpecIssueSummary(selectedSpec),
-		selectedRenderableSpecIssues:
-			getRenderableScreenSpecIssueSummary(selectedRenderableSpec),
-		getScreenSpecById,
-		getRenderableScreenSpecById,
+		selectedSpecIssues: selectedSpec ? getScreenSpecIssues(selectedSpec) : [],
+		selectedRenderableSpecIssues: selectedRenderableSpec
+			? getPreviewRenderableSpecIssues(selectedRenderableSpec)
+			: [],
+		getScreenSpecById: (id: string) => screenSpecsById[id],
+		getRenderableScreenSpecById: (id: string) =>
+			previewRenderableScreenSpecsById[id],
 	};
+}
+
+function getPreviewRenderableSpecIssues(spec: PreviewRenderableScreenSpec) {
+	if (isRenderScreenSpec(spec)) {
+		return validateRenderScreenSpec(spec, componentRegistry, {
+			requireFigmaSpec: true,
+		});
+	}
+	return isSduiScreenSpec(spec)
+		? getSduiScreenIssues(spec)
+		: getRenderableScreenSpecIssues(spec);
+}
+
+function isSduiScreenSpec(spec: PreviewRenderableScreenSpec): spec is SduiScreen {
+	return "schemaVersion" in spec && spec.schemaVersion === "sdui-v1";
+}
+
+function isRenderScreenSpec(
+	spec: PreviewRenderableScreenSpec,
+): spec is RenderScreenSpec {
+	return "schemaVersion" in spec && spec.schemaVersion === "render-spec-v1";
 }

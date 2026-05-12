@@ -24,8 +24,16 @@ import { createPxdsTokensStudioJson } from "@pxds/pxds-tokens/tokens-studio";
 
 import { usePageRegistry } from "@/contexts/page-registry-context";
 import { useFigmaMcpRequest } from "@/hooks/use-figma-mcp-request";
+import { useScreenTreeFigmaExport } from "@/hooks/use-screen-tree-figma-export";
 import type { FigmaMcpExportRequest } from "@/utils/figma-mcp-request";
-import { getRenderableScreenSpecById } from "@/utils/screen-specs";
+import {
+	activeRenderScreenSpecs,
+	activeRenderableScreenSpecs,
+	activeSduiScreenSpecs,
+	type RenderScreenSpec,
+	type RenderableScreenSpecV1,
+	type SduiScreen,
+} from "@screen/mobile/screens";
 import { ActionRail } from "./ActionRail";
 import { ActionRailButton } from "./ActionRailButton";
 
@@ -34,15 +42,22 @@ const tokensStudioJson = createPxdsTokensStudioJson(tokenRegistry);
 const pageExportRegisteredComponentIds = componentFigmaSpecRegistry.map(
 	(entry) => entry.componentId,
 );
+type PreviewPageExportSpec = RenderScreenSpec | RenderableScreenSpecV1 | SduiScreen;
+const pageExportSpecsById: Record<string, PreviewPageExportSpec> = {
+	...(activeRenderableScreenSpecs as Record<string, RenderableScreenSpecV1>),
+	...(activeSduiScreenSpecs as Record<string, SduiScreen>),
+	...(activeRenderScreenSpecs as Record<string, RenderScreenSpec>),
+};
 
 export function PreviewActionRail() {
 	const pathname = usePathname();
 	const { selectedRoute } = usePageRegistry();
 	const componentId = getComponentIdFromPath(pathname);
 	const pageId = getPageIdFromPath(pathname, selectedRoute.id);
+	const pageIframeSrc = getPageIframeSrc(selectedRoute.route);
 	const component = componentId ? getComponentById(componentId) : null;
 	const figmaSpec = getComponentFigmaSpec(componentId);
-	const renderablePageSpec = pageId ? getRenderableScreenSpecById(pageId) : null;
+	const renderablePageSpec = pageId ? (pageExportSpecsById[pageId] ?? null) : null;
 	const pageFigmaSpec = renderablePageSpec
 		? createPageFigmaExportSpec(renderablePageSpec, {
 				registeredComponentIds: pageExportRegisteredComponentIds,
@@ -53,7 +68,7 @@ export function PreviewActionRail() {
 		: "이 컴포넌트의 Figma 스펙이 아직 없습니다";
 	const canExportPage = pathname === "/pages";
 	const pageExportLabel = pageFigmaSpec
-		? "현재 페이지 Figma 파일 생성"
+		? "현재 페이지 Figma 코드 복사"
 		: "현재 페이지의 renderable spec이 없습니다";
 	const tokensStudioLabel = "Tokens Studio JSON 파일 생성";
 	const figmaVariablesLabel = "Figma Variables sync 파일 생성";
@@ -100,12 +115,11 @@ export function PreviewActionRail() {
 		});
 	const {
 		exportPageToFigma,
-		isCreating: isPageExportCreating,
-		isCreated: isPageExportCreated,
+		isCopying: isPageExportCopying,
+		isCopied: isPageExportCopied,
 		status: pageExportStatus,
 		error: pageExportError,
 	} = useFigmaPageExport({
-		fileName: pageId ? `pxds-page-${pageId}.js` : "pxds-page-export.js",
 		spec: pageFigmaSpec,
 		dsTokens: figmaTokenTree,
 		componentSpecs: componentFigmaSpecRegistry,
@@ -119,6 +133,13 @@ export function PreviewActionRail() {
 		status: figmaMcpRequestStatus,
 		error: figmaMcpRequestError,
 	} = useFigmaMcpRequest();
+	const {
+		exportScreenTreeToFigma,
+		isCopying: isScreenTreeExportCopying,
+		isCopied: isScreenTreeExportCopied,
+		status: screenTreeExportStatus,
+		error: screenTreeExportError,
+	} = useScreenTreeFigmaExport();
 	const figmaMcpLabel = getFigmaMcpLabel({
 		error: figmaMcpRequestError,
 		isCreated: isFigmaMcpRequestCreated,
@@ -167,11 +188,28 @@ export function PreviewActionRail() {
 			/>
 			<ActionRailButton
 				defaultIcon={LayoutTemplateIcon}
-				disabled={!canExportPage || !pageFigmaSpec || isPageExportCreating}
+				disabled={!canExportPage || !pageFigmaSpec || isPageExportCopying}
 				error={pageExportError}
 				label={pageExportLabel}
 				onClick={() => void exportPageToFigma()}
-				status={isPageExportCreated ? "created" : pageExportStatus}
+				status={isPageExportCopied ? "copied" : pageExportStatus}
+			/>
+			<ActionRailButton
+				defaultIcon={LayoutTemplateIcon}
+				disabled={!canExportPage || isScreenTreeExportCopying}
+				error={screenTreeExportError}
+				label="현재 렌더 트리 Figma 코드 복사"
+				onClick={() =>
+					void exportScreenTreeToFigma({
+						id: selectedRoute.id,
+						iframeSrc: pageIframeSrc,
+						name: selectedRoute.label,
+						route: selectedRoute.route,
+					})
+				}
+				status={
+					isScreenTreeExportCopied ? "copied" : screenTreeExportStatus
+				}
 			/>
 		</ActionRail>
 	);
@@ -185,6 +223,12 @@ function getComponentIdFromPath(pathname: string) {
 function getPageIdFromPath(pathname: string, selectedPageId: string) {
 	if (pathname !== "/pages") return null;
 	return selectedPageId;
+}
+
+function getPageIframeSrc(route: string) {
+	const mobileOrigin =
+		process.env.NEXT_PUBLIC_MOBILE_ORIGIN ?? "http://localhost:3001";
+	return `${mobileOrigin}${route}`;
 }
 
 type FigmaMcpTargetInput = {
@@ -213,15 +257,12 @@ function getFigmaMcpTarget({
 	}
 
 	if (pathname === "/pages") {
-		const mobileOrigin =
-			process.env.NEXT_PUBLIC_MOBILE_ORIGIN ?? "http://localhost:3001";
-
 		return {
 			kind: "page" as const,
 			id: selectedRoute.id,
 			name: selectedRoute.label,
 			sourcePath: pathname,
-			previewUrl: `${mobileOrigin}${selectedRoute.route}`,
+			previewUrl: getPageIframeSrc(selectedRoute.route),
 		};
 	}
 

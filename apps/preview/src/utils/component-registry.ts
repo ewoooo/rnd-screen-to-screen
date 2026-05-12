@@ -22,6 +22,7 @@ export const COMPONENT_GROUP_ORDER = [
 	"template",
 	"global",
 	"home",
+	"mbr",
 	"product",
 	"search",
 	"tu",

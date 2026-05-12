@@ -2,8 +2,10 @@ import { FIGMA_VARIABLES_SYNC_RUNTIME_SOURCE } from "./runtime/figma-variables-s
 
 export type PxdsFigmaVariablesSyncCodeOptions = {
 	collectionName?: string;
+	includeTextStyles?: boolean;
 	runtimeSource?: string;
 	sourceLabel?: string;
+	textStylePrefix?: string;
 };
 
 export type PxdsFigmaVariablesSyncPayload = {
@@ -14,8 +16,10 @@ export type PxdsFigmaVariablesSyncPayload = {
 
 const DEFAULT_OPTIONS = {
 	collectionName: "PXDS",
+	includeTextStyles: true,
 	runtimeSource: FIGMA_VARIABLES_SYNC_RUNTIME_SOURCE,
 	sourceLabel: "PXDS Figma Variables sync",
+	textStylePrefix: "PXDS",
 } satisfies Required<PxdsFigmaVariablesSyncCodeOptions>;
 
 export function createPxdsFigmaVariablesSyncPayload(
@@ -57,6 +61,8 @@ export function createPxdsFigmaVariablesSyncCode(
 		`const PXDS_FIGMA_VARIABLES_SYNC_OPTIONS = ${JSON.stringify(
 			{
 				collectionName: payload.options.collectionName,
+				includeTextStyles: payload.options.includeTextStyles,
+				textStylePrefix: payload.options.textStylePrefix,
 			},
 			null,
 			2,
@@ -72,4 +78,3 @@ export function createPxdsFigmaVariablesSyncCode(
 		"",
 	].join("\n");
 }
-

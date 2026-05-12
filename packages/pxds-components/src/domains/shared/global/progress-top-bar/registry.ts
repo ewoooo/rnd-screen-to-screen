@@ -1,3 +1,5 @@
+import { progressTopBarFigmaSpec } from "./figma";
+
 export const progressTopBarRegistryEntry = {
 	id: "progress-top-bar",
 	name: "ProgressTopBar",
@@ -7,6 +9,7 @@ export const progressTopBarRegistryEntry = {
 	group: "global",
 	status: "active",
 	createdAt: "2026-05-07",
+	figmaSpec: () => progressTopBarFigmaSpec,
 	composedOf: [
 		"wds-top-navigation",
 		"wds-top-navigation-button",

@@ -1,4 +1,4 @@
-@import "@pxds/pxds-preview/styles.css";
+@import "../../components/mobile-preview/styles.css";
 
 .preview-shell-root {
 	min-height: 100dvh;

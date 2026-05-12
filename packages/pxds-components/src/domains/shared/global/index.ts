@@ -11,6 +11,7 @@ export {
 	type ProgressTopBarLeading,
 	type ProgressTopBarProgress,
 } from "./progress-top-bar";
+export { progressTopBarFigmaSpec } from "./progress-top-bar/figma";
 export { FlowHero } from "./flow-hero";
 export { FlowContinueBar } from "./flow-continue-bar";
 export { FlowNotice } from "./flow-notice";

@@ -1,3 +1,5 @@
+import { primaryCtaBarFigmaSpec } from "./cta-bar.figma";
+
 export const primaryCtaBarRegistryEntry = {
 	id: "primary-cta-bar",
 	name: "PrimaryCTABar",
@@ -7,6 +9,7 @@ export const primaryCtaBarRegistryEntry = {
 	group: "navigation",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => primaryCtaBarFigmaSpec,
 	composedOf: [
 		"wds-button",
 		"layout-primitives",

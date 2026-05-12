@@ -4,8 +4,11 @@ import path from "node:path";
 import process from "node:process";
 
 const appDir = path.resolve(import.meta.dirname, "..");
+const repoRoot = path.resolve(appDir, "..", "..");
 const routeDir = path.join(appDir, "src", "app");
 const outputPath = path.join(appDir, "src", "screens", "index.ts");
+const sduiSchemaRef = "../../../../../sdui.schema.json";
+const sduiSchemaPath = path.join(repoRoot, "sdui.schema.json");
 const isCheck = process.argv.includes("--check");
 
 const preferredGroupOrder = [
@@ -26,6 +29,25 @@ function readScreenRoute(routeFolder) {
 	const match = source.match(/export\s+const\s+screenRoute\s*=\s*(\{[\s\S]*?\})\s*as\s+const\s*;/);
 	if (!match) throw new Error(`Invalid screen registry shape: ${registryPath}`);
 	return JSON.parse(match[1]);
+}
+
+function readJson(filePath) {
+	return JSON.parse(readFileSync(filePath, "utf8"));
+}
+
+function assertSduiSchemaReference(filePath, spec) {
+	if (!existsSync(sduiSchemaPath)) {
+		throw new Error(`Missing root SDUI schema: ${path.relative(repoRoot, sduiSchemaPath)}`);
+	}
+	if (spec.$schema !== sduiSchemaRef) {
+		throw new Error(
+			`SDUI spec must reference root schema: ${path.relative(appDir, filePath)} expected ${sduiSchemaRef}`,
+		);
+	}
+}
+
+function isCompactSduiScreenSpec(spec) {
+	return spec.schemaVersion === "sdui-v1" && typeof spec.screen_id === "string" && Boolean(spec.slots);
 }
 
 function toIdentifier(id, suffix) {
@@ -65,6 +87,7 @@ function getScreenEntries() {
 			const route = readScreenRoute(folder);
 			const specPath = path.join(routeDir, folder, "spec.json");
 			const renderablePath = path.join(routeDir, folder, "sdui.json");
+			const renderableSpec = existsSync(renderablePath) ? readJson(renderablePath) : undefined;
 			if (route.id !== folder) {
 				throw new Error(`Screen route id must match folder name: ${folder} received ${route.id}`);
 			}
@@ -74,10 +97,14 @@ function getScreenEntries() {
 			if (!existsSync(specPath)) {
 				throw new Error(`Missing screen spec: ${path.relative(appDir, specPath)}`);
 			}
+			if (renderableSpec) {
+				assertSduiSchemaReference(renderablePath, renderableSpec);
+			}
 			return {
 				folder,
 				route,
-				hasRenderableSpec: existsSync(renderablePath),
+				hasRenderableSpec: Boolean(renderableSpec),
+				isSduiScreenSpec: renderableSpec ? isCompactSduiScreenSpec(renderableSpec) : false,
 				routeName: toIdentifier(route.id, "Route"),
 				specName: toIdentifier(route.id, "Spec"),
 				renderableName: toIdentifier(route.id, "RenderableSpec"),
@@ -116,8 +143,12 @@ function renderIndex(entries) {
 		.map((entry) => `\t${quote(entry.route.id)}: asScreenSpec(${entry.specName}),`)
 		.join("\n");
 	const renderableItems = entries
-		.filter((entry) => entry.hasRenderableSpec)
+		.filter((entry) => entry.hasRenderableSpec && !entry.isSduiScreenSpec)
 		.map((entry) => `\t${quote(entry.route.id)}: asRenderableScreenSpec(${entry.renderableName}),`)
+		.join("\n");
+	const sduiItems = entries
+		.filter((entry) => entry.isSduiScreenSpec)
+		.map((entry) => `\t${quote(entry.route.id)}: asSduiScreenSpec(${entry.renderableName}),`)
 		.join("\n");
 
 	return `${imports.join("\n")}
@@ -145,8 +176,10 @@ export type ScreenRoutePath = (typeof screenRoutes)[number]["route"];
 export const screenCount = screenRoutes.length;
 
 import type { RenderableScreenSpecV1, ScreenSpecV2 } from "./spec";
+import type { SduiScreen } from "./sdui";
 const asScreenSpec = (spec: unknown) => spec as ScreenSpecV2;
 const asRenderableScreenSpec = (spec: unknown) => spec as RenderableScreenSpecV1;
+const asSduiScreenSpec = (spec: unknown) => spec as SduiScreen;
 
 export const activeScreenSpecs = {
 ${specItems}
@@ -155,6 +188,10 @@ ${specItems}
 export const activeRenderableScreenSpecs = {
 ${renderableItems}
 } as const satisfies Partial<Record<ScreenId, RenderableScreenSpecV1>>;
+
+export const activeSduiScreenSpecs = {
+${sduiItems}
+} as const satisfies Partial<Record<ScreenId, SduiScreen>>;
 
 export type ActiveScreenSpecId = keyof typeof activeScreenSpecs;
 export type ActiveRenderableScreenSpecId = keyof typeof activeRenderableScreenSpecs;
@@ -217,6 +254,7 @@ export {
 \tgetRenderableScreenSpecIssues,
 \tgetScreenSpecIssues,
 } from "./spec";
+export { getSduiScreenIssues, isSduiScreen } from "./sdui";
 
 export type {
 \tDesignException,
@@ -233,6 +271,18 @@ export type {
 \tSDUIJsonValue,
 \tSDUINode,
 } from "./spec";
+
+export type {
+\tSduiComponentId,
+\tSduiNode,
+\tSduiPrimitiveValue,
+\tSduiPropValue,
+\tSduiScreen,
+\tSduiScreenIssue,
+\tSduiScreenIssueSeverity,
+\tSduiScreenShell,
+\tSduiScreenSlots,
+} from "./sdui";
 `;
 }
 

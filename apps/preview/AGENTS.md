@@ -1,6 +1,6 @@
 # apps/preview
 
-shadcn/Tailwind 기반 브라우저 프리뷰 셸이다. WDS 모바일 화면을 직접 import하지 않고 `@pxds/pxds-preview`의 iframe helper로 띄운다. 기본 mobile origin은 `NEXT_PUBLIC_MOBILE_ORIGIN` 또는 `http://localhost:3001`이다.
+shadcn/Tailwind 기반 브라우저 프리뷰 셸이다. WDS 모바일 화면을 직접 import하지 않고 앱 내부 iframe helper로 띄운다. 기본 mobile origin은 `NEXT_PUBLIC_MOBILE_ORIGIN` 또는 `http://localhost:3001`이다.
 
 ## 역할
 

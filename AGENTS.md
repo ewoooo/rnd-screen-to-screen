@@ -25,7 +25,6 @@
 │   ├── pxds-icons/       WDS icon adapter + icon registry
 │   ├── pxds-components/  순수 UI 컴포넌트 + 모바일 domains + core WDS re-export + component vocabulary registry
 │   ├── pxds-layout/      화면/frame/layout runtime
-│   ├── pxds-preview/     모바일 iframe preview/helper
 │   ├── pxds-figma/       Figma bridge/hooks/spec authoring
 │   ├── policy-core/      Policy / UseCase 순수 문서 도메인
 │   ├── policy-authoring/ 문서/정책서 → Screen 도출 추적
@@ -41,13 +40,12 @@
 ## 패키지 책임
 
 - `apps/mobile` — 실제 모바일 화면 route와 WDS/PXDS 화면 조립. 앱은 컴포넌트를 소유하지 않고 각 page 폴더의 route, mock/spec, SDUI renderer만 소유한다. 각 page 폴더가 `page.tsx`, `registry.ts`, `spec.json`, `sdui.json`를 함께 소유하며 `@screen/mobile/screens`로 화면 registry/spec를 재노출한다.
-- `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component/policy registry 탐색, Figma export 요청, spec 조회 UI를 소유한다.
+- `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component/policy registry 탐색, Figma export 요청, spec 조회 UI, iframe preview helper를 소유한다.
 - `@pxds/pxds-tokens` — 런타임 시각 token 값의 SSOT. WDS theme 값을 흡수하고 CSS/token export를 제공한다.
 - `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry.
 - `@pxds/pxds-components` — WDS core re-export, atoms/typography, atoms/feedback, molecules, shared/global/domain 컴포넌트, 구현 세부 없는 component vocabulary registry. 모바일 화면에서 쓰는 컴포넌트 어휘는 이 패키지가 소유한다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge.
-- `@pxds/pxds-preview` — 모바일 iframe/view frame helper. 실제 화면 layout runtime을 소유하지 않는다.
-- `@pxds/pxds-figma` — Figma variables, component/page export, Figma capture/hooks/spec authoring.
+- `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring.
 - `@policy/core` — Policy / UseCase 순수 문서 도메인. Screen을 모른다.
 - `@policy/authoring` — 정책서와 screen 도출 사이 trace/evidence. 화면 contract 자체는 `@screen/mobile/screens`에서 읽는다.
 - `@screen/evaluation` — benchmark/audit/scoring.
@@ -73,7 +71,6 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
   → @pxds/pxds-components
   → apps/mobile
 
-@pxds/pxds-preview → apps/preview
 @pxds/pxds-figma  → apps/preview
 apps/mobile/src/app/<page-id> → @screen/mobile/screens → apps/preview, @screen/evaluation
 @policy/core → @policy/authoring → @screen/mobile/screens

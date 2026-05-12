@@ -1,3 +1,5 @@
+import { consentListFigmaSpec } from "./consent-list.figma";
+
 export const consentListRegistryEntry = {
 	id: "consent-list",
 	name: "ConsentList",
@@ -7,6 +9,7 @@ export const consentListRegistryEntry = {
 	group: "selection",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => consentListFigmaSpec,
 	composedOf: [
 		"wds-checkbox",
 		"divider",

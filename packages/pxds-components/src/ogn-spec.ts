@@ -7,6 +7,8 @@ import type { PolicyDefinition } from "@policy/core";
  * `policy` carries the bound policy text source (resolved by the rendering
  * mol via its `policySlots` declaration).
  */
+export type OgnPartSlot = "content" | "bottom";
+
 export type OgnPart = {
 	id: string;
 	component: string;
@@ -18,6 +20,12 @@ export type OgnPart = {
 	placeholder?: string;
 	required?: boolean;
 	note?: string;
+	/**
+	 * Physical layout slot the part belongs to inside its hosting screen.
+	 * Defaults to "content". Parts marked "bottom" are hoisted to the
+	 * AppScreen bottom slot when the ogn is rendered.
+	 */
+	slot?: OgnPartSlot;
 };
 
 export type OgnAction =

@@ -1,3 +1,5 @@
+import { queryBarFigmaSpec } from "./query-bar.figma";
+
 export const queryBarRegistryEntry = {
 	id: "query-bar",
 	name: "QueryBar",
@@ -7,5 +9,6 @@ export const queryBarRegistryEntry = {
 	group: "form",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => queryBarFigmaSpec,
 	composedOf: ["wds-search-field"],
 } as const;

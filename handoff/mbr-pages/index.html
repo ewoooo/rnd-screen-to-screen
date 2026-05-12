@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>MBR Pages Handoff</title>
+	<style>
+		:root {
+			--pxds-screen-width: 375px;
+			--pxds-screen-height: 812px;
+			--pxds-radius-screen: 28px;
+
+			--semantic-surface-page-normal: #ffffff;
+			--semantic-surface-page-semi: rgba(255, 255, 255, 0.92);
+			--semantic-background-normal-alternative: #f7f7f8;
+			--semantic-background-elevated-normal: #ffffff;
+			--semantic-background-elevated-alternative: #f4f4f5;
+			--semantic-label-normal: #171719;
+			--semantic-label-alternative: #878a93;
+			--semantic-label-assistive: #c2c4c8;
+			--semantic-line-normal-normal: rgba(112, 115, 124, 0.22);
+			--semantic-line-solid-alternative: #e5e6e8;
+			--semantic-primary-normal: #0066ff;
+			--semantic-status-positive: #00a661;
+			--semantic-status-negative: #ff4242;
+
+			--spacing-2: 2px;
+			--spacing-4: 4px;
+			--spacing-6: 6px;
+			--spacing-8: 8px;
+			--spacing-12: 12px;
+			--spacing-16: 16px;
+			--spacing-20: 20px;
+			--spacing-24: 24px;
+			--spacing-32: 32px;
+			--spacing-40: 40px;
+
+			--font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Segoe UI", sans-serif;
+			--shadow-screen: 0 24px 80px rgba(20, 24, 32, 0.12);
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			background: #f5f6f8;
+			color: var(--semantic-label-normal);
+			font-family: var(--font-family);
+		}
+
+		.handoff {
+			min-height: 100vh;
+			padding: 48px;
+		}
+
+		.handoff-header {
+			max-width: 1240px;
+			margin: 0 auto 32px;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			gap: 24px;
+			align-items: end;
+		}
+
+		.handoff-title {
+			margin: 0;
+			font-size: 32px;
+			line-height: 1.2;
+		}
+
+		.handoff-meta {
+			margin: 8px 0 0;
+			color: var(--semantic-label-alternative);
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		.token-note {
+			padding: 12px 16px;
+			border: 1px solid var(--semantic-line-solid-alternative);
+			border-radius: 8px;
+			background: var(--semantic-surface-page-normal);
+			color: var(--semantic-label-alternative);
+			font-size: 12px;
+			line-height: 1.5;
+			white-space: nowrap;
+		}
+
+		.pages {
+			max-width: 1240px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: repeat(2, minmax(420px, 1fr));
+			gap: 40px;
+			align-items: start;
+		}
+
+		.page-card {
+			display: grid;
+			gap: 12px;
+			justify-items: center;
+		}
+
+		.page-label {
+			width: var(--pxds-screen-width);
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			color: var(--semantic-label-alternative);
+			font-size: 12px;
+		}
+
+		.page-label strong {
+			color: var(--semantic-label-normal);
+			font-size: 14px;
+		}
+
+		.phone {
+			width: var(--pxds-screen-width);
+			height: var(--pxds-screen-height);
+			overflow: hidden;
+			border: 1px solid var(--semantic-line-solid-alternative);
+			border-radius: var(--pxds-radius-screen);
+			background: var(--semantic-surface-page-normal);
+			box-shadow: var(--shadow-screen);
+			display: flex;
+			flex-direction: column;
+		}
+
+		.system-header {
+			height: 36px;
+			padding: 0 var(--spacing-24);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 15px;
+			font-weight: 700;
+		}
+
+		.status-icons {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+		}
+
+		.signal { display: flex; gap: 2px; align-items: end; }
+		.signal i { display: block; width: 3px; border-radius: 2px; background: var(--semantic-label-normal); }
+		.signal i:nth-child(1) { height: 6px; }
+		.signal i:nth-child(2) { height: 9px; }
+		.signal i:nth-child(3) { height: 12px; }
+		.signal i:nth-child(4) { height: 15px; }
+
+		.wifi {
+			width: 18px; height: 12px;
+			border: 3px solid var(--semantic-label-normal);
+			border-bottom: 0;
+			border-left-color: transparent;
+			border-right-color: transparent;
+			border-radius: 18px 18px 0 0;
+			position: relative;
+		}
+		.wifi::after {
+			content: ""; position: absolute; left: 50%; bottom: -4px;
+			width: 5px; height: 5px; border-radius: 50%;
+			background: var(--semantic-label-normal); transform: translateX(-50%);
+		}
+
+		.battery {
+			width: 24px; height: 12px; border-radius: 3px;
+			background: var(--semantic-label-normal); position: relative;
+		}
+		.battery::after {
+			content: ""; position: absolute; right: -4px; top: 3px;
+			width: 2px; height: 6px; border-radius: 0 2px 2px 0;
+			background: var(--semantic-label-assistive);
+		}
+
+		.top-bar { background: var(--semantic-surface-page-normal); }
+
+		.nav {
+			height: 56px;
+			padding: 0 var(--spacing-16);
+			display: grid;
+			grid-template-columns: 40px 1fr 40px;
+			align-items: center;
+		}
+
+		.back { width: 28px; height: 28px; position: relative; }
+		.back::before, .back::after {
+			content: ""; position: absolute; left: 4px; top: 13px;
+			background: var(--semantic-label-normal); border-radius: 2px;
+		}
+		.back::before { width: 20px; height: 3px; }
+		.back::after {
+			width: 13px; height: 13px;
+			border-left: 3px solid var(--semantic-label-normal);
+			border-bottom: 3px solid var(--semantic-label-normal);
+			background: transparent; transform: rotate(45deg);
+			top: 7px; left: 5px;
+		}
+
+		.nav-title {
+			text-align: center;
+			font-size: 18px;
+			font-weight: 800;
+		}
+
+		.progress-wrap {
+			padding: 0 var(--spacing-12) var(--spacing-16);
+			display: grid;
+			gap: var(--spacing-8);
+		}
+
+		.progress-label {
+			color: var(--semantic-label-alternative);
+			font-size: 13px;
+			font-weight: 700;
+		}
+
+		.progress-track {
+			height: 3px;
+			background: var(--semantic-line-solid-alternative);
+			overflow: hidden;
+		}
+
+		.progress-fill {
+			height: 100%;
+			background: var(--semantic-primary-normal);
+		}
+
+		.content {
+			flex: 1;
+			overflow: hidden;
+			padding-bottom: var(--spacing-16);
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-16);
+		}
+
+		.section {
+			padding-left: var(--spacing-12);
+			padding-right: var(--spacing-12);
+		}
+
+		.page-heading {
+			margin: 0;
+			padding-top: var(--spacing-24);
+			padding-bottom: var(--spacing-8);
+			font-size: 36px;
+			line-height: 1.16;
+			font-weight: 900;
+		}
+
+		.stack { display: grid; gap: var(--spacing-16); }
+
+		.caption {
+			color: var(--semantic-label-alternative);
+			font-size: 13px;
+			line-height: 1.45;
+		}
+
+		.terms { display: grid; gap: var(--spacing-12); }
+
+		.term-row, .option-row {
+			min-height: 48px;
+			display: grid;
+			grid-template-columns: 1fr 32px;
+			gap: var(--spacing-12);
+			align-items: center;
+		}
+
+		.term-all {
+			padding: var(--spacing-16);
+			border: 1px solid var(--semantic-line-solid-alternative);
+			border-radius: 12px;
+			background: var(--semantic-background-elevated-normal);
+		}
+
+		.term-title, .option-title {
+			font-size: 17px;
+			font-weight: 800;
+			line-height: 1.35;
+		}
+
+		.term-caption {
+			margin-top: 3px;
+			color: var(--semantic-label-alternative);
+			font-size: 12px;
+		}
+
+		.required-tag {
+			display: inline-block;
+			margin-right: 6px;
+			color: var(--semantic-primary-normal);
+			font-weight: 800;
+		}
+
+		.optional-tag {
+			display: inline-block;
+			margin-right: 6px;
+			color: var(--semantic-label-alternative);
+			font-weight: 800;
+		}
+
+		.check, .radio {
+			width: 28px;
+			height: 28px;
+			border: 2px solid var(--semantic-line-solid-alternative);
+			border-radius: 50%;
+		}
+
+		.check.active, .radio.active {
+			border: 8px solid var(--semantic-primary-normal);
+			background: var(--semantic-surface-page-normal);
+		}
+
+		.field-list { display: grid; gap: var(--spacing-16); }
+
+		.field { display: grid; gap: var(--spacing-8); }
+
+		.field-label {
+			font-size: 14px;
+			font-weight: 800;
+		}
+
+		.required {
+			color: var(--semantic-status-negative);
+		}
+
+		.input {
+			height: 48px;
+			padding: 0 var(--spacing-16);
+			display: flex;
+			align-items: center;
+			border: 1px solid var(--semantic-line-normal-normal);
+			border-radius: 12px;
+			color: var(--semantic-label-assistive);
+			font-size: 16px;
+			background: var(--semantic-background-elevated-normal);
+		}
+
+		.helper {
+			color: var(--semantic-label-alternative);
+			font-size: 12px;
+		}
+
+		.inline-field {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: var(--spacing-8);
+			align-items: end;
+		}
+
+		.auth-list {
+			display: grid;
+			gap: var(--spacing-4);
+			background: var(--semantic-surface-page-normal);
+		}
+
+		.option-row {
+			padding: 0 var(--spacing-12);
+			height: 56px;
+			border: 1px solid var(--semantic-line-solid-alternative);
+			border-radius: 12px;
+		}
+
+		.option-row.selected {
+			border-color: var(--semantic-primary-normal);
+			background: var(--semantic-background-elevated-normal);
+			color: var(--semantic-primary-normal);
+		}
+
+		.actions {
+			display: flex;
+			gap: var(--spacing-12);
+			align-items: center;
+		}
+
+		.button {
+			height: 48px;
+			padding: 0 var(--spacing-20);
+			border: 1px solid var(--semantic-line-normal-normal);
+			border-radius: 12px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			background: var(--semantic-background-elevated-normal);
+			color: var(--semantic-primary-normal);
+			font-size: 16px;
+			font-weight: 800;
+		}
+
+		.button.primary {
+			border-color: var(--semantic-primary-normal);
+			background: var(--semantic-primary-normal);
+			color: #fff;
+		}
+
+		.button.disabled {
+			border-color: transparent;
+			background: #f1f1f3;
+			color: var(--semantic-label-assistive);
+		}
+
+		.bottom {
+			padding: var(--spacing-12);
+			background: linear-gradient(180deg, rgba(255,255,255,0.7), var(--semantic-surface-page-normal) 34%);
+		}
+
+		.bottom .button {
+			width: 100%;
+			height: 56px;
+			border-radius: 14px;
+			font-size: 18px;
+		}
+
+		.text-block {
+			color: var(--semantic-label-normal);
+			font-size: 16px;
+			line-height: 1.5;
+			white-space: pre-line;
+		}
+
+		.text-block.title {
+			font-size: 22px;
+			font-weight: 800;
+			line-height: 1.35;
+		}
+
+		.text-block.muted {
+			color: var(--semantic-label-alternative);
+			font-size: 14px;
+		}
+
+		.timer {
+			color: var(--semantic-label-normal);
+			font-weight: 800;
+			font-size: 14px;
+		}
+
+		.token-tags {
+			width: var(--pxds-screen-width);
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+		}
+
+		.token-tags span {
+			padding: 3px 7px;
+			border-radius: 6px;
+			background: #eef2ff;
+			color: #3154b8;
+			font-size: 11px;
+			font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		}
+
+		@media (max-width: 980px) {
+			.handoff { padding: 28px 16px; }
+			.handoff-header, .pages { grid-template-columns: 1fr; }
+			.token-note { white-space: normal; }
+		}
+	</style>
+</head>
+<body>
+	<main class="handoff">
+		<header class="handoff-header">
+			<div>
+				<h1 class="handoff-title">MBR 가입 플로우 핸드오프</h1>
+				<p class="handoff-meta">NOVA-MBR-PG-001-0 / 002-0 / 003-0 / 005-0 · SDUI v1 기준 · PXDS token variables 포함</p>
+			</div>
+			<div class="token-note">주요 토큰: --semantic-* / --spacing-* / --pxds-screen-*</div>
+		</header>
+
+		<section class="pages">
+			<!-- ========== NOVA-MBR-PG-001-0 약관 동의 ========== -->
+			<article class="page-card">
+				<div class="page-label"><strong>NOVA-MBR-PG-001-0</strong><span>약관 동의</span></div>
+				<div class="phone">
+					<div class="system-header">
+						<span>7:28</span>
+						<div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi"></span><span class="battery"></span></div>
+					</div>
+					<div class="top-bar">
+						<div class="nav"><span class="back"></span><strong class="nav-title">회원 가입</strong><span></span></div>
+						<div class="progress-wrap"><span class="progress-label">1 / 5</span><div class="progress-track"><div class="progress-fill" style="width:20%"></div></div></div>
+					</div>
+					<div class="content">
+						<section class="section"><h2 class="page-heading">약관 동의</h2></section>
+						<section class="section">
+							<div class="terms">
+								<div class="term-row term-all">
+									<div>
+										<div class="term-title">전체 동의</div>
+										<div class="term-caption">선택 약관까지 한 번에 동의</div>
+									</div>
+									<span class="check"></span>
+								</div>
+								<div class="term-row">
+									<div>
+										<div class="term-title"><span class="required-tag">[필수]</span>서비스 이용약관</div>
+										<div class="term-caption">v1.0</div>
+									</div>
+									<span class="check"></span>
+								</div>
+								<div class="term-row">
+									<div>
+										<div class="term-title"><span class="required-tag">[필수]</span>개인정보 수집·이용 동의</div>
+										<div class="term-caption">v1.0</div>
+									</div>
+									<span class="check"></span>
+								</div>
+								<div class="term-row">
+									<div>
+										<div class="term-title"><span class="required-tag">[필수]</span>개인정보 제3자 제공 동의</div>
+										<div class="term-caption">v1.0</div>
+									</div>
+									<span class="check"></span>
+								</div>
+								<div class="term-row">
+									<div>
+										<div class="term-title"><span class="optional-tag">[선택]</span>혜택·이벤트 정보 수신 동의</div>
+										<div class="term-caption">동의하지 않아도 가입 가능</div>
+									</div>
+									<span class="check"></span>
+								</div>
+							</div>
+						</section>
+					</div>
+					<div class="bottom"><div class="button disabled">동의하고 계속하기</div></div>
+				</div>
+				<div class="token-tags">
+					<span>shell=app-screen</span>
+					<span>header=progress-top-bar</span>
+					<span>terms-agreement-group</span>
+					<span>section.inset=inherit</span>
+					<span>bottom=primary-cta-bar</span>
+				</div>
+			</article>
+
+			<!-- ========== NOVA-MBR-PG-002-0 개인정보 입력 ========== -->
+			<article class="page-card">
+				<div class="page-label"><strong>NOVA-MBR-PG-002-0</strong><span>개인정보 입력</span></div>
+				<div class="phone">
+					<div class="system-header">
+						<span>7:28</span>
+						<div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi"></span><span class="battery"></span></div>
+					</div>
+					<div class="top-bar">
+						<div class="nav"><span class="back"></span><strong class="nav-title">회원 가입</strong><span></span></div>
+						<div class="progress-wrap"><span class="progress-label">2 / 5</span><div class="progress-track"><div class="progress-fill" style="width:40%"></div></div></div>
+					</div>
+					<div class="content">
+						<section class="section"><h2 class="page-heading">개인정보 입력</h2></section>
+						<section class="section">
+							<div class="field-list">
+								<div class="inline-field">
+									<div class="field">
+										<label class="field-label">아이디 <span class="required">*</span></label>
+										<div class="input">영문, 숫자 6~20자</div>
+									</div>
+									<div class="button">중복확인</div>
+								</div>
+								<div class="field">
+									<label class="field-label">비밀번호 <span class="required">*</span></label>
+									<div class="input">영문/숫자/특수문자 조합 10~20자</div>
+								</div>
+								<div class="field">
+									<label class="field-label">비밀번호 확인 <span class="required">*</span></label>
+									<div class="input">비밀번호 재입력</div>
+								</div>
+								<div class="field">
+									<label class="field-label">이메일 <span class="required">*</span></label>
+									<div class="input">example@domain.com</div>
+								</div>
+								<div class="field">
+									<label class="field-label">휴대폰번호 <span class="required">*</span></label>
+									<div class="input">숫자만 입력</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<div class="token-tags">
+					<span>shell=app-screen</span>
+					<span>header=progress-top-bar</span>
+					<span>ogn-MBR-text-field-member-info</span>
+					<span>state=default</span>
+					<span>bottom=false</span>
+				</div>
+			</article>
+
+			<!-- ========== NOVA-MBR-PG-003-0 본인인증 ========== -->
+			<article class="page-card">
+				<div class="page-label"><strong>NOVA-MBR-PG-003-0</strong><span>본인인증</span></div>
+				<div class="phone">
+					<div class="system-header">
+						<span>7:28</span>
+						<div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi"></span><span class="battery"></span></div>
+					</div>
+					<div class="top-bar">
+						<div class="nav"><span class="back"></span><strong class="nav-title">회원 가입</strong><span></span></div>
+						<div class="progress-wrap"><span class="progress-label">3 / 5</span><div class="progress-track"><div class="progress-fill" style="width:60%"></div></div></div>
+					</div>
+					<div class="content">
+						<section class="section"><h2 class="page-heading">본인인증</h2></section>
+						<section class="section">
+							<div class="auth-list">
+								<div class="option-row selected"><div class="option-title">휴대폰 인증</div><span class="radio active"></span></div>
+								<div class="option-row"><div class="option-title">PASS 인증</div><span class="radio"></span></div>
+								<div class="option-row"><div class="option-title">공동인증서</div><span class="radio"></span></div>
+							</div>
+						</section>
+						<section class="section">
+							<div class="field">
+								<label class="field-label">인증번호</label>
+								<div class="input">6자리 숫자</div>
+								<div class="helper">유효시간 3분</div>
+							</div>
+						</section>
+						<section class="section">
+							<div class="timer">남은 시간 02:48</div>
+						</section>
+						<section class="section">
+							<div class="actions">
+								<div class="button primary" style="flex:1;">인증번호 요청</div>
+								<div class="button">재요청</div>
+							</div>
+						</section>
+					</div>
+					<div class="bottom"><div class="button disabled">인증 완료</div></div>
+				</div>
+				<div class="token-tags">
+					<span>shell=app-screen</span>
+					<span>selectable-list (auth-method)</span>
+					<span>form-field</span>
+					<span>text-block</span>
+					<span>primary-cta-bar ×2</span>
+				</div>
+			</article>
+
+			<!-- ========== NOVA-MBR-PG-005-0 가입 완료 ========== -->
+			<article class="page-card">
+				<div class="page-label"><strong>NOVA-MBR-PG-005-0</strong><span>가입 완료</span></div>
+				<div class="phone">
+					<div class="system-header">
+						<span>7:28</span>
+						<div class="status-icons"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi"></span><span class="battery"></span></div>
+					</div>
+					<div class="top-bar">
+						<div class="nav"><span class="back"></span><strong class="nav-title">회원 가입</strong><span></span></div>
+						<div class="progress-wrap"><span class="progress-label">5 / 5</span><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+					</div>
+					<div class="content">
+						<section class="section"><h2 class="page-heading">가입 완료</h2></section>
+						<section class="section">
+							<div class="text-block title">가입이 완료되었습니다</div>
+						</section>
+						<section class="section">
+							<div class="text-block">가입이 정상 처리되었습니다. 일반 회원으로 자동 로그인됩니다.</div>
+						</section>
+						<section class="section">
+							<div class="text-block muted">가입 후 이용 안내
+· 세션 유효시간 24시간
+· 가입 완료 후 홈으로 이동합니다</div>
+						</section>
+					</div>
+					<div class="bottom"><div class="button primary">홈으로 이동</div></div>
+				</div>
+				<div class="token-tags">
+					<span>shell=app-screen</span>
+					<span>text-block ×3</span>
+					<span>section.inset=inherit</span>
+					<span>bottom=primary-cta-bar</span>
+				</div>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

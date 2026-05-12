@@ -1,3 +1,5 @@
+import { selectFieldFigmaSpec } from "./select-field.figma";
+
 export const selectFieldRegistryEntry = {
 	id: "select-field",
 	name: "SelectField",
@@ -7,6 +9,7 @@ export const selectFieldRegistryEntry = {
 	group: "form",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => selectFieldFigmaSpec,
 	composedOf: [
 		"wds-select",
 		"wds-option",

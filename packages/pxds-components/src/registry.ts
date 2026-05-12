@@ -33,6 +33,16 @@ import { searchRegistryEntries } from "./domains/search/search.registry";
 import { tuRegistryEntries } from "./domains/tu/tu.registry";
 import { textBlockRegistryEntry } from "./atoms/typography/text-block/text-block.registry";
 import { wdsCoreRegistryEntries } from "./core/core.registry";
+import {
+	flexFigmaSpec,
+	hStackFigmaSpec,
+	vStackFigmaSpec,
+} from "@pxds/pxds-layout/primitives";
+
+import type {
+	ComponentRegistryExportMode,
+	ComponentRenderContract,
+} from "./schema";
 
 export type ComponentLayer = "atom" | "molecule" | "organism" | "template";
 
@@ -54,6 +64,7 @@ export type ComponentGroup =
 	| "home"
 	| "layout"
 	| "media"
+	| "mbr"
 	| "navigation"
 	| "product"
 	| "search"
@@ -71,9 +82,9 @@ export type PolicySlotBinding =
 /**
  * Component-level vocabulary record.
  *
- * This table is for component discovery and ownership only. It intentionally
- * does not define props, variants, token values, screen usage, or evaluation
- * notes; those belong to component APIs, DESIGN.md, specs, and evaluation.
+ * The stable fields are for discovery and ownership. Optional export fields
+ * connect the entry to a component-owned render contract without moving layout
+ * or instance details into the central registry table.
  */
 export type ComponentRegistryEntry = {
 	id: string;
@@ -100,6 +111,23 @@ export type ComponentRegistryEntry = {
 	 * `error`); the value names the policy field bound to it.
 	 */
 	policySlots?: Readonly<Record<string, PolicySlotBinding>>;
+	/**
+	 * Optional Figma component spec owned by the component folder. Kept as a
+	 * getter so discovery metadata can remain cheap and side-effect light.
+	 */
+	figmaSpec?: () => unknown;
+	/**
+	 * Declares whether this component exports as a concrete instance or expands
+	 * into a render tree. Older entries omit this until their folder owns a
+	 * render.ts contract.
+	 */
+	exportMode?: ComponentRegistryExportMode;
+	/**
+	 * Optional render contract owned by the component folder. Page/organism
+	 * entries typically expand through render-tree; molecule/atom entries can use
+	 * instance contracts.
+	 */
+	render?: () => ComponentRenderContract;
 };
 
 export const componentRegistry = [
@@ -115,6 +143,39 @@ export const componentRegistry = [
 		group: "layout",
 		status: "active",
 		createdAt: "2026-04-30",
+	},
+	{
+		id: "flex",
+		name: "Flex",
+		layer: "atom",
+		owner: "@pxds/pxds-layout",
+		importPath: "@pxds/pxds-layout/primitives",
+		group: "layout",
+		status: "active",
+		createdAt: "2026-04-30",
+		figmaSpec: () => flexFigmaSpec,
+	},
+	{
+		id: "h-stack",
+		name: "HStack",
+		layer: "atom",
+		owner: "@pxds/pxds-layout",
+		importPath: "@pxds/pxds-layout/primitives",
+		group: "layout",
+		status: "active",
+		createdAt: "2026-04-30",
+		figmaSpec: () => hStackFigmaSpec,
+	},
+	{
+		id: "v-stack",
+		name: "VStack",
+		layer: "atom",
+		owner: "@pxds/pxds-layout",
+		importPath: "@pxds/pxds-layout/primitives",
+		group: "layout",
+		status: "active",
+		createdAt: "2026-04-30",
+		figmaSpec: () => vStackFigmaSpec,
 	},
 	{
 		id: "frame-icons",

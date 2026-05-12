@@ -1,0 +1,132 @@
+import {
+	POL_MBR_AUTH_002_01,
+	POL_MBR_AUTH_003_03,
+	POL_MBR_AUTH_004_01,
+	POL_MBR_AUTH_004_02,
+	POL_MBR_AUTH_005_01,
+	POL_MBR_AUTH_005_03,
+} from "@policy/core/policies";
+
+import { defineOgnSpec } from "../../../ogn-spec";
+
+export const listCellAuthMethodSpec = defineOgnSpec({
+	id: "ogn-MBR-list-cell-auth-method",
+	module: "MBR",
+	composedOfRegistryId: "ogn-mbr-list-cell-auth-method",
+	states: ["default", "loading", "error", "blocked"],
+	triggers: {
+		loading: "API 호출 중",
+		error: "인증번호 불일치 / 시간 초과",
+		blocked: "최대 실패 초과 (5회)",
+	},
+	serverControl: ["허용 인증수단", "노출 여부", "텍스트 내용"],
+	policyRefs: [
+		"PG-MBR-AUTH-001",
+		"PG-MBR-AUTH-002",
+		"PG-MBR-AUTH-003",
+		"PG-MBR-AUTH-004",
+		"PG-MBR-AUTH-005",
+		"PG-MBR-AUTH-006",
+		"POL-MBR-AUTH-002-01",
+		"POL-MBR-AUTH-003-03",
+		"POL-MBR-AUTH-004-01",
+		"POL-MBR-AUTH-004-02",
+		"POL-MBR-AUTH-005-01",
+		"POL-MBR-AUTH-005-03",
+	],
+	parts: [
+		{
+			id: "list-cell-auth-method",
+			component: "selectable-list",
+			event: "onClick",
+			action: { kind: "setState", key: "selectedAuthMethod" },
+			policies: [POL_MBR_AUTH_002_01],
+		},
+		{
+			id: "text-field-auth-code",
+			component: "form-field",
+			event: "onChange",
+			action: { kind: "setState", key: "authCode" },
+			label: "인증번호",
+			placeholder: "6자리 숫자",
+			required: true,
+		},
+		{
+			id: "text-timer",
+			component: "text-block",
+			policies: [POL_MBR_AUTH_003_03],
+			note: "유효시간 타이머 (180초)",
+		},
+		{
+			id: "button-auth-request",
+			component: "wds-button",
+			variant: "solid",
+			event: "onClick",
+			action: { kind: "apiCall" },
+			label: "인증번호 요청",
+		},
+		{
+			id: "button-auth-resend",
+			component: "wds-button",
+			variant: "outlined",
+			event: "onClick",
+			action: { kind: "apiCall" },
+			policies: [POL_MBR_AUTH_004_01, POL_MBR_AUTH_004_02],
+			label: "재요청",
+		},
+		{
+			id: "section-message-auth-error",
+			component: "wds-section-message",
+			variant: "negative",
+			action: { kind: "setState", key: "authErrorVisible" },
+			policies: [POL_MBR_AUTH_005_01, POL_MBR_AUTH_005_03],
+		},
+		{
+			id: "action-area-auth-complete",
+			component: "primary-cta-bar",
+			variant: "strong",
+			event: "onClick",
+			action: { kind: "navigate", target: "NOVA-MBR-PG-005-0" },
+			label: "인증 완료",
+			slot: "bottom",
+		},
+	],
+	snapshots: {
+		default: {
+			visibleParts: [
+				"list-cell-auth-method",
+				"text-field-auth-code",
+				"text-timer",
+				"button-auth-request",
+				"button-auth-resend",
+				"action-area-auth-complete",
+			],
+		},
+		loading: { visibleParts: ["list-cell-auth-method", "text-field-auth-code"] },
+		error: {
+			visibleParts: [
+				"list-cell-auth-method",
+				"text-field-auth-code",
+				"text-timer",
+				"button-auth-request",
+				"button-auth-resend",
+				"section-message-auth-error",
+				"action-area-auth-complete",
+			],
+			emphasize: { "text-field-auth-code": "error" },
+		},
+		blocked: {
+			visibleParts: [
+				"list-cell-auth-method",
+				"text-field-auth-code",
+				"section-message-auth-error",
+				"action-area-auth-complete",
+			],
+		},
+	},
+	copyStatus: {
+		status: "authored",
+		author: "wooseong",
+		updatedAt: "2026-05-11",
+	},
+});

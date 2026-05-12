@@ -1,9 +1,18 @@
 export { createPageFigmaExportSpec } from "./create-page-export-spec";
 export { createPageFigmaExportSpecFromScreenTree } from "./create-page-export-spec-from-screen-tree";
 export {
+	isRenderScreenSpecLike,
+	renderScreenSpecToPageFigmaSpec,
+	validateRenderScreenSpec,
+	type RenderScreenSpecLike,
+	type RenderSpecNodeLike,
+	type RenderSpecRegistryEntryLike,
+	type RenderSpecValidationIssue,
+} from "./render-spec";
+export {
 	createPageComponentAssembly,
 	type PageComponentAssemblyOptions,
-} from "@pxds/pxds-figma-renderer";
+} from "../renderer";
 export {
 	createPageFigmaBuildCode,
 	createPageFigmaExportPayload,

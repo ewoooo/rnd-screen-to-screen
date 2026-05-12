@@ -17,7 +17,12 @@ import type {
 	FigmaMcpExportRequest,
 	FigmaMcpExportRequestInput,
 } from "@/utils/figma-mcp-request";
-import { getRenderableScreenSpecById } from "@/utils/screen-specs";
+import {
+	activeRenderableScreenSpecs,
+	activeSduiScreenSpecs,
+	type RenderableScreenSpecV1,
+	type SduiScreen,
+} from "@screen/mobile/screens";
 
 const REQUEST_DIR = join(
 	process.cwd(),
@@ -30,6 +35,11 @@ const figmaTokenTree = createPxdsFigmaTokenTree(tokenRegistry);
 const pageExportRegisteredComponentIds = componentFigmaSpecRegistry.map(
 	(entry) => entry.componentId,
 );
+type PreviewPageExportSpec = RenderableScreenSpecV1 | SduiScreen;
+const pageExportSpecsById: Record<string, PreviewPageExportSpec> = {
+	...(activeRenderableScreenSpecs as Record<string, RenderableScreenSpecV1>),
+	...(activeSduiScreenSpecs as Record<string, SduiScreen>),
+};
 
 export async function POST(request: Request) {
 	const input = (await request.json()) as Partial<FigmaMcpExportRequestInput>;
@@ -144,7 +154,7 @@ function createFigmaPluginCode(input: FigmaMcpExportRequestInput) {
 		});
 	}
 
-	const renderablePageSpec = getRenderableScreenSpecById(input.id);
+	const renderablePageSpec = pageExportSpecsById[input.id];
 	if (!renderablePageSpec) return null;
 
 	const pageFigmaSpec = createPageFigmaExportSpec(renderablePageSpec, {

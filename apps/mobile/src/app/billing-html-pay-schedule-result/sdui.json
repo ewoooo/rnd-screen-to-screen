@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../../sdui.schema.json",
   "version": "1.0.0",
   "minRendererVersion": "0.1.0",
   "minComponentsVersion": "0.1.0",

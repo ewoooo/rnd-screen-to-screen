@@ -302,7 +302,100 @@ for (const spec of ognSpecs) {
 }
 console.log("");
 
-// 6) Summary
+// 6) sdui.json ↔ page.tsx drift
+console.log(color("[6] sdui.json ↔ page.tsx component drift", "1"));
+const screenDirs = walkFiles(appsRoot, (p) => p.endsWith("/sdui.json"))
+	.map((p) => path.dirname(p))
+	.filter((d) => path.basename(d).startsWith("NOVA-"));
+for (const dir of screenDirs) {
+	const sduiPath = path.join(dir, "sdui.json");
+	const pagePath = path.join(dir, "page.tsx");
+	const rel = path.relative(repoRoot, dir);
+	if (!existsSync(pagePath)) {
+		warnings += 1;
+		console.log(`  ${yellow("·")} ${rel}  ${yellow("(no page.tsx)")}`);
+		continue;
+	}
+	const sdui = JSON.parse(readText(sduiPath));
+	const pageSrc = readText(pagePath);
+	const slots = sdui.slots ?? {};
+
+	// Schema: `bottom` is mandatory — must be `false` (explicit none) or non-empty array.
+	if (!Object.prototype.hasOwnProperty.call(slots, "bottom")) {
+		problems += 1;
+		console.log(
+			`  ${red("✗")} ${rel}  ${red("slots.bottom missing — declare false or array")}`,
+		);
+		continue;
+	}
+	if (
+		slots.bottom !== false &&
+		!(Array.isArray(slots.bottom) && slots.bottom.length > 0)
+	) {
+		problems += 1;
+		console.log(
+			`  ${red("✗")} ${rel}  ${red("slots.bottom must be false or non-empty array")}`,
+		);
+		continue;
+	}
+	const sduiComponents = new Set();
+	const collect = (node) => {
+		if (!node || typeof node !== "object") return;
+		if (Array.isArray(node)) {
+			node.forEach(collect);
+			return;
+		}
+		if (typeof node.component === "string") {
+			sduiComponents.add(node.component);
+		}
+	};
+	collect(slots.header);
+	collect(slots.content);
+	collect(slots.bottom);
+
+	// Build expected import names from sb id → component name guess.
+	// We only check the SB-style "ogn-MBR-..." ids and "progress-top-bar" against
+	// page source. Simple substring match on the React component name.
+	const COMPONENT_NAME_HINTS = {
+		"progress-top-bar": "ProgressTopBar",
+		"ogn-MBR-section-header-page": "SectionHeaderPage",
+		"ogn-MBR-text-field-member-info": "TextFieldMemberInfo",
+		"ogn-MBR-checkbox-terms": "CheckboxTerms",
+		"ogn-MBR-action-area-terms": "ActionAreaTerms",
+		"ogn-MBR-text-field-guardian-request": "TextFieldGuardianRequest",
+		"ogn-MBR-list-cell-auth-method": "ListCellAuthMethod",
+		"ogn-MBR-section-message-entry-branch": "SectionMessageEntryBranch",
+		"ogn-MBR-section-message-join-complete-view":
+			"SectionMessageJoinCompleteView",
+	};
+
+	const missingInPage = [];
+	const sduiList = [...sduiComponents];
+	for (const id of sduiList) {
+		const hint = COMPONENT_NAME_HINTS[id];
+		if (!hint) continue;
+		if (!pageSrc.includes(hint)) missingInPage.push(`${id} (${hint})`);
+	}
+
+	// Detect components used in page.tsx that are not in sdui.json
+	const extraInPage = [];
+	for (const [id, hint] of Object.entries(COMPONENT_NAME_HINTS)) {
+		if (sduiComponents.has(id)) continue;
+		if (pageSrc.includes(hint)) extraInPage.push(`${hint} (page-only, sdui missing ${id})`);
+	}
+
+	if (missingInPage.length === 0 && extraInPage.length === 0) {
+		console.log(`  ${green("✓")} ${rel}  ${dim(`${sduiList.length} components synced`)}`);
+	} else {
+		problems += missingInPage.length + extraInPage.length;
+		console.log(`  ${red("✗")} ${rel}`);
+		for (const m of missingInPage) console.log(`      ${red("missing in page")}: ${m}`);
+		for (const e of extraInPage) console.log(`      ${red("extra in page")}: ${e}`);
+	}
+}
+console.log("");
+
+// 7) Summary
 console.log(color("─── summary ───", "1"));
 console.log(`  policies        : ${policies.length}`);
 console.log(`  ogn specs       : ${ognSpecs.length}`);

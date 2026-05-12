@@ -1,6 +1,6 @@
 # @pxds/pxds-layout
 
-화면/frame/layout runtime을 소유한다. `apps/mobile`의 screen root, scroll, sticky chrome, bottom-sheet, primitive layout, screen export bridge는 이 패키지 경계 안에 둔다. iframe 기반 preview helper는 `@pxds/pxds-preview` 소유다.
+화면/frame/layout runtime을 소유한다. `apps/mobile`의 screen root, scroll, sticky chrome, bottom-sheet, primitive layout, screen export bridge는 이 패키지 경계 안에 둔다. iframe 기반 preview helper는 preview 앱 내부 책임이다.
 
 `@pxds/pxds-layout`은 `@pxds/pxds-components`를 의존하지 않는다. bottom-sheet처럼 layout runtime 자체에 필요한 WDS primitive는 이 패키지 경계에서 직접 흡수해서 `@pxds/pxds-components ↔ @pxds/pxds-layout` 순환을 만들지 않는다.
 

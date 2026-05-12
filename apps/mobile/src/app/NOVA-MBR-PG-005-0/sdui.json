@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../../sdui.schema.json",
+  "schemaVersion": "sdui-v1",
+  "screen_id": "NOVA-MBR-PG-005-0",
+  "shell": "app-screen",
+  "slots": {
+    "system_header": true,
+    "header": {
+      "component": "progress-top-bar",
+      "props": {
+        "title": "회원 가입",
+        "leading": "back",
+        "progress": {
+          "label": "5 / 5",
+          "percent": 100,
+          "showLabel": true
+        }
+      }
+    },
+    "content": [
+      {
+        "component": "ogn-MBR-section-header-page",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "title": "가입 완료"
+        }
+      },
+      {
+        "component": "text-block",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "text": "가입이 완료되었습니다"
+        }
+      },
+      {
+        "component": "text-block",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "text": "가입이 정상 처리되었습니다. 일반 회원으로 자동 로그인됩니다."
+        }
+      },
+      {
+        "component": "text-block",
+        "section": {
+          "inset": "inherit"
+        },
+        "props": {
+          "text": "가입 후 이용 안내\n· 세션 유효시간 24시간\n· 가입 완료 후 홈으로 이동합니다"
+        }
+      }
+    ],
+    "bottom": [
+      {
+        "component": "primary-cta-bar",
+        "props": {
+          "primaryLabel": "홈으로 이동"
+        }
+      }
+    ]
+  }
+}

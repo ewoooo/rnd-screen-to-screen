@@ -1,3 +1,5 @@
+import { dividerFigmaSpec } from "./divider.figma";
+
 export const dividerRegistryEntry = {
 	id: "divider",
 	name: "Divider",
@@ -7,4 +9,5 @@ export const dividerRegistryEntry = {
 	group: "feedback",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => dividerFigmaSpec,
 } as const;

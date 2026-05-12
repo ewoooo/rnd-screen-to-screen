@@ -45,6 +45,7 @@ export function createPageFigmaExportSpecFromScreenTree(
 		type: "EmptyScreenTree",
 		children: [],
 	};
+	const rootNode = normalizeScreenRoot(root, registeredComponentIds);
 
 	return {
 		$schema: "page-figma-export-v1",
@@ -63,39 +64,83 @@ export function createPageFigmaExportSpecFromScreenTree(
 			inset: "{spacing.12}",
 			gap: "{spacing.4}",
 		},
-		root: mapScreenTreeNode(root, registeredComponentIds),
+		root: rootNode,
 	};
+}
+
+function normalizeScreenRoot(
+	root: ScreenExportNodeLike,
+	registeredComponentIds: ReadonlySet<string>,
+): PageFigmaNodeSpec {
+	return {
+		id: root.id,
+		type: "AppScreen",
+		componentId: "app-screen",
+		registered: registeredComponentIds.has("app-screen"),
+		props: {
+			exportSource: "screen-tree",
+			bounds: root.bounds,
+			localBounds: root.localBounds,
+		},
+		children: collectScreenTreeChildren(root, registeredComponentIds),
+	};
+}
+
+function collectScreenTreeChildren(
+	node: ScreenExportNodeLike,
+	registeredComponentIds: ReadonlySet<string>,
+	inheritedSlot?: PageFigmaNodeSpec["slot"],
+): PageFigmaNodeSpec[] {
+	const slot = normalizeSlot(node.slot) ?? inheritedSlot;
+
+	if (isLayoutOnlyNode(node)) {
+		return (
+			node.children?.flatMap((child) =>
+				collectScreenTreeChildren(child, registeredComponentIds, slot),
+			) ?? []
+		);
+	}
+
+	return [mapScreenTreeNode(node, registeredComponentIds, slot)];
 }
 
 function mapScreenTreeNode(
 	node: ScreenExportNodeLike,
 	registeredComponentIds: ReadonlySet<string>,
+	slot?: PageFigmaNodeSpec["slot"],
 ): PageFigmaNodeSpec {
-	const componentId = toComponentId(node.type);
+	const componentId =
+		typeof node.props?.componentId === "string"
+			? node.props.componentId
+			: toComponentId(node.type);
 	const props = {
-		...(node.props ?? {}),
+		...stripInternalProps(node.props),
 		exportSource: "screen-tree",
 		bounds: node.bounds,
 		localBounds: node.localBounds,
 		style: node.style,
 		text: node.text,
 	};
+	const isRegisteredComponent = registeredComponentIds.has(componentId);
+	const isLayoutPrimitive = isLayoutPrimitiveNode(node);
 
 	return {
 		id: node.id,
 		type: node.type,
 		componentId,
-		registered: registeredComponentIds.has(componentId),
-		slot: normalizeSlot(node.slot),
+		registered: isRegisteredComponent,
+		slot: slot ?? normalizeSlot(node.slot),
 		props,
-		children:
-			node.children?.map((child) =>
-				mapScreenTreeNode(child, registeredComponentIds),
-			) ?? [],
+		children: isRegisteredComponent && !isLayoutPrimitive
+			? []
+			: (node.children?.flatMap((child) =>
+					collectScreenTreeChildren(child, registeredComponentIds),
+				) ?? []),
 	};
 }
 
 function normalizeSlot(slot: string | undefined) {
+	if (slot === "header") return "top";
 	if (
 		slot === "top" ||
 		slot === "content" ||
@@ -106,6 +151,28 @@ function normalizeSlot(slot: string | undefined) {
 		return slot;
 	}
 	return undefined;
+}
+
+function isLayoutOnlyNode(node: ScreenExportNodeLike) {
+	return (
+		node.type === "AppScreenRoot" ||
+		node.type === "AppScreenContent" ||
+		node.type === "AppScreenChromeSlot" ||
+		node.type === "ContentOutlet" ||
+		node.type === "ContentList" ||
+		node.type === "ContentSection" ||
+		node.type === "ContentRail"
+	);
+}
+
+function isLayoutPrimitiveNode(node: ScreenExportNodeLike) {
+	return node.type === "Flex" || node.type === "HStack" || node.type === "VStack";
+}
+
+function stripInternalProps(props: Record<string, unknown> | undefined) {
+	if (!props) return {};
+	const { componentId: _componentId, ...rest } = props;
+	return rest;
 }
 
 function toComponentId(type: string) {

@@ -1,0 +1,99 @@
+{
+	"meta": {
+		"schema_version": 2,
+		"status": "active",
+		"route": "/NOVA-MBR-PG-005-0",
+		"source": "policy-driven",
+		"source_ref": "sb 0508/screen/NOVA-MBR-PG-005-0.md",
+		"policy_doc": "NC 회원가입·탈퇴 정책서 Full v1.0 확정본",
+		"policy_section": "PG-MBR-ACCT-001 / PG-MBR-SESS-001 / PG-MBR-PROF-001"
+	},
+	"screen": {
+		"id": "NOVA-MBR-PG-005-0",
+		"name": "가입 완료",
+		"domain": "membership",
+		"type": "page"
+	},
+	"x_storyboard": {
+		"source": "sb-0508",
+		"section_path": "회원 가입 > 약관 동의 > 개인정보 입력 > 본인인증 > 가입 완료",
+		"composition": [
+			{
+				"no": 0,
+				"section_type": "dynamic",
+				"section": "화면 제목 영역",
+				"layout": "vertical",
+				"ogn_id": "ogn-MBR-section-header-page",
+				"server_control": "텍스트 내용",
+				"min": 1,
+				"max": 1,
+				"priority": 1,
+				"error_handling": "기본값 표시"
+			},
+			{
+				"no": 1,
+				"section_type": "dynamic",
+				"section": "가입 완료 안내 영역",
+				"layout": "vertical",
+				"ogn_id": "ogn-MBR-section-message-join-complete",
+				"server_control": "텍스트 내용",
+				"min": 1,
+				"max": 1,
+				"priority": 1,
+				"error_handling": "기본값 표시",
+				"_resolved_ogn_id": "ogn-MBR-section-message-join-complete-view",
+				"_resolved_reason": "SB references id without -view suffix; ogn file frontmatter authoritative."
+			}
+		]
+	},
+	"screen_contract": {
+		"shell": "AppScreen",
+		"slots": {
+			"top": { "owner": "ProgressTopBar" },
+			"content": {
+				"owner": "ContentList",
+				"patterns": [
+					"organisms/mbr/SectionHeaderPage",
+					"organisms/mbr/SectionMessageJoinCompleteView"
+				]
+			}
+		}
+	},
+	"layout_contract": {
+		"content_outlet_inline_inset": "spacing-12",
+		"section_inset": "inherit",
+		"content_gap": "section",
+		"top_bottom_flow": "reserved",
+		"bleed_sections": []
+	},
+	"areas": [
+		{
+			"id": "header",
+			"slot": "content",
+			"pattern": "organisms/mbr/SectionHeaderPage",
+			"uses": ["TextBlock"],
+			"content_role": "primary-copy"
+		},
+		{
+			"id": "complete",
+			"slot": "content",
+			"pattern": "organisms/mbr/SectionMessageJoinCompleteView",
+			"uses": ["SectionMessage", "TextBlock", "Button"],
+			"content_role": "primary-copy",
+			"state_binding": {
+				"primary_label": "홈으로 이동"
+			}
+		}
+	],
+	"design_system_contract": {
+		"templates": ["AppScreen", "ContentList", "ContentSection"],
+		"organisms": [
+			"ogn-mbr-section-header-page",
+			"ogn-mbr-section-message-join-complete-view"
+		],
+		"molecules": [],
+		"atoms": ["TextBlock", "Button", "SectionMessage"],
+		"allowed_escape_hatches": [],
+		"new_vocabulary_required": []
+	}
+}

@@ -1,3 +1,5 @@
+import { formFieldFigmaSpec } from "./form-field.figma";
+
 export const formFieldRegistryEntry = {
 	id: "form-field",
 	name: "FormField",
@@ -7,6 +9,7 @@ export const formFieldRegistryEntry = {
 	group: "form",
 	status: "active",
 	createdAt: "2026-04-30",
+	figmaSpec: () => formFieldFigmaSpec,
 	composedOf: [
 		"wds-form-field",
 		"wds-form-label",

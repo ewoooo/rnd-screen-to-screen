@@ -129,6 +129,172 @@ function variableNameForPath_s(path) {
   return parseTokenPath_s(path).map(variableSegmentName_s).join("/");
 }
 
+function tokenNodeAtPath_s(path) {
+  const segments = parseTokenPath_s(path);
+  let node = DS_TOKENS;
+  for (let i = 0; i < segments.length; i++) {
+    if (!isRecord_s(node) || !(segments[i] in node)) return null;
+    node = node[segments[i]];
+  }
+  return node;
+}
+
+function rawTokenValueAtPath_s(path) {
+  const node = tokenNodeAtPath_s(path);
+  if (isRecord_s(node) && "value" in node) return node.value;
+  return node;
+}
+
+function resolveTokenValue_s(value, seen) {
+  const visited = seen || {};
+  const path = isAlias_s(value) ? aliasPath_s(value) : null;
+  if (path) {
+    if (visited[path]) return null;
+    visited[path] = true;
+    return resolveTokenValue_s(rawTokenValueAtPath_s(path), visited);
+  }
+  if (Array.isArray(value)) {
+    return value.map(function (item) {
+      return resolveTokenValue_s(item, visited);
+    });
+  }
+  if (isRecord_s(value)) {
+    const result = {};
+    for (const key in value) result[key] = resolveTokenValue_s(value[key], visited);
+    return result;
+  }
+  return value;
+}
+
+function parseNumber_s(value) {
+  if (typeof value === "number") return value;
+  if (typeof value !== "string") return null;
+  const match = value.match(/^-?\d+(\.\d+)?/);
+  return match ? parseFloat(match[0]) : null;
+}
+
+function normalizeStyleName_s(family, styleName) {
+  if (family === "Inter" && styleName === "SemiBold") return "Semi Bold";
+  return styleName;
+}
+
+function fallbackFontStyleName_s(weight) {
+  if (weight >= 700) return "Bold";
+  if (weight >= 600) return "SemiBold";
+  if (weight >= 500) return "Medium";
+  return "Regular";
+}
+
+async function loadFirstAvailableFont_s(style) {
+  const primaryFamily = resolveTokenValue_s("{typography.fontFamily.primary}") || "Pretendard";
+  const fallbackFamily = resolveTokenValue_s("{typography.fontFamily.fallback}") || "Inter";
+  const styleName = typeof style.fontWeightName === "string"
+    ? style.fontWeightName
+    : fallbackFontStyleName_s(parseNumber_s(style.fontWeight) || 400);
+  const families = [primaryFamily, fallbackFamily, "Inter"];
+  const tried = {};
+  for (let i = 0; i < families.length; i++) {
+    const family = String(families[i]);
+    const names = [normalizeStyleName_s(family, styleName), styleName, "Regular"];
+    for (let j = 0; j < names.length; j++) {
+      const fontName = { family, style: names[j] };
+      const key = fontName.family + "/" + fontName.style;
+      if (tried[key]) continue;
+      tried[key] = true;
+      try {
+        await figma.loadFontAsync(fontName);
+        return fontName;
+      } catch (error) {}
+    }
+  }
+  return null;
+}
+
+function textStyleNameForToken_s(path) {
+  const segments = parseTokenPath_s(path);
+  const variantName = segments[1] || "style";
+  const weightName = segments[2] || "regular";
+  const prefix = typeof PXDS_FIGMA_VARIABLES_SYNC_OPTIONS.textStylePrefix === "string"
+    ? PXDS_FIGMA_VARIABLES_SYNC_OPTIONS.textStylePrefix.trim()
+    : "PXDS";
+  const suffix = "Typography/" + variantName + "/" + weightName;
+  return prefix ? prefix + "/" + suffix : suffix;
+}
+
+function collectTypographyTextStyleTokens_s() {
+  const typography = isRecord_s(DS_TOKENS.typography) ? DS_TOKENS.typography : {};
+  const reserved = {
+    fontFamily: true,
+    fontSize: true,
+    fontWeight: true,
+    fontWeightName: true,
+    letterSpacing: true,
+    lineHeight: true,
+  };
+  const result = [];
+  for (const variantName in typography) {
+    if (reserved[variantName] || !isRecord_s(typography[variantName])) continue;
+    const variantNode = typography[variantName];
+    for (const weightName in variantNode) {
+      const styleNode = variantNode[weightName];
+      if (!isRecord_s(styleNode) || !("value" in styleNode)) continue;
+      const path = "typography." + variantName + "." + weightName;
+      const styleValue = resolveTokenValue_s(styleNode.value);
+      if (isRecord_s(styleValue)) result.push({ path, styleValue });
+    }
+  }
+  return result;
+}
+
+async function syncPxdsFigmaTextStyles_s() {
+  if (PXDS_FIGMA_VARIABLES_SYNC_OPTIONS.includeTextStyles === false) {
+    return { created: 0, updated: 0, skipped: 0 };
+  }
+
+  const textStyles = await figma.getLocalTextStylesAsync();
+  const existingByName = {};
+  for (let i = 0; i < textStyles.length; i++) existingByName[textStyles[i].name] = textStyles[i];
+
+  const stats = { created: 0, updated: 0, skipped: 0 };
+  const tokens = collectTypographyTextStyleTokens_s();
+  for (let i = 0; i < tokens.length; i++) {
+    const entry = tokens[i];
+    const fontSize = parseNumber_s(entry.styleValue.fontSize);
+    const lineHeight = parseNumber_s(entry.styleValue.lineHeight);
+    const letterSpacing = parseNumber_s(entry.styleValue.letterSpacing);
+    if (fontSize == null || lineHeight == null) {
+      stats.skipped++;
+      continue;
+    }
+
+    const fontName = await loadFirstAvailableFont_s(entry.styleValue);
+    if (!fontName) {
+      stats.skipped++;
+      continue;
+    }
+
+    const styleName = textStyleNameForToken_s(entry.path);
+    let textStyle = existingByName[styleName];
+    if (!textStyle) {
+      textStyle = figma.createTextStyle();
+      textStyle.name = styleName;
+      existingByName[styleName] = textStyle;
+      stats.created++;
+    } else {
+      stats.updated++;
+    }
+
+    textStyle.fontName = fontName;
+    textStyle.fontSize = fontSize;
+    textStyle.lineHeight = { value: lineHeight, unit: "PIXELS" };
+    textStyle.letterSpacing = { value: letterSpacing == null ? 0 : letterSpacing, unit: "PIXELS" };
+    textStyle.description = "PXDS typography token: " + entry.path;
+  }
+
+  console.log("PXDS Figma Text Styles synced", stats);
+  return stats;
+}
+
 function colorEquals_s(a, b) {
   if (!a || typeof a !== "object") return false;
   return (
@@ -292,10 +458,13 @@ async function syncPxdsFigmaVariables() {
   }
 
   figma.root.setPluginData(PXDS_VARIABLE_MAP_PLUGIN_DATA_KEY, JSON.stringify(idMap));
+  const textStyleStats = await syncPxdsFigmaTextStyles_s();
   const total = Object.keys(idMap).length;
   const changed = stats.created + stats.updated + stats.typeRecreated;
-  console.log("PXDS Figma Variables synced", { total, changed, stats });
-  figma.notify("PXDS variables synced: " + changed + " changed / " + total + " mapped");
+  console.log("PXDS Figma Variables synced", { total, changed, stats, textStyleStats });
+  figma.notify(
+    "PXDS variables synced: " + changed + " changed / " + total + " mapped" +
+    " · text styles " + (textStyleStats.created + textStyleStats.updated) + " changed"
+  );
 }
 `;
-

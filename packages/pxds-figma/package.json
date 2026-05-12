@@ -14,7 +14,7 @@
 		"./page-export": "./src/page-export/index.ts"
 	},
 	"dependencies": {
-		"@pxds/pxds-figma-renderer": "0.1.0",
+		"@pxds/pxds-components": "0.1.0",
 		"react": "19.2.4"
 	}
 }
