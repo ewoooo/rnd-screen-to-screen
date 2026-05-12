@@ -35,14 +35,9 @@ shadcn/Tailwind 기반 브라우저 프리뷰 셸이다. WDS 모바일 화면을
 
 ## Figma workflow
 
-- 브라우저에서 Figma MCP를 직접 호출하지 않는다.
-- 버튼은 요청 세트를 생성한다: `artifacts/figma-mcp-requests/{requestId}/`.
-- 생성물:
-  - `request.json`
-  - `codex-prompt.md`
-  - 가능한 경우 `figma-plugin.js`
-- `figma-plugin.js`가 있으면 Codex가 Figma MCP `use_figma`로 실행할 수 있다.
-- `figma-plugin.js`가 없으면 preview/mobile URL을 Figma capture workflow로 넘긴다.
+- 오른쪽 action rail은 내보내기만 담당한다.
+- 토큰은 Tokens Studio JSON으로 내보낸다. Variables와 Text Styles는 Tokens Studio 쪽 export 기능으로 일원화한다.
+- 컴포넌트와 페이지는 Figma plugin JS를 생성한다.
 - Figma capture는 iframe 내부를 파싱하지 못한다. 비교용 캡처가 필요하면 mobile app 자체 route를 capture mode로 열고 `AppScreenRoot` selector를 잡는다.
 
 ## UI 원칙

@@ -1,15 +1,14 @@
 "use client";
 
-import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
-
 import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
 import { ComponentExampleMissing } from "@/components/preview/render-view/component/ComponentExampleMissing";
 import { PreviewCanvas } from "@/components/preview/render-view/shared/PreviewCanvas";
 import { PreviewHeader } from "@/components/preview/render-view/shared/PreviewHeader";
 import { ComponentRender } from "@/components/preview/render-view/component/ComponentRender";
+import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
 
 type ComponentPreviewProps = {
-	component: ComponentRegistryEntry;
+	component: PreviewComponentRegistryEntry;
 };
 
 export function ComponentPreview({ component }: ComponentPreviewProps) {

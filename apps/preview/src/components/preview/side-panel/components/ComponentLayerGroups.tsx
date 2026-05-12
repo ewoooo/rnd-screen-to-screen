@@ -1,14 +1,12 @@
-import type {
-	ComponentLayer,
-	ComponentRegistryEntry,
-} from "@pxds/pxds-components/registry";
+import type { ComponentLayer } from "@pxds/pxds-components/registry";
 
 import { ComponentLayerGroup } from "@/components/preview/side-panel/components/ComponentLayerGroup";
+import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
 
 type ComponentLayerGroupsProps = {
 	layers: readonly ComponentLayer[];
 	componentsByLayer: Partial<
-		Record<ComponentLayer, readonly ComponentRegistryEntry[]>
+		Record<ComponentLayer, readonly PreviewComponentRegistryEntry[]>
 	>;
 	selectedComponentId?: string;
 };

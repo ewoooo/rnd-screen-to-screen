@@ -1,8 +1,9 @@
 import Link from "next/link";
-import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
+
+import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
 
 type ComponentRouteButtonProps = {
-	component: ComponentRegistryEntry;
+	component: PreviewComponentRegistryEntry;
 	active: boolean;
 };
 

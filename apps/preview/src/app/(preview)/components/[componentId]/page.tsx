@@ -4,6 +4,7 @@ import { getComponentById } from "@pxds/pxds-components/registry";
 import { ComponentPreview } from "@/components/preview/render-view/component/ComponentPreview";
 import { PreviewSidePanel } from "@/components/preview/side-panel/PreviewSidePanel";
 import { ComponentRegistrySidePanel } from "@/components/preview/side-panel/components/ComponentRegistrySidePanel";
+import { toPreviewComponentRegistryEntry } from "@/utils/component-registry";
 
 type ComponentsPreviewRoutePageProps = {
 	params: Promise<{
@@ -26,7 +27,7 @@ export default async function ComponentsPreviewRoutePage({
 			<PreviewSidePanel>
 				<ComponentRegistrySidePanel selectedComponentId={componentId} />
 			</PreviewSidePanel>
-			<ComponentPreview component={component} />
+			<ComponentPreview component={toPreviewComponentRegistryEntry(component)} />
 		</>
 	);
 }

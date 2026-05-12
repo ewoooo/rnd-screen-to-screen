@@ -1,5 +1,4 @@
 export { createPageFigmaExportSpec } from "./create-page-export-spec";
-export { createPageFigmaExportSpecFromScreenTree } from "./create-page-export-spec-from-screen-tree";
 export {
 	isRenderScreenSpecLike,
 	renderScreenSpecToPageFigmaSpec,

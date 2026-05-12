@@ -1,9 +1,9 @@
 "use client";
 
 import { lazy, Suspense } from "react";
-import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
 
 import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
+import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
 
 const ComponentRenderFrame = lazy(() =>
 	import("@/components/preview/render-view/component/ComponentRenderFrame").then(
@@ -14,7 +14,7 @@ const ComponentRenderFrame = lazy(() =>
 );
 
 type ComponentRenderProps = {
-	component: ComponentRegistryEntry;
+	component: PreviewComponentRegistryEntry;
 };
 
 export function ComponentRender({ component }: ComponentRenderProps) {

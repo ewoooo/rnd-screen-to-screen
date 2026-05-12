@@ -1,14 +1,7 @@
 "use client";
 
-import {
-	CodeIcon,
-	DatabaseIcon,
-	LayoutTemplateIcon,
-	MousePointerClickIcon,
-	UploadIcon,
-} from "lucide-react";
+import { DatabaseIcon, LayoutTemplateIcon, UploadIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { getComponentById } from "@pxds/pxds-components/registry";
 import {
 	createPxdsFigmaTokenTree,
 	createPageFigmaExportSpec,
@@ -16,16 +9,12 @@ import {
 	getComponentFigmaSpec,
 	useFigmaPageExport,
 	useFigmaPluginExport,
-	useFigmaVariablesExport,
 	useTokensStudioExport,
 } from "@pxds/pxds-figma";
 import tokenRegistry from "@pxds/pxds-tokens/registry/wds-token-registry.json";
 import { createPxdsTokensStudioJson } from "@pxds/pxds-tokens/tokens-studio";
 
 import { usePageRegistry } from "@/contexts/page-registry-context";
-import { useFigmaMcpRequest } from "@/hooks/use-figma-mcp-request";
-import { useScreenTreeFigmaExport } from "@/hooks/use-screen-tree-figma-export";
-import type { FigmaMcpExportRequest } from "@/utils/figma-mcp-request";
 import {
 	activeRenderScreenSpecs,
 	activeRenderableScreenSpecs,
@@ -54,8 +43,6 @@ export function PreviewActionRail() {
 	const { selectedRoute } = usePageRegistry();
 	const componentId = getComponentIdFromPath(pathname);
 	const pageId = getPageIdFromPath(pathname, selectedRoute.id);
-	const pageIframeSrc = getPageIframeSrc(selectedRoute.route);
-	const component = componentId ? getComponentById(componentId) : null;
 	const figmaSpec = getComponentFigmaSpec(componentId);
 	const renderablePageSpec = pageId ? (pageExportSpecsById[pageId] ?? null) : null;
 	const pageFigmaSpec = renderablePageSpec
@@ -71,12 +58,6 @@ export function PreviewActionRail() {
 		? "현재 페이지 Figma 코드 복사"
 		: "현재 페이지의 renderable spec이 없습니다";
 	const tokensStudioLabel = "Tokens Studio JSON 파일 생성";
-	const figmaVariablesLabel = "Figma Variables sync 파일 생성";
-	const figmaMcpTarget = getFigmaMcpTarget({
-		component,
-		pathname,
-		selectedRoute,
-	});
 	const {
 		exportTokensStudioJson,
 		isCopying: isTokensStudioCopying,
@@ -87,17 +68,6 @@ export function PreviewActionRail() {
 		fileName: "pxds.tokens.json",
 		tokenJson: tokensStudioJson,
 		sourceLabel: "PXDS preview Tokens Studio JSON",
-	});
-	const {
-		exportFigmaVariablesCode,
-		isCreating: isFigmaVariablesCreating,
-		isCreated: isFigmaVariablesCreated,
-		status: figmaVariablesStatus,
-		error: figmaVariablesError,
-	} = useFigmaVariablesExport({
-		fileName: "pxds-figma-variables-sync.js",
-		tokenTree: figmaTokenTree,
-		sourceLabel: "PXDS preview Figma Variables sync",
 	});
 	const {
 		exportToFigma,
@@ -125,43 +95,9 @@ export function PreviewActionRail() {
 		componentSpecs: componentFigmaSpecRegistry,
 		sourceLabel: pageId ? `PXDS preview page: ${pageId}` : "PXDS preview page",
 	});
-	const {
-		createFigmaMcpRequest,
-		isCreating: isFigmaMcpRequestCreating,
-		isCreated: isFigmaMcpRequestCreated,
-		request: figmaMcpRequest,
-		status: figmaMcpRequestStatus,
-		error: figmaMcpRequestError,
-	} = useFigmaMcpRequest();
-	const {
-		exportScreenTreeToFigma,
-		isCopying: isScreenTreeExportCopying,
-		isCopied: isScreenTreeExportCopied,
-		status: screenTreeExportStatus,
-		error: screenTreeExportError,
-	} = useScreenTreeFigmaExport();
-	const figmaMcpLabel = getFigmaMcpLabel({
-		error: figmaMcpRequestError,
-		isCreated: isFigmaMcpRequestCreated,
-		request: figmaMcpRequest,
-		target: figmaMcpTarget,
-	});
 
 	return (
 		<ActionRail label="Preview actions">
-			<ActionRailButton
-				defaultIcon={MousePointerClickIcon}
-				disabled={!figmaMcpTarget || isFigmaMcpRequestCreating}
-				error={figmaMcpRequestError}
-				label={figmaMcpLabel}
-				onClick={() => {
-					if (!figmaMcpTarget) return;
-					void createFigmaMcpRequest(figmaMcpTarget);
-				}}
-				status={
-					isFigmaMcpRequestCreated ? "created" : figmaMcpRequestStatus
-				}
-			/>
 			<ActionRailButton
 				defaultIcon={DatabaseIcon}
 				disabled={isTokensStudioCopying}
@@ -169,14 +105,6 @@ export function PreviewActionRail() {
 				label={tokensStudioLabel}
 				onClick={() => void exportTokensStudioJson()}
 				status={isTokensStudioCopied ? "copied" : tokensStudioStatus}
-			/>
-			<ActionRailButton
-				defaultIcon={CodeIcon}
-				disabled={isFigmaVariablesCreating}
-				error={figmaVariablesError}
-				label={figmaVariablesLabel}
-				onClick={() => void exportFigmaVariablesCode()}
-				status={isFigmaVariablesCreated ? "created" : figmaVariablesStatus}
 			/>
 			<ActionRailButton
 				defaultIcon={UploadIcon}
@@ -194,23 +122,6 @@ export function PreviewActionRail() {
 				onClick={() => void exportPageToFigma()}
 				status={isPageExportCopied ? "copied" : pageExportStatus}
 			/>
-			<ActionRailButton
-				defaultIcon={LayoutTemplateIcon}
-				disabled={!canExportPage || isScreenTreeExportCopying}
-				error={screenTreeExportError}
-				label="현재 렌더 트리 Figma 코드 복사"
-				onClick={() =>
-					void exportScreenTreeToFigma({
-						id: selectedRoute.id,
-						iframeSrc: pageIframeSrc,
-						name: selectedRoute.label,
-						route: selectedRoute.route,
-					})
-				}
-				status={
-					isScreenTreeExportCopied ? "copied" : screenTreeExportStatus
-				}
-			/>
 		</ActionRail>
 	);
 }
@@ -223,68 +134,4 @@ function getComponentIdFromPath(pathname: string) {
 function getPageIdFromPath(pathname: string, selectedPageId: string) {
 	if (pathname !== "/pages") return null;
 	return selectedPageId;
-}
-
-function getPageIframeSrc(route: string) {
-	const mobileOrigin =
-		process.env.NEXT_PUBLIC_MOBILE_ORIGIN ?? "http://localhost:3001";
-	return `${mobileOrigin}${route}`;
-}
-
-type FigmaMcpTargetInput = {
-	component: ReturnType<typeof getComponentById> | null;
-	pathname: string;
-	selectedRoute: ReturnType<typeof usePageRegistry>["selectedRoute"];
-};
-
-function getFigmaMcpTarget({
-	component,
-	pathname,
-	selectedRoute,
-}: FigmaMcpTargetInput) {
-	if (component && pathname.startsWith("/components/")) {
-		return {
-			kind: "component" as const,
-			id: component.id,
-			name: component.name,
-			sourcePath: pathname,
-			previewUrl:
-				typeof window === "undefined"
-					? `/component-render/${component.id}`
-					: new URL(`/component-render/${component.id}`, window.location.origin)
-							.href,
-		};
-	}
-
-	if (pathname === "/pages") {
-		return {
-			kind: "page" as const,
-			id: selectedRoute.id,
-			name: selectedRoute.label,
-			sourcePath: pathname,
-			previewUrl: getPageIframeSrc(selectedRoute.route),
-		};
-	}
-
-	return null;
-}
-
-function getFigmaMcpLabel({
-	error,
-	isCreated,
-	request,
-	target,
-}: {
-	error: string | null;
-	isCreated: boolean;
-	request: FigmaMcpExportRequest | null;
-	target: ReturnType<typeof getFigmaMcpTarget>;
-}) {
-	if (error) return error;
-	if (!target) return "현재 화면은 Figma MCP 요청 대상이 아닙니다";
-	if (!isCreated || !request) return "Figma MCP 워크플로우 생성";
-
-	return request.workflow.hasExecutableFigmaCode
-		? "Figma MCP 워크플로우 생성됨: figma-plugin.js + Codex 프롬프트"
-		: "Figma MCP 요청 생성됨: Codex 프롬프트";
 }

@@ -4,6 +4,11 @@ import type {
 	ComponentRegistryEntry,
 } from "@pxds/pxds-components/registry";
 
+export type PreviewComponentRegistryEntry = Omit<
+	ComponentRegistryEntry,
+	"figmaSpec" | "render"
+>;
+
 export const COMPONENT_LAYER_ORDER = [
 	"atom",
 	"molecule",
@@ -31,15 +36,30 @@ export const COMPONENT_GROUP_ORDER = [
 ] as const satisfies readonly ComponentGroup[];
 
 export type ComponentLayerGroups = Partial<
-	Record<ComponentLayer, ComponentRegistryEntry[]>
+	Record<ComponentLayer, PreviewComponentRegistryEntry[]>
 >;
 
 export type ComponentGroups = Partial<
-	Record<ComponentGroup, ComponentRegistryEntry[]>
+	Record<ComponentGroup, PreviewComponentRegistryEntry[]>
 >;
 
-export function getComponentLayers(
+export function toPreviewComponentRegistryEntry(
+	component: ComponentRegistryEntry,
+): PreviewComponentRegistryEntry {
+	const { figmaSpec, render, ...serializableComponent } = component;
+	void figmaSpec;
+	void render;
+	return serializableComponent;
+}
+
+export function toPreviewComponentRegistry(
 	components: readonly ComponentRegistryEntry[],
+): PreviewComponentRegistryEntry[] {
+	return components.map(toPreviewComponentRegistryEntry);
+}
+
+export function getComponentLayers(
+	components: readonly PreviewComponentRegistryEntry[],
 ) {
 	const orderedLayers = COMPONENT_LAYER_ORDER.filter((layer) =>
 		components.some((component) => component.layer === layer),
@@ -55,7 +75,7 @@ export function getComponentLayers(
 }
 
 export function getComponentGroups(
-	components: readonly ComponentRegistryEntry[],
+	components: readonly PreviewComponentRegistryEntry[],
 ) {
 	const orderedGroups = COMPONENT_GROUP_ORDER.filter((group) =>
 		components.some((component) => component.group === group),
@@ -71,7 +91,7 @@ export function getComponentGroups(
 }
 
 export function groupComponentsByLayer(
-	components: readonly ComponentRegistryEntry[],
+	components: readonly PreviewComponentRegistryEntry[],
 ) {
 	return components.reduce<ComponentLayerGroups>((acc, component) => {
 		(acc[component.layer] ??= []).push(component);
@@ -80,7 +100,7 @@ export function groupComponentsByLayer(
 }
 
 export function groupComponentsByGroup(
-	components: readonly ComponentRegistryEntry[],
+	components: readonly PreviewComponentRegistryEntry[],
 ) {
 	return components.reduce<ComponentGroups>((acc, component) => {
 		(acc[component.group] ??= []).push(component);

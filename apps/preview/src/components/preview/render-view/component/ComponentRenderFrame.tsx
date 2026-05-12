@@ -1,7 +1,7 @@
-import type { ComponentRegistryEntry } from "@pxds/pxds-components/registry";
+import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
 
 type ComponentRenderFrameProps = {
-	component: ComponentRegistryEntry;
+	component: PreviewComponentRegistryEntry;
 };
 
 export function ComponentRenderFrame({ component }: ComponentRenderFrameProps) {
