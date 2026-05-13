@@ -1,94 +1,14 @@
-
-
-const legacyMbrPg0010Route = {
-	id: "LEGACY-MBR-PG-001-0",
-	route: "/LEGACY-MBR-PG-001-0",
-	label: "회원 가입 본인인증",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const legacyMbrPg0020Route = {
-	id: "LEGACY-MBR-PG-002-0",
-	route: "/LEGACY-MBR-PG-002-0",
-	label: "회원 가입 완료",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const legacyMbrPg0030Route = {
-	id: "LEGACY-MBR-PG-003-0",
-	route: "/LEGACY-MBR-PG-003-0",
-	label: "회원 탈퇴 완료",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const legacyMbrPg0040Route = {
-	id: "LEGACY-MBR-PG-004-0",
-	route: "/LEGACY-MBR-PG-004-0",
-	label: "회원 탈퇴 영향 확인",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const legacyMbrPg0050Route = {
-	id: "LEGACY-MBR-PG-005-0",
-	route: "/LEGACY-MBR-PG-005-0",
-	label: "회원 탈퇴 사유",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const legacyMbrPg0060Route = {
-	id: "LEGACY-MBR-PG-006-0",
-	route: "/LEGACY-MBR-PG-006-0",
-	label: "회원 가입 기본 정보",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const legacyMbrPg0070Route = {
-	id: "LEGACY-MBR-PG-007-0",
-	route: "/LEGACY-MBR-PG-007-0",
-	label: "회원 가입 약관 동의",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-12",
-} as const;
-const novaMbrPg0010Route = {
-	id: "NOVA-MBR-PG-001-0",
-	route: "/NOVA-MBR-PG-001-0",
-	label: "MBR 가입 1·약관 동의",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-11",
-} as const;
-const novaMbrPg0020Route = {
-	id: "NOVA-MBR-PG-002-0",
-	route: "/NOVA-MBR-PG-002-0",
-	label: "MBR 가입 2·개인정보 입력",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-11",
-} as const;
-const novaMbrPg0030Route = {
-	id: "NOVA-MBR-PG-003-0",
-	route: "/NOVA-MBR-PG-003-0",
-	label: "MBR 가입 3·본인인증",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-11",
-} as const;
-const novaMbrPg0050Route = {
-	id: "NOVA-MBR-PG-005-0",
-	route: "/NOVA-MBR-PG-005-0",
-	label: "MBR 가입 5·가입 완료",
-	group: "membership",
-	status: "active",
-	createdAt: "2026-05-11",
-} as const;
-
+import { screenConfig as legacyMbrPg0010Route } from "../app/LEGACY-MBR-PG-001-0/Screen.config";
+import { screenConfig as legacyMbrPg0020Route } from "../app/LEGACY-MBR-PG-002-0/Screen.config";
+import { screenConfig as legacyMbrPg0030Route } from "../app/LEGACY-MBR-PG-003-0/Screen.config";
+import { screenConfig as legacyMbrPg0040Route } from "../app/LEGACY-MBR-PG-004-0/Screen.config";
+import { screenConfig as legacyMbrPg0050Route } from "../app/LEGACY-MBR-PG-005-0/Screen.config";
+import { screenConfig as legacyMbrPg0060Route } from "../app/LEGACY-MBR-PG-006-0/Screen.config";
+import { screenConfig as legacyMbrPg0070Route } from "../app/LEGACY-MBR-PG-007-0/Screen.config";
+import { screenConfig as novaMbrPg0010Route } from "../app/NOVA-MBR-PG-001-0/Screen.config";
+import { screenConfig as novaMbrPg0020Route } from "../app/NOVA-MBR-PG-002-0/Screen.config";
+import { screenConfig as novaMbrPg0030Route } from "../app/NOVA-MBR-PG-003-0/Screen.config";
+import { screenConfig as novaMbrPg0050Route } from "../app/NOVA-MBR-PG-005-0/Screen.config";
 
 export type ScreenGroup =
 	| "membership";

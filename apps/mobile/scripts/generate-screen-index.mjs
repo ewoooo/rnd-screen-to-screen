@@ -11,23 +11,34 @@ const isCheck = process.argv.includes("--check");
 const preferredGroupOrder = ["membership"];
 
 function readScreenRoute(routeFolder) {
-	const metaPath = path.join(routeDir, routeFolder, "meta.json");
-	if (!existsSync(metaPath)) {
-		throw new Error(`Missing screen meta: ${path.relative(appDir, metaPath)}`);
+	const configPath = path.join(routeDir, routeFolder, "Screen.config.ts");
+	if (!existsSync(configPath)) {
+		throw new Error(`Missing screen config: ${path.relative(appDir, configPath)}`);
 	}
-	const meta = readJson(metaPath);
+	const configSource = readFileSync(configPath, "utf8");
 	return {
-		id: meta.id,
-		route: meta.route,
-		label: meta.name,
-		group: meta.group ?? meta.domain,
-		status: meta.status,
-		createdAt: meta.createdAt,
+		id: readConfigString(configSource, "id", configPath),
+		route: readConfigString(configSource, "route", configPath),
+		label:
+			readOptionalConfigString(configSource, "label") ??
+			readConfigString(configSource, "name", configPath),
+		group: readConfigString(configSource, "group", configPath),
+		status: readConfigString(configSource, "status", configPath),
+		createdAt: readConfigString(configSource, "createdAt", configPath),
 	};
 }
 
-function readJson(filePath) {
-	return JSON.parse(readFileSync(filePath, "utf8"));
+function readConfigString(source, key, filePath) {
+	const value = readOptionalConfigString(source, key);
+	if (value === undefined) {
+		throw new Error(`Missing ${key} in screen config: ${path.relative(appDir, filePath)}`);
+	}
+	return value;
+}
+
+function readOptionalConfigString(source, key) {
+	const match = source.match(new RegExp(`\\b${key}:\\s*"([^"]+)"`));
+	return match?.[1];
 }
 
 function toIdentifier(id, suffix) {
@@ -62,7 +73,7 @@ function getScreenEntries() {
 	const entries = readdirSync(routeDir, { withFileTypes: true })
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => entry.name)
-		.filter((folder) => existsSync(path.join(routeDir, folder, "meta.json")))
+		.filter((folder) => existsSync(path.join(routeDir, folder, "Screen.config.ts")))
 		.map((folder) => {
 			const route = readScreenRoute(folder);
 			const renderTsPath = path.join(routeDir, folder, "render-tree.ts");
@@ -101,6 +112,10 @@ function renderIndex(entries) {
 	const groups = [...new Set(entries.map((entry) => entry.route.group))];
 	const statuses = [...new Set(entries.map((entry) => entry.route.status))];
 	const imports = [
+		...entries.map(
+			(entry) =>
+				`import { screenConfig as ${entry.routeName} } from "../app/${entry.folder}/Screen.config";`,
+		),
 		...entries.flatMap((entry) => {
 		const lines = [];
 		if (entry.hasRenderSpec) {
@@ -113,19 +128,6 @@ function renderIndex(entries) {
 		return lines;
 		}),
 	];
-	const routeDeclarations = entries
-		.map(
-			(entry) => `const ${entry.routeName} = {
-\tid: ${quote(entry.route.id)},
-\troute: ${quote(entry.route.route)},
-\tlabel: ${quote(entry.route.label)},
-\tgroup: ${quote(entry.route.group)},
-\tstatus: ${quote(entry.route.status)},
-\tcreatedAt: ${quote(entry.route.createdAt)},
-} as const;`,
-		)
-		.join("\n");
-
 	const routeItems = entries.map((entry) => `\t${entry.routeName},`).join("\n");
 	const renderItems = entries
 		.filter((entry) => entry.hasRenderSpec)
@@ -133,7 +135,6 @@ function renderIndex(entries) {
 		.join("\n");
 
 	return `${imports.join("\n")}
-${routeDeclarations ? `\n${routeDeclarations}\n` : ""}
 
 export type ScreenGroup =
 ${groups.map((group) => `\t| ${quote(group)}`).join("\n")};
