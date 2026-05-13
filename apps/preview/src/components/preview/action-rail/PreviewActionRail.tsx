@@ -8,8 +8,8 @@ import {
 	useFigmaPluginExport,
 	useTokensStudioExport,
 } from "@pxds/pxds-figma";
-import tokenRegistry from "@pxds/pxds-tokens/registry/tokens.original.json";
-import { createPxdsTokensStudioJson } from "@pxds/pxds-tokens/tokens-studio";
+import tokenRegistry from "@pxds/cx-tokens/registry/tokens.original.json";
+import { createPxdsTokensStudioJson } from "@pxds/cx-tokens/tokens-studio";
 
 import { ActionRail } from "./ActionRail";
 import { ActionRailButton } from "./ActionRailButton";

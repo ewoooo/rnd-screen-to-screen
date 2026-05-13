@@ -1,10 +1,10 @@
-# @pxds/pxds-tokens
+# @pxds/cx-tokens
 
-PXDS 런타임 시각 token 값의 SSOT다. SKT primitive token set을 흡수해 color, spacing, radius, font-size, font-weight를 emit한다.
+PXDS 런타임 시각 token 값의 SSOT다. CX primitive token set을 흡수해 color, spacing, radius, font-size, font-weight를 emit한다.
 
 ## 원칙
 
-- 레지스트리 원천은 `registry/tokens.original.json`이다. Tokens Studio single-file 포맷, root set `_skt/primitive/default` 하나. DTCG `$type`/`$value` 리프 + `{path}` alias.
+- 레지스트리 원천은 `registry/tokens.original.json`이다. Tokens Studio single-file 포맷, root set `_skt/primitive/default` 하나. DTCG `$type`/`$value` 리프 + `{path}` alias. 원천 set 이름은 `_skt`로 남아 있어도 제품/시스템 명칭은 CX DS로 부른다.
 - 값은 JSON에만 산다. 런타임 소비자는 generated CSS custom property만 사용한다. TS token helper/alias를 신규 생성하지 않는다.
 - generated CSS는 `src/tokens.css`로 노출하고 package export는 `./tokens.css`를 제공한다. var 이름은 카테고리 prefix(`--color-…`, `--spacing-…`, `--radius-…`, `--font-size-…`, `--font-weight-…`). Set 이름은 prefix에 박지 않는다.
 - 색상은 `--color-*-rgb` (R, G, B) 변종도 같이 emit한다. alpha 합성용.
@@ -15,9 +15,9 @@ PXDS 런타임 시각 token 값의 SSOT다. SKT primitive token set을 흡수해
 ## 소비 경로
 
 - CSS 변수: `var(--color-*)`, `var(--spacing-*)`, `var(--radius-*)`, `var(--font-size-*)`, `var(--font-weight-*)`
-- registry JSON: `@pxds/pxds-tokens/registry/tokens.original.json`
-- CSS: `@pxds/pxds-tokens/tokens.css`
-- Tokens Studio: `@pxds/pxds-tokens/tokens-studio` (registry 그대로 export)
+- registry JSON: `@pxds/cx-tokens/registry/tokens.original.json`
+- CSS: `@pxds/cx-tokens/tokens.css`
+- Tokens Studio: `@pxds/cx-tokens/tokens-studio` (registry 그대로 export)
 
 ## 보관 자료
 

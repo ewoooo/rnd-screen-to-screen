@@ -1,6 +1,6 @@
 # apps/mobile
 
-Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 layout/chrome/scroll 계약은 `@pxds/pxds-layout`, 컴포넌트 어휘는 `@pxds/pxds-components`, icon은 `@pxds/pxds-icons`, token은 `@pxds/pxds-tokens`를 통과한다. 앱은 로컬 `src/components`를 소유하지 않는다.
+Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 layout/chrome/scroll 계약은 `@pxds/pxds-layout`, 컴포넌트 어휘는 `@pxds/pxds-components`, icon은 `@pxds/pxds-icons`, token은 `@pxds/cx-tokens`를 통과한다. 앱은 로컬 `src/components`를 소유하지 않는다.
 
 ## 화면 구조
 

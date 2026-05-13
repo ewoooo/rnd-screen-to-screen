@@ -1633,7 +1633,7 @@
 			"meta": {
 				"source": "wanteddev/montage-web packages/wds-theme, absorbed into PXDS",
 				"source_path": "https://github.com/wanteddev/montage-web/tree/main/packages/wds-theme",
-				"package": "@pxds/pxds-tokens",
+				"package": "@pxds/cx-tokens",
 				"fetched_at": "2026-04-24",
 				"format": "Tokens Studio single-file (foundation/semantic/project Sets, DTCG $type/$value, {set.path} aliases)",
 				"note": "PXDS token registry SSOT. WDS 원본 값은 이 패키지로 흡수하고, project extension도 같은 registry에 둔다. light only — dark는 추후 semantic-dark set으로 분리 예정.",

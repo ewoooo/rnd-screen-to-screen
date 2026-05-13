@@ -7,7 +7,7 @@ import type { TokensStudioTokenTree } from "./types";
  * foundation/semantic/project + $metadata + $themes + DTCG $type/$value
  * leaves), so this exporter is a passthrough — registry shape is the export
  * shape. Per-category map-* helpers are now unused and slated for removal in
- * the next pxds-tokens cleanup pass.
+ * the next cx-tokens cleanup pass.
  */
 export function createPxdsTokensStudioTokenSets(
 	registry: Record<string, unknown>,

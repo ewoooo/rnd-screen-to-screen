@@ -119,7 +119,7 @@ StyleDictionary.registerFormat({
 		}
 
 		const lines = [
-			"/* Generated from @pxds/pxds-tokens/registry/tokens.original.json. */",
+			"/* Generated from @pxds/cx-tokens/registry/tokens.original.json. */",
 			"/* Source: SKT primitive token set (_skt/primitive/default). */",
 			"/* Do not edit token values here by hand. */",
 			"",

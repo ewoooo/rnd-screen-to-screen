@@ -1,4 +1,4 @@
-@import "@pxds/pxds-tokens/tokens.css";
+@import "@pxds/cx-tokens/tokens.css";
 
 .mobile-view-frame {
 	width: var(--pxds-device-mobile-view-width);

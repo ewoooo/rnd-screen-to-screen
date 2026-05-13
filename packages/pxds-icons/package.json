@@ -9,7 +9,7 @@
 		"./registry/wds-icon-registry.json": "./registry/wds-icon-registry.json"
 	},
 	"dependencies": {
-		"@pxds/pxds-tokens": "0.1.0",
+		"@pxds/cx-tokens": "0.1.0",
 		"@wanteddev/wds-icon": "^3.5.0",
 		"react": "19.2.4"
 	}

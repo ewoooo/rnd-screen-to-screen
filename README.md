@@ -10,7 +10,7 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
 │   ├── mobile/   실제 모바일 화면 route와 WDS/PXDS 화면 조립
 │   └── preview/  모바일 화면과 컴포넌트 registry를 확인하는 브라우저 프리뷰 셸
 └── packages/
-    ├── pxds-tokens/               WDS theme 기반 token SSOT
+    ├── cx-tokens/               CX DS 기반 token SSOT
     ├── pxds-icons/                WDS icon adapter와 icon registry
     ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
     ├── pxds-components/           core adapter, atoms, molecules, shared/global component vocabulary
@@ -23,7 +23,7 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
 책임 방향은 아래 흐름을 기본으로 둡니다.
 
 ```txt
-@pxds/pxds-tokens
+@pxds/cx-tokens
   -> @pxds/pxds-icons
   -> @pxds/pxds-layout
   -> @pxds/pxds-components
@@ -80,7 +80,7 @@ WDS primitive
 
 | Area | Status | Note |
 | --- | --- | --- |
-| Token | 완료 | `@pxds/pxds-tokens`에서 token registry와 CSS export를 SSOT로 관리합니다. |
+| Token | 완료 | `@pxds/cx-tokens`에서 token registry와 CSS export를 SSOT로 관리합니다. |
 | Component | 기초 엘리먼츠 전환중 | WDS adapter, atoms, 모바일에서 실제 소비하는 molecules/shared-global 중심으로 정리 중입니다. |
 
 현재는 token 기반을 먼저 고정하고, component vocabulary를 모바일 화면에서 실제로 쓰이는 어휘 위주로 좁히는 단계입니다.

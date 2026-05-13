@@ -11,6 +11,6 @@
 	"files": ["manifest.json", "code.js", "ui.html"],
 	"dependencies": {
 		"@pxds/pxds-figma": "0.1.0",
-		"@pxds/pxds-tokens": "0.1.0"
+		"@pxds/cx-tokens": "0.1.0"
 	}
 }

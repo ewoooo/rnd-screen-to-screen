@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
 		"@pxds/pxds-components",
 		"@pxds/pxds-icons",
 		"@pxds/pxds-layout",
-		"@pxds/pxds-tokens",
+		"@pxds/cx-tokens",
 	],
 };
 

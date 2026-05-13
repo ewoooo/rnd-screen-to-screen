@@ -21,7 +21,7 @@
 │   ├── mobile/       Active WDS 모바일 화면 렌더러
 │   └── preview/      shadcn 기반 브라우저 프리뷰 셸
 ├── packages/
-│   ├── pxds-tokens/      WDS theme 기반 토큰 SSOT
+│   ├── cx-tokens/      CX DS 기반 토큰 SSOT
 │   ├── pxds-icons/       WDS icon adapter + icon registry
 │   ├── pxds-components/  순수 UI 컴포넌트 + 모바일 molecules/shared-global + core WDS re-export + component vocabulary registry
 │   ├── pxds-layout/      화면/frame/layout runtime
@@ -36,7 +36,7 @@
 
 - `apps/mobile` — 실제 모바일 화면 route와 WDS/PXDS 화면 조립. MBR(`NOVA-MBR-PG-*`, `src/organisms/mbr`)과 membership legacy(`LEGACY-MBR-PG-*`, `src/organisms/membership`) 모두 page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. 그 외 legacy route는 삭제 대상이다. 화면 route/spec를 `@screen/mobile/screens`로 재노출한다.
 - `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component registry 탐색, Figma export 요청, spec 조회 UI, iframe preview helper를 소유한다.
-- `@pxds/pxds-tokens` — 런타임 시각 token 값의 SSOT. SKT primitive token set을 흡수하고 CSS/token export를 제공한다.
+- `@pxds/cx-tokens` — 런타임 시각 token 값의 SSOT. CX primitive token set을 흡수하고 CSS/token export를 제공한다.
 - `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry.
 - `@pxds/pxds-components` — atoms/typography, atoms/feedback, 모바일에서 실제 소비하는 molecules와 shared/global 컴포넌트, 구현 세부 없는 component vocabulary registry. Current page/OGN은 `apps/mobile`의 React DOM 조립이 SOT다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge.
@@ -49,7 +49,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
 
 - WDS component는 `@pxds/pxds-components/core`를 통해 소비한다. 단, `@pxds/pxds-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수한다.
 - WDS icon은 `@pxds/pxds-icons`를 통해 소비한다.
-- token 값은 `@pxds/pxds-tokens`와 generated CSS를 통해 소비한다.
+- token 값은 `@pxds/cx-tokens`와 generated CSS를 통해 소비한다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
 - `apps/mobile` 아래에 `src/components`를 두지 않는다. 화면 route는 `@pxds/pxds-components/molecules`, `@pxds/pxds-components/shared/global`, `@pxds/pxds-layout/*`를 직접 소비한다.
 - `@pxds/pxds-components`는 모바일 shared/global 구현을 위해 `@pxds/pxds-layout`을 의존할 수 있다.
@@ -58,7 +58,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
 패키지 대략 방향:
 
 ```txt
-@pxds/pxds-tokens
+@pxds/cx-tokens
   → @pxds/pxds-icons
   → @pxds/pxds-layout
   → @pxds/pxds-components
