@@ -4,7 +4,7 @@ import type {
 	ComponentPropsWithRef,
 	ElementType,
 } from "react";
-import type { FigmaBridgeProps } from "../../../types";
+import type { FigmaBridgeProps } from "../../types";
 import type { textVariants } from "./text.variants";
 
 export type TextElement =

@@ -1,4 +1,4 @@
-import { Button, Text } from "@pxds/cx-components";
+import { Text } from "@pxds/cx-components";
 import { SectionMessage } from "@pxds/pxds-components/core";
 import { MbrOgnSectionLayout } from "../_layout";
 
@@ -20,9 +20,6 @@ export function SectionMessageJoinCompleteView() {
 			<Text variant="caption" as="p">
 				· 가입 완료 후 홈으로 이동합니다
 			</Text>
-			<Button variant="primary" size="large">
-				홈으로 이동
-			</Button>
 		</MbrOgnSectionLayout>
 	);
 }

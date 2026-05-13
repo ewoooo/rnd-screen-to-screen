@@ -1,6 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
 import type { ComponentPropsWithoutRef } from "react";
-import type { FigmaBridgeSizeProps } from "../../../types";
+import type { FigmaBridgeSizeProps } from "../../types";
 import type { buttonVariants } from "./button.variants";
 
 type NativeButtonProps = ComponentPropsWithoutRef<"button">;

@@ -1,7 +1,7 @@
-import { PrimaryCTABar } from "@pxds/pxds-components/molecules";
 import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import {
+	MbrPrimaryCTABar,
 	SectionHeaderPage,
 	SectionMessageJoinCompleteView,
 } from "@/organisms/mbr";
@@ -22,7 +22,7 @@ export function Screen() {
 				<SectionMessageJoinCompleteView />
 			</AppScreen.Content>
 			<AppScreen.Bottom>
-				<PrimaryCTABar primaryLabel="홈으로 이동" />
+				<MbrPrimaryCTABar primaryLabel="홈으로 이동" />
 			</AppScreen.Bottom>
 		</AppScreen>
 	);

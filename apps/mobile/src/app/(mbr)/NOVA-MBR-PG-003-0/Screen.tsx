@@ -1,7 +1,10 @@
-import { PrimaryCTABar } from "@pxds/pxds-components/molecules";
 import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
-import { ListCellAuthMethod, SectionHeaderPage } from "@/organisms/mbr";
+import {
+	ListCellAuthMethod,
+	MbrPrimaryCTABar,
+	SectionHeaderPage,
+} from "@/organisms/mbr";
 
 export function Screen() {
 	return (
@@ -19,7 +22,7 @@ export function Screen() {
 				<ListCellAuthMethod />
 			</AppScreen.Content>
 			<AppScreen.Bottom>
-				<PrimaryCTABar primaryLabel="인증 완료" disabled />
+				<MbrPrimaryCTABar primaryLabel="인증 완료" disabled />
 			</AppScreen.Bottom>
 		</AppScreen>
 	);

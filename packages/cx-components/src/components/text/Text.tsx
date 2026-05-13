@@ -1,10 +1,10 @@
 import {
 	createElement,
-	forwardRef,
 	type ElementType,
+	forwardRef,
 	type ReactElement,
 } from "react";
-import { cn } from "../../../lib/cn";
+import { cn } from "../../lib/cn";
 import type { TextElement, TextProps, TextRef } from "./Text.types";
 import { textVariants } from "./text.variants";
 

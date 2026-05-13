@@ -11,6 +11,7 @@ import { textFieldMemberInfoConfig } from "./text-field-member-info";
 export { ActionAreaTerms } from "./action-area-terms";
 export { CheckboxTerms } from "./checkbox-terms";
 export { ListCellAuthMethod } from "./list-cell-auth-method";
+export { MbrPrimaryCTABar } from "./primary-cta-bar";
 export { SectionHeaderPage } from "./section-header-page";
 export { SectionMessageEntryBranch } from "./section-message-entry-branch";
 export { SectionMessageJoinCompleteView } from "./section-message-join-complete-view";

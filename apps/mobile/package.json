@@ -12,6 +12,7 @@
     "lint": "biome lint ../../apps/mobile && node ../../scripts/check-react-hooks-policy.mjs apps/mobile"
   },
   "dependencies": {
+    "@pxds/cx-components": "0.1.0",
     "@pxds/pxds-components": "0.1.0",
     "@pxds/pxds-icons": "0.1.0",
     "@pxds/pxds-layout": "0.1.0",

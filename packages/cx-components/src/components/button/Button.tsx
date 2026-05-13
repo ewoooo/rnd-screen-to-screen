@@ -1,15 +1,15 @@
 import { Slot } from "radix-ui";
 import { forwardRef } from "react";
-import { cn } from "../../../lib/cn";
+import { cn } from "../../lib/cn";
 import type { ButtonProps } from "./Button.types";
 import { buttonVariants } from "./button.variants";
-import "./button.css";
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
 	{
 		asChild = false,
 		className,
 		disabled = false,
+		fullWidth = false,
 		size = "medium",
 		type = "button",
 		variant = "primary",
@@ -40,7 +40,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 			data-variant={resolvedVariant}
 			data-size={size}
 			data-disabled={isDisabled ? "" : undefined}
-			className={cn(buttonVariants({ variant: resolvedVariant, size }), className)}
+			className={cn(
+				buttonVariants({ variant: resolvedVariant, size }),
+				fullWidth && "cx-button--full-width",
+				className,
+			)}
 			{...props}
 		/>
 	);

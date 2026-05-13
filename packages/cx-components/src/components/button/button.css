@@ -64,6 +64,10 @@
 	outline-offset: 2px;
 }
 
+.cx-button--full-width {
+	width: 100%;
+}
+
 .cx-button--primary {
 	background: var(--cx-button-bg-primary);
 	color: var(--cx-button-fg-primary);
