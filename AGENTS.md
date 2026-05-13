@@ -26,12 +26,8 @@
 │   ├── pxds-components/  순수 UI 컴포넌트 + 모바일 domains + core WDS re-export + component vocabulary registry
 │   ├── pxds-layout/      화면/frame/layout runtime
 │   ├── pxds-figma/       Figma bridge/hooks/spec authoring
-│   ├── policy-core/      Policy / UseCase 순수 문서 도메인
-│   ├── policy-authoring/ 문서/정책서 → Screen 도출 추적
-│   └── screen-evaluation/ benchmark / audit / strain test
-├── registry/         WDS/PXDS registry index
+│   └── policy-core/      Policy / UseCase 순수 문서 도메인
 ├── AGENTS.md         루트 운영 방향
-├── DESIGN.md         디자인 수치, 토큰, 어휘 variant SSOT
 └── CLAUDE.md         AGENTS.md symlink
 ```
 
@@ -39,15 +35,13 @@
 ## 패키지 책임
 
 - `apps/mobile` — 실제 모바일 화면 route와 WDS/PXDS 화면 조립. MBR(`NOVA-MBR-PG-*`, `src/organisms/mbr`)과 membership legacy(`LEGACY-MBR-PG-*`, `src/organisms/membership`) 모두 page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. 그 외 legacy route는 삭제 대상이다. 화면 route/spec를 `@screen/mobile/screens`로 재노출한다.
-- `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component/policy registry 탐색, Figma export 요청, spec 조회 UI, iframe preview helper를 소유한다.
-- `@pxds/pxds-tokens` — 런타임 시각 token 값의 SSOT. WDS theme 값을 흡수하고 CSS/token export를 제공한다.
+- `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. `@screen/mobile/screens`를 통해 page registry/spec를 읽고, component registry 탐색, Figma export 요청, spec 조회 UI, iframe preview helper를 소유한다.
+- `@pxds/pxds-tokens` — 런타임 시각 token 값의 SSOT. SKT primitive token set을 흡수하고 CSS/token export를 제공한다.
 - `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry.
-- `@pxds/pxds-components` — WDS core re-export, atoms/typography, atoms/feedback, molecules, shared/global/domain 인스턴스 컴포넌트, 구현 세부 없는 component vocabulary registry. Current page/OGN은 `apps/mobile`의 React DOM 조립이 SOT다.
+- `@pxds/pxds-components` — atoms/typography, atoms/feedback, molecules, shared/global/domain 인스턴스 컴포넌트, 구현 세부 없는 component vocabulary registry. Current page/OGN은 `apps/mobile`의 React DOM 조립이 SOT다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge.
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring.
 - `@policy/core` — Policy / UseCase 순수 문서 도메인. Screen을 모른다.
-- `@policy/authoring` — 정책서와 screen 도출 사이 trace/evidence. 화면 contract 자체는 `@screen/mobile/screens`에서 읽는다.
-- `@screen/evaluation` — benchmark/audit/scoring.
 
 ## 의존 방향
 
@@ -59,7 +53,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
 - `apps/mobile` 아래에 `src/components`를 두지 않는다. 화면 route는 `@pxds/pxds-components/molecules`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-layout/*`를 직접 소비한다.
 - `@pxds/pxds-components`는 모바일 shared/domain 구현을 위해 `@pxds/pxds-layout`을 의존할 수 있다.
-- `@screen/mobile/screens`, `@policy/*`, `registry/`는 런타임 UI 의존성 없는 메타/문서 도메인을 유지한다.
+- `@screen/mobile/screens`, `@policy/core`는 런타임 UI 의존성 없는 메타/문서 도메인을 유지한다.
 
 패키지 대략 방향:
 
@@ -71,8 +65,8 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
   → apps/mobile
 
 @pxds/pxds-figma  → apps/preview
-apps/mobile/src/app/<page-id> → @screen/mobile/screens → apps/preview, @screen/evaluation
-@policy/core → @policy/authoring → @screen/mobile/screens
+apps/mobile/src/app/<page-id> → @screen/mobile/screens → apps/preview
+@policy/core → @screen/mobile/screens
 ```
 
 ## 구현 원칙
