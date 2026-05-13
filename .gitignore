@@ -12,3 +12,5 @@ docs/*.zip
 .vercel
 .gstack/
 .claude/
+.vscode/
+**/next-env.d.ts
