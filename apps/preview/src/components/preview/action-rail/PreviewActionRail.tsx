@@ -8,13 +8,13 @@ import {
 	useFigmaPluginExport,
 	useTokensStudioExport,
 } from "@pxds/pxds-figma";
-import componentDarkTokens from "@pxds/cx-tokens/registry/tokens/_skt/component/dark.json";
-import componentLightTokens from "@pxds/cx-tokens/registry/tokens/_skt/component/light.json";
-import primitiveTokens from "@pxds/cx-tokens/registry/tokens/_skt/primitive/default.json";
-import semanticDarkTokens from "@pxds/cx-tokens/registry/tokens/_skt/semantic/dark.json";
-import semanticLightTokens from "@pxds/cx-tokens/registry/tokens/_skt/semantic/light.json";
-import metadata from "@pxds/cx-tokens/registry/tokens/$metadata.json";
-import themes from "@pxds/cx-tokens/registry/tokens/$themes.json";
+import metadata from "@pxds/cx-tokens/originals/$metadata.json";
+import themes from "@pxds/cx-tokens/originals/$themes.json";
+import componentDarkTokens from "@pxds/cx-tokens/originals/_skt/component/dark.json";
+import componentLightTokens from "@pxds/cx-tokens/originals/_skt/component/light.json";
+import primitiveTokens from "@pxds/cx-tokens/originals/_skt/primitive/default.json";
+import semanticDarkTokens from "@pxds/cx-tokens/originals/_skt/semantic/dark.json";
+import semanticLightTokens from "@pxds/cx-tokens/originals/_skt/semantic/light.json";
 import { createPxdsTokensStudioJson } from "@pxds/cx-tokens/tokens-studio";
 
 import { ActionRail } from "./ActionRail";

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 
 import { generate, parse } from "css-tree";
 
-const TOKEN_ROOT = new URL("../registry/tokens/", import.meta.url);
+const TOKEN_ROOT = new URL("../src/originals/", import.meta.url);
 const tokens = await collectRegistryTokens();
 const valueIndex = new Map();
 const issues = [];
@@ -38,7 +38,7 @@ console.log(
 async function collectRegistryTokens() {
 	const metadataFile = new URL("$metadata.json", TOKEN_ROOT);
 	if (!existsSync(metadataFile)) {
-		throw new Error("Missing registry/tokens/$metadata.json token-set order.");
+		throw new Error("Missing src/originals/$metadata.json token-set order.");
 	}
 
 	const metadata = JSON.parse(await readFile(metadataFile, "utf8"));

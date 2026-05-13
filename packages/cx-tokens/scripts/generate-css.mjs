@@ -1,7 +1,7 @@
 /**
  * Generate src/tokens.css from the Tokens Studio token-set export.
  *
- * The source files stay in Tokens Studio set form under registry/tokens.
+ * The source files stay in Tokens Studio set form under src/originals.
  * This script only normalizes set ownership so Style Dictionary can resolve
  * same-path aliases across primitive, semantic, and component layers.
  */
@@ -26,7 +26,7 @@ import {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, "..");
-const tokenRoot = path.join(packageRoot, "registry", "tokens");
+const tokenRoot = path.join(packageRoot, "src", "originals");
 
 const PRIMITIVE_SET = "_skt/primitive/default";
 const SEMANTIC_SET_RE = /^_skt\/semantic\/(.+)$/;
@@ -39,7 +39,7 @@ await registerTokensStudio(StyleDictionary);
 
 StyleDictionary.registerParser({
 	name: "cx/tokens-studio-set",
-	pattern: /registry\/tokens\/_skt\/.*\.json$/,
+	pattern: /src\/originals\/_skt\/.*\.json$/,
 	parser: ({ contents, filePath }) => {
 		const context = contextFromFilePath(filePath);
 		if (!context) return {};
@@ -85,7 +85,7 @@ StyleDictionary.registerFormat({
 const styleDictionary = new StyleDictionary({
 	source: tokenSets
 		.filter((setName) => contextFromSetName(setName))
-		.map((setName) => path.join("registry", "tokens", `${setName}.json`)),
+		.map((setName) => path.join("src", "originals", `${setName}.json`)),
 	parsers: ["cx/tokens-studio-set"],
 	preprocessors: ["tokens-studio"],
 	expand: {
@@ -279,7 +279,7 @@ function formatCssVariables(dictionary) {
 	});
 
 	const lines = [
-		"/* Generated from @pxds/cx-tokens/registry/tokens. */",
+		"/* Generated from @pxds/cx-tokens/src/originals. */",
 		"/* Source: Tokens Studio token-set export. */",
 		"/* Do not edit token values here by hand. */",
 		"",

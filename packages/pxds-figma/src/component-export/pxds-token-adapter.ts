@@ -22,7 +22,7 @@ const ROOT_FONT_SIZE = 16;
 /**
  * Derived transport view of the PXDS token registry for Figma runtimes.
  *
- * SSOT stays in `@pxds/cx-tokens/registry/tokens/` (Tokens Studio token-set
+ * SSOT stays in `@pxds/cx-tokens/originals/` (Tokens Studio token-set
  * export: primitive, semantic, and component Sets, DTCG leaves).
  * This tree reshapes the registry into paths the Figma component generator
  * and token sync runtime consume. Figma Variables built from this are an

@@ -4,7 +4,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 
 const PRIMITIVE_SET_FILE = new URL(
-	"../registry/tokens/_skt/primitive/default.json",
+	"../src/originals/_skt/primitive/default.json",
 	import.meta.url,
 );
 const OUTPUT_FILE = new URL("../src/text-styles.css", import.meta.url);
@@ -13,7 +13,7 @@ const registry = JSON.parse(await readFile(PRIMITIVE_SET_FILE, "utf8"));
 const textStyles = collectTextStyles(registry);
 
 const lines = [
-	"/* Generated from @pxds/cx-tokens/registry/tokens/_skt/primitive/default.json. */",
+	"/* Generated from @pxds/cx-tokens/src/originals/_skt/primitive/default.json. */",
 	"/* Do not edit text style classes here by hand. */",
 	"",
 ];

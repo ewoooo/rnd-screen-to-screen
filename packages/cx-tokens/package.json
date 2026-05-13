@@ -14,7 +14,7 @@
 	],
 	"exports": {
 		"./package.json": "./package.json",
-		"./registry/tokens/*": "./registry/tokens/*",
+		"./originals/*": "./src/originals/*",
 		"./tokens-studio": "./src/tokens-studio/index.ts",
 		"./text-styles.css": "./src/text-styles.css",
 		"./tokens.css": "./src/tokens.css"
