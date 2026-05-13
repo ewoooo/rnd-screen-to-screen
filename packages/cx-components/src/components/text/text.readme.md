@@ -41,7 +41,6 @@ Native props for the selected element are supported.
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="cx-text"`
-- `data-figma-component="Text"`
-- `data-figma-variant`
+- `data-figma-render="component"`
+- `data-figma-component-id="text"`
+- `data-figma-property-variant`

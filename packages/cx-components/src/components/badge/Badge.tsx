@@ -1,13 +1,7 @@
 import { forwardRef } from "react";
 import { cn } from "../../lib/cn";
 import type { BadgeProps } from "./Badge.types";
-import { type BadgeType, badgeVariants } from "./badge.variants";
-
-const FIGMA_TYPE: Record<BadgeType, string> = {
-	gray: "Gray",
-	black: "Black",
-	blue: "Blue",
-};
+import { badgeVariants } from "./badge.variants";
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 	{
@@ -15,23 +9,23 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 		className,
 		text = "Badge",
 		type = "gray",
-		"data-node-kind": dataNodeKind = "component",
-		"data-component-id": dataComponentId = "badge",
-		"data-figma-component": dataFigmaComponent = "Badge",
-		"data-figma-type": dataFigmaType,
+		"data-figma-render": dataFigmaRender = "component",
+		"data-figma-component-id": dataFigmaComponentId,
+		"data-figma-property-type": dataFigmaType,
 		...props
 	},
 	ref,
 ) {
 	const resolvedType = type ?? "gray";
+	const resolvedComponentId =
+		dataFigmaComponentId ?? (dataFigmaRender === "component" ? "badge" : undefined);
 
 	return (
 		<span
 			ref={ref}
-			data-node-kind={dataNodeKind}
-			data-component-id={dataComponentId}
-			data-figma-component={dataFigmaComponent}
-			data-figma-type={dataFigmaType ?? FIGMA_TYPE[resolvedType]}
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={resolvedComponentId}
+			data-figma-property-type={dataFigmaType ?? resolvedType}
 			data-type={resolvedType}
 			className={cn(badgeVariants({ type: resolvedType }), className)}
 			{...props}

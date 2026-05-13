@@ -13,23 +13,23 @@ function TextInner<TElement extends TextElement = "span">(
 		as,
 		className,
 		variant = "body",
-		"data-node-kind": dataNodeKind = "component",
-		"data-component-id": dataComponentId = "cx-text",
-		"data-figma-component": dataFigmaComponent = "Text",
-		"data-figma-variant": dataFigmaVariant,
+		"data-figma-render": dataFigmaRender = "component",
+		"data-figma-component-id": dataFigmaComponentId,
+		"data-figma-property-variant": dataFigmaVariant,
 		...props
 	}: TextProps<TElement>,
 	ref: TextRef<TElement>,
 ) {
 	const Comp: ElementType = as ?? "span";
 	const resolvedVariant = variant ?? "body";
+	const resolvedComponentId =
+		dataFigmaComponentId ?? (dataFigmaRender === "component" ? "text" : undefined);
 
 	return createElement(Comp, {
 		ref,
-		"data-node-kind": dataNodeKind,
-		"data-component-id": dataComponentId,
-		"data-figma-component": dataFigmaComponent,
-		"data-figma-variant": dataFigmaVariant ?? resolvedVariant,
+		"data-figma-render": dataFigmaRender,
+		"data-figma-component-id": resolvedComponentId,
+		"data-figma-property-variant": dataFigmaVariant ?? resolvedVariant,
 		"data-variant": resolvedVariant,
 		className: cn(textVariants({ variant: resolvedVariant }), className),
 		...props,

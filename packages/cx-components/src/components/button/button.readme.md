@@ -31,8 +31,7 @@ Native `button` attributes are supported except `disabled`, which is controlled 
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="cx-button"`
-- `data-figma-component="Button"`
-- `data-figma-variant`
-- `data-figma-size`
+- `data-figma-render="component"`
+- `data-figma-component-id="button"`
+- `data-figma-property-variant`
+- `data-figma-property-size`

@@ -9,9 +9,8 @@ export function StatusBar({
 }: StatusBarProps) {
 	return (
 		<header
-			data-node-kind="component"
-			data-component-id="status-bar"
-			data-figma-component="StatusBar"
+			data-figma-render="component"
+			data-figma-component-id="status-bar"
 			className={cn(statusBarVariants(), className)}
 		>
 			<span className="cx-status-bar__time">{time}</span>

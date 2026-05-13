@@ -42,9 +42,8 @@ import { AppBar } from "@pxds/cx-components";
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="app-bar"`
-- `data-figma-component="AppBar"`
+- `data-figma-render="component"`
+- `data-figma-component-id="app-bar"`
 - `data-figma-property-left-item`
 - `data-figma-property-right-item`
 - `data-figma-property-title`

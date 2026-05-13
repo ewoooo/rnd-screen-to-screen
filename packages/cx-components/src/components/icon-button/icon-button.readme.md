@@ -36,5 +36,8 @@ import { IconButton, Icon } from "@pxds/cx-components";
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="icon-button"`
+- `data-figma-render="component"`
+- `data-figma-component-id="icon-button"`
+- `data-figma-property-size`
+- `data-figma-property-variant`
+- `data-figma-property-disabled`

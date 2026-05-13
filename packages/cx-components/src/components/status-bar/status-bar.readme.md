@@ -26,6 +26,5 @@ import { StatusBar } from "@pxds/cx-components";
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="status-bar"`
-- `data-figma-component="StatusBar"`
+- `data-figma-render="component"`
+- `data-figma-component-id="status-bar"`

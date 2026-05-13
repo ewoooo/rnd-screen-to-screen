@@ -2,10 +2,9 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import type { PageStackContentsTitle } from "./page-stack-contents.variants";
 
 export type PageStackContentsFigmaBridgeProps = {
-	"data-node-kind"?: string;
-	"data-component-id"?: string;
-	"data-figma-component"?: string;
-	"data-figma-contents-title"?: string;
+	"data-figma-render"?: "layout";
+	"data-figma-component-id"?: string;
+	"data-figma-property-contents-title"?: "true" | "false";
 };
 
 type NativePageStackContentsProps = Omit<

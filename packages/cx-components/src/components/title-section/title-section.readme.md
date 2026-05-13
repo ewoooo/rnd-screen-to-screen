@@ -1,6 +1,6 @@
 # TitleSection
 
-Page-level title block입니다. `PageStackContents` 같은 composition wrapper의 `title` slot에 넣어 사용합니다.
+CX section heading 컴포넌트입니다. Figma `TitleSection/Default`의 SubTitle, LeftItem, RightItem 조합을 React prop으로 표현합니다.
 
 ## Import
 
@@ -12,10 +12,34 @@ import { TitleSection } from "@pxds/cx-components";
 
 ```tsx
 <TitleSection title="타이틀" />
-<TitleSection title="타이틀" subText="설명" />
-<TitleSection title="타이틀" titleSubText="상단 보조 텍스트" />
-<TitleSection title="타이틀" titleSubImage={<Icon />} titleSubText="상단 보조 텍스트" />
-<TitleSection title="타이틀" leftItem={<Icon />} rightItem={<Button />} />
+<TitleSection subTitle="타이틀" title="타이틀" leftItem={{ type: "text", text: "2" }} />
+<TitleSection
+	title="타이틀"
+	rightItem={{ type: "icon", icon: <Icon type="arrow-up" size={16} />, label: "접기" }}
+/>
+<TitleSection
+	title="타이틀"
+	rightItem={{ type: "textButton", text: "Text", onClick: handleClick }}
+/>
+<TitleSection
+	title="타이틀"
+	rightItem={{
+		type: "textItemButton",
+		label: "선택한 휴대폰 번호",
+		value: "3개",
+		icon: <Icon type="arrow-right" size={16} />,
+		onClick: handleClick,
+	}}
+/>
+<TitleSection
+	title="타이틀"
+	rightItem={{
+		type: "buttonListOrder",
+		label: "인기순",
+		icon: <Icon type="dropdown" size={16} />,
+		onClick: handleClick,
+	}}
+/>
 ```
 
 ## Props
@@ -23,13 +47,9 @@ import { TitleSection } from "@pxds/cx-components";
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `title` | `ReactNode` | required | Main title content. |
-| `titleSubText` | `string` | - | Optional text inside `TitleText > TitleSubText`. |
-| `titleSubImage` | `ReactNode` | - | Optional image/icon inside `TitleText > TitleSubText`. |
-| `subText` | `string` | - | Optional bottom text inside `TitleMain > SubText`. |
-| `leftItem` | `ReactNode` | - | Optional leading slot. |
-| `rightItem` | `ReactNode` | - | Optional trailing slot. |
-| `showLeftItem` | `boolean` | `Boolean(leftItem)` | Controls left slot visibility. |
-| `showRightItem` | `boolean` | `Boolean(rightItem)` | Controls right slot visibility. |
+| `subTitle` | `ReactNode` | - | Optional tertiary subtitle. |
+| `leftItem` | `ReactNode \| preset` | - | Optional leading slot or private preset. |
+| `rightItem` | `ReactNode \| preset` | - | Optional trailing slot or private preset. |
 | `className` | `string` | - | Additional class name. |
 
 Native `section` attributes are supported except native `title`.
@@ -38,19 +58,23 @@ Native `section` attributes are supported except native `title`.
 
 | Figma property | React prop |
 | --- | --- |
-| `LeftItem=On/Off` | `showLeftItem` |
-| `RightItem=On/Off` | `showRightItem` |
-| `TitleSubText=On/Off` | `Boolean(titleSubText || titleSubImage)` |
-| `TitleSubImage=On/Off` | `Boolean(titleSubImage)` |
-| `SubText=On/Off` | `Boolean(subText)` |
+| `SubTitle=On/Off` | `Boolean(subTitle)` |
+| `LeftItem=On/Off` | `Boolean(leftItem)` |
+| `RightItem=On/Off` | `Boolean(rightItem)` |
+| `LeftItem Type=Text` | `{ type: "text", text }` |
+| `LeftItem Type=Icon` | `{ type: "icon", icon, label }` |
+| `LeftItem Type=Badge` | `{ type: "badge", text }` |
+| `RightItem Type=Icon` | `{ type: "icon", icon, label, onClick }` |
+| `RightItem Type=TextButton` | `{ type: "textButton", text, onClick }` |
+| `RightItem Type=TextItemButton` | `{ type: "textItemButton", label, value, icon, onClick }` |
+| `RightItem Type=ButtonListOrder` | `{ type: "buttonListOrder", label, icon, onClick }` |
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="title-section"`
-- `data-figma-component="TitleSection/Default"`
-- `data-figma-left-item`
-- `data-figma-right-item`
-- `data-figma-title-sub-text`
-- `data-figma-title-sub-image`
-- `data-figma-sub-text`
+- `data-figma-render="component"`
+- `data-figma-component-id="title-section"`
+- `data-figma-property-sub-title`
+- `data-figma-property-left-item`
+- `data-figma-property-right-item`
+- `data-figma-property-left-item-type`
+- `data-figma-property-right-item-type`

@@ -12,8 +12,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 			size = "medium",
 			variant = "plain",
 			"aria-label": ariaLabel,
-			"data-node-kind": dataNodeKind = "component",
-			"data-component-id": dataComponentId = "icon-button",
+			"data-figma-render": dataFigmaRender = "component",
+			"data-figma-component-id": dataFigmaComponentId = "icon-button",
+			"data-figma-property-size": dataFigmaSize,
+			"data-figma-property-variant": dataFigmaVariant,
+			"data-figma-property-disabled": dataFigmaDisabled,
 			onClick,
 		},
 		ref,
@@ -24,8 +27,13 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 				type="button"
 				aria-label={ariaLabel}
 				disabled={disabled}
-				data-node-kind={dataNodeKind}
-				data-component-id={dataComponentId}
+				data-figma-render={dataFigmaRender}
+				data-figma-component-id={dataFigmaComponentId}
+				data-figma-property-size={dataFigmaSize ?? size}
+				data-figma-property-variant={dataFigmaVariant ?? variant}
+				data-figma-property-disabled={
+					dataFigmaDisabled ?? (disabled ? "true" : "false")
+				}
 				data-size={size}
 				data-variant={variant}
 				data-disabled={disabled ? "" : undefined}

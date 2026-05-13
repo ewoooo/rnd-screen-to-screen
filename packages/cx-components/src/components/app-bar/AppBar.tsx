@@ -21,9 +21,8 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 		showRightItem = false,
 		showTitle,
 		title,
-		"data-node-kind": dataNodeKind = "component",
-		"data-component-id": dataComponentId = "app-bar",
-		"data-figma-component": dataFigmaComponent = "AppBar",
+		"data-figma-render": dataFigmaRender = "component",
+		"data-figma-component-id": dataFigmaComponentId = "app-bar",
 		"data-figma-property-left-item": dataFigmaLeftItem,
 		"data-figma-property-right-item": dataFigmaRightItem,
 		"data-figma-property-title": dataFigmaTitle,
@@ -44,9 +43,8 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 	return (
 		<header
 			ref={ref}
-			data-node-kind={dataNodeKind}
-			data-component-id={dataComponentId}
-			data-figma-component={dataFigmaComponent}
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={dataFigmaComponentId}
 			data-figma-property-left-item={
 				dataFigmaLeftItem ?? boolAttr(showLeftItem)
 			}
@@ -72,7 +70,11 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 			{showLogo ? (
 				<div className="cx-app-bar__logo">{logo}</div>
 			) : shouldShowLeading ? (
-				<div className="cx-app-bar__title-group" data-slot="title">
+				<div
+					className="cx-app-bar__title-group"
+					data-figma-render="slot"
+					data-figma-property-name="title"
+				>
 					{showLeftItem ? (
 						<IconButton aria-label={leftLabel} onClick={onLeftClick}>
 							{resolvedLeftIcon}
@@ -83,8 +85,7 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 							as="div"
 							variant="listTitle"
 							className="cx-app-bar__title"
-							data-component-id="app-bar-title"
-							data-figma-component="AppBarTitle"
+							data-figma-render="primitive"
 						>
 							{title}
 						</Text>
@@ -92,7 +93,11 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 				</div>
 			) : null}
 			{showRightItem ? (
-				<div className="cx-app-bar__right" data-slot="right-item">
+				<div
+					className="cx-app-bar__right"
+					data-figma-render="slot"
+					data-figma-property-name="right-item"
+				>
 					{resolvedRightItems.map((item, index) => (
 						<IconButton
 							// biome-ignore lint/suspicious/noArrayIndexKey: slot order is the only stable identity here.

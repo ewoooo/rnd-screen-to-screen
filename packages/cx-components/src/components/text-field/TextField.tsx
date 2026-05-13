@@ -3,15 +3,7 @@ import { cn } from "../../lib/cn";
 import { Text } from "../text";
 import type { TextFieldProps } from "./TextField.types";
 import { TextFieldInput } from "./TextFieldInput";
-import { type TextFieldState, textFieldVariants } from "./text-field.variants";
-
-const FIGMA_STATE: Record<TextFieldState, string> = {
-	default: "Default",
-	focused: "Focused",
-	typing: "Typing",
-	typed: "Typed",
-	disabled: "Disabled",
-};
+import { textFieldVariants } from "./text-field.variants";
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 	function TextField(
@@ -25,15 +17,13 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 			label,
 			state = "default",
 			type = "text",
-			"data-node-kind": dataNodeKind = "component",
-			"data-component-id": dataComponentId = "text-field",
-			"data-figma-component": dataFigmaComponent = "TextField",
-			"data-figma-variant": dataFigmaVariant,
-			"data-figma-state": dataFigmaState,
-			"data-figma-error": dataFigmaError,
-			"data-figma-label": dataFigmaLabel,
-			"data-figma-help-text": dataFigmaHelpText,
-			"data-figma-button": dataFigmaButton,
+			"data-figma-render": dataFigmaRender = "component",
+			"data-figma-component-id": dataFigmaComponentId = "text-field",
+			"data-figma-property-state": dataFigmaState,
+			"data-figma-property-error": dataFigmaError,
+			"data-figma-property-label": dataFigmaLabel,
+			"data-figma-property-help-text": dataFigmaHelpText,
+			"data-figma-property-button": dataFigmaButton,
 			...inputProps
 		},
 		ref,
@@ -46,15 +36,17 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
 		return (
 			<div
-				data-node-kind={dataNodeKind}
-				data-component-id={dataComponentId}
-				data-figma-component={dataFigmaComponent}
-				data-figma-variant={dataFigmaVariant}
-				data-figma-state={dataFigmaState ?? FIGMA_STATE[resolvedState]}
-				data-figma-error={dataFigmaError ?? (error ? "on" : "off")}
-				data-figma-label={dataFigmaLabel ?? (label ? "on" : "off")}
-				data-figma-help-text={dataFigmaHelpText ?? (helperText ? "on" : "off")}
-				data-figma-button={dataFigmaButton ?? (hasActionButton ? "on" : "off")}
+				data-figma-render={dataFigmaRender}
+				data-figma-component-id={dataFigmaComponentId}
+				data-figma-property-state={dataFigmaState ?? resolvedState}
+				data-figma-property-error={dataFigmaError ?? (error ? "true" : "false")}
+				data-figma-property-label={dataFigmaLabel ?? (label ? "true" : "false")}
+				data-figma-property-help-text={
+					dataFigmaHelpText ?? (helperText ? "true" : "false")
+				}
+				data-figma-property-button={
+					dataFigmaButton ?? (hasActionButton ? "true" : "false")
+				}
 				data-state={resolvedState}
 				data-error={error ? "true" : "false"}
 				className={cn(

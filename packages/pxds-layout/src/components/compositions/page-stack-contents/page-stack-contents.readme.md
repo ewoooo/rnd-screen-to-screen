@@ -34,7 +34,6 @@ Native `section` attributes are supported except native `children` and `title`.
 
 ## Bridge Attributes
 
-- `data-node-kind="composition"`
-- `data-component-id="page-stack-contents"`
-- `data-figma-component="PageStackContents"`
-- `data-figma-contents-title`
+- `data-figma-render="layout"`
+- `data-figma-component-id="page-stack-contents"`
+- `data-figma-property-contents-title`

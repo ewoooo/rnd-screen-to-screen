@@ -9,10 +9,10 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(function Divider
 		orientation = "horizontal",
 		role = "separator",
 		type = "contents",
-		"data-node-kind": dataNodeKind = "component",
-		"data-component-id": dataComponentId = "cx-divider",
-		"data-figma-component": dataFigmaComponent = "Divider",
-		"data-figma-variant": dataFigmaVariant,
+		"data-figma-render": dataFigmaRender = "component",
+		"data-figma-component-id": dataFigmaComponentId = "divider",
+		"data-figma-property-variant": dataFigmaVariant,
+		"data-figma-property-orientation": dataFigmaOrientation,
 		...props
 	},
 	ref,
@@ -24,10 +24,12 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(function Divider
 		<div
 			ref={ref}
 			role={role}
-			data-node-kind={dataNodeKind}
-			data-component-id={dataComponentId}
-			data-figma-component={dataFigmaComponent}
-			data-figma-variant={dataFigmaVariant ?? resolvedType}
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={dataFigmaComponentId}
+			data-figma-property-variant={dataFigmaVariant ?? resolvedType}
+			data-figma-property-orientation={
+				dataFigmaOrientation ?? resolvedOrientation
+			}
 			data-type={resolvedType}
 			data-orientation={resolvedOrientation}
 			className={cn(

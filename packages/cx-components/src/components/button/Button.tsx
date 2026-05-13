@@ -13,11 +13,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 		size = "medium",
 		type = "button",
 		variant = "primary",
-		"data-node-kind": dataNodeKind = "component",
-		"data-component-id": dataComponentId = "cx-button",
-		"data-figma-component": dataFigmaComponent = "Button",
-		"data-figma-variant": dataFigmaVariant,
-		"data-figma-size": dataFigmaSize,
+		"data-figma-render": dataFigmaRender = "component",
+		"data-figma-component-id": dataFigmaComponentId = "button",
+		"data-figma-property-variant": dataFigmaVariant,
+		"data-figma-property-size": dataFigmaSize,
 		...props
 	},
 	ref,
@@ -32,11 +31,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 			type={asChild ? undefined : type}
 			disabled={asChild ? undefined : isDisabled}
 			aria-disabled={asChild && isDisabled ? true : undefined}
-			data-node-kind={dataNodeKind}
-			data-component-id={dataComponentId}
-			data-figma-component={dataFigmaComponent}
-			data-figma-variant={dataFigmaVariant ?? resolvedVariant}
-			data-figma-size={dataFigmaSize ?? size}
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={dataFigmaComponentId}
+			data-figma-property-variant={dataFigmaVariant ?? resolvedVariant}
+			data-figma-property-size={dataFigmaSize ?? size}
 			data-variant={resolvedVariant}
 			data-size={size}
 			data-disabled={isDisabled ? "" : undefined}

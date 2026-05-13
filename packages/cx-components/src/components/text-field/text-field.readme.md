@@ -35,11 +35,10 @@ import { TextField } from "@pxds/cx-components";
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="text-field"`
-- `data-figma-component="TextField"`
-- `data-figma-state`
-- `data-figma-error`
-- `data-figma-label`
-- `data-figma-help-text`
-- `data-figma-button`
+- `data-figma-render="component"`
+- `data-figma-component-id="text-field"`
+- `data-figma-property-state`
+- `data-figma-property-error`
+- `data-figma-property-label`
+- `data-figma-property-help-text`
+- `data-figma-property-button`

@@ -1,6 +1,6 @@
 import { type CSSProperties, forwardRef } from "react";
-import type { SlotAlign, SlotProps } from "./Slot.types";
 import { VStack } from "../VStack";
+import type { SlotAlign, SlotProps } from "./Slot.types";
 
 const ALIGN_ITEMS: Record<SlotAlign, CSSProperties["alignItems"]> = {
 	start: "flex-start",
@@ -22,8 +22,8 @@ export const Slot = forwardRef<HTMLDivElement, SlotProps>(function Slot(
 			width="100%"
 			data-slot={name}
 			data-layout-slot="true"
-			data-figma-layout-slot="true"
-			data-node-kind="layout-slot"
+			data-figma-render="slot"
+			data-figma-property-name={name}
 		>
 			{children}
 		</VStack>

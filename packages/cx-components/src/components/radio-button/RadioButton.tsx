@@ -14,29 +14,27 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 			name,
 			onCheckedChange,
 			value,
-			"data-node-kind": dataNodeKind = "component",
-			"data-component-id": dataComponentId = "radio-button",
-			"data-figma-component": dataFigmaComponent = "RadioButton",
-			"data-figma-checked": dataFigmaChecked,
-			"data-figma-text": dataFigmaText,
-			"data-figma-disabled": dataFigmaDisabled,
+			"data-figma-render": dataFigmaRender = "component",
+			"data-figma-component-id": dataFigmaComponentId = "radio-button",
+			"data-figma-property-checked": dataFigmaChecked,
+			"data-figma-property-text": dataFigmaText,
+			"data-figma-property-disabled": dataFigmaDisabled,
 		},
 		ref,
 	) {
 		const inputId = useId();
 		const hasText = Boolean(label);
-		const checkedVariant = checked ? "On" : "Off";
-		const textVariant = hasText ? "On" : "Off";
-		const disabledVariant = disabled ? "On" : "Off";
+		const checkedVariant = checked ? "true" : "false";
+		const textVariant = hasText ? "true" : "false";
+		const disabledVariant = disabled ? "true" : "false";
 
 		return (
 			<label
-				data-node-kind={dataNodeKind}
-				data-component-id={dataComponentId}
-				data-figma-component={dataFigmaComponent}
-				data-figma-checked={dataFigmaChecked ?? checkedVariant}
-				data-figma-text={dataFigmaText ?? textVariant}
-				data-figma-disabled={dataFigmaDisabled ?? disabledVariant}
+				data-figma-render={dataFigmaRender}
+				data-figma-component-id={dataFigmaComponentId}
+				data-figma-property-checked={dataFigmaChecked ?? checkedVariant}
+				data-figma-property-text={dataFigmaText ?? textVariant}
+				data-figma-property-disabled={dataFigmaDisabled ?? disabledVariant}
 				data-checked={checkedVariant}
 				data-text={textVariant}
 				data-disabled={disabledVariant}

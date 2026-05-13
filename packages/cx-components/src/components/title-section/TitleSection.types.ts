@@ -7,19 +7,58 @@ export type { TitleSectionFigmaBridgeProps } from "../../types";
 
 type NativeTitleSectionProps = Omit<ComponentPropsWithoutRef<"section">, "title">;
 
+export type TitleSectionLeftItem =
+	| ReactNode
+	| {
+			type: "text";
+			text: string;
+	  }
+	| {
+			type: "icon";
+			icon: ReactNode;
+			label?: string;
+	  }
+	| {
+			type: "badge";
+			text: string;
+	  };
+
+export type TitleSectionRightItem =
+	| ReactNode
+	| {
+			type: "icon";
+			icon: ReactNode;
+			label?: string;
+			onClick?: () => void;
+	  }
+	| {
+			type: "textButton";
+			text: string;
+			onClick?: () => void;
+	  }
+	| {
+			type: "textItemButton";
+			label: string;
+			value: string;
+			icon?: ReactNode;
+			onClick?: () => void;
+	  }
+	| {
+			type: "buttonListOrder";
+			label: string;
+			icon?: ReactNode;
+			onClick?: () => void;
+	  };
+
 export type TitleSectionProps = NativeTitleSectionProps &
 	Omit<
 		VariantProps<typeof titleSectionVariants>,
-		"leftItem" | "rightItem" | "titleSubText" | "titleSubImage" | "subText"
+		"subTitle" | "leftItem" | "rightItem"
 	> &
 	TitleSectionFigmaBridgeProps & {
 		title: ReactNode;
-		titleSubText?: string;
-		titleSubImage?: ReactNode;
-		subText?: string;
-		leftItem?: ReactNode;
-		rightItem?: ReactNode;
-		showLeftItem?: boolean;
-		showRightItem?: boolean;
+		subTitle?: ReactNode;
+		leftItem?: TitleSectionLeftItem;
+		rightItem?: TitleSectionRightItem;
 		className?: string;
 	};

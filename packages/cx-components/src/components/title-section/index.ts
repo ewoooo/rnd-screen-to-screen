@@ -1,13 +1,11 @@
 export { TitleSection } from "./TitleSection";
 export type {
 	TitleSectionFigmaBridgeProps,
+	TitleSectionLeftItem,
 	TitleSectionProps,
+	TitleSectionRightItem,
 } from "./TitleSection.types";
 export {
-	type TitleSectionLeftItem,
-	type TitleSectionRightItem,
-	type TitleSectionSubText,
-	type TitleSectionTitleSubImage,
-	type TitleSectionTitleSubText,
+	type TitleSectionSubTitle,
 	titleSectionVariants,
 } from "./title-section.variants";

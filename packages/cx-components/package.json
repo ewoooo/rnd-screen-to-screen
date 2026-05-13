@@ -20,6 +20,7 @@
 		"./components/text": "./src/components/text/index.ts",
 		"./components/text-field": "./src/components/text-field/index.ts",
 		"./components/title-section": "./src/components/title-section/index.ts",
+		"./components/tooltip-bubble": "./src/components/tooltip-bubble/index.ts",
 		"./styles.css": "./src/styles.css"
 	},
 	"dependencies": {

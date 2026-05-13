@@ -30,9 +30,8 @@ import { Checkbox } from "@pxds/cx-components";
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="checkbox"`
-- `data-figma-component="Checkbox"`
-- `data-figma-checked`
-- `data-figma-text`
-- `data-figma-disabled`
+- `data-figma-render="component"`
+- `data-figma-component-id="checkbox"`
+- `data-figma-property-checked`
+- `data-figma-property-text`
+- `data-figma-property-disabled`

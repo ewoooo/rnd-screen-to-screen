@@ -81,11 +81,22 @@ export type {
 	TitleSectionLeftItem,
 	TitleSectionProps,
 	TitleSectionRightItem,
-	TitleSectionSubText,
-	TitleSectionTitleSubImage,
-	TitleSectionTitleSubText,
+	TitleSectionSubTitle,
 } from "./components/title-section";
 export { TitleSection, titleSectionVariants } from "./components/title-section";
-export type { FigmaBridgeProps, FigmaBridgeSizeProps } from "./types";
+export type {
+	TooltipBubbleDirection,
+	TooltipBubbleFigmaBridgeProps,
+	TooltipBubbleProps,
+} from "./components/tooltip-bubble";
+export {
+	TooltipBubble,
+	tooltipBubbleVariants,
+} from "./components/tooltip-bubble";
+export type {
+	FigmaBridgeAttributes,
+	FigmaRenderType,
+	FigmaStackDirection,
+} from "./types";
 
 export const cxComponentsPackageName = "@pxds/cx-components";

@@ -28,7 +28,6 @@ Native `span` attributes are also supported except `children` and `color`.
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="badge"`
-- `data-figma-component="Badge"`
-- `data-figma-type`
+- `data-figma-render="component"`
+- `data-figma-component-id="badge"`
+- `data-figma-property-type`

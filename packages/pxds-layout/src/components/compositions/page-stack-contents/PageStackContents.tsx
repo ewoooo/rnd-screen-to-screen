@@ -3,7 +3,7 @@ import { Slot } from "../../primitives";
 import type { PageStackContentsProps } from "./PageStackContents.types";
 import { pageStackContentsVariants } from "./page-stack-contents.variants";
 
-const onOff = (value: boolean) => (value ? "On" : "Off");
+const boolAttr = (value: boolean) => (value ? "true" : "false");
 
 const cn = (...values: Array<string | false | null | undefined>) =>
 	values.filter(Boolean).join(" ");
@@ -17,10 +17,9 @@ export const PageStackContents = forwardRef<
 		className,
 		showTitle,
 		title,
-		"data-node-kind": dataNodeKind = "composition",
-		"data-component-id": dataComponentId = "page-stack-contents",
-		"data-figma-component": dataFigmaComponent = "PageStackContents",
-		"data-figma-contents-title": dataFigmaContentsTitle,
+		"data-figma-render": dataFigmaRender = "layout",
+		"data-figma-component-id": dataFigmaComponentId = "page-stack-contents",
+		"data-figma-property-contents-title": dataFigmaContentsTitle,
 		...props
 	},
 	ref,
@@ -30,13 +29,12 @@ export const PageStackContents = forwardRef<
 	return (
 		<section
 			ref={ref}
-			data-node-kind={dataNodeKind}
-			data-component-id={dataComponentId}
-			data-figma-component={dataFigmaComponent}
-			data-figma-contents-title={
-				dataFigmaContentsTitle ?? onOff(shouldShowTitle)
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={dataFigmaComponentId}
+			data-figma-property-contents-title={
+				dataFigmaContentsTitle ?? boolAttr(shouldShowTitle)
 			}
-			data-contents-title={onOff(shouldShowTitle)}
+			data-contents-title={boolAttr(shouldShowTitle)}
 			className={cn(
 				pageStackContentsVariants({ title: shouldShowTitle }),
 				className,

@@ -28,7 +28,7 @@ Native `div` attributes are supported. `children` is not supported.
 
 ## Bridge Attributes
 
-- `data-node-kind="component"`
-- `data-component-id="divider"`
-- `data-figma-component="Divider"`
-- `data-figma-variant`
+- `data-figma-render="component"`
+- `data-figma-component-id="divider"`
+- `data-figma-property-variant`
+- `data-figma-property-orientation`
