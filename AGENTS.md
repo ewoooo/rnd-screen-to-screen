@@ -54,8 +54,8 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다.
 - WDS icon은 `@pxds/pxds-icons`를 통해 소비한다.
 - token 값은 `@pxds/cx-tokens`와 generated CSS를 통해 소비한다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
-- `apps/mobile` 아래에 `src/components`를 두지 않는다. 화면 route는 `@pxds/pxds-components/molecules`, `@pxds/pxds-components/shared/global`, `@pxds/pxds-layout/*`를 직접 소비한다.
-- `@pxds/pxds-components`는 모바일 shared/global 구현을 위해 `@pxds/pxds-layout`을 의존할 수 있다.
+- `apps/mobile` 아래에 `src/components`를 두지 않는다. 화면 route는 `@pxds/pxds-components/molecules`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-layout/*`를 직접 소비한다.
+- `@pxds/pxds-components`는 모바일 shared/domain 구현을 위해 `@pxds/pxds-layout`을 의존할 수 있다.
 - `@screen/mobile/screens`, `@policy/core`는 런타임 UI 의존성 없는 메타/문서 도메인을 유지한다.
 
 패키지 대략 방향:
