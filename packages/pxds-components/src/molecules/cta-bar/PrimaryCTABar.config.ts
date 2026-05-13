@@ -1,4 +1,3 @@
-import { primaryCtaBarFigmaSpec } from "./cta-bar.figma";
 import { primaryCtaBarRenderReact } from "./PrimaryCTABar";
 
 export const primaryCtaBarRegistryEntry = {
@@ -10,7 +9,6 @@ export const primaryCtaBarRegistryEntry = {
 	group: "navigation",
 	status: "active",
 	createdAt: "2026-04-30",
-	figmaSpec: () => primaryCtaBarFigmaSpec,
 	renderReact: primaryCtaBarRenderReact,
 	composedOf: [
 		"button",

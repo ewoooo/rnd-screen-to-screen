@@ -1,4 +1,3 @@
-import { consentListFigmaSpec } from "./consent-list.figma";
 import { consentListRenderReact } from "./ConsentList";
 
 export const consentListRegistryEntry = {
@@ -10,7 +9,6 @@ export const consentListRegistryEntry = {
 	group: "selection",
 	status: "active",
 	createdAt: "2026-04-30",
-	figmaSpec: () => consentListFigmaSpec,
 	renderReact: consentListRenderReact,
 	composedOf: [
 		"checkbox",

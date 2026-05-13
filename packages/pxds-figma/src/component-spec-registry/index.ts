@@ -1,7 +1,3 @@
-import {
-	componentRegistry,
-	type ComponentRegistryEntry,
-} from "@pxds/pxds-components/registry";
 import type {
 	ComponentSpecDraft,
 	FigmaRendererComponentRegistryEntry,
@@ -10,20 +6,8 @@ import type {
 export type ComponentFigmaSpecRegistryEntry =
 	FigmaRendererComponentRegistryEntry;
 
-export const componentFigmaSpecRegistry: readonly ComponentFigmaSpecRegistryEntry[] = (
-	componentRegistry as readonly ComponentRegistryEntry[]
-).flatMap((entry) =>
-	entry.figmaSpec
-		? [
-				{
-					componentId: entry.id,
-					spec: entry.figmaSpec() as ComponentSpecDraft,
-					exportMode: entry.exportMode,
-					render: entry.render?.(),
-				},
-			]
-		: [],
-);
+export const componentFigmaSpecRegistry: readonly ComponentFigmaSpecRegistryEntry[] =
+	[];
 
 export type ComponentFigmaSpecComponentId =
 	(typeof componentFigmaSpecRegistry)[number]["componentId"];

@@ -3,41 +3,20 @@ import {
 	placeholderRegistryEntry,
 } from "./atoms/feedback/shared.registry";
 import {
-	checkListRegistryEntry,
-	chipGroupRegistryEntry,
 	consentListRegistryEntry,
-	descriptionListRegistryEntry,
-	filterTabsRegistryEntry,
 	formControlsRegistryEntry,
 	formFieldRegistryEntry,
 	infoListRegistryEntry,
 	infoSectionRegistryEntry,
-	mediaBlockRegistryEntry,
 	noticeBlockRegistryEntry,
 	primaryCtaBarRegistryEntry,
-	promoBlockRegistryEntry,
-	queryBarRegistryEntry,
 	sectionCardRegistryEntry,
-	selectFieldRegistryEntry,
 	selectableListRegistryEntry,
-	stickyActionBarRegistryEntry,
-	summaryCardRegistryEntry,
 	textFieldListRegistryEntry,
 } from "./molecules/molecules.registry";
 import { globalRegistryEntries } from "./domains/shared/global/global.registry";
-import { homeRegistryEntries } from "./domains/home/home.registry";
-import { ncSimpleRegistryEntries } from "./domains/nc-simple/nc-simple.registry";
-import { productRegistryEntries } from "./domains/product/product.registry";
-import { searchRegistryEntries } from "./domains/search/search.registry";
-import { tuRegistryEntries } from "./domains/tu/tu.registry";
 import { textBlockRegistryEntry } from "./atoms/typography/text-block/text-block.registry";
 import { wdsCoreRegistryEntries } from "./core/core.registry";
-import {
-	flexFigmaSpec,
-	hStackFigmaSpec,
-	vStackFigmaSpec,
-} from "@pxds/pxds-layout/primitives";
-
 import type {
 	ComponentRegistryExportMode,
 	ComponentRenderTree,
@@ -60,18 +39,13 @@ export type ComponentGroup =
 	| "feedback"
 	| "form"
 	| "global"
-	| "home"
 	| "layout"
 	| "media"
 	| "mbr"
 	| "navigation"
-	| "product"
-	| "search"
 	| "selection"
 	| "template"
-	| "typography"
-	| "nc-simple"
-	| "tu";
+	| "typography";
 
 export type PolicySlotBinding =
 	| "policy.copy.requirement"
@@ -109,11 +83,6 @@ export type ComponentRegistryEntry = {
 	 * `error`); the value names the policy field bound to it.
 	 */
 	policySlots?: Readonly<Record<string, PolicySlotBinding>>;
-	/**
-	 * Optional Figma component spec owned by the component folder. Kept as a
-	 * getter so discovery metadata can remain cheap and side-effect light.
-	 */
-	figmaSpec?: () => unknown;
 	/**
 	 * Declares whether this component exports as a concrete instance or expands
 	 * into a render tree. Older entries omit this until their folder owns a
@@ -156,7 +125,6 @@ export const componentRegistry = [
 		group: "layout",
 		status: "active",
 		createdAt: "2026-04-30",
-		figmaSpec: () => flexFigmaSpec,
 	},
 	{
 		id: "h-stack",
@@ -167,7 +135,6 @@ export const componentRegistry = [
 		group: "layout",
 		status: "active",
 		createdAt: "2026-04-30",
-		figmaSpec: () => hStackFigmaSpec,
 	},
 	{
 		id: "v-stack",
@@ -178,7 +145,6 @@ export const componentRegistry = [
 		group: "layout",
 		status: "active",
 		createdAt: "2026-04-30",
-		figmaSpec: () => vStackFigmaSpec,
 	},
 	{
 		id: "frame-icons",
@@ -191,34 +157,19 @@ export const componentRegistry = [
 		createdAt: "2026-04-30",
 	},
 	...wdsCoreRegistryEntries.filter((entry) => entry.layer === "atom"),
-	mediaBlockRegistryEntry,
-	queryBarRegistryEntry,
-	filterTabsRegistryEntry,
 	formFieldRegistryEntry,
-	selectFieldRegistryEntry,
 	formControlsRegistryEntry,
 	...wdsCoreRegistryEntries.filter((entry) => entry.layer === "molecule"),
-	checkListRegistryEntry,
 	infoListRegistryEntry,
 	infoSectionRegistryEntry,
 	selectableListRegistryEntry,
 	consentListRegistryEntry,
-	descriptionListRegistryEntry,
 	noticeBlockRegistryEntry,
-	promoBlockRegistryEntry,
 	sectionCardRegistryEntry,
-	summaryCardRegistryEntry,
-	chipGroupRegistryEntry,
 	primaryCtaBarRegistryEntry,
-	stickyActionBarRegistryEntry,
 	textFieldListRegistryEntry,
 	...wdsCoreRegistryEntries.filter((entry) => entry.layer === "organism"),
 	...globalRegistryEntries,
-	...homeRegistryEntries,
-	...productRegistryEntries,
-	...searchRegistryEntries,
-	...ncSimpleRegistryEntries,
-	...tuRegistryEntries,
 	{
 		id: "app-screen",
 		name: "AppScreen",

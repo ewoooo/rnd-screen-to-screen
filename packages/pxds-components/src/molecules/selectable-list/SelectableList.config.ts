@@ -1,4 +1,3 @@
-import { selectableListFigmaSpec } from "./selectable-list.figma";
 import { selectableListRenderReact } from "./SelectableList";
 
 export const selectableListRegistryEntry = {
@@ -10,7 +9,6 @@ export const selectableListRegistryEntry = {
 	group: "selection",
 	status: "active",
 	createdAt: "2026-04-30",
-	figmaSpec: () => selectableListFigmaSpec,
 	renderReact: selectableListRenderReact,
 	composedOf: [
 		"list",

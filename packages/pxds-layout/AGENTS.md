@@ -13,7 +13,7 @@
 <AppScreen>
   <AppScreen.SystemHeader />
   <AppScreen.Header>
-    <GlobalNavigationHeader />
+    <ProgressTopBar />
   </AppScreen.Header>
   <AppScreen.Content>
     <Hero />
@@ -21,7 +21,6 @@
   </AppScreen.Content>
   <AppScreen.Bottom>
     <PrimaryCTABar />
-    <GlobalNavigationBar />
   </AppScreen.Bottom>
 </AppScreen>
 ```
@@ -46,7 +45,7 @@ AppScreen
 ### 사용 규칙
 
 - `SystemBottom`은 두지 않는다. 실제 필요가 생기기 전까지 시스템 하단 영역을 API로 만들지 않는다.
-- `ProgressTopBar`, `GlobalNavigationHeader`, `GlobalCloseHeader`, 검색 top bar 같은 글로벌 header organism은 `StatusBar`를 내부에 렌더하지 않는다. 새 compound 화면의 시스템 헤더는 항상 `<AppScreen.SystemHeader />`로 표현한다. legacy `systemHeader` prop은 기존 renderer 호환용이다.
+- `ProgressTopBar` 같은 글로벌 header organism은 `StatusBar`를 내부에 렌더하지 않는다. 새 compound 화면의 시스템 헤더는 항상 `<AppScreen.SystemHeader />`로 표현한다. legacy `systemHeader` prop은 기존 renderer 호환용이다.
 - 화면 route에서 상단/하단 chrome을 `position: fixed` 또는 `absolute`로 직접 만들지 않는다.
 - `Header`와 `Bottom`은 각자 내부 flow를 가질 수 있다. 예를 들어 검색 화면은 `Header` 안에 검색바와 탭을 함께 둘 수 있고, 상품 화면은 `Bottom` 안에 구매바와 GNB를 함께 둘 수 있다.
 - `Content` 밖에는 scrollable content를 두지 않는다. 본문 기준선, bleed, readable measure는 `ContentSection`과 `ContentRail`로 표현한다.

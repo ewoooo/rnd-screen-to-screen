@@ -6,7 +6,7 @@ import type {
 
 export type PreviewComponentRegistryEntry = Omit<
 	ComponentRegistryEntry,
-	"figmaSpec" | "render"
+	"render"
 >;
 
 export const COMPONENT_LAYER_ORDER = [
@@ -26,12 +26,7 @@ export const COMPONENT_GROUP_ORDER = [
 	"selection",
 	"template",
 	"global",
-	"home",
 	"mbr",
-	"product",
-	"search",
-	"tu",
-	"nc-simple",
 ] as const satisfies readonly ComponentGroup[];
 
 export type ComponentLayerGroups = Partial<
@@ -45,8 +40,7 @@ export type ComponentGroups = Partial<
 export function toPreviewComponentRegistryEntry(
 	component: ComponentRegistryEntry,
 ): PreviewComponentRegistryEntry {
-	const { figmaSpec, render, ...serializableComponent } = component;
-	void figmaSpec;
+	const { render, ...serializableComponent } = component;
 	void render;
 	return serializableComponent;
 }

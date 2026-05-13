@@ -25,18 +25,18 @@ Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실�
 <AppScreen>
   <AppScreen.SystemHeader />
   <AppScreen.Header>
-    <GlobalNavigationHeader />
+    <ProgressTopBar />
   </AppScreen.Header>
   <AppScreen.Content>
     {content}
   </AppScreen.Content>
   <AppScreen.Bottom>
-    <GlobalNavigationBar />
+    <PrimaryCTABar />
   </AppScreen.Bottom>
 </AppScreen>
 ```
 
-- route는 fixture/spec을 읽고 `@pxds/pxds-layout` templates와 `@pxds/pxds-components/<domain>`를 배치한다.
+- route는 fixture/spec을 읽고 `@pxds/pxds-layout` templates, `@pxds/pxds-components/molecules`, `@pxds/pxds-components/shared/global`를 배치한다.
 - screen에서 WDS `Card`, `Button`, `Chip`, `Typography` 등을 직접 대량 조합하지 않는다.
 - route에서 `position: fixed`, `absolute bottom: 0`로 chrome을 만들지 않는다. 상단은 `Header`, 하단은 `Bottom`에 올린다.
 - scroll content는 `AppScreen.Content`가 소유한다. 화면별 별도 scroll container를 만들지 않는다.
@@ -56,9 +56,9 @@ organism React components + templates + screen
 ```
 
 - `atoms` — 도메인 없는 최소 부품. `@pxds/pxds-layout/primitives`, `@pxds/pxds-components/atoms/feedback`, `@pxds/pxds-components/atoms/typography`, `@pxds/pxds-components/core`, `@pxds/pxds-icons`.
-- `molecules` — 도메인 독립 조합 패턴. `InfoList`, `SelectableList`, `ConsentList`, `PromoBlock`, `NoticeBlock`, `SectionCard`, `SummaryCard`, `ChipGroup`, `PrimaryCTABar`, `StickyActionBar` 등은 `@pxds/pxds-components/molecules`가 소유한다.
-- `domains/shared/global` — 여러 화면이 공유하는 전역 chrome/flow section. `@pxds/pxds-components/shared/global`가 소유한다.
-- `domains/<domain>` — 실제 React/Figma 인스턴스로 재사용되는 도메인 컴포넌트. `home`, `product`, `search`, `tu` 등은 `@pxds/pxds-components/<domain>`가 소유한다.
+- `molecules` — 도메인 독립 조합 패턴. 모바일에서 소비하는 `InfoList`, `InfoSection`, `SelectableList`, `ConsentList`, `NoticeBlock`, `SectionCard`, `FormField`, `form-controls`, `PrimaryCTABar`, `TextFieldList`만 `@pxds/pxds-components/molecules`가 소유한다.
+- `domains/shared/global` — 여러 화면이 공유하는 전역 chrome/flow section. 모바일에서 소비하는 `ProgressTopBar`, `FlowHero`, `FlowNotice`, `FlowSummaryCard`만 `@pxds/pxds-components/shared/global`가 소유한다.
+- `domains/<domain>` — 현재 모바일 소비 기준에서는 별도 도메인 컴포넌트를 두지 않는다. MBR과 legacy-mbr의 화면별 의미 구조는 앱 organism이 소유한다.
 - `src/organisms/mbr` — MBR 화면 영역 React 컴포넌트. MBR OGN은 page가 실제 DOM으로 조립하는 화면 어휘이며 render-tree registry를 소유하지 않는다.
 - `src/organisms/legacy-mbr` — 보존된 membership legacy 화면 영역 React 컴포넌트. 신규 구조의 기준으로 삼지 않는다.
 - 신규/legacy 모두 organism render-tree registry를 소유하지 않는다.
@@ -66,7 +66,7 @@ organism React components + templates + screen
 
 허용 import:
 
-- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-components/molecules`, `@/organisms/{mbr,legacy-mbr}`
+- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/molecules`, `@pxds/pxds-components/shared/global`, `@/organisms/{mbr,legacy-mbr}`
 - domain → molecules, shared/global, atoms, WDS core
 - molecules → atoms, WDS core
 - shared/global → molecules, atoms, WDS core
@@ -83,10 +83,10 @@ organism React components + templates + screen
 ## 승격 규칙
 
 1. `@pxds/pxds-components/registry`에서 현재 어휘와 소유 패키지를 확인한다.
-2. 기존 domain 컴포넌트로 표현 가능한지 본다.
-3. 부족하면 먼저 molecules 조합으로 표현 가능한지 본다.
+2. 먼저 기존 molecules/shared-global 조합으로 표현 가능한지 본다.
+3. 부족하면 앱 organism 경계에서 의미 구조를 분리할 수 있는지 본다.
 4. 같은 WDS 조합이 반복되면 `@pxds/pxds-components/molecules`로 승격한다.
-5. 도메인 이름과 데이터 구조가 필요한 부분만 해당 domain에 둔다.
+5. 도메인 이름과 데이터 구조가 필요한 부분은 현재 앱 organism에 두고, 재사용 계약이 확정될 때만 패키지 승격을 검토한다.
 6. 기존 컴포넌트에 새 variant/slot을 추가하기 전에 더 일반적인 molecule 축이 있는지 검토한다.
 
 ## 검증

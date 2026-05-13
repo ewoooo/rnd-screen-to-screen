@@ -1,4 +1,3 @@
-import { textBlockFigmaSpec } from "./text-block.figma";
 import { textBlockRenderReact } from "./text-block";
 
 export const textBlockRegistryEntry = {
@@ -10,6 +9,5 @@ export const textBlockRegistryEntry = {
 	group: "typography",
 	status: "active",
 	createdAt: "2026-04-30",
-	figmaSpec: () => textBlockFigmaSpec,
 	renderReact: textBlockRenderReact,
 } as const;

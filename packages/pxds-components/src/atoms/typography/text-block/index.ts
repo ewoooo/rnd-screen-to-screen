@@ -5,6 +5,5 @@ export {
 	type TextBlockProps,
 	type TextBlockVariant,
 } from "./text-block";
-export { textBlockFigmaSpec } from "./text-block.figma";
 export { textBlockPreviewMocks } from "./text-block.mock";
 export { textBlockRegistryEntry } from "./text-block.registry";

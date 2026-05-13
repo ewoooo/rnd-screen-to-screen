@@ -1,4 +1,3 @@
-import { formFieldFigmaSpec } from "./form-field.figma";
 import { formFieldRenderReact } from "./FormField";
 
 export const formFieldRegistryEntry = {
@@ -10,7 +9,6 @@ export const formFieldRegistryEntry = {
 	group: "form",
 	status: "active",
 	createdAt: "2026-04-30",
-	figmaSpec: () => formFieldFigmaSpec,
 	renderReact: formFieldRenderReact,
 	composedOf: [
 		"form-field",

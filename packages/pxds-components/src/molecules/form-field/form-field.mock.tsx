@@ -1,4 +1,4 @@
-import { SelectField } from "../select-field";
+import { TextField } from "../form-controls";
 import { FormField } from "./FormField";
 
 export const formFieldPreviewExample = {
@@ -6,14 +6,8 @@ export const formFieldPreviewExample = {
 	description: "Label, helper, and field composition boundary.",
 	render: () => (
 		<div className="w-80 max-w-full">
-			<FormField label="옵션" helperText="선택 가능한 값을 확인합니다.">
-				<SelectField
-					value="basic"
-					options={[
-						{ id: "basic", label: "기본 옵션" },
-						{ id: "premium", label: "프리미엄 옵션" },
-					]}
-				/>
+			<FormField label="이름" helperText="표시될 이름을 입력합니다.">
+				<TextField placeholder="홍길동" />
 			</FormField>
 		</div>
 	),
