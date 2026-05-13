@@ -7,7 +7,7 @@
 ## AppScreen compound API
 
 `AppScreen`은 모바일 화면의 물리적 레이어 순서를 코드에 드러내는 compound API를 기본 사용한다. 새 화면과 리팩터 대상은 `top` / `bottom` prop보다 아래 구조를 우선한다.
-`apps/mobile`의 route와 SDUI renderer는 이 compound 구조를 사용한다.
+`apps/mobile`의 route는 이 compound 구조를 사용한다.
 
 ```tsx
 <AppScreen>

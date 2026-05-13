@@ -20,4 +20,4 @@ Figma bridge, hooks, variables sync, component/screen export, spec authoring을 
 
 ## Capture
 
-Figma html-to-design capture는 iframe 내부를 안정적으로 파싱하지 못한다. 모바일 화면 비교 캡처는 `apps/mobile` route를 `#figmacapture` mode로 열고 `AppScreenRoot` selector를 잡는 쪽을 우선한다.
+Figma export/capture는 preview 또는 별도 export 앱 경계에서 처리한다. `apps/mobile` route에 capture script나 export bridge를 주입하지 않는다.

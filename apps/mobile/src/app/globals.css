@@ -37,17 +37,6 @@ body {
 	transform: translateZ(0);
 }
 
-.figma-capture-mobile-frame body {
-	width: var(--pxds-device-mobile-view-width);
-	height: var(--pxds-device-mobile-view-height);
-	overflow: hidden;
-}
-
-.figma-capture-mobile-frame .mobile-frame {
-	width: var(--pxds-device-mobile-view-width);
-	height: var(--pxds-device-mobile-view-height);
-}
-
 .mobile-frame,
 .mobile-frame * {
 	box-sizing: border-box;

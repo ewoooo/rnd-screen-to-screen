@@ -1,11 +1,19 @@
 import Link from "next/link";
 import {
-  legacyScreenRoutes,
-  referenceScreenRoutes,
+  isLegacyScreenId,
+  isReferenceScreenId,
+  screenRoutes,
   type ScreenRoute,
-} from "@/registry/screen-registry";
+} from "@/scripts/screen-routes";
 
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
+
+const referenceScreenRoutes = screenRoutes.filter((screen) =>
+  isReferenceScreenId(screen.id),
+);
+const legacyScreenRoutes = screenRoutes.filter((screen) =>
+  isLegacyScreenId(screen.id),
+);
 
 const sections = [
   {

@@ -4,20 +4,18 @@ Active WDS 모바일 화면 렌더러다. route는 화면을 조립하고, 실�
 
 ## 화면 구조
 
-- 화면 평탄 구조를 유지한다: screen은 `src/app/<screen>/page.tsx`, `meta.json`을 기준으로 한다.
+- 화면 route는 `src/app/(mbr)/<screen>/page.tsx`, `src/app/(legacy-mbr)/<screen>/page.tsx`처럼 route group으로 분리한다.
 - 버전 폴더(`v?-?`)를 만들지 않는다.
-- 인덱스(`/`)는 hard-coded route 목록으로 둔다. registry generator에 의존하지 않는다.
+- 인덱스(`/`)는 `src/scripts/screen-routes`의 route catalog를 읽어 화면 목록을 보여준다.
 - mock은 화면 재현용 임시 입력이며 API 연결 시 교체한다.
-- `src/type`은 screen/render/organism 타입만 둔다.
-- `src/scripts`는 검증/변환 함수만 둔다. `runtime`, `schema`, `lib` 같은 역할이 흐린 폴더를 다시 만들지 않는다.
-- `src/registry`는 screen route/spec registry 생성물을 둔다.
+- `src/scripts/screen-routes`는 screen route catalog와 조회/분류 helper를 카테고리별 파일로 둔다. 파생 목록은 소비처에서 필요한 기준으로 만든다. route config 공용 타입은 `@pxds/pxds-spec`의 `ScreenRouteConfig`를 사용한다.
 
 ## Current / Legacy 경계
 
-- Current reference는 MBR이다: `src/app/NOVA-MBR-PG-*` page가 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. MBR organism은 `src/organisms/mbr`의 React 컴포넌트로 표현한다.
-- Membership은 보존된 legacy 비교군이다: `src/app/LEGACY-MBR-PG-*`, `src/organisms/membership/*`는 React DOM 기준으로 남기되 신규 기준으로 승격하지 않는다.
-- MBR과 membership을 제외한 legacy route는 삭제되어야 한다.
-- `@screen/mobile/screens`는 `src/registry/screen-registry.ts`를 통해 route table을 노출한다. `referenceScreenRoutes`는 MBR만, `legacyScreenRoutes`는 보존된 membership만 포함한다.
+- Current reference는 MBR이다: `src/app/(mbr)/NOVA-MBR-PG-*` page가 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. MBR organism은 `src/organisms/mbr`의 React 컴포넌트로 표현한다.
+- Legacy MBR은 보존된 membership 비교군이다: `src/app/(legacy-mbr)/LEGACY-MBR-PG-*`, `src/organisms/legacy-mbr/*`는 React DOM 기준으로 남기되 신규 기준으로 승격하지 않는다.
+- MBR과 legacy-mbr을 제외한 legacy route는 삭제되어야 한다.
+- `@screen/mobile/screens`는 `src/scripts/screen-routes/index.ts`를 통해 route catalog와 조회/분류 helper만 노출한다.
 
 ## 화면 조립 규칙
 
@@ -62,13 +60,13 @@ organism React components + templates + screen
 - `domains/shared/global` — 여러 화면이 공유하는 전역 chrome/flow section. `@pxds/pxds-components/shared/global`가 소유한다.
 - `domains/<domain>` — 실제 React/Figma 인스턴스로 재사용되는 도메인 컴포넌트. `home`, `product`, `search`, `tu` 등은 `@pxds/pxds-components/<domain>`가 소유한다.
 - `src/organisms/mbr` — MBR 화면 영역 React 컴포넌트. MBR OGN은 page가 실제 DOM으로 조립하는 화면 어휘이며 render-tree registry를 소유하지 않는다.
-- `src/organisms/membership` — 보존된 membership legacy 화면 영역 React 컴포넌트. 신규 구조의 기준으로 삼지 않는다.
+- `src/organisms/legacy-mbr` — 보존된 membership legacy 화면 영역 React 컴포넌트. 신규 구조의 기준으로 삼지 않는다.
 - 신규/legacy 모두 organism render-tree registry를 소유하지 않는다.
 - `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/pxds-layout/app-screen`, `@pxds/pxds-layout/bottom-sheet`.
 
 허용 import:
 
-- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-components/molecules`, `@/organisms/{mbr,membership}`
+- screen → `@pxds/pxds-layout/*`, `@pxds/pxds-components/<domain>`, `@pxds/pxds-components/molecules`, `@/organisms/{mbr,legacy-mbr}`
 - domain → molecules, shared/global, atoms, WDS core
 - molecules → atoms, WDS core
 - shared/global → molecules, atoms, WDS core
@@ -90,10 +88,6 @@ organism React components + templates + screen
 4. 같은 WDS 조합이 반복되면 `@pxds/pxds-components/molecules`로 승격한다.
 5. 도메인 이름과 데이터 구조가 필요한 부분만 해당 domain에 둔다.
 6. 기존 컴포넌트에 새 variant/slot을 추가하기 전에 더 일반적인 molecule 축이 있는지 검토한다.
-
-## Figma capture
-
-`layout.tsx`에는 Figma capture script가 들어갈 수 있다. `#figmacapture` hash가 붙은 경우에만 `.mobile-frame`을 `375×812`로 고정하는 capture mode를 허용한다. 일반 앱/프리뷰 동작에는 영향을 주지 않아야 한다.
 
 ## 검증
 
