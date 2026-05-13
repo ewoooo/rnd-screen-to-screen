@@ -13,7 +13,7 @@ export const primaryCtaBarRegistryEntry = {
 	figmaSpec: () => primaryCtaBarFigmaSpec,
 	renderReact: primaryCtaBarRenderReact,
 	composedOf: [
-		"wds-button",
+		"button",
 		"layout-primitives",
 	],
 } as const;

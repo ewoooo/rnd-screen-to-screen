@@ -7,5 +7,5 @@ export const globalNavigationBarRegistryEntry = {
 	group: "global",
 	status: "active",
 	createdAt: "2026-04-30",
-	composedOf: ["wds-bottom-navigation", "wds-bottom-navigation-item"],
+	composedOf: ["bottom-navigation", "bottom-navigation-item"],
 } as const;

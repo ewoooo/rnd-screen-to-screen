@@ -8,8 +8,8 @@ export const homeBlockRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-card",
-		"wds-button",
+		"card",
+		"button",
 		"divider",
 		"text-block",
 		"layout-primitives",

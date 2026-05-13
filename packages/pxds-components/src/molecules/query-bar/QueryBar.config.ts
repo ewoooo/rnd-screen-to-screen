@@ -10,5 +10,5 @@ export const queryBarRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	figmaSpec: () => queryBarFigmaSpec,
-	composedOf: ["wds-search-field"],
+	composedOf: ["search-field"],
 } as const;

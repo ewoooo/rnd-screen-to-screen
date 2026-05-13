@@ -8,9 +8,9 @@ export const noticeBlockRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-card",
-		"wds-content-badge",
-		"wds-button",
+		"card",
+		"content-badge",
+		"button",
 		"text-block",
 		"layout-primitives",
 	],

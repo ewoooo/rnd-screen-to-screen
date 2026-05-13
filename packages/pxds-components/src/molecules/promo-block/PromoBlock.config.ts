@@ -8,8 +8,8 @@ export const promoBlockRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-content-badge",
-		"wds-button",
+		"content-badge",
+		"button",
 		"media-block",
 		"text-block",
 		"layout-primitives",

@@ -12,7 +12,7 @@ export const globalSearchRegistryEntry = {
 		"global-navigation-bar",
 		"query-bar",
 		"search-result-tabs",
-		"wds-top-navigation",
-		"wds-top-navigation-button",
+		"top-navigation",
+		"top-navigation-button",
 	],
 } as const;

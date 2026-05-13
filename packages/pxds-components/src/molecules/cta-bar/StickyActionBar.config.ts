@@ -8,8 +8,8 @@ export const stickyActionBarRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-button",
-		"wds-icon-button",
+		"button",
+		"icon-button",
 		"text-block",
 		"layout-primitives",
 	],

@@ -13,9 +13,9 @@ export const progressTopBarRegistryEntry = {
 	figmaSpec: () => progressTopBarFigmaSpec,
 	renderReact: progressTopBarRenderReact,
 	composedOf: [
-		"wds-top-navigation",
-		"wds-top-navigation-button",
-		"wds-progress-indicator",
+		"top-navigation",
+		"top-navigation-button",
+		"progress-indicator",
 		"text-block",
 		"layout-primitives",
 	],

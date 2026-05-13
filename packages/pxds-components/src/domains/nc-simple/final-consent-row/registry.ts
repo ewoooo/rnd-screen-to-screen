@@ -9,9 +9,9 @@ export const finalConsentRowRegistryEntry = {
 	createdAt: "2026-05-07",
 	composedOf: [
 		"content-section",
-		"wds-card",
-		"wds-card-content",
-		"wds-checkbox",
+		"card",
+		"card-content",
+		"checkbox",
 		"text-block",
 		"layout-primitives",
 	],

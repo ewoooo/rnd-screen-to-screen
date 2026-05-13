@@ -7,5 +7,5 @@ export const myEditButtonRegistryEntry = {
 	group: "home",
 	status: "active",
 	createdAt: "2026-04-30",
-	composedOf: ["wds-button", "layout-primitives"],
+	composedOf: ["button", "layout-primitives"],
 } as const;

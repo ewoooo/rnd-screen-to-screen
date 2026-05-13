@@ -8,9 +8,9 @@ export const infoListRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-list",
-		"wds-list-cell",
-		"wds-chip",
+		"list",
+		"list-cell",
+		"chip",
 		"text-block",
 		"layout-primitives",
 	],

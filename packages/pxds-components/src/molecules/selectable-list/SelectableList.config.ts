@@ -13,11 +13,11 @@ export const selectableListRegistryEntry = {
 	figmaSpec: () => selectableListFigmaSpec,
 	renderReact: selectableListRenderReact,
 	composedOf: [
-		"wds-list",
-		"wds-list-cell",
-		"wds-radio-group",
-		"wds-checkbox",
-		"wds-chip",
+		"list",
+		"list-cell",
+		"radio-group",
+		"checkbox",
+		"chip",
 		"layout-primitives",
 	],
 } as const;

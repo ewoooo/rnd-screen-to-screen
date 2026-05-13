@@ -8,7 +8,7 @@ export const descriptionListRegistryEntry = {
 	status: "active",
 	createdAt: "2026-05-11",
 	composedOf: [
-		"wds-button",
+		"button",
 		"divider",
 		"text-block",
 		"layout-primitives",

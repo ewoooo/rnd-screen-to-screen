@@ -13,9 +13,9 @@ export const formFieldRegistryEntry = {
 	figmaSpec: () => formFieldFigmaSpec,
 	renderReact: formFieldRenderReact,
 	composedOf: [
-		"wds-form-field",
-		"wds-form-label",
-		"wds-form-message",
+		"form-field",
+		"form-label",
+		"form-message",
 	],
 	sbAliases: ["text-field"],
 	policySlots: {

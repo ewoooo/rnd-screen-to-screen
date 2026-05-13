@@ -11,8 +11,8 @@ export const selectFieldRegistryEntry = {
 	createdAt: "2026-04-30",
 	figmaSpec: () => selectFieldFigmaSpec,
 	composedOf: [
-		"wds-select",
-		"wds-option",
-		"wds-option-content",
+		"select",
+		"option",
+		"option-content",
 	],
 } as const;

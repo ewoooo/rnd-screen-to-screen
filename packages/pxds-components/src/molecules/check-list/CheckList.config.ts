@@ -8,8 +8,8 @@ export const checkListRegistryEntry = {
 	status: "active",
 	createdAt: "2026-05-11",
 	composedOf: [
-		"wds-checkbox",
-		"wds-text-button",
+		"checkbox",
+		"text-button",
 		"divider",
 		"text-block",
 		"layout-primitives",

@@ -8,7 +8,7 @@ export const chipGroupRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-chip",
+		"chip",
 		"layout-primitives",
 	],
 } as const;

@@ -11,8 +11,8 @@ export const mediaBlockRegistryEntry = {
 	createdAt: "2026-04-30",
 	figmaSpec: () => mediaBlockFigmaSpec,
 	composedOf: [
-		"wds-thumbnail",
-		"wds-card-thumbnail",
-		"wds-content-badge",
+		"thumbnail",
+		"card-thumbnail",
+		"content-badge",
 	],
 } as const;

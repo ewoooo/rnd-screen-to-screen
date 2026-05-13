@@ -7,5 +7,5 @@ export const globalNavigationHeaderRegistryEntry = {
 	group: "global",
 	status: "active",
 	createdAt: "2026-04-30",
-	composedOf: ["wds-top-navigation", "wds-top-navigation-button"],
+	composedOf: ["top-navigation", "top-navigation-button"],
 } as const;

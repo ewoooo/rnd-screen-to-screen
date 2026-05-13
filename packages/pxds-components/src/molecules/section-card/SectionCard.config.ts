@@ -8,9 +8,9 @@ export const sectionCardRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-card",
-		"wds-card-content",
-		"wds-card-title",
+		"card",
+		"card-content",
+		"card-title",
 		"text-block",
 		"layout-primitives",
 	],

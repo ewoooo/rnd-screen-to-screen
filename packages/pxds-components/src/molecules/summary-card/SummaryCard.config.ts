@@ -8,8 +8,8 @@ export const summaryCardRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-card",
-		"wds-card-content",
+		"card",
+		"card-content",
 		"media-block",
 		"text-block",
 		"layout-primitives",

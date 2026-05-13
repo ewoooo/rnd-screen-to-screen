@@ -13,7 +13,7 @@ export const consentListRegistryEntry = {
 	figmaSpec: () => consentListFigmaSpec,
 	renderReact: consentListRenderReact,
 	composedOf: [
-		"wds-checkbox",
+		"checkbox",
 		"divider",
 		"text-block",
 		"layout-primitives",

@@ -11,8 +11,8 @@ export const filterTabsRegistryEntry = {
 	createdAt: "2026-04-30",
 	figmaSpec: () => filterTabsFigmaSpec,
 	composedOf: [
-		"wds-tab",
-		"wds-tab-list",
-		"wds-tab-list-item",
+		"tab",
+		"tab-list",
+		"tab-list-item",
 	],
 } as const;

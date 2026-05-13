@@ -8,11 +8,11 @@ export const formControlsRegistryEntry = {
 	status: "active",
 	createdAt: "2026-04-30",
 	composedOf: [
-		"wds-text-field",
-		"wds-text-area",
-		"wds-select",
-		"wds-option",
-		"wds-switch",
-		"wds-checkbox",
+		"text-field",
+		"text-area",
+		"select",
+		"option",
+		"switch",
+		"checkbox",
 	],
 } as const;

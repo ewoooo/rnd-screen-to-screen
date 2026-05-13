@@ -10,7 +10,7 @@ export const productShellRegistryEntry = {
 	composedOf: [
 		"app-screen",
 		"global-navigation-bar",
-		"wds-top-navigation",
-		"wds-top-navigation-button",
+		"top-navigation",
+		"top-navigation-button",
 	],
 } as const;

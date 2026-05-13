@@ -7,5 +7,5 @@ export const flowContinueBarRegistryEntry = {
 	group: "global",
 	status: "active",
 	createdAt: "2026-05-07",
-	composedOf: ["wds-button", "text-block", "layout-primitives"],
+	composedOf: ["button", "text-block", "layout-primitives"],
 } as const;
