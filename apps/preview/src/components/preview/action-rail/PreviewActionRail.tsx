@@ -1,7 +1,6 @@
 "use client";
 
 import { DatabaseIcon, LayoutTemplateIcon, UploadIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
 import {
 	createPxdsFigmaTokenTree,
 	getComponentFigmaSpec,
@@ -19,6 +18,7 @@ import { createPxdsTokensStudioJson } from "@pxds/cx-tokens/tokens-studio";
 
 import { ActionRail } from "./ActionRail";
 import { ActionRailButton } from "./ActionRailButton";
+import { useComponentRegistry } from "@/contexts/component-registry-context";
 
 const tokenRegistry = {
 	"_skt/primitive/default": primitiveTokens,
@@ -34,8 +34,8 @@ const figmaTokenTree = createPxdsFigmaTokenTree(tokenRegistry);
 const tokensStudioJson = createPxdsTokensStudioJson(tokenRegistry);
 
 export function PreviewActionRail() {
-	const pathname = usePathname();
-	const componentId = getComponentIdFromPath(pathname);
+	const { selectedComponent } = useComponentRegistry();
+	const componentId = selectedComponent?.id ?? null;
 	const figmaSpec = getComponentFigmaSpec(componentId);
 	const componentExportLabel = figmaSpec
 		? "Figma 플러그인 코드 복사"
@@ -100,7 +100,3 @@ export function PreviewActionRail() {
 	);
 }
 
-function getComponentIdFromPath(pathname: string) {
-	const match = pathname.match(/^\/components\/([^/]+)/);
-	return match?.[1] ?? null;
-}

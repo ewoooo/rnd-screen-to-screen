@@ -1,32 +1,10 @@
-"use client";
-
-import { lazy, Suspense } from "react";
-
-import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
+import { ComponentRenderFrame } from "@/components/preview/render-view/component/ComponentRenderFrame";
 import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
-
-const ComponentRenderFrame = lazy(() =>
-	import("@/components/preview/render-view/component/ComponentRenderFrame").then(
-		(module) => ({
-			default: module.ComponentRenderFrame,
-		}),
-	),
-);
 
 type ComponentRenderProps = {
 	component: PreviewComponentRegistryEntry;
 };
 
 export function ComponentRender({ component }: ComponentRenderProps) {
-	return (
-		<Suspense
-			fallback={
-				<div className="grid min-h-[560px] w-full place-items-center">
-					<PreviewSpinner label="Loading component preview" />
-				</div>
-			}
-		>
-			<ComponentRenderFrame key={component.id} component={component} />
-		</Suspense>
-	);
+	return <ComponentRenderFrame key={component.id} component={component} />;
 }

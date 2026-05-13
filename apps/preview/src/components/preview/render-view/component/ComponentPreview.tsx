@@ -5,27 +5,27 @@ import { ComponentExampleMissing } from "@/components/preview/render-view/compon
 import { PreviewCanvas } from "@/components/preview/render-view/shared/PreviewCanvas";
 import { PreviewHeader } from "@/components/preview/render-view/shared/PreviewHeader";
 import { ComponentRender } from "@/components/preview/render-view/component/ComponentRender";
-import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
+import { useComponentRegistry } from "@/contexts/component-registry-context";
 
-type ComponentPreviewProps = {
-	component: PreviewComponentRegistryEntry;
-};
+export function ComponentPreview() {
+	const { selectedComponent } = useComponentRegistry();
 
-export function ComponentPreview({ component }: ComponentPreviewProps) {
-	const example = getComponentPreviewExample(component.id);
+	if (!selectedComponent) return null;
+
+	const example = getComponentPreviewExample(selectedComponent.id);
 
 	return (
 		<section className="flex min-w-0 flex-col">
 			<PreviewHeader
-				eyebrow={component.layer}
-				title={component.name}
-				description={component.importPath}
+				eyebrow={selectedComponent.layer}
+				title={selectedComponent.name}
+				description={selectedComponent.importPath}
 			/>
 			<PreviewCanvas>
 				{example ? (
-					<ComponentRender component={component} />
+					<ComponentRender component={selectedComponent} />
 				) : (
-					<ComponentExampleMissing componentName={component.name} />
+					<ComponentExampleMissing componentName={selectedComponent.name} />
 				)}
 			</PreviewCanvas>
 		</section>
