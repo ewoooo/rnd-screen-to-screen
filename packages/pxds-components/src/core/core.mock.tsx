@@ -5,10 +5,14 @@ import {
 	Button,
 	Card,
 	CardContent,
+	CardThumbnail,
 	CardTitle,
 	Checkbox,
 	Chip,
 	ContentBadge,
+	FormField,
+	FormLabel,
+	FormMessage,
 	IconButton,
 	List,
 	ListCell,
@@ -17,11 +21,26 @@ import {
 	ModalContainer,
 	ModalContent,
 	ModalDimmer,
+	Option,
+	OptionContent,
+	OptionGroup,
 	ProgressIndicator,
 	RadioGroup,
 	RadioGroupItem,
+	SearchField,
 	SectionMessage,
+	Select,
+	SelectContent,
+	Switch,
+	Tab,
+	TabList,
+	TabListItem,
+	TextArea,
+	TextAreaContent,
 	TextButton,
+	TextField,
+	TextFieldButton,
+	TextFieldContent,
 	Thumbnail,
 	TopNavigation,
 	TopNavigationButton,
@@ -350,6 +369,236 @@ export const wdsCorePreviewExamples = [
 					</ModalContent>
 				</ModalContainer>
 			</Modal>
+		),
+	},
+	{
+		componentId: "wds-card-thumbnail",
+		description: "WDS card thumbnail media slot.",
+		render: () => (
+			<CardThumbnail width={160} ratio="16:9">
+				<div className="grid h-full place-items-center text-neutral-400">
+					<DemoIcon label="img" />
+				</div>
+			</CardThumbnail>
+		),
+	},
+	{
+		componentId: "wds-search-field",
+		description: "WDS search field primitive.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<SearchField placeholder="검색어를 입력하세요" />
+			</div>
+		),
+	},
+	{
+		componentId: "wds-text-field",
+		description: "WDS text field primitive.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<TextField placeholder="입력하세요" />
+			</div>
+		),
+	},
+	{
+		componentId: "wds-text-field-content",
+		description: "WDS text field with leading/trailing content slots.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<TextField>
+					<TextFieldContent slot="leading">
+						<DemoIcon label="@" />
+					</TextFieldContent>
+				</TextField>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-text-field-button",
+		description: "WDS text field trailing action button.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<TextField placeholder="입력하세요">
+					<TextFieldButton slot="trailing">지우기</TextFieldButton>
+				</TextField>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-text-area",
+		description: "WDS text area primitive.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<TextArea placeholder="내용을 입력하세요" />
+			</div>
+		),
+	},
+	{
+		componentId: "wds-text-area-content",
+		description: "WDS text area with content slot.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<TextArea placeholder="내용을 입력하세요">
+					<TextAreaContent slot="trailing">
+						<Typography variant="caption1" color="semantic.label.alternative">
+							0/200
+						</Typography>
+					</TextAreaContent>
+				</TextArea>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-switch",
+		description: "WDS switch toggle primitive.",
+		render: () => (
+			<div className="flex items-center gap-3">
+				<Switch defaultChecked />
+				<Switch />
+			</div>
+		),
+	},
+	{
+		componentId: "wds-select",
+		description: "WDS select dropdown composition.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<Select>
+					<SelectContent>
+						<OptionGroup>
+							<Option value="basic">기본 요금제</Option>
+							<Option value="save">절약 요금제</Option>
+							<Option value="premium">프리미엄 요금제</Option>
+						</OptionGroup>
+					</SelectContent>
+				</Select>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-select-content",
+		description: "WDS select content wrapper.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<Select>
+					<SelectContent>
+						<Option value="a">옵션 A</Option>
+						<Option value="b">옵션 B</Option>
+					</SelectContent>
+				</Select>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-option",
+		description: "WDS select option item.",
+		render: () => (
+			<Select>
+				<SelectContent>
+					<Option value="example">선택 항목</Option>
+				</SelectContent>
+			</Select>
+		),
+	},
+	{
+		componentId: "wds-option-content",
+		description: "WDS option with custom content slot.",
+		render: () => (
+			<Select>
+				<SelectContent>
+					<Option value="custom">
+						<OptionContent>
+							<DemoIcon label="★" />
+							<span>프리미엄</span>
+						</OptionContent>
+					</Option>
+				</SelectContent>
+			</Select>
+		),
+	},
+	{
+		componentId: "wds-option-group",
+		description: "WDS option group for grouping select items.",
+		render: () => (
+			<Select>
+				<SelectContent>
+					<OptionGroup title="요금제">
+						<Option value="basic">기본</Option>
+						<Option value="premium">프리미엄</Option>
+					</OptionGroup>
+				</SelectContent>
+			</Select>
+		),
+	},
+	{
+		componentId: "wds-form-field",
+		description: "WDS form field composition with label and message.",
+		render: () => (
+			<div className="w-80 max-w-full">
+				<FormField>
+					<FormLabel>이름</FormLabel>
+					<TextField placeholder="홍길동" />
+					<FormMessage>실명으로 입력해주세요.</FormMessage>
+				</FormField>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-form-label",
+		description: "WDS form label primitive.",
+		render: () => <FormLabel>이름</FormLabel>,
+	},
+	{
+		componentId: "wds-form-message",
+		description: "WDS form hint/error message primitive.",
+		render: () => (
+			<div className="flex flex-col gap-2">
+				<FormMessage>올바른 형식으로 입력해주세요.</FormMessage>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-tab",
+		description: "WDS tab inside tab list context.",
+		render: () => (
+			<TabList defaultValue="all">
+				<TabListItem value="all">
+					<Tab>전체</Tab>
+				</TabListItem>
+				<TabListItem value="active">
+					<Tab>진행중</Tab>
+				</TabListItem>
+			</TabList>
+		),
+	},
+	{
+		componentId: "wds-tab-list",
+		description: "WDS tab list composition.",
+		render: () => (
+			<div className="w-[390px] max-w-full">
+				<TabList defaultValue="all">
+					<TabListItem value="all">
+						<Tab>전체</Tab>
+					</TabListItem>
+					<TabListItem value="active">
+						<Tab>진행중</Tab>
+					</TabListItem>
+					<TabListItem value="done">
+						<Tab>완료</Tab>
+					</TabListItem>
+				</TabList>
+			</div>
+		),
+	},
+	{
+		componentId: "wds-tab-list-item",
+		description: "WDS tab list item slot.",
+		render: () => (
+			<TabList defaultValue="item">
+				<TabListItem value="item">
+					<Tab>항목</Tab>
+				</TabListItem>
+			</TabList>
 		),
 	},
 ] as const satisfies readonly CorePreviewExample[];

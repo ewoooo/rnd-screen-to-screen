@@ -6,7 +6,7 @@ import type {
 
 export type PreviewComponentRegistryEntry = Omit<
 	ComponentRegistryEntry,
-	"render"
+	"render" | "renderReact"
 >;
 
 export const COMPONENT_LAYER_ORDER = [
@@ -40,8 +40,9 @@ export type ComponentGroups = Partial<
 export function toPreviewComponentRegistryEntry(
 	component: ComponentRegistryEntry,
 ): PreviewComponentRegistryEntry {
-	const { render, ...serializableComponent } = component;
+	const { render, renderReact, ...serializableComponent } = component;
 	void render;
+	void renderReact;
 	return serializableComponent;
 }
 
