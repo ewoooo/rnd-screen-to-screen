@@ -1,10 +1,10 @@
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 
 import { generate, parse } from "css-tree";
 
-const REGISTRY_FILE = new URL("../registry/tokens.original.json", import.meta.url);
-const registry = JSON.parse(await readFile(REGISTRY_FILE, "utf8"));
-const tokens = collectTokens(registry);
+const TOKEN_ROOT = new URL("../registry/tokens/", import.meta.url);
+const tokens = await collectRegistryTokens();
 const valueIndex = new Map();
 const issues = [];
 
@@ -34,6 +34,28 @@ if (issues.length > 0) {
 console.log(
 	`token value index ready (${tokens.length} tokens, ${valueIndex.size} normalized CSS values, ${issues.length} warnings).`,
 );
+
+async function collectRegistryTokens() {
+	const metadataFile = new URL("$metadata.json", TOKEN_ROOT);
+	if (!existsSync(metadataFile)) {
+		throw new Error("Missing registry/tokens/$metadata.json token-set order.");
+	}
+
+	const metadata = JSON.parse(await readFile(metadataFile, "utf8"));
+	const tokenSetOrder = Array.isArray(metadata.tokenSetOrder)
+		? metadata.tokenSetOrder
+		: [];
+
+	const tokenSets = await Promise.all(
+		tokenSetOrder.map(async (setName) => {
+			const tokenSetFile = new URL(`${setName}.json`, TOKEN_ROOT);
+			const tokenSet = JSON.parse(await readFile(tokenSetFile, "utf8"));
+			return collectTokens(tokenSet, [setName]);
+		}),
+	);
+
+	return tokenSets.flat();
+}
 
 function collectTokens(node, path = []) {
 	if (!isRecord(node)) return [];

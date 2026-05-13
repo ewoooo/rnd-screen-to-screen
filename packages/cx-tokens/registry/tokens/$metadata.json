@@ -1,0 +1,9 @@
+{
+  "tokenSetOrder": [
+    "_skt/primitive/default",
+    "_skt/semantic/light",
+    "_skt/semantic/dark",
+    "_skt/component/light",
+    "_skt/component/dark"
+  ]
+}

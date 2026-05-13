@@ -1,0 +1,288 @@
+/* Generated from @pxds/cx-tokens/registry/tokens/_skt/primitive/default.json. */
+/* Do not edit text style classes here by hand. */
+
+.text-24-med {
+	font-family: var(--24-med-font-family);
+	font-weight: var(--24-med-font-weight);
+	line-height: var(--24-med-line-height);
+	font-size: var(--24-med-font-size);
+	letter-spacing: var(--24-med-letter-spacing);
+	text-indent: var(--24-med-paragraph-indent);
+	text-transform: var(--24-med-text-case);
+	text-decoration: var(--24-med-text-decoration);
+}
+
+.text-20-med {
+	font-family: var(--20-med-font-family);
+	font-weight: var(--20-med-font-weight);
+	line-height: var(--20-med-line-height);
+	font-size: var(--20-med-font-size);
+	letter-spacing: var(--20-med-letter-spacing);
+	text-indent: var(--20-med-paragraph-indent);
+	text-transform: var(--20-med-text-case);
+	text-decoration: var(--20-med-text-decoration);
+}
+
+.text-18-bold {
+	font-family: var(--18-bold-font-family);
+	font-weight: var(--18-bold-font-weight);
+	line-height: var(--18-bold-line-height);
+	font-size: var(--18-bold-font-size);
+	letter-spacing: var(--18-bold-letter-spacing);
+	text-indent: var(--18-bold-paragraph-indent);
+	text-transform: var(--18-bold-text-case);
+	text-decoration: var(--18-bold-text-decoration);
+}
+
+.text-18-semi {
+	font-family: var(--18-semi-font-family);
+	font-weight: var(--18-semi-font-weight);
+	line-height: var(--18-semi-line-height);
+	font-size: var(--18-semi-font-size);
+	letter-spacing: var(--18-semi-letter-spacing);
+	text-indent: var(--18-semi-paragraph-indent);
+	text-transform: var(--18-semi-text-case);
+	text-decoration: var(--18-semi-text-decoration);
+}
+
+.text-18-med {
+	font-family: var(--18-med-font-family);
+	font-weight: var(--18-med-font-weight);
+	line-height: var(--18-med-line-height);
+	font-size: var(--18-med-font-size);
+	letter-spacing: var(--18-med-letter-spacing);
+	text-indent: var(--18-med-paragraph-indent);
+	text-transform: var(--18-med-text-case);
+	text-decoration: var(--18-med-text-decoration);
+}
+
+.text-16-semi {
+	font-family: var(--16-semi-font-family);
+	font-weight: var(--16-semi-font-weight);
+	line-height: var(--16-semi-line-height);
+	font-size: var(--16-semi-font-size);
+	letter-spacing: var(--16-semi-letter-spacing);
+	text-indent: var(--16-semi-paragraph-indent);
+	text-transform: var(--16-semi-text-case);
+	text-decoration: var(--16-semi-text-decoration);
+}
+
+.text-16-med {
+	font-family: var(--16-med-font-family);
+	font-weight: var(--16-med-font-weight);
+	line-height: var(--16-med-line-height);
+	font-size: var(--16-med-font-size);
+	letter-spacing: var(--16-med-letter-spacing);
+	text-indent: var(--16-med-paragraph-indent);
+	text-transform: var(--16-med-text-case);
+	text-decoration: var(--16-med-text-decoration);
+}
+
+.text-16-reg {
+	font-family: var(--16-reg-font-family);
+	font-weight: var(--16-reg-font-weight);
+	line-height: var(--16-reg-line-height);
+	font-size: var(--16-reg-font-size);
+	letter-spacing: var(--16-reg-letter-spacing);
+	text-indent: var(--16-reg-paragraph-indent);
+	text-transform: var(--16-reg-text-case);
+	text-decoration: var(--16-reg-text-decoration);
+}
+
+.text-15-bold {
+	font-family: var(--15-bold-font-family);
+	font-weight: var(--15-bold-font-weight);
+	line-height: var(--15-bold-line-height);
+	font-size: var(--15-bold-font-size);
+	letter-spacing: var(--15-bold-letter-spacing);
+	text-indent: var(--15-bold-paragraph-indent);
+	text-transform: var(--15-bold-text-case);
+	text-decoration: var(--15-bold-text-decoration);
+}
+
+.text-15-med {
+	font-family: var(--15-med-font-family);
+	font-weight: var(--15-med-font-weight);
+	line-height: var(--15-med-line-height);
+	font-size: var(--15-med-font-size);
+	letter-spacing: var(--15-med-letter-spacing);
+	text-indent: var(--15-med-paragraph-indent);
+	text-transform: var(--15-med-text-case);
+	text-decoration: var(--15-med-text-decoration);
+}
+
+.text-14-bold {
+	font-family: var(--14-bold-font-family);
+	font-weight: var(--14-bold-font-weight);
+	line-height: var(--14-bold-line-height);
+	font-size: var(--14-bold-font-size);
+	letter-spacing: var(--14-bold-letter-spacing);
+	text-indent: var(--14-bold-paragraph-indent);
+	text-transform: var(--14-bold-text-case);
+	text-decoration: var(--14-bold-text-decoration);
+}
+
+.text-14-semi {
+	font-family: var(--14-semi-font-family);
+	font-weight: var(--14-semi-font-weight);
+	line-height: var(--14-semi-line-height);
+	font-size: var(--14-semi-font-size);
+	letter-spacing: var(--14-semi-letter-spacing);
+	text-indent: var(--14-semi-paragraph-indent);
+	text-transform: var(--14-semi-text-case);
+	text-decoration: var(--14-semi-text-decoration);
+}
+
+.text-14-med {
+	font-family: var(--14-med-font-family);
+	font-weight: var(--14-med-font-weight);
+	line-height: var(--14-med-line-height);
+	font-size: var(--14-med-font-size);
+	letter-spacing: var(--14-med-letter-spacing);
+	text-indent: var(--14-med-paragraph-indent);
+	text-transform: var(--14-med-text-case);
+	text-decoration: var(--14-med-text-decoration);
+}
+
+.text-14-reg {
+	font-family: var(--14-reg-font-family);
+	font-weight: var(--14-reg-font-weight);
+	line-height: var(--14-reg-line-height);
+	font-size: var(--14-reg-font-size);
+	letter-spacing: var(--14-reg-letter-spacing);
+	text-indent: var(--14-reg-paragraph-indent);
+	text-transform: var(--14-reg-text-case);
+	text-decoration: var(--14-reg-text-decoration);
+}
+
+.text-13-bold {
+	font-family: var(--13-bold-font-family);
+	font-weight: var(--13-bold-font-weight);
+	line-height: var(--13-bold-line-height);
+	font-size: var(--13-bold-font-size);
+	letter-spacing: var(--13-bold-letter-spacing);
+	text-indent: var(--13-bold-paragraph-indent);
+	text-transform: var(--13-bold-text-case);
+	text-decoration: var(--13-bold-text-decoration);
+}
+
+.text-13-semi {
+	font-family: var(--13-semi-font-family);
+	font-weight: var(--13-semi-font-weight);
+	line-height: var(--13-semi-line-height);
+	font-size: var(--13-semi-font-size);
+	letter-spacing: var(--13-semi-letter-spacing);
+	text-indent: var(--13-semi-paragraph-indent);
+	text-transform: var(--13-semi-text-case);
+	text-decoration: var(--13-semi-text-decoration);
+}
+
+.text-13-med {
+	font-family: var(--13-med-font-family);
+	font-weight: var(--13-med-font-weight);
+	line-height: var(--13-med-line-height);
+	font-size: var(--13-med-font-size);
+	letter-spacing: var(--13-med-letter-spacing);
+	text-indent: var(--13-med-paragraph-indent);
+	text-transform: var(--13-med-text-case);
+	text-decoration: var(--13-med-text-decoration);
+}
+
+.text-13-reg {
+	font-family: var(--13-reg-font-family);
+	font-weight: var(--13-reg-font-weight);
+	line-height: var(--13-reg-line-height);
+	font-size: var(--13-reg-font-size);
+	letter-spacing: var(--13-reg-letter-spacing);
+	text-indent: var(--13-reg-paragraph-indent);
+	text-transform: var(--13-reg-text-case);
+	text-decoration: var(--13-reg-text-decoration);
+}
+
+.text-12-semi {
+	font-family: var(--12-semi-font-family);
+	font-weight: var(--12-semi-font-weight);
+	line-height: var(--12-semi-line-height);
+	font-size: var(--12-semi-font-size);
+	letter-spacing: var(--12-semi-letter-spacing);
+	text-indent: var(--12-semi-paragraph-indent);
+	text-transform: var(--12-semi-text-case);
+	text-decoration: var(--12-semi-text-decoration);
+}
+
+.text-12-med {
+	font-family: var(--12-med-font-family);
+	font-weight: var(--12-med-font-weight);
+	line-height: var(--12-med-line-height);
+	font-size: var(--12-med-font-size);
+	letter-spacing: var(--12-med-letter-spacing);
+	text-indent: var(--12-med-paragraph-indent);
+	text-transform: var(--12-med-text-case);
+	text-decoration: var(--12-med-text-decoration);
+}
+
+.text-12-reg {
+	font-family: var(--12-reg-font-family);
+	font-weight: var(--12-reg-font-weight);
+	line-height: var(--12-reg-line-height);
+	font-size: var(--12-reg-font-size);
+	letter-spacing: var(--12-reg-letter-spacing);
+	text-indent: var(--12-reg-paragraph-indent);
+	text-transform: var(--12-reg-text-case);
+	text-decoration: var(--12-reg-text-decoration);
+}
+
+.text-11-semi {
+	font-family: var(--11-semi-font-family);
+	font-weight: var(--11-semi-font-weight);
+	line-height: var(--11-semi-line-height);
+	font-size: var(--11-semi-font-size);
+	letter-spacing: var(--11-semi-letter-spacing);
+	text-indent: var(--11-semi-paragraph-indent);
+	text-transform: var(--11-semi-text-case);
+	text-decoration: var(--11-semi-text-decoration);
+}
+
+.text-11-med {
+	font-family: var(--11-med-font-family);
+	font-weight: var(--11-med-font-weight);
+	line-height: var(--11-med-line-height);
+	font-size: var(--11-med-font-size);
+	letter-spacing: var(--11-med-letter-spacing);
+	text-indent: var(--11-med-paragraph-indent);
+	text-transform: var(--11-med-text-case);
+	text-decoration: var(--11-med-text-decoration);
+}
+
+.text-11-reg {
+	font-family: var(--11-reg-font-family);
+	font-weight: var(--11-reg-font-weight);
+	line-height: var(--11-reg-line-height);
+	font-size: var(--11-reg-font-size);
+	letter-spacing: var(--11-reg-letter-spacing);
+	text-indent: var(--11-reg-paragraph-indent);
+	text-transform: var(--11-reg-text-case);
+	text-decoration: var(--11-reg-text-decoration);
+}
+
+.text-10-semi {
+	font-family: var(--10-semi-font-family);
+	font-weight: var(--10-semi-font-weight);
+	line-height: var(--10-semi-line-height);
+	font-size: var(--10-semi-font-size);
+	letter-spacing: var(--10-semi-letter-spacing);
+	text-indent: var(--10-semi-paragraph-indent);
+	text-transform: var(--10-semi-text-case);
+	text-decoration: var(--10-semi-text-decoration);
+}
+
+.text-10-med {
+	font-family: var(--10-med-font-family);
+	font-weight: var(--10-med-font-weight);
+	line-height: var(--10-med-line-height);
+	font-size: var(--10-med-font-size);
+	letter-spacing: var(--10-med-letter-spacing);
+	text-indent: var(--10-med-paragraph-indent);
+	text-transform: var(--10-med-text-case);
+	text-decoration: var(--10-med-text-decoration);
+}

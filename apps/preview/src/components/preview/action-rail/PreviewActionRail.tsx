@@ -8,11 +8,27 @@ import {
 	useFigmaPluginExport,
 	useTokensStudioExport,
 } from "@pxds/pxds-figma";
-import tokenRegistry from "@pxds/cx-tokens/registry/tokens.original.json";
+import componentDarkTokens from "@pxds/cx-tokens/registry/tokens/_skt/component/dark.json";
+import componentLightTokens from "@pxds/cx-tokens/registry/tokens/_skt/component/light.json";
+import primitiveTokens from "@pxds/cx-tokens/registry/tokens/_skt/primitive/default.json";
+import semanticDarkTokens from "@pxds/cx-tokens/registry/tokens/_skt/semantic/dark.json";
+import semanticLightTokens from "@pxds/cx-tokens/registry/tokens/_skt/semantic/light.json";
+import metadata from "@pxds/cx-tokens/registry/tokens/$metadata.json";
+import themes from "@pxds/cx-tokens/registry/tokens/$themes.json";
 import { createPxdsTokensStudioJson } from "@pxds/cx-tokens/tokens-studio";
 
 import { ActionRail } from "./ActionRail";
 import { ActionRailButton } from "./ActionRailButton";
+
+const tokenRegistry = {
+	"_skt/primitive/default": primitiveTokens,
+	"_skt/semantic/light": semanticLightTokens,
+	"_skt/semantic/dark": semanticDarkTokens,
+	"_skt/component/light": componentLightTokens,
+	"_skt/component/dark": componentDarkTokens,
+	$themes: themes,
+	$metadata: metadata,
+};
 
 const figmaTokenTree = createPxdsFigmaTokenTree(tokenRegistry);
 const tokensStudioJson = createPxdsTokensStudioJson(tokenRegistry);

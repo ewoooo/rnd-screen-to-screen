@@ -5,15 +5,18 @@
 	"type": "module",
 	"scripts": {
 		"generate:css": "node scripts/generate-css.mjs",
+		"generate-text-styles": "node scripts/generate-text-styles.mjs",
 		"check:value-index": "node scripts/check-token-value-index.mjs"
 	},
 	"sideEffects": [
-		"./src/tokens.css"
+		"./src/tokens.css",
+		"./src/text-styles.css"
 	],
 	"exports": {
 		"./package.json": "./package.json",
-		"./registry/tokens.original.json": "./registry/tokens.original.json",
+		"./registry/tokens/*": "./registry/tokens/*",
 		"./tokens-studio": "./src/tokens-studio/index.ts",
+		"./text-styles.css": "./src/text-styles.css",
 		"./tokens.css": "./src/tokens.css"
 	},
 	"devDependencies": {

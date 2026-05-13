@@ -8,6 +8,9 @@ type PxdsTokenRegistry = {
 	foundation?: Record<string, unknown>;
 	semantic?: Record<string, unknown>;
 	project?: Record<string, unknown>;
+	"_skt/primitive/default"?: Record<string, unknown>;
+	"_skt/semantic/light"?: Record<string, unknown>;
+	"_skt/component/light"?: Record<string, unknown>;
 };
 
 type FigmaTokenNode = { value: unknown };
@@ -19,8 +22,8 @@ const ROOT_FONT_SIZE = 16;
 /**
  * Derived transport view of the PXDS token registry for Figma runtimes.
  *
- * SSOT stays in `@pxds/cx-tokens/registry/tokens.original.json` (Tokens
- * Studio single-file format: foundation/semantic/project Sets, DTCG leaves).
+ * SSOT stays in `@pxds/cx-tokens/registry/tokens/` (Tokens Studio token-set
+ * export: primitive, semantic, and component Sets, DTCG leaves).
  * This tree reshapes the registry into paths the Figma component generator
  * and token sync runtime consume. Figma Variables built from this are an
  * external mirror.
@@ -28,9 +31,15 @@ const ROOT_FONT_SIZE = 16;
 export function createPxdsFigmaTokenTree(
 	registry: PxdsTokenRegistry,
 ): PxdsFigmaTokenTree {
-	const foundation = isRecord(registry.foundation) ? registry.foundation : {};
-	const semantic = isRecord(registry.semantic) ? registry.semantic : {};
-	const project = isRecord(registry.project) ? registry.project : {};
+	const foundation = isRecord(registry.foundation)
+		? registry.foundation
+		: normalizePrimitiveSet(registry["_skt/primitive/default"]);
+	const semantic = isRecord(registry.semantic)
+		? registry.semantic
+		: normalizeSemanticSet(registry["_skt/semantic/light"]);
+	const project = isRecord(registry.project)
+		? registry.project
+		: normalizeComponentSet(registry["_skt/component/light"]);
 
 	const tokens: PxdsFigmaTokenTree = {
 		color: { atomic: {}, semantic: {} },
@@ -79,6 +88,25 @@ export function createPxdsFigmaTokenTree(
  * @deprecated Use `createPxdsFigmaTokenTree`.
  */
 export const createPxdsFigmaTokens = createPxdsFigmaTokenTree;
+
+function normalizePrimitiveSet(set: unknown): Record<string, unknown> {
+	if (!isRecord(set)) return {};
+	return {
+		atomic: isRecord(set.color) ? set.color : {},
+		spacing: isRecord(set.spacing) ? set.spacing : {},
+		typography: set,
+	};
+}
+
+function normalizeSemanticSet(set: unknown): Record<string, unknown> {
+	if (!isRecord(set)) return {};
+	return set;
+}
+
+function normalizeComponentSet(set: unknown): Record<string, unknown> {
+	if (!isRecord(set)) return {};
+	return set;
+}
 
 function assignAtomicColors(
 	target: PxdsFigmaTokenTree,
