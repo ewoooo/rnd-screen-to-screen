@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { componentRegistry } from "@pxds/pxds-components/registry";
 
@@ -42,15 +42,16 @@ export function ComponentRegistryProvider({
 	const components = toPreviewComponentRegistry(previewableRegistry);
 	const router = useRouter();
 
-	const [selectedComponentId, setSelectedComponentId] = useState<
-		string | null
-	>(() => {
-		if (typeof window === "undefined") return components[0]?.id ?? null;
+	const [selectedComponentId, setSelectedComponentId] = useState<string | null>(
+		components[0]?.id ?? null,
+	);
+
+	useEffect(() => {
 		const id = new URLSearchParams(window.location.search).get("id");
-		return id && components.find((c) => c.id === id)
-			? id
-			: (components[0]?.id ?? null);
-	});
+		if (id && components.find((c) => c.id === id)) {
+			setSelectedComponentId(id);
+		}
+	}, []);
 
 	const selectedComponent =
 		components.find((c) => c.id === selectedComponentId) ?? null;
