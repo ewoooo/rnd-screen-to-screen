@@ -4,6 +4,8 @@ node_modules/
 out/
 build/
 storybook-static/
+.vscode/
+**/next-env.d.ts
 apps/figma-export/codetofigma-*
 artifacts/
 docs/*.zip
@@ -11,3 +13,6 @@ docs/*.zip
 .env*
 .vercel
 .gstack/
+.claude/
+.vscode/
+**/next-env.d.ts

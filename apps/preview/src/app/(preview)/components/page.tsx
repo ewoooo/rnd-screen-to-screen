@@ -1,11 +1,14 @@
-import { redirect } from "next/navigation";
-import { componentRegistry } from "@pxds/pxds-components/registry";
+import { ComponentPreview } from "@/components/preview/render-view/component/ComponentPreview";
+import { PreviewSidePanel } from "@/components/preview/side-panel/PreviewSidePanel";
+import { ComponentRegistrySidePanel } from "@/components/preview/side-panel/components/ComponentRegistrySidePanel";
 
 export default function ComponentsPreviewRoutePage() {
-	const firstComponent = componentRegistry[0];
-	if (!firstComponent) {
-		redirect("/components/empty");
-	}
-
-	redirect(`/components/${firstComponent.id}`);
+	return (
+		<>
+			<PreviewSidePanel>
+				<ComponentRegistrySidePanel />
+			</PreviewSidePanel>
+			<ComponentPreview />
+		</>
+	);
 }
