@@ -1,11 +1,13 @@
-import { TextBlock } from "@pxds/pxds-components/atoms/typography";
+import { Text } from "@pxds/cx-components";
 import { MbrOgnSectionLayout } from "../_layout";
 import type { SectionHeaderPageProps } from "./SectionHeaderPage.config";
 
 export function SectionHeaderPage({ title }: SectionHeaderPageProps) {
 	return (
 		<MbrOgnSectionLayout>
-			<TextBlock variant="displayTitle" text={title} />
+			<Text variant="displayTitle" as="h1">
+				{title}
+			</Text>
 		</MbrOgnSectionLayout>
 	);
 }

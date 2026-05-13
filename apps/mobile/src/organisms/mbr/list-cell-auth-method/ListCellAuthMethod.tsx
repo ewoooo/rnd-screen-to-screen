@@ -1,5 +1,5 @@
-import { TextBlock } from "@pxds/pxds-components/atoms/typography";
-import { Button, SectionMessage } from "@pxds/pxds-components/core";
+import { Button, Text } from "@pxds/cx-components";
+import { SectionMessage } from "@pxds/pxds-components/core";
 import { FormField, SelectableList, TextField } from "@pxds/pxds-components/molecules";
 import { MbrOgnSectionLayout } from "../_layout";
 
@@ -19,11 +19,13 @@ export function ListCellAuthMethod() {
 					{ id: "cert", title: "공동인증서" },
 				]}
 			/>
-			<TextBlock variant="caption" text="남은 시간 02:48" />
-			<Button variant="solid" size="large">
+			<Text variant="caption" as="p">
+				남은 시간 02:48
+			</Text>
+			<Button variant="primary" size="large">
 				인증번호 요청
 			</Button>
-			<Button variant="outlined" size="large">
+			<Button variant="secondary" size="large">
 				재요청
 			</Button>
 			<SectionMessage

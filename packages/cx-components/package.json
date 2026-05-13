@@ -9,6 +9,7 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./components/master/button": "./src/components/master/button/index.ts",
+		"./components/master/text": "./src/components/master/text/index.ts",
 		"./styles.css": "./src/styles.css"
 	},
 	"dependencies": {
