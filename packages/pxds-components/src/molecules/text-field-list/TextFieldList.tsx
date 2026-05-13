@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
+import type { ChangeEvent, HTMLAttributes } from "react";
 
 import { VStack } from "@pxds/pxds-layout/primitives";
 import { FormField } from "../form-field";
@@ -20,7 +21,7 @@ export type TextFieldListField = {
 	required?: boolean;
 	helperText?: string;
 	errorText?: string;
-	inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+	inputMode?: HTMLAttributes<HTMLInputElement>["inputMode"];
 	maxLength?: number;
 };
 
@@ -57,7 +58,7 @@ export function TextFieldList({
 								invalid={Boolean(errorText)}
 								inputMode={field.inputMode}
 								maxLength={field.maxLength}
-								onChange={(event) =>
+								onChange={(event: ChangeEvent<HTMLInputElement>) =>
 									onChange(field.id, (event.target as HTMLInputElement).value)
 								}
 							/>

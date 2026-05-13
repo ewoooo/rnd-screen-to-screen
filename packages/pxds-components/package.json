@@ -9,7 +9,10 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./core": "./src/core/index.ts",
+		"./core/button": "./src/core/button/index.ts",
 		"./core/global.css": "./src/core/global.css",
+		"./core/section-message": "./src/core/section-message/index.ts",
+		"./component-config": "./src/component-config.ts",
 		"./atoms/feedback": "./src/atoms/feedback/index.ts",
 		"./domains": "./src/domains/index.ts",
 		"./molecules": "./src/molecules/index.ts",

@@ -26,7 +26,7 @@ import {
 	TopNavigation,
 	TopNavigationButton,
 	Typography,
-} from "@wanteddev/wds";
+} from "./wds-adapter";
 
 export type CorePreviewExample = {
 	componentId: string;

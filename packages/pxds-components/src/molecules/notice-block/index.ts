@@ -1,2 +1,3 @@
 export { NoticeBlock } from "./NoticeBlock";
-export { noticeBlockRegistryEntry } from "./notice-block.registry";
+export { noticeBlockRegistryEntry } from "./NoticeBlock.config";
+export type { NoticeBlockProps } from "./NoticeBlock.types";

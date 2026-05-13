@@ -55,7 +55,7 @@ export function CheckList({ items, onActionClick, onStateChange }: Props) {
 						<HStack gap="var(--semantic-spacing-row)" align="flex-start">
 							<Checkbox
 								checked={Boolean(checked[item.id])}
-								onCheckedChange={(next) => setItem(item.id, next)}
+								onCheckedChange={(next: boolean) => setItem(item.id, next)}
 							/>
 							<VStack gap="var(--semantic-spacing-inline)">
 								<TextBlock variant="body" text={item.title} />

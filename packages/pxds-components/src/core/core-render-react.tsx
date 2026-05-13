@@ -1,4 +1,5 @@
-import { Button, SectionMessage } from "@wanteddev/wds";
+import { Button } from "./button";
+import { SectionMessage } from "./section-message";
 import {
 	renderBoolean,
 	renderString,

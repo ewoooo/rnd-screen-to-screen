@@ -1,6 +1,7 @@
-export {
-	CheckList,
-	type CheckListItem,
-	type CheckListState,
-} from "./CheckList";
-export { checkListRegistryEntry } from "./check-list.registry";
+export { CheckList } from "./CheckList";
+export { checkListRegistryEntry } from "./CheckList.config";
+export type {
+	CheckListItem,
+	CheckListProps,
+	CheckListState,
+} from "./CheckList.types";

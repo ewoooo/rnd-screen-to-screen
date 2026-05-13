@@ -1,5 +1,6 @@
-export {
-	TextFieldList,
-	type TextFieldListField,
-} from "./TextFieldList";
-export { textFieldListRegistryEntry } from "./text-field-list.registry";
+export { TextFieldList } from "./TextFieldList";
+export { textFieldListRegistryEntry } from "./TextFieldList.config";
+export type {
+	TextFieldListField,
+	TextFieldListProps,
+} from "./TextFieldList.types";

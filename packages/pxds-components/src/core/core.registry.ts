@@ -2,6 +2,8 @@ import {
 	wdsButtonRenderReact,
 	wdsSectionMessageRenderReact,
 } from "./core-render-react";
+import { buttonConfig } from "./button";
+import { sectionMessageConfig } from "./section-message";
 
 export const wdsCoreRegistryEntries = [
 	{
@@ -15,14 +17,7 @@ export const wdsCoreRegistryEntries = [
 		createdAt: "2026-05-11",
 	},
 	{
-		id: "wds-button",
-		name: "Button",
-		layer: "atom",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/core",
-		group: "navigation",
-		status: "active",
-		createdAt: "2026-05-11",
+		...buttonConfig,
 		sbAliases: ["button"],
 		renderReact: wdsButtonRenderReact,
 	},
@@ -368,14 +363,7 @@ export const wdsCoreRegistryEntries = [
 		createdAt: "2026-05-11",
 	},
 	{
-		id: "wds-section-message",
-		name: "SectionMessage",
-		layer: "molecule",
-		owner: "@pxds/pxds-components",
-		importPath: "@pxds/pxds-components/core",
-		group: "feedback",
-		status: "active",
-		createdAt: "2026-05-11",
+		...sectionMessageConfig,
 		sbAliases: ["section-message"],
 		renderReact: wdsSectionMessageRenderReact,
 	},

@@ -1,7 +1,8 @@
-export {
-	InfoList,
-	type InfoListItem,
-	type InfoListTrailingKind,
-	type InfoListTrailingTone,
-} from "./InfoList";
-export { infoListRegistryEntry } from "./info-list.registry";
+export { InfoList } from "./InfoList";
+export { infoListRegistryEntry } from "./InfoList.config";
+export type {
+	InfoListItem,
+	InfoListProps,
+	InfoListTrailingKind,
+	InfoListTrailingTone,
+} from "./InfoList.types";
