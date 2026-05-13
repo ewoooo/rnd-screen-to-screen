@@ -8,11 +8,15 @@ import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewS
 type PreviewScreenRenderItemProps = {
 	src: string;
 	title: string;
+	height?: number;
+	width?: number;
 };
 
 export function PreviewScreenRenderItem({
+	height,
 	src,
 	title,
+	width,
 }: PreviewScreenRenderItemProps) {
 	const [status, setStatus] = useState<"loading" | "loaded" | "error">(
 		"loading",
@@ -25,8 +29,10 @@ export function PreviewScreenRenderItem({
 				{title} · {src}
 			</figcaption>
 			<MobilePreviewFrame
+				height={height}
 				src={src}
 				title={title}
+				width={width}
 				onLoad={() => setStatus("loaded")}
 				onError={() => setStatus("error")}
 			/>

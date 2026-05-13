@@ -35,9 +35,11 @@ export function ScreenPreview() {
 			<PreviewCanvas>
 				<Suspense fallback={<PreviewSpinner label="Loading screen preview" />}>
 					<PreviewScreenRenderItem
+						height={selectedRoute.figma?.height}
 						key={iframeSrc}
 						src={iframeSrc}
 						title={selectedRoute.label}
+						width={selectedRoute.figma?.width}
 					/>
 				</Suspense>
 			</PreviewCanvas>

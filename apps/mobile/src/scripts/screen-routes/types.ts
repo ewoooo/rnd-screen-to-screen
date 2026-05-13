@@ -1,13 +1,11 @@
-export type ScreenGroup =
-	| "membership";
+import type {
+	ScreenLifecycleStatus as SpecScreenLifecycleStatus,
+	ScreenRouteConfig,
+} from "@pxds/pxds-spec";
 
-export type ScreenLifecycleStatus = "active";
+export type ScreenGroup = "membership";
+export type ScreenLifecycleStatus = SpecScreenLifecycleStatus;
 
-export type ScreenRoute = {
-	id: string;
-	route: `/${string}`;
-	label: string;
+export type ScreenRoute = ScreenRouteConfig & {
 	group: ScreenGroup;
-	status: ScreenLifecycleStatus;
-	createdAt: `${number}-${number}-${number}`;
 };

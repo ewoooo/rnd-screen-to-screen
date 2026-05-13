@@ -2,6 +2,10 @@ type UseScreenSpecsOptions = {
 	selectedId?: string;
 };
 
+function getScreenSpecIssues(_spec: unknown) {
+	return [];
+}
+
 export function useScreenSpecs(_options: UseScreenSpecsOptions = {}) {
 	const selectedSpec = undefined;
 	const selectedRenderableSpec = undefined;
