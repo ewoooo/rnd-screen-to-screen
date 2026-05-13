@@ -11,3 +11,4 @@ docs/*.zip
 .env*
 .vercel
 .gstack/
+.claude/
