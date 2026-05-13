@@ -1,0 +1,95 @@
+{
+	"$comment": "Legacy WDS extras (opacity/breakpoint/zIndex). Not part of SKT primitive SSOT. Kept for reference only — do not consume directly.",
+	"foundation": {
+		"opacity": {
+			"0": {
+				"$type": "opacity",
+				"$value": 0
+			},
+			"5": {
+				"$type": "opacity",
+				"$value": 0.05
+			},
+			"8": {
+				"$type": "opacity",
+				"$value": 0.08
+			},
+			"12": {
+				"$type": "opacity",
+				"$value": 0.12
+			},
+			"16": {
+				"$type": "opacity",
+				"$value": 0.16
+			},
+			"22": {
+				"$type": "opacity",
+				"$value": 0.22
+			},
+			"28": {
+				"$type": "opacity",
+				"$value": 0.28
+			},
+			"35": {
+				"$type": "opacity",
+				"$value": 0.35
+			},
+			"43": {
+				"$type": "opacity",
+				"$value": 0.43
+			},
+			"52": {
+				"$type": "opacity",
+				"$value": 0.52
+			},
+			"61": {
+				"$type": "opacity",
+				"$value": 0.61
+			},
+			"74": {
+				"$type": "opacity",
+				"$value": 0.74
+			},
+			"88": {
+				"$type": "opacity",
+				"$value": 0.88
+			},
+			"97": {
+				"$type": "opacity",
+				"$value": 0.97
+			},
+			"100": {
+				"$type": "opacity",
+				"$value": 1
+			}
+		},
+		"breakpoint": {
+			"xs": {
+				"$type": "sizing",
+				"$value": "0px"
+			},
+			"sm": {
+				"$type": "sizing",
+				"$value": "768px"
+			},
+			"md": {
+				"$type": "sizing",
+				"$value": "992px"
+			},
+			"lg": {
+				"$type": "sizing",
+				"$value": "1200px"
+			},
+			"xl": {
+				"$type": "sizing",
+				"$value": "1600px"
+			}
+		},
+		"zIndex": {
+			"modal": {
+				"$type": "number",
+				"$value": 1300
+			}
+		}
+	}
+}
