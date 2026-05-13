@@ -1,4 +1,3 @@
-export { MembershipContentSection } from "./MembershipContentSection";
 export { MembershipFormSection } from "./form-section";
 export { MembershipHeroSection } from "./hero-section";
 export { MembershipNoticeSection } from "./notice-section";

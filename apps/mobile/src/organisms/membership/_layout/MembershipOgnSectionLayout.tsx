@@ -8,17 +8,17 @@ import {
 } from "@pxds/pxds-layout/app-screen";
 import { VStack } from "@pxds/pxds-layout/primitives";
 
-type MembershipSectionProps = {
+type MembershipOgnSectionLayoutProps = {
 	children: React.ReactNode;
 	inset?: ContentSectionInset;
 	rail?: ContentRailKind;
 };
 
-export function MembershipContentSection({
+export function MembershipOgnSectionLayout({
 	children,
 	inset = "inherit",
 	rail = "inset",
-}: MembershipSectionProps) {
+}: MembershipOgnSectionLayoutProps) {
 	return (
 		<ContentSection inset={inset}>
 			<ContentRail rail={rail}>

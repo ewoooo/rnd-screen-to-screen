@@ -1,13 +1,13 @@
 "use client";
 
 import { TextFieldList } from "@pxds/pxds-components/molecules";
-import { MembershipContentSection } from "../MembershipContentSection";
+import { MembershipOgnSectionLayout } from "../_layout";
 import type { FormSectionProps } from "./FormSection.config";
 
 export function MembershipFormSection({ fields }: FormSectionProps) {
 	return (
-		<MembershipContentSection>
+		<MembershipOgnSectionLayout>
 			<TextFieldList fields={fields} values={{}} onChange={() => undefined} />
-		</MembershipContentSection>
+		</MembershipOgnSectionLayout>
 	);
 }

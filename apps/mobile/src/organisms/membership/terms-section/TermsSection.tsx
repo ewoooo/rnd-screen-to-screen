@@ -2,11 +2,11 @@
 
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import { ConsentList } from "@pxds/pxds-components/molecules";
-import { MembershipContentSection } from "../MembershipContentSection";
+import { MembershipOgnSectionLayout } from "../_layout";
 
 export function MembershipTermsSection() {
 	return (
-		<MembershipContentSection>
+		<MembershipOgnSectionLayout>
 			<TextBlock variant="sectionTitle" text="필수 약관" />
 			<ConsentList
 				allLabel="전체 동의"
@@ -35,6 +35,6 @@ export function MembershipTermsSection() {
 					},
 				]}
 			/>
-		</MembershipContentSection>
+		</MembershipOgnSectionLayout>
 	);
 }

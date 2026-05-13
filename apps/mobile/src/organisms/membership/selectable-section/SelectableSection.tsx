@@ -1,7 +1,7 @@
 "use client";
 
 import { SelectableList } from "@pxds/pxds-components/molecules";
-import { MembershipContentSection } from "../MembershipContentSection";
+import { MembershipOgnSectionLayout } from "../_layout";
 import type { SelectableSectionProps } from "./SelectableSection.config";
 
 export function MembershipSelectableSection({
@@ -13,20 +13,20 @@ export function MembershipSelectableSection({
 }: SelectableSectionProps) {
 	if (selectionMode === "multi") {
 		return (
-			<MembershipContentSection inset="bleed" rail="inset">
+			<MembershipOgnSectionLayout inset="bleed" rail="inset">
 				<SelectableList
 					name={name}
 					items={items}
 					selectionMode="multi"
 					selectedIds={selectedIds ?? []}
 				/>
-			</MembershipContentSection>
+			</MembershipOgnSectionLayout>
 		);
 	}
 
 	return (
-		<MembershipContentSection inset="bleed" rail="inset">
+		<MembershipOgnSectionLayout inset="bleed" rail="inset">
 			<SelectableList name={name} items={items} value={value} />
-		</MembershipContentSection>
+		</MembershipOgnSectionLayout>
 	);
 }
