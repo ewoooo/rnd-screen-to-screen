@@ -7,12 +7,14 @@ type ComponentLayerGroupProps = {
 	layer: ComponentLayer;
 	components: readonly PreviewComponentRegistryEntry[];
 	selectedComponentId?: string;
+	onSelectComponent: (id: string) => void;
 };
 
 export function ComponentLayerGroup({
 	layer,
 	components,
 	selectedComponentId,
+	onSelectComponent,
 }: ComponentLayerGroupProps) {
 	return (
 		<section className="flex flex-col gap-1">
@@ -26,6 +28,7 @@ export function ComponentLayerGroup({
 						key={component.id}
 						component={component}
 						active={component.id === selectedComponentId}
+						onSelect={() => onSelectComponent(component.id)}
 					/>
 				))}
 			</div>

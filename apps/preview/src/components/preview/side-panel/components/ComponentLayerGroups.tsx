@@ -9,12 +9,14 @@ type ComponentLayerGroupsProps = {
 		Record<ComponentLayer, readonly PreviewComponentRegistryEntry[]>
 	>;
 	selectedComponentId?: string;
+	onSelectComponent: (id: string) => void;
 };
 
 export function ComponentLayerGroups({
 	layers,
 	componentsByLayer,
 	selectedComponentId,
+	onSelectComponent,
 }: ComponentLayerGroupsProps) {
 	return (
 		<nav className="flex flex-1 flex-col gap-5 overflow-auto p-3">
@@ -24,6 +26,7 @@ export function ComponentLayerGroups({
 					layer={layer}
 					components={componentsByLayer[layer] ?? []}
 					selectedComponentId={selectedComponentId}
+					onSelectComponent={onSelectComponent}
 				/>
 			))}
 		</nav>

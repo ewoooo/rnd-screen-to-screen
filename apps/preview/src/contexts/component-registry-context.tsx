@@ -1,8 +1,10 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { componentRegistry } from "@pxds/pxds-components/registry";
 
+import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
 import {
 	getComponentGroups,
 	getComponentLayers,
@@ -14,6 +16,10 @@ import {
 	type PreviewComponentRegistryEntry,
 } from "@/utils/component-registry";
 
+const previewableRegistry = componentRegistry.filter(
+	(c) => getComponentPreviewExample(c.id) !== undefined,
+);
+
 type ComponentRegistryContextValue = {
 	components: readonly PreviewComponentRegistryEntry[];
 	componentGroups: ReturnType<typeof getComponentGroups>;
@@ -21,6 +27,8 @@ type ComponentRegistryContextValue = {
 	componentLayers: ReturnType<typeof getComponentLayers>;
 	componentsByLayer: ComponentLayerGroups;
 	componentCount: number;
+	selectedComponent: PreviewComponentRegistryEntry | null;
+	selectComponent: (id: string) => void;
 };
 
 const ComponentRegistryContext =
@@ -31,7 +39,26 @@ export function ComponentRegistryProvider({
 }: {
 	children: ReactNode;
 }) {
-	const components = toPreviewComponentRegistry(componentRegistry);
+	const components = toPreviewComponentRegistry(previewableRegistry);
+	const router = useRouter();
+
+	const [selectedComponentId, setSelectedComponentId] = useState<
+		string | null
+	>(() => {
+		if (typeof window === "undefined") return components[0]?.id ?? null;
+		const id = new URLSearchParams(window.location.search).get("id");
+		return id && components.find((c) => c.id === id)
+			? id
+			: (components[0]?.id ?? null);
+	});
+
+	const selectedComponent =
+		components.find((c) => c.id === selectedComponentId) ?? null;
+
+	const selectComponent = (id: string) => {
+		setSelectedComponentId(id);
+		router.replace(`/components?id=${id}`, { scroll: false });
+	};
 
 	return (
 		<ComponentRegistryContext.Provider
@@ -42,6 +69,8 @@ export function ComponentRegistryProvider({
 				componentLayers: getComponentLayers(components),
 				componentsByLayer: groupComponentsByLayer(components),
 				componentCount: components.length,
+				selectedComponent,
+				selectComponent,
 			}}
 		>
 			{children}
