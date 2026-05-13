@@ -11,6 +11,7 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
 │   └── preview/  모바일 화면과 컴포넌트 registry를 확인하는 브라우저 프리뷰 셸
 └── packages/
     ├── cx-tokens/                CX DS token-set SSOT, CSS variables, text style classes
+    ├── cx-icons/                 CX DS icon originals, registry, React Icon wrapper
     ├── pxds-icons/                WDS icon adapter와 icon registry
     ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
     ├── pxds-components/           core adapter, atoms, molecules, shared/global component vocabulary
@@ -24,6 +25,7 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
 
 ```txt
 @pxds/cx-tokens
+  -> @pxds/cx-icons
   -> @pxds/pxds-icons
   -> @pxds/pxds-layout
   -> @pxds/pxds-components
@@ -81,6 +83,7 @@ WDS primitive
 | Area | Status | Note |
 | --- | --- | --- |
 | Token | CSS Variable화 완료 | `@pxds/cx-tokens`가 Tokens Studio token-set을 SSOT로 두고 `tokens.css` CSS custom properties와 `text-styles.css` 합성 텍스트 스타일 클래스를 생성합니다. |
+| Icon | 원천 보관 + registry 초안 | `@pxds/cx-icons`가 Figma export SVG 원천을 `src/originals`에 보관하고, 파일명 기반 icon registry와 `<Icon type="close" size={24} />` React wrapper 초안을 제공합니다. 앱 import 전환은 아직 하지 않습니다. |
 | Component | 기초 엘리먼츠 전환중 | WDS adapter, atoms, 모바일에서 실제 소비하는 molecules/shared-global 중심으로 정리 중입니다. |
 
 현재는 token 기반을 먼저 고정하고, component vocabulary를 모바일 화면에서 실제로 쓰이는 어휘 위주로 좁히는 단계입니다.

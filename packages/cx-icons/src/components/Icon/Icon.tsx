@@ -1,6 +1,6 @@
 import type { ImgHTMLAttributes } from "react";
 
-import { getIconFile, type IconSize, type IconType } from "./registry";
+import { getIconFile, type IconSize, type IconType } from "../../registry";
 
 export type IconProps = Omit<
 	ImgHTMLAttributes<HTMLImageElement>,
