@@ -1,1 +1,3 @@
-export const cxIconsPackageName = "@pxds/cx-icons";
+export { Icon } from "./Icon";
+export { iconRegistry } from "./registry";
+export type { IconSize, IconType } from "./registry";
