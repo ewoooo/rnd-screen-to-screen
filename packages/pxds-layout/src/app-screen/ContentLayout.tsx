@@ -7,7 +7,6 @@ import {
 	type ReactNode,
 	useContext,
 } from "react";
-import { createScreenExportAttributes } from "../screen-export";
 
 export type ContentLayoutMode = "legacy" | "screen";
 export type ContentSectionInset = "inherit" | "bleed";
@@ -48,17 +47,11 @@ export function ContentSection({
 	as = "section",
 	inset = "inherit",
 	children,
-	exportNode,
 	style,
 }: {
 	as?: ElementType;
 	inset?: ContentSectionInset;
 	children: ReactNode;
-	exportNode?: {
-		type: string;
-		id?: string;
-		props?: Record<string, unknown>;
-	};
 	style?: CSSProperties;
 }) {
 	const { inlineInset } = useContentInsetContext();
@@ -73,11 +66,6 @@ export function ContentSection({
 	return (
 		<Element
 			as={as}
-			exportAttributes={createScreenExportAttributes({
-				type: exportNode?.type ?? "ContentSection",
-				id: exportNode?.id,
-				props: { inset, ...(exportNode?.props ?? {}) },
-			})}
 			style={{ ...bleedStyle, ...style }}
 		>
 			<ContentLayoutContext.Provider
@@ -120,10 +108,6 @@ export function ContentRail({
 	return (
 		<Element
 			as={as}
-			exportAttributes={createScreenExportAttributes({
-				type: "ContentRail",
-				props: { rail, measure },
-			})}
 			style={{
 				boxSizing: "border-box",
 				width: "100%",
@@ -141,16 +125,10 @@ function Element({
 	as: As,
 	children,
 	style,
-	exportAttributes,
 }: {
 	as: ElementType;
 	children: ReactNode;
 	style?: CSSProperties;
-	exportAttributes?: Record<string, string>;
 }) {
-	return (
-		<As style={style} {...exportAttributes}>
-			{children}
-		</As>
-	);
+	return <As style={style}>{children}</As>;
 }

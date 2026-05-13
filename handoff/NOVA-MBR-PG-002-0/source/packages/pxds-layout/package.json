@@ -1,0 +1,20 @@
+{
+	"name": "@pxds/pxds-layout",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./app-screen": "./src/app-screen/index.ts",
+		"./bottom-sheet": "./src/bottom-sheet/index.ts",
+		"./components/compositions": "./src/components/compositions/index.ts",
+		"./page-stack": "./src/page-stack/index.ts",
+		"./primitives": "./src/primitives/index.ts",
+		"./screen-export": "./src/screen-export/index.ts",
+		"./styles.css": "./src/styles.css"
+	},
+	"dependencies": {
+		"@pxds/cx-tokens": "0.1.0",
+		"react": "19.2.4"
+	}
+}

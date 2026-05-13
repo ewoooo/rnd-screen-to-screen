@@ -1,0 +1,27 @@
+{
+	"name": "@pxds/cx-tokens",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"generate:css": "node scripts/generate-css.mjs",
+		"generate-text-styles": "node scripts/generate-text-styles.mjs",
+		"check:value-index": "node scripts/check-token-value-index.mjs"
+	},
+	"sideEffects": [
+		"./src/tokens.css",
+		"./src/text-styles.css"
+	],
+	"exports": {
+		"./package.json": "./package.json",
+		"./originals/*": "./src/originals/*",
+		"./tokens-studio": "./src/tokens-studio/index.ts",
+		"./text-styles.css": "./src/text-styles.css",
+		"./tokens.css": "./src/tokens.css"
+	},
+	"devDependencies": {
+		"@tokens-studio/sd-transforms": "^2.0.3",
+		"css-tree": "^3.2.1",
+		"style-dictionary": "^5.4.0"
+	}
+}

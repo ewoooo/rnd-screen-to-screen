@@ -6,7 +6,6 @@ import {
 import { IconArrowLeft, IconClose } from "@pxds/pxds-icons";
 
 import { Box, VStack } from "@pxds/pxds-layout/primitives";
-import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import {
 	renderBoolean,
@@ -33,16 +32,6 @@ export function ProgressTopBar({ title, leading = "back", progress }: Props) {
   const showProgressLabel = progress?.showLabel ?? false;
   return (
     <div
-      {...createScreenExportAttributes({
-        type: "ProgressTopBar",
-        id: "progress-top-bar",
-        props: {
-          componentId: "progress-top-bar",
-          leading,
-          progress,
-          title,
-        },
-      })}
       style={{ display: "flex", flexDirection: "column", width: "100%" }}
     >
       <TopNavigation

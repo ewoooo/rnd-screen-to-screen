@@ -1,11 +1,11 @@
 import type { VariantProps } from "class-variance-authority";
 import type { ComponentPropsWithoutRef } from "react";
-import type { FigmaBridgeProps } from "../../types";
+import type { DividerFigmaBridgeProps } from "../../types";
 import type { dividerVariants } from "./divider.variants";
 
-type NativeDividerProps = ComponentPropsWithoutRef<"div">;
+export type { DividerFigmaBridgeProps } from "../../types";
 
-export type DividerFigmaBridgeProps = FigmaBridgeProps;
+type NativeDividerProps = ComponentPropsWithoutRef<"div">;
 
 export type DividerProps = Omit<NativeDividerProps, "children"> &
 	VariantProps<typeof dividerVariants> &

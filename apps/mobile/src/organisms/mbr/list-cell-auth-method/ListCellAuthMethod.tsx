@@ -4,7 +4,6 @@ import { Button, RadioButton, Text, TextField } from "@pxds/cx-components";
 import { SectionMessage } from "@pxds/pxds-components/core";
 import { VStack } from "@pxds/pxds-layout/primitives";
 import { useState } from "react";
-import { MbrOgnSectionLayout } from "../_layout";
 
 const AUTH_METHODS = [
 	{ id: "phone", title: "휴대폰 인증" },
@@ -16,7 +15,7 @@ export function ListCellAuthMethod() {
 	const [authMethod, setAuthMethod] = useState("phone");
 
 	return (
-		<MbrOgnSectionLayout inset="bleed" rail="inset">
+		<VStack gap="var(--semantic-spacing-block)">
 			<TextField
 				label="인증번호"
 				value=""
@@ -53,6 +52,6 @@ export function ListCellAuthMethod() {
 			>
 				인증 실패 한도 초과
 			</SectionMessage>
-		</MbrOgnSectionLayout>
+		</VStack>
 	);
 }

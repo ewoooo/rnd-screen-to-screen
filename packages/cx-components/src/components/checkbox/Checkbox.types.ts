@@ -1,14 +1,6 @@
-import type { FigmaBridgeProps } from "../../types";
+import type { CheckboxFigmaBridgeProps } from "../../types";
 
-export type CheckboxFigmaBridgeProps = Omit<
-	FigmaBridgeProps,
-	"data-component-id" | "data-figma-variant"
-> & {
-	"data-component-id"?: string;
-	"data-figma-checked"?: string;
-	"data-figma-text"?: string;
-	"data-figma-disabled"?: string;
-};
+export type { CheckboxFigmaBridgeProps } from "../../types";
 
 export type CheckboxProps = CheckboxFigmaBridgeProps & {
 	checked?: boolean;

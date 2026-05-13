@@ -1,6 +1,6 @@
 # Divider
 
-CX foundation divider component for separating content, forms, lists, and sections.
+콘텐츠 또는 섹션 경계를 표현하는 divider입니다.
 
 ## Import
 
@@ -8,40 +8,27 @@ CX foundation divider component for separating content, forms, lists, and sectio
 import { Divider } from "@pxds/cx-components";
 ```
 
-## API
+## Usage
 
 ```tsx
-<Divider type="contents" />
+<Divider />
 <Divider type="section" />
+<Divider orientation="vertical" />
 ```
 
-### Props
+## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `type` | `"contents" \| "section"` | `"contents"` | Visual divider scale. |
+| `type` | `"contents" \| "section"` | `"contents"` | Divider thickness role. |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Divider direction. |
-| `className` | `string` | - | Extra classes merged after the variant classes. |
+| `className` | `string` | - | Additional class name. |
 
-Native `div` props are also supported. `Divider` does not accept children.
+Native `div` attributes are supported. `children` is not supported.
 
-## Type Intent
+## Bridge Attributes
 
-| Type | Intent |
-| --- | --- |
-| `contents` | Thin separator for content-internal boundaries such as list rows, form groups, or compact item breaks. |
-| `section` | Thicker separator for section-level boundaries between larger content blocks. |
-
-## Examples
-
-```tsx
-<Divider type="contents" />
-```
-
-```tsx
-<Divider type="section" />
-```
-
-```tsx
-<Divider type="contents" orientation="vertical" className="custom-divider" />
-```
+- `data-node-kind="component"`
+- `data-component-id="divider"`
+- `data-figma-component="Divider"`
+- `data-figma-variant`

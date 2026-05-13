@@ -1,0 +1,207 @@
+.cx-text-field {
+	--cx-text-field-bg: var(--component-light-text-field-bg-default);
+	--cx-text-field-bg-active: var(--semantic-light-color-bg-info-weak);
+	--cx-text-field-bg-critical: var(--semantic-light-color-bg-critical-weak);
+	--cx-text-field-bg-disabled: var(--component-light-text-field-bg-disabled);
+	--cx-text-field-border: var(--component-light-text-field-border-default);
+	--cx-text-field-border-focused: var(
+		--component-light-text-field-border-focused
+	);
+	--cx-text-field-border-critical: var(
+		--component-light-text-field-border-critical
+	);
+	--cx-text-field-fg-value: var(--component-light-text-field-fg-value);
+	--cx-text-field-fg-placeholder: var(
+		--component-light-text-field-fg-placeholder
+	);
+	--cx-text-field-fg-label: var(--component-light-text-field-fg-label);
+	--cx-text-field-fg-help: var(--semantic-light-color-text-primary);
+	--cx-text-field-fg-critical: var(--component-light-text-field-fg-critical);
+	--cx-text-field-fg-disabled: var(--semantic-light-color-text-disabled);
+	--cx-text-field-action-bg: var(--semantic-light-color-border-subtle);
+	--cx-text-field-action-bg-pressed: var(
+		--component-light-button-bg-secondary-pressed
+	);
+	--cx-text-field-action-fg: var(--component-light-button-fg-secondary);
+	--cx-text-field-action-disabled-bg: var(
+		--component-light-button-bg-primary-disabled
+	);
+	--cx-text-field-action-disabled-fg: var(
+		--component-light-button-fg-primary-disabled
+	);
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--semantic-light-spacing-gap-default);
+	width: 100%;
+}
+
+[data-theme="dark"] .cx-text-field,
+.cx-text-field[data-theme="dark"] {
+	--cx-text-field-bg: var(--component-dark-text-field-bg-default);
+	--cx-text-field-bg-active: var(--semantic-dark-color-bg-info-weak);
+	--cx-text-field-bg-critical: var(--semantic-dark-color-bg-critical-weak);
+	--cx-text-field-bg-disabled: var(--component-dark-text-field-bg-disabled);
+	--cx-text-field-border: var(--component-dark-text-field-border-default);
+	--cx-text-field-border-focused: var(
+		--component-dark-text-field-border-focused
+	);
+	--cx-text-field-border-critical: var(
+		--component-dark-text-field-border-critical
+	);
+	--cx-text-field-fg-value: var(--component-dark-text-field-fg-value);
+	--cx-text-field-fg-placeholder: var(
+		--component-dark-text-field-fg-placeholder
+	);
+	--cx-text-field-fg-label: var(--component-dark-text-field-fg-label);
+	--cx-text-field-fg-help: var(--semantic-dark-color-text-primary);
+	--cx-text-field-fg-critical: var(--component-dark-text-field-fg-critical);
+	--cx-text-field-fg-disabled: var(--semantic-dark-color-text-disabled);
+	--cx-text-field-action-bg: var(--semantic-dark-color-border-subtle);
+	--cx-text-field-action-bg-pressed: var(
+		--component-dark-button-bg-secondary-pressed
+	);
+	--cx-text-field-action-fg: var(--component-dark-button-fg-secondary);
+	--cx-text-field-action-disabled-bg: var(
+		--component-dark-button-bg-primary-disabled
+	);
+	--cx-text-field-action-disabled-fg: var(
+		--component-dark-button-fg-primary-disabled
+	);
+}
+
+.cx-text-field__label {
+	color: var(--cx-text-field-fg-label);
+}
+
+.cx-text-field-input {
+	align-items: flex-start;
+	box-sizing: border-box;
+	display: flex;
+	gap: var(--semantic-light-spacing-gap-default);
+	width: 100%;
+}
+
+.cx-text-field-input__field {
+	align-items: center;
+	background: var(--cx-text-field-bg);
+	border: 1px solid var(--cx-text-field-border);
+	border-radius: var(--semantic-light-radius-xl);
+	box-sizing: border-box;
+	display: flex;
+	flex: 1 1 auto;
+	height: 48px;
+	min-width: 0;
+	padding: var(--semantic-light-spacing-inset-lg)
+		var(--semantic-light-spacing-inset-xl);
+	transition:
+		background-color 160ms ease,
+		border-color 160ms ease;
+	width: 100%;
+}
+
+.cx-text-field-input__native {
+	appearance: none;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	caret-color: var(--cx-text-field-border-focused);
+	color: var(--cx-text-field-fg-value);
+	flex: 1 1 auto;
+	font-family: var(--15-med-font-family, inherit);
+	font-size: var(--15-med-font-size);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: 0;
+	line-height: 1.4;
+	min-width: 0;
+	outline: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.cx-text-field-input__native::placeholder {
+	color: var(--cx-text-field-fg-placeholder);
+	opacity: 1;
+}
+
+.cx-text-field-input__native:disabled {
+	color: var(--cx-text-field-fg-disabled);
+	cursor: not-allowed;
+	-webkit-text-fill-color: var(--cx-text-field-fg-disabled);
+}
+
+.cx-text-field-input__action {
+	appearance: none;
+	align-items: center;
+	background: var(--cx-text-field-action-bg);
+	border: 0;
+	border-radius: var(--semantic-light-radius-xl);
+	box-sizing: border-box;
+	color: var(--cx-text-field-action-fg);
+	cursor: pointer;
+	display: inline-flex;
+	flex: 0 0 82px;
+	font-family: var(--14-semi-font-family, inherit);
+	font-size: var(--14-semi-font-size);
+	font-weight: var(--font-weight-semibold);
+	height: 48px;
+	justify-content: center;
+	letter-spacing: 0;
+	line-height: 1.3;
+	min-width: 82px;
+	padding: var(--semantic-light-spacing-inset-md)
+		var(--semantic-light-spacing-inset-lg);
+	white-space: nowrap;
+	width: 82px;
+}
+
+.cx-text-field-input__action:active {
+	background: var(--cx-text-field-action-bg-pressed);
+}
+
+.cx-text-field-input__action:focus-visible {
+	outline: 2px solid var(--cx-text-field-border-focused);
+	outline-offset: 2px;
+}
+
+.cx-text-field-input__action:disabled {
+	background: var(--cx-text-field-action-disabled-bg);
+	border-color: transparent;
+	color: var(--cx-text-field-action-disabled-fg);
+	cursor: not-allowed;
+}
+
+.cx-text-field__helper {
+	color: var(--cx-text-field-fg-help);
+}
+
+.cx-text-field--focused .cx-text-field-input__field,
+.cx-text-field--typing .cx-text-field-input__field {
+	background: var(--cx-text-field-bg-active);
+	border-color: var(--cx-text-field-border-focused);
+}
+
+.cx-text-field--typed .cx-text-field-input__field,
+.cx-text-field--default .cx-text-field-input__field {
+	background: var(--cx-text-field-bg);
+}
+
+.cx-text-field--disabled .cx-text-field-input__field {
+	background: var(--cx-text-field-bg-disabled);
+	border-color: transparent;
+}
+
+.cx-text-field--disabled .cx-text-field__label,
+.cx-text-field--disabled .cx-text-field__helper {
+	color: var(--cx-text-field-fg-disabled);
+}
+
+.cx-text-field--error .cx-text-field-input__field {
+	background: var(--cx-text-field-bg-critical);
+	border-color: var(--cx-text-field-border-critical);
+}
+
+.cx-text-field--error .cx-text-field__label,
+.cx-text-field--error .cx-text-field__helper {
+	color: var(--cx-text-field-fg-critical);
+}

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-import { createScreenExportAttributes } from "../screen-export";
 import { ContentList } from "./ContentList";
 import { ContentOutlet } from "./ContentOutlet";
 
@@ -28,10 +27,6 @@ export function AppScreenContent({
 
 	return (
 		<div
-			{...createScreenExportAttributes({
-				type: "AppScreenContent",
-				props: { background },
-			})}
 			style={{
 				display: "flex",
 				flexDirection: "column",
@@ -81,11 +76,6 @@ function AppScreenChromeSlot({
 }) {
 	return (
 		<section
-			{...createScreenExportAttributes({
-				type: "AppScreenChromeSlot",
-				slot,
-				props: { background },
-			})}
 			style={{
 				flexShrink: 0,
 				background,

@@ -1,0 +1,123 @@
+@import "@pxds/cx-tokens/tokens.css";
+
+.cx-button {
+	--cx-button-bg-primary: var(--component-light-button-bg-primary);
+	--cx-button-bg-primary-pressed: var(
+		--component-light-button-bg-primary-pressed
+	);
+	--cx-button-bg-disabled: var(--component-light-button-bg-primary-disabled);
+	--cx-button-bg-secondary: var(--component-light-button-bg-secondary);
+	--cx-button-bg-secondary-pressed: var(
+		--component-light-button-bg-secondary-pressed
+	);
+	--cx-button-fg-primary: var(--component-light-button-fg-primary);
+	--cx-button-fg-disabled: var(--component-light-button-fg-primary-disabled);
+	--cx-button-fg-secondary: var(--component-light-button-fg-secondary);
+	--cx-button-border-secondary: var(
+		--component-light-button-border-secondary
+	);
+	--cx-button-focus-ring: var(--semantic-light-color-border-focused);
+
+	appearance: none;
+	align-items: center;
+	border: 1px solid transparent;
+	border-radius: var(--semantic-light-radius-md);
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-flex;
+	font-family: var(--16-semi-font-family, inherit);
+	font-weight: var(--font-weight-semibold);
+	gap: var(--semantic-light-spacing-gap-default);
+	justify-content: center;
+	letter-spacing: 0;
+	line-height: 1.3;
+	position: relative;
+	text-decoration: none;
+	transition:
+		background-color 160ms ease,
+		border-color 160ms ease,
+		color 160ms ease;
+	user-select: none;
+	white-space: nowrap;
+}
+
+[data-theme="dark"] .cx-button,
+.cx-button[data-theme="dark"] {
+	--cx-button-bg-primary: var(--component-dark-button-bg-primary);
+	--cx-button-bg-primary-pressed: var(
+		--component-dark-button-bg-primary-pressed
+	);
+	--cx-button-bg-disabled: var(--component-dark-button-bg-primary-disabled);
+	--cx-button-bg-secondary: var(--component-dark-button-bg-secondary);
+	--cx-button-bg-secondary-pressed: var(
+		--component-dark-button-bg-secondary-pressed
+	);
+	--cx-button-fg-primary: var(--component-dark-button-fg-primary);
+	--cx-button-fg-disabled: var(--component-dark-button-fg-primary-disabled);
+	--cx-button-fg-secondary: var(--component-dark-button-fg-secondary);
+	--cx-button-border-secondary: var(--component-dark-button-border-secondary);
+	--cx-button-focus-ring: var(--semantic-dark-color-border-focused);
+}
+
+.cx-button:focus-visible {
+	outline: 2px solid var(--cx-button-focus-ring);
+	outline-offset: 2px;
+}
+
+.cx-button--full-width {
+	width: 100%;
+}
+
+.cx-button--primary {
+	background: var(--cx-button-bg-primary);
+	color: var(--cx-button-fg-primary);
+}
+
+.cx-button--primary:active {
+	background: var(--cx-button-bg-primary-pressed);
+}
+
+.cx-button--secondary {
+	background: var(--cx-button-bg-secondary);
+	border-color: var(--cx-button-border-secondary);
+	color: var(--cx-button-fg-secondary);
+}
+
+.cx-button--secondary:active {
+	background: var(--cx-button-bg-secondary-pressed);
+}
+
+.cx-button--disabled,
+.cx-button:disabled,
+.cx-button[aria-disabled="true"],
+.cx-button[data-disabled] {
+	background: var(--cx-button-bg-disabled);
+	border-color: transparent;
+	color: var(--cx-button-fg-disabled);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.cx-button--small {
+	font-size: var(--13-semi-font-size);
+	min-height: 32px;
+	padding: 0 var(--semantic-light-spacing-inset-md);
+}
+
+.cx-button--medium {
+	font-size: var(--14-semi-font-size);
+	min-height: 40px;
+	padding: 0 var(--semantic-light-spacing-inset-lg);
+}
+
+.cx-button--large {
+	font-size: var(--16-semi-font-size);
+	min-height: 48px;
+	padding: 0 var(--semantic-light-spacing-inset-xl);
+}
+
+.cx-button--xlarge {
+	font-size: var(--16-semi-font-size);
+	min-height: 56px;
+	padding: 0 var(--semantic-light-spacing-inset-xl);
+}

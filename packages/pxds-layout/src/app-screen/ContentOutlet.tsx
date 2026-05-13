@@ -1,6 +1,5 @@
 import type { CSSProperties, PropsWithChildren } from "react";
 
-import { createScreenExportAttributes } from "../screen-export";
 import { ContentLayoutProvider } from "./ContentLayout";
 
 type Props = PropsWithChildren<{
@@ -19,11 +18,6 @@ export function ContentOutlet({ children, inlineInset, style }: Props) {
 	return (
 		<div
 			className="content-outlet"
-			{...createScreenExportAttributes({
-				type: "ContentOutlet",
-				slot: "content",
-				props: { inlineInset },
-			})}
 			style={{
 				"--content-inline-inset": inlineInset,
 				display: "flex",

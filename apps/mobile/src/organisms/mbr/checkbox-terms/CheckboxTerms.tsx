@@ -3,7 +3,6 @@
 import { Checkbox, Divider, Text } from "@pxds/cx-components";
 import { HStack, VStack } from "@pxds/pxds-layout/primitives";
 import { useState } from "react";
-import { MbrOgnSectionLayout } from "../_layout";
 
 type ConsentItem = {
 	id: string;
@@ -54,7 +53,7 @@ export function CheckboxTerms() {
 	};
 
 	return (
-		<MbrOgnSectionLayout>
+		<VStack gap="var(--semantic-spacing-block)">
 			<VStack>
 				<ConsentRow
 					title="전체 동의"
@@ -86,7 +85,7 @@ export function CheckboxTerms() {
 					</VStack>
 				) : null}
 			</VStack>
-		</MbrOgnSectionLayout>
+		</VStack>
 	);
 }
 

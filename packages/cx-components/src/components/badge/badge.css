@@ -1,0 +1,47 @@
+.cx-badge {
+	--cx-badge-bg-gray: var(--semantic-light-color-border-subtle);
+	--cx-badge-bg-black: var(--semantic-light-color-bg-inverse);
+	--cx-badge-bg-blue: var(--semantic-light-color-bg-brand);
+	--cx-badge-fg-gray: var(--semantic-light-color-text-secondary);
+	--cx-badge-fg-on-color: var(--semantic-light-color-text-on-brand);
+
+	align-items: center;
+	background: var(--cx-badge-bg-gray);
+	border-radius: var(--semantic-light-radius-sm);
+	box-sizing: border-box;
+	color: var(--cx-badge-fg-gray);
+	display: inline-flex;
+	font-family: var(--10-med-font-family, inherit);
+	font-size: var(--10-med-font-size);
+	font-weight: var(--font-weight-medium);
+	justify-content: center;
+	letter-spacing: 0;
+	line-height: var(--10-med-line-height);
+	padding: var(--spacing-2) var(--semantic-light-spacing-inset-sm);
+	white-space: nowrap;
+	width: fit-content;
+}
+
+[data-theme="dark"] .cx-badge,
+.cx-badge[data-theme="dark"] {
+	--cx-badge-bg-gray: var(--semantic-dark-color-border-subtle);
+	--cx-badge-bg-black: var(--semantic-dark-color-bg-inverse);
+	--cx-badge-bg-blue: var(--semantic-dark-color-bg-brand);
+	--cx-badge-fg-gray: var(--semantic-dark-color-text-secondary);
+	--cx-badge-fg-on-color: var(--semantic-dark-color-text-on-brand);
+}
+
+.cx-badge--gray {
+	background: var(--cx-badge-bg-gray);
+	color: var(--cx-badge-fg-gray);
+}
+
+.cx-badge--black {
+	background: var(--cx-badge-bg-black);
+	color: var(--cx-badge-fg-on-color);
+}
+
+.cx-badge--blue {
+	background: var(--cx-badge-bg-blue);
+	color: var(--cx-badge-fg-on-color);
+}

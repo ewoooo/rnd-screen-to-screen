@@ -1,7 +1,7 @@
 import {
   Children,
-  isValidElement,
   type ComponentProps,
+  isValidElement,
   type ReactElement,
   type ReactNode,
 } from "react";
@@ -15,7 +15,7 @@ type SlotProps = {
   children: ReactNode;
 };
 type SystemHeaderSlotProps = {
-  children?: never;
+  children?: ReactNode;
 };
 type AppScreenComponent = ((props: Props) => ReactElement) & {
   SystemHeader: (props: SystemHeaderSlotProps) => ReactElement;
@@ -73,7 +73,9 @@ function createSlot(kind: SlotKind): SlotComponent {
 }
 
 function createSystemHeaderSlot(): SystemHeaderSlotComponent {
-  const Slot: SystemHeaderSlotComponent = () => <StatusBar />;
+  const Slot: SystemHeaderSlotComponent = ({ children }) => (
+    <>{children ?? <StatusBar />}</>
+  );
   Slot[SLOT_KIND] = "systemHeader";
   return Slot;
 }

@@ -1,14 +1,6 @@
-import type { FigmaBridgeProps } from "../../types";
+import type { RadioButtonFigmaBridgeProps } from "../../types";
 
-export type RadioButtonFigmaBridgeProps = Omit<
-	FigmaBridgeProps,
-	"data-component-id" | "data-figma-variant"
-> & {
-	"data-component-id"?: string;
-	"data-figma-checked"?: string;
-	"data-figma-text"?: string;
-	"data-figma-disabled"?: string;
-};
+export type { RadioButtonFigmaBridgeProps } from "../../types";
 
 export type RadioButtonProps = RadioButtonFigmaBridgeProps & {
 	checked?: boolean;

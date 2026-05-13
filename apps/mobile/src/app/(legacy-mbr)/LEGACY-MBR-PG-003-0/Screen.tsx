@@ -1,3 +1,4 @@
+import { StatusBar } from "@pxds/cx-components";
 import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
 import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import {
@@ -10,7 +11,9 @@ import {
 export function Screen() {
 	return (
 		<AppScreen>
-			<AppScreen.SystemHeader />
+			<AppScreen.SystemHeader>
+				<StatusBar />
+			</AppScreen.SystemHeader>
 			<AppScreen.Header>
 				<ProgressTopBar
 					title="탈퇴 완료"

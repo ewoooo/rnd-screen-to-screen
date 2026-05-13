@@ -1,5 +1,4 @@
 import { Button } from "@pxds/cx-components";
-import { createScreenExportAttributes } from "@pxds/pxds-layout/screen-export";
 
 type MbrPrimaryCTABarProps = {
 	primaryLabel: string;
@@ -14,15 +13,6 @@ export function MbrPrimaryCTABar({
 }: MbrPrimaryCTABarProps) {
 	return (
 		<div
-			{...createScreenExportAttributes({
-				type: "MbrPrimaryCTABar",
-				id: "mbr-primary-cta-bar",
-				props: {
-					componentId: "mbr-primary-cta-bar",
-					disabled,
-					primaryLabel,
-				},
-			})}
 			style={{
 				display: "grid",
 				gap: "var(--semantic-spacing-inline)",

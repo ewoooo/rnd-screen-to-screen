@@ -1,6 +1,6 @@
 import { SectionMessage } from "@pxds/pxds-components/core";
 import { Button, TextField } from "@pxds/cx-components";
-import { MbrOgnSectionLayout } from "../_layout";
+import { VStack } from "@pxds/pxds-layout/primitives";
 import type { TextFieldGuardianRequestProps } from "./TextFieldGuardianRequest.config";
 
 export function TextFieldGuardianRequest({
@@ -9,7 +9,7 @@ export function TextFieldGuardianRequest({
 	if (!visible) return null;
 
 	return (
-		<MbrOgnSectionLayout>
+		<VStack gap="var(--semantic-spacing-block)">
 			<SectionMessage
 				variant="info"
 				description="만 14세 미만 고객의 가입은 법정대리인 동의가 필요합니다."
@@ -32,6 +32,6 @@ export function TextFieldGuardianRequest({
 			<Button variant="primary" size="large">
 				동의 요청 보내기
 			</Button>
-		</MbrOgnSectionLayout>
+		</VStack>
 	);
 }

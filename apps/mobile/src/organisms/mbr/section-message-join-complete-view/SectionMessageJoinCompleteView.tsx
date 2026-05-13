@@ -1,10 +1,10 @@
 import { Text } from "@pxds/cx-components";
 import { SectionMessage } from "@pxds/pxds-components/core";
-import { MbrOgnSectionLayout } from "../_layout";
+import { VStack } from "@pxds/pxds-layout/primitives";
 
 export function SectionMessageJoinCompleteView() {
 	return (
-		<MbrOgnSectionLayout>
+		<VStack gap="var(--semantic-spacing-block)">
 			<SectionMessage
 				variant="positive"
 				description="가입이 정상 처리되었습니다. 일반 회원으로 자동 로그인됩니다."
@@ -20,6 +20,6 @@ export function SectionMessageJoinCompleteView() {
 			<Text variant="caption" as="p">
 				· 가입 완료 후 홈으로 이동합니다
 			</Text>
-		</MbrOgnSectionLayout>
+		</VStack>
 	);
 }

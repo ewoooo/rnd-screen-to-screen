@@ -7,8 +7,10 @@
 		".": "./src/index.ts",
 		"./app-screen": "./src/app-screen/index.ts",
 		"./bottom-sheet": "./src/bottom-sheet/index.ts",
-		"./primitives": "./src/primitives/index.ts",
-		"./screen-export": "./src/screen-export/index.ts"
+		"./components/compositions": "./src/components/compositions/index.ts",
+		"./components/primitives": "./src/components/primitives/index.ts",
+		"./primitives": "./src/components/primitives/index.ts",
+		"./styles.css": "./src/styles.css"
 	},
 	"dependencies": {
 		"@pxds/pxds-icons": "0.1.0",

@@ -1,4 +1,4 @@
 export * from "./app-screen";
 export * from "./bottom-sheet";
-export * from "./primitives";
-export * from "./screen-export";
+export * from "./components/compositions";
+export * from "./components/primitives";

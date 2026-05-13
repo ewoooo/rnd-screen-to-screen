@@ -4,7 +4,9 @@ import type { PropsWithChildren } from "react";
 
 import "@pxds/pxds-components/core/global.css";
 import "@pxds/cx-tokens/tokens.css";
+import "@pxds/pxds-layout/styles.css";
 import "@pxds/cx-components/styles.css";
+import "../patterns/mbr/styles.css";
 import "./globals.css";
 
 const RootLayout = ({ children }: PropsWithChildren) => (

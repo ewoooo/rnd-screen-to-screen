@@ -1,6 +1,6 @@
 # RadioButton
 
-CX RadioButton component based on the Figma `RadioButton` master component.
+단일 radio control입니다. RadioGroup composition은 별도 레이어에서 다룹니다.
 
 ## Import
 
@@ -8,49 +8,30 @@ CX RadioButton component based on the Figma `RadioButton` master component.
 import { RadioButton } from "@pxds/cx-components";
 ```
 
-## API
+## Usage
 
 ```tsx
-<RadioButton checked />
+<RadioButton name="auth" value="phone" label="휴대폰 인증" />
+<RadioButton checked name="auth" value="pass" label="PASS 인증" />
 ```
 
-```tsx
-<RadioButton
-  label="텍스트"
-  checked={false}
-  onCheckedChange={setChecked}
-/>
-```
-
-```tsx
-<RadioButton label="텍스트" checked disabled />
-```
-
-### Props
+## Props
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `checked` | `boolean` | `false` | Controls selected state. |
-| `disabled` | `boolean` | `false` | Disables the native radio input and visual state. |
-| `label` | `string` | - | Optional text label. When present, the label and input are clickable together. |
-| `value` | `string` | - | Native radio value. |
-| `name` | `string` | - | Native radio group name. |
-| `onCheckedChange` | `(checked: boolean) => void` | - | Called from the native input change event. |
-| `className` | `string` | - | Extra classes merged after variant classes. |
+| `checked` | `boolean` | `false` | Checked state. |
+| `disabled` | `boolean` | `false` | Disabled state. |
+| `label` | `string` | - | Optional visible label. |
+| `value` | `string` | - | Input value. |
+| `name` | `string` | - | Input name. |
+| `onCheckedChange` | `(checked: boolean) => void` | - | Change callback. |
+| `className` | `string` | - | Additional class name. |
 
-## Figma Mapping
+## Bridge Attributes
 
-| Figma variant/property | React prop |
-| --- | --- |
-| `Checked=On` | `checked={true}` |
-| `Checked=Off` | `checked={false}` |
-| `Text=On` | `label` is present |
-| `Text=Off` | `label` is absent |
-| `Disabled=On` | `disabled={true}` |
-| `Disabled=Off` | `disabled={false}` |
-
-## Notes
-
-- Uses native `input type="radio"` for accessibility.
-- Uses CSS for the selected indicator; no image asset is required.
-- Implements only a single RadioButton. RadioGroup and SelectableList composition are separate components.
+- `data-node-kind="component"`
+- `data-component-id="radio-button"`
+- `data-figma-component="RadioButton"`
+- `data-figma-checked`
+- `data-figma-text`
+- `data-figma-disabled`
