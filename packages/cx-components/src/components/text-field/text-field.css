@@ -18,17 +18,6 @@
 	--cx-text-field-fg-help: var(--semantic-light-color-text-primary);
 	--cx-text-field-fg-critical: var(--component-light-text-field-fg-critical);
 	--cx-text-field-fg-disabled: var(--semantic-light-color-text-disabled);
-	--cx-text-field-action-bg: var(--semantic-light-color-border-subtle);
-	--cx-text-field-action-bg-pressed: var(
-		--component-light-button-bg-secondary-pressed
-	);
-	--cx-text-field-action-fg: var(--component-light-button-fg-secondary);
-	--cx-text-field-action-disabled-bg: var(
-		--component-light-button-bg-primary-disabled
-	);
-	--cx-text-field-action-disabled-fg: var(
-		--component-light-button-fg-primary-disabled
-	);
 
 	display: flex;
 	flex-direction: column;
@@ -57,17 +46,6 @@
 	--cx-text-field-fg-help: var(--semantic-dark-color-text-primary);
 	--cx-text-field-fg-critical: var(--component-dark-text-field-fg-critical);
 	--cx-text-field-fg-disabled: var(--semantic-dark-color-text-disabled);
-	--cx-text-field-action-bg: var(--semantic-dark-color-border-subtle);
-	--cx-text-field-action-bg-pressed: var(
-		--component-dark-button-bg-secondary-pressed
-	);
-	--cx-text-field-action-fg: var(--component-dark-button-fg-secondary);
-	--cx-text-field-action-disabled-bg: var(
-		--component-dark-button-bg-primary-disabled
-	);
-	--cx-text-field-action-disabled-fg: var(
-		--component-dark-button-fg-primary-disabled
-	);
 }
 
 .cx-text-field__label {
@@ -131,44 +109,11 @@
 }
 
 .cx-text-field-input__action {
-	appearance: none;
-	align-items: center;
-	background: var(--cx-text-field-action-bg);
-	border: 0;
 	border-radius: var(--semantic-light-radius-xl);
-	box-sizing: border-box;
-	color: var(--cx-text-field-action-fg);
-	cursor: pointer;
-	display: inline-flex;
 	flex: 0 0 82px;
-	font-family: var(--14-semi-font-family, inherit);
-	font-size: var(--14-semi-font-size);
-	font-weight: var(--font-weight-semibold);
 	height: 48px;
-	justify-content: center;
-	letter-spacing: 0;
-	line-height: 1.3;
 	min-width: 82px;
-	padding: var(--semantic-light-spacing-inset-md)
-		var(--semantic-light-spacing-inset-lg);
-	white-space: nowrap;
 	width: 82px;
-}
-
-.cx-text-field-input__action:active {
-	background: var(--cx-text-field-action-bg-pressed);
-}
-
-.cx-text-field-input__action:focus-visible {
-	outline: 2px solid var(--cx-text-field-border-focused);
-	outline-offset: 2px;
-}
-
-.cx-text-field-input__action:disabled {
-	background: var(--cx-text-field-action-disabled-bg);
-	border-color: transparent;
-	color: var(--cx-text-field-action-disabled-fg);
-	cursor: not-allowed;
 }
 
 .cx-text-field__helper {
