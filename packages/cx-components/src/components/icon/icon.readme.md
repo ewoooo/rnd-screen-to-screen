@@ -1,6 +1,6 @@
 # Icon
 
-`@pxds/cx-icons`를 `@pxds/cx-components`에서 재노출하는 icon component입니다.
+`@pxds/cx-components` does not implement Icon directly. It re-exports the Icon wrapper, types, color list, and registry helpers from `@pxds/cx-icons`.
 
 ## Import
 
@@ -20,11 +20,15 @@ import { Icon } from "@pxds/cx-components";
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `type` | `IconType` | required | Registry icon key. |
-| `size` | `12 \| 16 \| 20 \| 24 \| 32 \| 40` | required | Icon asset size. |
-| `color` | `IconColor` | - | Token color for recolorable icons. |
-| `alt` | `string` | `""` | Image alt text. |
-| `aria-label` | `string` | - | Accessible name. |
+| `type` | `IconType` | required | Normalized registry icon key from `@pxds/cx-icons`. |
+| `size` | `40 \| 24 \| 20 \| 16 \| 12` | required | Public icon size in current code. |
+| `color` | `IconColor` | - | Token color for recolorable icons only. |
+| `alt` | `string` | - | Image alt text. Used in accessibility-name resolution. |
+| `aria-label` | `string` | - | Accessible name. Takes precedence over `alt`. |
 | `className` | `string` | - | Additional class name. |
 
-Unsupported `type`/`size` combinations render `null`.
+If neither `aria-label` nor `alt` is provided, Icon is treated as decorative and defaults to `aria-hidden=true`.
+
+The current Figma source includes `Size=32, Type=Logo`, but current public `IconSize` does not include `32`. Unsupported runtime lookups render `null` if a registry file cannot be resolved.
+
+Icon does not emit Icon-specific `data-figma-*` bridge attributes.
