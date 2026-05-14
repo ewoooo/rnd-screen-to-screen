@@ -1,26 +1,13 @@
-@import "@pxds/cx-tokens/tokens.css";
-
 .cx-tab-item {
-	--cx-tab-item-fg-default: var(--semantic-light-color-text-primary);
-	--cx-tab-item-fg-selected: var(--component-light-tab-fg-selected);
-	--cx-tab-item-indicator: var(--component-light-tab-indicator);
-
 	align-items: center;
 	box-sizing: border-box;
-	color: var(--cx-tab-item-fg-default);
+	color: var(--semantic-color-text-primary);
 	display: inline-flex;
 	flex-direction: column;
 	justify-content: flex-end;
 	min-height: 35px;
 	position: relative;
 	width: fit-content;
-}
-
-[data-theme="dark"] .cx-tab-item,
-.cx-tab-item[data-theme="dark"] {
-	--cx-tab-item-fg-default: var(--semantic-dark-color-text-primary);
-	--cx-tab-item-fg-selected: var(--component-dark-tab-fg-selected);
-	--cx-tab-item-indicator: var(--component-dark-tab-indicator);
 }
 
 .cx-tab-item::after {
@@ -45,11 +32,11 @@
 }
 
 .cx-tab-item--selected {
-	color: var(--cx-tab-item-fg-selected);
+	color: var(--component-tab-fg-selected);
 }
 
 .cx-tab-item--selected::after {
-	background: var(--cx-tab-item-indicator);
+	background: var(--component-tab-indicator);
 }
 
 .cx-tab-item--selected .cx-tab-item__label {

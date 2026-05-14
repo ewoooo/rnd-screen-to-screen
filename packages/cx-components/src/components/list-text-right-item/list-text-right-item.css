@@ -1,28 +1,13 @@
 .cx-list-text-right-item {
-	--cx-list-text-right-item-fg: var(--semantic-light-color-text-secondary);
-	--cx-list-text-right-item-icon-fg: var(--semantic-light-color-text-tertiary);
-	--cx-list-text-right-item-focus-ring: var(
-		--semantic-light-color-border-focused
-	);
-
 	align-items: center;
 	box-sizing: border-box;
-	color: var(--cx-list-text-right-item-fg);
+	color: var(--semantic-color-text-secondary);
 	display: inline-flex;
 	flex: 0 0 auto;
 	gap: var(--spacing-2);
 	justify-content: flex-end;
 	vertical-align: middle;
 	width: fit-content;
-}
-
-[data-theme="dark"] .cx-list-text-right-item,
-.cx-list-text-right-item[data-theme="dark"] {
-	--cx-list-text-right-item-fg: var(--semantic-dark-color-text-secondary);
-	--cx-list-text-right-item-icon-fg: var(--semantic-dark-color-text-tertiary);
-	--cx-list-text-right-item-focus-ring: var(
-		--semantic-dark-color-border-focused
-	);
 }
 
 .cx-list-text-right-item--badge-level {
@@ -64,13 +49,13 @@ button.cx-list-text-right-item__text-button {
 }
 
 .cx-list-text-right-item__text-button:focus-visible {
-	border-radius: var(--semantic-light-radius-xs);
-	outline: 2px solid var(--cx-list-text-right-item-focus-ring);
+	border-radius: var(--semantic-radius-sm);
+	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
 .cx-list-text-right-item__icon {
-	background-color: var(--cx-list-text-right-item-icon-fg) !important;
+	background-color: var(--semantic-color-text-tertiary) !important;
 	display: block;
 	flex: 0 0 auto;
 	height: 16px;
@@ -78,7 +63,7 @@ button.cx-list-text-right-item__text-button {
 }
 
 .cx-list-text-right-item__icon-button {
-	color: var(--cx-list-text-right-item-icon-fg);
+	color: var(--semantic-color-text-tertiary);
 	margin: -8px;
 }
 

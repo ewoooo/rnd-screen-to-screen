@@ -1,18 +1,11 @@
 .cx-icon-button {
-	--cx-icon-button-bg: transparent;
-	--cx-icon-button-bg-hover: var(--semantic-light-color-bg-dim);
-	--cx-icon-button-bg-pressed: var(--component-light-list-cell-bg-pressed);
-	--cx-icon-button-fg: var(--semantic-light-color-text-primary);
-	--cx-icon-button-fg-disabled: var(--semantic-light-color-text-disabled);
-	--cx-icon-button-focus-ring: var(--semantic-light-color-border-focused);
-
 	appearance: none;
 	align-items: center;
-	background: var(--cx-icon-button-bg);
+	background: transparent;
 	border: 0;
 	border-radius: var(--semantic-light-radius-md);
 	box-sizing: border-box;
-	color: var(--cx-icon-button-fg);
+	color: var(--semantic-color-text-primary);
 	cursor: pointer;
 	display: inline-flex;
 	flex: 0 0 auto;
@@ -24,15 +17,6 @@
 		background-color 120ms ease,
 		color 120ms ease;
 	user-select: none;
-}
-
-[data-theme="dark"] .cx-icon-button,
-.cx-icon-button[data-theme="dark"] {
-	--cx-icon-button-bg-hover: var(--semantic-dark-color-bg-dim);
-	--cx-icon-button-bg-pressed: var(--component-dark-list-cell-bg-pressed);
-	--cx-icon-button-fg: var(--semantic-dark-color-text-primary);
-	--cx-icon-button-fg-disabled: var(--semantic-dark-color-text-disabled);
-	--cx-icon-button-focus-ring: var(--semantic-dark-color-border-focused);
 }
 
 .cx-icon-button > svg,
@@ -55,22 +39,22 @@
 
 @media (hover: hover) {
 	.cx-icon-button--plain:hover {
-		background: var(--cx-icon-button-bg-hover);
+		background: var(--semantic-color-bg-dim);
 	}
 }
 
 .cx-icon-button--plain:active {
-	background: var(--cx-icon-button-bg-pressed);
+	background: var(--component-list-cell-bg-pressed);
 }
 
 .cx-icon-button:focus-visible {
-	outline: 2px solid var(--cx-icon-button-focus-ring);
+	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
 .cx-icon-button:disabled,
 .cx-icon-button[data-disabled] {
-	color: var(--cx-icon-button-fg-disabled);
+	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
 	opacity: 0.45;
 	pointer-events: none;

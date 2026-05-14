@@ -1,19 +1,11 @@
 .cx-button-list-order {
-	--cx-button-list-order-fg: var(--semantic-light-color-text-primary);
-	--cx-button-list-order-fg-disabled: var(
-		--semantic-light-color-text-disabled
-	);
-	--cx-button-list-order-focus-ring: var(
-		--semantic-light-color-border-focused
-	);
-
 	appearance: none;
 	align-items: center;
 	background: transparent;
 	border: 0;
-	border-radius: var(--semantic-light-radius-sm);
+	border-radius: var(--semantic-radius-sm);
 	box-sizing: border-box;
-	color: var(--cx-button-list-order-fg);
+	color: var(--semantic-color-text-primary);
 	cursor: pointer;
 	display: inline-flex;
 	flex: 0 0 auto;
@@ -31,17 +23,6 @@
 	white-space: nowrap;
 }
 
-[data-theme="dark"] .cx-button-list-order,
-.cx-button-list-order[data-theme="dark"] {
-	--cx-button-list-order-fg: var(--semantic-dark-color-text-primary);
-	--cx-button-list-order-fg-disabled: var(
-		--semantic-dark-color-text-disabled
-	);
-	--cx-button-list-order-focus-ring: var(
-		--semantic-dark-color-border-focused
-	);
-}
-
 .cx-button-list-order__label {
 	display: block;
 	min-width: 0;
@@ -55,13 +36,13 @@
 }
 
 .cx-button-list-order:focus-visible {
-	outline: 2px solid var(--cx-button-list-order-focus-ring);
+	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
 .cx-button-list-order:disabled,
 .cx-button-list-order[data-disabled] {
-	color: var(--cx-button-list-order-fg-disabled);
+	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
 	opacity: 0.45;
 	pointer-events: none;

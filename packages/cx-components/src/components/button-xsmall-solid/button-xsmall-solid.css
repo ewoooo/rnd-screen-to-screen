@@ -1,5 +1,3 @@
-@import "@pxds/cx-tokens/tokens.css";
-
 .cx-button.cx-button-xsmall-solid {
 	border-radius: 9999px;
 	font-family: var(--10-semi-font-family, inherit);

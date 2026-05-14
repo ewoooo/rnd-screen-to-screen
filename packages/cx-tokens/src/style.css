@@ -1,0 +1,3 @@
+/* Public token style adapter for @pxds/cx-tokens. */
+@import "./tokens.css";
+@import "./theme-aliases.css";

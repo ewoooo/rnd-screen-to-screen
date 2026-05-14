@@ -1,37 +1,10 @@
 .cx-radio-button {
-	--cx-radio-button-bg-unchecked: var(--semantic-light-color-bg-default);
-	--cx-radio-button-bg-disabled: var(--semantic-light-color-bg-dim);
-	--cx-radio-button-border: var(--semantic-light-color-border-subtle);
-	--cx-radio-button-indicator: var(--semantic-light-color-text-primary);
-	--cx-radio-button-indicator-disabled: var(
-		--semantic-light-color-border-default
-	);
-	--cx-radio-button-dot: var(--semantic-light-color-bg-default);
-	--cx-radio-button-label: var(--semantic-light-color-text-primary);
-	--cx-radio-button-label-disabled: var(--semantic-light-color-text-disabled);
-	--cx-radio-button-focus-ring: var(--semantic-light-color-border-focused);
-
 	align-items: center;
 	box-sizing: border-box;
 	cursor: pointer;
 	display: inline-flex;
-	gap: var(--semantic-light-spacing-gap-default);
+	gap: var(--semantic-spacing-gap-default);
 	width: fit-content;
-}
-
-[data-theme="dark"] .cx-radio-button,
-.cx-radio-button[data-theme="dark"] {
-	--cx-radio-button-bg-unchecked: var(--semantic-dark-color-bg-default);
-	--cx-radio-button-bg-disabled: var(--semantic-dark-color-bg-dim);
-	--cx-radio-button-border: var(--semantic-dark-color-border-subtle);
-	--cx-radio-button-indicator: var(--semantic-dark-color-text-primary);
-	--cx-radio-button-indicator-disabled: var(
-		--semantic-dark-color-border-default
-	);
-	--cx-radio-button-dot: var(--semantic-dark-color-bg-default);
-	--cx-radio-button-label: var(--semantic-dark-color-text-primary);
-	--cx-radio-button-label-disabled: var(--semantic-dark-color-text-disabled);
-	--cx-radio-button-focus-ring: var(--semantic-dark-color-border-focused);
 }
 
 .cx-radio-button__input {
@@ -46,9 +19,9 @@
 
 .cx-radio-button__control {
 	align-items: center;
-	background: var(--cx-radio-button-bg-unchecked);
-	border: 1px solid var(--cx-radio-button-border);
-	border-radius: var(--semantic-light-radius-full);
+	background: var(--semantic-color-bg-default);
+	border: 1px solid var(--semantic-color-border-subtle);
+	border-radius: var(--semantic-radius-full);
 	box-sizing: border-box;
 	display: inline-flex;
 	flex: 0 0 18px;
@@ -59,8 +32,8 @@
 }
 
 .cx-radio-button__control::after {
-	background: var(--cx-radio-button-dot);
-	border-radius: var(--semantic-light-radius-full);
+	background: var(--semantic-color-bg-default);
+	border-radius: var(--semantic-radius-full);
 	content: "";
 	display: block;
 	height: 8px;
@@ -69,16 +42,16 @@
 }
 
 .cx-radio-button__label {
-	color: var(--cx-radio-button-label);
+	color: var(--semantic-color-text-primary);
 }
 
 .cx-radio-button__input:focus-visible + .cx-radio-button__control {
-	outline: 2px solid var(--cx-radio-button-focus-ring);
+	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
 .cx-radio-button--checked .cx-radio-button__control {
-	background: var(--cx-radio-button-indicator);
+	background: var(--semantic-color-text-primary);
 	border-color: transparent;
 }
 
@@ -91,15 +64,15 @@
 }
 
 .cx-radio-button--disabled .cx-radio-button__control {
-	background: var(--cx-radio-button-bg-disabled);
-	border-color: var(--cx-radio-button-border);
+	background: var(--semantic-color-bg-dim);
+	border-color: var(--semantic-color-border-subtle);
 }
 
 .cx-radio-button--checked.cx-radio-button--disabled .cx-radio-button__control {
-	background: var(--cx-radio-button-indicator-disabled);
+	background: var(--semantic-color-border-default);
 	border-color: transparent;
 }
 
 .cx-radio-button--disabled .cx-radio-button__label {
-	color: var(--cx-radio-button-label-disabled);
+	color: var(--semantic-color-text-disabled);
 }
