@@ -10,7 +10,7 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components candidate |
 | Figma Source | indicator |
 | Dependencies | 없음 |
@@ -19,14 +19,19 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 ### Implementation Files
 
-No current implementation files were found for `Indicator`.
-
-Expected files when implemented:
+Implemented in `@pxds/cx-components`:
 
 - `packages/cx-components/src/components/indicator/Indicator.tsx`
 - `packages/cx-components/src/components/indicator/Indicator.types.ts`
+- `packages/cx-components/src/components/indicator/indicator.variants.ts`
 - `packages/cx-components/src/components/indicator/indicator.css`
+- `packages/cx-components/src/components/indicator/indicator.readme.md`
 - `packages/cx-components/src/components/indicator/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -68,7 +73,7 @@ Actual consumed components:
 
 | Consumed component | Used for | Current implementation |
 | --- | --- | --- |
-| None | Indicator is a primitive dot group. | Not implemented yet. |
+| None | Indicator is a primitive dot group. | Implemented as internal CSS circles in `Indicator.tsx`. |
 
 Expected consuming components:
 
@@ -136,6 +141,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep one public `Indicator` component.
 - Render dots as internal CSS circles.
 - Preserve Figma sizing: `4px` dots, `8px` gap, and `2px` horizontal root padding.
@@ -153,7 +159,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Validation
 
-`@pxds/cx-components` currently has no package-local `lint` or `build` scripts. Validate through consuming app checks after implementation.
+Validate through consuming app checks when implementation changes are made.
 
 - `npm run lint -w @screen/mobile`
 - `npm run build -w @screen/mobile`

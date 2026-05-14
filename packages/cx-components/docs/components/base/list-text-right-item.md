@@ -10,7 +10,7 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | list-text-right-item |
 | Dependencies | Icon, Text, IconButton, Badge |
@@ -19,9 +19,19 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 ### Implementation Files
 
-No implementation files currently exist for `ListText` or `ListText.RightItem` in `packages/cx-components/src/components`.
+Implemented in `@pxds/cx-components`:
 
-`ListText.RightItem` is a Phase 2 private scoped item set. Keep it as an implementation detail of `ListText` unless the component vocabulary explicitly promotes it.
+- `packages/cx-components/src/components/list-text-right-item/ListTextRightItem.tsx`
+- `packages/cx-components/src/components/list-text-right-item/ListTextRightItem.types.ts`
+- `packages/cx-components/src/components/list-text-right-item/list-text-right-item.variants.ts`
+- `packages/cx-components/src/components/list-text-right-item/list-text-right-item.css`
+- `packages/cx-components/src/components/list-text-right-item/list-text-right-item.readme.md`
+- `packages/cx-components/src/components/list-text-right-item/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -38,7 +48,7 @@ ListText
    └─ IconButton + Icon(arrow-right, 16)   Type=Icon
 ```
 
-`ListText.RightItem` should be represented as a private preset union on `ListText`, not as a public exported component.
+`ListTextRightItem` is implemented as a scoped CX component. Keep it aligned with the future `ListText.rightItem` preset contract instead of treating it as broad app-level vocabulary.
 
 ### Component Consumption
 
@@ -162,6 +172,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep `ListText.RightItem` private to `ListText`.
 - Normalize Figma `Type` values to a private preset union.
 - Use `Text` for text-bearing variants.
@@ -194,7 +205,7 @@ Figma uses the existing `Icon / Size=16, Type=ArrowRight` component for arrow af
 
 Documentation-only changes do not require app build checks.
 
-When implemented, validate through the consuming app checks:
+Validate through the consuming app checks when implementation changes are made:
 
 - `npm run lint -w @screen/mobile`
 - `npm run build -w @screen/mobile`

@@ -1,0 +1,56 @@
+.tooltip {
+	align-items: flex-start;
+	box-sizing: border-box;
+	display: inline-flex;
+	position: relative;
+	width: fit-content;
+}
+
+.tooltip--center {
+	align-items: center;
+}
+
+.tooltip--right {
+	align-items: flex-end;
+}
+
+.tooltip__trigger {
+	box-sizing: border-box;
+	display: inline-flex;
+	width: fit-content;
+}
+
+.tooltip__bubble {
+	box-sizing: border-box;
+	display: inline-flex;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.tooltip[data-has-trigger] .tooltip__bubble {
+	bottom: 100%;
+	margin-bottom: var(--spacing-4);
+	opacity: 0;
+	position: absolute;
+	visibility: hidden;
+}
+
+.tooltip[data-has-trigger].tooltip--left .tooltip__bubble {
+	left: 0;
+}
+
+.tooltip[data-has-trigger].tooltip--center .tooltip__bubble {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.tooltip[data-has-trigger].tooltip--right .tooltip__bubble {
+	right: 0;
+}
+
+.tooltip[data-has-trigger][data-state="open"] .tooltip__bubble,
+.tooltip[data-has-trigger]:not([data-controlled]):hover .tooltip__bubble,
+.tooltip[data-has-trigger]:not([data-controlled]):focus-within .tooltip__bubble {
+	opacity: 1;
+	visibility: visible;
+}

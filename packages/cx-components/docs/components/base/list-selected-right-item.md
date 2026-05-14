@@ -10,7 +10,7 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | list-selected-right-item |
 | Dependencies | ButtonXsmallSolid, Icon, TitleSection.RightItem, IconButton, Text |
@@ -19,7 +19,19 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 ### Implementation Files
 
-No actual implementation file exists yet. Repository search only finds the inventory row and this document. Write the first implementation from the Figma component-set structure below.
+Implemented in `@pxds/cx-components`:
+
+- `packages/cx-components/src/components/list-selected-right-item/ListSelectedRightItem.tsx`
+- `packages/cx-components/src/components/list-selected-right-item/ListSelectedRightItem.types.ts`
+- `packages/cx-components/src/components/list-selected-right-item/list-selected-right-item.variants.ts`
+- `packages/cx-components/src/components/list-selected-right-item/list-selected-right-item.css`
+- `packages/cx-components/src/components/list-selected-right-item/list-selected-right-item.readme.md`
+- `packages/cx-components/src/components/list-selected-right-item/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -35,7 +47,7 @@ ListSelected
    └─ TextButton/Text action             Type=TextButton
 ```
 
-`ListSelectedRightItem` should remain a private scoped item set for `ListSelected`. The parent row owns list layout, selected-control placement, row spacing, and presence rules.
+`ListSelectedRightItem` is implemented as a scoped CX component and should remain owned by the future `ListSelected` contract. The parent row owns list layout, selected-control placement, row spacing, and presence rules.
 
 Figma confirms one component set with three variants:
 
@@ -195,6 +207,7 @@ Private adapter examples:
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep this component private to the list-selected pattern.
 - Implement the Figma `Type` axis exactly: `ButtonXsmallSolid`, `Icon`, `TextButton`.
 - Reuse `ButtonXsmallSolid`, `Icon`, `IconButton`, `Text`, and the `TitleSection.RightItem` text-button contract.
@@ -212,7 +225,7 @@ Private adapter examples:
 
 ### Normalization Notes
 
-- Inventory marks this as `제작 예정`; no implementation file exists yet.
+- Inventory now marks this as `제작 완료`; implementation files exist under `packages/cx-components/src/components/list-selected-right-item`.
 - `ListSelectedRightItem` is a Phase 2 private scoped item set, not a public app-level component API.
 - The Figma `Type` values normalize as `ButtonXsmallSolid` -> `buttonXsmallSolid`, `Icon` -> `icon`, and `TextButton` -> `textButton`.
 - `ButtonXsmallSolid` should consume the component contract tracked in `button-xsmall-solid.md`; do not copy its pill styling here.

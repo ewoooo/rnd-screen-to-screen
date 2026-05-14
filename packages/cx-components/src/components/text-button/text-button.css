@@ -1,0 +1,50 @@
+.text-button {
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	color: var(--semantic-color-text-primary);
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+	text-decoration: none;
+	user-select: none;
+	vertical-align: baseline;
+	width: fit-content;
+}
+
+.text-button--paired {
+	gap: var(--semantic-spacing-inset-xl);
+}
+
+.text-button:focus-visible {
+	border-radius: var(--semantic-radius-sm);
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.text-button:disabled,
+.text-button[aria-disabled="true"],
+.text-button[data-disabled] {
+	color: var(--semantic-color-text-disabled);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.text-button__label {
+	color: currentColor;
+	white-space: nowrap;
+}
+
+.text-button__divider {
+	background: var(--component-list-cell-divider);
+	display: block;
+	flex: none;
+	height: 12px;
+	width: 1px;
+}

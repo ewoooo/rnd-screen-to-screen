@@ -1,0 +1,107 @@
+.search-bar {
+	align-items: center;
+	background: var(--component-text-field-bg-default);
+	border: 1px solid var(--component-text-field-border-default);
+	border-radius: var(--semantic-radius-xl);
+	box-sizing: border-box;
+	color: var(--component-text-field-fg-placeholder);
+	display: inline-flex;
+	gap: var(--semantic-spacing-gap-default);
+	min-height: 48px;
+	min-width: 0;
+	padding-inline: var(--semantic-spacing-inset-xl);
+	text-align: start;
+	transition:
+		background-color 160ms ease,
+		border-color 160ms ease,
+		color 160ms ease;
+	width: 100%;
+}
+
+.search-bar__trigger {
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	flex: 1 1 auto;
+	gap: var(--semantic-spacing-gap-default);
+	min-height: 46px;
+	min-width: 0;
+	padding: 0;
+	text-align: start;
+}
+
+.search-bar__leading-icon,
+.search-bar__action-icon {
+	display: block;
+	flex: none;
+	height: 24px;
+	width: 24px;
+}
+
+.search-bar__text {
+	color: var(--component-text-field-fg-placeholder);
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.search-bar__action {
+	color: var(--semantic-color-text-primary);
+	margin-inline-end: calc(var(--spacing-4) * -1);
+}
+
+.search-bar[data-has-value="true"] {
+	color: var(--component-text-field-fg-value);
+}
+
+.search-bar[data-has-value="true"] .search-bar__text {
+	color: var(--component-text-field-fg-value);
+}
+
+.search-bar--llm {
+	background: var(--semantic-color-bg-info-weak);
+	border-color: transparent;
+}
+
+@media (hover: hover) {
+	.search-bar:has(.search-bar__trigger:hover:not(:disabled)) {
+		background: var(--semantic-color-bg-dim);
+	}
+
+	.search-bar--llm:has(.search-bar__trigger:hover:not(:disabled)) {
+		background: var(--semantic-color-brand-weak);
+	}
+}
+
+.search-bar:has(.search-bar__trigger:active:not(:disabled)) {
+	background: var(--component-list-cell-bg-pressed);
+}
+
+.search-bar:has(.search-bar__trigger:focus-visible) {
+	border-color: var(--component-text-field-border-focused);
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.search-bar[data-disabled] {
+	background: var(--component-text-field-bg-disabled);
+	border-color: transparent;
+	color: var(--semantic-color-text-disabled);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.search-bar[data-disabled] .search-bar__trigger {
+	cursor: not-allowed;
+}
+
+.search-bar[data-disabled] .search-bar__text {
+	color: var(--semantic-color-text-disabled);
+}

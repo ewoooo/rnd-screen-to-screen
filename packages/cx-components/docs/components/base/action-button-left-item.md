@@ -12,7 +12,7 @@ Also checked the broader base section: [SKT_SDUI_Test_0512 / base section](https
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | action-button-left-item |
 | Dependencies | Icon |
@@ -21,9 +21,19 @@ Also checked the broader base section: [SKT_SDUI_Test_0512 / base section](https
 
 ### Implementation Files
 
-No dedicated `ActionButton.LeftItem` implementation file exists yet.
+Implemented in `@pxds/cx-components`:
 
-This should be implemented as an internal/scoped part of `ActionButton`, not as a public component export, unless another public API later needs the same visual contract.
+- `packages/cx-components/src/components/action-button-left-item/ActionButtonLeftItem.tsx`
+- `packages/cx-components/src/components/action-button-left-item/ActionButtonLeftItem.types.ts`
+- `packages/cx-components/src/components/action-button-left-item/action-button-left-item.variants.ts`
+- `packages/cx-components/src/components/action-button-left-item/action-button-left-item.css`
+- `packages/cx-components/src/components/action-button-left-item/action-button-left-item.readme.md`
+- `packages/cx-components/src/components/action-button-left-item/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -133,6 +143,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep this as an `ActionButton` internal/scoped item.
 - Use the action-button icon assets from `packages/cx-icons/src/action-button`.
 - Keep the wrapper horizontal, center aligned, and 22px tall.
@@ -152,7 +163,7 @@ Purpose: constrain implementation decisions and validation.
 
 - Figma node `10150:108976` was prioritized over the broader base section because this document already linked the individual node.
 - The broader base section confirms `LeftItem` sits near `ButtonXsmallSolid` and `TextButton`, under the same base area that contains `ActionButton`.
-- `docs/component-inventory.md` lists this as Phase 1 order 7 because it depends only on the already available `Icon` foundation and is needed by `ActionButton`.
+- `../../component-inventory.md` lists this as Phase 1 order 7 because it depends only on the already available `Icon` foundation and is needed by `ActionButton`.
 - The Figma generated context exports `Button/AI`, `Div`, and `Button/Gift` as image assets.
 - Dedicated source assets are now available in `packages/cx-icons/src/action-button`.
 

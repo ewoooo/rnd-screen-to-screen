@@ -12,7 +12,7 @@ Component node checked in Figma: [LeftItem](https://www.figma.com/design/n8pS1Vq
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 in inventory; current code has scoped preset support inside `TitleSection` |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | title-section-left-item |
 | Dependencies | Actual import: `Badge`; slot/preset input contract: `Icon`; text styling contract: `Text` |
@@ -21,13 +21,19 @@ Component node checked in Figma: [LeftItem](https://www.figma.com/design/n8pS1Vq
 
 ### Implementation Files
 
-No dedicated `TitleSection.LeftItem` implementation file exists.
+Implemented in `@pxds/cx-components`:
 
-Current implementation lives inside:
+- `packages/cx-components/src/components/title-section-left-item/TitleSectionLeftItem.tsx`
+- `packages/cx-components/src/components/title-section-left-item/TitleSectionLeftItem.types.ts`
+- `packages/cx-components/src/components/title-section-left-item/title-section-left-item.variants.ts`
+- `packages/cx-components/src/components/title-section-left-item/title-section-left-item.css`
+- `packages/cx-components/src/components/title-section-left-item/title-section-left-item.readme.md`
+- `packages/cx-components/src/components/title-section-left-item/index.ts`
 
-- `packages/cx-components/src/components/title-section/TitleSection.tsx`
-- `packages/cx-components/src/components/title-section/TitleSection.types.ts`
-- `packages/cx-components/src/components/title-section/title-section.css`
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -42,14 +48,14 @@ TitleSection.LeftItem (private preset set)
 └─ Badge
 ```
 
-This is not a standalone public React component. It is represented by the `leftItem` prop on `TitleSection`.
+This is implemented as a scoped CX component and can also be consumed through the `leftItem` prop on `TitleSection`.
 
 ### Component Consumption
 
 | Dependency | Contract type | Current implementation |
 | --- | --- | --- |
 | `Badge` | Actual code import | `TitleSection.tsx` imports and renders `Badge` for `leftItem.type="badge"`. |
-| `Icon` | Slot/preset input contract | Presets accept `ReactNode` icon content. `TitleSection` does not import `Icon`. |
+| `Icon` | Slot/preset input contract | Presets accept `ReactNode` icon content. The scoped component consumes `Icon`; the legacy `TitleSection` preset renderer accepts icon nodes. |
 | `Text` | Typography/source vocabulary contract | Text is rendered as a native `span` using `cx-title-section__left-text`; no public `Text` import is used here. |
 
 ### Figma Source Difference
@@ -158,6 +164,7 @@ Purpose: constrain implementation decisions and validation for this private scop
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep `TitleSection.LeftItem` private while Phase 2 treats it as a scoped item set.
 - Document current behavior from `TitleSection` code when the dedicated file does not exist.
 - Treat the existing `renderLeftItem()` branches in `TitleSection.tsx` as the current implementation SOT.
@@ -176,8 +183,8 @@ Purpose: constrain implementation decisions and validation for this private scop
 
 ### Normalization Notes
 
-- `docs/component-inventory.md` lists this as a Phase 2 private scoped item set depending on `Badge`, `Icon`, and `Text`.
-- Inventory lists this as `제작 예정`, but `TitleSection` already has private scoped preset branches for all three Figma variants.
+- `../../component-inventory.md` lists this as a Phase 2 private scoped item set depending on `Badge`, `Icon`, and `Text`.
+- Inventory now lists this as `제작 완료`; keep the scoped component and the legacy `TitleSection.leftItem` preset behavior aligned.
 - In code, this Phase 2 item is covered by `TitleSection`'s private preset renderer rather than by a dedicated component file.
 - `Icon` and `Text` are source/component vocabulary contracts in this context.
 - Plain `ReactNode` left item content is allowed, but it bypasses the internal type marker.

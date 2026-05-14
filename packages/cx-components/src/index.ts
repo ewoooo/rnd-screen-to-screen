@@ -1,4 +1,14 @@
 export type {
+	AccordionFigmaBridgeProps,
+	AccordionProps,
+} from "./components/accordion";
+export {
+	Accordion,
+	type AccordionLeftText,
+	type AccordionState,
+	accordionVariants,
+} from "./components/accordion";
+export type {
 	AppBarFigmaBridgeProps,
 	AppBarLogo,
 	AppBarProps,
@@ -10,6 +20,22 @@ export type {
 	BadgeType,
 } from "./components/badge";
 export { Badge, badgeVariants } from "./components/badge";
+export type {
+	BadgeIconFigmaBridgeProps,
+	BadgeIconProps,
+	BadgeIconSubtext,
+} from "./components/badge-icon";
+export { BadgeIcon, badgeIconVariants } from "./components/badge-icon";
+export type {
+	BottomNavigationFigmaBridgeProps,
+	BottomNavigationItem,
+	BottomNavigationProps,
+	BottomNavigationState,
+} from "./components/bottom-navigation";
+export {
+	BottomNavigation,
+	bottomNavigationVariants,
+} from "./components/bottom-navigation";
 export type {
 	ButtonFigmaBridgeProps,
 	ButtonProps,
@@ -43,6 +69,11 @@ export {
 	buttonXsmallSolidVariants,
 } from "./components/button-xsmall-solid";
 export type {
+	CalloutFigmaBridgeProps,
+	CalloutProps,
+} from "./components/callout";
+export { Callout, calloutVariants } from "./components/callout";
+export type {
 	CheckboxChecked,
 	CheckboxDisabled,
 	CheckboxFigmaBridgeProps,
@@ -63,6 +94,12 @@ export type {
 	DividerType,
 } from "./components/divider";
 export { Divider, dividerVariants } from "./components/divider";
+export type {
+	FooterFigmaBridgeProps,
+	FooterProps,
+	FooterType,
+} from "./components/footer";
+export { Footer, footerVariants } from "./components/footer";
 export type {
 	HandleFigmaBridgeProps,
 	HandleProps,
@@ -102,6 +139,13 @@ export type {
 	RadioButtonText,
 } from "./components/radio-button";
 export { RadioButton, radioButtonVariants } from "./components/radio-button";
+export type {
+	SearchBarAction,
+	SearchBarFigmaBridgeProps,
+	SearchBarProps,
+	SearchBarType,
+} from "./components/search-bar";
+export { SearchBar, searchBarVariants } from "./components/search-bar";
 export type { StatusBarProps } from "./components/status-bar";
 export { StatusBar, statusBarVariants } from "./components/status-bar";
 export type {
@@ -117,6 +161,15 @@ export type {
 	TextVariant,
 } from "./components/text";
 export { Text, textVariants } from "./components/text";
+export type {
+	TextButtonFigmaBridgeProps,
+	TextButtonProps,
+} from "./components/text-button";
+export {
+	TextButton,
+	type TextButtonVariant,
+	textButtonVariants,
+} from "./components/text-button";
 export type {
 	TextFieldActionButton,
 	TextFieldFigmaBridgeProps,
@@ -141,6 +194,12 @@ export type {
 } from "./components/title-section";
 export { TitleSection, titleSectionVariants } from "./components/title-section";
 export type {
+	TooltipDirection,
+	TooltipFigmaBridgeProps,
+	TooltipProps,
+} from "./components/tooltip";
+export { Tooltip, tooltipVariants } from "./components/tooltip";
+export type {
 	TooltipBubbleDirection,
 	TooltipBubbleFigmaBridgeProps,
 	TooltipBubbleProps,
@@ -149,6 +208,14 @@ export {
 	TooltipBubble,
 	tooltipBubbleVariants,
 } from "./components/tooltip-bubble";
+export type {
+	UnderlineTabFigmaBridgeProps,
+	UnderlineTabItem,
+	UnderlineTabProps,
+	UnderlineTabState,
+	UnderlineTabVariantState,
+} from "./components/underline-tab";
+export { UnderlineTab, underlineTabVariants } from "./components/underline-tab";
 export type {
 	FigmaBridgeAttributes,
 	FigmaRenderType,

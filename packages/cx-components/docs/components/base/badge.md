@@ -110,7 +110,7 @@ Code also writes `data-type` with the resolved lowercase type for styling/debugg
 - Figma variant values are `Gray`, `Blue`, and `Black`; code values are lowercase `gray`, `blue`, and `black`.
 - Figma text property is named `Text#9638:3`, default `Badge`.
 - Current code does not emit `data-figma-property-text`. Text is carried as DOM content through `children ?? text`.
-- `docs/component-inventory.md` currently lists `data-figma-property-text`: text for Badge, but the implemented bridge attribute is `data-figma-property-type`.
+- `../../component-inventory.md` currently lists `data-figma-property-text`: text for Badge, but the implemented bridge attribute is `data-figma-property-type`.
 
 ## Usage
 

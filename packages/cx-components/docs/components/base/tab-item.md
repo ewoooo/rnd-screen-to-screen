@@ -10,7 +10,7 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components candidate |
 | Figma Source | tab-item |
 | Dependencies | Text |
@@ -20,15 +20,19 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8
 
 ### Implementation Files
 
-No implementation files found yet.
-
-Expected future files:
+Implemented in `@pxds/cx-components`:
 
 - `packages/cx-components/src/components/tab-item/TabItem.tsx`
 - `packages/cx-components/src/components/tab-item/TabItem.types.ts`
 - `packages/cx-components/src/components/tab-item/tab-item.variants.ts`
 - `packages/cx-components/src/components/tab-item/tab-item.css`
+- `packages/cx-components/src/components/tab-item/tab-item.readme.md`
 - `packages/cx-components/src/components/tab-item/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -144,6 +148,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep one public `TabItem` component.
 - Use `Text` for the label.
 - Keep the underline as an internal CSS border, pseudo-element, or private element.
@@ -165,7 +170,7 @@ Purpose: constrain implementation decisions and validation.
 - Figma uses `State=Selected` and `State=Default`; code should normalize these to lowercase `selected` and `default`.
 - The selected underline is a simple 2px brand-colored rectangle and should be implemented with CSS, not an asset.
 - The default state still has a 35px source height. Preserve stable vertical rhythm so switching selected state does not move surrounding layout.
-- `TabItem` is Phase 1 in `docs/component-inventory.md` because it depends only on the existing `Text` foundation and blocks the compound `Tab`.
+- `TabItem` is Phase 1 in `../../component-inventory.md` because it depends only on the existing `Text` foundation and blocks the compound `Tab`.
 
 ### Validation
 
