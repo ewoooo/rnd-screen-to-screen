@@ -46,7 +46,7 @@ Rule of thumb: if a component needs CX visual styling or Figma component identit
 | BottomNavigation | 제작 예정 | cx-components candidate | bottom-navigation | Icon, Text | State: My/Search/Shopping | 없음 | [문서](components/base/bottom-navigation.md) |
 | ButtonListOrder | 제작 완료 | cx-components candidate | button-list-order | Icon | 없음 | 없음 | [문서](components/base/button-list-order.md) |
 | ButtonTextUnderline | 제작 완료 | cx-components candidate | button-text-underline | 없음 | 없음 | 없음 | [문서](components/base/button-text-underline.md) |
-| ButtonXsmallSolid | 제작 예정 | cx-components candidate | button-xsmall-solid | Icon, Button | State: Active/Disabled | 없음 | [문서](components/base/button-xsmall-solid.md) |
+| ButtonXsmallSolid | 제작 완료 | cx-components candidate | button-xsmall-solid | Icon, Button | State: Active/Disabled | 없음 | [문서](components/base/button-xsmall-solid.md) |
 | Callout | 제작 예정 | cx-components candidate | callout | Text, Icon | Property 1: Default | `data-figma-property-title`: boolean | [문서](components/base/callout.md) |
 | ChipItem | 제작 완료 | cx-components candidate | chip-item | Text | Selected: Off/On | 없음 | [문서](components/base/chip-item.md) |
 | Chips | 제작 예정 | cx-components candidate | chips | ChipItem | 없음 | 없음 | [문서](components/base/chips.md) |
@@ -65,12 +65,12 @@ Rule of thumb: if a component needs CX visual styling or Figma component identit
 | Tooltip | 제작 예정 | cx-components candidate | tooltip | TooltipBubble | Direction: Left/Center/Right | 없음 | [문서](components/base/tooltip.md) |
 | UnderlineTab | 제작 예정 | cx-components candidate | underline-tab | Text | State: 01/02 | 없음 | [문서](components/base/underline-tab.md) |
 | ActionButton.LeftItem | 제작 완료 | cx-components private | action-button-left-item | Icon | Type: Ai+Gift/Ai | 없음 | [문서](components/base/action-button-left-item.md) |
-| ListSelectedRightItem | 제작 예정 | cx-components private | list-selected-right-item | ButtonXsmallSolid, Icon, TitleSection.RightItem, IconButton, Text | Type: ButtonXsmallSolid/Icon/TextButton | 없음 | [문서](components/base/list-selected-right-item.md) |
-| ListText.RightItem | 제작 예정 | cx-components private | list-text-right-item | Icon, Text, IconButton, Badge | Type: Text/BadgeLevel/TextButton/Icon | 없음 | [문서](components/base/list-text-right-item.md) |
+| ListSelectedRightItem | 제작 완료 | cx-components private | list-selected-right-item | ButtonXsmallSolid, Icon, TitleSection.RightItem, IconButton, Text | Type: ButtonXsmallSolid/Icon/TextButton | 없음 | [문서](components/base/list-selected-right-item.md) |
+| ListText.RightItem | 제작 완료 | cx-components private | list-text-right-item | Icon, Text, IconButton, Badge | Type: Text/BadgeLevel/TextButton/Icon | 없음 | [문서](components/base/list-text-right-item.md) |
 | PopupActionButton | 제작 완료 | cx-components private | popup-action-button | Button | Options: 2Buttons/1Button | 없음 | [문서](components/base/popup-action-button.md) |
-| TitleContents.RightItem | 제작 예정 | cx-components private | title-contents-right-item | Button, Icon, IconButton | Type: Icon/Button/Type3 | 없음 | [문서](components/base/title-contents-right-item.md) |
-| TitleSection.LeftItem | 제작 예정 | cx-components private | title-section-left-item | Badge, Icon, Text | Type: Text/Icon/Badge | 없음 | [문서](components/base/title-section-left-item.md) |
-| TitleSection.RightItem | 제작 예정 | cx-components private | title-section-right-item | ButtonListOrder, Icon, IconButton, Button, Text | Type: Icon/TextButton/TextItemButton/ButtonListOrder | 없음 | [문서](components/base/title-section-right-item.md) |
+| TitleContents.RightItem | 제작 완료 | cx-components private | title-contents-right-item | Button, Icon, IconButton | Type: Icon/Button/Type3 | 없음 | [문서](components/base/title-contents-right-item.md) |
+| TitleSection.LeftItem | 제작 완료 | cx-components private | title-section-left-item | Badge, Icon, Text | Type: Text/Icon/Badge | 없음 | [문서](components/base/title-section-left-item.md) |
+| TitleSection.RightItem | 제작 완료 | cx-components private | title-section-right-item | ButtonListOrder, Icon, IconButton, Button, Text | Type: Icon/TextButton/TextItemButton/ButtonListOrder | 없음 | [문서](components/base/title-section-right-item.md) |
 | ProgressTopBar | 제작 완료 | pxds-components | progress-top-bar | 없음 | 없음 | 없음 | [문서](components/base/progress-top-bar.md) |
 | BottomSheet | 없음 | pxds-layout | bottom-sheet | 없음 | 없음 | 없음 | [문서](components/base/bottom-sheet.md) |
 | Bottomsheet | 제작 예정 | pxds-layout | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
