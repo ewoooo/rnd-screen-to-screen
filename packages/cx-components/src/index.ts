@@ -34,6 +34,15 @@ export {
 	buttonTextUnderlineVariants,
 } from "./components/button-text-underline";
 export type {
+	ButtonXsmallSolidFigmaBridgeProps,
+	ButtonXsmallSolidProps,
+	ButtonXsmallSolidState,
+} from "./components/button-xsmall-solid";
+export {
+	ButtonXsmallSolid,
+	buttonXsmallSolidVariants,
+} from "./components/button-xsmall-solid";
+export type {
 	CheckboxChecked,
 	CheckboxDisabled,
 	CheckboxFigmaBridgeProps,

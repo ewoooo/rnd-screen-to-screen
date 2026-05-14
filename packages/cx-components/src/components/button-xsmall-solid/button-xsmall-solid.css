@@ -1,0 +1,38 @@
+@import "@pxds/cx-tokens/tokens.css";
+
+.cx-button.cx-button-xsmall-solid {
+	border-radius: 9999px;
+	font-family: var(--10-semi-font-family, inherit);
+	font-size: var(--10-semi-font-size);
+	font-weight: var(--font-weight-semibold);
+	gap: var(--spacing-2);
+	line-height: var(--10-semi-line-height);
+	min-height: 21px;
+	padding: var(--spacing-4) var(--spacing-8);
+}
+
+.cx-button-xsmall-solid__label {
+	color: currentColor;
+	display: inline-block;
+	letter-spacing: 0;
+	line-height: inherit;
+	white-space: nowrap;
+}
+
+.cx-button-xsmall-solid__icon {
+	align-items: center;
+	display: inline-flex;
+	flex: 0 0 auto;
+	height: 12px;
+	justify-content: center;
+	width: 12px;
+}
+
+.cx-button-xsmall-solid__icon > svg,
+.cx-button-xsmall-solid__icon > img,
+.cx-button-xsmall-solid__icon > span {
+	display: block;
+	flex: 0 0 auto;
+	height: 12px;
+	width: 12px;
+}
