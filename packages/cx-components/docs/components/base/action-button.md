@@ -4,7 +4,9 @@
 
 Purpose: define an implementation-ready contract for the Phase 5 high-level action area that combines contextual text, tooltip guidance, and one or two CTA buttons.
 
-Figma SOT: [SKT_SDUI_Test_0512 / Component node](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_SDUI_Test_0512?node-id=9598-34265&t=wZRehc2DOVV8corW-1)
+Figma SOT: [SKT_SDUI_Test_0512 / base section](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_SDUI_Test_0512?node-id=14401-29020&t=wZRehc2DOVV8corW-1)
+
+Component node: [ActionButton](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_SDUI_Test_0512?node-id=9598-34265&t=wZRehc2DOVV8corW-1)
 
 Figma checked node: `ActionButton` (`9598:34265`) under `Component / base`.
 
@@ -139,6 +141,7 @@ Code should normalize them to lowercase/public API values:
 | `Buttons` frame | internal button group | no |
 | `LeftItem` instance | private `ActionButtonLeftItem` | no |
 | `Button/AI`, `Button/Gift`, `Div` | owned by `ActionButton.LeftItem` | no |
+| `Type=Ai, Button=2 / btn / ai / icon` | same private AI icon visual as `ActionButton.LeftItem` | no |
 
 ## Props
 
@@ -260,7 +263,7 @@ Purpose: constrain implementation decisions and validation.
 - `ShowText#9598:13` and `ShowTooltip#9719:0` are boolean component properties; code should expose readable prop names without the Figma suffixes.
 - The `Default, Button=2` source uses a summary text row and two button instances.
 - The `Ai, Button=1` and `Gift, Button=1` sources use tooltip plus a primary xlarge button with a private left item.
-- The `Ai, Button=2` source includes a custom `btn` layout in the Figma sample. Treat it as part of the same `buttonCount=2` action-area contract unless implementation reveals a separate reusable pattern.
+- The `Ai, Button=2` source includes a custom `btn` layout in the Figma sample and an inline AI vector. Treat the layout as part of the same `buttonCount=2` action-area contract, and normalize the vector to the same private AI asset used by `ActionButton.LeftItem` unless implementation reveals a separate reusable pattern.
 - Exact typography for summary text and price fragments should be checked against `Text` tokens during implementation.
 
 ### SVG Assets
@@ -272,6 +275,8 @@ Use `ActionButton.LeftItem` for AI/Gift assets:
 - `packages/cx-icons/src/action-button/ActionButton.LeftItem.AI.svg`
 - `packages/cx-icons/src/action-button/ActionButton.LeftItem.Div.svg`
 - `packages/cx-icons/src/action-button/ActionButton.LeftItem.Gift.svg`
+
+Figma also contains an inline AI vector inside `Type=Ai, Button=2 / btn / ai / icon`. Do not add a second ActionButton-local SVG for that node; normalize it to `ActionButton.LeftItem.AI.svg` or a later registered equivalent.
 
 ### Validation
 
