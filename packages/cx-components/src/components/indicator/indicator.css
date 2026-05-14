@@ -1,0 +1,31 @@
+.cx-indicator {
+	--cx-indicator-active: var(--semantic-light-color-bg-brand);
+	--cx-indicator-inactive: var(--semantic-light-color-border-default);
+
+	align-items: center;
+	box-sizing: border-box;
+	display: inline-flex;
+	flex-direction: row;
+	gap: var(--spacing-8);
+	padding: 0 var(--spacing-2);
+	width: fit-content;
+}
+
+[data-theme="dark"] .cx-indicator,
+.cx-indicator[data-theme="dark"] {
+	--cx-indicator-active: var(--semantic-dark-color-bg-brand);
+	--cx-indicator-inactive: var(--semantic-dark-color-border-subtle);
+}
+
+.cx-indicator__dot {
+	background: var(--cx-indicator-inactive);
+	border-radius: 999px;
+	display: block;
+	flex: 0 0 auto;
+	height: 4px;
+	width: 4px;
+}
+
+.cx-indicator__dot[data-active="true"] {
+	background: var(--cx-indicator-active);
+}

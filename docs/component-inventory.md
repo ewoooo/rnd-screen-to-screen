@@ -44,30 +44,30 @@ Rule of thumb: if a component needs CX visual styling or Figma component identit
 | BadgeIcon | 제작 예정 | cx-components candidate | badge-icon | Icon, Badge | Subtext: Off/On | 없음 | [문서](components/base/badge-icon.md) |
 | BannerHorizontal | 제작 예정 | cx-components candidate | banner-horizontal | Indicator, Text, Icon, Button | 없음 | `data-figma-property-indicator`: boolean | [문서](components/base/banner-horizontal.md) |
 | BottomNavigation | 제작 예정 | cx-components candidate | bottom-navigation | Icon, Text | State: My/Search/Shopping | 없음 | [문서](components/base/bottom-navigation.md) |
-| ButtonListOrder | 제작 예정 | cx-components candidate | button-list-order | Icon | 없음 | 없음 | [문서](components/base/button-list-order.md) |
-| ButtonTextUnderline | 제작 예정 | cx-components candidate | button-text-underline | 없음 | 없음 | 없음 | [문서](components/base/button-text-underline.md) |
+| ButtonListOrder | 제작 완료 | cx-components candidate | button-list-order | Icon | 없음 | 없음 | [문서](components/base/button-list-order.md) |
+| ButtonTextUnderline | 제작 완료 | cx-components candidate | button-text-underline | 없음 | 없음 | 없음 | [문서](components/base/button-text-underline.md) |
 | ButtonXsmallSolid | 제작 예정 | cx-components candidate | button-xsmall-solid | Icon, Button | State: Active/Disabled | 없음 | [문서](components/base/button-xsmall-solid.md) |
 | Callout | 제작 예정 | cx-components candidate | callout | Text, Icon | Property 1: Default | `data-figma-property-title`: boolean | [문서](components/base/callout.md) |
-| ChipItem | 제작 예정 | cx-components candidate | chip-item | Text | Selected: Off/On | 없음 | [문서](components/base/chip-item.md) |
+| ChipItem | 제작 완료 | cx-components candidate | chip-item | Text | Selected: Off/On | 없음 | [문서](components/base/chip-item.md) |
 | Chips | 제작 예정 | cx-components candidate | chips | ChipItem | 없음 | 없음 | [문서](components/base/chips.md) |
 | FilterSorting | 제작 예정 | cx-components candidate | filter-sorting | ButtonListOrder, Divider, Icon | 없음 | `data-figma-property-divider`: boolean | [문서](components/base/filter-sorting.md) |
 | Footer | 제작 예정 | cx-components candidate | footer | Text, Button | Type: 01/02 | 없음 | [문서](components/base/footer.md) |
-| Handle | 제작 예정 | cx-components candidate | handle | 없음 | state: Default/off | `data-figma-property-show-handle`: boolean | [문서](components/base/handle.md) |
-| Indicator | 제작 예정 | cx-components candidate | indicator | 없음 | 없음 | 없음 | [문서](components/base/indicator.md) |
+| Handle | 제작 완료 | cx-components candidate | handle | 없음 | state: Default/off | `data-figma-property-show-handle`: boolean | [문서](components/base/handle.md) |
+| Indicator | 제작 완료 | cx-components candidate | indicator | 없음 | 없음 | 없음 | [문서](components/base/indicator.md) |
 | ListSelected | 제작 예정 | cx-components candidate | list-selected | ButtonXsmallSolid, CheckBox, Icon, ListSelectedRightItem, RadioButton, Text | type: Radio/Checkbox | `data-figma-property-show-list-selected-right-item`: boolean; `data-figma-property-show-sub-text`: boolean | [문서](components/base/list-selected.md) |
 | ListText | 제작 예정 | cx-components candidate | list-text | Icon, ListText.RightItem, Text, Divider | Table: off/on | `data-figma-property-right-item`: boolean | [문서](components/base/list-text.md) |
 | SectionItem_이친구를복붙하세요 | 제작 예정 | cx-components candidate | section-item | TitleSection, Text, Badge | Type: Card 0/Default 20 | `data-figma-property-contents`: slot | [문서](components/base/section-item.md) |
 | Tab | 제작 예정 | cx-components candidate | tab | TabItem | 없음 | 없음 | [문서](components/base/tab.md) |
-| TabItem | 제작 예정 | cx-components candidate | tab-item | Text | State: Default/Selected | 없음 | [문서](components/base/tab-item.md) |
+| TabItem | 제작 완료 | cx-components candidate | tab-item | Text | State: Default/Selected | 없음 | [문서](components/base/tab-item.md) |
 | TextButton | 제작 예정 | cx-components candidate | text-button | Text | Property 1: Default/Variant2 | 없음 | [문서](components/base/text-button.md) |
-| TitleBottomSheet | 제작 예정 | cx-components candidate | title-bottom-sheet | Icon | 없음 | `data-figma-property-show-title-text`: boolean; `data-figma-property-show-title-button`: boolean; `data-figma-property-show-sub-text`: boolean; `data-figma-property-show-sub-text-2`: boolean; `data-figma-property-show-title`: boolean | [문서](components/base/title-bottom-sheet.md) |
+| TitleBottomSheet | 제작 완료 | cx-components candidate | title-bottom-sheet | Icon | 없음 | `data-figma-property-show-title-text`: boolean; `data-figma-property-show-title-button`: boolean; `data-figma-property-show-sub-text`: boolean; `data-figma-property-show-sub-text-2`: boolean; `data-figma-property-show-title`: boolean | [문서](components/base/title-bottom-sheet.md) |
 | TitleContents | 제작 예정 | cx-components candidate | title-contents | Icon, TitleContents.RightItem | 없음 | `data-figma-property-show-button`: boolean | [문서](components/base/title-contents.md) |
 | Tooltip | 제작 예정 | cx-components candidate | tooltip | TooltipBubble | Direction: Left/Center/Right | 없음 | [문서](components/base/tooltip.md) |
 | UnderlineTab | 제작 예정 | cx-components candidate | underline-tab | Text | State: 01/02 | 없음 | [문서](components/base/underline-tab.md) |
-| ActionButton.LeftItem | 제작 예정 | cx-components private | action-button-left-item | Icon | Type: Ai+Gift/Ai | 없음 | [문서](components/base/action-button-left-item.md) |
+| ActionButton.LeftItem | 제작 완료 | cx-components private | action-button-left-item | Icon | Type: Ai+Gift/Ai | 없음 | [문서](components/base/action-button-left-item.md) |
 | ListSelectedRightItem | 제작 예정 | cx-components private | list-selected-right-item | ButtonXsmallSolid, Icon, TitleSection.RightItem, IconButton, Text | Type: ButtonXsmallSolid/Icon/TextButton | 없음 | [문서](components/base/list-selected-right-item.md) |
 | ListText.RightItem | 제작 예정 | cx-components private | list-text-right-item | Icon, Text, IconButton, Badge | Type: Text/BadgeLevel/TextButton/Icon | 없음 | [문서](components/base/list-text-right-item.md) |
-| PopupActionButton | 제작 예정 | cx-components private | popup-action-button | Button | Options: 2Buttons/1Button | 없음 | [문서](components/base/popup-action-button.md) |
+| PopupActionButton | 제작 완료 | cx-components private | popup-action-button | Button | Options: 2Buttons/1Button | 없음 | [문서](components/base/popup-action-button.md) |
 | TitleContents.RightItem | 제작 예정 | cx-components private | title-contents-right-item | Button, Icon, IconButton | Type: Icon/Button/Type3 | 없음 | [문서](components/base/title-contents-right-item.md) |
 | TitleSection.LeftItem | 제작 예정 | cx-components private | title-section-left-item | Badge, Icon, Text | Type: Text/Icon/Badge | 없음 | [문서](components/base/title-section-left-item.md) |
 | TitleSection.RightItem | 제작 예정 | cx-components private | title-section-right-item | ButtonListOrder, Icon, IconButton, Button, Text | Type: Icon/TextButton/TextItemButton/ButtonListOrder | 없음 | [문서](components/base/title-section-right-item.md) |

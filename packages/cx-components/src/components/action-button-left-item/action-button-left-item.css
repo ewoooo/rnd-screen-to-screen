@@ -1,0 +1,36 @@
+.cx-action-button-left-item {
+	align-items: center;
+	box-sizing: border-box;
+	display: inline-flex;
+	flex: none;
+	gap: 20px;
+	height: 22px;
+	justify-content: flex-start;
+	vertical-align: middle;
+}
+
+.cx-action-button-left-item--ai-gift {
+	width: 85px;
+}
+
+.cx-action-button-left-item--ai {
+	width: 43px;
+}
+
+.cx-action-button-left-item__icon,
+.cx-action-button-left-item__divider {
+	display: block;
+	flex: none;
+	pointer-events: none;
+	user-select: none;
+}
+
+.cx-action-button-left-item__icon {
+	height: 22px;
+	width: 22px;
+}
+
+.cx-action-button-left-item__divider {
+	height: 8px;
+	width: 1px;
+}

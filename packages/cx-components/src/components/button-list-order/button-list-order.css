@@ -1,0 +1,68 @@
+.cx-button-list-order {
+	--cx-button-list-order-fg: var(--semantic-light-color-text-primary);
+	--cx-button-list-order-fg-disabled: var(
+		--semantic-light-color-text-disabled
+	);
+	--cx-button-list-order-focus-ring: var(
+		--semantic-light-color-border-focused
+	);
+
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	border-radius: var(--semantic-light-radius-sm);
+	box-sizing: border-box;
+	color: var(--cx-button-list-order-fg);
+	cursor: pointer;
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-family: var(--14-bold-font-family, inherit);
+	font-size: var(--14-bold-font-size);
+	font-weight: var(--14-bold-font-weight);
+	gap: var(--spacing-2);
+	justify-content: center;
+	letter-spacing: var(--14-bold-letter-spacing);
+	line-height: var(--14-bold-line-height);
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	user-select: none;
+	white-space: nowrap;
+}
+
+[data-theme="dark"] .cx-button-list-order,
+.cx-button-list-order[data-theme="dark"] {
+	--cx-button-list-order-fg: var(--semantic-dark-color-text-primary);
+	--cx-button-list-order-fg-disabled: var(
+		--semantic-dark-color-text-disabled
+	);
+	--cx-button-list-order-focus-ring: var(
+		--semantic-dark-color-border-focused
+	);
+}
+
+.cx-button-list-order__label {
+	display: block;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cx-button-list-order__icon {
+	display: block;
+	flex: 0 0 auto;
+}
+
+.cx-button-list-order:focus-visible {
+	outline: 2px solid var(--cx-button-list-order-focus-ring);
+	outline-offset: 2px;
+}
+
+.cx-button-list-order:disabled,
+.cx-button-list-order[data-disabled] {
+	color: var(--cx-button-list-order-fg-disabled);
+	cursor: not-allowed;
+	opacity: 0.45;
+	pointer-events: none;
+}

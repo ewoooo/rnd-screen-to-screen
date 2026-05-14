@@ -1,0 +1,68 @@
+@import "@pxds/cx-tokens/tokens.css";
+
+.cx-button-text-underline {
+	--cx-button-text-underline-fg: var(--semantic-light-color-text-secondary);
+	--cx-button-text-underline-fg-disabled: var(
+		--semantic-light-color-text-disabled
+	);
+	--cx-button-text-underline-focus-ring: var(
+		--semantic-light-color-border-focused
+	);
+
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	color: var(--cx-button-text-underline-fg);
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	gap: var(--semantic-light-spacing-gap-default);
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+	text-decoration: none;
+	user-select: none;
+	vertical-align: baseline;
+	width: fit-content;
+}
+
+[data-theme="dark"] .cx-button-text-underline,
+.cx-button-text-underline[data-theme="dark"] {
+	--cx-button-text-underline-fg: var(--semantic-dark-color-text-secondary);
+	--cx-button-text-underline-fg-disabled: var(
+		--semantic-dark-color-text-disabled
+	);
+	--cx-button-text-underline-focus-ring: var(
+		--semantic-dark-color-border-focused
+	);
+}
+
+.cx-button-text-underline:focus-visible {
+	border-radius: var(--semantic-light-radius-xs);
+	outline: 2px solid var(--cx-button-text-underline-focus-ring);
+	outline-offset: 2px;
+}
+
+.cx-button-text-underline:disabled,
+.cx-button-text-underline[aria-disabled="true"],
+.cx-button-text-underline[data-disabled] {
+	color: var(--cx-button-text-underline-fg-disabled);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.cx-button-text-underline__label {
+	color: currentColor;
+	font-family: var(--13-reg-font-family, inherit);
+	font-size: var(--13-reg-font-size);
+	font-weight: var(--13-reg-font-weight);
+	letter-spacing: var(--13-reg-letter-spacing);
+	line-height: var(--13-reg-line-height);
+	text-decoration: var(--13-reg-text-decoration);
+	text-indent: var(--13-reg-paragraph-indent);
+	text-transform: var(--13-reg-text-case);
+	white-space: nowrap;
+}
