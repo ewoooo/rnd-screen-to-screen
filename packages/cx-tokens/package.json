@@ -5,22 +5,24 @@
 	"type": "module",
 	"scripts": {
 		"generate:css": "node scripts/generate-css-variables.mjs",
-		"generate:tailwind": "node scripts/generate-tailwind.mjs",
+		"generate:theme-aliases": "node scripts/generate-theme-aliases.mjs",
 		"generate-text-styles": "node scripts/generate-text-styles.mjs",
 		"check:value-index": "node scripts/check-token-value-index.mjs"
 	},
 	"sideEffects": [
 		"./src/tokens.css",
 		"./src/text-styles.css",
-		"./src/tailwind/style.css"
+		"./src/theme-aliases.css",
+		"./src/style.css"
 	],
 	"exports": {
 		"./package.json": "./package.json",
 		"./originals/*": "./src/originals/*",
 		"./tokens-studio": "./src/tokens-studio/index.ts",
+		"./style.css": "./src/style.css",
+		"./theme-aliases.css": "./src/theme-aliases.css",
 		"./text-styles.css": "./src/text-styles.css",
-		"./tokens.css": "./src/tokens.css",
-		"./tailwind/style.css": "./src/tailwind/style.css"
+		"./tokens.css": "./src/tokens.css"
 	},
 	"devDependencies": {
 		"@tokens-studio/sd-transforms": "^2.0.3",
