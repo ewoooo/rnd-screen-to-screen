@@ -1,0 +1,25 @@
+.cx-popup-action-button {
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	padding-block-start: var(--spacing-12);
+	padding-inline: var(--spacing-24);
+	width: 100%;
+}
+
+.cx-popup-action-button--2-buttons {
+	gap: var(--spacing-8);
+}
+
+.cx-popup-action-button--1-button {
+	gap: var(--spacing-0);
+}
+
+.cx-popup-action-button__button--secondary {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+.cx-popup-action-button__button--primary {
+	flex: 0 0 auto;
+}

@@ -1,0 +1,32 @@
+.cx-handle {
+	--cx-handle-bar-color: var(--component-light-bottom-sheet-handle, #d9d9d9);
+	--cx-handle-bar-height: 3px;
+	--cx-handle-bar-width: 44px;
+	--cx-handle-height: 32px;
+
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	flex: none;
+	height: var(--cx-handle-height);
+	justify-content: center;
+	width: 100%;
+}
+
+[data-theme="dark"] .cx-handle,
+.cx-handle[data-theme="dark"] {
+	--cx-handle-bar-color: var(--component-dark-bottom-sheet-handle, #5c5c5c);
+}
+
+.cx-handle__bar {
+	background: var(--cx-handle-bar-color);
+	border-radius: var(--semantic-light-radius-full);
+	display: block;
+	flex: none;
+	height: var(--cx-handle-bar-height);
+	width: var(--cx-handle-bar-width);
+}
+
+.cx-handle--off .cx-handle__bar {
+	display: none;
+}

@@ -18,6 +18,22 @@ export type {
 } from "./components/button";
 export { Button, buttonVariants } from "./components/button";
 export type {
+	ButtonListOrderFigmaBridgeProps,
+	ButtonListOrderProps,
+} from "./components/button-list-order";
+export {
+	ButtonListOrder,
+	buttonListOrderVariants,
+} from "./components/button-list-order";
+export type {
+	ButtonTextUnderlineFigmaBridgeProps,
+	ButtonTextUnderlineProps,
+} from "./components/button-text-underline";
+export {
+	ButtonTextUnderline,
+	buttonTextUnderlineVariants,
+} from "./components/button-text-underline";
+export type {
 	CheckboxChecked,
 	CheckboxDisabled,
 	CheckboxFigmaBridgeProps,
@@ -26,12 +42,24 @@ export type {
 } from "./components/checkbox";
 export { Checkbox, checkboxVariants } from "./components/checkbox";
 export type {
+	ChipItemFigmaBridgeProps,
+	ChipItemProps,
+	ChipItemSelected,
+} from "./components/chip-item";
+export { ChipItem, chipItemVariants } from "./components/chip-item";
+export type {
 	DividerFigmaBridgeProps,
 	DividerOrientation,
 	DividerProps,
 	DividerType,
 } from "./components/divider";
 export { Divider, dividerVariants } from "./components/divider";
+export type {
+	HandleFigmaBridgeProps,
+	HandleProps,
+	HandleState,
+} from "./components/handle";
+export { Handle, handleVariants } from "./components/handle";
 export type {
 	IconColor,
 	IconProps,
@@ -53,6 +81,11 @@ export type {
 } from "./components/icon-button";
 export { IconButton, iconButtonVariants } from "./components/icon-button";
 export type {
+	IndicatorFigmaBridgeProps,
+	IndicatorProps,
+} from "./components/indicator";
+export { Indicator, indicatorVariants } from "./components/indicator";
+export type {
 	RadioButtonChecked,
 	RadioButtonDisabled,
 	RadioButtonFigmaBridgeProps,
@@ -62,6 +95,12 @@ export type {
 export { RadioButton, radioButtonVariants } from "./components/radio-button";
 export type { StatusBarProps } from "./components/status-bar";
 export { StatusBar, statusBarVariants } from "./components/status-bar";
+export type {
+	TabItemFigmaBridgeProps,
+	TabItemProps,
+	TabItemState,
+} from "./components/tab-item";
+export { TabItem, tabItemVariants } from "./components/tab-item";
 export type {
 	TextElement,
 	TextFigmaBridgeProps,
@@ -76,6 +115,14 @@ export type {
 	TextFieldState,
 } from "./components/text-field";
 export { TextField, textFieldVariants } from "./components/text-field";
+export type {
+	TitleBottomSheetFigmaBridgeProps,
+	TitleBottomSheetProps,
+} from "./components/title-bottom-sheet";
+export {
+	TitleBottomSheet,
+	titleBottomSheetVariants,
+} from "./components/title-bottom-sheet";
 export type {
 	TitleSectionFigmaBridgeProps,
 	TitleSectionLeftItem,

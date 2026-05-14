@@ -1,0 +1,62 @@
+.cx-chip-item {
+	--cx-chip-item-bg: var(--component-light-chip-bg-default);
+	--cx-chip-item-bg-selected: var(--semantic-light-color-bg-brand);
+	--cx-chip-item-fg: var(--semantic-light-color-text-primary);
+	--cx-chip-item-fg-selected: var(--semantic-light-color-text-on-brand);
+	--cx-chip-item-focus-ring: var(--semantic-light-color-border-focused);
+
+	appearance: none;
+	align-items: center;
+	background: var(--cx-chip-item-bg);
+	border: 0;
+	border-radius: var(--semantic-light-radius-full);
+	box-sizing: border-box;
+	color: var(--cx-chip-item-fg);
+	display: inline-flex;
+	justify-content: center;
+	min-height: 41px;
+	padding: 0 var(--semantic-light-spacing-inset-md);
+	text-decoration: none;
+	white-space: nowrap;
+	width: fit-content;
+}
+
+[data-theme="dark"] .cx-chip-item,
+.cx-chip-item[data-theme="dark"] {
+	--cx-chip-item-bg: var(--component-dark-chip-bg-default);
+	--cx-chip-item-bg-selected: var(--semantic-dark-color-bg-brand);
+	--cx-chip-item-fg: var(--semantic-dark-color-text-primary);
+	--cx-chip-item-fg-selected: var(--semantic-dark-color-text-on-brand);
+	--cx-chip-item-focus-ring: var(--semantic-dark-color-border-focused);
+}
+
+button.cx-chip-item {
+	cursor: pointer;
+}
+
+.cx-chip-item:focus-visible {
+	outline: 2px solid var(--cx-chip-item-focus-ring);
+	outline-offset: 2px;
+}
+
+.cx-chip-item__label {
+	color: inherit;
+	font-family: var(--13-med-font-family, inherit);
+	font-size: var(--13-med-font-size);
+	font-weight: var(--13-med-font-weight);
+	letter-spacing: var(--13-med-letter-spacing);
+	line-height: var(--13-med-line-height);
+}
+
+.cx-chip-item--selected {
+	background: var(--cx-chip-item-bg-selected);
+	color: var(--cx-chip-item-fg-selected);
+}
+
+.cx-chip-item--selected .cx-chip-item__label {
+	font-family: var(--13-semi-font-family, inherit);
+	font-size: var(--13-semi-font-size);
+	font-weight: var(--13-semi-font-weight);
+	letter-spacing: var(--13-semi-letter-spacing);
+	line-height: var(--13-semi-line-height);
+}
