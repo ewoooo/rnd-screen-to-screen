@@ -18,7 +18,7 @@ function getVisibleActions(actions: readonly ActionButtonAction[]) {
 function getButtonCount(
 	buttonCount: ActionButtonProps["buttonCount"],
 	actionCount: number,
-) {
+): 1 | 2 {
 	return buttonCount ?? (actionCount === 2 ? 2 : 1);
 }
 
@@ -28,14 +28,21 @@ function getPrimaryActionIndex(actions: readonly ActionButtonAction[]) {
 	return primaryIndex >= 0 ? primaryIndex : 0;
 }
 
-function getActionKey(action: ActionButtonAction) {
+function getRenderedActions(
+	actions: readonly ActionButtonAction[],
+	buttonCount: 1 | 2,
+) {
+	return actions.slice(0, buttonCount);
+}
+
+function getActionKey(action: ActionButtonAction, index: number) {
 	const variant = action.variant ?? "primary";
 
 	if (typeof action.label === "string" || typeof action.label === "number") {
-		return `${variant}-${action.label}`;
+		return `${variant}-${action.label}-${index}`;
 	}
 
-	return `${variant}-${action.leftItem ?? "none"}`;
+	return `${variant}-${action.leftItem ?? "none"}-${index}`;
 }
 
 function getDefaultLeftItem(
@@ -82,10 +89,11 @@ export const ActionButton = forwardRef<HTMLDivElement, ActionButtonProps>(
 	) {
 		const visibleActions = getVisibleActions(actions);
 		const resolvedButtonCount = getButtonCount(buttonCount, visibleActions.length);
+		const renderedActions = getRenderedActions(visibleActions, resolvedButtonCount);
 		const resolvedShowText = showText ?? (text !== undefined && text !== null);
 		const resolvedShowTooltip =
 			showTooltip ?? (tooltip !== undefined && tooltip !== null);
-		const primaryActionIndex = getPrimaryActionIndex(visibleActions);
+		const primaryActionIndex = getPrimaryActionIndex(renderedActions);
 
 		return (
 			<div
@@ -141,7 +149,7 @@ export const ActionButton = forwardRef<HTMLDivElement, ActionButtonProps>(
 					data-figma-render="layout"
 					data-figma-property-name="actions"
 				>
-					{visibleActions.map((action, index) => {
+					{renderedActions.map((action, index) => {
 						const variant = action.variant ?? "primary";
 						const leftItem =
 							action.leftItem ??
@@ -149,7 +157,7 @@ export const ActionButton = forwardRef<HTMLDivElement, ActionButtonProps>(
 
 						return (
 							<Button
-								key={getActionKey(action)}
+								key={getActionKey(action, index)}
 								variant={variant}
 								size="xlarge"
 								fullWidth

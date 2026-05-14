@@ -5,7 +5,10 @@ import type { ChipsProps } from "./Chips.types";
 import { chipsVariants } from "./chips.variants";
 
 function getFallbackValue(items: ChipsProps["items"], defaultValue?: string) {
-	if (defaultValue && items.some((item) => item.value === defaultValue)) {
+	if (
+		defaultValue !== undefined &&
+		items.some((item) => item.value === defaultValue)
+	) {
 		return defaultValue;
 	}
 
@@ -33,7 +36,9 @@ export const Chips = forwardRef<HTMLDivElement, ChipsProps>(function Chips(
 	);
 	const fallbackValue = getFallbackValue(items, defaultValue);
 	const controlledValue =
-		value && items.some((item) => item.value === value) ? value : undefined;
+		value !== undefined && items.some((item) => item.value === value)
+			? value
+			: undefined;
 	const selectedValue = controlledValue ?? uncontrolledValue ?? fallbackValue;
 	const resolvedSelectedValue = items.some((item) => item.value === selectedValue)
 		? selectedValue
@@ -48,9 +53,10 @@ export const Chips = forwardRef<HTMLDivElement, ChipsProps>(function Chips(
 	}
 
 	return (
+		// biome-ignore lint/a11y/useSemanticElements: Chips keeps a div root to preserve the public ref/native props contract.
 		<div
 			ref={ref}
-			role="radiogroup"
+			role="group"
 			aria-label={ariaLabel}
 			data-figma-render={dataFigmaRender}
 			data-figma-component-id={dataFigmaComponentId}
@@ -67,8 +73,6 @@ export const Chips = forwardRef<HTMLDivElement, ChipsProps>(function Chips(
 				return (
 					<ChipItem
 						key={item.value}
-						role="radio"
-						aria-checked={selected}
 						selected={selected}
 						aria-disabled={item.disabled || undefined}
 						onClick={item.disabled ? undefined : () => selectValue(item.value)}

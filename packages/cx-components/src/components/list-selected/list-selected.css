@@ -21,6 +21,7 @@
 .list-selected__label-group {
 	align-items: center;
 	box-sizing: border-box;
+	cursor: pointer;
 	display: flex;
 	flex: 1 1 auto;
 	gap: var(--spacing-8);
@@ -29,6 +30,18 @@
 
 .list-selected__control {
 	flex: none;
+}
+
+.list-selected__label-group
+	.radio-button__input:focus-visible
+	+ .list-selected__control
+	.radio-button__control,
+.list-selected__label-group
+	.checkbox__input:focus-visible
+	+ .list-selected__control
+	.checkbox__control {
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
 }
 
 .list-selected__label {
@@ -67,4 +80,8 @@
 .list-selected[data-disabled] .list-selected__label,
 .list-selected[data-disabled] .list-selected__sub-text {
 	color: var(--semantic-color-text-disabled);
+}
+
+.list-selected[data-disabled] .list-selected__label-group {
+	cursor: not-allowed;
 }

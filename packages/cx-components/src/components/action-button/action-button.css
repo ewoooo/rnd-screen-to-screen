@@ -10,7 +10,7 @@
 }
 
 .action-button__text {
-	color: var(--semantic-color-fg-muted);
+	color: var(--semantic-color-text-secondary);
 	margin: 0;
 	text-align: center;
 }

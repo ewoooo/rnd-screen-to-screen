@@ -25,6 +25,8 @@ export const FilterSorting = forwardRef<HTMLDivElement, FilterSortingProps>(
 		ref,
 	) {
 		const resolvedDivider = divider ? "true" : "false";
+		const orderDisabled = !onOrderClick;
+		const filterDisabled = !onFilterClick;
 
 		return (
 			<div
@@ -49,12 +51,15 @@ export const FilterSorting = forwardRef<HTMLDivElement, FilterSortingProps>(
 						<ButtonListOrder
 							className="filter-sorting__order"
 							label={orderLabel}
+							disabled={orderDisabled}
 							onClick={onOrderClick}
 						/>
 						<span className="filter-sorting__separator" aria-hidden="true" />
 						<button
 							className="filter-sorting__filter"
 							type="button"
+							disabled={filterDisabled}
+							data-disabled={filterDisabled ? "" : undefined}
 							onClick={onFilterClick}
 						>
 							<span className="filter-sorting__filter-label">{filterLabel}</span>

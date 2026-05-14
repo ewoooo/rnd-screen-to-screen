@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
 import { cn } from "../../lib/cn";
-import { Checkbox } from "../checkbox";
+import { checkboxVariants } from "../checkbox/checkbox.variants";
 import {
 	ListSelectedRightItem,
 	type ListSelectedRightItemProps,
 } from "../list-selected-right-item";
-import { RadioButton } from "../radio-button";
+import { radioButtonVariants } from "../radio-button/radio-button.variants";
 import { Text } from "../text";
 import type { ListSelectedProps } from "./ListSelected.types";
 import { listSelectedVariants } from "./list-selected.variants";
@@ -42,24 +42,25 @@ export const ListSelected = forwardRef<HTMLDivElement, ListSelectedProps>(
 		const shouldRenderRightItem =
 			showListSelectedRightItem ?? rightItem !== null;
 		const resolvedRightItem = rightItem ?? DEFAULT_RIGHT_ITEM;
+		const resolvedType = type ?? "radio";
 
 		return (
 			<div
 				ref={ref}
 				data-figma-render={dataFigmaRender}
 				data-figma-component-id={dataFigmaComponentId}
-				data-figma-property-type={dataFigmaType ?? type}
+				data-figma-property-type={dataFigmaType ?? resolvedType}
 				data-figma-property-show-list-selected-right-item={
 					dataFigmaShowRightItem ?? boolAttr(shouldRenderRightItem)
 				}
 				data-figma-property-show-sub-text={
 					dataFigmaShowSubText ?? boolAttr(shouldRenderSubText)
 				}
-				data-type={type}
+				data-type={resolvedType}
 				data-disabled={disabled ? "" : undefined}
 				className={cn(
 					listSelectedVariants({
-						type,
+						type: resolvedType,
 						rightItem: shouldRenderRightItem,
 						subText: shouldRenderSubText,
 					}),
@@ -68,24 +69,46 @@ export const ListSelected = forwardRef<HTMLDivElement, ListSelectedProps>(
 				{...props}
 			>
 				<div className="list-selected__content" data-figma-render="layout">
-					<div className="list-selected__label-group" data-figma-render="layout">
-						{type === "radio" ? (
-							<RadioButton
-								checked={checked}
-								className="list-selected__control"
-								disabled={disabled}
-								onCheckedChange={onChange}
-								data-figma-render="primitive"
+					<label className="list-selected__label-group" data-figma-render="layout">
+						<input
+							type={resolvedType}
+							checked={checked}
+							className={
+								resolvedType === "radio"
+									? "radio-button__input"
+									: "checkbox__input"
+							}
+							disabled={disabled}
+							onChange={(event) => onChange?.(event.currentTarget.checked)}
+							readOnly={onChange ? undefined : true}
+						/>
+						<span
+							className={cn(
+								"list-selected__control",
+								resolvedType === "radio"
+									? radioButtonVariants({ checked, disabled, text: false })
+									: checkboxVariants({ checked, disabled, text: false }),
+							)}
+							data-figma-render="primitive"
+							data-figma-component-id={
+								resolvedType === "radio" ? "radio-button" : "checkbox"
+							}
+							data-figma-property-checked={boolAttr(checked)}
+							data-figma-property-text="false"
+							data-figma-property-disabled={boolAttr(disabled)}
+							data-checked={boolAttr(checked)}
+							data-text="false"
+							data-disabled={boolAttr(disabled)}
+						>
+							<span
+								className={
+									resolvedType === "radio"
+										? "radio-button__control"
+										: "checkbox__control"
+								}
+								aria-hidden="true"
 							/>
-						) : (
-							<Checkbox
-								checked={checked}
-								className="list-selected__control"
-								disabled={disabled}
-								onCheckedChange={onChange}
-								data-figma-render="primitive"
-							/>
-						)}
+						</span>
 						<Text
 							as="span"
 							className="list-selected__label"
@@ -94,7 +117,7 @@ export const ListSelected = forwardRef<HTMLDivElement, ListSelectedProps>(
 						>
 							{label}
 						</Text>
-					</div>
+					</label>
 					{shouldRenderSubText ? (
 						<Text
 							as="span"

@@ -223,6 +223,12 @@ export { SectionItem, sectionItemVariants } from "./components/section-item";
 export type { StatusBarProps } from "./components/status-bar";
 export { StatusBar, statusBarVariants } from "./components/status-bar";
 export type {
+	TabFigmaBridgeProps,
+	TabItemOption,
+	TabProps,
+} from "./components/tab";
+export { Tab, tabVariants } from "./components/tab";
+export type {
 	TabItemFigmaBridgeProps,
 	TabItemProps,
 	TabItemState,

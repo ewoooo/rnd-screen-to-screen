@@ -48,5 +48,5 @@
 }
 
 .bottomsheet--action-button-off {
-	padding-block-end: var(--spacing-34, 34px);
+	padding-block-end: var(--spacing-32);
 }

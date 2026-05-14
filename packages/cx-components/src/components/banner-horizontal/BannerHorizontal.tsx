@@ -3,6 +3,7 @@ import {
 	type ElementType,
 	forwardRef,
 	isValidElement,
+	type KeyboardEventHandler,
 } from "react";
 import { cn } from "../../lib/cn";
 import { Indicator } from "../indicator";
@@ -43,6 +44,9 @@ export const BannerHorizontal = forwardRef<HTMLElement, BannerHorizontalProps>(
 			indicator = true,
 			indicatorCount = DEFAULT_INDICATOR_COUNT,
 			onClick,
+			onKeyDown,
+			role,
+			tabIndex,
 			title,
 			"data-figma-render": dataFigmaRender = "component",
 			"data-figma-component-id": dataFigmaComponentId = "banner-horizontal",
@@ -51,25 +55,40 @@ export const BannerHorizontal = forwardRef<HTMLElement, BannerHorizontalProps>(
 		},
 		ref,
 	) {
-		const Root: ElementType = href ? "a" : onClick ? "button" : "div";
+		const Root: ElementType = href ? "a" : "div";
 		const media = renderMedia(image);
-		const isButton = Root === "button";
+		const isClickableDiv = !href && Boolean(onClick);
+		const isInteractive = Boolean(href || onClick);
+		const handleKeyDown: KeyboardEventHandler<HTMLElement> = (event) => {
+			onKeyDown?.(event);
+
+			if (event.defaultPrevented || !isClickableDiv) {
+				return;
+			}
+
+			if (event.key === "Enter" || event.key === " ") {
+				event.preventDefault();
+				event.currentTarget.click();
+			}
+		};
 
 		return createElement(
 			Root,
 			{
 				ref,
+				...props,
 				href,
-				type: isButton ? "button" : undefined,
 				onClick,
+				onKeyDown: isClickableDiv ? handleKeyDown : onKeyDown,
+				role: isClickableDiv ? (role ?? "button") : role,
+				tabIndex: isClickableDiv ? (tabIndex ?? 0) : tabIndex,
 				"aria-label": ariaLabel,
 				"data-figma-render": dataFigmaRender,
 				"data-figma-component-id": dataFigmaComponentId,
 				"data-figma-property-indicator":
 					dataFigmaIndicator ?? boolAttr(indicator),
-				"data-interactive": href || onClick ? "true" : undefined,
+				"data-interactive": isInteractive ? "true" : undefined,
 				className: cn(bannerHorizontalVariants(), className),
-				...props,
 			},
 			<>
 				<div className="banner-horizontal__surface">

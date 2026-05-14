@@ -1,6 +1,7 @@
 import type { VariantProps } from "class-variance-authority";
 import type {
 	ComponentPropsWithoutRef,
+	KeyboardEventHandler,
 	MouseEventHandler,
 	ReactNode,
 } from "react";
@@ -11,12 +12,23 @@ export type BannerHorizontalFigmaBridgeProps = FigmaBridgeAttributes & {
 	"data-figma-property-indicator"?: "true" | "false";
 };
 
-type NativeBannerHorizontalProps = Omit<
+type NativeBannerHorizontalDivProps = Omit<
 	ComponentPropsWithoutRef<"div">,
-	"aria-label" | "children" | "onClick" | "title"
->;
+	"aria-label" | "children" | "onClick" | "onKeyDown" | "title"
+> & {
+	href?: undefined;
+	onClick?: MouseEventHandler<HTMLElement>;
+};
 
-export type BannerHorizontalProps = NativeBannerHorizontalProps &
+type NativeBannerHorizontalAnchorProps = Omit<
+	ComponentPropsWithoutRef<"a">,
+	"aria-label" | "children" | "href" | "onClick" | "onKeyDown" | "title"
+> & {
+	href: string;
+	onClick?: MouseEventHandler<HTMLElement>;
+};
+
+type BannerHorizontalOwnProps =
 	VariantProps<typeof bannerHorizontalVariants> &
 	BannerHorizontalFigmaBridgeProps & {
 		title: ReactNode;
@@ -25,8 +37,10 @@ export type BannerHorizontalProps = NativeBannerHorizontalProps &
 		indicator?: boolean;
 		indicatorCount?: number;
 		activeIndex?: number;
-		href?: string;
-		onClick?: MouseEventHandler<HTMLElement>;
 		ariaLabel?: string;
 		className?: string;
+		onKeyDown?: KeyboardEventHandler<HTMLElement>;
 	};
+
+export type BannerHorizontalProps = BannerHorizontalOwnProps &
+	(NativeBannerHorizontalDivProps | NativeBannerHorizontalAnchorProps);

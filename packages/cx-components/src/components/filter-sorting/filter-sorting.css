@@ -117,3 +117,11 @@
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
+
+.filter-sorting__filter:disabled,
+.filter-sorting__filter[data-disabled] {
+	color: var(--semantic-color-text-disabled);
+	cursor: not-allowed;
+	opacity: 0.45;
+	pointer-events: none;
+}
