@@ -1,32 +1,11 @@
-@import "@pxds/cx-tokens/tokens.css";
-
 .cx-title-section-right-item {
-	--cx-title-section-right-item-fg: var(--semantic-light-color-text-primary);
-	--cx-title-section-right-item-tertiary-fg: var(
-		--semantic-light-color-text-tertiary
-	);
-	--cx-title-section-right-item-pressed-bg: var(
-		--component-light-list-cell-bg-pressed
-	);
-
 	align-items: center;
 	box-sizing: border-box;
-	color: var(--cx-title-section-right-item-fg);
+	color: var(--semantic-color-text-primary);
 	display: inline-flex;
 	flex: 0 1 auto;
 	justify-content: flex-end;
 	min-width: 0;
-}
-
-[data-theme="dark"] .cx-title-section-right-item,
-.cx-title-section-right-item[data-theme="dark"] {
-	--cx-title-section-right-item-fg: var(--semantic-dark-color-text-primary);
-	--cx-title-section-right-item-tertiary-fg: var(
-		--semantic-dark-color-text-tertiary
-	);
-	--cx-title-section-right-item-pressed-bg: var(
-		--component-dark-list-cell-bg-pressed
-	);
 }
 
 .cx-title-section-right-item__icon-button {
@@ -37,17 +16,17 @@
 .cx-title-section-right-item__text-item-button.cx-button {
 	background: transparent;
 	border: 0;
-	border-radius: var(--semantic-light-radius-sm);
+	border-radius: var(--semantic-radius-sm);
 	color: currentColor;
-	gap: var(--spacing-4);
+	gap: var(--semantic-spacing-gap-tight);
 	min-height: auto;
 	min-width: 0;
-	padding: var(--spacing-4);
+	padding: var(--semantic-spacing-gap-tight);
 }
 
 .cx-title-section-right-item__text-button.cx-button:active,
 .cx-title-section-right-item__text-item-button.cx-button:active {
-	background: var(--cx-title-section-right-item-pressed-bg);
+	background: var(--component-list-cell-bg-pressed);
 }
 
 .cx-title-section-right-item__text-button-label,
@@ -62,7 +41,7 @@
 }
 
 .cx-title-section-right-item__text-item-label {
-	color: var(--cx-title-section-right-item-tertiary-fg);
+	color: var(--semantic-color-text-tertiary);
 	font-family: var(--12-med-font-family, inherit);
 	font-size: var(--12-med-font-size);
 	font-weight: var(--12-med-font-weight);

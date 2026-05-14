@@ -1,77 +1,33 @@
 .cx-text-field {
-	--cx-text-field-bg: var(--component-light-text-field-bg-default);
-	--cx-text-field-bg-active: var(--semantic-light-color-bg-info-weak);
-	--cx-text-field-bg-critical: var(--semantic-light-color-bg-critical-weak);
-	--cx-text-field-bg-disabled: var(--component-light-text-field-bg-disabled);
-	--cx-text-field-border: var(--component-light-text-field-border-default);
-	--cx-text-field-border-focused: var(
-		--component-light-text-field-border-focused
-	);
-	--cx-text-field-border-critical: var(
-		--component-light-text-field-border-critical
-	);
-	--cx-text-field-fg-value: var(--component-light-text-field-fg-value);
-	--cx-text-field-fg-placeholder: var(
-		--component-light-text-field-fg-placeholder
-	);
-	--cx-text-field-fg-label: var(--component-light-text-field-fg-label);
-	--cx-text-field-fg-help: var(--semantic-light-color-text-primary);
-	--cx-text-field-fg-critical: var(--component-light-text-field-fg-critical);
-	--cx-text-field-fg-disabled: var(--semantic-light-color-text-disabled);
-
 	display: flex;
 	flex-direction: column;
-	gap: var(--semantic-light-spacing-gap-default);
+	gap: var(--semantic-spacing-gap-default);
 	width: 100%;
 }
 
-[data-theme="dark"] .cx-text-field,
-.cx-text-field[data-theme="dark"] {
-	--cx-text-field-bg: var(--component-dark-text-field-bg-default);
-	--cx-text-field-bg-active: var(--semantic-dark-color-bg-info-weak);
-	--cx-text-field-bg-critical: var(--semantic-dark-color-bg-critical-weak);
-	--cx-text-field-bg-disabled: var(--component-dark-text-field-bg-disabled);
-	--cx-text-field-border: var(--component-dark-text-field-border-default);
-	--cx-text-field-border-focused: var(
-		--component-dark-text-field-border-focused
-	);
-	--cx-text-field-border-critical: var(
-		--component-dark-text-field-border-critical
-	);
-	--cx-text-field-fg-value: var(--component-dark-text-field-fg-value);
-	--cx-text-field-fg-placeholder: var(
-		--component-dark-text-field-fg-placeholder
-	);
-	--cx-text-field-fg-label: var(--component-dark-text-field-fg-label);
-	--cx-text-field-fg-help: var(--semantic-dark-color-text-primary);
-	--cx-text-field-fg-critical: var(--component-dark-text-field-fg-critical);
-	--cx-text-field-fg-disabled: var(--semantic-dark-color-text-disabled);
-}
-
 .cx-text-field__label {
-	color: var(--cx-text-field-fg-label);
+	color: var(--component-text-field-fg-label);
 }
 
 .cx-text-field-input {
 	align-items: flex-start;
 	box-sizing: border-box;
 	display: flex;
-	gap: var(--semantic-light-spacing-gap-default);
+	gap: var(--semantic-spacing-gap-default);
 	width: 100%;
 }
 
 .cx-text-field-input__field {
 	align-items: center;
-	background: var(--cx-text-field-bg);
-	border: 1px solid var(--cx-text-field-border);
-	border-radius: var(--semantic-light-radius-xl);
+	background: var(--component-text-field-bg-default);
+	border: 1px solid var(--component-text-field-border-default);
+	border-radius: var(--semantic-radius-xl);
 	box-sizing: border-box;
 	display: flex;
 	flex: 1 1 auto;
 	height: 48px;
 	min-width: 0;
-	padding: var(--semantic-light-spacing-inset-lg)
-		var(--semantic-light-spacing-inset-xl);
+	padding: var(--semantic-spacing-inset-lg) var(--semantic-spacing-inset-xl);
 	transition:
 		background-color 160ms ease,
 		border-color 160ms ease;
@@ -83,8 +39,8 @@
 	background: transparent;
 	border: 0;
 	box-sizing: border-box;
-	caret-color: var(--cx-text-field-border-focused);
-	color: var(--cx-text-field-fg-value);
+	caret-color: var(--component-text-field-border-focused);
+	color: var(--component-text-field-fg-value);
 	flex: 1 1 auto;
 	font-family: var(--15-med-font-family, inherit);
 	font-size: var(--15-med-font-size);
@@ -98,18 +54,18 @@
 }
 
 .cx-text-field-input__native::placeholder {
-	color: var(--cx-text-field-fg-placeholder);
+	color: var(--component-text-field-fg-placeholder);
 	opacity: 1;
 }
 
 .cx-text-field-input__native:disabled {
-	color: var(--cx-text-field-fg-disabled);
+	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
-	-webkit-text-fill-color: var(--cx-text-field-fg-disabled);
+	-webkit-text-fill-color: var(--semantic-color-text-disabled);
 }
 
 .cx-text-field-input__action {
-	border-radius: var(--semantic-light-radius-xl);
+	border-radius: var(--semantic-radius-xl);
 	flex: 0 0 82px;
 	height: 48px;
 	min-width: 82px;
@@ -117,36 +73,36 @@
 }
 
 .cx-text-field__helper {
-	color: var(--cx-text-field-fg-help);
+	color: var(--semantic-color-text-primary);
 }
 
 .cx-text-field--focused .cx-text-field-input__field,
 .cx-text-field--typing .cx-text-field-input__field {
-	background: var(--cx-text-field-bg-active);
-	border-color: var(--cx-text-field-border-focused);
+	background: var(--semantic-color-bg-info-weak);
+	border-color: var(--component-text-field-border-focused);
 }
 
 .cx-text-field--typed .cx-text-field-input__field,
 .cx-text-field--default .cx-text-field-input__field {
-	background: var(--cx-text-field-bg);
+	background: var(--component-text-field-bg-default);
 }
 
 .cx-text-field--disabled .cx-text-field-input__field {
-	background: var(--cx-text-field-bg-disabled);
+	background: var(--component-text-field-bg-disabled);
 	border-color: transparent;
 }
 
 .cx-text-field--disabled .cx-text-field__label,
 .cx-text-field--disabled .cx-text-field__helper {
-	color: var(--cx-text-field-fg-disabled);
+	color: var(--semantic-color-text-disabled);
 }
 
 .cx-text-field--error .cx-text-field-input__field {
-	background: var(--cx-text-field-bg-critical);
-	border-color: var(--cx-text-field-border-critical);
+	background: var(--semantic-color-bg-critical-weak);
+	border-color: var(--component-text-field-border-critical);
 }
 
 .cx-text-field--error .cx-text-field__label,
 .cx-text-field--error .cx-text-field__helper {
-	color: var(--cx-text-field-fg-critical);
+	color: var(--component-text-field-fg-critical);
 }

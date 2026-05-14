@@ -1,24 +1,14 @@
-@import "@pxds/cx-tokens/tokens.css";
-
 .cx-button-text-underline {
-	--cx-button-text-underline-fg: var(--semantic-light-color-text-secondary);
-	--cx-button-text-underline-fg-disabled: var(
-		--semantic-light-color-text-disabled
-	);
-	--cx-button-text-underline-focus-ring: var(
-		--semantic-light-color-border-focused
-	);
-
 	appearance: none;
 	align-items: center;
 	background: transparent;
 	border: 0;
 	box-sizing: border-box;
-	color: var(--cx-button-text-underline-fg);
+	color: var(--semantic-color-text-secondary);
 	cursor: pointer;
 	display: inline-flex;
 	font: inherit;
-	gap: var(--semantic-light-spacing-gap-default);
+	gap: var(--semantic-spacing-gap-default);
 	justify-content: center;
 	margin: 0;
 	padding: 0;
@@ -29,27 +19,16 @@
 	width: fit-content;
 }
 
-[data-theme="dark"] .cx-button-text-underline,
-.cx-button-text-underline[data-theme="dark"] {
-	--cx-button-text-underline-fg: var(--semantic-dark-color-text-secondary);
-	--cx-button-text-underline-fg-disabled: var(
-		--semantic-dark-color-text-disabled
-	);
-	--cx-button-text-underline-focus-ring: var(
-		--semantic-dark-color-border-focused
-	);
-}
-
 .cx-button-text-underline:focus-visible {
-	border-radius: var(--semantic-light-radius-xs);
-	outline: 2px solid var(--cx-button-text-underline-focus-ring);
+	border-radius: var(--semantic-radius-sm);
+	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
 .cx-button-text-underline:disabled,
 .cx-button-text-underline[aria-disabled="true"],
 .cx-button-text-underline[data-disabled] {
-	color: var(--cx-button-text-underline-fg-disabled);
+	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
 	pointer-events: none;
 }
