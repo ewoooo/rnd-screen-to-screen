@@ -1,0 +1,5 @@
+/* Public Tailwind adapter for @pxds/cx-tokens. */
+@import "tailwindcss";
+@import "./tailwind.css";
+@import "../tokens.css";
+@import "./aliases.css";

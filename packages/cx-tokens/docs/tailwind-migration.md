@@ -14,7 +14,7 @@ Do not hand-edit token values in generated CSS.
 
 ```txt
 src/originals
-  -> scripts/generate-css.mjs
+  -> scripts/generate-css-variables.mjs
   -> src/tokens.css
 ```
 
@@ -124,6 +124,46 @@ Theme changes are handled by CSS variable values, not by duplicating every class
 
 For Tailwind v4, prefer a CSS-first theme file that maps Tailwind theme variables to CX aliases.
 
+The Tailwind exposure must preserve all three token layers:
+
+```txt
+primitive  -> --radius-r0, --font-size-10
+semantic   -> --semantic-light-color-border-strong-rgb
+semantic   -> --semantic-dark-color-border-strong-rgb
+alias      -> --semantic-color-border-strong-rgb
+component  -> --component-light-button-bg-secondary
+component  -> --component-dark-button-bg-secondary
+alias      -> --component-button-bg-secondary
+```
+
+The readable token key is the CSS custom property name without `--`.
+
+```txt
+--radius-r0 -> radius-r0
+--font-size-10 -> font-size-10
+--semantic-color-border-strong-rgb -> semantic-color-border-strong-rgb
+```
+
+For property-specific utility classes, Tailwind still applies its normal namespace:
+
+```txt
+--radius-r0 -> rounded-r0
+--font-size-10 -> text-10
+--semantic-color-border-strong -> border-[var(--semantic-color-border-strong)]
+```
+
+Use `semantic`, not `sementic`, to match the existing token path.
+
+In addition to exact token keys, `generate-tailwind.mjs` may emit Tailwind color namespace aliases for component ergonomics:
+
+```txt
+--semantic-color-text-primary -> --color-text-primary -> text-text-primary
+--component-button-bg-secondary -> --color-button-secondary -> bg-button-secondary
+--component-button-border-secondary -> --color-button-border-secondary -> border-button-border-secondary
+```
+
+These aliases are convenience utility contracts. They do not replace the exact token-key exposure.
+
 Example target file:
 
 ```txt
@@ -133,43 +173,42 @@ packages/cx-tokens/src/tailwind/tailwind.css
 Example:
 
 ```css
-@import "tailwindcss";
-@import "./aliases.css";
-
 @theme {
-	--color-text-primary: var(--semantic-color-text-primary);
-	--color-bg-default: var(--semantic-color-bg-default);
-	--color-border-subtle: var(--semantic-color-border-subtle);
+	--semantic-light-color-border-strong-rgb: <generated from tokens.css>;
+	--semantic-dark-color-border-strong-rgb: <generated from tokens.css>;
+	--semantic-color-border-strong-rgb: var(--semantic-light-color-border-strong-rgb);
 
-	--color-button-primary: var(--component-button-bg-primary);
+	--component-light-button-bg-secondary: <generated from tokens.css>;
+	--component-dark-button-bg-secondary: <generated from tokens.css>;
+	--component-button-bg-secondary: var(--component-light-button-bg-secondary);
 	--color-button-secondary: var(--component-button-bg-secondary);
-	--color-button-disabled: var(--component-button-bg-disabled);
-	--color-button-fg-primary: var(--component-button-fg-primary);
-	--color-button-fg-secondary: var(--component-button-fg-secondary);
-	--color-button-fg-disabled: var(--component-button-fg-disabled);
-	--color-button-border-secondary: var(--component-button-border-secondary);
 
 	/*
 	 * Spacing and radius already use Tailwind-compatible names in the token
 	 * source. Emit them into @theme from the generator instead of writing
 	 * recursive aliases such as `--spacing-16: var(--spacing-16)`.
 	 */
-	--spacing-0: 0px;
-	--spacing-2: 2px;
-	--spacing-4: 4px;
-	--spacing-8: 8px;
-	--spacing-12: 12px;
-	--spacing-16: 16px;
-	--spacing-20: 20px;
-	--spacing-24: 24px;
-	--spacing-32: 32px;
-
-	--radius-r1: 4px;
-	--radius-r2: 6px;
-	--radius-r3: 8px;
-	--radius-r4: 12px;
-	--radius-full: 9999px;
+	--spacing-16: <generated from tokens.css>;
+	--radius-r3: <generated from tokens.css>;
 }
+```
+
+Text styles must also be expressible as Tailwind utilities. Existing text style classes should be emitted through Tailwind `@utility` using the same class contract:
+
+```css
+@utility text-20-med {
+	font-family: var(--20-med-font-family);
+	font-weight: var(--20-med-font-weight);
+	line-height: var(--20-med-line-height);
+	font-size: var(--20-med-font-size);
+	letter-spacing: var(--20-med-letter-spacing);
+}
+```
+
+This keeps the migration path stable:
+
+```txt
+.text-20-med -> text-20-med
 ```
 
 Expose the Tailwind adapter through a public `style.css` file:
@@ -181,8 +220,10 @@ packages/cx-tokens/src/tailwind/style.css
 Example:
 
 ```css
-@import "../tokens.css";
+@import "tailwindcss";
 @import "./tailwind.css";
+@import "../tokens.css";
+@import "./aliases.css";
 ```
 
 Consumers should import `style.css`, not `aliases.css` or `tailwind.css` directly. This keeps the Tailwind implementation isolated under `src/tailwind` and leaves room to change the internal split later.
@@ -315,17 +356,16 @@ Start with components whose visual state is mostly variant-driven.
 Recommended first pass:
 
 1. Keep `tokens.css` as the generated source.
-2. Add `src/tailwind/aliases.css` for theme-neutral semantic and component aliases.
-3. Add `src/tailwind/tailwind.css` as the Tailwind theme adapter.
-4. Add `src/tailwind/style.css` as the public import boundary.
-5. Convert `Button` as the pilot.
-6. Convert simple primitives:
+2. Run `npm run generate:css -w @pxds/cx-tokens` after Tokens Studio source changes.
+3. Run `npm run generate:tailwind -w @pxds/cx-tokens` to create `src/tailwind/aliases.css`, `src/tailwind/tailwind.css`, and `src/tailwind/style.css`.
+4. Convert `Button` as the pilot.
+5. Convert simple primitives:
    - `Badge`
    - `ChipItem`
    - `TabItem`
    - `ButtonTextUnderline`
    - `ButtonXsmallSolid`
-7. Convert compounds only after the primitive pattern is stable.
+6. Convert compounds only after the primitive pattern is stable.
 
 Avoid starting with `TextField`, `TitleSection`, or list components because they mix internal slots, layout, and state more heavily.
 
@@ -353,7 +393,7 @@ npm run build -w @screen/mobile
 ## Open Decisions
 
 - Whether Tailwind v4 is the migration target now, or whether a v3-compatible preset is needed first.
-- Whether `tailwind/aliases.css` should be generated by `scripts/generate-css.mjs` or maintained in a separate handwritten file.
+- Whether `tailwind/aliases.css` should be generated by `scripts/generate-tailwind.mjs` or maintained in a separate handwritten file.
 - Whether `tailwind/tailwind.css` should be generated with token values for spacing/radius to avoid same-name recursive aliases.
 - Exact naming convention for color utilities:
   - Semantic colors: `text-primary`, `bg-default`, `border-subtle`
