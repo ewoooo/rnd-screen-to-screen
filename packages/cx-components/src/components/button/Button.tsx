@@ -40,7 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 			data-disabled={isDisabled ? "" : undefined}
 			className={cn(
 				buttonVariants({ variant: resolvedVariant, size }),
-				fullWidth && "cx-button--full-width",
+				fullWidth && "w-full",
 				className,
 			)}
 			{...props}
