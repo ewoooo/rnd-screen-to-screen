@@ -16,7 +16,10 @@ export function Screen() {
 				<AppBar title="회원 가입" showLeftItem showTitle />
 			</AppScreen.Header>
 			<AppScreen.Content>
-				<SectionHeaderPage title="가입 완료" />
+				<SectionHeaderPage
+					title="가입이 완료되었습니다"
+					subTitle="잠시 후 홈으로 이동합니다"
+				/>
 				<SectionMessageJoinCompleteView />
 			</AppScreen.Content>
 			<AppScreen.Bottom>

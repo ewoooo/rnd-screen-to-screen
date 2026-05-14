@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 
-import "@pxds/cx-tokens/tokens.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

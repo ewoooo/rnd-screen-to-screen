@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, Divider, Text } from "@pxds/cx-components";
+import { Checkbox, Divider, Notice, Text } from "@pxds/cx-components";
 import { HStack, VStack } from "@pxds/pxds-layout/primitives";
 import { useState } from "react";
 
@@ -54,7 +54,7 @@ export function CheckboxTerms() {
 
 	return (
 		<VStack gap="var(--semantic-spacing-block)">
-			<VStack>
+			<VStack gap="var(--semantic-spacing-stack)">
 				<ConsentRow
 					title="전체 동의"
 					caption="필수·선택 약관을 모두 동의합니다"
@@ -63,28 +63,23 @@ export function CheckboxTerms() {
 					emphasis
 				/>
 				<Divider type="contents" />
-				{CONSENT_ITEMS.map((item, index) => (
-					<VStack key={item.id}>
+				<VStack gap="var(--semantic-spacing-stack)">
+					{CONSENT_ITEMS.map((item) => (
 						<ConsentRow
+							key={item.id}
 							title={item.title}
-							caption={`${item.required ? "필수" : "선택"} · ${item.caption}`}
+							caption={item.caption}
 							checked={Boolean(checked[item.id])}
-							invalid={item.required && !checked[item.id]}
 							onCheckedChange={(next) => setItem(item.id, next)}
 						/>
-						{index < CONSENT_ITEMS.length - 1 ? (
-							<Divider type="contents" />
-						) : null}
-					</VStack>
-				))}
-				{requiredUnchecked.length > 0 ? (
-					<VStack pt="var(--semantic-spacing-inline)">
-						<Text variant="error" as="p">
-							{requiredUnchecked.length}개의 필수 약관 동의가 필요합니다.
-						</Text>
-					</VStack>
-				) : null}
+					))}
+				</VStack>
 			</VStack>
+			{requiredUnchecked.length > 0 ? (
+				<Notice tone="negative" title="필수 약관 동의가 필요합니다">
+					{requiredUnchecked.length}개의 필수 약관에 동의해 주세요.
+				</Notice>
+			) : null}
 		</VStack>
 	);
 }
@@ -93,32 +88,21 @@ function ConsentRow({
 	title,
 	caption,
 	checked,
-	invalid,
 	onCheckedChange,
 	emphasis,
 }: {
 	title: string;
 	caption: string;
 	checked: boolean;
-	invalid?: boolean;
 	onCheckedChange: (checked: boolean) => void;
 	emphasis?: boolean;
 }) {
 	return (
-		<HStack
-			align="center"
-			gap="var(--semantic-spacing-stack)"
-			style={{
-				minHeight: emphasis ? 60 : 64,
-			}}
-		>
-			<Checkbox
-				checked={checked}
-				onCheckedChange={onCheckedChange}
-			/>
+		<HStack align="flex-start" gap="var(--semantic-spacing-stack)">
+			<Checkbox checked={checked} onCheckedChange={onCheckedChange} />
 			<VStack minWidth={0} gap="var(--semantic-spacing-row)">
 				<Text variant={emphasis ? "sectionTitle" : "listTitle"}>{title}</Text>
-				<Text variant={invalid ? "error" : "helper"}>{caption}</Text>
+				<Text variant="helper">{caption}</Text>
 			</VStack>
 		</HStack>
 	);

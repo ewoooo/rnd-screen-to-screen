@@ -16,7 +16,10 @@ export function Screen() {
 				<AppBar title="회원 가입" showLeftItem showTitle />
 			</AppScreen.Header>
 			<AppScreen.Content>
-				<SectionHeaderPage title="본인인증" />
+				<SectionHeaderPage
+					title="본인 인증"
+					subTitle="본인 명의 인증 수단으로 가입자를 확인해 주세요"
+				/>
 				<ListCellAuthMethod />
 			</AppScreen.Content>
 			<AppScreen.Bottom>

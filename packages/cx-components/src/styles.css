@@ -1,4 +1,3 @@
-@import "@pxds/cx-tokens/style.css";
 @import "./components/accordion-list/accordion-list.css";
 @import "./components/accordion/accordion.css";
 @import "./components/action-button-left-item/action-button-left-item.css";
@@ -48,3 +47,6 @@
 @import "./components/tooltip-bubble/tooltip-bubble.css";
 @import "./components/tooltip/tooltip.css";
 @import "./components/underline-tab/underline-tab.css";
+
+/* Candidate: cx-tokens 어휘로 흡수되기 전 검증 단계의 컴포넌트 */
+@import "./candidate/notice/notice.css";
