@@ -38,7 +38,7 @@ export const PopupActionButton = forwardRef<
 				fullWidth
 				disabled={secondaryAction.disabled}
 				onClick={secondaryAction.onClick}
-				className="cx-popup-action-button__button cx-popup-action-button__button--secondary"
+				className="popup-action-button__button popup-action-button__button--secondary"
 			>
 				{secondaryAction.label}
 			</Button>
@@ -48,7 +48,7 @@ export const PopupActionButton = forwardRef<
 					size="large"
 					disabled={primaryAction.disabled}
 					onClick={primaryAction.onClick}
-					className="cx-popup-action-button__button cx-popup-action-button__button--primary"
+					className="popup-action-button__button popup-action-button__button--primary"
 				>
 					{primaryAction.label}
 				</Button>

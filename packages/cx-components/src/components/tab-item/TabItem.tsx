@@ -35,7 +35,7 @@ export const TabItem = forwardRef<HTMLDivElement, TabItemProps>(function TabItem
 			{...props}
 		>
 			<Text
-				className="cx-tab-item__label"
+				className="tab-item__label"
 				data-figma-render="primitive"
 				as="span"
 			>

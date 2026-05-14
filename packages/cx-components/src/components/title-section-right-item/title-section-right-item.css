@@ -1,4 +1,4 @@
-.cx-title-section-right-item {
+.title-section-right-item {
 	align-items: center;
 	box-sizing: border-box;
 	color: var(--semantic-color-text-primary);
@@ -8,12 +8,12 @@
 	min-width: 0;
 }
 
-.cx-title-section-right-item__icon-button {
+.title-section-right-item__icon-button {
 	color: currentColor;
 }
 
-.cx-title-section-right-item__text-button.cx-button,
-.cx-title-section-right-item__text-item-button.cx-button {
+.title-section-right-item__text-button.button,
+.title-section-right-item__text-item-button.button {
 	background: transparent;
 	border: 0;
 	border-radius: var(--semantic-radius-sm);
@@ -24,13 +24,13 @@
 	padding: var(--semantic-spacing-gap-tight);
 }
 
-.cx-title-section-right-item__text-button.cx-button:active,
-.cx-title-section-right-item__text-item-button.cx-button:active {
+.title-section-right-item__text-button.button:active,
+.title-section-right-item__text-item-button.button:active {
 	background: var(--component-list-cell-bg-pressed);
 }
 
-.cx-title-section-right-item__text-button-label,
-.cx-title-section-right-item__text-item-value {
+.title-section-right-item__text-button-label,
+.title-section-right-item__text-item-value {
 	color: currentColor;
 	font-family: var(--14-semi-font-family, inherit);
 	font-size: var(--14-semi-font-size);
@@ -40,7 +40,7 @@
 	white-space: nowrap;
 }
 
-.cx-title-section-right-item__text-item-label {
+.title-section-right-item__text-item-label {
 	color: var(--semantic-color-text-tertiary);
 	font-family: var(--12-med-font-family, inherit);
 	font-size: var(--12-med-font-size);
@@ -53,22 +53,22 @@
 	white-space: nowrap;
 }
 
-.cx-title-section-right-item__text-item-icon {
+.title-section-right-item__text-item-icon {
 	align-items: center;
 	display: inline-flex;
 	flex: 0 0 auto;
 }
 
-.cx-title-section-right-item__text-item-icon > svg,
-.cx-title-section-right-item__text-item-icon > img {
+.title-section-right-item__text-item-icon > svg,
+.title-section-right-item__text-item-icon > img {
 	display: block;
 	flex: 0 0 auto;
 }
 
-.cx-title-section-right-item__list-order-button {
+.title-section-right-item__list-order-button {
 	color: currentColor;
 }
 
-.cx-title-section-right-item[data-disabled] {
+.title-section-right-item[data-disabled] {
 	cursor: not-allowed;
 }

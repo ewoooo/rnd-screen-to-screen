@@ -82,12 +82,12 @@ export const TitleBottomSheet = forwardRef<
 		>
 			{shouldShowTitle ? (
 				<div
-					className="cx-title-bottom-sheet__title"
+					className="title-bottom-sheet__title"
 					data-figma-render="ignore"
 				>
 					{shouldShowTitleText ? (
 						<div
-							className="cx-title-bottom-sheet__title-text"
+							className="title-bottom-sheet__title-text"
 							data-figma-render="slot"
 							data-figma-property-name="title"
 						>
@@ -98,7 +98,7 @@ export const TitleBottomSheet = forwardRef<
 						onClose ? (
 							<button
 								aria-label={closeLabel}
-								className="cx-title-bottom-sheet__close-button"
+								className="title-bottom-sheet__close-button"
 								data-figma-render="primitive"
 								onClick={onClose}
 								type="button"
@@ -108,7 +108,7 @@ export const TitleBottomSheet = forwardRef<
 						) : (
 							<span
 								aria-hidden="true"
-								className="cx-title-bottom-sheet__close-icon"
+								className="title-bottom-sheet__close-icon"
 								data-figma-render="primitive"
 							>
 								{closeIcon}
@@ -119,15 +119,15 @@ export const TitleBottomSheet = forwardRef<
 			) : null}
 			{shouldShowSubText ? (
 				<div
-					className="cx-title-bottom-sheet__sub-text"
+					className="title-bottom-sheet__sub-text"
 					data-figma-render="slot"
 					data-figma-property-name="sub-text"
 				>
-					<span className="cx-title-bottom-sheet__sub-text-primary">
+					<span className="title-bottom-sheet__sub-text-primary">
 						{subText}
 					</span>
 					{shouldShowSubText2 ? (
-						<span className="cx-title-bottom-sheet__sub-text-emphasis">
+						<span className="title-bottom-sheet__sub-text-emphasis">
 							{subText2}
 						</span>
 					) : null}

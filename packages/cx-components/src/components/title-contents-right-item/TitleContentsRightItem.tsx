@@ -59,7 +59,7 @@ export const TitleContentsRightItem = forwardRef<
 		>
 			{type === "button" ? (
 				<Button
-					className="cx-title-contents-right-item__button"
+					className="title-contents-right-item__button"
 					disabled={disabled}
 					onClick={onClick}
 					size="small"
@@ -74,7 +74,7 @@ export const TitleContentsRightItem = forwardRef<
 			) : isInteractiveIcon ? (
 				<IconButton
 					aria-label={iconLabel}
-					className="cx-title-contents-right-item__icon-button"
+					className="title-contents-right-item__icon-button"
 					onClick={onClick}
 					size="small"
 					variant="plain"
@@ -86,7 +86,7 @@ export const TitleContentsRightItem = forwardRef<
 			) : (
 				<span
 					aria-label={iconLabel}
-					className="cx-title-contents-right-item__icon"
+					className="title-contents-right-item__icon"
 					role="img"
 				>
 					<Icon aria-hidden="true" type={iconType} size={16} />

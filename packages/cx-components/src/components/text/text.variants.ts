@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const textVariants = cva("cx-text", {
+export const textVariants = cva("text", {
 	variants: {
 		variant: {
 			displayTitle: "text-24-med",

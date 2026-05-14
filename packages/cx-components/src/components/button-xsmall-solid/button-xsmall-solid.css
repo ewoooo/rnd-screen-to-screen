@@ -1,4 +1,4 @@
-.cx-button.cx-button-xsmall-solid {
+.button.button-xsmall-solid {
 	border-radius: 9999px;
 	font-family: var(--10-semi-font-family, inherit);
 	font-size: var(--10-semi-font-size);
@@ -9,7 +9,7 @@
 	padding: var(--spacing-4) var(--spacing-8);
 }
 
-.cx-button-xsmall-solid__label {
+.button-xsmall-solid__label {
 	color: currentColor;
 	display: inline-block;
 	letter-spacing: 0;
@@ -17,7 +17,7 @@
 	white-space: nowrap;
 }
 
-.cx-button-xsmall-solid__icon {
+.button-xsmall-solid__icon {
 	align-items: center;
 	display: inline-flex;
 	flex: 0 0 auto;
@@ -26,9 +26,9 @@
 	width: 12px;
 }
 
-.cx-button-xsmall-solid__icon > svg,
-.cx-button-xsmall-solid__icon > img,
-.cx-button-xsmall-solid__icon > span {
+.button-xsmall-solid__icon > svg,
+.button-xsmall-solid__icon > img,
+.button-xsmall-solid__icon > span {
 	display: block;
 	flex: 0 0 auto;
 	height: 12px;

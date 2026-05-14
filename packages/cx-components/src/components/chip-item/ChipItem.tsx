@@ -29,7 +29,7 @@ export const ChipItem = forwardRef<HTMLElement, ChipItemProps>(function ChipItem
 
 	const label = (
 		<Text
-			className="cx-chip-item__label"
+			className="chip-item__label"
 			data-figma-render="slot"
 			data-figma-component-id={undefined}
 			variant="caption"

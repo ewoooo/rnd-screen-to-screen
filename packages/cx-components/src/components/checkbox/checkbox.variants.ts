@@ -1,18 +1,18 @@
 import { cva } from "class-variance-authority";
 
-export const checkboxVariants = cva("cx-checkbox", {
+export const checkboxVariants = cva("checkbox", {
 	variants: {
 		checked: {
-			true: "cx-checkbox--checked",
-			false: "cx-checkbox--unchecked",
+			true: "checkbox--checked",
+			false: "checkbox--unchecked",
 		},
 		disabled: {
-			true: "cx-checkbox--disabled",
-			false: "cx-checkbox--enabled",
+			true: "checkbox--disabled",
+			false: "checkbox--enabled",
 		},
 		text: {
-			true: "cx-checkbox--with-text",
-			false: "cx-checkbox--icon-only",
+			true: "checkbox--with-text",
+			false: "checkbox--icon-only",
 		},
 	},
 	defaultVariants: {

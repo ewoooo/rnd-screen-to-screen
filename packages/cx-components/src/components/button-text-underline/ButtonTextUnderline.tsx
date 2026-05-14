@@ -39,7 +39,7 @@ export const ButtonTextUnderline = forwardRef<
 				as="span"
 				variant="bodySubtle"
 				data-figma-render="primitive"
-				className="cx-button-text-underline__label"
+				className="button-text-underline__label"
 			>
 				{children}
 			</Text>

@@ -12,7 +12,7 @@ Component node: [Handle](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components candidate |
 | Figma Source | handle |
 | Dependencies | 없음 |
@@ -22,7 +22,19 @@ Component node: [Handle](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT
 
 ### Implementation Files
 
-No implementation file exists yet. Repository search found only this documentation file for `Handle`.
+Implemented in `@pxds/cx-components`:
+
+- `packages/cx-components/src/components/handle/Handle.tsx`
+- `packages/cx-components/src/components/handle/Handle.types.ts`
+- `packages/cx-components/src/components/handle/handle.variants.ts`
+- `packages/cx-components/src/components/handle/handle.css`
+- `packages/cx-components/src/components/handle/handle.readme.md`
+- `packages/cx-components/src/components/handle/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -108,6 +120,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Implement the visible handle as a CSS box, not as an imported SVG.
 - Use tokenized size, color, radius, and spacing values where available.
 - Keep the root width compatible with mobile sheet content width; Figma variant width is `393px`.

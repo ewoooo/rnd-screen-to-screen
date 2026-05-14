@@ -1,4 +1,4 @@
-.cx-divider {
+.divider {
 	align-self: stretch;
 	background: var(--component-list-cell-divider);
 	border: 0;
@@ -9,24 +9,24 @@
 	padding: 0;
 }
 
-.cx-divider--horizontal {
+.divider--horizontal {
 	height: 1px;
 	min-height: 1px;
 	width: 100%;
 }
 
-.cx-divider--vertical {
+.divider--vertical {
 	height: 100%;
 	min-width: 1px;
 	width: 1px;
 }
 
-.cx-divider--section.cx-divider--horizontal {
+.divider--section.divider--horizontal {
 	height: 4px;
 	min-height: 4px;
 }
 
-.cx-divider--section.cx-divider--vertical {
+.divider--section.divider--vertical {
 	min-width: 4px;
 	width: 4px;
 }

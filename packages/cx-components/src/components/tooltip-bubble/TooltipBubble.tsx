@@ -32,18 +32,18 @@ export const TooltipBubble = forwardRef<HTMLDivElement, TooltipBubbleProps>(
 				{...props}
 			>
 				<div
-					className="cx-tooltip-bubble__bubble"
+					className="tooltip-bubble__bubble"
 					data-figma-render="slot"
 					data-figma-property-name="bubble"
 				>
 					{children}
 				</div>
 				<div
-					className="cx-tooltip-bubble__tail-wrap"
+					className="tooltip-bubble__tail-wrap"
 					data-figma-render="slot"
 					data-figma-property-name="tail"
 				>
-					<span aria-hidden="true" className="cx-tooltip-bubble__tail" />
+					<span aria-hidden="true" className="tooltip-bubble__tail" />
 				</div>
 			</div>
 		);

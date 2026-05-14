@@ -1,4 +1,4 @@
-.cx-button-text-underline {
+.button-text-underline {
 	appearance: none;
 	align-items: center;
 	background: transparent;
@@ -19,21 +19,21 @@
 	width: fit-content;
 }
 
-.cx-button-text-underline:focus-visible {
+.button-text-underline:focus-visible {
 	border-radius: var(--semantic-radius-sm);
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
-.cx-button-text-underline:disabled,
-.cx-button-text-underline[aria-disabled="true"],
-.cx-button-text-underline[data-disabled] {
+.button-text-underline:disabled,
+.button-text-underline[aria-disabled="true"],
+.button-text-underline[data-disabled] {
 	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
 	pointer-events: none;
 }
 
-.cx-button-text-underline__label {
+.button-text-underline__label {
 	color: currentColor;
 	font-family: var(--13-reg-font-family, inherit);
 	font-size: var(--13-reg-font-size);

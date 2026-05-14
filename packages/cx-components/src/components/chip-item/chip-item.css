@@ -1,4 +1,4 @@
-.cx-chip-item {
+.chip-item {
 	appearance: none;
 	align-items: center;
 	background: var(--component-chip-bg-default);
@@ -15,16 +15,16 @@
 	width: fit-content;
 }
 
-button.cx-chip-item {
+button.chip-item {
 	cursor: pointer;
 }
 
-.cx-chip-item:focus-visible {
+.chip-item:focus-visible {
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
-.cx-chip-item__label {
+.chip-item__label {
 	color: inherit;
 	font-family: var(--13-med-font-family, inherit);
 	font-size: var(--13-med-font-size);
@@ -33,12 +33,12 @@ button.cx-chip-item {
 	line-height: var(--13-med-line-height);
 }
 
-.cx-chip-item--selected {
+.chip-item--selected {
 	background: var(--semantic-color-bg-brand);
 	color: var(--semantic-color-text-on-brand);
 }
 
-.cx-chip-item--selected .cx-chip-item__label {
+.chip-item--selected .chip-item__label {
 	font-family: var(--13-semi-font-family, inherit);
 	font-size: var(--13-semi-font-size);
 	font-weight: var(--13-semi-font-weight);

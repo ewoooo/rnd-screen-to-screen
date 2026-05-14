@@ -1,4 +1,4 @@
-.cx-radio-button {
+.radio-button {
 	align-items: center;
 	box-sizing: border-box;
 	cursor: pointer;
@@ -7,7 +7,7 @@
 	width: fit-content;
 }
 
-.cx-radio-button__input {
+.radio-button__input {
 	clip: rect(0 0 0 0);
 	clip-path: inset(50%);
 	height: 1px;
@@ -17,7 +17,7 @@
 	width: 1px;
 }
 
-.cx-radio-button__control {
+.radio-button__control {
 	align-items: center;
 	background: var(--semantic-color-bg-default);
 	border: 1px solid var(--semantic-color-border-subtle);
@@ -31,7 +31,7 @@
 	width: 18px;
 }
 
-.cx-radio-button__control::after {
+.radio-button__control::after {
 	background: var(--semantic-color-bg-default);
 	border-radius: var(--semantic-radius-full);
 	content: "";
@@ -41,38 +41,38 @@
 	width: 8px;
 }
 
-.cx-radio-button__label {
+.radio-button__label {
 	color: var(--semantic-color-text-primary);
 }
 
-.cx-radio-button__input:focus-visible + .cx-radio-button__control {
+.radio-button__input:focus-visible + .radio-button__control {
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
-.cx-radio-button--checked .cx-radio-button__control {
+.radio-button--checked .radio-button__control {
 	background: var(--semantic-color-text-primary);
 	border-color: transparent;
 }
 
-.cx-radio-button--checked .cx-radio-button__control::after {
+.radio-button--checked .radio-button__control::after {
 	opacity: 1;
 }
 
-.cx-radio-button--disabled {
+.radio-button--disabled {
 	cursor: not-allowed;
 }
 
-.cx-radio-button--disabled .cx-radio-button__control {
+.radio-button--disabled .radio-button__control {
 	background: var(--semantic-color-bg-dim);
 	border-color: var(--semantic-color-border-subtle);
 }
 
-.cx-radio-button--checked.cx-radio-button--disabled .cx-radio-button__control {
+.radio-button--checked.radio-button--disabled .radio-button__control {
 	background: var(--semantic-color-border-default);
 	border-color: transparent;
 }
 
-.cx-radio-button--disabled .cx-radio-button__label {
+.radio-button--disabled .radio-button__label {
 	color: var(--semantic-color-text-disabled);
 }

@@ -55,7 +55,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
 						<span
 							key={dotId}
 							aria-hidden="true"
-							className="cx-indicator__dot"
+							className="indicator__dot"
 							data-active={active ? "true" : "false"}
 						/>
 					);

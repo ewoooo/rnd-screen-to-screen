@@ -1,4 +1,4 @@
-.cx-button-list-order {
+.button-list-order {
 	appearance: none;
 	align-items: center;
 	background: transparent;
@@ -23,25 +23,25 @@
 	white-space: nowrap;
 }
 
-.cx-button-list-order__label {
+.button-list-order__label {
 	display: block;
 	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.cx-button-list-order__icon {
+.button-list-order__icon {
 	display: block;
 	flex: 0 0 auto;
 }
 
-.cx-button-list-order:focus-visible {
+.button-list-order:focus-visible {
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
-.cx-button-list-order:disabled,
-.cx-button-list-order[data-disabled] {
+.button-list-order:disabled,
+.button-list-order[data-disabled] {
 	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
 	opacity: 0.45;

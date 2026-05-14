@@ -1,4 +1,4 @@
-.cx-title-contents-right-item {
+.title-contents-right-item {
 	align-items: center;
 	box-sizing: border-box;
 	display: inline-flex;
@@ -8,33 +8,33 @@
 	vertical-align: middle;
 }
 
-.cx-title-contents-right-item--icon,
-.cx-title-contents-right-item--type3 {
+.title-contents-right-item--icon,
+.title-contents-right-item--type3 {
 	min-height: 16px;
 	min-width: 16px;
 }
 
-.cx-title-contents-right-item--button {
+.title-contents-right-item--button {
 	min-height: 32px;
 	min-width: 45px;
 }
 
-.cx-title-contents-right-item__icon {
+.title-contents-right-item__icon {
 	display: block;
 	flex: none;
 	height: 16px;
 	width: 16px;
 }
 
-.cx-title-contents-right-item__icon > svg,
-.cx-title-contents-right-item__icon > img,
-.cx-title-contents-right-item__icon-button > svg,
-.cx-title-contents-right-item__icon-button > img {
+.title-contents-right-item__icon > svg,
+.title-contents-right-item__icon > img,
+.title-contents-right-item__icon-button > svg,
+.title-contents-right-item__icon-button > img {
 	display: block;
 	height: 16px;
 	width: 16px;
 }
 
-.cx-title-contents-right-item__button {
+.title-contents-right-item__button {
 	flex: none;
 }

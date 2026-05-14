@@ -67,7 +67,7 @@ export const TitleSectionLeftItem = forwardRef<
 				{...spanProps}
 			>
 				<Badge
-					className="cx-title-section-left-item__badge"
+					className="title-section-left-item__badge"
 					data-figma-render="primitive"
 					text={text}
 					type={badgeType}
@@ -98,7 +98,7 @@ export const TitleSectionLeftItem = forwardRef<
 		>
 			<Text
 				as="span"
-				className="cx-title-section-left-item__text"
+				className="title-section-left-item__text"
 				data-figma-render="primitive"
 				variant="listTitle"
 			>

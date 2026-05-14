@@ -1,13 +1,13 @@
 import { cva } from "class-variance-authority";
 
-export const iconButtonVariants = cva("cx-icon-button", {
+export const iconButtonVariants = cva("icon-button", {
 	variants: {
 		size: {
-			small: "cx-icon-button--small",
-			medium: "cx-icon-button--medium",
+			small: "icon-button--small",
+			medium: "icon-button--medium",
 		},
 		variant: {
-			plain: "cx-icon-button--plain",
+			plain: "icon-button--plain",
 		},
 	},
 	defaultVariants: {

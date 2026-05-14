@@ -1,4 +1,4 @@
-.cx-title-section {
+.title-section {
 	box-sizing: border-box;
 	color: var(--semantic-color-text-primary);
 	display: flex;
@@ -8,14 +8,14 @@
 	width: 100%;
 }
 
-.cx-title-section__title-row {
+.title-section__title-row {
 	align-items: center;
 	display: flex;
 	gap: var(--spacing-8);
 	width: 100%;
 }
 
-.cx-title-section__title-area {
+.title-section__title-area {
 	align-items: center;
 	display: flex;
 	flex: 1 1 auto;
@@ -23,13 +23,13 @@
 	min-width: 0;
 }
 
-.cx-title-section__left {
+.title-section__left {
 	align-items: center;
 	display: inline-flex;
 	flex: 0 0 auto;
 }
 
-.cx-title-section__title {
+.title-section__title {
 	color: var(--semantic-color-text-primary);
 	flex: 1 1 auto;
 	font-family: var(--16-semi-font-family, inherit);
@@ -42,7 +42,7 @@
 	overflow-wrap: anywhere;
 }
 
-.cx-title-section__right {
+.title-section__right {
 	align-items: center;
 	display: inline-flex;
 	flex: 0 1 auto;
@@ -50,7 +50,7 @@
 	min-width: 0;
 }
 
-.cx-title-section__sub-title {
+.title-section__sub-title {
 	color: var(--semantic-color-text-tertiary);
 	font-family: var(--14-med-font-family, inherit);
 	font-size: var(--14-med-font-size);
@@ -63,7 +63,7 @@
 	width: 100%;
 }
 
-.cx-title-section__left-text {
+.title-section__left-text {
 	color: var(--semantic-color-text-tertiary);
 	font-family: var(--16-semi-font-family, inherit);
 	font-size: var(--16-semi-font-size);
@@ -73,27 +73,27 @@
 	white-space: nowrap;
 }
 
-.cx-title-section__left-icon,
-.cx-title-section__right-text-item-icon,
-.cx-title-section__right-list-order-icon {
+.title-section__left-icon,
+.title-section__right-text-item-icon,
+.title-section__right-list-order-icon {
 	align-items: center;
 	display: inline-flex;
 	flex: 0 0 auto;
 }
 
-.cx-title-section__left-icon > svg,
-.cx-title-section__left-icon > img,
-.cx-title-section__right-text-item-icon > svg,
-.cx-title-section__right-text-item-icon > img,
-.cx-title-section__right-list-order-icon > svg,
-.cx-title-section__right-list-order-icon > img {
+.title-section__left-icon > svg,
+.title-section__left-icon > img,
+.title-section__right-text-item-icon > svg,
+.title-section__right-text-item-icon > img,
+.title-section__right-list-order-icon > svg,
+.title-section__right-list-order-icon > img {
 	display: block;
 	flex: 0 0 auto;
 }
 
-.cx-title-section__right-text-button,
-.cx-title-section__right-text-item-button,
-.cx-title-section__right-list-order-button {
+.title-section__right-text-button,
+.title-section__right-text-item-button,
+.title-section__right-list-order-button {
 	appearance: none;
 	align-items: center;
 	background: transparent;
@@ -112,7 +112,7 @@
 	user-select: none;
 }
 
-.cx-title-section__right-text-button {
+.title-section__right-text-button {
 	font-family: var(--14-semi-font-family, inherit);
 	font-size: var(--14-semi-font-size);
 	font-weight: var(--14-semi-font-weight);
@@ -121,11 +121,11 @@
 	white-space: nowrap;
 }
 
-.cx-title-section__right-text-item-button {
+.title-section__right-text-item-button {
 	gap: var(--spacing-4);
 }
 
-.cx-title-section__right-text-item-label {
+.title-section__right-text-item-label {
 	color: var(--semantic-color-text-tertiary);
 	font-family: var(--12-med-font-family, inherit);
 	font-size: var(--12-med-font-size);
@@ -137,8 +137,8 @@
 	white-space: nowrap;
 }
 
-.cx-title-section__right-text-item-value,
-.cx-title-section__right-list-order-button {
+.title-section__right-text-item-value,
+.title-section__right-list-order-button {
 	font-family: var(--14-semi-font-family, inherit);
 	font-size: var(--14-semi-font-size);
 	font-weight: var(--14-semi-font-weight);
@@ -147,19 +147,19 @@
 	white-space: nowrap;
 }
 
-.cx-title-section__right-list-order-button {
+.title-section__right-list-order-button {
 	gap: var(--spacing-2);
 }
 
-.cx-title-section__right-text-button:active,
-.cx-title-section__right-text-item-button:active,
-.cx-title-section__right-list-order-button:active {
+.title-section__right-text-button:active,
+.title-section__right-text-item-button:active,
+.title-section__right-list-order-button:active {
 	background: var(--component-list-cell-bg-pressed);
 }
 
-.cx-title-section__right-text-button:focus-visible,
-.cx-title-section__right-text-item-button:focus-visible,
-.cx-title-section__right-list-order-button:focus-visible {
+.title-section__right-text-button:focus-visible,
+.title-section__right-text-item-button:focus-visible,
+.title-section__right-list-order-button:focus-visible {
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }

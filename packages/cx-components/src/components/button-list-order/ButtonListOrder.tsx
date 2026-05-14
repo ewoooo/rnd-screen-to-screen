@@ -31,9 +31,9 @@ export const ButtonListOrder = forwardRef<
 			className={cn(buttonListOrderVariants(), className)}
 			{...props}
 		>
-			<span className="cx-button-list-order__label">{label}</span>
+			<span className="button-list-order__label">{label}</span>
 			<Icon
-				className="cx-button-list-order__icon"
+				className="button-list-order__icon"
 				type={icon}
 				size={16}
 				aria-hidden="true"

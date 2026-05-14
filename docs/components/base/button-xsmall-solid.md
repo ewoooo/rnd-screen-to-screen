@@ -12,7 +12,7 @@ Figma section reference: [SKT_SDUI_Test_0512 / base section](https://www.figma.c
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components candidate |
 | Figma Source | button-xsmall-solid |
 | Dependencies | Icon, Button |
@@ -22,16 +22,19 @@ Figma section reference: [SKT_SDUI_Test_0512 / base section](https://www.figma.c
 
 ### Implementation Files
 
-No actual implementation files exist yet for `ButtonXsmallSolid`.
-
-Expected implementation location if promoted to code:
+Implemented in `@pxds/cx-components`:
 
 - `packages/cx-components/src/components/button-xsmall-solid/ButtonXsmallSolid.tsx`
 - `packages/cx-components/src/components/button-xsmall-solid/ButtonXsmallSolid.types.ts`
+- `packages/cx-components/src/components/button-xsmall-solid/button-xsmall-solid.variants.ts`
 - `packages/cx-components/src/components/button-xsmall-solid/button-xsmall-solid.css`
+- `packages/cx-components/src/components/button-xsmall-solid/button-xsmall-solid.readme.md`
 - `packages/cx-components/src/components/button-xsmall-solid/index.ts`
 
-Preferred first check: extend the existing `Button` implementation with an `xsmall` size and solid/icon composition before creating these files.
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -180,6 +183,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - First evaluate extending `Button` with `size="xsmall"` instead of adding a standalone public component.
 - Use `Button` for the root action semantics and disabled behavior.
 - Use `Icon type="download" size={12}` for the active-state trailing glyph.
@@ -210,7 +214,7 @@ The checked Figma active state uses a 12px nested icon that matches the existing
 
 ### Validation
 
-`@pxds/cx-components` currently has no package-local `lint` or `build` scripts. Validate through consuming app checks after implementation.
+Validate through consuming app checks when implementation changes are made.
 
 - `npm run lint -w @screen/mobile`
 - `npm run build -w @screen/mobile`

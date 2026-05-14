@@ -49,11 +49,11 @@ export const ButtonXsmallSolid = forwardRef<
 			)}
 			{...props}
 		>
-			<span className="cx-button-xsmall-solid__label">{children}</span>
+			<span className="button-xsmall-solid__label">{children}</span>
 			{trailingIcon ? (
 				<span
 					aria-hidden="true"
-					className="cx-button-xsmall-solid__icon"
+					className="button-xsmall-solid__icon"
 					data-figma-render="primitive"
 				>
 					{trailingIcon}

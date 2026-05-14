@@ -1,4 +1,4 @@
-.cx-button {
+.button {
 	appearance: none;
 	align-items: center;
 	border: 1px solid transparent;
@@ -22,38 +22,38 @@
 	white-space: nowrap;
 }
 
-.cx-button:focus-visible {
+.button:focus-visible {
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
-.cx-button--full-width {
+.button--full-width {
 	width: 100%;
 }
 
-.cx-button--primary {
+.button--primary {
 	background: var(--component-button-bg-primary);
 	color: var(--component-button-fg-primary);
 }
 
-.cx-button--primary:active {
+.button--primary:active {
 	background: var(--component-button-bg-primary-pressed);
 }
 
-.cx-button--secondary {
+.button--secondary {
 	background: var(--component-button-bg-secondary);
 	border-color: var(--component-button-border-secondary);
 	color: var(--component-button-fg-secondary);
 }
 
-.cx-button--secondary:active {
+.button--secondary:active {
 	background: var(--component-button-bg-secondary-pressed);
 }
 
-.cx-button--disabled,
-.cx-button:disabled,
-.cx-button[aria-disabled="true"],
-.cx-button[data-disabled] {
+.button--disabled,
+.button:disabled,
+.button[aria-disabled="true"],
+.button[data-disabled] {
 	background: var(--component-button-bg-primary-disabled);
 	border-color: transparent;
 	color: var(--component-button-fg-primary-disabled);
@@ -61,25 +61,25 @@
 	pointer-events: none;
 }
 
-.cx-button--small {
+.button--small {
 	font-size: var(--13-semi-font-size);
 	min-height: 32px;
 	padding: 0 var(--semantic-spacing-inset-md);
 }
 
-.cx-button--medium {
+.button--medium {
 	font-size: var(--14-semi-font-size);
 	min-height: 40px;
 	padding: 0 var(--semantic-spacing-inset-lg);
 }
 
-.cx-button--large {
+.button--large {
 	font-size: var(--16-semi-font-size);
 	min-height: 48px;
 	padding: 0 var(--semantic-spacing-inset-xl);
 }
 
-.cx-button--xlarge {
+.button--xlarge {
 	font-size: var(--16-semi-font-size);
 	min-height: 56px;
 	padding: 0 var(--semantic-spacing-inset-xl);

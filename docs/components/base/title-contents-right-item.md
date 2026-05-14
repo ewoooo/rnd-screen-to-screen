@@ -12,7 +12,7 @@ This is a Phase 2 private scoped item set. It should stay an implementation deta
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | title-contents-right-item |
 | Dependencies | Button, Icon, IconButton |
@@ -21,13 +21,19 @@ This is a Phase 2 private scoped item set. It should stay an implementation deta
 
 ### Implementation Files
 
-No implementation file exists yet for `TitleContents.RightItem`.
+Implemented in `@pxds/cx-components`:
 
-Expected target when implemented:
+- `packages/cx-components/src/components/title-contents-right-item/TitleContentsRightItem.tsx`
+- `packages/cx-components/src/components/title-contents-right-item/TitleContentsRightItem.types.ts`
+- `packages/cx-components/src/components/title-contents-right-item/title-contents-right-item.variants.ts`
+- `packages/cx-components/src/components/title-contents-right-item/title-contents-right-item.css`
+- `packages/cx-components/src/components/title-contents-right-item/title-contents-right-item.readme.md`
+- `packages/cx-components/src/components/title-contents-right-item/index.ts`
 
-- `packages/cx-components/src/components/title-contents/TitleContents.tsx`
-- `packages/cx-components/src/components/title-contents/TitleContents.types.ts`
-- optional private renderer inside the same folder, not a public export
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -42,7 +48,7 @@ TitleContents.RightItem (private preset set)
 └─ Button
 ```
 
-This is not a standalone public React component. It should be represented by the parent `TitleContents` API, either as a private preset or as a constrained `rightItem` slot.
+This is implemented as a scoped CX component. It should still be treated as `TitleContents`-owned vocabulary when the parent compound is added.
 
 ### Component Consumption
 
@@ -148,6 +154,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep `TitleContents.RightItem` private to `TitleContents`.
 - Use existing `Icon`, `IconButton`, and `Button` components.
 - Preserve Figma bridge value `Type3` even though its current visual structure matches `Icon`.

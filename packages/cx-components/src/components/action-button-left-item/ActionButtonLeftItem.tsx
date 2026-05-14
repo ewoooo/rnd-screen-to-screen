@@ -33,7 +33,7 @@ export const ActionButtonLeftItem = forwardRef<
 			{...props}
 		>
 			<img
-				className="cx-action-button-left-item__icon"
+				className="action-button-left-item__icon"
 				src={actionButtonLeftItemAssets.ai}
 				alt=""
 				width="22"
@@ -41,7 +41,7 @@ export const ActionButtonLeftItem = forwardRef<
 				draggable={false}
 			/>
 			<img
-				className="cx-action-button-left-item__divider"
+				className="action-button-left-item__divider"
 				src={actionButtonLeftItemAssets.div}
 				alt=""
 				width="1"
@@ -50,7 +50,7 @@ export const ActionButtonLeftItem = forwardRef<
 			/>
 			{showGift ? (
 				<img
-					className="cx-action-button-left-item__icon"
+					className="action-button-left-item__icon"
 					src={actionButtonLeftItemAssets.gift}
 					alt=""
 					width="22"

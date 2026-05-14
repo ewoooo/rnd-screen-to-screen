@@ -53,7 +53,7 @@ function renderLeftItem(item: TitleSectionLeftItem): ReactNode {
 	if (item.type === "text") {
 		return (
 			<span
-				className="cx-title-section__left-text"
+				className="title-section__left-text"
 				data-figma-render="primitive"
 				data-figma-property-left-item-type="text"
 			>
@@ -67,7 +67,7 @@ function renderLeftItem(item: TitleSectionLeftItem): ReactNode {
 			return (
 				<span
 					aria-label={item.label}
-					className="cx-title-section__left-icon"
+					className="title-section__left-icon"
 					data-figma-render="primitive"
 					data-figma-property-left-item-type="icon"
 					role="img"
@@ -79,7 +79,7 @@ function renderLeftItem(item: TitleSectionLeftItem): ReactNode {
 
 		return (
 			<span
-				className="cx-title-section__left-icon"
+				className="title-section__left-icon"
 				data-figma-render="primitive"
 				data-figma-property-left-item-type="icon"
 			>
@@ -90,7 +90,7 @@ function renderLeftItem(item: TitleSectionLeftItem): ReactNode {
 
 	return (
 		<Badge
-			className="cx-title-section__left-badge"
+			className="title-section__left-badge"
 			data-figma-render="primitive"
 			data-figma-property-left-item-type="badge"
 			text={item.text}
@@ -107,7 +107,7 @@ function renderRightItem(item: TitleSectionRightItem): ReactNode {
 		return (
 			<button
 				aria-label={item.label}
-				className="cx-icon-button cx-icon-button--small cx-icon-button--plain cx-title-section__right-icon-button"
+				className="icon-button icon-button--small icon-button--plain title-section__right-icon-button"
 				data-figma-render="primitive"
 				data-figma-property-right-item-type="icon"
 				onClick={item.onClick}
@@ -121,7 +121,7 @@ function renderRightItem(item: TitleSectionRightItem): ReactNode {
 	if (item.type === "textButton") {
 		return (
 			<button
-				className="cx-title-section__right-text-button"
+				className="title-section__right-text-button"
 				data-figma-render="primitive"
 				data-figma-property-right-item-type="text-button"
 				onClick={item.onClick}
@@ -135,20 +135,20 @@ function renderRightItem(item: TitleSectionRightItem): ReactNode {
 	if (item.type === "textItemButton") {
 		return (
 			<button
-				className="cx-title-section__right-text-item-button"
+				className="title-section__right-text-item-button"
 				data-figma-render="primitive"
 				data-figma-property-right-item-type="text-item-button"
 				onClick={item.onClick}
 				type="button"
 			>
-				<span className="cx-title-section__right-text-item-label">
+				<span className="title-section__right-text-item-label">
 					{item.label}
 				</span>
-				<span className="cx-title-section__right-text-item-value">
+				<span className="title-section__right-text-item-value">
 					{item.value}
 				</span>
 				{item.icon ? (
-					<span className="cx-title-section__right-text-item-icon">
+					<span className="title-section__right-text-item-icon">
 						{item.icon}
 					</span>
 				) : null}
@@ -158,7 +158,7 @@ function renderRightItem(item: TitleSectionRightItem): ReactNode {
 
 	return (
 		<button
-			className="cx-title-section__right-list-order-button"
+			className="title-section__right-list-order-button"
 			data-figma-render="primitive"
 			data-figma-property-right-item-type="button-list-order"
 			onClick={item.onClick}
@@ -166,7 +166,7 @@ function renderRightItem(item: TitleSectionRightItem): ReactNode {
 		>
 			<span>{item.label}</span>
 			{item.icon ? (
-				<span className="cx-title-section__right-list-order-icon">
+				<span className="title-section__right-list-order-icon">
 					{item.icon}
 				</span>
 			) : null}
@@ -222,11 +222,11 @@ export const TitleSection = forwardRef<HTMLElement, TitleSectionProps>(
 				)}
 				{...props}
 			>
-				<div className="cx-title-section__title-row" data-figma-render="ignore">
-					<div className="cx-title-section__title-area" data-figma-render="ignore">
+				<div className="title-section__title-row" data-figma-render="ignore">
+					<div className="title-section__title-area" data-figma-render="ignore">
 						{shouldShowLeftItem ? (
 							<div
-								className="cx-title-section__left"
+								className="title-section__left"
 								data-figma-render="slot"
 								data-figma-property-name="left-item"
 							>
@@ -234,7 +234,7 @@ export const TitleSection = forwardRef<HTMLElement, TitleSectionProps>(
 							</div>
 						) : null}
 						<div
-							className="cx-title-section__title"
+							className="title-section__title"
 							data-figma-render="slot"
 							data-figma-property-name="title"
 						>
@@ -243,7 +243,7 @@ export const TitleSection = forwardRef<HTMLElement, TitleSectionProps>(
 					</div>
 					{shouldShowRightItem ? (
 						<div
-							className="cx-title-section__right"
+							className="title-section__right"
 							data-figma-render="slot"
 							data-figma-property-name="right-item"
 						>
@@ -253,7 +253,7 @@ export const TitleSection = forwardRef<HTMLElement, TitleSectionProps>(
 				</div>
 				{shouldShowSubTitle ? (
 					<div
-						className="cx-title-section__sub-title"
+						className="title-section__sub-title"
 						data-figma-render="slot"
 						data-figma-property-name="sub-title"
 					>

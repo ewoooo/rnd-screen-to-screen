@@ -12,7 +12,7 @@ Figma component node: [SKT_SDUI_Test_0512 / PopupActionButton](https://www.figma
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | popup-action-button |
 | Dependencies | Button |
@@ -22,7 +22,19 @@ Figma component node: [SKT_SDUI_Test_0512 / PopupActionButton](https://www.figma
 
 ### Implementation Files
 
-No implementation files exist yet. `PopupActionButton` currently appears only in documentation and inventory references, and should be implemented as a Popup-internal scoped/private action area rather than exported as broad public vocabulary.
+Implemented in `@pxds/cx-components`:
+
+- `packages/cx-components/src/components/popup-action-button/PopupActionButton.tsx`
+- `packages/cx-components/src/components/popup-action-button/PopupActionButton.types.ts`
+- `packages/cx-components/src/components/popup-action-button/popup-action-button.variants.ts`
+- `packages/cx-components/src/components/popup-action-button/popup-action-button.css`
+- `packages/cx-components/src/components/popup-action-button/popup-action-button.readme.md`
+- `packages/cx-components/src/components/popup-action-button/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -130,6 +142,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep `PopupActionButton` private/scoped to `Popup`.
 - Consume `Button` for every action.
 - Use `Button size="large"` for all nested actions.

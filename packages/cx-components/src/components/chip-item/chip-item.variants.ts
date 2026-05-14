@@ -1,10 +1,10 @@
 import { cva } from "class-variance-authority";
 
-export const chipItemVariants = cva("cx-chip-item", {
+export const chipItemVariants = cva("chip-item", {
 	variants: {
 		selected: {
-			true: "cx-chip-item--selected",
-			false: "cx-chip-item--unselected",
+			true: "chip-item--selected",
+			false: "chip-item--unselected",
 		},
 	},
 	defaultVariants: {

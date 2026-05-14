@@ -1,4 +1,4 @@
-.cx-indicator {
+.indicator {
 	align-items: center;
 	box-sizing: border-box;
 	display: inline-flex;
@@ -8,7 +8,7 @@
 	width: fit-content;
 }
 
-.cx-indicator__dot {
+.indicator__dot {
 	background: var(--semantic-color-border-default);
 	border-radius: 999px;
 	display: block;
@@ -17,6 +17,6 @@
 	width: 4px;
 }
 
-.cx-indicator__dot[data-active="true"] {
+.indicator__dot[data-active="true"] {
 	background: var(--semantic-color-bg-brand);
 }

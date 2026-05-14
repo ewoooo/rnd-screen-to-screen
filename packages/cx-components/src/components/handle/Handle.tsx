@@ -56,7 +56,7 @@ export const Handle = forwardRef<HTMLDivElement, HandleProps>(function Handle(
 			{...props}
 		>
 			{shouldShowHandle ? (
-				<span className="cx-handle__bar" aria-hidden="true" />
+				<span className="handle__bar" aria-hidden="true" />
 			) : null}
 		</div>
 	);

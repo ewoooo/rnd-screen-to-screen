@@ -13,7 +13,7 @@ Figma SOT:
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components candidate |
 | Figma Source | button-text-underline |
 | Dependencies | Text |
@@ -22,14 +22,19 @@ Figma SOT:
 
 ### Implementation Files
 
-No implementation files currently exist for `ButtonTextUnderline`.
-
-Expected files if this remains a standalone public component:
+Implemented in `@pxds/cx-components`:
 
 - `packages/cx-components/src/components/button-text-underline/ButtonTextUnderline.tsx`
 - `packages/cx-components/src/components/button-text-underline/ButtonTextUnderline.types.ts`
+- `packages/cx-components/src/components/button-text-underline/button-text-underline.variants.ts`
 - `packages/cx-components/src/components/button-text-underline/button-text-underline.css`
+- `packages/cx-components/src/components/button-text-underline/button-text-underline.readme.md`
 - `packages/cx-components/src/components/button-text-underline/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -45,7 +50,7 @@ ButtonTextUnderline
 The Figma node is a component with horizontal auto layout and one text child:
 
 - Root: `ButtonTextUnderline`, width `24`, height `17`, horizontal auto layout, center aligned, gap `12`, no padding.
-- Child: `Text`, characters `Text`, Pretendard Variable Regular, `13px`, line-height `130%`, letter-spacing `-4%`, color `#05001a` / `semantic-light-color-text-secondary`.
+- Child: `Text`, characters `Text`, Pretendard Variable Regular, `13px`, line-height `130%`, letter-spacing `-4%`, color `#05001a`; implementation maps this to `--semantic-color-text-secondary`.
 
 ### Component Consumption
 
@@ -119,11 +124,12 @@ Purpose: constrain implementation decisions before adding a new public component
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Confirm whether underline is visually required, because the current Figma text layer is not underlined.
 - Preserve the compact intrinsic size: no root padding, no block-level width, no route-local spacing compensation.
 - Render a semantic `button` by default if it performs an action.
 - Use tokenized typography from `@pxds/cx-tokens`: `text-13-reg`.
-- Use tokenized foreground color: `var(--semantic-light-color-text-secondary)` and dark-mode equivalent if CSS variables are needed.
+- Use the theme-neutral foreground alias: `var(--semantic-color-text-secondary)`.
 - Preserve root `data-figma-render="component"` and `data-figma-component-id="button-text-underline"` if a standalone component is added.
 
 ### Don't
@@ -146,7 +152,7 @@ Recommended first implementation path: add a `Button` text-only variant or conso
 
 ### Validation
 
-Validate through consuming app checks after implementation:
+Validate through consuming app checks when implementation changes are made:
 
 - `npm run lint -w @screen/mobile`
 - `npm run build -w @screen/mobile`

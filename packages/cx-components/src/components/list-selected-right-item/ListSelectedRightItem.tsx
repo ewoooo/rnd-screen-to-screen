@@ -76,7 +76,7 @@ export const ListSelectedRightItem = forwardRef<
 			{type === "icon" && isInteractiveIcon ? (
 				<IconButton
 					aria-label={resolvedIconAriaLabel}
-					className="cx-list-selected-right-item__icon-button"
+					className="list-selected-right-item__icon-button"
 					disabled={disabled}
 					onClick={onClick}
 					size="small"
@@ -84,7 +84,7 @@ export const ListSelectedRightItem = forwardRef<
 					data-figma-render="primitive"
 				>
 					<Icon
-						className="cx-list-selected-right-item__icon"
+						className="list-selected-right-item__icon"
 						type={iconType}
 						size={16}
 						aria-hidden="true"
@@ -93,7 +93,7 @@ export const ListSelectedRightItem = forwardRef<
 			) : null}
 			{type === "icon" && !isInteractiveIcon ? (
 				<Icon
-					className="cx-list-selected-right-item__icon"
+					className="list-selected-right-item__icon"
 					type={iconType}
 					size={16}
 					aria-hidden="true"
@@ -102,7 +102,7 @@ export const ListSelectedRightItem = forwardRef<
 			) : null}
 			{type === "textButton" ? (
 				<TitleSectionTextButton
-					className="cx-list-selected-right-item__title-section-text-button"
+					className="list-selected-right-item__title-section-text-button"
 					data-figma-render="primitive"
 					disabled={disabled}
 					onClick={disabled ? undefined : onClick}
@@ -113,7 +113,7 @@ export const ListSelectedRightItem = forwardRef<
 			{type === "textButton" ? (
 				<Text
 					as="span"
-					className="cx-list-selected-right-item__text-vocabulary"
+					className="list-selected-right-item__text-vocabulary"
 					data-figma-render="ignore"
 					variant="label"
 				>

@@ -63,7 +63,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 						as="label"
 						variant="label"
 						htmlFor={inputId}
-						className="cx-text-field__label"
+						className="text-field__label"
 					>
 						{label}
 					</Text>
@@ -83,7 +83,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 						as="p"
 						id={helperId}
 						variant={error ? "error" : "helper"}
-						className="cx-text-field__helper"
+						className="text-field__helper"
 					>
 						{helperText}
 					</Text>

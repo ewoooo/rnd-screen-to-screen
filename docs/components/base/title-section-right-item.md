@@ -12,7 +12,7 @@ Parent context checked in Figma: [SKT_SDUI_Test_0512 / base section](https://www
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 in inventory; current code has scoped preset support inside `TitleSection` |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | title-section-right-item |
 | Dependencies | ButtonListOrder, Icon, IconButton, Button, Text |
@@ -21,13 +21,19 @@ Parent context checked in Figma: [SKT_SDUI_Test_0512 / base section](https://www
 
 ### Implementation Files
 
-No dedicated `TitleSection.RightItem` implementation file exists.
+Implemented in `@pxds/cx-components`:
 
-Current implementation lives inside:
+- `packages/cx-components/src/components/title-section-right-item/TitleSectionRightItem.tsx`
+- `packages/cx-components/src/components/title-section-right-item/TitleSectionRightItem.types.ts`
+- `packages/cx-components/src/components/title-section-right-item/title-section-right-item.variants.ts`
+- `packages/cx-components/src/components/title-section-right-item/title-section-right-item.css`
+- `packages/cx-components/src/components/title-section-right-item/title-section-right-item.readme.md`
+- `packages/cx-components/src/components/title-section-right-item/index.ts`
 
-- `packages/cx-components/src/components/title-section/TitleSection.tsx`
-- `packages/cx-components/src/components/title-section/TitleSection.types.ts`
-- `packages/cx-components/src/components/title-section/title-section.css`
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -48,17 +54,17 @@ TitleSection.RightItem (private preset set)
    └─ Icon
 ```
 
-This is not a standalone public React component. It is represented by the `rightItem` prop on `TitleSection`.
+This is implemented as a scoped CX component and can also be consumed through the `rightItem` prop on `TitleSection`.
 
 ### Component Consumption
 
 | Dependency | Contract type | Current implementation |
 | --- | --- | --- |
 | `ButtonListOrder` | Figma/source preset contract | `rightItem.type="buttonListOrder"` renders a local text-plus-icon button branch. No public `ButtonListOrder` import is used here. |
-| `Icon` | Slot/preset input contract | Presets accept `ReactNode` icon content. `TitleSection` does not import `Icon`. |
+| `Icon` | Slot/preset input contract | Presets accept `ReactNode` icon content. The scoped component consumes `Icon`; the legacy `TitleSection` preset renderer accepts icon nodes. |
 | `IconButton` | Implementation-style contract | `rightItem.type="icon"` renders a native `<button>` using `cx-icon-button` classes, but does not import the `IconButton` component. |
 | `Button` | Interaction semantics contract | Text and order variants render local native `<button>` elements. No public `Button` import is used here. |
-| `Text` | Typography/source vocabulary contract | Text is rendered as spans/button text using typography tokens. No public `Text` import is used here. |
+| `Text` | Typography/source vocabulary contract | Text is rendered as spans/button text using typography tokens. The scoped component consumes `Text`; the legacy `TitleSection` preset renderer may still render a native span. |
 
 ### Figma Source Difference
 
@@ -177,6 +183,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep `TitleSection.RightItem` private while Phase 2 treats it as a scoped item set.
 - Document current behavior from `TitleSection` code when the dedicated file does not exist.
 - Keep the four Figma variants normalized to `icon`, `textButton`, `textItemButton`, and `buttonListOrder`.
@@ -192,7 +199,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Normalization Notes
 
-- Inventory lists this as `제작 예정`, but `TitleSection` already has private scoped preset branches for all four Figma variants.
+- Inventory now lists this as `제작 완료`; keep the scoped component and the legacy `TitleSection.rightItem` preset behavior aligned.
 - `Icon` and `Text` are source/component vocabulary contracts in this context.
 - `IconButton` and `Button` describe interaction semantics; current code renders native buttons and class hooks locally.
 - `ButtonListOrder` is a source preset contract here. A standalone implementation is tracked separately and is not consumed by current `TitleSection`.

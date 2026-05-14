@@ -1,4 +1,4 @@
-.cx-tab-item {
+.tab-item {
 	align-items: center;
 	box-sizing: border-box;
 	color: var(--semantic-color-text-primary);
@@ -10,7 +10,7 @@
 	width: fit-content;
 }
 
-.cx-tab-item::after {
+.tab-item::after {
 	background: transparent;
 	content: "";
 	display: block;
@@ -20,7 +20,7 @@
 	width: 100%;
 }
 
-.cx-tab-item__label {
+.tab-item__label {
 	color: currentcolor;
 	font-family: var(--15-med-font-family, inherit);
 	font-size: var(--15-med-font-size);
@@ -31,15 +31,15 @@
 	white-space: nowrap;
 }
 
-.cx-tab-item--selected {
+.tab-item--selected {
 	color: var(--component-tab-fg-selected);
 }
 
-.cx-tab-item--selected::after {
+.tab-item--selected::after {
 	background: var(--component-tab-indicator);
 }
 
-.cx-tab-item--selected .cx-tab-item__label {
+.tab-item--selected .tab-item__label {
 	font-family: var(--15-bold-font-family, inherit);
 	font-size: var(--15-bold-font-size);
 	font-weight: var(--15-bold-font-weight);

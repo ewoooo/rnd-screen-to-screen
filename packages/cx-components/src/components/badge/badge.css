@@ -1,4 +1,4 @@
-.cx-badge {
+.badge {
 	align-items: center;
 	background: var(--semantic-color-border-subtle);
 	border-radius: var(--semantic-light-radius-sm);
@@ -16,17 +16,17 @@
 	width: fit-content;
 }
 
-.cx-badge--gray {
+.badge--gray {
 	background: var(--semantic-color-border-subtle);
 	color: var(--semantic-color-text-secondary);
 }
 
-.cx-badge--black {
+.badge--black {
 	background: var(--semantic-color-bg-inverse);
 	color: var(--semantic-color-text-on-brand);
 }
 
-.cx-badge--blue {
+.badge--blue {
 	background: var(--semantic-color-bg-brand);
 	color: var(--semantic-color-text-on-brand);
 }

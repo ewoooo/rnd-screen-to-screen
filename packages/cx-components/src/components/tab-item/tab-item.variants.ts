@@ -1,10 +1,10 @@
 import { cva } from "class-variance-authority";
 
-export const tabItemVariants = cva("cx-tab-item", {
+export const tabItemVariants = cva("tab-item", {
 	variants: {
 		state: {
-			default: "cx-tab-item--default",
-			selected: "cx-tab-item--selected",
+			default: "tab-item--default",
+			selected: "tab-item--selected",
 		},
 	},
 	defaultVariants: {

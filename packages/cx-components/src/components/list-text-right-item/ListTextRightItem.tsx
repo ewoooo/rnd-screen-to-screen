@@ -104,7 +104,7 @@ function renderRightItem(
 		return levels.map((level) => (
 			<Badge
 				key={level}
-				className="cx-list-text-right-item__level-badge"
+				className="list-text-right-item__level-badge"
 				data-figma-render="primitive"
 				data-figma-property-level={level}
 				text={LEVEL_LABEL[level]}
@@ -118,7 +118,7 @@ function renderRightItem(
 			<>
 				<Text
 					as="span"
-					className="cx-list-text-right-item__text"
+					className="list-text-right-item__text"
 					data-figma-render="primitive"
 					variant="bodySubtle"
 				>
@@ -126,7 +126,7 @@ function renderRightItem(
 				</Text>
 				<Icon
 					aria-hidden
-					className="cx-list-text-right-item__icon"
+					className="list-text-right-item__icon"
 					color="tertiary"
 					size={16}
 					type="arrow-right"
@@ -138,7 +138,7 @@ function renderRightItem(
 			return (
 				<button
 					aria-label={props.ariaLabel}
-					className="cx-list-text-right-item__text-button"
+					className="list-text-right-item__text-button"
 					data-figma-render="primitive"
 					onClick={props.onClick}
 					type="button"
@@ -150,7 +150,7 @@ function renderRightItem(
 
 		return (
 			<span
-				className="cx-list-text-right-item__text-button"
+				className="list-text-right-item__text-button"
 				data-figma-render="primitive"
 			>
 				{content}
@@ -162,7 +162,7 @@ function renderRightItem(
 		const icon = (
 			<Icon
 				aria-hidden
-				className="cx-list-text-right-item__icon"
+				className="list-text-right-item__icon"
 				color="tertiary"
 				size={16}
 				type={props.icon ?? "arrow-right"}
@@ -173,7 +173,7 @@ function renderRightItem(
 			return (
 				<IconButton
 					aria-label={props.ariaLabel}
-					className="cx-list-text-right-item__icon-button"
+					className="list-text-right-item__icon-button"
 					data-figma-render="primitive"
 					onClick={props.onClick}
 					size="small"
@@ -190,7 +190,7 @@ function renderRightItem(
 	return (
 		<Text
 			as="span"
-			className="cx-list-text-right-item__text"
+			className="list-text-right-item__text"
 			data-figma-render="primitive"
 			variant="bodySubtle"
 		>

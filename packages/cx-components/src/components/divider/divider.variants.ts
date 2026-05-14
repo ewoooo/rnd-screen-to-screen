@@ -1,14 +1,14 @@
 import { cva } from "class-variance-authority";
 
-export const dividerVariants = cva("cx-divider", {
+export const dividerVariants = cva("divider", {
 	variants: {
 		type: {
-			contents: "cx-divider--contents",
-			section: "cx-divider--section",
+			contents: "divider--contents",
+			section: "divider--section",
 		},
 		orientation: {
-			horizontal: "cx-divider--horizontal",
-			vertical: "cx-divider--vertical",
+			horizontal: "divider--horizontal",
+			vertical: "divider--vertical",
 		},
 	},
 	defaultVariants: {

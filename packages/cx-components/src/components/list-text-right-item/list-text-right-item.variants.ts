@@ -1,12 +1,12 @@
 import { cva } from "class-variance-authority";
 
-export const listTextRightItemVariants = cva("cx-list-text-right-item", {
+export const listTextRightItemVariants = cva("list-text-right-item", {
 	variants: {
 		type: {
-			text: "cx-list-text-right-item--text",
-			badgeLevel: "cx-list-text-right-item--badge-level",
-			textButton: "cx-list-text-right-item--text-button",
-			icon: "cx-list-text-right-item--icon",
+			text: "list-text-right-item--text",
+			badgeLevel: "list-text-right-item--badge-level",
+			textButton: "list-text-right-item--text-button",
+			icon: "list-text-right-item--icon",
 		},
 	},
 	defaultVariants: {

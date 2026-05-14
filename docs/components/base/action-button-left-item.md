@@ -12,7 +12,7 @@ Also checked the broader base section: [SKT_SDUI_Test_0512 / base section](https
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components private |
 | Figma Source | action-button-left-item |
 | Dependencies | Icon |
@@ -21,9 +21,19 @@ Also checked the broader base section: [SKT_SDUI_Test_0512 / base section](https
 
 ### Implementation Files
 
-No dedicated `ActionButton.LeftItem` implementation file exists yet.
+Implemented in `@pxds/cx-components`:
 
-This should be implemented as an internal/scoped part of `ActionButton`, not as a public component export, unless another public API later needs the same visual contract.
+- `packages/cx-components/src/components/action-button-left-item/ActionButtonLeftItem.tsx`
+- `packages/cx-components/src/components/action-button-left-item/ActionButtonLeftItem.types.ts`
+- `packages/cx-components/src/components/action-button-left-item/action-button-left-item.variants.ts`
+- `packages/cx-components/src/components/action-button-left-item/action-button-left-item.css`
+- `packages/cx-components/src/components/action-button-left-item/action-button-left-item.readme.md`
+- `packages/cx-components/src/components/action-button-left-item/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -133,6 +143,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Keep this as an `ActionButton` internal/scoped item.
 - Use the action-button icon assets from `packages/cx-icons/src/action-button`.
 - Keep the wrapper horizontal, center aligned, and 22px tall.

@@ -1,4 +1,4 @@
-.cx-icon-button {
+.icon-button {
 	appearance: none;
 	align-items: center;
 	background: transparent;
@@ -19,41 +19,41 @@
 	user-select: none;
 }
 
-.cx-icon-button > svg,
-.cx-icon-button > img {
+.icon-button > svg,
+.icon-button > img {
 	display: block;
 	flex: 0 0 auto;
 	height: 24px;
 	width: 24px;
 }
 
-.cx-icon-button--small {
+.icon-button--small {
 	min-height: 32px;
 	min-width: 32px;
 }
 
-.cx-icon-button--medium {
+.icon-button--medium {
 	min-height: 32px;
 	min-width: 32px;
 }
 
 @media (hover: hover) {
-	.cx-icon-button--plain:hover {
+	.icon-button--plain:hover {
 		background: var(--semantic-color-bg-dim);
 	}
 }
 
-.cx-icon-button--plain:active {
+.icon-button--plain:active {
 	background: var(--component-list-cell-bg-pressed);
 }
 
-.cx-icon-button:focus-visible {
+.icon-button:focus-visible {
 	outline: 2px solid var(--semantic-color-border-focused);
 	outline-offset: 2px;
 }
 
-.cx-icon-button:disabled,
-.cx-icon-button[data-disabled] {
+.icon-button:disabled,
+.icon-button[data-disabled] {
 	color: var(--semantic-color-text-disabled);
 	cursor: not-allowed;
 	opacity: 0.45;

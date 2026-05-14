@@ -1,14 +1,14 @@
 import { cva } from "class-variance-authority";
 
 export const listSelectedRightItemVariants = cva(
-	"cx-list-selected-right-item",
+	"list-selected-right-item",
 	{
 		variants: {
 			type: {
 				buttonXsmallSolid:
-					"cx-list-selected-right-item--button-xsmall-solid",
-				icon: "cx-list-selected-right-item--icon",
-				textButton: "cx-list-selected-right-item--text-button",
+					"list-selected-right-item--button-xsmall-solid",
+				icon: "list-selected-right-item--icon",
+				textButton: "list-selected-right-item--text-button",
 			},
 		},
 		defaultVariants: {

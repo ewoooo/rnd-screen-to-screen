@@ -1,10 +1,10 @@
 import { cva } from "class-variance-authority";
 
-export const handleVariants = cva("cx-handle", {
+export const handleVariants = cva("handle", {
 	variants: {
 		state: {
-			default: "cx-handle--default",
-			off: "cx-handle--off",
+			default: "handle--default",
+			off: "handle--off",
 		},
 	},
 	defaultVariants: {

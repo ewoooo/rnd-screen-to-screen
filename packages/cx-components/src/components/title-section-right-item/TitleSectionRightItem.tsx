@@ -68,7 +68,7 @@ export const TitleSectionRightItem = forwardRef<
 			{type === "icon" ? (
 				<IconButton
 					aria-label={props.label ?? "타이틀 섹션 액션"}
-					className="cx-title-section-right-item__icon-button"
+					className="title-section-right-item__icon-button"
 					data-figma-render="ignore"
 					disabled={disabled}
 					onClick={props.onClick}
@@ -80,7 +80,7 @@ export const TitleSectionRightItem = forwardRef<
 			) : null}
 			{type === "textButton" ? (
 				<Button
-					className="cx-title-section-right-item__text-button"
+					className="title-section-right-item__text-button"
 					data-figma-render="ignore"
 					disabled={disabled}
 					onClick={props.onClick}
@@ -89,7 +89,7 @@ export const TitleSectionRightItem = forwardRef<
 				>
 					<Text
 						as="span"
-						className="cx-title-section-right-item__text-button-label"
+						className="title-section-right-item__text-button-label"
 						data-figma-render="ignore"
 						variant="label"
 					>
@@ -99,7 +99,7 @@ export const TitleSectionRightItem = forwardRef<
 			) : null}
 			{type === "textItemButton" ? (
 				<Button
-					className="cx-title-section-right-item__text-item-button"
+					className="title-section-right-item__text-item-button"
 					data-figma-render="ignore"
 					disabled={disabled}
 					onClick={props.onClick}
@@ -108,7 +108,7 @@ export const TitleSectionRightItem = forwardRef<
 				>
 					<Text
 						as="span"
-						className="cx-title-section-right-item__text-item-label"
+						className="title-section-right-item__text-item-label"
 						data-figma-render="ignore"
 						variant="caption"
 					>
@@ -116,14 +116,14 @@ export const TitleSectionRightItem = forwardRef<
 					</Text>
 					<Text
 						as="span"
-						className="cx-title-section-right-item__text-item-value"
+						className="title-section-right-item__text-item-value"
 						data-figma-render="ignore"
 						variant="label"
 					>
 						{props.value}
 					</Text>
 					{props.icon ? (
-						<span className="cx-title-section-right-item__text-item-icon">
+						<span className="title-section-right-item__text-item-icon">
 							{renderIcon(props.icon)}
 						</span>
 					) : null}
@@ -131,7 +131,7 @@ export const TitleSectionRightItem = forwardRef<
 			) : null}
 			{type === "buttonListOrder" ? (
 				<ButtonListOrder
-					className="cx-title-section-right-item__list-order-button"
+					className="title-section-right-item__list-order-button"
 					data-figma-render="ignore"
 					disabled={disabled}
 					icon={props.icon}

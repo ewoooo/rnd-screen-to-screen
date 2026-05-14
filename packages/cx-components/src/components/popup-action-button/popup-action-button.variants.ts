@@ -1,10 +1,10 @@
 import { cva } from "class-variance-authority";
 
-export const popupActionButtonVariants = cva("cx-popup-action-button", {
+export const popupActionButtonVariants = cva("popup-action-button", {
 	variants: {
 		options: {
-			"2Buttons": "cx-popup-action-button--2-buttons",
-			"1Button": "cx-popup-action-button--1-button",
+			"2Buttons": "popup-action-button--2-buttons",
+			"1Button": "popup-action-button--1-button",
 		},
 	},
 	defaultVariants: {

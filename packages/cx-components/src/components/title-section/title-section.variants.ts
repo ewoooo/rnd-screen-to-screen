@@ -1,18 +1,18 @@
 import { cva } from "class-variance-authority";
 
-export const titleSectionVariants = cva("cx-title-section", {
+export const titleSectionVariants = cva("title-section", {
 	variants: {
 		subTitle: {
-			true: "cx-title-section--sub-title-on",
-			false: "cx-title-section--sub-title-off",
+			true: "title-section--sub-title-on",
+			false: "title-section--sub-title-off",
 		},
 		leftItem: {
-			true: "cx-title-section--left-item-on",
-			false: "cx-title-section--left-item-off",
+			true: "title-section--left-item-on",
+			false: "title-section--left-item-off",
 		},
 		rightItem: {
-			true: "cx-title-section--right-item-on",
-			false: "cx-title-section--right-item-off",
+			true: "title-section--right-item-on",
+			false: "title-section--right-item-off",
 		},
 	},
 	defaultVariants: {

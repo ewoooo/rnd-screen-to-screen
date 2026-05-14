@@ -1,10 +1,10 @@
 import { cva } from "class-variance-authority";
 
-export const actionButtonLeftItemVariants = cva("cx-action-button-left-item", {
+export const actionButtonLeftItemVariants = cva("action-button-left-item", {
 	variants: {
 		type: {
-			"ai-gift": "cx-action-button-left-item--ai-gift",
-			ai: "cx-action-button-left-item--ai",
+			"ai-gift": "action-button-left-item--ai-gift",
+			ai: "action-button-left-item--ai",
 		},
 	},
 	defaultVariants: {

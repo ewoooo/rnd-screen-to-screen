@@ -39,8 +39,8 @@ export const TextFieldInput = forwardRef<HTMLInputElement, TextFieldInputProps>(
 		ref,
 	) {
 		return (
-			<div className="cx-text-field-input">
-				<div className="cx-text-field-input__field">
+			<div className="text-field-input">
+				<div className="text-field-input__field">
 					<input
 						{...inputProps}
 						ref={ref}
@@ -48,7 +48,7 @@ export const TextFieldInput = forwardRef<HTMLInputElement, TextFieldInputProps>(
 						disabled={disabled}
 						aria-describedby={ariaDescribedBy}
 						aria-invalid={ariaInvalid}
-						className="cx-text-field-input__native"
+						className="text-field-input__native"
 					/>
 				</div>
 				{actionButton ? (
@@ -57,7 +57,7 @@ export const TextFieldInput = forwardRef<HTMLInputElement, TextFieldInputProps>(
 						variant="secondary"
 						size="large"
 						disabled={disabled || actionButton.disabled}
-						className="cx-text-field-input__action"
+						className="text-field-input__action"
 						onClick={actionButton.onClick}
 					>
 						{actionButton.label}

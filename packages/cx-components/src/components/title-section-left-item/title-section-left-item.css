@@ -1,4 +1,4 @@
-.cx-title-section-left-item {
+.title-section-left-item {
 	align-items: center;
 	box-sizing: border-box;
 	color: var(--semantic-color-text-tertiary);
@@ -7,21 +7,21 @@
 	min-width: 0;
 }
 
-.cx-title-section-left-item--text {
+.title-section-left-item--text {
 	white-space: nowrap;
 }
 
-.cx-title-section-left-item--icon > svg,
-.cx-title-section-left-item--icon > img {
+.title-section-left-item--icon > svg,
+.title-section-left-item--icon > img {
 	display: block;
 	flex: 0 0 auto;
 }
 
-.cx-title-section-left-item__text {
+.title-section-left-item__text {
 	color: var(--semantic-color-text-tertiary);
 	white-space: nowrap;
 }
 
-.cx-title-section-left-item__badge {
+.title-section-left-item__badge {
 	flex: 0 0 auto;
 }

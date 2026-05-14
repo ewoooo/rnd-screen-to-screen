@@ -12,7 +12,7 @@ Component node: [ChipItem](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/S
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components candidate |
 | Figma Source | chip-item |
 | Dependencies | Text |
@@ -21,7 +21,19 @@ Component node: [ChipItem](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/S
 
 ### Implementation Files
 
-No implementation file exists yet. A search for `ChipItem`, `chip-item`, and chip-named source files under `apps` and `packages` did not find a current implementation.
+Implemented in `@pxds/cx-components`:
+
+- `packages/cx-components/src/components/chip-item/ChipItem.tsx`
+- `packages/cx-components/src/components/chip-item/ChipItem.types.ts`
+- `packages/cx-components/src/components/chip-item/chip-item.variants.ts`
+- `packages/cx-components/src/components/chip-item/chip-item.css`
+- `packages/cx-components/src/components/chip-item/chip-item.readme.md`
+- `packages/cx-components/src/components/chip-item/index.ts`
+
+### Styling Contract
+
+- Component CSS must not define component-local `--cx-*` custom properties.
+- Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 
 ## Structure
 
@@ -109,6 +121,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
+- Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Implement one public `ChipItem` component.
 - Consume `Text` for the label.
 - Keep `selected` as the only visual state axis.

@@ -1,10 +1,10 @@
 import { cva } from "class-variance-authority";
 
-export const buttonXsmallSolidVariants = cva("cx-button-xsmall-solid", {
+export const buttonXsmallSolidVariants = cva("button-xsmall-solid", {
 	variants: {
 		state: {
-			active: "cx-button-xsmall-solid--active",
-			disabled: "cx-button-xsmall-solid--disabled",
+			active: "button-xsmall-solid--active",
+			disabled: "button-xsmall-solid--disabled",
 		},
 	},
 	defaultVariants: {

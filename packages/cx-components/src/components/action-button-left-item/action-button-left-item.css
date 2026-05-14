@@ -1,4 +1,4 @@
-.cx-action-button-left-item {
+.action-button-left-item {
 	align-items: center;
 	box-sizing: border-box;
 	display: inline-flex;
@@ -9,28 +9,28 @@
 	vertical-align: middle;
 }
 
-.cx-action-button-left-item--ai-gift {
+.action-button-left-item--ai-gift {
 	width: 85px;
 }
 
-.cx-action-button-left-item--ai {
+.action-button-left-item--ai {
 	width: 43px;
 }
 
-.cx-action-button-left-item__icon,
-.cx-action-button-left-item__divider {
+.action-button-left-item__icon,
+.action-button-left-item__divider {
 	display: block;
 	flex: none;
 	pointer-events: none;
 	user-select: none;
 }
 
-.cx-action-button-left-item__icon {
+.action-button-left-item__icon {
 	height: 22px;
 	width: 22px;
 }
 
-.cx-action-button-left-item__divider {
+.action-button-left-item__divider {
 	height: 8px;
 	width: 1px;
 }
