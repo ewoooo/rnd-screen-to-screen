@@ -87,12 +87,18 @@ export function getComponentGroups(
 export function groupComponentsByLayer(
 	components: readonly PreviewComponentRegistryEntry[],
 ) {
-	return components.reduce<ComponentLayerGroups>((acc, component) => {
+	const grouped = components.reduce<ComponentLayerGroups>((acc, component) => {
 		const layerComponents = acc[component.layer] ?? [];
 		acc[component.layer] = layerComponents;
 		layerComponents.push(component);
 		return acc;
 	}, {});
+
+	for (const layer of Object.keys(grouped) as (keyof typeof grouped)[]) {
+		grouped[layer]?.sort((a, b) => a.name.localeCompare(b.name));
+	}
+
+	return grouped;
 }
 
 export function groupComponentsByGroup(

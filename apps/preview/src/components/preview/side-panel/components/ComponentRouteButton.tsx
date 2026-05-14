@@ -21,8 +21,10 @@ export function ComponentRouteButton({
 					: "text-neutral-700 hover:bg-neutral-50 hover:text-neutral-950"
 			}`}
 		>
-			<p className="truncate font-medium">{component.name}</p>
-			<p className="truncate text-xs text-neutral-500">{component.group}</p>
+			<span className="flex min-w-0 items-baseline justify-between gap-2">
+				<span className="truncate font-medium">{component.name}</span>
+				<span className="shrink-0 text-xs text-neutral-500">{component.group}</span>
+			</span>
 		</button>
 	);
 }
