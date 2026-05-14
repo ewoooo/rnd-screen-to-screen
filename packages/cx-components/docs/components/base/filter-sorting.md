@@ -66,7 +66,7 @@ FilterSorting
 
 The vertical separator between sorting and filter is an internal rule, not a `Divider` component instance and not a public component vocabulary item.
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `FilterSorting` as a single component with one boolean property:
 

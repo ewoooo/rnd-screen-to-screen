@@ -64,7 +64,7 @@ BannerHorizontal
 | `Icon` | Inventory dependency / future affordance | Do not render an icon unless a mapped banner content preset requires it. Any icon must use registered Icon vocabulary. |
 | `Button` | Inventory dependency / future action | Do not embed an ad hoc button style. If a banner action is needed, compose through the existing Button vocabulary or keep the whole banner as the action target. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma exposes `BannerHorizontal` as a component, not a component set:
 

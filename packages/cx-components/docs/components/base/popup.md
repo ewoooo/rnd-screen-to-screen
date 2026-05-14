@@ -64,7 +64,7 @@ Popup
 | `Button` | Nested actions | Consumed through `PopupActionButton`. Popup should not duplicate Button styling. |
 | `IconButton` | Optional close/dismiss affordance | Listed in inventory, but the checked Figma Popup node does not contain an IconButton layer or close icon. Do not render it by default unless the product contract requires a close affordance. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `Popup` as one non-variant component:
 
@@ -152,7 +152,7 @@ Native dialog/container attributes should be supported by the root surface when 
 
 Normalize Figma property names to kebab-case bridge attributes. Figma uses `Show SubText`; DOM metadata should use `data-figma-property-show-sub-text`.
 
-### State / Variant Rules
+### State Rules
 
 - Popup has no Figma variant axis.
 - `Show SubText=false` removes the sub text region and should not leave route-local spacing compensation.

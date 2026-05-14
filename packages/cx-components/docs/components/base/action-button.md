@@ -107,7 +107,7 @@ ActionButton (component set, 433 x 851)
 | `Icon` | Indirectly through `ActionButton.LeftItem` and any future icon slot | `ActionButton` should not inline Figma vectors. |
 | `Text` | Optional supporting text or price/summary row | Use existing text vocabulary or a constrained internal text layout. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma exposes these component properties:
 

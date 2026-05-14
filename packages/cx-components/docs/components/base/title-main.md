@@ -64,7 +64,7 @@ TitleMain
 | `Indicator` | Optional dot indicator for carousel/search style title content | Consume `Indicator`; do not recreate dot ellipses locally. |
 | `Image` | Figma leading visual asset/media in the top supporting row | Treat as a media slot or plain image input until `Image` is promoted to a CX component. Do not list it as a public CX component dependency by implementation import unless that component exists. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma exposes `TitleMain` as a component set under the base section:
 
@@ -125,7 +125,7 @@ Recommended root identity:
 | root render identity | `data-figma-render` | `component` |
 | component id | `data-figma-component-id` | `title-main` |
 
-### State / Variant Rules
+### State Rules
 
 - `type="complete"` is the completion/title confirmation layout. It may show `titleSubText`, `media`, and `subTitle`; it normally does not show `Indicator`.
 - `type="search"` is the search/topic carousel layout. It may show `Indicator`; it should not require a media image.

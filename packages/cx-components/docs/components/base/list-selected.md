@@ -64,7 +64,7 @@ ListSelected
 | `ButtonXsmallSolid` | Right-item `ButtonXsmallSolid` branch | Consumed through `ListSelectedRightItem`, not recreated in the row. |
 | `Icon` | Right-item icon branches and nested button icon vocabulary | Use registered icons through dependencies. Do not import raw Figma asset URLs. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `ListSelected` as a component set in the base section:
 
@@ -157,7 +157,7 @@ type ListSelectedProps = {
 
 Use lowercase code values even though Figma displays `Radio` and `Checkbox`. The two boolean bridge attributes are listed in inventory and should be emitted from the root when the component is implemented.
 
-### State / Variant Rules
+### State Rules
 
 - `type="radio"` renders a checked `RadioButton` plus the main label.
 - `type="checkbox"` renders a checked `CheckBox` plus the main label.

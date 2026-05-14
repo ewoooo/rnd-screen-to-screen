@@ -65,7 +65,7 @@ TitleContents
 | `TitleContents.RightItem` | Optional trailing affordance | Use the existing private right-item component/preset. Default Figma state is `Type=Icon`. |
 | `Icon` | Nested right-item icon | Use existing `Icon` mapping through `TitleContents.RightItem`: `Size=16, Type=ArrowUp`. Do not inline SVG. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `TitleContents` as a single component with one boolean property:
 

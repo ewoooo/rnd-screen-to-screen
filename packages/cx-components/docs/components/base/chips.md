@@ -67,7 +67,7 @@ Chips
 | --- | --- | --- |
 | `ChipItem` | Each option pill | Render every option through `ChipItem`; pass normalized `selected` state and label content. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `Chips` as one non-variant component:
 
@@ -145,7 +145,7 @@ Native `div` or list attributes may be supported on the root. If the group is in
 
 Figma lists no `Chips` component properties. The bridge should still identify the root as `chips`, while preserving each child `ChipItem` selected marker for nested component matching.
 
-### State/Variant Rules
+### State Rules
 
 - `Chips` has no standalone Figma variant axis.
 - Exactly one item should be selected for the current contract.

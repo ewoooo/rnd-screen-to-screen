@@ -72,7 +72,7 @@ Tab
 | --- | --- | --- |
 | `TabItem` | Each tab option | Compose existing `TabItem` and pass normalized `state="selected"` or `state="default"`. Do not duplicate TabItem typography or underline styles in `Tab`. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma exposes `Tab` as a single component node `9508:56855`, not a component set:
 

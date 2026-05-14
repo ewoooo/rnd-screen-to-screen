@@ -70,7 +70,7 @@ BottomSheet
 | `Tooltip` | Optional promotional tooltip above action CTA | Figma uses `Direction=Center` in the `ActionButton=on` source. |
 | `Icon` | Close icon inside `TitleBottomSheet` and nested icon dependencies | Consume registered icon vocabulary; no Bottomsheet-owned icon set. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma exposes `Bottomsheet` as a component set at node `9717:37390` with one variant axis and two component variants:
 
@@ -106,6 +106,18 @@ Source measurements checked in Figma:
 
 Figma source includes a separate `BottomSheet` frame label in the base section. Treat that as the layout/runtime naming anchor, while `Bottomsheet` is the Figma compound that describes expected child composition.
 
+### Node Mapping
+
+| Figma node | Code structure | Public vocabulary? |
+| --- | --- | --- |
+| `Bottomsheet` component set | `BottomSheet` runtime plus scoped composition wrapper if needed | layout vocabulary |
+| `ActionButton=on/off` | `actionButton="on" \| "off"` or derived action presence | variant value |
+| `Handle` instance | `Handle` | yes |
+| `TitleBottomSheet` instance | `TitleBottomSheet` | yes |
+| `Con` slot | `children` / `content` | slot |
+| `ActionButton` instance | `ActionButton` | yes |
+| Nested icons and left items | owned by `Icon`, `TitleBottomSheet`, and `ActionButton.LeftItem` | dependency-owned |
+
 ## Props
 
 Purpose: define the public API shape and Figma bridge contract expected when this compound is normalized through `BottomSheet`.
@@ -139,7 +151,7 @@ The exact exported prop shape may remain the current `BottomSheet` composition A
 | `showTitleBottomSheet` | `data-figma-property-show-title-bottom-sheet` | `true` / `false`. |
 | `actionButton` | `data-figma-property-action-button` | `on` / `off`. |
 
-### State / Variant Rules
+### State Rules
 
 - `ActionButton=on` renders the bottom action area after the `Con` slot.
 - `ActionButton=off` omits the action area and uses the sheet's bottom padding to preserve the source bottom spacing.

@@ -61,7 +61,7 @@ AccordionList
 | `Divider` | Row separators | Use `Type=Contents` / `type="contents"` separators at the list width. |
 | `Icon` | Accordion affordance through `Accordion` | Do not consume directly unless the `Accordion` API requires an icon override. The Figma dependency is inherited from nested Accordion rows. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma exposes `AccordionList` as one component, not a component set:
 

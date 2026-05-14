@@ -70,7 +70,7 @@ ListText
 | `Icon` | Nested right-item arrow | Consume through `ListText.RightItem`; use registered `Icon / Size=16, Type=ArrowRight`. Do not inline the vector. |
 | `Divider` | Optional row separation in list contexts | Use existing `Divider` when list composition needs a divider. Do not recreate a border in the screen route. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `ListText` as a component set with one visible variant axis:
 
@@ -156,7 +156,7 @@ Native `div` or row attributes may be supported on the root. If the row is inter
 
 `data-figma-property-right-item` is a parent row presence property. It should not replace the nested `ListText.RightItem` type marker when a right item is rendered.
 
-### State/Variant Rules
+### State Rules
 
 - `table=false` maps to Figma `Table=off`: one primary text region plus optional right item.
 - `table=true` maps to Figma `Table=on`: two text regions with an 8px source gap and no right item in the checked SOT.

@@ -62,7 +62,7 @@ SectionItem
 | `Text` | Common slotted body or row content | Use existing text vocabulary inside `children`; do not create section-local typography primitives. |
 | `Badge` | Optional slotted status/label content | Render through the existing Badge component when content needs a badge. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models this as a component set named `SectionItem_이친구를복붙하세요` with a single variant property:
 
@@ -119,7 +119,7 @@ If the implementation prefers `type`, keep it an alias for `variant` rather than
 
 Figma uses display values with spacing numbers. Code should expose lowercase semantic values and keep the exact Figma names only in bridge/export mapping.
 
-### State / Variant Rules
+### State Rules
 
 - `Default 20` is the default variant and applies the 20px horizontal section inset.
 - `Card 0` removes the section inset so card-shaped or already-inset content can fill the 369px wrapper.

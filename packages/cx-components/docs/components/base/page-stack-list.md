@@ -64,7 +64,7 @@ PageStackList
 | `TitleSection.LeftItem` / `TitleSection.RightItem` / `Icon` | Possible nested title affordances | Owned by the title component passed by the consumer, not by `PageStackList`. |
 | `SectionItem_이친구를복붙하세요` | Example content payloads in Figma | Consumer-provided `children`. Do not import or recreate the Figma copy helper inside layout code. |
 
-### Figma Source / Normalization
+### Figma Source Difference
 
 Figma models `PageStackList` as a 393px-wide vertical auto-layout component:
 
@@ -136,7 +136,7 @@ Purpose: define the planned public API and the `data-figma-property-*` bridge co
 
 `data-figma-property-contents-title` should be derived from the resolved title visibility when the caller does not pass an explicit bridge value. `data-figma-property-contents-slot` represents the Figma authoring slot, not a visual child component.
 
-### State / Variant Rules
+### State Rules
 
 - Variants: 없음.
 - `contents-title=true` renders the title slot region.
