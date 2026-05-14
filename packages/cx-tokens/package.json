@@ -7,7 +7,6 @@
 		"generate:css": "node scripts/generate-css-variables.mjs",
 		"generate:tailwind": "node scripts/generate-tailwind.mjs",
 		"generate-text-styles": "node scripts/generate-text-styles.mjs",
-		"check:tailwind": "node scripts/check-tailwind.mjs",
 		"check:value-index": "node scripts/check-token-value-index.mjs"
 	},
 	"sideEffects": [
