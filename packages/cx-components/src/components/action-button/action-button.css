@@ -1,0 +1,51 @@
+.action-button {
+	align-items: stretch;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: var(--semantic-spacing-gap-comfortable);
+	padding: var(--spacing-12) var(--semantic-spacing-inset-md)
+		var(--spacing-40);
+	width: 100%;
+}
+
+.action-button__text {
+	color: var(--semantic-color-fg-muted);
+	margin: 0;
+	text-align: center;
+}
+
+.action-button__tooltip {
+	width: 100%;
+}
+
+.action-button__actions {
+	align-items: stretch;
+	box-sizing: border-box;
+	display: flex;
+	gap: var(--semantic-spacing-gap-default);
+	width: 100%;
+}
+
+.action-button--button-1 .action-button__actions {
+	flex-direction: column;
+}
+
+.action-button--button-2 .action-button__actions {
+	flex-direction: row;
+}
+
+.action-button__button {
+	min-width: 0;
+}
+
+.action-button--button-2 .action-button__button {
+	flex: 1 1 0;
+}
+
+.action-button__button-label {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

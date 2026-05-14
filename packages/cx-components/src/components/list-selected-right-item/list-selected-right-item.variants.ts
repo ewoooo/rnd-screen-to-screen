@@ -18,5 +18,5 @@ export const listSelectedRightItemVariants = cva(
 );
 
 export type ListSelectedRightItemType = NonNullable<
-	Parameters<typeof listSelectedRightItemVariants>[0]
->["type"];
+	NonNullable<Parameters<typeof listSelectedRightItemVariants>[0]>["type"]
+>;

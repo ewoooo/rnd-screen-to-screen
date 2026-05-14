@@ -1,0 +1,119 @@
+.filter-sorting {
+	box-sizing: border-box;
+	color: var(--semantic-color-text-primary);
+	display: flex;
+	flex-direction: column;
+	min-height: 52px;
+	width: 100%;
+}
+
+.filter-sorting__divider {
+	flex: 0 0 auto;
+}
+
+.filter-sorting__content {
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	gap: var(--spacing-20);
+	justify-content: space-between;
+	min-height: 50px;
+	padding: var(--spacing-16) var(--spacing-32);
+	width: 100%;
+}
+
+.filter-sorting__count,
+.filter-sorting__filter {
+	font-family: var(--14-bold-font-family, inherit);
+	font-size: var(--14-bold-font-size);
+	font-weight: var(--14-bold-font-weight);
+	letter-spacing: var(--14-bold-letter-spacing);
+	line-height: var(--14-bold-line-height);
+}
+
+.filter-sorting__count {
+	display: inline-flex;
+	flex: 1 1 auto;
+	min-width: 0;
+	white-space: nowrap;
+}
+
+.filter-sorting__actions {
+	align-items: center;
+	display: inline-flex;
+	flex: 0 0 auto;
+	gap: var(--spacing-12);
+	justify-content: flex-end;
+	min-width: 0;
+}
+
+.filter-sorting__order {
+	flex: 0 0 auto;
+}
+
+.filter-sorting__separator {
+	background: var(--component-list-cell-divider);
+	display: block;
+	flex: 0 0 auto;
+	height: 12px;
+	width: 1px;
+}
+
+.filter-sorting__filter {
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	border-radius: var(--semantic-radius-sm);
+	box-sizing: border-box;
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	flex: 0 0 auto;
+	gap: var(--spacing-4);
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	user-select: none;
+	white-space: nowrap;
+}
+
+.filter-sorting__filter-label {
+	display: block;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.filter-sorting__filter-icon {
+	align-items: center;
+	box-sizing: border-box;
+	display: inline-flex;
+	flex: 0 0 auto;
+	flex-direction: column;
+	gap: var(--spacing-2);
+	height: 16px;
+	justify-content: center;
+	width: 16px;
+}
+
+.filter-sorting__filter-icon-line {
+	background: currentColor;
+	border-radius: var(--semantic-radius-sm);
+	display: block;
+	height: var(--spacing-2);
+	width: 11px;
+}
+
+.filter-sorting__filter-icon-line:nth-child(2) {
+	width: 8px;
+}
+
+.filter-sorting__filter-icon-line:nth-child(3) {
+	width: 5px;
+}
+
+.filter-sorting__filter:focus-visible {
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}

@@ -29,39 +29,39 @@ Rule of thumb: if a component needs CX visual styling or Figma component identit
 | CheckBox | 제작 완료 | cx-components | checkbox | Text | Checked: Off/On; Text: Off/On; Disabled: Off/On | 없음 | [문서](components/base/checkbox.md) |
 | Divider | 제작 완료 | cx-components | divider | 없음 | Type: Contents/Section | 없음 | [문서](components/base/divider.md) |
 | IconButton | 제작 완료 | cx-components | icon-button | Icon | 없음 | 없음 | [문서](components/base/icon-button.md) |
-| Popup | 제작 예정 | cx-components | popup | Button, PopupActionButton, Text, IconButton | 없음 | `data-figma-property-contents`: slot; `data-figma-property-show-contents`: boolean; `data-figma-property-show-sub-text`: boolean | [문서](components/base/popup.md) |
+| Popup | 제작 완료 | cx-components | popup | Button, PopupActionButton, Text, IconButton | 없음 | `data-figma-property-contents`: slot; `data-figma-property-show-contents`: boolean; `data-figma-property-show-sub-text`: boolean | [문서](components/base/popup.md) |
 | RadioButton | 제작 완료 | cx-components | radio-button | Text | Checked: On/Off; Text: Off/On; Disabled: Off/On | 없음 | [문서](components/base/radio-button.md) |
 | SearchBar | 제작 완료 | cx-components | search-bar | Icon, Text, IconButton | type: LLM/search | 없음 | [문서](components/base/search-bar.md) |
 | StatusBar | 제작 완료 | cx-components | status-bar | _StatusBar-time | State: Default | 없음 | [문서](components/base/status-bar.md) |
 | Text | 제작 완료 | cx-components | text | 없음 | 없음 | 없음 | [문서](components/base/text.md) |
 | TextField | 제작 완료 | cx-components | text-field | Text; Button | States: Default/Disabled/Focused/Typed/Typing; Error: on/off; Button: off/on | `data-figma-property-state`: default/focused/typing/typed/disabled; `data-figma-property-error`: true/false; `data-figma-property-label`: true/false; `data-figma-property-help-text`: true/false; `data-figma-property-button`: true/false | [문서](components/base/text-field.md) |
-| TitleMain | 제작 예정 | cx-components | title-main | Image, Indicator, Text, TitleSection | Type: Complete/Search | `data-figma-property-show-title-sub-text`: boolean; `data-figma-property-show-title-sub-text-image`: boolean; `data-figma-property-indicator`: boolean | [문서](components/base/title-main.md) |
+| TitleMain | 제작 완료 | cx-components | title-main | Image, Indicator, Text, TitleSection | Type: Complete/Search | `data-figma-property-show-title-sub-text`: boolean; `data-figma-property-show-title-sub-text-image`: boolean; `data-figma-property-indicator`: boolean | [문서](components/base/title-main.md) |
 | TitleSection | 제작 완료 | cx-components | title-section | Icon, TitleSection.LeftItem, TitleSection.RightItem, Badge | 없음 | `data-figma-property-sub-title`: boolean; `data-figma-property-left-item`: boolean; `data-figma-property-right-item`: boolean | [문서](components/base/title-section.md) |
 | TooltipBubble | 제작 완료 | cx-components | tooltip-bubble | 없음 | 없음 | 없음 | [문서](components/base/tooltip-bubble.md) |
 | Icon | 제작 완료 | cx-components / cx-icons | icon | 없음 | Size: 24/20/16/32/40/12; Type: Close/ArrowLeft/Menu/Shop/Barcode/Home/AiSearch/Info/FamilyData/DataShare/Payment/Calender/RatePlan/All/ArrowUp/ArrowDown/ArrowRight/Plus/Terminal/MobilePlan/Benefit/Subscribe/youtube/netflix/TU/TW/money/percent/data/Logo/point/Voice/search/history/call/Point/Device/Content/Bill/Data/Family/Dropdown/Download/Bubble/Heart | 없음 | [문서](components/base/icon.md) |
-| AccordionList | 제작 예정 | cx-components candidate | accordion-list | Accordion, Divider, Icon | 없음 | 없음 | [문서](components/base/accordion-list.md) |
-| ActionButton | 제작 예정 | cx-components candidate | action-button | Button, ActionButton.LeftItem, Tooltip, Icon, Text | Type: Default/Ai/Gift; Button: 1/2 | `data-figma-property-show-text`: boolean; `data-figma-property-show-tooltip`: boolean | [문서](components/base/action-button.md) |
+| AccordionList | 제작 완료 | cx-components candidate | accordion-list | Accordion, Divider, Icon | 없음 | 없음 | [문서](components/base/accordion-list.md) |
+| ActionButton | 제작 완료 | cx-components candidate | action-button | Button, ActionButton.LeftItem, Tooltip, Icon, Text | Type: Default/Ai/Gift; Button: 1/2 | `data-figma-property-show-text`: boolean; `data-figma-property-show-tooltip`: boolean | [문서](components/base/action-button.md) |
 | BadgeIcon | 제작 완료 | cx-components candidate | badge-icon | Icon, Badge | Subtext: Off/On | 없음 | [문서](components/base/badge-icon.md) |
-| BannerHorizontal | 제작 예정 | cx-components candidate | banner-horizontal | Indicator, Text, Icon, Button | 없음 | `data-figma-property-indicator`: boolean | [문서](components/base/banner-horizontal.md) |
+| BannerHorizontal | 제작 완료 | cx-components candidate | banner-horizontal | Indicator, Text, Icon, Button | 없음 | `data-figma-property-indicator`: boolean | [문서](components/base/banner-horizontal.md) |
 | BottomNavigation | 제작 완료 | cx-components candidate | bottom-navigation | Icon, Text | State: My/Search/Shopping | 없음 | [문서](components/base/bottom-navigation.md) |
 | ButtonListOrder | 제작 완료 | cx-components candidate | button-list-order | Icon | 없음 | 없음 | [문서](components/base/button-list-order.md) |
 | ButtonTextUnderline | 제작 완료 | cx-components candidate | button-text-underline | 없음 | 없음 | 없음 | [문서](components/base/button-text-underline.md) |
 | ButtonXsmallSolid | 제작 완료 | cx-components candidate | button-xsmall-solid | Icon, Button | State: Active/Disabled | 없음 | [문서](components/base/button-xsmall-solid.md) |
 | Callout | 제작 완료 | cx-components candidate | callout | Text, Icon | Property 1: Default | `data-figma-property-title`: boolean | [문서](components/base/callout.md) |
 | ChipItem | 제작 완료 | cx-components candidate | chip-item | Text | Selected: Off/On | 없음 | [문서](components/base/chip-item.md) |
-| Chips | 제작 예정 | cx-components candidate | chips | ChipItem | 없음 | 없음 | [문서](components/base/chips.md) |
-| FilterSorting | 제작 예정 | cx-components candidate | filter-sorting | ButtonListOrder, Divider, Icon | 없음 | `data-figma-property-divider`: boolean | [문서](components/base/filter-sorting.md) |
+| Chips | 제작 완료 | cx-components candidate | chips | ChipItem | 없음 | 없음 | [문서](components/base/chips.md) |
+| FilterSorting | 제작 완료 | cx-components candidate | filter-sorting | ButtonListOrder, Divider, Icon | 없음 | `data-figma-property-divider`: boolean | [문서](components/base/filter-sorting.md) |
 | Footer | 제작 완료 | cx-components candidate | footer | Text, Button | Type: 01/02 | 없음 | [문서](components/base/footer.md) |
 | Handle | 제작 완료 | cx-components candidate | handle | 없음 | state: Default/off | `data-figma-property-show-handle`: boolean | [문서](components/base/handle.md) |
 | Indicator | 제작 완료 | cx-components candidate | indicator | 없음 | 없음 | 없음 | [문서](components/base/indicator.md) |
-| ListSelected | 제작 예정 | cx-components candidate | list-selected | ButtonXsmallSolid, CheckBox, Icon, ListSelectedRightItem, RadioButton, Text | type: Radio/Checkbox | `data-figma-property-show-list-selected-right-item`: boolean; `data-figma-property-show-sub-text`: boolean | [문서](components/base/list-selected.md) |
-| ListText | 제작 예정 | cx-components candidate | list-text | Icon, ListText.RightItem, Text, Divider | Table: off/on | `data-figma-property-right-item`: boolean | [문서](components/base/list-text.md) |
-| SectionItem_이친구를복붙하세요 | 제작 예정 | cx-components candidate | section-item | TitleSection, Text, Badge | Type: Card 0/Default 20 | `data-figma-property-contents`: slot | [문서](components/base/section-item.md) |
-| Tab | 제작 예정 | cx-components candidate | tab | TabItem | 없음 | 없음 | [문서](components/base/tab.md) |
+| ListSelected | 제작 완료 | cx-components candidate | list-selected | ButtonXsmallSolid, CheckBox, Icon, ListSelectedRightItem, RadioButton, Text | type: Radio/Checkbox | `data-figma-property-show-list-selected-right-item`: boolean; `data-figma-property-show-sub-text`: boolean | [문서](components/base/list-selected.md) |
+| ListText | 제작 완료 | cx-components candidate | list-text | Icon, ListText.RightItem, Text, Divider | Table: off/on | `data-figma-property-right-item`: boolean | [문서](components/base/list-text.md) |
+| SectionItem_이친구를복붙하세요 | 제작 완료 | cx-components candidate | section-item | TitleSection, Text, Badge | Type: Card 0/Default 20 | `data-figma-property-contents`: slot | [문서](components/base/section-item.md) |
+| Tab | 제작 완료 | cx-components candidate | tab | TabItem | 없음 | 없음 | [문서](components/base/tab.md) |
 | TabItem | 제작 완료 | cx-components candidate | tab-item | Text | State: Default/Selected | 없음 | [문서](components/base/tab-item.md) |
 | TextButton | 제작 완료 | cx-components candidate | text-button | Text | Property 1: Default/Variant2 | 없음 | [문서](components/base/text-button.md) |
 | TitleBottomSheet | 제작 완료 | cx-components candidate | title-bottom-sheet | Icon | 없음 | `data-figma-property-show-title-text`: boolean; `data-figma-property-show-title-button`: boolean; `data-figma-property-show-sub-text`: boolean; `data-figma-property-show-sub-text-2`: boolean; `data-figma-property-show-title`: boolean | [문서](components/base/title-bottom-sheet.md) |
-| TitleContents | 제작 예정 | cx-components candidate | title-contents | Icon, TitleContents.RightItem | 없음 | `data-figma-property-show-button`: boolean | [문서](components/base/title-contents.md) |
+| TitleContents | 제작 완료 | cx-components candidate | title-contents | Icon, TitleContents.RightItem | 없음 | `data-figma-property-show-button`: boolean | [문서](components/base/title-contents.md) |
 | Tooltip | 제작 완료 | cx-components candidate | tooltip | TooltipBubble | Direction: Left/Center/Right | 없음 | [문서](components/base/tooltip.md) |
 | UnderlineTab | 제작 완료 | cx-components candidate | underline-tab | Text | State: 01/02 | 없음 | [문서](components/base/underline-tab.md) |
 | ActionButton.LeftItem | 제작 완료 | cx-components private | action-button-left-item | Icon | Type: Ai+Gift/Ai | 없음 | [문서](components/base/action-button-left-item.md) |
@@ -73,9 +73,9 @@ Rule of thumb: if a component needs CX visual styling or Figma component identit
 | TitleSection.RightItem | 제작 완료 | cx-components private | title-section-right-item | ButtonListOrder, Icon, IconButton, Button, Text | Type: Icon/TextButton/TextItemButton/ButtonListOrder | 없음 | [문서](components/base/title-section-right-item.md) |
 | ProgressTopBar | 제작 완료 | pxds-components | progress-top-bar | 없음 | 없음 | 없음 | [문서](components/base/progress-top-bar.md) |
 | BottomSheet | 없음 | pxds-layout | bottom-sheet | 없음 | 없음 | 없음 | [문서](components/base/bottom-sheet.md) |
-| Bottomsheet | 제작 예정 | pxds-layout | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
+| Bottomsheet | 제작 완료 | cx-components / pxds-layout candidate | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
 | PageStackContents | 제작 완료 | pxds-layout | page-stack-contents | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot | 없음 | `data-figma-property-title-type`: instance swap; `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean; `data-figma-property-title-swap`: instance swap | [문서](components/base/page-stack-contents.md) |
-| PageStackList | 제작 예정 | pxds-layout | page-stack-list | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack | 없음 | `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean | [문서](components/base/page-stack-list.md) |
+| PageStackList | 제작 완료 | cx-components / pxds-layout candidate | page-stack-list | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack | 없음 | `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean | [문서](components/base/page-stack-list.md) |
 
 Status는 Figma/component 제작 상태만 네 단계로 기록한다: `검수 완료`, `제작 완료`, `제작 예정`, `없음`.
 
@@ -269,8 +269,9 @@ Implementation notes:
 - `Image` is currently an external/lower-level dependency. Confirm whether it is a CX component, asset slot, or plain media slot before implementing `TitleMain`.
 - `SectionItem_이친구를복붙하세요` should be renamed or normalized before becoming public API.
 - `Bottomsheet` should map to existing `BottomSheet` naming unless the visual content wrapper needs a separate compound.
-- `FilterSorting` needs a registered 16px `filter` icon before implementation; the Figma source uses a local vector for that glyph.
+- `FilterSorting` is implemented with a CSS fallback affordance until a registered 16px `filter` icon is added; the Figma source uses a local vector for that glyph.
 - `TitleMain` treats `Image` as a media/asset slot, not a CX component dependency, unless a dedicated image component is introduced later.
+- `Bottomsheet` and `PageStackList` now have conservative `cx-components` composition wrappers per implementation request; keep them eligible for later `pxds-layout` promotion if the layout boundary is formalized.
 
 ## 5. Figma Bridge Attribute Contract
 
