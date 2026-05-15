@@ -9,7 +9,7 @@
     "lint": "biome lint ../../apps/preview && node ../../scripts/check-react-hooks-policy.mjs apps/preview"
   },
   "dependencies": {
-    "@pxds/pxds-components": "^0.1.0",
+    "@pxds/cx-components": "0.1.0",
     "@pxds/pxds-figma": "0.1.0",
     "@pxds/cx-tokens": "^0.1.0",
     "@screen/mobile": "0.1.0",

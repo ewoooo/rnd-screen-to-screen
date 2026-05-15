@@ -1,30 +1,23 @@
+"use client";
+
 import type { ReactNode } from "react";
 import {
-	dividerPreviewExample,
-	placeholderPreviewExample,
-} from "@pxds/pxds-components/atoms/feedback";
-import {
-	TextBlock,
-	textBlockPreviewMocks,
-} from "@pxds/pxds-components/atoms/typography";
-import { wdsCorePreviewExamples } from "@pxds/pxds-components/core";
-import {
-	FlowHero,
-	FlowNotice,
-	FlowSummaryCard,
-	ProgressTopBar,
-} from "@pxds/pxds-components/domains";
-import {
-	ConsentList,
-	formFieldPreviewExample,
-	InfoList,
-	InfoSection,
-	NoticeBlock,
-	PrimaryCTABar,
-	SectionCard,
-	SelectableList,
-	TextFieldList,
-} from "@pxds/pxds-components/molecules";
+	ActionButton,
+	AppBar,
+	Button,
+	Callout,
+	Checkbox,
+	Chips,
+	Divider,
+	ListText,
+	SearchBar,
+	SectionItem,
+	StatusBar,
+	Text,
+	TextField,
+	TitleMain,
+	TitleSection,
+} from "@pxds/cx-components";
 
 export type ComponentPreviewExample = {
 	componentId: string;
@@ -36,166 +29,188 @@ function PreviewStack({ children }: { children: ReactNode }) {
 	return <div className="flex w-[390px] max-w-full flex-col gap-4">{children}</div>;
 }
 
-const sampleInfoItems = [
-	{
-		id: "plan",
-		title: "5GX 프라임",
-		sub: "데이터 무제한",
-		trailingLabel: "이용중",
-		mediaLabel: "plan",
-	},
-	{
-		id: "coupon",
-		title: "멤버십 쿠폰",
-		sub: "이번 달 2장 남음",
-		trailingLabel: "보기",
-		trailingKind: "action" as const,
-		mediaLabel: "coupon",
-	},
-];
-
-const sampleSelectableItems = [
-	{ id: "basic", title: "기본 요금제", sub: "월 64,000원", trailingLabel: "추천" },
-	{ id: "save", title: "절약 요금제", sub: "월 39,000원", trailingLabel: "할인" },
-];
-
 export const componentPreviewExamples = [
-	...wdsCorePreviewExamples,
 	{
-		componentId: "text-block",
-		description: "Typography primitive with PXDS text role mapping.",
+		componentId: "status-bar",
+		description: "Mobile status bar frame component.",
+		render: () => (
+			<PreviewStack>
+				<StatusBar />
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "app-bar",
+		description: "Top app bar with optional navigation and title regions.",
+		render: () => (
+			<PreviewStack>
+				<AppBar title="가입자 정보 입력" showLeftItem showTitle />
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "title-main",
+		description: "Primary title block for top-level screen messaging.",
+		render: () => (
+			<PreviewStack>
+				<TitleMain
+					type="search"
+					title="무엇을 찾고 계신가요?"
+					subTitle="필요한 서비스를 빠르게 검색해 보세요."
+				/>
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "title-section",
+		description: "Section title with optional subtitle and right item.",
+		render: () => (
+			<PreviewStack>
+				<TitleSection
+					title="배송지 정보"
+					subTitle="받는 분과 배송 요청사항을 입력해 주세요."
+					rightItem={{ type: "textButton", text: "수정" }}
+				/>
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "text",
+		description: "CX typography primitive using component text styles.",
 		render: () => (
 			<div className="grid gap-2">
-				{textBlockPreviewMocks.map((props) => (
-					<TextBlock key={`${props.variant}-${props.text}`} {...props} />
-				))}
+				<Text variant="sectionTitle">타이틀 텍스트</Text>
+				<Text variant="body">본문 텍스트는 화면의 주요 설명에 사용합니다.</Text>
+				<Text variant="helper">보조 설명 텍스트</Text>
 			</div>
 		),
 	},
-	dividerPreviewExample,
-	placeholderPreviewExample,
-	formFieldPreviewExample,
 	{
-		componentId: "consent-list",
-		description: "Agreement list with required validation state.",
+		componentId: "text-field",
+		description: "Input field with state, helper text, and optional action button.",
 		render: () => (
 			<PreviewStack>
-				<ConsentList
-					allLabel="전체 동의"
-					allCaption="선택 약관까지 한 번에 동의"
+				<TextField placeholder="이름 입력" />
+				<TextField
+					placeholder="우편번호"
+					actionButton={{ label: "주소 찾기" }}
+				/>
+				<TextField
+					placeholder="휴대폰 번호"
+					error
+					helperText="휴대폰 번호를 확인해 주세요."
+				/>
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "button",
+		description: "CX button variants and full-width action state.",
+		render: () => (
+			<PreviewStack>
+				<Button fullWidth>다음</Button>
+				<Button variant="secondary" fullWidth>
+					주소 찾기
+				</Button>
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "action-button",
+		description: "Docked action button with optional supporting text.",
+		render: () => (
+			<PreviewStack>
+				<ActionButton
+					type="ai"
+					text="사진이나 연락처, 앱도 새 휴대폰으로 한 번에 옮겨볼까요?"
+					actions={[
+						{
+							label: "홈으로 이동",
+							secondaryLabel: "데이터 옮기기",
+							variant: "primary",
+						},
+					]}
+				/>
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "checkbox",
+		description: "Checkbox control with label and checked state.",
+		render: () => (
+			<PreviewStack>
+				<Checkbox label="가입자 정보와 동일" checked />
+				<Checkbox label="공동현관 출입 정보를 입력할게요" />
+			</PreviewStack>
+		),
+	},
+	{
+		componentId: "chips",
+		description: "Horizontal chip selection group.",
+		render: () => (
+			<PreviewStack>
+				<Chips
+					defaultValue="all"
 					items={[
-						{ id: "service", title: "서비스 이용약관", caption: "v1.0", required: true },
-						{ id: "event", title: "혜택 정보 수신", caption: "동의하지 않아도 가입 가능", required: false },
+						{ value: "all", label: "전체" },
+						{ value: "mobile", label: "모바일" },
+						{ value: "internet", label: "인터넷" },
 					]}
+					ariaLabel="카테고리"
 				/>
 			</PreviewStack>
 		),
 	},
 	{
-		componentId: "info-list",
-		description: "Media, title, sub text, and trailing affordance rows.",
+		componentId: "list-text",
+		description: "Text list row with optional right affordance.",
 		render: () => (
 			<PreviewStack>
-				<InfoList items={sampleInfoItems} />
-			</PreviewStack>
-		),
-	},
-	{
-		componentId: "info-section",
-		description: "Section card wrapper around info rows.",
-		render: () => (
-			<PreviewStack>
-				<InfoSection label="이용 정보" title="요금제" trailingText="2개" items={sampleInfoItems} />
-			</PreviewStack>
-		),
-	},
-	{
-		componentId: "notice-block",
-		description: "Policy or status notice block.",
-		render: () => (
-			<PreviewStack>
-				<NoticeBlock badge="안내" text="유예 기간 후에는 회원 정보가 영구 삭제됩니다." action="자세히 보기" />
-			</PreviewStack>
-		),
-	},
-	{
-		componentId: "section-card",
-		description: "Generic section card with header slots.",
-		render: () => (
-			<PreviewStack>
-				<SectionCard label="섹션" title="청구 정보" trailingText="최근">
-					<TextBlock variant="body" text="이번 달 청구 예정 금액은 64,000원입니다." />
-				</SectionCard>
-			</PreviewStack>
-		),
-	},
-	{
-		componentId: "selectable-list",
-		description: "Single-selection list pattern.",
-		render: () => (
-			<PreviewStack>
-				<SelectableList name="preview-selectable" items={sampleSelectableItems} value="basic" />
-			</PreviewStack>
-		),
-	},
-	{
-		componentId: "primary-cta-bar",
-		description: "Primary docked CTA bar.",
-		render: () => (
-			<PreviewStack>
-				<PrimaryCTABar primaryLabel="동의하고 계속하기" secondaryLabel="이전" />
-			</PreviewStack>
-		),
-	},
-	{
-		componentId: "text-field-list",
-		description: "Stacked form fields.",
-		render: () => (
-			<PreviewStack>
-				<TextFieldList
-					fields={[
-						{ id: "name", label: "이름", placeholder: "홍길동", required: true },
-						{ id: "phone", label: "휴대폰 번호", placeholder: "01012345678", inputMode: "numeric" },
-					]}
-					values={{ name: "", phone: "" }}
-					onChange={() => undefined}
+				<ListText
+					text="선택한 요금제는 다음 달부터 적용됩니다."
+					rightItem={{ type: "icon", icon: "arrow-right", ariaLabel: "자세히 보기" }}
 				/>
 			</PreviewStack>
 		),
 	},
 	{
-		componentId: "progress-top-bar",
-		description: "Flow top bar with progress.",
+		componentId: "section-item",
+		description: "Section content wrapper for form and list contents.",
 		render: () => (
 			<PreviewStack>
-				<ProgressTopBar title="회원가입" leading="close" progress={{ label: "1/4", percent: 25 }} />
+				<SectionItem>
+					<TextField placeholder="상세 주소" />
+				</SectionItem>
 			</PreviewStack>
 		),
 	},
 	{
-		componentId: "flow-hero",
-		description: "Flow page hero copy.",
+		componentId: "callout",
+		description: "Inline notice/callout block for guidance and policy copy.",
 		render: () => (
 			<PreviewStack>
-				<FlowHero titleLines={["약관에 동의하고", "가입을 시작하세요"]} description="필수 약관에 동의하면 다음 단계로 진행할 수 있어요." />
+				<Callout title="본인인증 완료">
+					조현호 고객님의 본인인증이 완료되었습니다.
+				</Callout>
 			</PreviewStack>
 		),
 	},
 	{
-		componentId: "flow-notice",
-		description: "Flow notice section.",
+		componentId: "search-bar",
+		description: "Search input affordance for main/search screens.",
 		render: () => (
 			<PreviewStack>
-				<FlowNotice badge="안내" text="30일 이내 같은 정보로 로그인하면 탈퇴를 철회할 수 있어요." action="자세히" />
+				<SearchBar placeholder="검색어를 입력해 주세요" />
 			</PreviewStack>
 		),
 	},
 	{
-		componentId: "flow-summary-card",
-		description: "Flow summary information card.",
+		componentId: "divider",
+		description: "Content or section divider.",
 		render: () => (
 			<PreviewStack>
-				<FlowSummaryCard label="탈퇴 정보" title="처리 결과" items={sampleInfoItems} />
+				<Divider type="section" />
+				<Divider type="contents" />
 			</PreviewStack>
 		),
 	},

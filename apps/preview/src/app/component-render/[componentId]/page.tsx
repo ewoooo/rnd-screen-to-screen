@@ -1,23 +1,22 @@
-import { notFound } from "next/navigation";
-import { getComponentById } from "@pxds/pxds-components/registry";
+"use client";
+
+import { useParams } from "next/navigation";
 
 import { ComponentExampleMissing } from "@/components/preview/render-view/component/ComponentExampleMissing";
 import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
+import { getCxComponentById } from "@/utils/cx-component-registry";
 
-type ComponentRenderRoutePageProps = {
-	params: Promise<{
-		componentId: string;
-	}>;
-};
-
-export default async function ComponentRenderRoutePage({
-	params,
-}: ComponentRenderRoutePageProps) {
-	const { componentId } = await params;
-	const component = getComponentById(componentId);
+export default function ComponentRenderRoutePage() {
+	const params = useParams<{ componentId?: string }>();
+	const componentId = params.componentId ?? "";
+	const component = getCxComponentById(componentId);
 
 	if (!component) {
-		notFound();
+		return (
+			<main className="grid min-h-dvh place-items-center bg-transparent p-8">
+				<ComponentExampleMissing componentName={componentId || "Unknown"} />
+			</main>
+		);
 	}
 
 	const example = getComponentPreviewExample(component.id);

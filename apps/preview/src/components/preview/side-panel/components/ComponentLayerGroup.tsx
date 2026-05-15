@@ -1,7 +1,8 @@
-import type { ComponentLayer } from "@pxds/pxds-components/registry";
-
 import { ComponentRouteButton } from "@/components/preview/side-panel/components/ComponentRouteButton";
-import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
+import type {
+	ComponentLayer,
+	PreviewComponentRegistryEntry,
+} from "@/utils/component-registry";
 
 type ComponentLayerGroupProps = {
 	layer: ComponentLayer;

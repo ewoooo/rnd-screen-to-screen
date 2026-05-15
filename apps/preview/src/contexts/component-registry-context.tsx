@@ -2,24 +2,22 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { componentRegistry } from "@pxds/pxds-components/registry";
 
 import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
+import { cxComponentRegistry } from "@/utils/cx-component-registry";
 import {
 	getComponentGroups,
 	getComponentLayers,
 	groupComponentsByGroup,
 	groupComponentsByLayer,
-	toPreviewComponentRegistry,
 	type ComponentGroups,
 	type ComponentLayerGroups,
 	type PreviewComponentRegistryEntry,
 } from "@/utils/component-registry";
 
-const previewableRegistry = componentRegistry.filter(
+const previewComponents = cxComponentRegistry.filter(
 	(c) => getComponentPreviewExample(c.id) !== undefined,
 );
-const previewComponents = toPreviewComponentRegistry(previewableRegistry);
 
 type ComponentRegistryContextValue = {
 	components: readonly PreviewComponentRegistryEntry[];
