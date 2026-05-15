@@ -80,15 +80,41 @@ async function appendInstance(parent, node) {
   var instance = comp.createInstance();
   parent.appendChild(instance);
   instance.layoutSizingHorizontal = "FILL";
-  // Figma component properties (boolean visibility 등)
+
+  // 1. 최상위 component properties (Show Label, HelpText 등)
   if (node.figmaProps && Object.keys(node.figmaProps).length > 0) {
     try { instance.setProperties(node.figmaProps); } catch(e) {
       figma.notify("setProperties failed (" + node.figmaName + "): " + (e && e.message || e), { error: true });
     }
   }
-  // 텍스트 레이어 오버라이드
-  if (node.textOverrides && Object.keys(node.textOverrides).length > 0) {
-    await applyTextOverrides(instance, node.textOverrides);
+
+  // 2. 중첩 인스턴스 properties (Button=on 등) — 텍스트 오버라이드 전에 적용해야 레이어 노출됨
+  if (node.nestedInstanceProps) {
+    var nestedKeys = Object.keys(node.nestedInstanceProps);
+    for (var ni = 0; ni < nestedKeys.length; ni++) {
+      var nestedName = nestedKeys[ni];
+      var nestedOverride = node.nestedInstanceProps[nestedName];
+      var nestedInst = instance.findOne(function(n) { return n.type === "INSTANCE" && n.name === nestedName; });
+      if (!nestedInst) continue;
+      if (nestedOverride.properties && Object.keys(nestedOverride.properties).length > 0) {
+        try { nestedInst.setProperties(nestedOverride.properties); } catch(e) {
+          figma.notify("nested setProperties failed (" + nestedName + "): " + (e && e.message || e), { error: true });
+        }
+      }
+    }
+  }
+
+  // 3. 텍스트 오버라이드 (최상위 + 중첩 인스턴스 포함)
+  var allTextOverrides = Object.assign({}, node.textOverrides || {});
+  if (node.nestedInstanceProps) {
+    var nKeys = Object.keys(node.nestedInstanceProps);
+    for (var nj = 0; nj < nKeys.length; nj++) {
+      var no = node.nestedInstanceProps[nKeys[nj]];
+      if (no.textOverrides) Object.assign(allTextOverrides, no.textOverrides);
+    }
+  }
+  if (Object.keys(allTextOverrides).length > 0) {
+    await applyTextOverrides(instance, allTextOverrides);
   }
 }
 

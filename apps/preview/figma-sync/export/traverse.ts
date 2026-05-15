@@ -3,15 +3,22 @@ import { AppScreen } from "@pxds/pxds-layout/app-screen";
 
 export type FigmaSlot = "top" | "content" | "bottom";
 
+export type NestedInstanceOverride = {
+	properties?: Record<string, boolean | string>;
+	textOverrides?: Record<string, string>;
+};
+
 export type FigmaNode = {
 	figmaName: string;
 	figmaVariant?: string;
 	slot: FigmaSlot;
 	props: Record<string, unknown>;
-	/** text layer name → 실제 텍스트 값. codegen에서 인스턴스 내부 TEXT 노드 오버라이드에 사용. */
+	/** text layer name → 실제 텍스트 값. */
 	textOverrides?: Record<string, string>;
-	/** Figma component properties에 직접 전달할 값. instance.setProperties()로 처리. */
+	/** 최상위 Figma component properties. instance.setProperties()로 처리. */
 	figmaProps?: Record<string, boolean | string>;
+	/** 중첩 인스턴스별 property + text override. { 인스턴스이름: { properties, textOverrides } } */
+	nestedInstanceProps?: Record<string, NestedInstanceOverride>;
 };
 
 export type ScreenFigmaSpec = {
@@ -22,21 +29,33 @@ export type ScreenFigmaSpec = {
 	nodes: FigmaNode[];
 };
 
+type FigmaPropsValue = Record<string, boolean | string>;
+type FigmaTextNodesValue = Record<string, string>;
+
 export type RegistryEntry = {
 	component: ComponentType<Record<string, unknown>>;
 	figmaName: string;
 	figmaVariant?: string;
 	mapProps?: (props: Record<string, unknown>) => Record<string, unknown>;
 	/**
-	 * mapProps 결과의 어떤 키 → Figma 컴포넌트 내부 TEXT 레이어 이름
-	 * e.g. { titleText: "Title" }  →  props.titleText 값을 "Title" 레이어에 삽입
+	 * { propKey: figmaLayerName } 또는 mappedProps를 받아 동적으로 반환하는 함수.
+	 * propKey의 값을 해당 figma TEXT 레이어에 삽입.
 	 */
-	figmaTextNodes?: Record<string, string>;
+	figmaTextNodes?:
+		| FigmaTextNodesValue
+		| ((mappedProps: Record<string, unknown>) => FigmaTextNodesValue);
 	/**
-	 * Figma component properties에 직접 전달할 정적 값
-	 * e.g. { "SubTitle#10095:12": false }  →  instance.setProperties(...)
+	 * Figma component properties 값. 정적 객체 또는 mappedProps 기반 동적 함수.
 	 */
-	figmaProps?: Record<string, boolean | string>;
+	figmaProps?:
+		| FigmaPropsValue
+		| ((mappedProps: Record<string, unknown>) => FigmaPropsValue);
+	/**
+	 * 중첩 인스턴스별 overrides. { 인스턴스이름: { properties, textOverrides } }
+	 */
+	figmaNestedProps?:
+		| Record<string, NestedInstanceOverride>
+		| ((mappedProps: Record<string, unknown>) => Record<string, NestedInstanceOverride> | undefined);
 };
 
 export type Registry = readonly RegistryEntry[];
@@ -89,6 +108,54 @@ export function traverseScreen(
 	};
 }
 
+function resolveEntry(
+	entry: RegistryEntry,
+	rawProps: Record<string, unknown>,
+	slot: FigmaSlot,
+): FigmaNode {
+	const mappedProps = entry.mapProps ? entry.mapProps(rawProps) : rawProps;
+
+	// figmaTextNodes 해석
+	// - 함수형: (mappedProps) => { layerName: value }  — 이미 resolved, 그대로 사용
+	// - 정적형: { propKey: layerName }                  — mappedProps에서 값 조회
+	let textOverrides: Record<string, string> | undefined;
+	if (typeof entry.figmaTextNodes === "function") {
+		const resolved = entry.figmaTextNodes(mappedProps);
+		const pairs = Object.entries(resolved).filter(
+			([, v]) => typeof v === "string" && (v as string).length > 0,
+		);
+		if (pairs.length > 0) textOverrides = Object.fromEntries(pairs);
+	} else if (entry.figmaTextNodes) {
+		const acc: Record<string, string> = {};
+		for (const [propKey, layerName] of Object.entries(entry.figmaTextNodes)) {
+			const val = mappedProps[propKey];
+			if (typeof val === "string" && val.length > 0) acc[layerName] = val;
+		}
+		if (Object.keys(acc).length > 0) textOverrides = acc;
+	}
+
+	// figmaProps 해석: 정적 객체 or 함수
+	const resolvedFigmaProps =
+		typeof entry.figmaProps === "function"
+			? entry.figmaProps(mappedProps)
+			: entry.figmaProps;
+
+	const resolvedNestedProps =
+		typeof entry.figmaNestedProps === "function"
+			? entry.figmaNestedProps(mappedProps)
+			: entry.figmaNestedProps;
+
+	return {
+		figmaName: entry.figmaName,
+		...(entry.figmaVariant ? { figmaVariant: entry.figmaVariant } : {}),
+		slot,
+		props: mappedProps,
+		...(textOverrides ? { textOverrides } : {}),
+		...(resolvedFigmaProps ? { figmaProps: resolvedFigmaProps } : {}),
+		...(resolvedNestedProps ? { nestedInstanceProps: resolvedNestedProps } : {}),
+	};
+}
+
 function collectNodes(
 	children: ReactNode,
 	registry: Registry,
@@ -103,34 +170,22 @@ function collectNodes(
 		);
 
 		if (entry) {
-			const rawProps = child.props as Record<string, unknown>;
-			const mappedProps = entry.mapProps ? entry.mapProps(rawProps) : rawProps;
-
-			// figmaTextNodes: { propKey: layerName } + mappedProps → { layerName: value }
-			let textOverrides: Record<string, string> | undefined;
-			if (entry.figmaTextNodes) {
-				textOverrides = {};
-				for (const [propKey, layerName] of Object.entries(entry.figmaTextNodes)) {
-					const val = mappedProps[propKey];
-					if (typeof val === "string" && val.length > 0) {
-						textOverrides[layerName] = val;
-					}
-				}
-				if (Object.keys(textOverrides).length === 0) textOverrides = undefined;
-			}
-
-			out.push({
-				figmaName: entry.figmaName,
-				...(entry.figmaVariant ? { figmaVariant: entry.figmaVariant } : {}),
-				slot,
-				props: mappedProps,
-				...(textOverrides ? { textOverrides } : {}),
-				...(entry.figmaProps ? { figmaProps: entry.figmaProps } : {}),
-			});
+			out.push(resolveEntry(entry, child.props as Record<string, unknown>, slot));
 		} else {
-			// layout wrapper or unknown — recurse
+			// children prop이 있으면 바로 재귀 (layout wrapper)
 			const inner = (child.props as { children?: ReactNode }).children;
-			if (inner) collectNodes(inner, registry, slot, out);
+			if (inner) {
+				collectNodes(inner, registry, slot, out);
+			} else if (typeof child.type === "function") {
+				// children prop 없는 컴포넌트 → 직접 호출해서 내부 트리 재귀
+				// hooks 없는 순수 컴포넌트만 안전. 실패 시 무시.
+				try {
+					const rendered = (child.type as (p: unknown) => ReactElement)(child.props);
+					if (rendered) collectNodes(normalizeChildren(rendered), registry, slot, out);
+				} catch {
+					// hooks 등으로 실패하면 skip
+				}
+			}
 		}
 	}
 }
