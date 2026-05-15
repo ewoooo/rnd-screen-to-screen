@@ -11,14 +11,20 @@
 - required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - design SOT (참고): `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-007-0-CX/Screen.diagram.md`, `apps/mobile/src/app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md`
 
+## Pattern Decision
+
+- Figma SOT(`detail-information`)는 흐름 *중간* form-entry 화면 4종을 보여주며 hero/intro를 두지 않는다.
+- 본 화면은 탈퇴 흐름의 한 단계이며, 일관된 사용자 경험(환영/유도 hero + 진행 단계 안내)을 위해 다른 PG-MBR 화면들과 동일하게 **`Section(intro) → TitleMain` 을 유지**한다. SOT 예시 범위 밖의 본 도메인에 대한 결정.
+- Callout 분리 구조(별도 Section(notice) + SectionDivider)는 시각적으로 Callout 위/아래에 두꺼운 4px 구분선이 끼어 의도와 다른 강한 분절감을 만든다. 미납 확인 Callout은 영향 항목 안내와 같은 의미 단위(탈퇴 차단 사유)이므로 impact section의 SectionItem 마지막 자식으로 흡수한다.
+
 ## Conversion Intent (Legacy → CX)
 
 | Legacy 어휘 | CX 대체 | 비고 |
 | --- | --- | --- |
-| `ProgressTopBar(title, leading="back", progress={label:"회원 탈퇴 3/6", percent:50})` | `AppBar(title="회원 탈퇴", showLeftItem, showTitle)` | CX `AppBar`에는 progress slot이 없음. 단계(3/6, 50%) 시각 표현은 제거하며, AppBar title 또는 TitleSection으로 흡수가 어려우면 생략한다. 완료 화면이 아니므로 back leading 유지 |
-| `MembershipHeroSection(titleLines, description)` | 별도 hero section 미생성 | legacy hero ("탈퇴하면 아래 정보가\n사라지거나 제한돼요" + description) 의미는 첫 TitleSection title("사라지거나 정리되는 항목")로 흡수. 30일 재가입 제한 안내는 Open Question으로 분리 결정 |
+| `ProgressTopBar(title, leading="back", progress={label:"회원 탈퇴 3/6", percent:50})` | `AppBar(title="회원 탈퇴", showLeftItem, showTitle)` + 단계 정보를 `TitleMain.titleSubText`(eyebrow)에 흡수 | CX `AppBar`에는 progress slot이 없음. 단계(3/6, 50%) 시각 표현은 제거하고 `titleSubText`로 자연어 흡수. 완료 화면이 아니므로 back leading 유지 |
+| `MembershipHeroSection(titleLines, description)` | `Section(intro)` → `PageStackContents(title=TitleMain)` | legacy titleLines는 `title`로(`\n` 보존), description은 `subTitle`로 분리. 탈퇴 흐름 단계의 진입 hero로 유지 |
 | `MembershipSummarySection(label, title, items[])` | `Section(impact)` → `PageStackContents(title=TitleSection("사라지거나 정리되는 항목"))` + `SectionItem` + `ListText` 반복 (각 항목 `rightItem={{type:"text", text}}`) | legacy의 `label`이 section title 역할. `title`("이 정보가 영향을 받아요")은 정보 위계 중복이므로 SectionTitle로 흡수하며 단일 헤더로 정리. trailingLabel → ListText right-item text preset |
-| `MembershipNoticeSection(badge="미납 확인", text)` | `Section(impact)` 내부 `SectionItem` 마지막 자식 `Callout(title="미납 확인", children=...)` | legacy badge "미납 확인"이 Callout `title` 역할. 본문이 CTA 비활성 사유를 설명. Callout은 tone variant 없음 — 경고 강조는 카피로 처리. 단일 의미 단위이므로 별도 section을 만들지 않고 impact section에 흡수 |
+| `MembershipNoticeSection(badge="미납 확인", text)` | Section(impact) 내부 SectionItem의 마지막 자식 Callout(title="미납 확인", children="...") | Callout을 별도 PageStackContents + SectionDivider로 분리하면 시각 분절감 강함. 미납 확인은 영향 항목과 같은 의미 단위(탈퇴 차단 사유)이므로 흡수 |
 | `MembershipPrimaryActionBar(primaryLabel="다음으로", disabled)` | `AppScreen.ActionBar` → `SinglePrimaryAction` + `Button(variant="primary", size="xlarge", fullWidth, disabled)` | disabled 상태 보존. 미납 정산 완료가 disabled 해제 조건이라는 정책 의미를 State Rules에 명시 |
 
 폐기 대상 import:
@@ -36,7 +42,9 @@
 │   AppBar(title="회원 탈퇴", showLeftItem, showTitle)               │
 ├───────────────────────────────────────────────────────────────────┤
 │ [Content: scroll owner]                                           │
-│   Section(impact)                                                 │
+│   Section(intro)                                                  │
+│   SectionDivider(thickness="section")                             │
+│   Section(impact)  ← Callout(미납 확인) 포함                       │
 ├───────────────────────────────────────────────────────────────────┤
 │ [ActionBar: primary screen action]                                │
 │   SinglePrimaryAction                                             │
@@ -49,6 +57,17 @@
 
 ```txt
 [Content: scroll owner]
+
+Section(intro)
+└─ PageStackContents(
+     title=TitleMain(
+       titleSubText="회원 탈퇴 3/6",
+       title="탈퇴하면 아래 정보가\n사라지거나 제한돼요",
+       subTitle="탈퇴 후에는 같은 식별정보로 30일간 재가입이 제한될 수 있어요."
+     )
+   )
+
+SectionDivider(thickness="section")
 
 Section(impact)
 └─ PageStackContents(title=TitleSection(title="사라지거나 정리되는 항목"))
@@ -79,7 +98,8 @@ Section(impact)
 
 | section | title | primary components | policy |
 | --- | --- | --- | --- |
-| `impact` | `사라지거나 정리되는 항목` | `PageStackContents`, `TitleSection`, `SectionItem`, `ListText`, `Callout` | POL-MBR-WITHDRAW-IMPACT (TBD) — 포인트 소멸, 쿠폰 소멸, 자동 결제 해지, 본인인증 이력 보관 / POL-MBR-WITHDRAW-UNPAID (TBD) — 미납 요금이 있는 경우 탈퇴 차단 |
+| `intro` | `탈퇴하면 아래 정보가 사라지거나 제한돼요` | `PageStackContents`, `TitleMain` | POL-MBR-WITHDRAW-INTRO (TBD) — 탈퇴 후 30일 재가입 제한 안내 |
+| `impact` | `사라지거나 정리되는 항목` | `PageStackContents`, `TitleSection`, `SectionItem`, `ListText`, `Callout` | POL-MBR-WITHDRAW-IMPACT (TBD) — 포인트 소멸, 쿠폰 소멸, 자동 결제 해지, 본인인증 이력 보관. 미납 확인 Callout이 impact SectionItem 내부 마지막 자식으로 포함됨 (POL-MBR-WITHDRAW-UNPAID TBD) |
 
 ## Action Contract
 
@@ -92,7 +112,7 @@ Section(impact)
 - legacy는 CTA가 항상 `disabled=true`로 하드코딩되어 있다. 본 변환은 이 상태를 그대로 보존한다.
 - 정책 의도: 미납 요금 = 0 일 때 CTA `primary` 활성. 미납이 남아 있으면 `disabled`.
 - 미납 정산 trigger(미납 결제 flow로의 이동, 정산 완료 콜백)는 본 변환 범위 밖이며 Open Questions에 기록한다.
-- Section(notice)의 Callout과 CTA `disabled`는 같은 사유(미납 존재)에서 파생되어야 하며, 분리된 상태가 동기화되도록 organism/screen 단계에서 단일 source(unpaidAmount > 0)로 묶는다.
+- impact section 내부 Callout과 CTA `disabled`는 동일 source(unpaidAmount > 0)에서 파생되어야 하며, 분리된 상태가 동기화되도록 organism/screen 단계에서 단일 source로 묶는다.
 
 ## Implementation Contract
 
@@ -100,13 +120,13 @@ Section(impact)
 - Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` (deprecated legacy) and `@pxds/pxds-icons` (deprecated legacy).
 - Do NOT reuse `@/organisms/legacy-mbr/*`. 본 화면은 단순 조립으로 충분하므로 Screen.tsx에서 직접 조립한다 (CX-EXAMPLE 방식). 동일 도메인의 신규 organism이 필요해지면 `@/organisms/mbr/`에 신설한다.
-- Progress 정보(3/6, 50%)는 시각 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`(eyebrow)에 자연어로 흡수한다.
 - `AppScreen.Content`가 유일한 scroll owner.
 - CTA는 반드시 `AppScreen.ActionBar` 안에 둔다. 본문 마지막 section에 두지 않는다.
 - Section 사이는 `SectionDivider(thickness="section")` 외 다른 wrapper로 구분하지 않는다.
 - ListText의 trailingLabel은 반드시 `rightItem={ type: "text", text }` preset으로 전달한다. 자체 inline 노드를 우측에 끼워 넣지 않는다.
-- Form-entry 화면은 Figma SOT를 따라 별도 hero/intro section을 두지 않는다.
-- 단일 의미 단위로 묶이는 Callout(미납 등)은 관련 PageStackContents의 SectionItem 마지막 자식으로 배치한다.
+- 본 화면은 탈퇴 흐름 단계이므로 `Section(intro) → TitleMain` 을 유지한다. Figma SOT(`detail-information`)는 흐름 중간 화면만 다루므로 본 화면에는 적용하지 않는다.
+- Progress 정보(3/6, 50%)는 시각 progress 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`(eyebrow)에 자연어로 흡수한다.
+- 단일 의미 단위로 묶이는 Callout(미납 확인)은 별도 Section + SectionDivider로 분리하지 않고 관련 PageStackContents의 SectionItem 내부 마지막 자식으로 배치한다. 시각적 분절감을 줄이고 의미 묶음을 유지한다.
 
 ## Open Questions
 

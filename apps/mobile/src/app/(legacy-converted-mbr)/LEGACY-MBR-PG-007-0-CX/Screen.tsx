@@ -71,13 +71,6 @@ export function Screen() {
 							checkedById={checkedById}
 							onItemCheckedChange={handleItemCheckedChange}
 						/>
-					</SectionItem>
-				</PageStackContents>
-
-				<SectionDivider thickness="section" />
-
-				<PageStackContents>
-					<SectionItem>
 						<Callout title="법정대리인 동의 안내">
 							만 14세 미만 고객은 법정대리인 동의 요청이 함께 진행됩니다.
 						</Callout>

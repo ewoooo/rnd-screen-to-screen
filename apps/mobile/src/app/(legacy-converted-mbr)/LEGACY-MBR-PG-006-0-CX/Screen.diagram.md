@@ -11,12 +11,17 @@
 - required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - design SOT (참고): `apps/mobile/src/app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md`
 
+## Pattern Decision
+
+- Figma SOT(`detail-information`)는 흐름 *중간* form-entry 화면 4종을 보여주며 hero/intro를 두지 않는다.
+- 본 화면은 회원가입 흐름의 한 단계이며, 일관된 사용자 경험(환영/유도 hero + 진행 단계 안내)을 위해 다른 PG-MBR 화면들과 동일하게 **`Section(intro) → TitleMain` 을 유지**한다. SOT 예시 범위 밖의 본 도메인에 대한 결정.
+
 ## Conversion Intent (Legacy → CX)
 
 | Legacy 어휘 | CX 대체 | 비고 |
 | --- | --- | --- |
-| `ProgressTopBar(title, leading, progress)` | `AppBar(title, showLeftItem, showTitle)` | CX `AppBar`는 progress slot이 없음. 단계(2/5, 40%) 시각 표현은 form-entry 화면에서 제거하고, 필요 시 AppBar title 또는 첫 TitleSection title의 자연어로 흡수하거나 생략 |
-| `MembershipHeroSection(titleLines, description)` | 별도 hero section 미생성 | legacy hero ("기본 정보를\n입력해주세요" + description) 의미는 첫 TitleSection title("기본 정보")로 흡수하고 상세 카피는 organism 단계에서 결정. Figma SOT는 form-entry 화면에 hero를 두지 않음 |
+| `ProgressTopBar(title, leading, progress)` | `AppBar(title="회원 가입", showLeftItem, showTitle)` + 단계 정보를 `TitleMain.titleSubText`(eyebrow)에 흡수 | CX `AppBar`에는 progress slot이 없음. `titleSubText`는 제목 상단의 eyebrow/메타 라벨 slot이라 단계 정보(2/5)와 의미 정합 |
+| `MembershipHeroSection(titleLines, description)` | `Section(intro)` → `PageStackContents(title=TitleMain)` | legacy titleLines는 `title`로(`\n` 보존), description은 `subTitle`로 분리 |
 | `MembershipFormSection(fields[])` | `Section(profile)` → `PageStackContents(title=TitleSection("기본 정보"))` + `SectionItem` + `FieldStack` + `TextField` × 3 | CX-EXAMPLE `address` 섹션과 동일 패턴. helperText는 TextField helper slot |
 | `MembershipSelectableSection(name, items[])` | `Section(gender)` → `PageStackContents(title=TitleSection("성별"))` + `SectionItem` + `ListSelected`(type="radio") × 3 | 행 수 적고 단일 선택 — ListSelected의 radio 어휘 사용 |
 | `MembershipPrimaryActionBar(primaryLabel, disabled)` | `AppScreen.ActionBar` + `SinglePrimaryAction` + `Button(disabled until valid)` | CX 표준 CTA 어휘 |
@@ -36,6 +41,8 @@
 │   AppBar(title="회원 가입", showLeftItem, showTitle)               │
 ├───────────────────────────────────────────────────────────────────┤
 │ [Content: scroll owner]                                           │
+│   Section(intro)                                                  │
+│   SectionDivider(thickness="section")                             │
 │   Section(profile)                                                │
 │   SectionDivider(thickness="section")                             │
 │   Section(gender)                                                 │
@@ -52,6 +59,17 @@
 
 ```txt
 [Content: scroll owner]
+
+Section(intro)
+└─ PageStackContents(
+     title=TitleMain(
+       titleSubText="회원 가입 2/5",                  // eyebrow (제목 상단)
+       title="기본 정보를\n입력해주세요",
+       subTitle="본인인증과 회원 식별에 사용해요. 입력값은 서비스 이용 외에 활용되지 않습니다."
+     )
+   )
+
+SectionDivider(thickness="section")
 
 Section(profile)
 └─ PageStackContents(title=TitleSection(title="기본 정보"))
@@ -114,6 +132,7 @@ Section(gender)
 
 | section | title | primary components | policy |
 | --- | --- | --- | --- |
+| `intro` | `기본 정보를 입력해주세요` | `PageStackContents`, `TitleMain` | POL-MBR-INFO-INTRO (TBD) |
 | `profile` | `기본 정보` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `TextField` | POL-MBR-PROFILE-BASIC (TBD) — 이름/생년월일/휴대전화 필수 |
 | `gender` | `성별` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `ListSelected` | POL-MBR-PROFILE-GENDER (TBD) — 단일 선택, "선택 안 함" 옵션 허용 |
 
@@ -133,16 +152,16 @@ Section(gender)
 
 ## Implementation Contract
 
-- Use `@pxds/cx-components` for `AppBar`, `Button`, `ListSelected`, `SectionItem`, `StatusBar`, `TextField`, `TitleSection`.
+- Use `@pxds/cx-components` for `AppBar`, `Button`, `ListSelected`, `SectionItem`, `StatusBar`, `TextField`, `TitleMain`, `TitleSection`.
 - Use `@pxds/pxds-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` (deprecated legacy) and `@pxds/pxds-icons` (deprecated legacy).
 - Do NOT reuse `@/organisms/legacy-mbr/*`. 화면이 단순 조립이므로 Screen.tsx에서 직접 조립한다 (CX-EXAMPLE 방식과 동일). 재사용 가능한 단위가 식별되면 `@/organisms/mbr/`에 CX 어휘로 신설.
-- Progress 정보(2/5, 40%)는 시각 progress bar로 표현하지 않는다. AppBar title이나 첫 TitleSection title의 자연어로 흡수하거나 생략한다.
+- 본 화면은 회원가입 흐름 단계이므로 `Section(intro) → TitleMain` 을 유지한다. Figma SOT(`detail-information`)는 흐름 중간 화면만 다루므로 본 화면에는 적용하지 않는다.
+- Progress 정보(2/5, 40%)는 시각 progress 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`(eyebrow)에 자연어로 흡수한다.
 - `AppScreen.Content`가 유일한 scroll owner.
 - CTA는 반드시 `AppScreen.ActionBar` 안에 둔다.
 - Section 사이는 `SectionDivider(thickness="section")` 외 다른 wrapper로 구분하지 않는다.
 - TextField `helperText`는 TextField helper slot으로 전달하며, FieldStack 바깥에 별도 caption을 두지 않는다.
-- Form-entry 화면은 Figma SOT를 따라 별도 hero/intro section을 두지 않는다.
 
 ## Open Questions
 
