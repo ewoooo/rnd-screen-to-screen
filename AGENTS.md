@@ -53,12 +53,13 @@
 │   ├── cx-icons/                  CX DS icon originals + registry + React wrapper
 │   ├── pxds-icons/                WDS icon adapter + PXDS icon registry
 │   ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
-│   ├── pxds-components/           atoms/molecules/shared-global + component vocabulary registry
-│   ├── cx-components/             CX component inventory / migration reference
+│   ├── pxds-components/           Deprecated legacy PXDS/WDS component adapter
+│   ├── cx-components/             최신 CX component package + inventory
 │   ├── pxds-figma/                Figma bridge/hooks/spec authoring
 │   └── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
 ├── DESIGN_FOUNDATION.md  디자인 foundation SOT
 ├── DESIGN_PATTERNS.md    화면 패턴 SOT
+├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 workflow SOT
 ├── AGENTS.md             루트 운영 방향
 └── CLAUDE.md             AGENTS.md symlink
 ```
@@ -67,14 +68,20 @@
 
 새 화면을 만들거나 기존 화면을 고칠 때는 아래 흐름을 기본으로 한다.
 
-1. `packages/policy-core/policies`에서 관련 정책 md와 `.policy.ts`를 확인한다.
-2. 정책의 필수 요구사항, 선택지, 제한 조건, evidence/sourceRef, 사용자에게 보여줄 copy를 분리한다.
-3. 실제 페이지 재현이 필요한 경우 Figma 목업 SOT에서 배치, 상태, 콘텐츠 위계를 확인한다.
-4. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
-5. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
-6. 구현은 `@pxds/pxds-layout`, `@pxds/pxds-components`, `@pxds/pxds-icons`, `@pxds/cx-tokens`의 공개 surface를 사용한다.
-7. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
-8. preview에서 screen, component, policy registry를 통해 생성 결과를 탐색 가능하게 유지한다.
+SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다. 이 문서는 SB 구조 추출, 필수 SOT 조회, 제작 Diagram 생성, Diagram 검증, OGN 구현, Screen 조립, preview/검증까지의 표준 순서를 정의한다.
+
+1. SB에서 화면 ID, 도메인, 과업, 상태, CTA, 정책 태그, 도메인 모듈 ID, OGN ID, part/slot/hierarchy를 추출한다.
+2. `packages/policy-core/policies`에서 관련 정책 md와 `.policy.ts`를 확인한다.
+3. `DESIGN_PATTERNS.md`와 `DESIGN_FOUNDATION.md`를 반드시 조회한다.
+4. 정책의 필수 요구사항, 선택지, 제한 조건, evidence/sourceRef, 사용자에게 보여줄 copy를 분리한다.
+5. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
+6. 구현 전에 SB 기반 제작 Diagram을 작성한다. Diagram은 AppScreen slot, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여주어야 한다.
+7. Diagram 단계에서 정책 필수 정보, 정책서의 도메인 모듈 ID/OGN 포함 여부, 패턴/토큰/spacing 위반 여부를 검증한다.
+8. 정책서에 적힌 도메인 모듈 ID/OGN별로 반드시 `apps/mobile/src/organisms/<domain>/` 아래에 컴포넌트를 제작하거나 기존 OGN을 보강한다.
+9. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
+10. 구현은 `@pxds/pxds-layout`, `@pxds/cx-components`, `@pxds/pxds-icons`, `@pxds/cx-tokens`의 공개 surface를 우선 사용한다. `@pxds/pxds-components`는 deprecated 호환 경계로만 다룬다.
+11. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
+12. preview에서 screen, component, policy registry를 통해 생성 결과를 탐색 가능하게 유지한다.
 
 ## 패키지 책임
 
@@ -84,7 +91,8 @@
 - `@pxds/cx-icons` — CX DS Figma 원천 SVG, icon registry, React `Icon` wrapper 초안을 소유한다.
 - `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry를 소유한다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge를 소유한다.
-- `@pxds/pxds-components` — atoms/typography, atoms/feedback, 모바일에서 실제 소비하는 molecules/shared-global 컴포넌트, 구현 세부 없는 component vocabulary registry를 소유한다.
+- `@pxds/cx-components` — 최신 CX component package. 신규 화면/컴포넌트 제작의 기준 어휘와 구현 surface를 소유한다.
+- `@pxds/pxds-components` — deprecated legacy PXDS/WDS component adapter. 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않고, 기존 호환이 필요한 경우에만 제한적으로 소비한다.
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring을 소유한다.
 - `apps/mobile` — 정책 기반 모바일 화면 route와 PXDS 화면 조립의 SOT. page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다.
 - `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. screen/component/policy registry 탐색, Figma export 요청, spec 조회 UI를 소유한다.
@@ -101,18 +109,18 @@
 
 @pxds/cx-tokens
   → @pxds/cx-icons
+  → @pxds/cx-components
   → @pxds/pxds-icons
   → @pxds/pxds-layout
-  → @pxds/pxds-components
   → apps/mobile
 
 @pxds/pxds-figma → apps/preview
 ```
 
-WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS Component는 deprecated이며 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않는다.**
+WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS Component와 `@pxds/pxds-components`는 deprecated이며 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않는다.**
 
-- 기존 호환이 필요한 WDS component는 `@pxds/pxds-components/core`를 통해 제한적으로 소비한다.
-- 신규 구현은 PXDS component vocabulary, `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`를 우선한다.
+- 기존 호환이 필요한 WDS/PXDS legacy component는 `@pxds/pxds-components` 경계를 통해 제한적으로 소비한다.
+- 신규 구현은 `@pxds/cx-components`, `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`를 우선한다.
 - `@wanteddev/wds` 직접 import는 adapter/core 경계 안에 격리한다.
 - `@pxds/pxds-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수할 수 있다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
@@ -124,7 +132,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - optional/fallback은 API/mock/spec 경계에서 처리하고 하위 component에는 확정 값을 넘긴다.
 - `useMemo` / `useCallback`은 기본 금지다. 렌더 비용이나 참조 안정성이 실제 문제가 되면 먼저 컴포넌트 경계, state 위치, 데이터 변환 위치를 조정한다.
 - route/screen에서 margin, padding, raw style로 기준선을 보정하지 않는다. layout 책임은 `@pxds/pxds-layout`의 template과 primitives가 가진다.
-- 새 component/variant/slot이 필요하면 먼저 `@pxds/pxds-components/registry`에서 현재 어휘를 확인하고, 기존 molecule/pattern 축으로 표현 가능한지 검토한다.
+- 새 component/variant/slot이 필요하면 먼저 `@pxds/cx-components`의 최신 어휘를 확인하고, 기존 molecule/pattern 축으로 표현 가능한지 검토한다. `@pxds/pxds-components/registry`는 deprecated legacy 참고로만 사용한다.
 - 아름다운 UI는 token과 pattern을 벗어난 장식이 아니라, 정책 정보의 위계, 간격, 상태, 행동이 명확하게 정리된 결과여야 한다.
 
 ## 디자인 품질 기준
@@ -133,7 +141,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - 화면 패턴은 사용자의 과업 흐름을 보존해야 한다. form, detail, list, complete, bottom sheet, popup의 역할을 섞지 않는다.
 - 한 화면 안에서 CTA, navigation, error, notice의 위계가 즉시 읽혀야 한다.
 - 정책상 중요한 제한 조건과 에러는 숨기지 않는다. 단, 긴 정책 문장은 사용자가 행동할 수 있는 UI copy로 정리한다.
-- WDS Component나 임의 inline UI로 빠르게 맞춘 결과가 반복되면 PXDS component vocabulary를 보강할 후보로 기록한다.
+- WDS Component, deprecated `@pxds/pxds-components`, 임의 inline UI로 빠르게 맞춘 결과가 반복되면 `@pxds/cx-components` vocabulary를 보강할 후보로 기록한다.
 
 ## 공통 검증
 

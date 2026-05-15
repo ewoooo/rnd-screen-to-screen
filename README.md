@@ -14,7 +14,8 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
     ├── cx-icons/                 CX DS icon originals, registry, React Icon wrapper
     ├── pxds-icons/                WDS icon adapter와 icon registry
     ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
-    ├── pxds-components/           core adapter, atoms, molecules, shared/global component vocabulary
+    ├── cx-components/             latest CX component package and inventory
+    ├── pxds-components/           deprecated legacy PXDS/WDS component adapter
     ├── pxds-spec/                 screen route/config와 kind 같은 UI 비의존 spec 타입
     ├── pxds-figma/                Figma bridge/hooks/export 관련 도구
     ├── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
@@ -26,9 +27,9 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
 ```txt
 @pxds/cx-tokens
   -> @pxds/cx-icons
+  -> @pxds/cx-components
   -> @pxds/pxds-icons
   -> @pxds/pxds-layout
-  -> @pxds/pxds-components
   -> apps/mobile
 
 apps/mobile/screens -> apps/preview
@@ -62,17 +63,13 @@ apps/mobile/src/app/(mbr)/NOVA-MBR-PG-001-0/
 
 ```txt
 WDS primitive
-  -> @pxds/pxds-components/core
-  -> atoms
-  -> molecules + shared/global
+  -> @pxds/cx-components
   -> apps/mobile organisms
   -> screen/page
 ```
 
-- `core`: WDS component adapter와 global CSS 진입점입니다.
-- `atoms`: `TextBlock`, `Divider`, `Placeholder` 같은 최소 단위입니다.
-- `molecules`: 모바일이 실제 소비하는 도메인 독립 조합입니다. 예: `FormField`, `SelectableList`, `ConsentList`, `PrimaryCTABar`, `TextFieldList`.
-- `shared/global`: 여러 화면에서 공유하는 flow/chrome 성격의 컴포넌트입니다. 예: `ProgressTopBar`, `FlowHero`, `FlowNotice`, `FlowSummaryCard`.
+- `@pxds/cx-components`: 최신 CX component package입니다. 신규 화면/컴포넌트 제작의 기준 어휘입니다.
+- `@pxds/pxds-components`: deprecated legacy PXDS/WDS adapter입니다. 기존 호환이나 migration reference가 필요할 때만 제한적으로 봅니다.
 - `organisms`: MBR 또는 legacy-mbr 화면 영역의 의미 구조입니다. 현재 앱이 소유하며 package registry로 올리지 않습니다.
 - `screen/page`: route 단위의 최종 화면 조립입니다.
 
@@ -84,6 +81,6 @@ WDS primitive
 | --- | --- | --- |
 | Token | CSS Variable화 완료 | `@pxds/cx-tokens`가 Tokens Studio token-set을 SSOT로 두고 `tokens.css` CSS custom properties와 `text-styles.css` 합성 텍스트 스타일 클래스를 생성합니다. |
 | Icon | 원천 보관 + registry 초안 | `@pxds/cx-icons`가 Figma export SVG 원천을 `src/originals`에 보관하고, 파일명 기반 icon registry와 `<Icon type="close" size={24} />` React wrapper 초안을 제공합니다. 앱 import 전환은 아직 하지 않습니다. |
-| Component | 기초 엘리먼츠 전환중 | WDS adapter, atoms, 모바일에서 실제 소비하는 molecules/shared-global 중심으로 정리 중입니다. |
+| Component | 최신 패키지 기준 | 신규 component vocabulary는 `@pxds/cx-components`를 기준으로 하며, `@pxds/pxds-components`는 deprecated legacy 호환 경계입니다. |
 
 현재는 token 기반을 먼저 고정하고, component vocabulary를 모바일 화면에서 실제로 쓰이는 어휘 위주로 좁히는 단계입니다.

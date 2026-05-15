@@ -1,6 +1,7 @@
 {
 	"name": "@pxds/cx-components",
 	"version": "0.1.0",
+	"description": "Latest CX DS component package for new screen and component work.",
 	"private": true,
 	"type": "module",
 	"sideEffects": [
