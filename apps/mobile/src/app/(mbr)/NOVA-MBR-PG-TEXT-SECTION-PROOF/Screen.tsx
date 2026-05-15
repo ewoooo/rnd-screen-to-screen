@@ -34,7 +34,7 @@ function TextSection({ title, children }: TextSectionProps) {
 
 export function Screen() {
 	return (
-		<AppScreen headerPreset="genui-text-section-117">
+		<AppScreen headerPreset="form-entry">
 			<AppScreen.SystemHeader>
 				<StatusBar />
 			</AppScreen.SystemHeader>
@@ -111,7 +111,7 @@ export function Screen() {
 					<TextField defaultValue="example@plus-ex.com" state="typed" />
 				</TextSection>
 			</AppScreen.Content>
-			<AppScreen.ActionBar preset="single-primary-cta">
+			<AppScreen.ActionBar preset="primary-cta">
 				<SinglePrimaryAction>
 					<Button fullWidth size="xlarge" variant="primary">
 						다음

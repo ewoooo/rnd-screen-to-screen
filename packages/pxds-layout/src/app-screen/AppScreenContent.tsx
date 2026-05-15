@@ -7,10 +7,16 @@ const SCREEN_INLINE_INSET = "var(--spacing-12)";
 const CONTENT_BOTTOM_PADDING = "var(--spacing-16)";
 
 export type AppScreenHeaderPreset =
+	| "standard"
+	| "form-entry"
 	| "pattern-107"
 	| "genui-text-section-117";
 
 export type AppScreenActionBarPreset =
+	| "compact-action"
+	| "default-action"
+	| "guided-action"
+	| "primary-cta"
 	| "pattern-102"
 	| "cx-default-108"
 	| "cx-with-text-154"
@@ -38,11 +44,17 @@ export function AppScreenContent({
 	actionBarPreset,
 }: AppScreenContentProps) {
 	const appHeader = header ?? top;
-	const headerMetrics = headerPreset
-		? headerPresetMetrics[headerPreset]
+	const resolvedHeaderPreset = headerPreset
+		? resolveHeaderPreset(headerPreset)
 		: undefined;
-	const actionBarMetrics = actionBarPreset
-		? actionBarPresetMetrics[actionBarPreset]
+	const resolvedActionBarPreset = actionBarPreset
+		? resolveActionBarPreset(actionBarPreset)
+		: undefined;
+	const headerMetrics = resolvedHeaderPreset
+		? headerPresetMetrics[resolvedHeaderPreset]
+		: undefined;
+	const actionBarMetrics = resolvedActionBarPreset
+		? actionBarPresetMetrics[resolvedActionBarPreset]
 		: undefined;
 	const contentBottomPadding = actionBarMetrics
 		? actionBarMetrics.contentBottomPadding
@@ -50,8 +62,8 @@ export function AppScreenContent({
 
 	return (
 		<div
-			data-app-screen-header-preset={headerPreset}
-			data-app-screen-action-bar-preset={actionBarPreset}
+			data-app-screen-header-preset={resolvedHeaderPreset}
+			data-app-screen-action-bar-preset={resolvedActionBarPreset}
 			style={{
 				"--app-screen-header-height": headerMetrics?.height,
 				"--app-screen-system-header-height": headerMetrics?.systemHeaderHeight,
@@ -69,7 +81,7 @@ export function AppScreenContent({
 			{systemHeader ? (
 				<AppScreenChromeSlot
 					background={background}
-					headerPreset={headerPreset}
+					headerPreset={resolvedHeaderPreset}
 				>
 					{systemHeader}
 				</AppScreenChromeSlot>
@@ -78,14 +90,14 @@ export function AppScreenContent({
 				<AppScreenChromeSlot
 					background={background}
 					slot="header"
-					headerPreset={headerPreset}
+					headerPreset={resolvedHeaderPreset}
 				>
 					{appHeader}
 				</AppScreenChromeSlot>
 			) : null}
 			<ContentOutlet
 				inlineInset={SCREEN_INLINE_INSET}
-				actionBarPreset={actionBarPreset}
+				actionBarPreset={resolvedActionBarPreset}
 				style={{
 					flex: "1 1 0",
 					minHeight: 0,
@@ -96,7 +108,7 @@ export function AppScreenContent({
 			</ContentOutlet>
 			{bottom ? (
 				<AppScreenChromeSlot
-					actionBarPreset={actionBarPreset}
+					actionBarPreset={resolvedActionBarPreset}
 					background={background}
 					slot="bottom"
 				>
@@ -153,18 +165,18 @@ function getChromeSlotHeight(slot: "systemHeader" | "header" | "bottom") {
 }
 
 const headerPresetMetrics = {
-	"pattern-107": {
+	standard: {
 		height: "107px",
 		systemHeaderHeight: "59px",
 		appHeaderHeight: "48px",
 	},
-	"genui-text-section-117": {
+	"form-entry": {
 		height: "117px",
 		systemHeaderHeight: "61px",
 		appHeaderHeight: "56px",
 	},
 } satisfies Record<
-	AppScreenHeaderPreset,
+	ResolvedAppScreenHeaderPreset,
 	{
 		height: string;
 		systemHeaderHeight: string;
@@ -173,26 +185,69 @@ const headerPresetMetrics = {
 >;
 
 const actionBarPresetMetrics = {
-	"pattern-102": {
+	"compact-action": {
 		height: "102px",
 		contentBottomPadding: "102px",
 	},
-	"cx-default-108": {
+	"default-action": {
 		height: "108px",
 		contentBottomPadding: "108px",
 	},
-	"cx-with-text-154": {
+	"guided-action": {
 		height: "154px",
 		contentBottomPadding: "154px",
 	},
-	"single-primary-cta": {
+	"primary-cta": {
 		height: "108px",
 		contentBottomPadding: "108px",
 	},
 } satisfies Record<
-	AppScreenActionBarPreset,
+	ResolvedAppScreenActionBarPreset,
 	{
 		height: string;
 		contentBottomPadding: string;
 	}
 >;
+
+type ResolvedAppScreenHeaderPreset = "standard" | "form-entry";
+type ResolvedAppScreenActionBarPreset =
+	| "compact-action"
+	| "default-action"
+	| "guided-action"
+	| "primary-cta";
+
+function resolveHeaderPreset(
+	preset: AppScreenHeaderPreset,
+): ResolvedAppScreenHeaderPreset {
+	if (preset === "pattern-107") {
+		return "standard";
+	}
+
+	if (preset === "genui-text-section-117") {
+		return "form-entry";
+	}
+
+	return preset;
+}
+
+function resolveActionBarPreset(
+	preset: AppScreenActionBarPreset,
+): ResolvedAppScreenActionBarPreset {
+	if (preset === "pattern-102") {
+		return "compact-action";
+	}
+
+	if (preset === "cx-default-108") {
+		return "default-action";
+	}
+
+	if (preset === "single-primary-cta") {
+		return "primary-cta";
+	}
+
+	if (preset === "cx-with-text-154") {
+		return "guided-action";
+	}
+
+	return preset;
+}

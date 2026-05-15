@@ -51,13 +51,13 @@
 
 ### 중요한 차이
 
-기존 pattern guide에는 header가 `StatusBar 59 + AppBar 48 = 107`로 정리되어 있다. Text Section 목업은 `61 + 56 = 117`을 사용한다. 따라서 `pxds-layout`은 하나의 숫자를 전역 상수로 박기보다, pattern/source에 따른 header preset을 제공해야 한다.
+기존 pattern guide에는 header가 `StatusBar 59 + AppBar 48 = 107`로 정리되어 있다. Text Section 목업은 `61 + 56 = 117`을 사용한다. 따라서 `pxds-layout`은 하나의 숫자를 전역 상수로 박기보다, 화면 역할에 따른 semantic preset을 제공해야 한다. 수치는 preset 내부 contract로 숨기고 route API에는 드러내지 않는다.
 
 ```ts
-type HeaderPreset = "pattern-107" | "genui-text-section-117";
+type HeaderPreset = "standard" | "form-entry";
 ```
 
-`pattern-107`은 `DESIGN_PATTERNS.md`의 일반 패턴 기준이고, `genui-text-section-117`은 실제 페이지 목업 재현 기준이다. 신규 API는 두 값을 모두 표현하되, route가 raw height를 직접 지정하지 않게 해야 한다.
+`standard`는 일반 패턴 기준 header이고, `form-entry`는 form/detail 입력 화면에서 사용하는 header chrome이다. legacy `pattern-107`, `genui-text-section-117` 값은 compatibility alias로만 남긴다.
 
 ## 개선 원칙
 
@@ -96,7 +96,7 @@ Pattern guide는 메인/브라우즈 화면의 `BottomNavigation(88)`과 상세/
 - `AppScreen.BottomNavigation`
 - `AppScreen.ActionBar`
 - `bottomKind="navigation|action|none"`
-- `actionBarPreset="pattern-102|cx-default-108|cx-with-text-154"`
+- `actionBarPreset="compact-action|default-action|guided-action|primary-cta"`
 - bottom kind에 따른 content bottom padding 자동 계산
 - dev mode warning: navigation/action 동시 사용 감지
 
@@ -109,7 +109,7 @@ Pattern guide는 메인/브라우즈 화면의 `BottomNavigation(88)`과 상세/
 예상 사용:
 
 ```tsx
-<AppScreen.ActionBar preset="cx-with-text-154">
+<AppScreen.ActionBar preset="guided-action">
   <ActionButton text="사진이나 연락처, 앱도 새 휴대폰으로 한 번에 옮겨볼까요?" />
 </AppScreen.ActionBar>
 ```
@@ -187,7 +187,7 @@ Pattern guide는 `StatusBar(59) + AppBar(48) = 107`을 화면 구조의 기본�
 - `AppScreen.SystemHeader` height contract 재정의
 - `AppScreen.AppBarSlot` 또는 `ChromeHeader`
 - `headerMode="normal|overlay|transparent|sticky"`
-- `headerPreset="pattern-107|genui-text-section-117"`
+- `headerPreset="standard|form-entry"`
 - product detail용 overlay header layer
 - `StatusBar` token/color/height 정렬
 
@@ -305,7 +305,7 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 1. Foundation spacing/radius/color alias와 3단 rail API를 먼저 추가한다.
 2. `AppScreen.Bottom`을 bottom kind 기반 API로 확장하고 기존 API는 compatibility로 유지한다.
 3. `PageStackContents`, `PageStackList`, `ScreenSection`, `SectionDivider`를 `pxds-layout`에 추가해 Text Section의 completion/form 화면부터 적용한다.
-4. `headerPreset`과 `actionBarPreset`을 추가해 `107/117`, `102/108/154` 차이를 route raw style 없이 표현한다.
+4. `headerPreset`과 `actionBarPreset`을 semantic preset으로 추가해 `standard/form-entry`, `compact-action/default-action/guided-action/primary-cta` 차이를 route raw style 없이 표현한다.
 5. BottomSheet compound API를 재정의하고 Popup runtime을 추가한다.
 6. Header overlay mode와 horizontal lane을 추가한다.
 7. `cx-components`의 `PageStackList`는 deprecated bridge로 표시하고 소비자를 `pxds-layout`의 `PageStackList`로 이동시킨다.
