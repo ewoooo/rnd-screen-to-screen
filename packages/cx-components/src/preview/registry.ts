@@ -1,10 +1,10 @@
-import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
+import type { CxComponentPreviewEntry } from "./types";
 
-export const cxComponentRegistry = [
+export const cxComponentPreviewRegistry = [
 	{
 		id: "status-bar",
 		name: "StatusBar",
-		layer: "component",
+		layer: "base",
 		group: "navigation",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/status-bar",
@@ -13,7 +13,7 @@ export const cxComponentRegistry = [
 	{
 		id: "app-bar",
 		name: "AppBar",
-		layer: "component",
+		layer: "base",
 		group: "navigation",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/app-bar",
@@ -22,7 +22,7 @@ export const cxComponentRegistry = [
 	{
 		id: "title-main",
 		name: "TitleMain",
-		layer: "component",
+		layer: "base",
 		group: "typography",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/title-main",
@@ -31,7 +31,7 @@ export const cxComponentRegistry = [
 	{
 		id: "title-section",
 		name: "TitleSection",
-		layer: "component",
+		layer: "base",
 		group: "typography",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/title-section",
@@ -40,7 +40,7 @@ export const cxComponentRegistry = [
 	{
 		id: "text",
 		name: "Text",
-		layer: "atom",
+		layer: "base",
 		group: "typography",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/text",
@@ -49,7 +49,7 @@ export const cxComponentRegistry = [
 	{
 		id: "text-field",
 		name: "TextField",
-		layer: "component",
+		layer: "base",
 		group: "form",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/text-field",
@@ -58,7 +58,7 @@ export const cxComponentRegistry = [
 	{
 		id: "button",
 		name: "Button",
-		layer: "component",
+		layer: "base",
 		group: "action",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/button",
@@ -67,7 +67,7 @@ export const cxComponentRegistry = [
 	{
 		id: "action-button",
 		name: "ActionButton",
-		layer: "pattern",
+		layer: "base",
 		group: "action",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/action-button",
@@ -76,7 +76,7 @@ export const cxComponentRegistry = [
 	{
 		id: "checkbox",
 		name: "Checkbox",
-		layer: "component",
+		layer: "base",
 		group: "selection",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/checkbox",
@@ -85,7 +85,7 @@ export const cxComponentRegistry = [
 	{
 		id: "chips",
 		name: "Chips",
-		layer: "component",
+		layer: "base",
 		group: "selection",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/chips",
@@ -94,7 +94,7 @@ export const cxComponentRegistry = [
 	{
 		id: "list-text",
 		name: "ListText",
-		layer: "component",
+		layer: "base",
 		group: "layout",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/list-text",
@@ -103,7 +103,7 @@ export const cxComponentRegistry = [
 	{
 		id: "section-item",
 		name: "SectionItem",
-		layer: "component",
+		layer: "base",
 		group: "layout",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/section-item",
@@ -112,7 +112,7 @@ export const cxComponentRegistry = [
 	{
 		id: "callout",
 		name: "Callout",
-		layer: "component",
+		layer: "base",
 		group: "feedback",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/callout",
@@ -121,7 +121,7 @@ export const cxComponentRegistry = [
 	{
 		id: "search-bar",
 		name: "SearchBar",
-		layer: "component",
+		layer: "base",
 		group: "form",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/search-bar",
@@ -130,14 +130,10 @@ export const cxComponentRegistry = [
 	{
 		id: "divider",
 		name: "Divider",
-		layer: "atom",
+		layer: "base",
 		group: "feedback",
 		owner: "@pxds/cx-components",
 		importPath: "@pxds/cx-components/components/divider",
 		status: "active",
 	},
-] as const satisfies readonly PreviewComponentRegistryEntry[];
-
-export function getCxComponentById(componentId: string) {
-	return cxComponentRegistry.find((component) => component.id === componentId);
-}
+] as const satisfies readonly CxComponentPreviewEntry[];

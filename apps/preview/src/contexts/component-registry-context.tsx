@@ -2,9 +2,11 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import {
+	cxComponentPreviewRegistry,
+	getCxComponentPreviewExample,
+} from "@pxds/cx-components/preview";
 
-import { getComponentPreviewExample } from "@/components/preview/examples/component-preview-examples";
-import { cxComponentRegistry } from "@/utils/cx-component-registry";
 import {
 	getComponentGroups,
 	getComponentLayers,
@@ -15,8 +17,8 @@ import {
 	type PreviewComponentRegistryEntry,
 } from "@/utils/component-registry";
 
-const previewComponents = cxComponentRegistry.filter(
-	(c) => getComponentPreviewExample(c.id) !== undefined,
+const previewComponents = cxComponentPreviewRegistry.filter(
+	(c) => getCxComponentPreviewExample(c.id) !== undefined,
 );
 
 type ComponentRegistryContextValue = {

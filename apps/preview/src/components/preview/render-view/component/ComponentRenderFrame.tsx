@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { MobilePreviewFrame } from "@/components/mobile-preview/MobilePreviewFrame";
 import { PreviewSpinner } from "@/components/preview/render-view/shared/PreviewSpinner";
 import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
 
@@ -16,13 +15,14 @@ export function ComponentRenderFrame({ component }: ComponentRenderFrameProps) {
 	const showSpinner = status !== "loaded";
 
 	return (
-		<figure className="relative m-0">
+		<figure className="relative m-0 h-full min-h-[560px] w-full overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
 			<figcaption className="sr-only">
 				{component.name} component render · {src}
 			</figcaption>
-			<MobilePreviewFrame
+			<iframe
 				src={src}
 				title={`${component.name} component render`}
+				className="block h-full min-h-[560px] w-full border-0 bg-neutral-50"
 				onLoad={() => setStatus("loaded")}
 				onError={() => setStatus("error")}
 			/>

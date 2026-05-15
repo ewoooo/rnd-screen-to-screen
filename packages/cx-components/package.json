@@ -60,6 +60,7 @@
 		"./components/tooltip": "./src/components/tooltip/index.ts",
 		"./components/tooltip-bubble": "./src/components/tooltip-bubble/index.ts",
 		"./components/underline-tab": "./src/components/underline-tab/index.ts",
+		"./preview": "./src/preview/index.ts",
 		"./styles.css": "./src/styles.css"
 	},
 	"dependencies": {

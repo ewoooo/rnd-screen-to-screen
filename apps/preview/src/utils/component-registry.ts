@@ -1,28 +1,17 @@
-export type ComponentLayer = "atom" | "component" | "pattern";
+import type {
+	CxComponentPreviewEntry as PreviewComponentRegistryEntry,
+	CxComponentPreviewGroup as ComponentGroup,
+	CxComponentPreviewLayer as ComponentLayer,
+} from "@pxds/cx-components/preview";
 
-export type ComponentGroup =
-	| "action"
-	| "feedback"
-	| "form"
-	| "layout"
-	| "navigation"
-	| "selection"
-	| "typography";
-
-export type PreviewComponentRegistryEntry = {
-	id: string;
-	name: string;
-	layer: ComponentLayer;
-	group: ComponentGroup;
-	owner: "@pxds/cx-components";
-	importPath: string;
-	status: "active" | "candidate";
+export type {
+	ComponentGroup,
+	ComponentLayer,
+	PreviewComponentRegistryEntry,
 };
 
 export const COMPONENT_LAYER_ORDER = [
-	"atom",
-	"component",
-	"pattern",
+	"base",
 ] as const satisfies readonly ComponentLayer[];
 
 export const COMPONENT_GROUP_ORDER = [
