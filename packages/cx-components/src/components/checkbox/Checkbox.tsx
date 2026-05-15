@@ -52,16 +52,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 					ref={ref}
 					id={inputId}
 					type="checkbox"
-					className="cx-checkbox__input"
+					className="checkbox__input"
 					checked={checked}
 					disabled={disabled}
 					name={name}
 					value={value}
 					onChange={(event) => onCheckedChange?.(event.currentTarget.checked)}
 				/>
-				<span className="cx-checkbox__control" aria-hidden="true" />
+				<span className="checkbox__control" aria-hidden="true" />
 				{label ? (
-					<Text className="cx-checkbox__label" variant="label">
+					<Text className="checkbox__label" variant="label">
 						{label}
 					</Text>
 				) : null}

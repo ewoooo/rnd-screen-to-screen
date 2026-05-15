@@ -1,0 +1,30 @@
+.footer {
+	align-items: stretch;
+	background: var(--semantic-color-bg-default);
+	box-sizing: border-box;
+	color: var(--semantic-color-text-tertiary);
+	display: flex;
+	flex-direction: column;
+	gap: var(--semantic-spacing-gap-loose);
+	width: 100%;
+}
+
+.footer__text {
+	color: var(--semantic-color-text-tertiary);
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.footer__action {
+	align-items: stretch;
+	display: flex;
+	width: 100%;
+}
+
+.footer--type-01 {
+	gap: var(--semantic-spacing-gap-default);
+}
+
+.footer--type-02 {
+	gap: var(--semantic-spacing-gap-loose);
+}

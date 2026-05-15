@@ -7,22 +7,22 @@ export type TextFieldState =
 	| "typed"
 	| "disabled";
 
-export const textFieldVariants = cva("cx-text-field", {
+export const textFieldVariants = cva("text-field", {
 	variants: {
 		state: {
-			default: "cx-text-field--default",
-			focused: "cx-text-field--focused",
-			typing: "cx-text-field--typing",
-			typed: "cx-text-field--typed",
-			disabled: "cx-text-field--disabled",
+			default: "text-field--default",
+			focused: "text-field--focused",
+			typing: "text-field--typing",
+			typed: "text-field--typed",
+			disabled: "text-field--disabled",
 		},
 		error: {
-			true: "cx-text-field--error",
+			true: "text-field--error",
 			false: null,
 		},
 		button: {
-			on: "cx-text-field--button-on",
-			off: "cx-text-field--button-off",
+			on: "text-field--button-on",
+			off: "text-field--button-off",
 		},
 	},
 	defaultVariants: {

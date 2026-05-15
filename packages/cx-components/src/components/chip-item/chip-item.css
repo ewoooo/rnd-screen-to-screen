@@ -1,0 +1,47 @@
+.chip-item {
+	appearance: none;
+	align-items: center;
+	background: var(--component-chip-bg-default);
+	border: 0;
+	border-radius: var(--semantic-radius-full);
+	box-sizing: border-box;
+	color: var(--semantic-color-text-primary);
+	display: inline-flex;
+	justify-content: center;
+	min-height: 41px;
+	padding: 0 var(--semantic-spacing-inset-md);
+	text-decoration: none;
+	white-space: nowrap;
+	width: fit-content;
+}
+
+button.chip-item {
+	cursor: pointer;
+}
+
+.chip-item:focus-visible {
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.chip-item__label {
+	color: inherit;
+	font-family: var(--13-med-font-family, inherit);
+	font-size: var(--13-med-font-size);
+	font-weight: var(--13-med-font-weight);
+	letter-spacing: var(--13-med-letter-spacing);
+	line-height: var(--13-med-line-height);
+}
+
+.chip-item--selected {
+	background: var(--semantic-color-bg-brand);
+	color: var(--semantic-color-text-on-brand);
+}
+
+.chip-item--selected .chip-item__label {
+	font-family: var(--13-semi-font-family, inherit);
+	font-size: var(--13-semi-font-size);
+	font-weight: var(--13-semi-font-weight);
+	letter-spacing: var(--13-semi-letter-spacing);
+	line-height: var(--13-semi-line-height);
+}

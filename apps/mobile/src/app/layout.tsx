@@ -3,7 +3,7 @@ import { AppRouterCacheProvider } from "@pxds/pxds-components/core";
 import type { PropsWithChildren } from "react";
 
 import "@pxds/pxds-components/core/global.css";
-import "@pxds/cx-tokens/tokens.css";
+import "@pxds/cx-tokens/style.css";
 import "@pxds/pxds-layout/styles.css";
 import "@pxds/cx-components/styles.css";
 import "../patterns/mbr/styles.css";

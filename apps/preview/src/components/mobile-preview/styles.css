@@ -1,5 +1,3 @@
-@import "@pxds/cx-tokens/tokens.css";
-
 .mobile-view-frame {
 	width: var(--pxds-device-mobile-view-width, 375px);
 	height: var(--pxds-device-mobile-view-height, 812px);

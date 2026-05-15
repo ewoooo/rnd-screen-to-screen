@@ -2,6 +2,7 @@ import { defineComponentConfig } from "@pxds/pxds-spec";
 
 export type SectionHeaderPageProps = {
 	title: string;
+	subTitle?: string;
 };
 
 export const sectionHeaderPageConfig = defineComponentConfig<SectionHeaderPageProps>({
@@ -19,6 +20,11 @@ export const sectionHeaderPageConfig = defineComponentConfig<SectionHeaderPagePr
 			type: "string",
 			editable: true,
 			figmaProperty: "Title",
+		},
+		subTitle: {
+			type: "string",
+			editable: true,
+			figmaProperty: "SubTitle",
 		},
 	},
 	figma: {

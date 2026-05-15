@@ -1,35 +1,50 @@
-import { Button } from "@pxds/cx-components";
+import { ActionButton } from "@pxds/cx-components";
 
 type MbrPrimaryCTABarProps = {
 	primaryLabel: string;
 	disabled?: boolean;
 	onPrimary?: () => void;
+	secondaryLabel?: string;
+	onSecondary?: () => void;
 };
 
 export function MbrPrimaryCTABar({
 	primaryLabel,
 	disabled = false,
 	onPrimary,
+	secondaryLabel,
+	onSecondary,
 }: MbrPrimaryCTABarProps) {
+	if (secondaryLabel) {
+		return (
+			<ActionButton
+				actions={[
+					{
+						label: secondaryLabel,
+						variant: "secondary",
+						onClick: onSecondary,
+					},
+					{
+						label: primaryLabel,
+						variant: "primary",
+						disabled,
+						onClick: onPrimary,
+					},
+				]}
+			/>
+		);
+	}
+
 	return (
-		<div
-			style={{
-				display: "grid",
-				gap: "var(--semantic-spacing-inline)",
-				gridTemplateColumns: "1fr",
-				padding: "var(--spacing-12) var(--spacing-16) var(--spacing-20)",
-				background: "var(--semantic-surface-page-normal)",
-			}}
-		>
-			<Button
-				fullWidth
-				size="large"
-				variant="primary"
-				disabled={disabled}
-				onClick={onPrimary}
-			>
-				{primaryLabel}
-			</Button>
-		</div>
+		<ActionButton
+			actions={[
+				{
+					label: primaryLabel,
+					variant: "primary",
+					disabled,
+					onClick: onPrimary,
+				},
+			]}
+		/>
 	);
 }

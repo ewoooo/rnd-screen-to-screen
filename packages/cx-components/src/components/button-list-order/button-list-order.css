@@ -1,0 +1,49 @@
+.button-list-order {
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	border-radius: var(--semantic-radius-sm);
+	box-sizing: border-box;
+	color: var(--semantic-color-text-primary);
+	cursor: pointer;
+	display: inline-flex;
+	flex: 0 0 auto;
+	font-family: var(--14-bold-font-family, inherit);
+	font-size: var(--14-bold-font-size);
+	font-weight: var(--14-bold-font-weight);
+	gap: var(--spacing-2);
+	justify-content: center;
+	letter-spacing: var(--14-bold-letter-spacing);
+	line-height: var(--14-bold-line-height);
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	user-select: none;
+	white-space: nowrap;
+}
+
+.button-list-order__label {
+	display: block;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.button-list-order__icon {
+	display: block;
+	flex: 0 0 auto;
+}
+
+.button-list-order:focus-visible {
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.button-list-order:disabled,
+.button-list-order[data-disabled] {
+	color: var(--semantic-color-text-disabled);
+	cursor: not-allowed;
+	opacity: 0.45;
+	pointer-events: none;
+}

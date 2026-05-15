@@ -17,7 +17,10 @@ export function Screen() {
 				<AppBar title="회원 가입" showLeftItem showTitle />
 			</AppScreen.Header>
 			<AppScreen.Content>
-				<SectionHeaderPage title="약관 동의" />
+				<SectionHeaderPage
+					title="약관 동의"
+					subTitle="회원 가입을 위한 필수·선택 약관에 동의해 주세요"
+				/>
 				<CheckboxTerms />
 				<TextFieldGuardianRequest visible={false} />
 			</AppScreen.Content>

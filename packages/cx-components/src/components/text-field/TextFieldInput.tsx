@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
+import { Button } from "../button";
 import type { TextFieldActionButton } from "./TextField.types";
 
 type NativeInputProps = Pick<
@@ -38,8 +39,8 @@ export const TextFieldInput = forwardRef<HTMLInputElement, TextFieldInputProps>(
 		ref,
 	) {
 		return (
-			<div className="cx-text-field-input">
-				<div className="cx-text-field-input__field">
+			<div className="text-field-input">
+				<div className="text-field-input__field">
 					<input
 						{...inputProps}
 						ref={ref}
@@ -47,18 +48,20 @@ export const TextFieldInput = forwardRef<HTMLInputElement, TextFieldInputProps>(
 						disabled={disabled}
 						aria-describedby={ariaDescribedBy}
 						aria-invalid={ariaInvalid}
-						className="cx-text-field-input__native"
+						className="text-field-input__native"
 					/>
 				</div>
 				{actionButton ? (
-					<button
+					<Button
 						type="button"
+						variant="secondary"
+						size="large"
 						disabled={disabled || actionButton.disabled}
-						className="cx-text-field-input__action"
+						className="text-field-input__action"
 						onClick={actionButton.onClick}
 					>
 						{actionButton.label}
-					</button>
+					</Button>
 				) : null}
 			</div>
 		);

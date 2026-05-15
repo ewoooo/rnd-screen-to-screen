@@ -1,0 +1,77 @@
+.underline-tab {
+	box-sizing: border-box;
+	color: var(--component-tab-fg-default);
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	min-height: calc(var(--spacing-56) + var(--spacing-4));
+	padding-block-start: var(--spacing-24);
+	padding-inline: var(--semantic-spacing-inset-md);
+	position: relative;
+	width: 100%;
+}
+
+.underline-tab__button {
+	appearance: none;
+	align-items: flex-start;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	color: var(--component-tab-fg-default);
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	justify-content: center;
+	margin: 0;
+	min-width: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.underline-tab__button:disabled {
+	cursor: not-allowed;
+	opacity: 0.45;
+}
+
+.underline-tab__button:focus-visible {
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.underline-tab__button[aria-selected="true"] {
+	color: var(--component-tab-fg-selected);
+}
+
+.underline-tab__label {
+	color: currentcolor;
+	font-family: var(--15-med-font-family, inherit);
+	font-size: var(--15-med-font-size);
+	font-weight: var(--15-med-font-weight);
+	letter-spacing: var(--15-med-letter-spacing);
+	line-height: var(--15-med-line-height);
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.underline-tab__button[aria-selected="true"] .underline-tab__label {
+	font-family: var(--15-bold-font-family, inherit);
+	font-size: var(--15-bold-font-size);
+	font-weight: var(--15-bold-font-weight);
+	letter-spacing: var(--15-bold-letter-spacing);
+	line-height: var(--15-bold-line-height);
+}
+
+.underline-tab__indicator {
+	background: var(--component-tab-indicator);
+	block-size: var(--spacing-2);
+	bottom: 0;
+	inline-size: calc((100% - (var(--semantic-spacing-inset-md) * 2)) / 2);
+	inset-inline-start: var(--semantic-spacing-inset-md);
+	position: absolute;
+	transition: transform 160ms ease;
+}
+
+.underline-tab--state-02 .underline-tab__indicator {
+	transform: translateX(100%);
+}

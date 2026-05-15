@@ -1,0 +1,22 @@
+.indicator {
+	align-items: center;
+	box-sizing: border-box;
+	display: inline-flex;
+	flex-direction: row;
+	gap: var(--spacing-8);
+	padding: 0 var(--spacing-2);
+	width: fit-content;
+}
+
+.indicator__dot {
+	background: var(--semantic-color-border-default);
+	border-radius: 999px;
+	display: block;
+	flex: 0 0 auto;
+	height: 4px;
+	width: 4px;
+}
+
+.indicator__dot[data-active="true"] {
+	background: var(--semantic-color-bg-brand);
+}

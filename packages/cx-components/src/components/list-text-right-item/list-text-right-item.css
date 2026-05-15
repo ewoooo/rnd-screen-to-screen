@@ -1,0 +1,87 @@
+.list-text-right-item {
+	align-items: center;
+	box-sizing: border-box;
+	color: var(--semantic-color-text-secondary);
+	display: inline-flex;
+	flex: 0 0 auto;
+	gap: var(--spacing-2);
+	justify-content: flex-end;
+	vertical-align: middle;
+	width: fit-content;
+}
+
+.list-text-right-item--badge-level {
+	gap: var(--spacing-4);
+}
+
+.list-text-right-item__text {
+	color: currentColor;
+	font-family: var(--14-med-font-family, inherit);
+	font-size: var(--14-med-font-size);
+	font-weight: var(--14-med-font-weight);
+	letter-spacing: var(--14-med-letter-spacing);
+	line-height: var(--14-med-line-height);
+	text-decoration: var(--14-med-text-decoration);
+	text-indent: var(--14-med-paragraph-indent);
+	text-transform: var(--14-med-text-case);
+	white-space: nowrap;
+}
+
+.list-text-right-item__text-button {
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	color: inherit;
+	display: inline-flex;
+	font: inherit;
+	gap: var(--spacing-2);
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+	vertical-align: middle;
+	width: fit-content;
+}
+
+button.list-text-right-item__text-button {
+	cursor: pointer;
+}
+
+.list-text-right-item__text-button:focus-visible {
+	border-radius: var(--semantic-radius-sm);
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.list-text-right-item__icon {
+	background-color: var(--semantic-color-text-tertiary) !important;
+	display: block;
+	flex: 0 0 auto;
+	height: 16px;
+	width: 16px;
+}
+
+.list-text-right-item__icon-button {
+	color: var(--semantic-color-text-tertiary);
+	margin: -8px;
+}
+
+.list-text-right-item__icon-button > .list-text-right-item__icon {
+	height: 16px;
+	width: 16px;
+}
+
+.list-text-right-item__level-badge {
+	border-radius: 999px;
+	flex: 0 0 auto;
+	font-family: var(--10-med-font-family, inherit);
+	font-size: var(--10-med-font-size);
+	font-weight: var(--10-med-font-weight);
+	height: 14px;
+	letter-spacing: var(--10-med-letter-spacing);
+	line-height: var(--10-med-line-height);
+	min-width: 14px;
+	padding: 0;
+	width: 14px;
+}

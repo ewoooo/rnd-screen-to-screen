@@ -19,6 +19,7 @@ import {
 const previewableRegistry = componentRegistry.filter(
 	(c) => getComponentPreviewExample(c.id) !== undefined,
 );
+const previewComponents = toPreviewComponentRegistry(previewableRegistry);
 
 type ComponentRegistryContextValue = {
 	components: readonly PreviewComponentRegistryEntry[];
@@ -39,7 +40,7 @@ export function ComponentRegistryProvider({
 }: {
 	children: ReactNode;
 }) {
-	const components = toPreviewComponentRegistry(previewableRegistry);
+	const components = previewComponents;
 	const router = useRouter();
 
 	const [selectedComponentId, setSelectedComponentId] = useState<string | null>(

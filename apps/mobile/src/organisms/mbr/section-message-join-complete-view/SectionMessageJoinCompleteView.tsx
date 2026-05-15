@@ -1,25 +1,23 @@
-import { Text } from "@pxds/cx-components";
-import { SectionMessage } from "@pxds/pxds-components/core";
+import { ListText, Notice, TitleContents } from "@pxds/cx-components";
 import { VStack } from "@pxds/pxds-layout/primitives";
+
+const POST_JOIN_NOTES = [
+	{ id: "session", text: "세션 유효시간은 24시간입니다." },
+	{ id: "home", text: "가입 완료 후 홈으로 이동합니다." },
+] as const;
 
 export function SectionMessageJoinCompleteView() {
 	return (
 		<VStack gap="var(--semantic-spacing-block)">
-			<SectionMessage
-				variant="positive"
-				description="가입이 정상 처리되었습니다. 일반 회원으로 자동 로그인됩니다."
-			>
-				가입이 완료되었습니다
-			</SectionMessage>
-			<Text variant="bodySubtle" as="p">
-				가입 후 이용 안내
-			</Text>
-			<Text variant="caption" as="p">
-				· 세션 유효시간 24시간
-			</Text>
-			<Text variant="caption" as="p">
-				· 가입 완료 후 홈으로 이동합니다
-			</Text>
+			<Notice tone="positive" title="가입이 정상 처리되었습니다">
+				일반 회원으로 자동 로그인됩니다.
+			</Notice>
+			<VStack>
+				<TitleContents title="가입 후 이용 안내" />
+				{POST_JOIN_NOTES.map((item) => (
+					<ListText key={item.id} text={item.text} />
+				))}
+			</VStack>
 		</VStack>
 	);
 }

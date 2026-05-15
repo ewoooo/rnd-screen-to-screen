@@ -1,18 +1,18 @@
 import { cva } from "class-variance-authority";
 
-export const radioButtonVariants = cva("cx-radio-button", {
+export const radioButtonVariants = cva("radio-button", {
 	variants: {
 		checked: {
-			true: "cx-radio-button--checked",
-			false: "cx-radio-button--unchecked",
+			true: "radio-button--checked",
+			false: "radio-button--unchecked",
 		},
 		disabled: {
-			true: "cx-radio-button--disabled",
-			false: "cx-radio-button--enabled",
+			true: "radio-button--disabled",
+			false: "radio-button--enabled",
 		},
 		text: {
-			true: "cx-radio-button--with-text",
-			false: "cx-radio-button--icon-only",
+			true: "radio-button--with-text",
+			false: "radio-button--icon-only",
 		},
 	},
 	defaultVariants: {

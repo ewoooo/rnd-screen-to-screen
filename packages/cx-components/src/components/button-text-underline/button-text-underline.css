@@ -1,0 +1,47 @@
+.button-text-underline {
+	appearance: none;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	box-sizing: border-box;
+	color: var(--semantic-color-text-secondary);
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	gap: var(--semantic-spacing-gap-default);
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+	text-decoration: none;
+	user-select: none;
+	vertical-align: baseline;
+	width: fit-content;
+}
+
+.button-text-underline:focus-visible {
+	border-radius: var(--semantic-radius-sm);
+	outline: 2px solid var(--semantic-color-border-focused);
+	outline-offset: 2px;
+}
+
+.button-text-underline:disabled,
+.button-text-underline[aria-disabled="true"],
+.button-text-underline[data-disabled] {
+	color: var(--semantic-color-text-disabled);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.button-text-underline__label {
+	color: currentColor;
+	font-family: var(--13-reg-font-family, inherit);
+	font-size: var(--13-reg-font-size);
+	font-weight: var(--13-reg-font-weight);
+	letter-spacing: var(--13-reg-letter-spacing);
+	line-height: var(--13-reg-line-height);
+	text-decoration: var(--13-reg-text-decoration);
+	text-indent: var(--13-reg-paragraph-indent);
+	text-transform: var(--13-reg-text-case);
+	white-space: nowrap;
+}

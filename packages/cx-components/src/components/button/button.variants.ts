@@ -1,17 +1,17 @@
 import { cva } from "class-variance-authority";
 
-export const buttonVariants = cva("cx-button", {
+export const buttonVariants = cva("button", {
 	variants: {
 		variant: {
-			primary: "cx-button--primary",
-			secondary: "cx-button--secondary",
-			disabled: "cx-button--disabled",
+			primary: "button--primary",
+			secondary: "button--secondary",
+			disabled: "button--disabled",
 		},
 		size: {
-			small: "cx-button--small",
-			medium: "cx-button--medium",
-			large: "cx-button--large",
-			xlarge: "cx-button--xlarge",
+			small: "button--small",
+			medium: "button--medium",
+			large: "button--large",
+			xlarge: "button--xlarge",
 		},
 	},
 	defaultVariants: {

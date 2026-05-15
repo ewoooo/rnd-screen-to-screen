@@ -1,0 +1,57 @@
+.notice {
+	/*
+	 * tone 별 surface/text 색은 컴포넌트 로컬 변수로 흡수한다.
+	 * cx-tokens는 info/critical 시멘틱만 노출하므로 positive/cautionary는
+	 * primitive color token에서 직접 끌어와 로컬 fallback을 둔다.
+	 * cx-tokens가 positive/cautionary 시멘틱을 갖추면 이 값들을 그쪽으로 옮긴다.
+	 */
+	--notice-surface: var(--semantic-color-bg-info-weak);
+	--notice-title: var(--semantic-color-text-primary);
+	--notice-body: var(--semantic-color-text-secondary);
+
+	align-items: flex-start;
+	background: var(--notice-surface);
+	border-radius: var(--semantic-radius-md);
+	box-sizing: border-box;
+	color: var(--notice-title);
+	display: flex;
+	gap: var(--semantic-spacing-gap-default);
+	padding: var(--semantic-spacing-inset-lg) var(--semantic-spacing-inset-xl);
+	width: 100%;
+}
+
+.notice--info {
+	--notice-surface: var(--semantic-color-bg-info-weak);
+}
+
+.notice--negative {
+	--notice-surface: var(--semantic-color-bg-critical-weak);
+	--notice-title: var(--semantic-color-text-critical);
+}
+
+.notice--positive {
+	--notice-surface: var(--color-green-100, #e8f5ec);
+	--notice-title: var(--color-green-500, #1f9d55);
+}
+
+.notice--cautionary {
+	--notice-surface: var(--color-yellow-100, #fff4d6);
+	--notice-title: var(--color-yellow-700, #8a5a00);
+}
+
+.notice__content {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: var(--semantic-spacing-gap-tight);
+	min-width: 0;
+}
+
+.notice__title {
+	color: var(--notice-title);
+}
+
+.notice__body {
+	color: var(--notice-body);
+	margin: 0;
+}

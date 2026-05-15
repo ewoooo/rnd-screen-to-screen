@@ -1,0 +1,40 @@
+.title-contents-right-item {
+	align-items: center;
+	box-sizing: border-box;
+	display: inline-flex;
+	flex: none;
+	justify-content: center;
+	line-height: 0;
+	vertical-align: middle;
+}
+
+.title-contents-right-item--icon,
+.title-contents-right-item--type3 {
+	min-height: 16px;
+	min-width: 16px;
+}
+
+.title-contents-right-item--button {
+	min-height: 32px;
+	min-width: 45px;
+}
+
+.title-contents-right-item__icon {
+	display: block;
+	flex: none;
+	height: 16px;
+	width: 16px;
+}
+
+.title-contents-right-item__icon > svg,
+.title-contents-right-item__icon > img,
+.title-contents-right-item__icon-button > svg,
+.title-contents-right-item__icon-button > img {
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
+.title-contents-right-item__button {
+	flex: none;
+}

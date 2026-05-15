@@ -1,0 +1,27 @@
+.title-section-left-item {
+	align-items: center;
+	box-sizing: border-box;
+	color: var(--semantic-color-text-tertiary);
+	display: inline-flex;
+	flex: 0 0 auto;
+	min-width: 0;
+}
+
+.title-section-left-item--text {
+	white-space: nowrap;
+}
+
+.title-section-left-item--icon > svg,
+.title-section-left-item--icon > img {
+	display: block;
+	flex: 0 0 auto;
+}
+
+.title-section-left-item__text {
+	color: var(--semantic-color-text-tertiary);
+	white-space: nowrap;
+}
+
+.title-section-left-item__badge {
+	flex: 0 0 auto;
+}

@@ -1,11 +1,6 @@
-.cx-divider {
-	--cx-divider-color: var(--component-light-list-cell-divider);
-	--cx-divider-contents-thickness: 1px;
-	--cx-divider-section-thickness: 4px;
-	--cx-divider-thickness: var(--cx-divider-contents-thickness);
-
+.divider {
 	align-self: stretch;
-	background: var(--cx-divider-color);
+	background: var(--component-list-cell-divider);
 	border: 0;
 	box-sizing: border-box;
 	display: block;
@@ -14,27 +9,24 @@
 	padding: 0;
 }
 
-[data-theme="dark"] .cx-divider,
-.cx-divider[data-theme="dark"] {
-	--cx-divider-color: var(--component-dark-list-cell-divider);
-}
-
-.cx-divider--contents {
-	--cx-divider-thickness: var(--cx-divider-contents-thickness);
-}
-
-.cx-divider--section {
-	--cx-divider-thickness: var(--cx-divider-section-thickness);
-}
-
-.cx-divider--horizontal {
-	height: var(--cx-divider-thickness);
-	min-height: var(--cx-divider-thickness);
+.divider--horizontal {
+	height: 1px;
+	min-height: 1px;
 	width: 100%;
 }
 
-.cx-divider--vertical {
+.divider--vertical {
 	height: 100%;
-	min-width: var(--cx-divider-thickness);
-	width: var(--cx-divider-thickness);
+	min-width: 1px;
+	width: 1px;
+}
+
+.divider--section.divider--horizontal {
+	height: 4px;
+	min-height: 4px;
+}
+
+.divider--section.divider--vertical {
+	min-width: 4px;
+	width: 4px;
 }

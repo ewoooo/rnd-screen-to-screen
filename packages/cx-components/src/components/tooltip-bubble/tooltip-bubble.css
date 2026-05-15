@@ -1,37 +1,20 @@
-.cx-tooltip-bubble {
-	--cx-tooltip-bubble-bg: var(--semantic-light-color-bg-primary);
-	--cx-tooltip-bubble-fg: var(--semantic-light-color-text-primary);
-	--cx-tooltip-bubble-shadow-color: rgba(
-		var(--semantic-light-color-text-primary-rgb),
-		0.14
-	);
-
+.tooltip-bubble {
 	align-items: stretch;
 	box-sizing: border-box;
-	color: var(--cx-tooltip-bubble-fg);
+	color: var(--semantic-color-text-primary);
 	display: inline-flex;
 	flex-direction: column;
 	width: fit-content;
 }
 
-[data-theme="dark"] .cx-tooltip-bubble,
-.cx-tooltip-bubble[data-theme="dark"] {
-	--cx-tooltip-bubble-bg: var(--semantic-dark-color-bg-primary);
-	--cx-tooltip-bubble-fg: var(--semantic-dark-color-text-primary);
-	--cx-tooltip-bubble-shadow-color: rgba(
-		var(--semantic-dark-color-text-primary-rgb),
-		0.28
-	);
-}
-
-.cx-tooltip-bubble__bubble {
-	background: var(--cx-tooltip-bubble-bg);
-	border-radius: var(--semantic-light-radius-full);
+.tooltip-bubble__bubble {
+	background: var(--semantic-color-bg-default);
+	border-radius: var(--semantic-radius-full);
 	box-shadow:
-		0 2px 8px var(--cx-tooltip-bubble-shadow-color),
+		0 2px 8px rgba(var(--semantic-color-text-primary-rgb), 0.14),
 		0 1px 2px rgb(0 0 0 / 8%);
 	box-sizing: border-box;
-	color: var(--cx-tooltip-bubble-fg);
+	color: var(--semantic-color-text-primary);
 	font-family: var(--14-semi-font-family, inherit);
 	font-size: var(--14-semi-font-size);
 	font-weight: var(--14-semi-font-weight);
@@ -41,30 +24,46 @@
 	white-space: nowrap;
 }
 
-.cx-tooltip-bubble__tail-wrap {
+.tooltip-bubble__tail-wrap {
 	box-sizing: border-box;
 	display: flex;
 	padding-inline: var(--spacing-20);
 	width: 100%;
 }
 
-.cx-tooltip-bubble--left .cx-tooltip-bubble__tail-wrap {
+.tooltip-bubble--left .tooltip-bubble__tail-wrap {
 	justify-content: flex-start;
 }
 
-.cx-tooltip-bubble--center .cx-tooltip-bubble__tail-wrap {
+.tooltip-bubble--center .tooltip-bubble__tail-wrap {
 	justify-content: center;
 }
 
-.cx-tooltip-bubble--right .cx-tooltip-bubble__tail-wrap {
+.tooltip-bubble--right .tooltip-bubble__tail-wrap {
 	justify-content: flex-end;
 }
 
-.cx-tooltip-bubble__tail {
-	filter: drop-shadow(0 2px 2px var(--cx-tooltip-bubble-shadow-color));
+.tooltip-bubble__tail {
+	filter: drop-shadow(
+		0 2px 2px rgba(var(--semantic-color-text-primary-rgb), 0.14)
+	);
 	height: 0;
 	width: 0;
 	border-left: calc(var(--spacing-12) / 2) solid transparent;
 	border-right: calc(var(--spacing-12) / 2) solid transparent;
-	border-top: var(--spacing-8) solid var(--cx-tooltip-bubble-bg);
+	border-top: var(--spacing-8) solid var(--semantic-color-bg-default);
+}
+
+[data-theme="dark"] .tooltip-bubble__bubble,
+.tooltip-bubble[data-theme="dark"] .tooltip-bubble__bubble {
+	box-shadow:
+		0 2px 8px rgba(var(--semantic-color-text-primary-rgb), 0.28),
+		0 1px 2px rgb(0 0 0 / 8%);
+}
+
+[data-theme="dark"] .tooltip-bubble__tail,
+.tooltip-bubble[data-theme="dark"] .tooltip-bubble__tail {
+	filter: drop-shadow(
+		0 2px 2px rgba(var(--semantic-color-text-primary-rgb), 0.28)
+	);
 }

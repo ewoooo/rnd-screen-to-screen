@@ -52,16 +52,16 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 					ref={ref}
 					id={inputId}
 					type="radio"
-					className="cx-radio-button__input"
+					className="radio-button__input"
 					checked={checked}
 					disabled={disabled}
 					name={name}
 					value={value}
 					onChange={(event) => onCheckedChange?.(event.currentTarget.checked)}
 				/>
-				<span className="cx-radio-button__control" aria-hidden="true" />
+				<span className="radio-button__control" aria-hidden="true" />
 				{label ? (
-					<Text className="cx-radio-button__label" variant="label">
+					<Text className="radio-button__label" variant="label">
 						{label}
 					</Text>
 				) : null}

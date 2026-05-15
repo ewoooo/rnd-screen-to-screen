@@ -1,0 +1,27 @@
+.handle {
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	flex: none;
+	height: 32px;
+	justify-content: center;
+	width: 100%;
+}
+
+.handle__bar {
+	background: #d9d9d9;
+	border-radius: var(--semantic-radius-full);
+	display: block;
+	flex: none;
+	height: 3px;
+	width: 44px;
+}
+
+[data-theme="dark"] .handle__bar,
+.handle[data-theme="dark"] .handle__bar {
+	background: #5c5c5c;
+}
+
+.handle--off .handle__bar {
+	display: none;
+}

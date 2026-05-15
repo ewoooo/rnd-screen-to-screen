@@ -68,10 +68,10 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 			)}
 		>
 			{showLogo ? (
-				<div className="cx-app-bar__logo">{logo}</div>
+				<div className="app-bar__logo">{logo}</div>
 			) : shouldShowLeading ? (
 				<div
-					className="cx-app-bar__title-group"
+					className="app-bar__title-group"
 					data-figma-render="slot"
 					data-figma-property-name="title"
 				>
@@ -84,7 +84,7 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 						<Text
 							as="div"
 							variant="listTitle"
-							className="cx-app-bar__title"
+							className="app-bar__title"
 							data-figma-render="primitive"
 						>
 							{title}
@@ -94,7 +94,7 @@ export const AppBar = forwardRef<HTMLElement, AppBarProps>(function AppBar(
 			) : null}
 			{showRightItem ? (
 				<div
-					className="cx-app-bar__right"
+					className="app-bar__right"
 					data-figma-render="slot"
 					data-figma-property-name="right-item"
 				>

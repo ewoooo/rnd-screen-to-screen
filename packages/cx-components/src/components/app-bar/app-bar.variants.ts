@@ -1,22 +1,22 @@
 import { cva } from "class-variance-authority";
 
-export const appBarVariants = cva("cx-app-bar", {
+export const appBarVariants = cva("app-bar", {
 	variants: {
 		leftItem: {
-			true: "cx-app-bar--left-item-on",
-			false: "cx-app-bar--left-item-off",
+			true: "app-bar--left-item-on",
+			false: "app-bar--left-item-off",
 		},
 		logo: {
-			true: "cx-app-bar--logo",
-			false: "cx-app-bar--default",
+			true: "app-bar--logo",
+			false: "app-bar--default",
 		},
 		rightItem: {
-			true: "cx-app-bar--right-item-on",
-			false: "cx-app-bar--right-item-off",
+			true: "app-bar--right-item-on",
+			false: "app-bar--right-item-off",
 		},
 		title: {
-			true: "cx-app-bar--title-on",
-			false: "cx-app-bar--title-off",
+			true: "app-bar--title-on",
+			false: "app-bar--title-off",
 		},
 	},
 	defaultVariants: {
