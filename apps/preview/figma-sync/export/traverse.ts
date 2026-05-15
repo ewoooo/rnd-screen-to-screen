@@ -5,8 +5,13 @@ export type FigmaSlot = "top" | "content" | "bottom";
 
 export type FigmaNode = {
 	figmaName: string;
+	figmaVariant?: string;
 	slot: FigmaSlot;
 	props: Record<string, unknown>;
+	/** text layer name → 실제 텍스트 값. codegen에서 인스턴스 내부 TEXT 노드 오버라이드에 사용. */
+	textOverrides?: Record<string, string>;
+	/** Figma component properties에 직접 전달할 값. instance.setProperties()로 처리. */
+	figmaProps?: Record<string, boolean | string>;
 };
 
 export type ScreenFigmaSpec = {
@@ -20,7 +25,18 @@ export type ScreenFigmaSpec = {
 export type RegistryEntry = {
 	component: ComponentType<Record<string, unknown>>;
 	figmaName: string;
+	figmaVariant?: string;
 	mapProps?: (props: Record<string, unknown>) => Record<string, unknown>;
+	/**
+	 * mapProps 결과의 어떤 키 → Figma 컴포넌트 내부 TEXT 레이어 이름
+	 * e.g. { titleText: "Title" }  →  props.titleText 값을 "Title" 레이어에 삽입
+	 */
+	figmaTextNodes?: Record<string, string>;
+	/**
+	 * Figma component properties에 직접 전달할 정적 값
+	 * e.g. { "SubTitle#10095:12": false }  →  instance.setProperties(...)
+	 */
+	figmaProps?: Record<string, boolean | string>;
 };
 
 export type Registry = readonly RegistryEntry[];
@@ -89,7 +105,28 @@ function collectNodes(
 		if (entry) {
 			const rawProps = child.props as Record<string, unknown>;
 			const mappedProps = entry.mapProps ? entry.mapProps(rawProps) : rawProps;
-			out.push({ figmaName: entry.figmaName, slot, props: mappedProps });
+
+			// figmaTextNodes: { propKey: layerName } + mappedProps → { layerName: value }
+			let textOverrides: Record<string, string> | undefined;
+			if (entry.figmaTextNodes) {
+				textOverrides = {};
+				for (const [propKey, layerName] of Object.entries(entry.figmaTextNodes)) {
+					const val = mappedProps[propKey];
+					if (typeof val === "string" && val.length > 0) {
+						textOverrides[layerName] = val;
+					}
+				}
+				if (Object.keys(textOverrides).length === 0) textOverrides = undefined;
+			}
+
+			out.push({
+				figmaName: entry.figmaName,
+				...(entry.figmaVariant ? { figmaVariant: entry.figmaVariant } : {}),
+				slot,
+				props: mappedProps,
+				...(textOverrides ? { textOverrides } : {}),
+				...(entry.figmaProps ? { figmaProps: entry.figmaProps } : {}),
+			});
 		} else {
 			// layout wrapper or unknown — recurse
 			const inner = (child.props as { children?: ReactNode }).children;

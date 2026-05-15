@@ -15,17 +15,28 @@ export function generateFigmaPluginCode(spec: ScreenFigmaSpec): string {
 	const specJson = JSON.stringify(spec, null, 2);
 
 	const runtime = `
-async function findOrCreateComponent(name) {
+async function findOrCreateComponent(name, variant) {
   const all = await figma.root.findAllWithCriteria({ types: ["COMPONENT"] });
+
+  // variant 있으면: 부모 ComponentSet 이름 = name, 컴포넌트 이름 = variant
+  if (variant) {
+    const found = all.find(function(c) {
+      return c.name === variant && c.parent && c.parent.name === name;
+    });
+    if (found) return found;
+  }
+
+  // 직접 이름 매칭 (variant 없는 단독 컴포넌트)
   const found = all.find(function(c) { return c.name === name; });
   if (found) return found;
 
+  // 없으면 placeholder 생성 (stub)
   const comp = figma.createComponent();
-  comp.name = name;
+  comp.name = variant ? (name + " / " + variant) : name;
   comp.layoutMode = "VERTICAL";
-  comp.primaryAxisSizingMode = "AUTO";
+  comp.primaryAxisSizingMode = "FIXED";
   comp.counterAxisSizingMode = "FIXED";
-  comp.resize(375, 1);
+  comp.resize(375, 48);
   comp.paddingLeft = 16; comp.paddingRight = 16;
   comp.paddingTop = 12; comp.paddingBottom = 12;
   comp.fills = [{ type: "SOLID", color: { r: 0.93, g: 0.97, b: 1 } }];
@@ -34,7 +45,7 @@ async function findOrCreateComponent(name) {
   await figma.loadFontAsync({ family: "Inter", style: "Semi Bold" });
   var label = figma.createText();
   label.fontName = { family: "Inter", style: "Semi Bold" };
-  label.characters = name;
+  label.characters = comp.name;
   label.fontSize = 12;
   label.fills = [{ type: "SOLID", color: { r: 0.08, g: 0.3, b: 0.7 } }];
   label.layoutSizingHorizontal = "FILL";
@@ -45,27 +56,92 @@ async function findOrCreateComponent(name) {
   return comp;
 }
 
+async function applyTextOverrides(instance, overrides) {
+  var keys = Object.keys(overrides);
+  if (keys.length === 0) return;
+  // 인스턴스 내부 TEXT 노드 전체 수집
+  var textNodes = instance.findAll(function(n) { return n.type === "TEXT"; });
+  for (var i = 0; i < keys.length; i++) {
+    var layerName = keys[i];
+    var value = overrides[layerName];
+    var target = textNodes.find(function(n) { return n.name === layerName; });
+    if (!target) continue;
+    try {
+      await figma.loadFontAsync(target.fontName);
+      target.characters = value;
+    } catch(e) {
+      figma.notify("textOverride failed (" + layerName + "): " + (e && e.message || e), { error: true });
+    }
+  }
+}
+
+async function appendInstance(parent, node) {
+  var comp = await findOrCreateComponent(node.figmaName, node.figmaVariant);
+  var instance = comp.createInstance();
+  parent.appendChild(instance);
+  instance.layoutSizingHorizontal = "FILL";
+  // Figma component properties (boolean visibility 등)
+  if (node.figmaProps && Object.keys(node.figmaProps).length > 0) {
+    try { instance.setProperties(node.figmaProps); } catch(e) {
+      figma.notify("setProperties failed (" + node.figmaName + "): " + (e && e.message || e), { error: true });
+    }
+  }
+  // 텍스트 레이어 오버라이드
+  if (node.textOverrides && Object.keys(node.textOverrides).length > 0) {
+    await applyTextOverrides(instance, node.textOverrides);
+  }
+}
+
 async function run() {
   await figma.loadAllPagesAsync();
+
+  // 화면 루트 프레임 (AppScreen) — 375×812 고정
   var frame = figma.createFrame();
-  frame.name = SPEC.id + " · " + SPEC.name;
+  frame.name = SPEC.id;
   frame.layoutMode = "VERTICAL";
-  frame.primaryAxisSizingMode = "AUTO";
+  frame.primaryAxisSizingMode = "FIXED";
   frame.counterAxisSizingMode = "FIXED";
-  frame.resize(SPEC.width, 1);
+  frame.resize(SPEC.width, SPEC.height);
+  frame.itemSpacing = 0;
+  frame.paddingLeft = 0; frame.paddingRight = 0;
+  frame.paddingTop = 0; frame.paddingBottom = 0;
   frame.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
   figma.currentPage.appendChild(frame);
 
-  for (var i = 0; i < SPEC.nodes.length; i++) {
-    var node = SPEC.nodes[i];
-    try {
-      var comp = await findOrCreateComponent(node.figmaName);
-      var instance = comp.createInstance();
-      instance.layoutSizingHorizontal = "FILL";
-      frame.appendChild(instance);
-    } catch(e) {
-      figma.notify("Error on " + node.figmaName + ": " + (e && e.message ? e.message : e), { error: true });
+  var topNodes     = SPEC.nodes.filter(function(n) { return n.slot === "top"; });
+  var contentNodes = SPEC.nodes.filter(function(n) { return n.slot === "content"; });
+  var bottomNodes  = SPEC.nodes.filter(function(n) { return n.slot === "bottom"; });
+
+  // ── chrome header zone (AppScreen.Header) — 패딩 없음
+  for (var i = 0; i < topNodes.length; i++) {
+    try { await appendInstance(frame, topNodes[i]); }
+    catch(e) { figma.notify("header: " + topNodes[i].figmaName + " — " + (e && e.message || e), { error: true }); }
+  }
+
+  // ── content zone (AppScreenContent) — 좌우 12px, 하단 16px, gap 4px
+  if (contentNodes.length > 0) {
+    var contentFrame = figma.createFrame();
+    contentFrame.name = "_content";
+    contentFrame.layoutMode = "VERTICAL";
+    contentFrame.primaryAxisSizingMode = "AUTO";
+    contentFrame.fills = [];
+    contentFrame.itemSpacing = 4;
+    contentFrame.paddingLeft = 12; contentFrame.paddingRight = 12;
+    contentFrame.paddingTop = 0;   contentFrame.paddingBottom = 16;
+    frame.appendChild(contentFrame);
+    contentFrame.layoutSizingHorizontal = "FILL";
+    contentFrame.layoutSizingVertical = "FILL";
+
+    for (var j = 0; j < contentNodes.length; j++) {
+      try { await appendInstance(contentFrame, contentNodes[j]); }
+      catch(e) { figma.notify("content: " + contentNodes[j].figmaName + " — " + (e && e.message || e), { error: true }); }
     }
+  }
+
+  // ── bottom zone
+  for (var k = 0; k < bottomNodes.length; k++) {
+    try { await appendInstance(frame, bottomNodes[k]); }
+    catch(e) { figma.notify("bottom: " + bottomNodes[k].figmaName + " — " + (e && e.message || e), { error: true }); }
   }
 
   figma.viewport.scrollAndZoomIntoView([frame]);
