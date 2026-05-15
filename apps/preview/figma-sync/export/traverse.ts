@@ -1,5 +1,5 @@
 import { isValidElement, type ReactElement, type ReactNode, type ComponentType } from "react";
-import { AppScreen } from "@pxds/pxds-layout/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/components/chrome";
 
 export type FigmaSlot = "top" | "content" | "bottom";
 
