@@ -63,6 +63,14 @@ Screen -> Chrome -> Section -> Slot -> Stack -> Component
 
 이 구조를 넘는 abstraction은 먼저 의심해야 한다. 새 wrapper가 필요해 보이면, 실제로는 기존 `Slot`, `VStack`, `FieldStack`, `SectionDivider`의 이름이 부족한 것일 수 있다.
 
+화면 조립 계층은 repo 어휘로 아래처럼 해석한다.
+
+```txt
+Component -> Pattern -> Organism -> Screen
+```
+
+`pxds-layout`은 이 중 `Pattern`을 소유한다. 기초 component(`Button`, `Badge`, `Icon`, 선택 컨트롤 등)를 화면 route에 직접 배치하기보다, `SinglePrimaryAction`, `PageStackContents`, `FieldStack`, `BottomSheet`, `Popup` 같은 pattern slot 안에서 의미 있게 소비하게 한다.
+
 ### 2. primitive는 시각을 새로 만드는 도구가 아니다
 
 `Box`, `VStack`, `Slot`은 기존 시각 CSS를 대체하기 위한 디자인 표현 계층이 아니다. 이들은 DOM 구조에 layout 의미를 부여하는 얇은 syntax sugar다.
@@ -99,6 +107,8 @@ Figma 변환기가 알아야 하는 정보는 `x=12`, `width=369` 같은 수치�
 3. CSS class를 유지한 채 `Box`, `VStack`, `Slot`으로 의미만 표준화할 수 있는가?
 4. route에서 spacing을 보정하고 있다면, 그 값은 layout package의 pattern contract로 올라가야 하지 않는가?
 5. Figma bridge가 이 구조를 읽었을 때 화면 layer와 slot을 복원할 수 있는가?
+6. 361px 일반 content rail, 369px section/card rail, 329px inner rail 중 어느 기준선을 쓰는지 SOT 문서로 설명되는가?
+7. `SPACING_PATTERNS.md`의 실측 운영 규칙과 충돌하는 route-local margin/padding이 없는가?
 
 ## 결론
 

@@ -1,6 +1,6 @@
 # @pxds/pxds-layout
 
-화면/frame/layout runtime을 소유한다. `apps/mobile`의 screen root, scroll, sticky chrome, bottom-sheet, primitive layout, screen export bridge는 이 패키지 경계 안에 둔다. iframe 기반 preview helper는 preview 앱 내부 책임이다.
+화면/frame/layout runtime과 반복 pattern contract를 소유한다. `apps/mobile`의 screen root, scroll, sticky chrome, bottom-sheet, popup/layout overlay, primitive layout, screen export bridge는 이 패키지 경계 안에 둔다. iframe 기반 preview helper는 preview 앱 내부 책임이다.
 
 `@pxds/pxds-layout`은 `@pxds/pxds-components`를 의존하지 않는다. bottom-sheet처럼 layout runtime 자체에 필요한 WDS primitive는 이 패키지 경계에서 직접 흡수해서 `@pxds/pxds-components ↔ @pxds/pxds-layout` 순환을 만들지 않는다.
 
@@ -35,6 +35,8 @@ AppScreen
   └─ Bottom        // 앱/글로벌 하단 chrome
 ```
 
+`pxds-layout`은 `Component -> Pattern -> Organism -> Screen` 중 `Pattern` 레이어를 주로 소유한다. `Button`, `Badge`, `Icon`, 선택 컨트롤 같은 기초 component를 직접 새로 만들지 않고, `@pxds/cx-components`의 public surface를 pattern slot 안에 배치할 수 있게 한다.
+
 ### 레이어 책임
 
 - `AppScreen.SystemHeader` — OS/디바이스 레벨 표시 영역이다. 내부에서 `StatusBar`를 렌더하며 children을 받지 않는다. 앱 도메인 header와 섞지 않는다.
@@ -59,6 +61,17 @@ AppScreen
 - `ContentRail` — bleed/full-width 표면 안에서 내부 콘텐츠 기준선을 복귀시킨다. caption/body/title measure가 필요하면 rail measure를 사용한다.
 
 화면이나 route가 margin/padding으로 콘텐츠 기준선을 직접 보정하면 실패다.
+
+## Spacing / Grid Contract
+
+- foundation token은 `DESIGN_FOUNDATION.md`를 따른다.
+- 화면·컴포넌트 실측 운영 규칙은 `SPACING_PATTERNS.md`를 따른다.
+- 기본 화면 폭은 393px이다.
+- 369px section/card rail은 `spacing/layout/section-horizontal` 의미다.
+- 361px 일반 content rail은 `spacing/layout/content-horizontal` 의미다.
+- 329px inner rail은 `spacing/layout/card-horizontal-pagestack` 의미다.
+- `space/5` 같은 실측 예외는 layout public token으로 즉시 승격하지 않는다.
+- route-level raw `margin`, `padding`, `position`, width 보정은 pattern contract 후보로 끌어올린다.
 
 ## BottomSheet
 
@@ -97,4 +110,4 @@ deprecated frame portal runtime은 남기지 않는다. preview가 iframe으로 
 - HStack
 - VStack
 
-spacing prop은 `DESIGN.md`의 제한된 spacing token 어휘를 따른다.
+spacing prop은 `DESIGN_FOUNDATION.md`의 제한된 spacing token 어휘와 `SPACING_PATTERNS.md`의 적용 규칙을 따른다.

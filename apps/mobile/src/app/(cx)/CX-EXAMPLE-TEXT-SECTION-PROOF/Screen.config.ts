@@ -6,7 +6,7 @@ export const screenConfig = defineScreenConfig({
 	name: "Text Section proof",
 	label: "Text Section proof",
 	route: "/CX-EXAMPLE-TEXT-SECTION-PROOF",
-	group: "cx-example",
+	group: "cx",
 	owner: "@screen/mobile",
 	status: "active",
 	createdAt: "2026-05-15",
@@ -30,6 +30,8 @@ export const screenConfig = defineScreenConfig({
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
+			"SPACING_PATTERNS.md",
+			"SCREEN_STRUCTURE_PRINCIPLES.md",
 		],
 	},
 } as const satisfies ScreenRouteConfig);

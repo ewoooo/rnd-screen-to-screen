@@ -69,6 +69,7 @@
 	text-decoration: var(--24-med-text-decoration, none);
 	text-indent: var(--24-med-paragraph-indent, 0);
 	text-transform: var(--24-med-text-case, none);
+	white-space: pre-line;
 	width: 100%;
 }
 

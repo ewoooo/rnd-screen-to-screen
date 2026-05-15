@@ -7,6 +7,9 @@
 	"sideEffects": [
 		"./src/**/*.css"
 	],
+	"scripts": {
+		"lint": "biome lint ../../packages/cx-components && node ../../scripts/check-cx-component-folder-contract.mjs"
+	},
 	"exports": {
 		".": "./src/index.ts",
 		"./components/accordion": "./src/components/accordion/index.ts",

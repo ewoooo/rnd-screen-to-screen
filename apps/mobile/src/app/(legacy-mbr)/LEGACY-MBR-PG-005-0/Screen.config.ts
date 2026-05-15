@@ -6,7 +6,7 @@ export const screenConfig = defineScreenConfig({
 	name: "회원 탈퇴 사유",
 	label: "회원 탈퇴 사유",
 	route: "/LEGACY-MBR-PG-005-0",
-	group: "membership",
+	group: "legacy-mbr",
 	owner: "@screen/mobile",
 	status: "active",
 	createdAt: "2026-05-12",

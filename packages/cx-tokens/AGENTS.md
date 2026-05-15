@@ -13,6 +13,8 @@ PXDS 런타임 시각 token 값의 SSOT다. CX raw/semantic/component token set 
 - `generate-text-styles`는 typography composite을 `.text-16-med` 같은 합성 class로 emit한다. 앱은 `@pxds/cx-tokens/tokens.css`만 import해도 `text-styles.css`가 같이 포함된다.
 - raw / semantic / component layer가 `src/originals`에 들어오면 token path를 유지해 CSS custom property로 emit한다.
 - 앱/패키지 로컬 `*tokens.ts`나 CSS token 파일을 새로 만들지 않는다.
+- `DESIGN_FOUNDATION.md`가 token SSOT이고, `SPACING_PATTERNS.md`는 token의 화면·컴포넌트 적용 운영 규칙이다. 실측 문서에서 관찰된 값이 곧바로 primitive token 추가를 의미하지 않는다.
+- `spacing/layout/content-horizontal`처럼 foundation semantic token으로 확정된 값만 generated CSS에 반영한다. `space/5` 같은 실측 예외값은 반복성과 token 승격 결정 전까지 이 패키지 원천에 추가하지 않는다.
 
 ## 소비 경로
 

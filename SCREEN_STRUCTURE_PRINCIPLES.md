@@ -10,6 +10,17 @@
 Screen -> Chrome -> Section -> Slot -> Stack -> Component
 ```
 
+컴포넌트 조립 레이어는 이 repo의 구현 어휘에 맞춰 아래처럼 해석한다. 외부 문서의 `Atom` 같은 클래스명은 직접 도입하지 않는다.
+
+```txt
+Component -> Pattern -> Organism -> Screen
+```
+
+- `Component`: `@pxds/cx-components`, `@pxds/cx-icons`, layout primitive가 제공하는 기초 UI 어휘다. `Button`, `Badge`, `Ico`, `RadioText`처럼 단독 시각 요소에 가까운 단위는 화면 route가 직접 배치하지 않는다.
+- `Pattern`: `SinglePrimaryAction`, `PageStackContents`, `FieldStack`, `SectionDivider`, `PopupActionButton`처럼 반복 가능한 조합 계약이다. CTA, 리스트, 폼, 오버레이 액션은 pattern slot 안에서 조립한다.
+- `Organism`: 정책 의미나 도메인 모듈 ID/OGN을 담는 화면 의미 단위다. `apps/mobile/src/organisms/<domain>/` 아래에 두며, 필요한 component와 pattern을 조합한다.
+- `Screen`: `AppScreen` slot에 chrome, section, organism을 배치하는 지도다. 정책 의미와 화면 구조가 읽히는 수준까지만 책임진다.
+
 이 구조는 다음 코드 구조로 대응된다.
 
 ```txt
@@ -35,6 +46,7 @@ AppScreen
 - section 사이의 구분은 route margin이 아니라 `SectionDivider` 같은 pattern node로 표현한다.
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
 - 하단 CTA는 본문 마지막 section이 아니라 `Bottom` 또는 `action-area`로 분리한다.
+- 버튼, 배지, 아이콘, 라디오/체크 같은 기초 component는 route에 직접 흩뿌리지 않고 `Pattern` 또는 `Organism`의 이름 있는 slot 안에 둔다.
 - component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern으로 표현 가능하면 `reuse`로 기록한다.
 - `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
 - 정책 근거는 해당 section 또는 OGN node에 붙인다.
@@ -49,6 +61,7 @@ AppScreen
 - 하단 CTA가 scroll content와 bottom chrome 사이에서 애매하게 섞인다.
 - 새 component가 필요해 보이지만 실제로는 기존 slot 이름이 부족한 상태다.
 - `reuse` 판단 없이 신규 candidate를 만들거나, 신규 candidate에 `RQR` 식별자가 없다.
+- 기초 component가 Screen route에 직접 배치되어 CTA, 선택지, 안내, 상태의 소유자가 불명확하다.
 
 ## Primitive 사용 방식
 
@@ -99,12 +112,14 @@ AppScreen
 3. route-level raw spacing 없이 layout package의 pattern contract로 표현되는가?
 4. Figma bridge가 읽을 수 있도록 layer, slot, auto-layout 의도가 남는가?
 5. 정책 필수 정보와 CTA가 정확한 section 또는 action-area에 연결되는가?
-6. component 후보가 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
+6. 기초 component가 `Pattern` 또는 `Organism` slot 안에 배치되어 화면 의미 단위가 보존되는가?
+7. component 후보가 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
 
 ## 관련 문서
 
 - `SCREEN_GENERATION_FLOW.md` — SB 기반 스크린 생성 workflow
 - `DESIGN_FOUNDATION.md` — foundation token SOT
 - `DESIGN_PATTERNS.md` — 화면 pattern SOT
+- `SPACING_PATTERNS.md` — 화면·컴포넌트 spacing 실측 운영 규칙
 - `packages/pxds-layout/docs/simple-page-structure-insight.md` — 실제 케이스에서 얻은 상세 기록
 - `packages/pxds-layout/docs/figma-attribute.md` — Figma bridge attribute contract

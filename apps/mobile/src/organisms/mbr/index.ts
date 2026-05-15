@@ -1,6 +1,7 @@
 import { defineRegistry } from "@pxds/pxds-spec";
 import { actionAreaTermsConfig } from "./action-area-terms";
 import { checkboxTermsConfig } from "./checkbox-terms";
+import { consentTermsAccordionConfig } from "./consent-terms-accordion";
 import { listCellAuthMethodConfig } from "./list-cell-auth-method";
 import { sectionHeaderPageConfig } from "./section-header-page";
 import { sectionMessageEntryBranchConfig } from "./section-message-entry-branch";
@@ -10,6 +11,11 @@ import { textFieldMemberInfoConfig } from "./text-field-member-info";
 
 export { ActionAreaTerms } from "./action-area-terms";
 export { CheckboxTerms } from "./checkbox-terms";
+export {
+	ConsentTermsAccordion,
+	CONSENT_ITEM_IDS,
+	REQUIRED_CONSENT_IDS,
+} from "./consent-terms-accordion";
 export { ListCellAuthMethod } from "./list-cell-auth-method";
 export { MbrPrimaryCTABar } from "./primary-cta-bar";
 export { SectionHeaderPage } from "./section-header-page";
@@ -22,6 +28,7 @@ export const mbrOrganismRegistry = defineRegistry([
 	actionAreaTermsConfig,
 	sectionHeaderPageConfig,
 	checkboxTermsConfig,
+	consentTermsAccordionConfig,
 	listCellAuthMethodConfig,
 	sectionMessageEntryBranchConfig,
 	sectionMessageJoinCompleteViewConfig,

@@ -37,6 +37,7 @@ No new implementation file is required for this documentation task.
 - Keep modal, dimmer, focus trap, scroll lock, and bottom placement inside `@pxds/pxds-layout`.
 - Use tokenized spacing and radius from the layout/component layers. Do not correct sheet alignment from route-level margin, padding, or raw style.
 - `@pxds/pxds-layout` may consume WDS bottom-sheet primitives directly at this boundary to avoid a circular dependency with component packages.
+- Follow `SPACING_PATTERNS.md` for measured sheet structure. Title rail is `x=32 / w=329`; the general `Con` rail is `x=20 / w=353` unless the child component owns its own padding. `space/5`-style measured exceptions are not new public tokens.
 
 ## Structure
 
@@ -48,7 +49,7 @@ Purpose: define how the Figma compound maps onto the layout runtime and consumed
 BottomSheet
 ├─ Handle
 ├─ TitleBottomSheet?                 showTitleBottomSheet=true
-├─ content slot                      con
+├─ content slot                      con, default x=20/w=353 or child-owned padding
 └─ ActionButton?                     actionButton=on
    ├─ Button
    ├─ ActionButton.LeftItem?
@@ -101,8 +102,8 @@ Source measurements checked in Figma:
 
 | Variant | Size | Root layout | Radius | Notable spacing |
 | --- | --- | --- | --- | --- |
-| `ActionButton=on` | `393 x 429` | vertical auto layout | top `28`, bottom `0` | `Handle` 32px high; title wrapper horizontal padding `32`; `Con` source height `221`; action area padding `12 12 40`. |
-| `ActionButton=off` | `393 x 409` | vertical auto layout | top `28`, bottom `0` | root bottom padding `34`; title wrapper horizontal padding `20`; `Con` source height `275`. |
+| `ActionButton=on` | `393 x 429` | vertical auto layout | top `28`, bottom `0` | `Handle` 32px high; title wrapper horizontal padding `32`; `Con` source height `221`; action area padding remains runtime-owned. |
+| `ActionButton=off` | `393 x 409` | vertical auto layout | top `28`, bottom `0` | root bottom padding `34`; title/content padding reconciled through the layout contract, not route overrides. |
 
 Figma source includes a separate `BottomSheet` frame label in the base section. Treat that as the layout/runtime naming anchor, while `Bottomsheet` is the Figma compound that describes expected child composition.
 
@@ -231,7 +232,7 @@ Purpose: constrain future implementation decisions and validation.
 - Inventory status remains `제작 예정`; this document defines the contract only.
 - Inventory also has `BottomSheet` with status `없음` and source `bottom-sheet`; that row represents the existing layout runtime anchor, not this Figma compound.
 - Figma property names include generated IDs (`Con#9717:4`, `Show TitleBottomSheet#10037:0`). Code should expose stable, lowercase bridge names.
-- `ActionButton=on` source uses title padding `32`; `ActionButton=off` source uses title padding `20`. Treat these as source measurements to reconcile in the layout/component contract, not permission for route-local overrides.
+- Title area uses the 329px title rail. General `Con` content uses the 353px bottom-sheet content rail unless child components define their own padding. Treat source measurements as layout/component contract data, not permission for route-local overrides.
 - The checked Figma source currently reports existing component-set errors when reading some nested icon variant properties. The main `Bottomsheet` component-set definitions and child structure were still readable.
 
 ### SVG Assets

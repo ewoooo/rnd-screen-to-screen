@@ -6,7 +6,7 @@ export const screenConfig = defineScreenConfig({
 	name: "MBR 가입 5·가입 완료",
 	label: "MBR 가입 5·가입 완료",
 	route: "/NOVA-MBR-PG-005-0",
-	group: "membership",
+	group: "mbr",
 	owner: "@screen/mobile",
 	status: "active",
 	createdAt: "2026-05-11",

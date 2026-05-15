@@ -9,7 +9,7 @@
 - pattern: `form`
 - frame: `SKT GenUI Test 0513 / 상세_정보 입력_인풋` (`393×1130`)
 - policy refs: `POL-MBR-INFO-002-08`, `POL-MBR-AUTH-002-01`
-- required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`
+- required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 
 ## Slot Ownership Map
 

@@ -13,6 +13,8 @@
 - `cx-components`는 시각 컴포넌트와 variant/property를 설명한다.
 - `pxds-layout`은 화면 구조, 레이어, slot, auto layout 의도를 설명한다.
 - CSS에서 추론 가능한 값도 Figma 변환에 필요한 핵심 정보라면 attribute로 명시한다.
+- bridge 구조는 `Component -> Pattern -> Organism -> Screen` 계층을 보존한다. 기초 component가 route-level raw 좌표로 평탄화되면 안 된다.
+- spacing attribute는 token 또는 semantic rail 이름을 우선 기록한다. Figma 실측값은 `SPACING_PATTERNS.md`와 대조할 evidence이며, 임의 token 생성 근거가 아니다.
 
 ## 공통 attribute
 
@@ -41,6 +43,7 @@ Figma Auto Layout 재현에 필요한 값은 CSS 추론에 맡기지 않고 `dat
 | `data-figma-layout-justify` | `start`, `center`, `end`, `space-between` | primary axis 정렬 |
 | `data-figma-layout-gap` | token name | item spacing token |
 | `data-figma-layout-padding` | token shorthand | padding token contract |
+| `data-figma-layout-rail` | `full`, `section`, `content`, `inner`, `bottom-sheet-title`, `bottom-sheet-content` | 393/369/361/329/overlay rail 의도 |
 | `data-figma-layout-sizing` | `fill`, `hug`, `fixed` | Figma resize 의도 |
 
 예시:
@@ -69,6 +72,9 @@ app-header
 content
 bottom
 section
+section-rail
+content-rail
+inner-rail
 field-stack
 action-area
 overlay
@@ -130,6 +136,7 @@ title
 body
 action
 backdrop
+con
 ```
 
 ## Property contract

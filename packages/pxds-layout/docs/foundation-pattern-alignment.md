@@ -8,13 +8,13 @@
 
 1. 정책 의미를 담은 화면 구조가 route마다 같은 방식으로 조립되도록 한다.
 2. foundation token의 spacing, radius, color, typography 기준을 raw style 없이 쓰게 한다.
-3. pattern guide의 393px viewport, 3단 너비 그리드, header/bottom chrome, overlay contract를 API로 고정한다.
+3. pattern guide의 393px viewport, 369/361/329 너비 rail, header/bottom chrome, overlay contract를 API로 고정한다.
 
 ## 현재 간극
 
 현재 `pxds-layout`은 `AppScreen`, `ContentOutlet`, `ContentSection`, `ContentRail`, `BottomSheet`, low-level primitives를 제공한다. 화면 뼈대는 있으나 디자인 SOT의 핵심 규칙을 충분히 강제하지 못한다.
 
-- 393 -> 369 -> 329 3단 그리드가 명명된 API가 아니라 padding/inset 조합으로 표현된다.
+- 393 -> 369 / 361 -> 329 화면 너비 rail이 명명된 API가 아니라 padding/inset 조합으로 표현된다.
 - `StatusBar 59px + AppBar 48px = 107px` header contract가 layout API에 고정되어 있지 않다.
 - `BottomNavigation(88)`과 `ActionButton(102)`의 이분법을 막거나 표현하는 bottom zone API가 없다.
 - Figma 계층의 `PageStackContents`, `PageStackList + Divider(393x4)` 반복 패턴이 공식 layout composition으로 정리되어 있지 않다.
@@ -69,22 +69,22 @@ type HeaderPreset = "standard" | "form-entry";
 
 ## 우선순위
 
-### P0. 3단 그리드와 spacing token API
+### P0. 화면 너비 rail과 spacing token API
 
-Foundation과 pattern 문서에서 가장 강하게 반복되는 기준은 `393 -> 369 -> 329` 너비 체계다.
+Foundation, pattern, spacing 문서에서 가장 강하게 반복되는 기준은 `393 -> 369 / 361 -> 329` 너비 체계다.
 
 필요한 API 후보:
 
-- `ContentFrame variant="page|section|inner"`
-- `ContentRail rail="full|section|inner|bottom-sheet"`
+- `ContentFrame variant="page|section|content|inner"`
+- `ContentRail rail="full|section|content|inner|bottom-sheet-title|bottom-sheet-content"`
 - `PageBleed`, `SectionRail`, `InnerRail`
 - `SpacingToken`, `LayoutSpacingToken`, `InnerSpacingToken`
 - `gap="component-md"`처럼 semantic spacing name만 받는 prop
 
 기대 효과:
 
-- `x=12`, `x=20`, `x=32` 기준선을 route에서 직접 padding으로 만들지 않는다.
-- card/list/form/detail 화면이 같은 width contract를 공유한다.
+- `x=12`, `x=16`, `x=20`, `x=32` 기준선을 route에서 직접 padding으로 만들지 않는다.
+- card/list/form/detail 화면이 같은 width contract를 공유한다. 369px는 section/card/list group, 361px는 일반 content/form/detail, 329px는 inner content 기준선으로 사용한다.
 - raw `var(--spacing-*)` 문자열 사용을 layout package 내부로 줄인다.
 
 ### P0. Bottom action zone contract
@@ -150,7 +150,7 @@ Text Section의 Figma 계층은 아래처럼 표현할 수 있어야 한다.
 
 ### P0. Overlay, BottomSheet, Popup contract
 
-BottomSheet와 Popup은 pattern guide에서 별도 섹션으로 정의된 핵심 overlay다. 현재 BottomSheet는 wrapper 수준이고 Popup은 없다.
+BottomSheet와 Popup은 pattern guide에서 별도 섹션으로 정의된 핵심 overlay다. BottomSheet는 runtime shell과 composition slot을 함께 안정화해야 하고 Popup은 blocking overlay pattern으로 관리한다.
 
 BottomSheet API 후보:
 
@@ -160,7 +160,8 @@ BottomSheet API 후보:
 - `BottomSheet.Content`
 - `BottomSheet.Action`
 - `BottomSheet.ScrollArea`
-- content rail x=32, width 329
+- title rail x=32, width 329
+- content rail x=20, width 353 또는 자식 component contract
 - max height와 fixed action zone
 
 Popup API 후보:
@@ -229,21 +230,23 @@ Pattern guide의 기준 viewport는 393px width다. root는 preview/mobile/captu
 - preview, mobile, Figma capture가 같은 root geometry를 공유한다.
 - 393px 기준 수치가 CSS 곳곳에 흩어지지 않는다.
 
-### P1. Foundation token alias 정렬
+### P1. Foundation / spacing pattern 정렬
 
-현재 코드에는 기존 token name과 새 foundation 문서의 token name이 섞일 수 있다. layout package는 compatibility layer를 제공해야 한다.
+현재 코드에는 기존 token name과 새 foundation 문서의 token name, 그리고 실측 spacing 운영값이 섞일 수 있다. layout package는 compatibility layer를 제공해야 한다.
 
 필요한 작업:
 
 - `styles.css`에 layout semantic variables 선언
 - old token -> foundation token alias 정리
 - `space/*`, `spacing/layout/*`, `spacing/inner/*` 매핑 table 추가
+- `SPACING_PATTERNS.md`의 component/screen 실측값과 layout semantic rail 매핑 table 추가
 - overlay/radius token mapping 추가
 
 기대 효과:
 
 - foundation 문서가 바뀌어도 route와 screen code의 변경 범위를 줄인다.
 - token 이름 혼재를 package boundary에서 흡수한다.
+- `space/5` 같은 실측 예외가 route나 public token API로 새어 나가지 않는다.
 
 ### P2. Primitive escape hatch 축소
 

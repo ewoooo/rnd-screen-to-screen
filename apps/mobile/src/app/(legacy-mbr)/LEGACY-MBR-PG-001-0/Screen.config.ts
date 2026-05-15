@@ -6,7 +6,7 @@ export const screenConfig = defineScreenConfig({
 	name: "회원 가입 본인인증",
 	label: "회원 가입 본인인증",
 	route: "/LEGACY-MBR-PG-001-0",
-	group: "membership",
+	group: "legacy-mbr",
 	owner: "@screen/mobile",
 	status: "active",
 	createdAt: "2026-05-12",

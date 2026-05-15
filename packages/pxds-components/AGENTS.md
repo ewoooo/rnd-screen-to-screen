@@ -4,6 +4,8 @@ Deprecated legacy PXDS/WDS component adapter다. 최신 컴포넌트 패키지�
 
 이 패키지는 기존 호환, migration reference, WDS 격리 경계로만 다룬다. 신규 component, variant, slot, public vocabulary를 이 패키지에 추가하지 않는다.
 
+최신 화면 생성 계층은 `Component -> Pattern -> Organism -> Screen`이다. 이 패키지의 legacy `atoms/*`, `molecules/*` 명칭은 historical folder structure로만 해석하고, 신규 설계 문서의 계층명으로 전파하지 않는다.
+
 ## 책임
 
 - `core` — legacy WDS component adapter, global CSS, Next adapter.

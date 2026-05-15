@@ -9,7 +9,7 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "biome lint ../../apps/mobile && node ../../scripts/check-react-hooks-policy.mjs apps/mobile"
+    "lint": "biome lint ../../apps/mobile && node ../../scripts/check-react-hooks-policy.mjs apps/mobile && node ../../scripts/check-mobile-page-folder-contract.mjs"
   },
   "dependencies": {
     "@pxds/cx-components": "0.1.0",

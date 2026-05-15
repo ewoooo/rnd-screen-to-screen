@@ -20,6 +20,7 @@ flowchart TD
     C --> C3["DESIGN_PATTERNS.md 조회"]
     C --> C4["DESIGN_FOUNDATION.md 조회"]
     C --> C5["SCREEN_STRUCTURE_PRINCIPLES.md 조회"]
+    C --> C6["SPACING_PATTERNS.md 조회"]
 
     C1 --> D["정책-화면 요구사항 매트릭스 작성"]
     C2 --> D
@@ -65,6 +66,7 @@ flowchart TD
    - `DESIGN_PATTERNS.md`
    - `DESIGN_FOUNDATION.md`
    - `SCREEN_STRUCTURE_PRINCIPLES.md`
+   - `SPACING_PATTERNS.md`
 
 3. 정책 요구사항 매트릭스 작성
    - 어떤 정책 문장이 어떤 화면 정보, 에러, 선택지, CTA로 표현되는지 정리한다.
@@ -124,8 +126,11 @@ AppScreen
    - 하단 CTA가 scroll content가 아니라 `Bottom` 또는 `action-area`로 분리되어 있는가?
    - `DESIGN_PATTERNS.md`의 화면 패턴과 맞는가?
    - `DESIGN_FOUNDATION.md`의 spacing, typography, color, radius 규칙을 벗어나지 않는가?
+   - `SPACING_PATTERNS.md`의 화면 유형별 padding/gap 실측 규칙과 충돌하지 않는가?
    - 신규 컴포넌트 기준은 `@pxds/cx-components`인가?
+   - 컴포넌트 후보가 `reuse` 또는 `new`로 분기되어 있고, `new`라면 `RQR{Name}` / `rqr-{name}` 식별자를 쓰는가?
    - deprecated `@pxds/pxds-components`는 legacy 참고/호환 경계로만 사용되는가?
+   - 기초 component가 Screen route에 직접 놓이지 않고 `Pattern` 또는 `Organism` slot 안에 있는가?
 
 8. 정책서 OGN별 컴포넌트 제작
    - 정책서에 도메인 모듈 ID가 있으면 반드시 `apps/mobile/src/organisms/<domain>/` 아래에 OGN 단위로 만든다.
@@ -164,6 +169,8 @@ export const screenConfig = defineScreenConfig({
     designDocsChecked: [
       "DESIGN_PATTERNS.md",
       "DESIGN_FOUNDATION.md",
+      "SPACING_PATTERNS.md",
+      "SCREEN_STRUCTURE_PRINCIPLES.md",
     ],
   },
 });

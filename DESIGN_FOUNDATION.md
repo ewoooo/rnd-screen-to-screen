@@ -618,6 +618,7 @@ Figma 컴포넌트에서 제공하는 속성:
 |---|---|---|---|
 | `spacing/layout/page-horizontal` | `space/none` | 0px | 컴포넌트 좌우 마진 없음 (풀블리드) |
 | `spacing/layout/section-horizontal` | `space/12` | 12px | 1depth 섹션 좌우 마진 (393→369px) |
+| `spacing/layout/content-horizontal` | `space/16` | 16px | 일반 본문 콘텐츠 좌우 마진 (393→361px) |
 | `spacing/layout/card-horizontal-pagestack` | `space/20` | 20px | PagestackItem 카드 좌우 내부 패딩 (369→329px) |
 | `spacing/layout/component-gap-xs` | `space/4` | 4px | 반복 컴포넌트 간 최소 간격 |
 | `spacing/layout/component-gap-sm` | `space/8` | 8px | 소형 컴포넌트 간 간격 |
@@ -650,10 +651,11 @@ Figma 컴포넌트에서 제공하는 속성:
 | 리스트 아이템 간 | component-gap-lg | 16px |
 | 카드 간 수직 간격 | component-gap-xl | 20px |
 
-#### 2. 레이아웃 마진 (Layout Spacing) — 3단 너비 그리드
+#### 2. 레이아웃 마진 (Layout Spacing) — 화면 너비 그리드
 ```
 393px ── 풀블리드 (page-horizontal = 0px)
   └── 369px ── 12px 양쪽 (section-horizontal)
+  └── 361px ── 16px 양쪽 (content-horizontal)
         └── 329px ── 20px 양쪽 (card-horizontal-pagestack)
 ```
 
@@ -661,8 +663,11 @@ Figma 컴포넌트에서 제공하는 속성:
 ```
 StatusBar, AppBar, ActionButton, Divider(4px)  → 393px (page-horizontal)
 Pagestack, CardCarousel, CardSection           → 369px (section-horizontal)
+Form body, detail content, two-column grid      → 361px (content-horizontal)
 TitleSection, ListText, TextField, Accordion   → 329px (card-horizontal-pagestack)
 ```
+
+`space/5`처럼 Figma 실측에서만 등장하는 값은 정식 primitive token으로 승격하지 않는다. 먼저 컴포넌트별 spacing evidence로 기록하고, 반복 사용이 확인될 때 token 추가를 검토한다.
 
 #### 3. Inner Spacing (카드·컨테이너 내부)
 | 컴포넌트 | 적용 토큰 |

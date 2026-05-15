@@ -44,6 +44,8 @@ Existing dependency implementation to reuse:
 - Consume theme-neutral aliases from `@pxds/cx-tokens/style.css` directly: prefer `--semantic-*` and `--component-*` tokens.
 - Keep action-area padding, text-to-button gap, tooltip placement, and button-group gap owned by `ActionButton`.
 - Route or screen styles must not compensate for the Figma `ActionButton` spacing.
+- `ActionButton` is a high-level component consumed through pattern/organism action slots. Screen routes should not place raw `Button` groups in the scroll content to mimic this component.
+- Spacing follows `DESIGN_FOUNDATION.md` tokens and `SPACING_PATTERNS.md` application rules. This document does not redefine the screen sticky CTA height decision.
 
 ## Structure
 
@@ -187,6 +189,7 @@ Figma uses display values `Default`, `Ai`, `Gift`; code emits lowercase bridge v
 ### State Rules
 
 - `actions.length` must be one or two. Extra actions should be rejected or ignored with a documented warning path during implementation.
+- Primary action labels should be verb-led for conversion/progression actions. Secondary actions should remain cancel/previous/close or low-emphasis alternatives.
 - `buttonCount` is derived from `actions.length` unless explicitly provided for bridge capture.
 - `type="default"` should not render `ActionButton.LeftItem` unless an action explicitly provides a `leftItem`.
 - `type="ai"` defaults the primary action left item to `ActionButton.LeftItem type="ai"`.

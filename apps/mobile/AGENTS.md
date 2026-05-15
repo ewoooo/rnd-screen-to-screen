@@ -42,18 +42,27 @@ Active 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 la
 - scroll content는 `AppScreen.Content`가 소유한다. 화면별 별도 scroll container를 만들지 않는다.
 - content direct item gap은 `ContentList`가 소유한다.
 - 기본 inset은 `ContentOutlet`, section boundary/bleed는 `ContentSection`, bleed 내부 기준선 복귀와 readable measure는 `ContentRail`을 사용한다.
+- 신규 화면은 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SCREEN_GENERATION_FLOW.md`를 함께 조회한다.
+- 361px 일반 콘텐츠 폭은 `spacing/layout/content-horizontal`, 369px section/card 폭은 `spacing/layout/section-horizontal`, 329px 내부 콘텐츠 폭은 `spacing/layout/card-horizontal-pagestack` 의미로 해석한다.
+- `space/5`처럼 실측 예외로만 등장한 값은 route에서 새 token처럼 확장하지 않는다. 필요한 경우 컴포넌트 실측 evidence로 남기고 token 승격은 foundation에서 결정한다.
 
 ## 컴포넌트 계층
 
 ```txt
-WDS primitive
+Component
   ↓
-@pxds/cx-components
+Pattern
   ↓
-organism React components + templates + screen
+Organism
+  ↓
+Screen
 ```
 
-- `@pxds/cx-components` — 최신 CX component vocabulary와 구현 surface. 신규 atoms/molecules/shared/global 성격의 컴포넌트 기준이다.
+- `Component` — `@pxds/cx-components`, `@pxds/cx-icons`, tokenized layout primitive가 제공하는 기초 UI 어휘다. `Button`, `Badge`, `Icon`, 선택 컨트롤처럼 단독 시각 요소에 가까운 단위는 screen route에 직접 흩뿌리지 않는다.
+- `Pattern` — `@pxds/pxds-layout`과 CX compound가 제공하는 반복 조합 계약이다. CTA, list, form, popup/bottom sheet action은 pattern slot 안에서 조립한다.
+- `Organism` — 정책 의미, 도메인 모듈 ID, OGN을 담는 앱 소유 의미 단위다.
+- `Screen` — `AppScreen` slot에 chrome, section, organism을 배치하는 지도다.
+- `@pxds/cx-components` — 최신 CX component vocabulary와 구현 surface. 신규 component/pattern 후보의 기준이다.
 - `@pxds/pxds-components` — deprecated legacy PXDS/WDS adapter. 기존 화면 호환 또는 migration reference가 필요할 때만 제한적으로 사용한다.
 - `@pxds/cx-icons` — 최신 CX icon vocabulary와 React `Icon` wrapper 기준이다.
 - `@pxds/pxds-icons` — deprecated legacy WDS icon adapter. 기존 화면 호환 또는 migration reference가 필요할 때만 제한적으로 사용한다.
@@ -62,6 +71,7 @@ organism React components + templates + screen
 - `src/organisms/legacy-mbr` — 보존된 membership legacy 화면 영역 React 컴포넌트. 신규 구조의 기준으로 삼지 않는다.
 - 신규/legacy 모두 organism render-tree registry를 소유하지 않는다.
 - `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/pxds-layout/components/chrome`, `@pxds/pxds-layout/components/overlays`.
+- 화면 route가 `Button`, `Badge`, `RadioButton`, `CheckBox`, `Icon` 같은 기초 component를 직접 나열해야 한다면 먼저 `Pattern` 또는 `Organism` slot으로 올릴 수 있는지 검토한다.
 
 허용 import:
 

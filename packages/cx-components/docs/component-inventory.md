@@ -25,6 +25,21 @@ Candidate decision rule:
 - The candidate `componentId`, folder name, import subpath, and default `data-figma-component-id` use `rqr-{name}`.
 - Remove the `RQR` prefix only when the candidate is promoted into the active `components/*` vocabulary.
 
+Current screen-generation hierarchy:
+
+```txt
+Component -> Pattern -> Organism -> Screen
+```
+
+`cx-components` owns the `Component` vocabulary and visual compounds. `pxds-layout` owns reusable `Pattern` contracts such as screen chrome, section rail, action area, bottom sheet/popup runtime, and slot structure. `apps/mobile` owns domain `Organism` nodes and final `Screen` assembly. Figma source names such as `Atom` are not carried into this repo as package boundaries.
+
+Spacing guidance:
+
+- Token SSOT: `DESIGN_FOUNDATION.md`
+- Component/screen application rules: `SPACING_PATTERNS.md`
+- Route-level raw padding/margin should not compensate for a component's Figma spacing.
+- `space/5` is currently a measured exception, not a primitive token to add here.
+
 Candidate registry guidance:
 
 - Active entries use `status: "active"` and must not carry `candidateKind`.
@@ -87,7 +102,7 @@ Candidate registry guidance:
 | TitleSection.RightItem | 제작 완료 | cx-components private | title-section-right-item | ButtonListOrder, Icon, IconButton, Button, Text | Type: Icon/TextButton/TextItemButton/ButtonListOrder | 없음 | [문서](components/base/title-section-right-item.md) |
 | ProgressTopBar | 제작 완료 | pxds-components | progress-top-bar | 없음 | 없음 | 없음 | [문서](components/base/progress-top-bar.md) |
 | BottomSheet | 없음 | pxds-layout | bottom-sheet | 없음 | 없음 | 없음 | [문서](components/base/bottom-sheet.md) |
-| Bottomsheet | 제작 완료 | cx-components / pxds-layout candidate | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
+| Bottomsheet | 제작 완료 | pxds-layout runtime + cx-components visual dependencies | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
 | PageStackContents | 제작 완료 | pxds-layout | page-stack-contents | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot | 없음 | `data-figma-property-title-type`: instance swap; `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean; `data-figma-property-title-swap`: instance swap | [문서](components/base/page-stack-contents.md) |
 | PageStackList | 제작 완료 | cx-components / pxds-layout candidate | page-stack-list | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack | 없음 | `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean | [문서](components/base/page-stack-list.md) |
 | RQRNotice | candidate/new | cx-components candidate | rqr-notice | Text | Tone: info/negative/positive/cautionary | `data-figma-property-title`: boolean; `data-figma-property-tone`: tone | [문서](components/candidate/rqr-notice.md) |

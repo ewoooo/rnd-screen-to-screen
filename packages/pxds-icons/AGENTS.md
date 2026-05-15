@@ -10,6 +10,7 @@ Deprecated legacy WDS icon adapter다. 최신 아이콘 패키지는 `@pxds/cx-i
 - import 전 `registry/wds-icon-registry.json`에서 이름을 검증한다.
 - 없는 아이콘명을 추측하지 않는다. 예: `IconAdd`가 없으면 registry에서 `IconPlus` 같은 실제 이름을 찾는다.
 - 신규 아이콘이 필요하면 `@pxds/cx-icons` registry/originals에 추가하는 방향을 우선 검토한다.
+- 화면 route는 icon을 raw SVG나 legacy icon adapter로 직접 보정하지 않는다. icon은 `@pxds/cx-icons` 또는 `@pxds/cx-components` component/pattern slot 안에서 소비한다.
 
 ## 책임
 
