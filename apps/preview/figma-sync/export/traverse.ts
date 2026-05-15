@@ -74,7 +74,14 @@ export function traverseScreen(
 		);
 		for (const child of children) {
 			if (!isValidElement(child)) continue;
-			if (child.type === AppScreen.Header) {
+			if (child.type === AppScreen.SystemHeader) {
+				collectNodes(
+					(child.props as { children?: ReactNode }).children,
+					registry,
+					"top",
+					nodes,
+				);
+			} else if (child.type === AppScreen.Header) {
 				collectNodes(
 					(child.props as { children?: ReactNode }).children,
 					registry,

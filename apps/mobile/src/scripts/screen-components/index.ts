@@ -3,7 +3,7 @@
  * Separate from @screen/mobile/screens (metadata-only export).
  */
 import type { ComponentType } from "react";
-import { TextField } from "@pxds/cx-components";
+import { StatusBar, TextField } from "@pxds/cx-components";
 import { ProgressAppBar } from "../../patterns/mbr";
 import { SectionHeaderPage } from "../../organisms/mbr";
 
@@ -30,6 +30,12 @@ type RegistryEntry = {
 export { Screen as NovaMbrPg002Screen, screenConfig as novaMbrPg002Config } from "../../app/(mbr)/NOVA-MBR-PG-002-0";
 
 export const novaMbrPg002Registry: readonly RegistryEntry[] = [
+	{
+		// StatusBar → Figma StatusBar (단일 variant, props 없음)
+		component: StatusBar as unknown as ComponentType<Record<string, unknown>>,
+		figmaName: "StatusBar",
+		figmaVariant: "State=Default",
+	},
 	{
 		// ProgressAppBar → AppBar 컴포넌트 셋의 특정 variant
 		component: ProgressAppBar as ComponentType<Record<string, unknown>>,
