@@ -91,6 +91,7 @@ export function Screen() {
 			<AppScreen.ActionBar preset="primary-cta">
 				<SinglePrimaryAction>
 					<ActionButton
+						type="gift"
 						actions={[
 							{ label: "내정보 확인", variant: "secondary" },
 							{ label: "홈으로 가기", variant: "primary" },
