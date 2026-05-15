@@ -31,7 +31,11 @@ export function Screen() {
 	const [phone, setPhone] = useState("");
 	const [gender, setGender] = useState<string | null>(null);
 
-	const disabled = !name || !birth || !phone || !gender;
+	const disabled =
+		name.trim().length === 0 ||
+		birth.length !== 8 ||
+		(phone.length !== 10 && phone.length !== 11) ||
+		!gender;
 
 	return (
 		<AppScreen headerPreset="form-entry">
@@ -39,7 +43,7 @@ export function Screen() {
 				<StatusBar />
 			</AppScreen.SystemHeader>
 			<AppScreen.Header>
-				<AppBar title="회원가입" showLeftItem showTitle />
+				<AppBar title="회원 가입" showLeftItem showTitle />
 			</AppScreen.Header>
 			<AppScreen.Content>
 				<PageStackContents
@@ -74,11 +78,14 @@ export function Screen() {
 							/>
 							<TextField
 								label="휴대전화"
-								placeholder="010-1234-5678"
+								placeholder="01012345678"
 								helperText="본인인증과 알림 발송에 사용해요"
 								value={phone}
-								onChange={(e) => setPhone(e.target.value)}
+								onChange={(e) =>
+									setPhone(e.target.value.replace(/\D/g, "").slice(0, 11))
+								}
 								inputMode="tel"
+								maxLength={11}
 							/>
 						</FieldStack>
 					</SectionItem>

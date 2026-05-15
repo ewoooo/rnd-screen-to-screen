@@ -27,8 +27,9 @@ flowchart TD
     C3 --> E["화면 패턴 결정"]
     C4 --> E
 
-    D --> E1["컴포넌트 후보 reuse/new 분기"]
-    E --> E1
+    D --> E0["OGN별 layoutStrategy 작성"]
+    E --> E0
+    E0 --> E1["컴포넌트 후보 reuse/new 분기"]
 
     E1 --> F["SB 기반 제작 Diagram 생성"]
 
@@ -36,10 +37,12 @@ flowchart TD
     G --> G1["정책 필수 정보 누락 없음?"]
     G --> G2["도메인 모듈 ID별 OGN 모두 존재/생성 예정?"]
     G --> G3["패턴/토큰/spacing 위반 없음?"]
+    G --> G4["layout distortion gate 통과?"]
 
     G1 --> H["OGN 구현 계획 확정"]
     G2 --> H
     G3 --> H
+    G4 --> H
 
     H --> I{"정책서 OGN 존재?"}
     I -- "있음" --> J["apps/mobile/src/organisms/<domain>/<ogn> 생성"]
@@ -76,16 +79,25 @@ flowchart TD
    - `DESIGN_PATTERNS.md` 기준으로 Main, list, detail, form, complete, bottom sheet, popup 중 하나로 매핑한다.
    - 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
 
-5. 컴포넌트 후보 reuse/new 분기
+5. OGN별 layoutStrategy 작성
+   - OGN section별로 역할, pattern, width tier, padding, stack 방향, alignment, typography hierarchy, wrapping/overflow 예산을 먼저 정한다.
+   - layoutStrategy는 `SCREEN_STRUCTURE_PRINCIPLES.md`의 OGN별 Layout Strategy 형식을 따른다.
+   - completion, form, summary, benefit처럼 한 화면 안에 역할이 다른 section은 같은 전략으로 묶지 않는다.
+   - `항목명 -> 값/상태` 행이 2개 이상 반복되면 카드 surface가 없어도 key-value group으로 분류한다.
+   - 텍스트 위계, key-value column, 과도한 wrapping, bottom action 겹침처럼 레이아웃 뒤틀림 가능성이 있으면 Diagram 단계에서 해결한다.
+
+6. 컴포넌트 후보 reuse/new 분기
    - SB part와 정책 요구사항을 `@pxds/cx-components`의 active component, `src/candidate`, `@pxds/pxds-layout` pattern, `apps/mobile/src/organisms/<domain>` 순서로 대조한다.
    - 기존 `components/*` 또는 `candidate/*` 조합으로 표현 가능하면 `reuse`로 결정하고 신규 candidate를 만들지 않는다.
-   - 기존 vocabulary로 정책 의미, 상태, slot, bridge identity를 표현할 수 없을 때만 `new`로 분기한다.
+   - 단, 기존 조합이 정책 의미를 담더라도 layoutStrategy의 alignment, text hierarchy, wrapping, overflow contract를 지키지 못하면 `reuse`로 확정하지 않는다.
+   - 기존 vocabulary로 정책 의미, 상태, slot, bridge identity, layout contract를 표현할 수 없을 때 `new`로 분기한다.
    - `new` candidate는 `packages/cx-components/src/candidate/rqr-{name}`에 만들고, React 이름은 `RQR{Name}`, `componentId`와 `data-figma-component-id`는 `rqr-{name}`을 사용한다.
    - `RQR`은 정식 승격 전 staging 식별자다. `components/*`로 승격할 때는 `RQR` prefix를 제거한다.
 
-6. SB 기반 제작 Diagram 생성
+7. SB 기반 제작 Diagram 생성
    - Diagram은 AppScreen slot, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여준다.
    - Diagram은 픽셀 좌표표가 아니라 `AppScreen -> Section -> Slot -> Stack -> Component` 구조 계약이다.
+   - Diagram은 각 OGN의 layoutStrategy를 포함해야 한다.
    - route-level raw spacing으로 기준선을 보정해야 하는 구조라면 구현 전에 layout pattern으로 올릴 수 있는지 검토한다.
    - 신규 candidate가 필요한 경우 Diagram에 `RQR{Name}`과 `candidateKind: new` 판단 근거를 남긴다.
    - 기존 컴포넌트를 재사용하는 경우 Diagram에 재사용 대상 component/pattern 이름을 명시한다.
@@ -100,6 +112,13 @@ AppScreen
       TitleSection / TitleMain
   Content
     PageStackContents
+      layoutStrategy:
+        widthTier: content-361
+        stack: vertical
+        alignment: leading
+        typography: section title -> field label/body
+        wrapping: title max 2 lines, field label max 1 line
+        overflow: multiline help text only
       title: TitleSection
       content:
         FieldStack
@@ -118,21 +137,24 @@ AppScreen
       ActionButton
 ```
 
-7. Diagram 검증
+8. Diagram 검증
    - 정책서 필수 정보가 Diagram에 있는가?
    - 정책서에 적힌 도메인 모듈 ID/OGN이 모두 들어갔는가?
    - OGN별 책임이 겹치지 않는가?
+   - OGN별 layoutStrategy가 역할, width tier, padding, stack, alignment, typography, wrapping, overflow를 설명하는가?
    - `Screen -> Chrome -> Section -> Slot -> Stack -> Component` 구조로 설명되는가?
    - 하단 CTA가 scroll content가 아니라 `Bottom` 또는 `action-area`로 분리되어 있는가?
    - `DESIGN_PATTERNS.md`의 화면 패턴과 맞는가?
    - `DESIGN_FOUNDATION.md`의 spacing, typography, color, radius 규칙을 벗어나지 않는가?
    - `SPACING_PATTERNS.md`의 화면 유형별 padding/gap 실측 규칙과 충돌하지 않는가?
+   - 레이아웃 뒤틀림이 없는가? content section 정렬, 텍스트 위계, key-value column, 과도한 text wrapping, bottom action 겹침을 확인한다.
    - 신규 컴포넌트 기준은 `@pxds/cx-components`인가?
    - 컴포넌트 후보가 `reuse` 또는 `new`로 분기되어 있고, `new`라면 `RQR{Name}` / `rqr-{name}` 식별자를 쓰는가?
+   - 기존 조합이 layoutStrategy를 지키지 못한다면 어휘 부족으로 기록하고 신규 candidate 또는 pattern 보강으로 분기했는가?
    - deprecated `@pxds/pxds-components`는 legacy 참고/호환 경계로만 사용되는가?
    - 기초 component가 Screen route에 직접 놓이지 않고 `Pattern` 또는 `Organism` slot 안에 있는가?
 
-8. 정책서 OGN별 컴포넌트 제작
+9. 정책서 OGN별 컴포넌트 제작
    - 정책서에 도메인 모듈 ID가 있으면 반드시 `apps/mobile/src/organisms/<domain>/` 아래에 OGN 단위로 만든다.
    - OGN config id는 현재 앱 규칙에 맞춰 `ogn-<domain>-...` 소문자를 사용한다. 예: `ogn-mbr-text-field-member-info`.
 
@@ -176,18 +198,18 @@ export const screenConfig = defineScreenConfig({
 });
 ```
 
-9. Screen 조립
+10. Screen 조립
    - `Screen.tsx`는 Diagram을 그대로 코드화한다.
    - `AppScreen.SystemHeader`, `Header`, `Content`, `Bottom` slot에 OGN을 배치한다.
 
-10. Screen config / route 등록
+11. Screen config / route 등록
    - `Screen.config.ts`를 작성한다.
    - `apps/mobile/src/scripts/screen-routes/routes.ts`에 등록한다.
 
-11. Preview 확인
+12. Preview 확인
     - `apps/preview` iframe에서 실제 mobile route를 확인한다.
 
-12. 검증
+13. 검증
 
 ```bash
 npm run lint -w @screen/mobile

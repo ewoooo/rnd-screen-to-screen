@@ -6,146 +6,264 @@
 - target route: `/LEGACY-MBR-PG-003-0-CX`
 - group: `legacy-converted-mbr`
 - domain: `mbr`
-- pattern: `complete` → 단순 완료형 (DESIGN_PATTERNS.md Pattern G — 완료)
+- pattern: `complete` (DESIGN_PATTERNS.md Pattern G — 단순 완료형)
 - 단계: 회원 탈퇴 6/6 (legacy `ProgressTopBar.percent=100`)
 - required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
-- design SOT (참고): `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-007-0-CX/Screen.diagram.md`, `apps/mobile/src/app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md`
+- baseline standard: `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md`
 
 ## Conversion Intent (Legacy → CX)
 
 | Legacy 어휘 | CX 대체 | 비고 |
 | --- | --- | --- |
-| `ProgressTopBar(title, leading="close", progress)` | `AppBar(title="탈퇴 완료", showLeftItem, leading="close", showTitle)` | DESIGN_PATTERNS 완료 패턴은 `close` leading 유지. progress 시각화는 제거하고 단계 정보를 `TitleMain.titleSubText`(eyebrow)에 흡수 |
-| `MembershipHeroSection(titleLines, description)` | `Section(intro)` → `PageStackContents(title=TitleMain(type="complete"))` | 완료형 hero. `title`에 본문, `subTitle`에 설명, `titleSubText`에 단계 라벨 |
-| `MembershipSummarySection(label, title, items[])` | `Section(summary)` → `PageStackContents(title=TitleSection)` + `SectionItem(variant=card)` + `ListText` 행들 | `trailingLabel`은 `ListText.rightItem`(`type="text"`) preset으로 표현 |
-| `MembershipNoticeSection(badge, text)` | `Section(notice)` → `Callout(title, children)` | DESIGN_PATTERNS Pattern A/G 공통 안내 어휘 |
-| `MembershipPrimaryActionBar(primaryLabel, secondaryLabel)` | `AppScreen.ActionBar` + `ActionButton(actions=[primary, secondary])` | dual CTA. `SinglePrimaryAction`은 단일 버튼 전용이라 부적합. `ActionButton`이 1·2 버튼 모두 수용 |
+| `ProgressTopBar(title="탈퇴 완료", leading="close", progress)` | `AppBar(title="탈퇴 완료", showLeftItem, showTitle, leftIcon=<Icon type="close"/>, leftLabel="닫기")` | 완료형은 back 대신 close exit를 쓴다. progress bar는 폐기하고 `회원 탈퇴 6/6`을 hero eyebrow로 흡수한다. |
+| `MembershipHeroSection(titleLines, description)` | `Section(intro)` → `PageStackContents(title=TitleMain(type="complete"))` | 완료 상태를 즉시 알리고 30일 유예/파기 조건을 설명한다. |
+| `MembershipSummarySection(label, title, items[])` | `Section(summary)` → `PageStackContents(title=TitleSection(title))` + `RQRContentsDetail(title="처리 정보")` | `PG-002`에서 확정한 카드형 key-value 표준을 재사용한다. `ListText.table`은 긴 날짜/유예 문구에서 value column 왜곡이 생기므로 사용하지 않는다. |
+| `MembershipNoticeSection(badge="철회 안내", text)` | `Section(notice)` → `Callout(title="철회 안내")` | 완료 후 보조 절차 안내는 별도 section으로 둔다. |
+| `MembershipPrimaryActionBar(primaryLabel, secondaryLabel)` | `AppScreen.ActionBar` + `SinglePrimaryAction` + `ActionButton(actions=[secondary, primary])` | 2 CTA는 `ActionButton`이 소유한다. 현재 순서는 좌측 `철회하기`, 우측 `홈으로 가기`다. |
 
 폐기 대상 import:
-- `@pxds/pxds-components/shared/global` (ProgressTopBar)
+- `@pxds/pxds-components/shared/global` (`ProgressTopBar`)
 - `@/organisms/legacy-mbr` (`MembershipHeroSection`, `MembershipSummarySection`, `MembershipNoticeSection`, `MembershipPrimaryActionBar`)
 
 ## Slot Ownership Map
 
 ```txt
-┌─ AppScreen(headerPreset="complete") ───────────────────────────────┐
-│ [SystemHeader]                                                     │
-│   StatusBar                                                        │
-├────────────────────────────────────────────────────────────────────┤
-│ [Header]                                                           │
-│   AppBar(title="탈퇴 완료", leading="close",                        │
-│          showLeftItem, showTitle)                                  │
-├────────────────────────────────────────────────────────────────────┤
-│ [Content: scroll owner]                                            │
-│   Section(intro)                                                   │
-│   SectionDivider(thickness="section")                              │
-│   Section(summary)                                                 │
-│   SectionDivider(thickness="section")                              │
-│   Section(notice)                                                  │
-├────────────────────────────────────────────────────────────────────┤
-│ [ActionBar: dual screen action]                                    │
-│   ActionButton(                                                    │
-│     buttonCount=2,                                                 │
-│     actions=[                                                      │
-│       { label: "홈으로 가기", variant: "primary" },                 │
-│       { label: "철회하기",   variant: "secondary" }                 │
-│     ]                                                              │
-│   )                                                                │
-└────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│ AppScreen(headerPreset="form-entry")    │
+│ pattern: complete                       │
+│ viewport: 393w                          │
+├─────────────────────────────────────────┤
+│ SystemHeader                            │
+│  9:41                              ▮▮▮  │
+├─────────────────────────────────────────┤
+│ OGN: ogn-mbr-withdraw-complete-app-bar  │
+│ role: completion-exit                   │
+│ layoutStrategy                          │
+│  widthTier : full-bleed                 │
+│  stack     : horizontal chrome          │
+│  alignment : leading title + close      │
+│  wrapping  : title max 1 line           │
+│ vocabularyDecision                      │
+│  reuse: AppBar + Icon(close)            │
+├─────────────────────────────────────────┤
+│  ✕   탈퇴 완료                          │
+├─────────────────────────────────────────┤
+│ Content: only scroll owner              │
+│                                         │
+│  OGN: ogn-mbr-withdraw-complete-hero    │
+│  role: hero                             │
+│  layoutStrategy                         │
+│   widthTier : content-361               │
+│   stack     : vertical                  │
+│   alignment : leading                   │
+│   typography: step caption -> title -> body│
+│   wrapping  : title max 2 / body max 2  │
+│                                         │
+│  회원 탈퇴 6/6                          │
+│                                         │
+│  탈퇴 처리가                            │
+│  완료되었습니다                         │
+│                                         │
+│  30일 이내에 다시 가입하시면 일부 정보를 │
+│  복원할 수 있어요. 그 이후엔 모두       │
+│  파기됩니다.                           │
+│                                         │
+│  ━━━━━━━ SectionDivider ━━━━━━━        │
+│                                         │
+│  OGN: ogn-mbr-withdraw-complete-summary │
+│  role: summary                          │
+│  layoutStrategy                         │
+│   widthTier : content-361               │
+│   stack     : section title + card      │
+│   alignment : left flex / right auto    │
+│   wrapping  : label/value max 1 line    │
+│                                         │
+│  이 내용으로 처리됐어요                 │
+│                                         │
+│  ┌───────────────────────────────────┐  │
+│  │ 처리 정보                         │  │
+│  │                                   │  │
+│  │ 탈퇴 처리 시각  2026년 4월 30일 (수) 19:24│
+│  │ 철회 가능 기간  5월 30일까지 (30일 유예)│
+│  │ 개인정보 파기   유예 종료 시 자동 파기 │
+│  └───────────────────────────────────┘  │
+│                                         │
+│  ━━━━━━━ SectionDivider ━━━━━━━        │
+│                                         │
+│  OGN: ogn-mbr-withdraw-revoke-notice    │
+│  role: revoke-guidance                  │
+│  layoutStrategy                         │
+│   widthTier : content-361               │
+│   stack     : callout title + body      │
+│   wrapping  : body max 3 lines          │
+│                                         │
+│  ┌───────────────────────────────────┐  │
+│  │ 철회 안내                         │  │
+│  │ 유예 기간 내 철회를 원하시면 탈퇴 시│  │
+│  │ 사용한 본인인증으로 마이페이지에서 │  │
+│  │ 진행할 수 있어요.                 │  │
+│  └───────────────────────────────────┘  │
+├─────────────────────────────────────────┤
+│ ActionBar(preset="primary-cta")         │
+│ OGN: ogn-mbr-withdraw-complete-actions  │
+│ layoutStrategy                          │
+│  widthTier : content-361                │
+│  stack     : horizontal 2 buttons       │
+│  wrapping  : button labels max 1 line   │
+│                                         │
+│  ┌───────────────┐ ┌────────────────┐  │
+│  │ 철회하기       │ │ 홈으로 가기     │  │
+│  └───────────────┘ └────────────────┘  │
+└─────────────────────────────────────────┘
 ```
 
 ## Content Flow
 
 ```txt
-[Content: scroll owner]
+AppScreen
+  SystemHeader
+    StatusBar
+  Header
+    OGN: ogn-mbr-withdraw-complete-app-bar
+      role: completion-exit
+      pattern: complete
+      layoutStrategy:
+        widthTier: full-bleed
+        stack: horizontal chrome
+        alignment: leading title + close
+        typography: app-bar title
+        wrapping: title max 1 line
+      vocabularyDecision:
+        reuse: AppBar + Icon(type="close")
+  Content
+    OGN: ogn-mbr-withdraw-complete-hero
+      role: hero
+      pattern: complete
+      layoutStrategy:
+        widthTier: content-361
+        stack: vertical
+        alignment: leading
+        typography: step caption -> display title -> body
+        wrapping: title max 2 lines, body max 2 lines
+        overflow: body multiline only
+      vocabularyDecision:
+        reuse: PageStackContents + TitleMain(type="complete")
+      content:
+        titleSubText: "회원 탈퇴 6/6"
+        title: "탈퇴 처리가\n완료되었습니다"
+        subTitle: "30일 이내에 다시 가입하시면 일부 정보를 복원할 수 있어요. 그 이후엔 모두 파기됩니다."
 
-Section(intro)
-└─ PageStackContents(
-     title=TitleMain(
-       type="complete",
-       titleSubText="회원 탈퇴 6/6",                         // eyebrow (단계 라벨)
-       title="탈퇴 처리가\n완료되었습니다",                    // hero copy
-       subTitle="30일 이내에 다시 가입하시면 일부 정보를 복원할 수 있어요. 그 이후엔 모두 파기됩니다."
-     )
-   )
+    SectionDivider(thickness="section")
 
-SectionDivider(thickness="section")
+    OGN: ogn-mbr-withdraw-complete-summary
+      role: summary
+      pattern: complete
+      layoutStrategy:
+        widthTier: content-361
+        stack: section title + card header + list rows
+        alignment: left flex / right auto
+        surface: fill #F4F5FA via semantic-color-bg-dim, radius 20, padding 24
+        typography: outer TitleSection -> card title -> row label/value
+        wrapping: label max 1 line, value max 1 line
+        overflow: right value may ellipsize; never fixed 80px value column
+      vocabularyDecision:
+        reuse: PageStackContents + TitleSection + RQRContentsDetail + ListText(non-table)
+        hold: ListText.table because current value column is fixed 80px
+      content:
+        sectionTitle: "이 내용으로 처리됐어요"
+        cardTitle: "처리 정보"
+        rows:
+          - label: "탈퇴 처리 시각"
+            value: "2026년 4월 30일 (수) 19:24"
+          - label: "철회 가능 기간"
+            value: "5월 30일까지 (30일 유예)"
+            rightItem: "철회 가능"
+          - label: "개인정보 파기"
+            value: "유예 종료 시 자동 파기"
 
-Section(summary)
-└─ PageStackContents(title=TitleSection(title="이 내용으로 처리됐어요", titleSubText="처리 정보"))
-   └─ SectionItem(variant="card")
-      ├─ ListText(
-      │    text="탈퇴 처리 시각",
-      │    tableText="2026년 4월 30일 (수) 19:24",
-      │    table=true,
-      │    showRightItem=false,
-      │    showDivider=true
-      │  )
-      ├─ ListText(
-      │    text="철회 가능 기간",
-      │    tableText="5월 30일까지 (30일 유예)",
-      │    table=true,
-      │    showRightItem=true,
-      │    rightItem={ type: "text", text: "철회 가능" },     // trailingLabel → right-item
-      │    showDivider=true
-      │  )
-      └─ ListText(
-           text="개인정보 파기",
-           tableText="유예 종료 시 자동 파기",
-           table=true,
-           showRightItem=false,
-           showDivider=false
-         )
+    SectionDivider(thickness="section")
 
-SectionDivider(thickness="section")
-
-Section(notice)
-└─ PageStackContents
-   └─ SectionItem
-      └─ Callout(
-           title="철회 안내",
-           children="유예 기간 내 철회를 원하시면 탈퇴 시 사용한 본인인증으로 마이페이지에서 진행할 수 있어요."
-         )
+    OGN: ogn-mbr-withdraw-revoke-notice
+      role: revoke-guidance
+      pattern: complete
+      layoutStrategy:
+        widthTier: content-361
+        stack: callout title + body
+        alignment: leading
+        typography: callout title -> body
+        wrapping: body max 3 lines
+        overflow: keep visible in scroll content; never hidden by ActionBar
+      vocabularyDecision:
+        reuse: PageStackContents + SectionItem + Callout
+      content:
+        title: "철회 안내"
+        body: "유예 기간 내 철회를 원하시면 탈퇴 시 사용한 본인인증으로 마이페이지에서 진행할 수 있어요."
+  ActionBar
+    OGN: ogn-mbr-withdraw-complete-actions
+      role: exit-actions
+      pattern: complete
+      layoutStrategy:
+        widthTier: content-361
+        stack: horizontal 2 buttons
+        alignment: stretch
+        wrapping: button labels max 1 line
+      vocabularyDecision:
+        reuse: SinglePrimaryAction + ActionButton(actions=[secondary, primary])
+      actions:
+        - secondary: "철회하기"
+        - primary: "홈으로 가기"
 ```
+
+## Layout Distortion Gate
+
+- `ListText.table` is forbidden for this summary because its table value column can be too narrow for `2026년 4월 30일 (수) 19:24` and `5월 30일까지 (30일 유예)`.
+- The `철회 가능` right status competes with the already long value. It must remain a short status token; if policy copy lengthens, move it to a badge/callout, not a custom inline node.
+- Current `Screen.tsx` wraps `ActionButton` in `SinglePrimaryAction`. This matches the local precedent in `PG-002`, but should be watched: `SinglePrimaryAction` must not impose single-button spacing on a 2-button `ActionButton`.
+- `AppScreen(headerPreset="form-entry")` is preserved from the implementation even though the pattern is `complete`. If complete-specific preset behavior becomes available, update all complete converted screens consistently.
+- 완료 화면 must not expose a back navigation affordance. Use close/home exit only.
+- Notice Callout must remain above the ActionBar in scroll content and must not be obscured by the bottom chrome.
+- Route-level `margin`, `padding`, `width`, `fontSize`, fixed/absolute CTA chrome, deprecated `@pxds/pxds-components`, deprecated `@pxds/pxds-icons`, and `@/organisms/legacy-mbr/*` are forbidden.
 
 ## Section Specs
 
 | section | title | primary components | policy |
 | --- | --- | --- | --- |
 | `intro` | `탈퇴 처리가 완료되었습니다` | `PageStackContents`, `TitleMain(type="complete")` | POL-MBR-WITHDRAW-COMPLETE (TBD) |
-| `summary` | `이 내용으로 처리됐어요` | `PageStackContents`, `TitleSection`, `SectionItem(card)`, `ListText`, `ListTextRightItem` | POL-MBR-WITHDRAW-GRACE (TBD) — 30일 유예, 철회 가능 기간, 개인정보 파기 시점 |
-| `notice` | (제목 없음, Callout 자체 title) | `PageStackContents`, `SectionItem`, `Callout` | POL-MBR-WITHDRAW-REVOKE (TBD) — 철회 절차 안내 |
+| `summary` | `이 내용으로 처리됐어요` | `PageStackContents`, `TitleSection`, `RQRContentsDetail`, `ListText(non-table)` | POL-MBR-WITHDRAW-GRACE (TBD) — 처리 시각, 30일 유예, 철회 가능 기간, 개인정보 파기 시점 |
+| `notice` | `철회 안내` | `PageStackContents`, `SectionItem`, `Callout` | POL-MBR-WITHDRAW-REVOKE (TBD) — 유예 기간 내 철회 절차 |
 
 ## Action Contract
 
-| element | label | variant | state | policy |
+| element | label | variant | role | policy |
 | --- | --- | --- | --- | --- |
-| Primary CTA | `홈으로 가기` | `primary` | always enabled — 완료 화면 표준 출구 | - |
-| Secondary CTA | `철회하기` | `secondary` | 유예 기간 내에서만 활성. 만료 시 `disabled` | POL-MBR-WITHDRAW-REVOKE (TBD) |
+| Primary CTA (우측) | `홈으로 가기` | `primary` | 완료 후 기본 출구 | POL-MBR-WITHDRAW-COMPLETE (TBD) |
+| Secondary CTA (좌측) | `철회하기` | `secondary` | 유예 기간 내 탈퇴 철회 진입 | POL-MBR-WITHDRAW-REVOKE (TBD) |
 
-`철회하기`는 destructive가 아니라 "완료된 탈퇴를 되돌리는" 보조 행동이므로 `secondary` variant로 표현한다. `primary` 한 자리는 사용자가 가장 자연스럽게 닫고 나가는 "홈으로 가기"가 가져간다.
+- `ActionButton.actions` order is `[secondary, primary]`, so the primary exit remains on the right.
+- `철회하기` is not destructive in this context; it reverses a pending withdrawal and remains secondary.
 
 ## State Rules
 
-- 본 화면은 입력이 없는 완료형이며, 두 CTA 외 trigger 없음.
-- `철회하기` 활성 조건은 `now <= grace.endsAt` (현재 다이어그램에서는 항상 활성으로 가정, 만료 처리 로직은 organism 단계에서 결정).
-- 단계 표시(6/6)는 시각 progress bar로 그리지 않고 `titleSubText` eyebrow 문구로만 표현 — 완료형이므로 진행률보다 "마지막 단계"라는 의미 라벨만 남긴다.
-- `ListText.rightItem` `text` preset은 짧은 상태 라벨(`철회 가능`) 표시에 한정한다. 길어지면 `badgeLevel`이나 별도 `Callout`으로 분리 후보.
+- Static complete screen; no input state in the content body.
+- `철회하기` should be enabled only while `now <= grace.endsAt`. Current implementation renders it enabled because the placeholder data is inside the 30-day grace period.
+- After the grace period expires, the secondary action should become disabled or disappear according to policy.
+- `회원 탈퇴 6/6` is an eyebrow label only. Do not restore a progress bar on completion.
 
 ## Implementation Contract
 
-- Use `@pxds/cx-components` for `ActionButton`, `AppBar`, `Callout`, `ListText`, `ListTextRightItem`, `SectionItem`, `StatusBar`, `TitleMain`, `TitleSection`.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`.
-- Do NOT import `@pxds/pxds-components/*` (deprecated legacy) and `@pxds/pxds-icons` (deprecated legacy).
-- Do NOT reuse `@/organisms/legacy-mbr/*`. 단순 조립으로 충분하므로 Screen.tsx에서 직접 조립한다.
-- Dual CTA는 반드시 `AppScreen.ActionBar` 안의 단일 `ActionButton(buttonCount=2)`로 둔다. `SinglePrimaryAction`을 두 번 쌓지 않는다.
-- Progress 정보(6/6, 100%)는 시각 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`에 자연어로 흡수한다.
-- `AppScreen.Content`가 유일한 scroll owner.
-- Section 사이는 `SectionDivider(thickness="section")` 외 다른 wrapper로 구분하지 않는다.
-- 처리 정보 카드는 `SectionItem(variant="card")` + `ListText(table=true)` 행 조합으로 구성하고, 행 간 구분은 `ListText.showDivider`로 처리한다. 임의 border/margin 추가 금지.
+- Use `@pxds/cx-components` for `ActionButton`, `AppBar`, `Callout`, `Icon`, `RQRContentsDetail`, `SectionItem`, `StatusBar`, `TitleMain`, `TitleSection`.
+- Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
+- Do NOT import `@pxds/pxds-components/*` or `@pxds/pxds-icons`.
+- Do NOT reuse `@/organisms/legacy-mbr/*`.
+- `AppScreen.Content` is the only scroll owner.
+- Dual CTA must be represented by a single `ActionButton(actions=[secondary, primary])` in `AppScreen.ActionBar`.
+- Section boundaries use `SectionDivider(thickness="section")` only.
+- Do not fix key-value distortion with route-level raw CSS; use `RQRContentsDetail` for this complete summary.
 
 ## Open Questions
 
-1. **정책 ref 채번** — 탈퇴 완료/유예/철회와 관련된 정책 ID가 policy-core에 아직 없음. POL-MBR-WITHDRAW-* 신설은 별도 트랙. 다이어그램에는 TBD로 표기.
-2. **실제 데이터 출처** — `탈퇴 처리 시각`, `철회 가능 기간 종료일`, `처리 정보` 항목 목록을 어디서 가져오는지(서버 응답 vs 라우트 state) 미정. 본 변환에서는 legacy의 정적 placeholder를 그대로 보존.
-3. **철회 flow trigger** — `철회하기` 클릭 시 본인인증 step으로 직접 진입하는지, 마이페이지 진입 후 별도 entry를 거치는지 정의되지 않음. 본 다이어그램은 버튼 위계와 변환 어휘까지만 다루고 후속 화면 연결은 별도 추적.
+1. **policy ref 채번** — 탈퇴 완료, 유예, 철회, 개인정보 파기 정책 ID가 policy-core에 아직 없다.
+2. **철회 가능 status 위치** — 기존 `ListText.table` 행의 right status `철회 가능`은 card row로 옮기면서 빠졌다. 별도 badge/status slot이 필요한지 policy와 Figma SOT 확인 필요.
+3. **실제 데이터 출처** — 처리 시각, 철회 가능 종료일, 개인정보 파기 예정일이 서버 응답인지 route state인지 미정이다.
+4. **철회 flow trigger** — `철회하기`가 본인인증 step으로 직접 진입하는지, 마이페이지 철회 entry로 이동하는지 정의 필요.
+5. **complete preset 정합성** — route uses `headerPreset="form-entry"` while the screen pattern is complete. This may be harmless layout reuse, but should be checked against `AppScreen` preset contracts.

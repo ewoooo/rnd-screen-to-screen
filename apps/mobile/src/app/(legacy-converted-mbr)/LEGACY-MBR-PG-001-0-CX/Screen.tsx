@@ -4,7 +4,7 @@ import {
 	AppBar,
 	Button,
 	Callout,
-	ListSelected,
+	RQRListOption,
 	SectionItem,
 	StatusBar,
 	TitleMain,
@@ -52,7 +52,7 @@ const AUTH_METHODS: readonly AuthMethodOption[] = [
 ] as const;
 
 export function Screen() {
-	const [selected, setSelected] = useState<AuthMethodId>("kakao");
+	const [selected, setSelected] = useState<AuthMethodId | null>(null);
 
 	return (
 		<AppScreen headerPreset="form-entry">
@@ -78,23 +78,17 @@ export function Screen() {
 				<PageStackContents title={<TitleSection title="인증 수단 선택" />}>
 					<SectionItem>
 						{AUTH_METHODS.map((method) => (
-							<ListSelected
+							<RQRListOption
 								key={method.id}
-								data-figma-property-type="radio"
-								label={method.label}
-								subText={method.subText}
-								showSubText
+								type="radio"
+								name="identity-method"
+								title={method.label}
+								description={method.subText}
 								checked={selected === method.id}
-								onChange={() => setSelected(method.id)}
-								{...(method.recommended
-									? {
-											rightItem: {
-												type: "buttonXsmallSolid",
-												label: "추천",
-											},
-											showListSelectedRightItem: true,
-										}
-									: {})}
+								onCheckedChange={(next) => {
+									if (next) setSelected(method.id);
+								}}
+								badgeText={method.recommended ? "추천" : undefined}
 							/>
 						))}
 						<Callout title="인증 정책 안내">

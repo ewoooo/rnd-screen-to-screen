@@ -49,4 +49,6 @@
 @import "./components/underline-tab/underline-tab.css";
 
 /* Candidate: 요구사항 기반 신규 후보는 RQR 식별자를 유지한 채 검증한다. */
+@import "./candidate/rqr-contents-detail/rqr-contents-detail.css";
+@import "./candidate/rqr-list-option/rqr-list-option.css";
 @import "./candidate/rqr-notice/rqr-notice.css";

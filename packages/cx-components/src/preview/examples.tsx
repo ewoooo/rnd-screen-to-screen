@@ -15,6 +15,7 @@ import { Text } from "../components/text";
 import { TextField } from "../components/text-field";
 import { TitleMain } from "../components/title-main";
 import { TitleSection } from "../components/title-section";
+import { RQRListOption } from "../candidate/rqr-list-option";
 import { RQRNotice } from "../candidate/rqr-notice";
 import type { CxComponentPreviewExample } from "./types";
 
@@ -291,6 +292,37 @@ export const cxComponentPreviewExamples = [
 				id: "contents",
 				label: "Contents",
 				render: () => <Divider type="contents" />,
+			},
+		],
+	},
+	{
+		componentId: "rqr-list-option",
+		description:
+			"RQR candidate selectable option row with stacked title and description.",
+		cases: [
+			{
+				id: "radio-badge",
+				label: "Radio + badge",
+				render: () => (
+					<RQRListOption
+						type="radio"
+						checked
+						title="카카오톡"
+						description="가장 빠르고 간편하게 인증할 수 있어요"
+						badgeText="추천"
+					/>
+				),
+			},
+			{
+				id: "checkbox",
+				label: "Checkbox",
+				render: () => (
+					<RQRListOption
+						type="checkbox"
+						title="마케팅 정보 수신 동의"
+						description="혜택과 이벤트 안내를 받을 수 있어요."
+					/>
+				),
 			},
 		],
 	},

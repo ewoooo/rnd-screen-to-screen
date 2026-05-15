@@ -64,6 +64,8 @@
 		"./components/tooltip-bubble": "./src/components/tooltip-bubble/index.ts",
 		"./components/underline-tab": "./src/components/underline-tab/index.ts",
 		"./candidate": "./src/candidate/index.ts",
+		"./candidate/rqr-contents-detail": "./src/candidate/rqr-contents-detail/index.ts",
+		"./candidate/rqr-list-option": "./src/candidate/rqr-list-option/index.ts",
 		"./candidate/rqr-notice": "./src/candidate/rqr-notice/index.ts",
 		"./preview": "./src/preview/index.ts",
 		"./styles.css": "./src/styles.css"

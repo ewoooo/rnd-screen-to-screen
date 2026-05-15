@@ -2,7 +2,6 @@ import type { ScreenGroup, ScreenRoute } from "@screen/mobile/screens";
 
 export const SCREEN_GROUP_ORDER = [
 	"mbr",
-	"legacy-mbr",
 	"cx",
 	"legacy-converted-mbr",
 ] as const satisfies readonly ScreenGroup[];

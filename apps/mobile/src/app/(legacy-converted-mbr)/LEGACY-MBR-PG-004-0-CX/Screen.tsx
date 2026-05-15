@@ -60,7 +60,11 @@ export function Screen() {
 							<ListText
 								key={item.id}
 								text={item.text}
-								rightItem={{ type: "text", text: item.rightText }}
+								rightItem={{
+									type: "badge",
+									text: item.rightText,
+									badgeType: "gray",
+								}}
 							/>
 						))}
 						<Callout title="미납 확인">

@@ -43,6 +43,7 @@ AppScreen
 
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
 - 본문은 section 단위로 나누고, 각 section의 `title`, `content`, `action`, `body` slot을 이름으로 기록한다.
+- 각 OGN section마다 `layoutStrategy`를 별도로 기록한다. section의 역할, grid/padding tier, 텍스트 위계, 주요 content alignment, 허용되는 wrapping 범위, overflow 처리 방식을 먼저 결정한다.
 - section 사이의 구분은 route margin이 아니라 `SectionDivider` 같은 pattern node로 표현한다.
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
 - 하단 CTA는 본문 마지막 section이 아니라 `Bottom` 또는 `action-area`로 분리한다.
@@ -50,6 +51,46 @@ AppScreen
 - component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern으로 표현 가능하면 `reuse`로 기록한다.
 - `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
 - 정책 근거는 해당 section 또는 OGN node에 붙인다.
+
+## OGN별 Layout Strategy
+
+다이어그램은 OGN을 단순 나열하지 않고, 각 OGN이 기존 component vocabulary로 안정적으로 조립 가능한지까지 판단해야 한다. 신규 component 필요 여부는 시각 취향이 아니라 layout contract 충족 여부로 결정한다.
+
+각 OGN section은 아래 항목을 포함한다.
+
+```txt
+OGN: ogn-...
+  role: hero | summary | form | notice | benefit | list | action
+  pattern: complete | detail | form | list | bottom-sheet | popup
+  layoutStrategy:
+    widthTier: full-bleed | section-369 | content-361 | inner-329
+    padding: DESIGN_FOUNDATION spacing token 또는 SPACING_PATTERNS tier
+    stack: vertical | horizontal | key-value | grid | scroll-x
+    alignment: leading | center | trailing | split
+    typography: title/body/caption 위계
+    wrapping: 제목/본문/값별 maxLines 또는 wrap 금지 사유
+    overflow: truncate | multiline | scroll | split row | new component
+  vocabularyDecision:
+    reuse: component/pattern 이름
+    new: RQR{Name}
+    reason: 정책 의미, 상태, slot, Figma bridge identity, layout contract 중 충족 실패 항목
+```
+
+### Layout Distortion Gate
+
+아래 중 하나라도 발생하면 기존 컴포넌트 조합 reuse로 확정하지 않는다. 먼저 OGN 내부 layoutStrategy를 바꾸고, 그래도 해결되지 않으면 어휘 부족으로 보고 신규 candidate 또는 pattern 보강을 검토한다.
+
+- 같은 section 안에 `항목명 -> 값/상태` 행이 2개 이상 반복되면 surface 유무와 관계없이 key-value group으로 분류한다. 카드형 summary만 key-value가 아니다.
+- 같은 section 안에서 title, subtitle, body의 위계가 시각적으로 뒤섞인다.
+- key-value, table, summary row에서 label/value column이 서로 침범하거나 기준선이 흔들린다.
+- 긴 정책 문장 때문에 CTA, card, bottom action, 다음 section을 가린다.
+- 중요한 값이 과도하게 wrap되어 사용자가 한눈에 비교해야 하는 정보의 행 구조가 무너진다.
+- 2열 또는 split layout에서 한쪽 텍스트가 2줄 이상으로 늘어나 다른 행과 높이 리듬이 깨진다.
+- 하단 fixed action과 scroll content가 겹치거나, action 위의 마지막 section이 잘린다.
+- route-level padding, negative margin, raw width, 임의 fontSize로만 정렬 문제가 해결된다.
+- existing component에는 필요한 slot 이름이 없어 의미 없는 wrapper나 빈 spacer가 추가된다.
+
+이 gate는 디자인 세부 조정 단계가 아니라 Diagram 검증 단계에서 통과해야 한다. 화면이 뒤틀릴 가능성이 있으면 구현으로 넘어가지 않는다.
 
 ## 금지 신호
 
@@ -103,6 +144,79 @@ AppScreen
       policy: POL-...
 ```
 
+### 완료 화면 Diagram 예시
+
+완료 화면은 상단 완료 메시지, 가입/신청 결과 요약, 혜택/안내, 하단 action이 서로 다른 OGN 전략을 가진다. 각 section을 같은 stack으로 밀어 넣지 않는다.
+
+```txt
+AppScreen
+  SystemHeader
+    StatusBar
+  Header
+    OGN: ogn-mbr-complete-header
+      pattern: complete
+      layoutStrategy:
+        widthTier: content-361
+        stack: vertical
+        alignment: leading
+        typography: progress caption -> display title -> body
+        wrapping: title max 2 lines, body max 2 lines
+      vocabularyDecision:
+        reuse: AppBar + TitleMain inside complete hero organism
+  Content
+    OGN: ogn-mbr-signup-summary
+      role: summary
+      pattern: complete
+      layoutStrategy:
+        widthTier: content-361
+        stack: key-value
+        alignment: split
+        typography: section title -> caption title -> row value/label
+        wrapping: row label max 1 line, row value max 2 lines
+        overflow: split row when value is long; do not compress label column
+      vocabularyDecision:
+        reuse: key-value summary organism
+        new: RQRSummaryKeyValue if existing list vocabulary cannot hold multiline values without column drift
+      policy: POL-MBR-...
+    OGN: ogn-mbr-withdraw-impact-list
+      role: impact-summary
+      pattern: form-entry
+      layoutStrategy:
+        widthTier: content-361
+        stack: key-value
+        alignment: left label flex / right status auto
+        typography: section title -> row label/status
+        wrapping: row label max 1 line, row status max 1 line
+        overflow: status labels stay short; secondary policy copy needs a new row/body slot
+      vocabularyDecision:
+        reuse: ListText(non-table, rightItem=badge) when right side is categorical status
+        reuse: ListText(non-table, rightItem=text) when right side is literal value
+        new: RQRKeyValueList if secondary text, badges, or multiline values are required
+      policy: POL-MBR-...
+    SectionDivider
+    OGN: ogn-mbr-complete-benefit
+      role: benefit
+      pattern: complete
+      layoutStrategy:
+        widthTier: section-369
+        stack: vertical
+        alignment: leading
+        typography: card title -> body
+        wrapping: body max 3 lines or collapsible/scroll handoff
+        overflow: keep card height inside scroll content; never hide behind Bottom
+      vocabularyDecision:
+        reuse: Callout/CardSection if text budget fits
+        new: RQRBenefitNotice if card needs title/body/action slots not present
+  Bottom
+    SinglePrimaryAction
+      secondary: TextButton or ActionButton
+      primary: ActionButton
+      layoutStrategy:
+        widthTier: content-361
+        stack: horizontal
+        wrapping: button label max 1 line
+```
+
 ## 설계 체크리스트
 
 구현 전 Diagram 단계에서 아래를 확인한다.
@@ -114,6 +228,8 @@ AppScreen
 5. 정책 필수 정보와 CTA가 정확한 section 또는 action-area에 연결되는가?
 6. 기초 component가 `Pattern` 또는 `Organism` slot 안에 배치되어 화면 의미 단위가 보존되는가?
 7. component 후보가 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
+8. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?
+9. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 reuse 판단을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
 
 ## 관련 문서
 

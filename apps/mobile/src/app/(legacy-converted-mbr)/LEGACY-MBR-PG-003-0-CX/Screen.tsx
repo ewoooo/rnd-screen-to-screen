@@ -3,7 +3,7 @@ import {
 	AppBar,
 	Callout,
 	Icon,
-	ListText,
+	RQRContentsDetail,
 	SectionItem,
 	StatusBar,
 	TitleMain,
@@ -13,7 +13,26 @@ import {
 	AppScreen,
 	PageStackContents,
 	SectionDivider,
+	SinglePrimaryAction,
 } from "@pxds/pxds-layout/components";
+
+const WITHDRAW_COMPLETE_SUMMARY_ROWS = [
+	{
+		id: "processed-at",
+		label: "탈퇴 처리 시각",
+		value: "2026년 4월 30일 (수) 19:24",
+	},
+	{
+		id: "revocation-period",
+		label: "철회 가능 기간",
+		value: "5월 30일까지 (30일 유예)",
+	},
+	{
+		id: "privacy-disposal",
+		label: "개인정보 파기",
+		value: "유예 종료 시 자동 파기",
+	},
+] as const;
 
 export function Screen() {
 	return (
@@ -47,30 +66,10 @@ export function Screen() {
 				<PageStackContents
 					title={<TitleSection title="이 내용으로 처리됐어요" />}
 				>
-					<SectionItem variant="card">
-						<ListText
-							text="탈퇴 처리 시각"
-							tableText="2026년 4월 30일 (수) 19:24"
-							table
-							showRightItem={false}
-							showDivider
-						/>
-						<ListText
-							text="철회 가능 기간"
-							tableText="5월 30일까지 (30일 유예)"
-							table
-							showRightItem
-							rightItem={{ type: "text", text: "철회 가능" }}
-							showDivider
-						/>
-						<ListText
-							text="개인정보 파기"
-							tableText="유예 종료 시 자동 파기"
-							table
-							showRightItem={false}
-							showDivider={false}
-						/>
-					</SectionItem>
+					<RQRContentsDetail
+						title="처리 정보"
+						rows={WITHDRAW_COMPLETE_SUMMARY_ROWS}
+					/>
 				</PageStackContents>
 
 				<SectionDivider thickness="section" />
@@ -85,12 +84,14 @@ export function Screen() {
 				</PageStackContents>
 			</AppScreen.Content>
 			<AppScreen.ActionBar preset="primary-cta">
-				<ActionButton
-					actions={[
-						{ label: "철회하기", variant: "secondary" },
-						{ label: "홈으로 가기", variant: "primary" },
-					]}
-				/>
+				<SinglePrimaryAction>
+					<ActionButton
+						actions={[
+							{ label: "철회하기", variant: "secondary" },
+							{ label: "홈으로 가기", variant: "primary" },
+						]}
+					/>
+				</SinglePrimaryAction>
 			</AppScreen.ActionBar>
 		</AppScreen>
 	);

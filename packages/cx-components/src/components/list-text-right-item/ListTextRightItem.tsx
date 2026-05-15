@@ -19,6 +19,7 @@ const DEFAULT_LEVELS = ["v", "g", "s"] as const;
 
 const FIGMA_TYPE_BY_TYPE = {
 	text: "Text",
+	badge: "Badge",
 	badgeLevel: "BadgeLevel",
 	textButton: "TextButton",
 	icon: "Icon",
@@ -86,6 +87,7 @@ function getRootProps(props: ListTextRightItemProps) {
 	} = props as ListTextRightItemProps & {
 		ariaLabel?: string;
 		icon?: "arrow-right";
+		badgeType?: "gray" | "black" | "blue";
 		levels?: ListTextRightItemLevel[];
 		onClick?: () => void;
 		text?: string;
@@ -111,6 +113,17 @@ function renderRightItem(
 				type={LEVEL_BADGE_TYPE[level]}
 			/>
 		));
+	}
+
+	if (props.type === "badge") {
+		return (
+			<Badge
+				className="list-text-right-item__badge"
+				data-figma-render="primitive"
+				text={props.text}
+				type={props.badgeType ?? "gray"}
+			/>
+		);
 	}
 
 	if (props.type === "textButton") {

@@ -137,6 +137,16 @@ export const cxComponentPreviewRegistry = [
 		status: "active",
 	},
 	{
+		id: "rqr-list-option",
+		name: "RQRListOption",
+		layer: "base",
+		group: "form",
+		owner: "@pxds/cx-components",
+		importPath: "@pxds/cx-components/candidate/rqr-list-option",
+		status: "candidate",
+		candidateKind: "new",
+	},
+	{
 		id: "rqr-notice",
 		name: "RQRNotice",
 		layer: "base",

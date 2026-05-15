@@ -85,7 +85,7 @@ export function Screen() {
 					<SectionItem>
 						<TextField
 							label="자유 의견 (선택)"
-							placeholder="더 자세한 의견이 있다면 알려주세요. (최대 500자)"
+							placeholder="자세한 의견을 입력해주세요"
 							helperText={`${freeText.length}/500자`}
 							maxLength={500}
 							value={freeText}

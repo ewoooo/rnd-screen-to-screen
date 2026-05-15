@@ -4,6 +4,7 @@ export const listTextRightItemVariants = cva("list-text-right-item", {
 	variants: {
 		type: {
 			text: "list-text-right-item--text",
+			badge: "list-text-right-item--badge",
 			badgeLevel: "list-text-right-item--badge-level",
 			textButton: "list-text-right-item--text-button",
 			icon: "list-text-right-item--icon",
@@ -20,6 +21,7 @@ export type ListTextRightItemType = NonNullable<
 
 export type ListTextRightItemFigmaType =
 	| "Text"
+	| "Badge"
 	| "BadgeLevel"
 	| "TextButton"
 	| "Icon";

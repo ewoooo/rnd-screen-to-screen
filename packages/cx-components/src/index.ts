@@ -9,6 +9,22 @@ export {
 	rqrNoticeVariants,
 } from "./candidate/rqr-notice";
 export type {
+	RQRListOptionFigmaBridgeProps,
+	RQRListOptionProps,
+} from "./candidate/rqr-list-option";
+export {
+	RQRListOption,
+	type RQRListOptionTrailingPresence,
+	type RQRListOptionType,
+	rqrListOptionVariants,
+} from "./candidate/rqr-list-option";
+export type {
+	RQRContentsDetailFigmaBridgeProps,
+	RQRContentsDetailProps,
+	RQRContentsDetailRow,
+} from "./candidate/rqr-contents-detail";
+export { RQRContentsDetail } from "./candidate/rqr-contents-detail";
+export type {
 	AccordionFigmaBridgeProps,
 	AccordionProps,
 } from "./components/accordion";

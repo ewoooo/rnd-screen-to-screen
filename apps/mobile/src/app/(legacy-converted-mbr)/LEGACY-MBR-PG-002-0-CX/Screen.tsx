@@ -3,7 +3,7 @@ import {
 	AppBar,
 	Callout,
 	Icon,
-	ListText,
+	RQRContentsDetail,
 	SectionItem,
 	StatusBar,
 	TitleMain,
@@ -15,6 +15,12 @@ import {
 	SectionDivider,
 	SinglePrimaryAction,
 } from "@pxds/pxds-layout/components";
+
+const SIGNUP_COMPLETE_SUMMARY_ROWS = [
+	{ id: "member-id", label: "회원 ID", value: "wooseong****" },
+	{ id: "joined-at", label: "가입일", value: "2026년 4월 30일 (수)" },
+	{ id: "auto-login", label: "자동 로그인", value: "이 기기에서 30일 유지" },
+] as const;
 
 export function Screen() {
 	return (
@@ -46,35 +52,12 @@ export function Screen() {
 				<SectionDivider thickness="section" />
 
 				<PageStackContents
-					title={
-						<TitleSection
-							title="이 정보로 가입이 완료됐어요"
-							subTitle="가입 정보"
-						/>
-					}
+					title={<TitleSection title="이 정보로 가입이 완료됐어요" />}
 				>
-					<SectionItem type="card">
-						<ListText
-							table
-							tableText="회원 ID"
-							text="wooseong****"
-							rightItem={{ type: "text", text: "본인" }}
-							showDivider
-						/>
-						<ListText
-							table
-							tableText="가입일"
-							text="2026년 4월 30일 (수)"
-							showRightItem={false}
-							showDivider
-						/>
-						<ListText
-							table
-							tableText="자동 로그인"
-							text="이 기기에서 30일 유지"
-							rightItem={{ type: "text", text: "활성" }}
-						/>
-					</SectionItem>
+					<RQRContentsDetail
+						title="가입 정보"
+						rows={SIGNUP_COMPLETE_SUMMARY_ROWS}
+					/>
 				</PageStackContents>
 
 				<SectionDivider thickness="section" />

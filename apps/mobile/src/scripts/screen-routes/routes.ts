@@ -7,13 +7,6 @@ import { screenConfig as legacyConvertedMbrPg0040CxRoute } from "../../app/(lega
 import { screenConfig as legacyConvertedMbrPg0050CxRoute } from "../../app/(legacy-converted-mbr)/LEGACY-MBR-PG-005-0-CX/Screen.config";
 import { screenConfig as legacyConvertedMbrPg0060CxRoute } from "../../app/(legacy-converted-mbr)/LEGACY-MBR-PG-006-0-CX/Screen.config";
 import { screenConfig as legacyConvertedMbrPg0070CxRoute } from "../../app/(legacy-converted-mbr)/LEGACY-MBR-PG-007-0-CX/Screen.config";
-import { screenConfig as legacyMbrPg0010Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-001-0/Screen.config";
-import { screenConfig as legacyMbrPg0020Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-002-0/Screen.config";
-import { screenConfig as legacyMbrPg0030Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-003-0/Screen.config";
-import { screenConfig as legacyMbrPg0040Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-004-0/Screen.config";
-import { screenConfig as legacyMbrPg0050Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-005-0/Screen.config";
-import { screenConfig as legacyMbrPg0060Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-006-0/Screen.config";
-import { screenConfig as legacyMbrPg0070Route } from "../../app/(legacy-mbr)/LEGACY-MBR-PG-007-0/Screen.config";
 import { screenConfig as novaMbrPg0010Route } from "../../app/(mbr)/NOVA-MBR-PG-001-0/Screen.config";
 import { screenConfig as novaMbrPg0020Route } from "../../app/(mbr)/NOVA-MBR-PG-002-0/Screen.config";
 import { screenConfig as novaMbrPg0030Route } from "../../app/(mbr)/NOVA-MBR-PG-003-0/Screen.config";
@@ -21,13 +14,6 @@ import { screenConfig as novaMbrPg0050Route } from "../../app/(mbr)/NOVA-MBR-PG-
 import type { ScreenRoute } from "./types";
 
 export const screenRoutes = [
-	legacyMbrPg0010Route,
-	legacyMbrPg0020Route,
-	legacyMbrPg0030Route,
-	legacyMbrPg0040Route,
-	legacyMbrPg0050Route,
-	legacyMbrPg0060Route,
-	legacyMbrPg0070Route,
 	legacyConvertedMbrPg0010CxRoute,
 	legacyConvertedMbrPg0020CxRoute,
 	legacyConvertedMbrPg0030CxRoute,
