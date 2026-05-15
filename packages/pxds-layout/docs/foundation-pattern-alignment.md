@@ -287,12 +287,12 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 ```txt
 @pxds/pxds-layout
 @pxds/pxds-layout/components
-@pxds/pxds-layout/components/app-screen
-@pxds/pxds-layout/components/page-stack-contents
-@pxds/pxds-layout/components/section-divider
-@pxds/pxds-layout/app-screen
-@pxds/pxds-layout/patterns
-@pxds/pxds-layout/overlays
+@pxds/pxds-layout/components/primitives
+@pxds/pxds-layout/components/compositions
+@pxds/pxds-layout/components/contents
+@pxds/pxds-layout/components/chrome
+@pxds/pxds-layout/components/overlays
+@pxds/pxds-layout/components/patterns
 @pxds/pxds-layout/primitives
 @pxds/pxds-layout/styles.css
 ```
@@ -300,12 +300,14 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 예상 모듈:
 
 - `components`: AI와 신규 화면이 기본으로 소비하는 layout component barrel
-- `components/app-screen`: root, system header, app header, content, bottom zone
-- `components/page-stack-contents`, `components/field-stack`, `components/section-divider`: form/detail section rhythm
-- `components/bottom-sheet`, `components/popup`: overlay layout component
-- `primitives`: tokenized box/stack/grid/rail primitives
+- `components/chrome`: root, system header, app header, content, bottom zone
+- `components/contents`: content slot shapes such as `PageStackContents`, `ListContents`, `TabsContents`
+- `components/compositions`: repeated layout assemblies such as `FieldStack`, `PageStackList`, `SinglePrimaryAction`
+- `components/overlays`: overlay layout components such as `BottomSheet`, `Popup`
+- `components/patterns`: SOT-derived repeated layout patterns such as `SectionDivider`
+- `components/primitives`: tokenized box/stack/grid/slot primitives
 
-`app-screen`, `patterns`, `overlays`, `components/compositions`는 기존 소비자를 위한 compatibility export로 유지한다. 신규 화면과 자동 생성은 `@pxds/pxds-layout/components`를 우선한다.
+기존 `app-screen`, `patterns`, `overlays`, `bottom-sheet` shim export는 제거한다. 신규 화면과 자동 생성은 책임 단위 export인 `@pxds/pxds-layout/components/{chrome,contents,compositions,overlays,patterns,primitives}`를 우선한다.
 
 ## 마이그레이션 순서 제안
 

@@ -1,5 +1,5 @@
 export { SectionHeaderPage } from "./SectionHeaderPage";
 export {
-	sectionHeaderPageConfig,
 	type SectionHeaderPageProps,
+	sectionHeaderPageConfig,
 } from "./SectionHeaderPage.config";

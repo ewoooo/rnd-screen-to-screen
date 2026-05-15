@@ -1,10 +1,13 @@
-export { Button, buttonConfig, type ButtonProps } from "./button";
+export { Button, type ButtonProps, buttonConfig } from "./button";
+export { type CorePreviewExample, wdsCorePreviewExamples } from "./core.mock";
+export { wdsCoreRegistryEntries } from "./core.registry";
 export {
 	SectionMessage,
-	sectionMessageConfig,
 	type SectionMessageProps,
+	sectionMessageConfig,
 } from "./section-message";
 export {
+	AppRouterCacheProvider,
 	BottomNavigation,
 	BottomNavigationItem,
 	Card,
@@ -52,7 +55,4 @@ export {
 	TopNavigation,
 	TopNavigationButton,
 	Typography,
-	AppRouterCacheProvider,
 } from "./wds-adapter";
-export { wdsCorePreviewExamples, type CorePreviewExample } from "./core.mock";
-export { wdsCoreRegistryEntries } from "./core.registry";

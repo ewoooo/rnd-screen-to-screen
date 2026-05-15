@@ -1,5 +1,5 @@
-import { defineComponentConfig } from "@pxds/pxds-spec";
 import type { SelectableItem } from "@pxds/pxds-components/molecules";
+import { defineComponentConfig } from "@pxds/pxds-spec";
 
 export type SelectableSectionProps = {
 	name: string;

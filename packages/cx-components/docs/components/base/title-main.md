@@ -12,10 +12,10 @@ Component node checked in Figma: [TitleMain](https://www.figma.com/design/n8pS1V
 
 | Field | Value |
 | --- | --- |
-| Status | 제작 예정 |
+| Status | 제작 완료 |
 | Implementation Target | cx-components |
 | Figma Source | title-main |
-| Dependencies | Image, Indicator, Text, TitleSection |
+| Dependencies | Image, Indicator, Text |
 | Variants | Type: Complete/Search |
 | Properties | `data-figma-property-show-title-sub-text`: boolean; `data-figma-property-show-title-sub-text-image`: boolean; `data-figma-property-indicator`: boolean |
 
@@ -47,20 +47,19 @@ TitleMain
 ├─ title-sub-text row?                 showTitleSubText
 │  ├─ image/media slot?                showTitleSubTextImage
 │  └─ Text(titleSubText)
-├─ TitleSection
-│  ├─ title
-│  └─ subTitle?                        showTitleSubText
+├─ TitleText
+│  ├─ title                            24 med / 20 med by type
+│  └─ subTitle?                        14 med
 └─ Indicator?                          indicator
 ```
 
-`TitleMain` should compose existing foundations instead of creating title-specific text, media, or dot primitives.
+`TitleMain` owns its main title metrics directly because the Figma source uses 24px/20px title styles that do not match `TitleSection`.
 
 ### Component Consumption
 
 | Consumed component | Used for | Requirement |
 | --- | --- | --- |
-| `TitleSection` | Main title block and optional subtitle/body line | Use the existing title/subTitle contract. Do not duplicate `TitleSection` typography in `TitleMain`. |
-| `Text` | Eyebrow or supporting text outside the `TitleSection` title block | Use shared text vocabulary or the nearest tokenized text branch. |
+| `Text` | Title, subtitle, and top supporting text primitives | Use shared text vocabulary with TitleMain-specific tokenized classes for SOT metrics. |
 | `Indicator` | Optional dot indicator for carousel/search style title content | Consume `Indicator`; do not recreate dot ellipses locally. |
 | `Image` | Figma leading visual asset/media in the top supporting row | Treat as a media slot or plain image input until `Image` is promoted to a CX component. Do not list it as a public CX component dependency by implementation import unless that component exists. |
 
@@ -87,7 +86,7 @@ Normalize these source variants into one public component with a `type` prop and
 | `Type=Search` | `type="search"` | variant value |
 | Top supporting text row | `titleSubText` region | no, conditional region |
 | Figma `Image` layer/instance | `media` slot or image props | no, unless a CX `Image` component is later introduced |
-| Main title/subtitle block | `TitleSection` composition | `TitleSection` yes |
+| Main title/subtitle block | `TitleText` region with tokenized text primitives | no, internal structure |
 | Dot group | `Indicator` | `Indicator` yes |
 
 ## Props
@@ -100,7 +99,7 @@ Purpose: define the public API and Figma bridge contract expected for implementa
 | --- | --- | --- | --- |
 | `type` | `"complete" \| "search"` | `"complete"` | Visual variant mapped from Figma `Type`. |
 | `title` | `ReactNode` | required | Main title content. |
-| `subTitle` | `ReactNode` | - | Optional supporting text in the title block. Presence maps to `show-title-sub-text`. |
+| `subTitle` | `ReactNode` | - | Optional supporting text under the main title. |
 | `titleSubText` | `ReactNode` | - | Optional top supporting text row. |
 | `media` | `ReactNode` | - | Optional leading media slot for the Figma image dependency. |
 | `indicator` | `boolean \| Indicator props` | `false` | Enables the `Indicator` region. Object form configures count/activeIndex. |
@@ -114,7 +113,7 @@ If implementation chooses structured image props instead of `media`, keep the AP
 | --- | --- | --- |
 | `type="complete"` | `data-figma-property-type` | `complete` |
 | `type="search"` | `data-figma-property-type` | `search` |
-| `subTitle` or `titleSubText` presence | `data-figma-property-show-title-sub-text` | `true` / `false` |
+| `titleSubText` or `media` presence | `data-figma-property-show-title-sub-text` | `true` / `false` |
 | `media` presence | `data-figma-property-show-title-sub-text-image` | `true` / `false` |
 | `indicator` presence | `data-figma-property-indicator` | `true` / `false` |
 
@@ -183,7 +182,7 @@ Purpose: constrain implementation decisions and validation.
 
 - Keep styling wired to `--semantic-*` / `--component-*` aliases and do not reintroduce component-local `--cx-*` CSS variables.
 - Implement one public `TitleMain` component with `type="complete" | "search"`.
-- Compose `TitleSection` for the main title block.
+- Render the main title block directly with `--24-med-*`, `--20-med-*`, and `--14-med-*` token families.
 - Consume `Indicator` for the dot indicator instead of recreating ellipses.
 - Treat the Figma `Image` dependency as a media slot/plain image input unless a real CX `Image` component is introduced and documented.
 - Preserve root `data-figma-render="component"` and `data-figma-component-id="title-main"`.
@@ -195,16 +194,16 @@ Purpose: constrain implementation decisions and validation.
 - Implement code as part of this documentation task.
 - Create separate public `TitleMainComplete` or `TitleMainSearch` components.
 - Promote the Figma `Image` layer to CX component vocabulary from this source alone.
-- Recreate `Indicator` dots or `TitleSection` title typography inside `TitleMain`.
+- Recreate `Indicator` dots or route-local title typography inside `TitleMain`.
 - Add new SVG or icon assets for the media mark shown in the `Complete` variant.
 - Add route/screen-local margin, padding, or raw font-size overrides to match this source.
 
 ### Normalization Notes
 
-- `TitleMain` is Phase 5 because it depends on already-stabilized smaller pieces: `Image`, `Indicator`, `Text`, and `TitleSection`.
-- Inventory status remains `제작 예정`.
+- `TitleMain` is Phase 5 because it depends on already-stabilized smaller pieces: `Image`, `Indicator`, and `Text`.
+- Inventory status is `제작 완료`.
 - The source variants are `Type=Complete` and `Type=Search`; code should use lowercase values.
-- `data-figma-property-show-title-sub-text` is a presence bridge for supporting text, not a separate typography variant.
+- `data-figma-property-show-title-sub-text` is a presence bridge for the top supporting text row, not a separate typography variant.
 - `data-figma-property-show-title-sub-text-image` should be driven by actual media presence.
 - `Image` is currently an external/lower-level dependency in `component-inventory.md`. For implementation, treat it as an asset/media slot and keep it out of the CX component vocabulary until a dedicated `Image` component contract exists.
 

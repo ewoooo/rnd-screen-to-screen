@@ -1,5 +1,5 @@
 export { ActionAreaTerms } from "./ActionAreaTerms";
 export {
-	actionAreaTermsConfig,
 	type ActionAreaTermsProps,
+	actionAreaTermsConfig,
 } from "./ActionAreaTerms.config";

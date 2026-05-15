@@ -1,0 +1,28 @@
+{
+	"name": "@screen/figma-export",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev -p 3002",
+		"build": "next build",
+		"start": "next start -p 3002",
+		"lint": "biome lint ../../apps/figma-export"
+	},
+	"dependencies": {
+		"@pxds/cx-components": "0.1.0",
+		"@pxds/cx-tokens": "0.1.0",
+		"@pxds/pxds-components": "0.1.0",
+		"@pxds/pxds-figma": "0.1.0",
+		"@pxds/pxds-layout": "0.1.0",
+		"@screen/mobile": "0.1.0",
+		"next": "^16.2.4",
+		"react": "19.2.4",
+		"react-dom": "19.2.4"
+	},
+	"devDependencies": {
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"typescript": "^5"
+	}
+}

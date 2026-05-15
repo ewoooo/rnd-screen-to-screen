@@ -1,6 +1,6 @@
 # apps/mobile
 
-Active 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 layout/chrome/scroll 계약은 `@pxds/pxds-layout`, 최신 컴포넌트 어휘는 `@pxds/cx-components`, icon은 `@pxds/pxds-icons`, token은 `@pxds/cx-tokens`를 통과한다. `@pxds/pxds-components`는 deprecated legacy 호환 경계로만 다룬다. 앱은 로컬 `src/components`를 소유하지 않는다.
+Active 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 layout/chrome/scroll 계약은 `@pxds/pxds-layout`, 최신 컴포넌트 어휘는 `@pxds/cx-components`, 최신 icon 어휘는 `@pxds/cx-icons`, token은 `@pxds/cx-tokens`를 통과한다. `@pxds/pxds-components`와 `@pxds/pxds-icons`는 deprecated legacy 호환 경계로만 다룬다. 앱은 로컬 `src/components`를 소유하지 않는다.
 
 ## 화면 구조
 
@@ -55,17 +55,19 @@ organism React components + templates + screen
 
 - `@pxds/cx-components` — 최신 CX component vocabulary와 구현 surface. 신규 atoms/molecules/shared/global 성격의 컴포넌트 기준이다.
 - `@pxds/pxds-components` — deprecated legacy PXDS/WDS adapter. 기존 화면 호환 또는 migration reference가 필요할 때만 제한적으로 사용한다.
+- `@pxds/cx-icons` — 최신 CX icon vocabulary와 React `Icon` wrapper 기준이다.
+- `@pxds/pxds-icons` — deprecated legacy WDS icon adapter. 기존 화면 호환 또는 migration reference가 필요할 때만 제한적으로 사용한다.
 - `domains/<domain>` — 현재 모바일 소비 기준에서는 별도 도메인 컴포넌트를 두지 않는다. MBR과 legacy-mbr의 화면별 의미 구조는 앱 organism이 소유한다.
 - `src/organisms/mbr` — MBR 화면 영역 React 컴포넌트. MBR OGN은 page가 실제 DOM으로 조립하는 화면 어휘이며 render-tree registry를 소유하지 않는다.
 - `src/organisms/legacy-mbr` — 보존된 membership legacy 화면 영역 React 컴포넌트. 신규 구조의 기준으로 삼지 않는다.
 - 신규/legacy 모두 organism render-tree registry를 소유하지 않는다.
-- `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/pxds-layout/app-screen`, `@pxds/pxds-layout/bottom-sheet`.
+- `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/pxds-layout/components/chrome`, `@pxds/pxds-layout/components/overlays`.
 
 허용 import:
 
 - screen → `@pxds/pxds-layout/*`, `@pxds/cx-components`, `@/organisms/{mbr,legacy-mbr}`
 - legacy compatibility only → `@pxds/pxds-components/*`
-- app organism → `@pxds/cx-components`, `@pxds/pxds-layout/*`, `@pxds/pxds-icons`
+- app organism → `@pxds/cx-components`, `@pxds/pxds-layout/*`, `@pxds/cx-icons`
 - CX component internals → `@pxds/cx-tokens`, `@pxds/cx-icons`, 필요한 primitive
 
 금지 import:
@@ -73,6 +75,7 @@ organism React components + templates + screen
 - home ↔ product 같은 도메인 교차 import
 - 앱 아래에 `src/components` 또는 component shim을 다시 만들기
 - 신규 screen/organism에서 WDS primitive 또는 deprecated `@pxds/pxds-components`를 직접 대량 사용
+- 신규 screen/organism에서 deprecated `@pxds/pxds-icons`를 새 icon 기준으로 사용
 
 ## 승격 규칙
 

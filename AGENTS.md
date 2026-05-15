@@ -51,7 +51,7 @@
 │   ├── pxds-spec/                 screen/component registry와 UI 비의존 spec 타입
 │   ├── cx-tokens/                 CX DS 기반 token SSOT
 │   ├── cx-icons/                  CX DS icon originals + registry + React wrapper
-│   ├── pxds-icons/                WDS icon adapter + PXDS icon registry
+│   ├── pxds-icons/                Deprecated legacy WDS icon adapter
 │   ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
 │   ├── pxds-components/           Deprecated legacy PXDS/WDS component adapter
 │   ├── cx-components/             최신 CX component package + inventory
@@ -79,7 +79,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 7. Diagram 단계에서 정책 필수 정보, 정책서의 도메인 모듈 ID/OGN 포함 여부, 패턴/토큰/spacing 위반 여부를 검증한다.
 8. 정책서에 적힌 도메인 모듈 ID/OGN별로 반드시 `apps/mobile/src/organisms/<domain>/` 아래에 컴포넌트를 제작하거나 기존 OGN을 보강한다.
 9. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
-10. 구현은 `@pxds/pxds-layout`, `@pxds/cx-components`, `@pxds/pxds-icons`, `@pxds/cx-tokens`의 공개 surface를 우선 사용한다. `@pxds/pxds-components`는 deprecated 호환 경계로만 다룬다.
+10. 구현은 `@pxds/pxds-layout`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`의 공개 surface를 우선 사용한다. `@pxds/pxds-components`와 `@pxds/pxds-icons`는 deprecated 호환 경계로만 다룬다.
 11. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
 12. preview에서 screen, component, policy registry를 통해 생성 결과를 탐색 가능하게 유지한다.
 
@@ -89,7 +89,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 - `@pxds/pxds-spec` — screen/component registry와 kind 같은 UI 비의존 spec 타입을 소유한다.
 - `@pxds/cx-tokens` — 런타임 시각 token 값의 SSOT. CX primitive/semantic token set과 generated CSS를 제공한다.
 - `@pxds/cx-icons` — CX DS Figma 원천 SVG, icon registry, React `Icon` wrapper 초안을 소유한다.
-- `@pxds/pxds-icons` — WDS icon adapter와 PXDS-owned frame icon registry를 소유한다.
+- `@pxds/pxds-icons` — deprecated legacy WDS icon adapter. 신규 화면/컴포넌트 제작의 기준 icon vocabulary로 삼지 않고, 기존 호환이 필요한 경우에만 제한적으로 소비한다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge를 소유한다.
 - `@pxds/cx-components` — 최신 CX component package. 신규 화면/컴포넌트 제작의 기준 어휘와 구현 surface를 소유한다.
 - `@pxds/pxds-components` — deprecated legacy PXDS/WDS component adapter. 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않고, 기존 호환이 필요한 경우에만 제한적으로 소비한다.
@@ -110,16 +110,18 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 @pxds/cx-tokens
   → @pxds/cx-icons
   → @pxds/cx-components
-  → @pxds/pxds-icons
   → @pxds/pxds-layout
   → apps/mobile
+
+@pxds/pxds-icons → legacy compatibility only
 
 @pxds/pxds-figma → apps/preview
 ```
 
-WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS Component와 `@pxds/pxds-components`는 deprecated이며 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않는다.**
+WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS Component, `@pxds/pxds-components`, `@pxds/pxds-icons`는 deprecated이며 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않는다.**
 
 - 기존 호환이 필요한 WDS/PXDS legacy component는 `@pxds/pxds-components` 경계를 통해 제한적으로 소비한다.
+- 기존 호환이 필요한 WDS/PXDS legacy icon은 `@pxds/pxds-icons` 경계를 통해 제한적으로 소비한다.
 - 신규 구현은 `@pxds/cx-components`, `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`를 우선한다.
 - `@wanteddev/wds` 직접 import는 adapter/core 경계 안에 격리한다.
 - `@pxds/pxds-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수할 수 있다.
@@ -141,7 +143,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - 화면 패턴은 사용자의 과업 흐름을 보존해야 한다. form, detail, list, complete, bottom sheet, popup의 역할을 섞지 않는다.
 - 한 화면 안에서 CTA, navigation, error, notice의 위계가 즉시 읽혀야 한다.
 - 정책상 중요한 제한 조건과 에러는 숨기지 않는다. 단, 긴 정책 문장은 사용자가 행동할 수 있는 UI copy로 정리한다.
-- WDS Component, deprecated `@pxds/pxds-components`, 임의 inline UI로 빠르게 맞춘 결과가 반복되면 `@pxds/cx-components` vocabulary를 보강할 후보로 기록한다.
+- WDS Component, deprecated `@pxds/pxds-components`, deprecated `@pxds/pxds-icons`, 임의 inline UI로 빠르게 맞춘 결과가 반복되면 `@pxds/cx-components` / `@pxds/cx-icons` vocabulary를 보강할 후보로 기록한다.
 
 ## 공통 검증
 

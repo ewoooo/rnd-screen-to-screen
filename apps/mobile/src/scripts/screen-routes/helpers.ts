@@ -1,4 +1,4 @@
-import { screenRoutes, type ScreenId, type ScreenRoutePath } from "./routes";
+import { type ScreenId, type ScreenRoutePath, screenRoutes } from "./routes";
 
 const referenceScreenIdPrefix = "NOVA-MBR-PG-" as const;
 

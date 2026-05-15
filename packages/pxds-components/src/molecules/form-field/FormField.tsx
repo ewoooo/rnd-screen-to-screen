@@ -2,17 +2,17 @@ import type { ReactNode } from "react";
 
 import {
 	FormErrorMessage,
-	FormField as WdsFormField,
 	FormLabel,
 	FormMessage,
 	Typography,
+	FormField as WdsFormField,
 } from "../../core";
-import { TextField } from "../form-controls";
 import {
+	type ComponentRenderReact,
 	renderBoolean,
 	renderString,
-	type ComponentRenderReact,
 } from "../../render-react";
+import { TextField } from "../form-controls";
 
 type Props = {
 	label: string;

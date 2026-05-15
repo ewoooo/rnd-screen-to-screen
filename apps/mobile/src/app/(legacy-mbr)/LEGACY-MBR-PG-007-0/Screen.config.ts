@@ -1,5 +1,5 @@
-import { defineScreenConfig } from "@pxds/pxds-spec";
 import type { ScreenRouteConfig } from "@pxds/pxds-spec";
+import { defineScreenConfig } from "@pxds/pxds-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "LEGACY-MBR-PG-007-0",

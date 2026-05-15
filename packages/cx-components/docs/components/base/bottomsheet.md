@@ -23,11 +23,11 @@ Component node checked in Figma: [Bottomsheet](https://www.figma.com/design/n8pS
 
 Existing runtime target in `@pxds/pxds-layout`:
 
-- `packages/pxds-layout/src/bottom-sheet/BottomSheet.tsx`
-- `packages/pxds-layout/src/bottom-sheet/BottomSheetRoot.tsx`
-- `packages/pxds-layout/src/bottom-sheet/BottomSheetContent.tsx`
-- `packages/pxds-layout/src/bottom-sheet/BottomSheetBackdrop.tsx`
-- `packages/pxds-layout/src/bottom-sheet/index.ts`
+- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheet.tsx`
+- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheetRoot.tsx`
+- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheetContent.tsx`
+- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheetBackdrop.tsx`
+- `packages/pxds-layout/src/components/overlays/bottom-sheet/index.ts`
 
 No new implementation file is required for this documentation task.
 
@@ -166,7 +166,7 @@ Purpose: show expected consumer usage while preserving `pxds-layout` ownership.
 ### Import
 
 ```tsx
-import { BottomSheet } from "@pxds/pxds-layout/bottom-sheet";
+import { BottomSheet } from "@pxds/pxds-layout/components/overlays";
 ```
 
 ### Examples

@@ -1,5 +1,5 @@
 export { MembershipNoticeSection } from "./NoticeSection";
 export {
-	noticeSectionConfig,
 	type NoticeSectionProps,
+	noticeSectionConfig,
 } from "./NoticeSection.config";

@@ -1,4 +1,4 @@
-import type { BottomSheet } from "@pxds/pxds-layout/bottom-sheet";
+import type { BottomSheet } from "@pxds/pxds-layout/components/overlays";
 import type { ComponentProps, ComponentPropsWithoutRef, ReactNode } from "react";
 import type { FigmaBridgeAttributes } from "../../types";
 import type { ActionButtonActions, ActionButtonProps } from "../action-button";

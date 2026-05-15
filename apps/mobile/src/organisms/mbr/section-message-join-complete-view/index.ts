@@ -1,5 +1,5 @@
 export { SectionMessageJoinCompleteView } from "./SectionMessageJoinCompleteView";
 export {
-	sectionMessageJoinCompleteViewConfig,
 	type SectionMessageJoinCompleteViewProps,
+	sectionMessageJoinCompleteViewConfig,
 } from "./SectionMessageJoinCompleteView.config";

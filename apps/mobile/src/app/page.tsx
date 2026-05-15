@@ -1,12 +1,11 @@
+import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 import Link from "next/link";
 import {
   isLegacyScreenId,
   isReferenceScreenId,
-  screenRoutes,
   type ScreenRoute,
+  screenRoutes,
 } from "@/scripts/screen-routes";
-
-import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
 
 const referenceScreenRoutes = screenRoutes.filter((screen) =>
   isReferenceScreenId(screen.id),

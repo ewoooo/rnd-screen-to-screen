@@ -1,10 +1,10 @@
 import {
 	ContentRail,
-	ContentSection,
 	type ContentRailKind,
 	type ContentRailMeasure,
+	ContentSection,
 	type ContentSectionInset,
-} from "@pxds/pxds-layout/app-screen";
+} from "@pxds/pxds-layout/components/chrome";
 import { VStack } from "@pxds/pxds-layout/primitives";
 
 type MbrOgnSectionLayoutProps = {

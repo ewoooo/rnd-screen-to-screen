@@ -117,25 +117,27 @@ SB 기반 신규 화면은 화면 폴더에 생성 근거 산출물을 함께 �
 apps/mobile/src/app/(mbr)/<screen-id>/
 ├── Screen.tsx
 ├── Screen.config.ts
-├── generation.diagram.md
-└── generation.meta.json
+└── Screen.diagram.md
 ```
 
-`generation.meta.json`은 검사 스크립트가 읽는 최소 계약이다.
+`Screen.config.ts`는 route 등록 정보와 생성 근거를 함께 담는 단일 계약이다. `Screen.meta.json`처럼 `Screen.config.ts`와 중복되는 별도 meta 파일은 만들지 않는다.
 
-```json
-{
-  "screenId": "NOVA-MBR-PG-001-0",
-  "domain": "mbr",
-  "source": "SB",
-  "pattern": "form",
-  "policyRefs": ["POL-MBR-TERM-001-06"],
-  "ognIds": ["ogn-mbr-checkbox-terms"],
-  "designDocsChecked": [
-    "DESIGN_PATTERNS.md",
-    "DESIGN_FOUNDATION.md"
-  ]
-}
+```ts
+export const screenConfig = defineScreenConfig({
+  id: "NOVA-MBR-PG-001-0",
+  route: "/NOVA-MBR-PG-001-0",
+  domain: "mbr",
+  generation: {
+    source: "SB",
+    pattern: "form",
+    policyRefs: ["POL-MBR-TERM-001-06"],
+    ognIds: ["ogn-mbr-checkbox-terms"],
+    designDocsChecked: [
+      "DESIGN_PATTERNS.md",
+      "DESIGN_FOUNDATION.md",
+    ],
+  },
+});
 ```
 
 8. Screen 조립
@@ -166,5 +168,5 @@ npm run check:screen-generation:strict -w @policy/core
 ```
 
 - `check:policy-source`: 정책 원문 `.md`와 `.policy.ts`의 `sourceText` 정합성을 검사한다.
-- `check:screen-generation`: `generation.meta.json`, `generation.diagram.md`, OGN config, `Screen.tsx`, route catalog 사이의 정합성을 검사한다. 기존 화면에 생성 산출물이 없으면 adoption warning으로 보고한다.
+- `check:screen-generation`: `Screen.config.ts`의 `generation` 블록, `Screen.diagram.md`, OGN config, `Screen.tsx`, route catalog 사이의 정합성을 검사한다. 기존 화면에 생성 산출물이 없으면 adoption warning으로 보고한다.
 - `check:screen-generation:strict`: 생성 산출물 누락도 실패로 처리한다.

@@ -1,6 +1,6 @@
 import { StatusBar } from "@pxds/cx-components";
 import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
-import { AppScreen } from "@pxds/pxds-layout/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/components/chrome";
 import {
 	MembershipFormSection,
 	MembershipHeroSection,

@@ -8,14 +8,13 @@ import {
 	RadioGroupItem,
 	Typography,
 } from "@pxds/pxds-components/core";
-import type { ReactNode } from "react";
-
 import { HStack } from "@pxds/pxds-layout/primitives";
+import type { ReactNode } from "react";
 import {
-	renderString,
-	renderStringArray,
 	type ComponentRenderReact,
 	type RenderReactPropValue,
+	renderString,
+	renderStringArray,
 } from "../../render-react";
 
 export type SelectableDensity = "comfortable" | "compact";

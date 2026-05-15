@@ -1,10 +1,10 @@
-import { Button } from "./button";
-import { SectionMessage } from "./section-message";
 import {
+	type ComponentRenderReact,
 	renderBoolean,
 	renderString,
-	type ComponentRenderReact,
 } from "../render-react";
+import { Button } from "./button";
+import { SectionMessage } from "./section-message";
 
 export const wdsButtonRenderReact: ComponentRenderReact = ({ node }) => (
 	<Button

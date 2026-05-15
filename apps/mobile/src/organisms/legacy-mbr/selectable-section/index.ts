@@ -1,5 +1,5 @@
 export { MembershipSelectableSection } from "./SelectableSection";
 export {
-	selectableSectionConfig,
 	type SelectableSectionProps,
+	selectableSectionConfig,
 } from "./SelectableSection.config";

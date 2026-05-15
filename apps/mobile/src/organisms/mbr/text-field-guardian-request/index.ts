@@ -1,5 +1,5 @@
 export { TextFieldGuardianRequest } from "./TextFieldGuardianRequest";
 export {
-	textFieldGuardianRequestConfig,
 	type TextFieldGuardianRequestProps,
+	textFieldGuardianRequestConfig,
 } from "./TextFieldGuardianRequest.config";

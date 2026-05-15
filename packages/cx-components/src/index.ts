@@ -1,4 +1,13 @@
 export type {
+	NoticeFigmaBridgeProps,
+	NoticeProps,
+} from "./candidate/notice";
+export {
+	Notice,
+	type NoticeTone,
+	noticeVariants,
+} from "./candidate/notice";
+export type {
 	AccordionFigmaBridgeProps,
 	AccordionProps,
 } from "./components/accordion";
@@ -185,15 +194,6 @@ export type {
 	ListTextTable,
 } from "./components/list-text";
 export { ListText, listTextVariants } from "./components/list-text";
-export type {
-	NoticeFigmaBridgeProps,
-	NoticeProps,
-} from "./candidate/notice";
-export {
-	Notice,
-	type NoticeTone,
-	noticeVariants,
-} from "./candidate/notice";
 export type {
 	PageStackListFigmaBridgeProps,
 	PageStackListProps,

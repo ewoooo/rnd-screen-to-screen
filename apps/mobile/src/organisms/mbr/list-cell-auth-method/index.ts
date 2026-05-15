@@ -1,5 +1,5 @@
 export { ListCellAuthMethod } from "./ListCellAuthMethod";
 export {
-	listCellAuthMethodConfig,
 	type ListCellAuthMethodProps,
+	listCellAuthMethodConfig,
 } from "./ListCellAuthMethod.config";
