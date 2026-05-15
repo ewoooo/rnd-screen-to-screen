@@ -1,12 +1,9 @@
-@import "./components/compositions/field-stack/field-stack.css";
-@import "./components/compositions/page-stack-contents/page-stack-contents.css";
-@import "./components/compositions/page-stack-list/page-stack-list.css";
-@import "./components/compositions/single-primary-action/single-primary-action.css";
+@import "./components/app-screen/app-screen.css";
+@import "./components/bottom-sheet/bottom-sheet.css";
+@import "./components/field-stack/field-stack.css";
+@import "./components/page-stack-contents/page-stack-contents.css";
+@import "./components/page-stack-list/page-stack-list.css";
+@import "./components/popup/popup.css";
+@import "./components/section-divider/section-divider.css";
+@import "./components/single-primary-action/single-primary-action.css";
 @import "./patterns/patterns.css";
-@import "./overlays/popup.css";
-
-[data-app-screen-slot="systemHeader"][data-app-screen-header-preset] > .status-bar,
-[data-app-screen-slot="header"][data-app-screen-header-preset] > .app-bar,
-[data-app-screen-slot="bottom"][data-app-screen-action-bar-preset] > .action-button {
-	block-size: 100%;
-}

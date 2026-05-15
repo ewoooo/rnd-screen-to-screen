@@ -1,17 +1,9 @@
 "use client";
 
 import { ModalContainer, ModalContent } from "@wanteddev/wds";
-import type { CSSProperties, ReactNode } from "react";
-
+import type { BottomSheetContentProps } from "./BottomSheet.types";
 import { BottomSheetBackdrop } from "./BottomSheetBackdrop";
-
-type Props = {
-	handle?: boolean;
-	peekHeight?: number;
-	gap?: CSSProperties["gap"];
-	backdrop?: ReactNode;
-	children: ReactNode;
-};
+import { bottomSheetVariants } from "./bottom-sheet.variants";
 
 export function BottomSheetContent({
 	handle = true,
@@ -19,17 +11,18 @@ export function BottomSheetContent({
 	gap = "var(--spacing-20)",
 	backdrop = <BottomSheetBackdrop />,
 	children,
-}: Props) {
+}: BottomSheetContentProps) {
 	return (
 		<ModalContainer
 			variant="bottom"
 			handle={handle}
 			peekHeight={peekHeight}
-			dimmer={backdrop}
-			wrapperProps={{
-				sx: {
-					width: "100%",
-					height: "100%",
+				dimmer={backdrop}
+				wrapperProps={{
+					className: bottomSheetVariants(),
+					sx: {
+						width: "100%",
+						height: "100%",
 				},
 			}}
 		>

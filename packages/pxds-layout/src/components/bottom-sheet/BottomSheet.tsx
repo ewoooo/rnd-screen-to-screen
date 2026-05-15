@@ -1,12 +1,8 @@
 "use client";
 
-import type { ComponentProps } from "react";
-
+import type { BottomSheetProps } from "./BottomSheet.types";
 import { BottomSheetContent } from "./BottomSheetContent";
 import { BottomSheetRoot } from "./BottomSheetRoot";
-
-type Props = ComponentProps<typeof BottomSheetRoot> &
-	Omit<ComponentProps<typeof BottomSheetContent>, "children">;
 
 export function BottomSheet({
 	children,
@@ -15,7 +11,7 @@ export function BottomSheet({
 	gap,
 	backdrop,
 	...rootProps
-}: Props) {
+}: BottomSheetProps) {
 	return (
 		<BottomSheetRoot {...rootProps}>
 			<BottomSheetContent

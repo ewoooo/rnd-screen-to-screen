@@ -1,16 +1,9 @@
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { forwardRef } from "react";
+import type { SectionDividerProps } from "./SectionDivider.types";
+import { sectionDividerVariants } from "./section-divider.variants";
 
 const cn = (...values: Array<string | false | null | undefined>) =>
 	values.filter(Boolean).join(" ");
-
-export type SectionDividerThickness = "section" | "hairline";
-
-export type SectionDividerProps = Omit<
-	ComponentPropsWithoutRef<"div">,
-	"children"
-> & {
-	thickness?: SectionDividerThickness;
-};
 
 export const SectionDivider = forwardRef<HTMLDivElement, SectionDividerProps>(
 	function SectionDivider(
@@ -23,11 +16,7 @@ export const SectionDivider = forwardRef<HTMLDivElement, SectionDividerProps>(
 				role={role}
 				data-pxds-pattern="section-divider"
 				data-pxds-thickness={thickness}
-				className={cn(
-					"pxds-section-divider",
-					`pxds-section-divider--${thickness}`,
-					className,
-				)}
+				className={cn(sectionDividerVariants({ thickness }), className)}
 				{...props}
 			/>
 		);

@@ -1,4 +1,12 @@
-export { BottomSheet } from "./BottomSheet";
-export { BottomSheetBackdrop } from "./BottomSheetBackdrop";
-export { BottomSheetContent } from "./BottomSheetContent";
-export { BottomSheetRoot } from "./BottomSheetRoot";
+export type {
+	BottomSheetBackdropProps,
+	BottomSheetContentProps,
+	BottomSheetProps,
+	BottomSheetRootProps,
+} from "../components/bottom-sheet";
+export {
+	BottomSheet,
+	BottomSheetBackdrop,
+	BottomSheetContent,
+	BottomSheetRoot,
+} from "../components/bottom-sheet";

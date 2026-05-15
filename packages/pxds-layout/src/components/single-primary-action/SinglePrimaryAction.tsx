@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import type { SinglePrimaryActionProps } from "./SinglePrimaryAction.types";
+import { singlePrimaryActionVariants } from "./single-primary-action.variants";
 
 const cn = (...values: Array<string | false | null | undefined>) =>
 	values.filter(Boolean).join(" ");
@@ -20,12 +21,12 @@ export const SinglePrimaryAction = forwardRef<
 ) {
 	return (
 		<div
-			ref={ref}
-			data-figma-render={dataFigmaRender}
-			data-figma-component-id={dataFigmaComponentId}
-			className={cn("single-primary-action", className)}
-			{...props}
-		>
+				ref={ref}
+				data-figma-render={dataFigmaRender}
+				data-figma-component-id={dataFigmaComponentId}
+				className={cn(singlePrimaryActionVariants(), className)}
+				{...props}
+			>
 			<div
 				className="single-primary-action__action"
 				data-layout-slot="true"

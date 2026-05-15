@@ -1,20 +1,18 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import type {
-	CSSProperties,
-	HTMLAttributes,
-	ReactNode,
-} from "react";
+	PopupActionsProps,
+	PopupBackdropProps,
+	PopupContentProps,
+	PopupRootProps,
+	PopupTitleProps,
+} from "./Popup.types";
+import { popupVariants } from "./popup.variants";
 
 function cx(...values: Array<string | false | null | undefined>) {
 	return values.filter(Boolean).join(" ");
 }
-
-type PopupRootProps = HTMLAttributes<HTMLDivElement> & {
-	open?: boolean;
-	forceMount?: boolean;
-	children: ReactNode;
-};
 
 export function PopupRoot({
 	open = true,
@@ -25,18 +23,16 @@ export function PopupRoot({
 }: PopupRootProps) {
 	if (!open && !forceMount) return null;
 
-	return (
-		<div
-			className={cx("pxds-popup-root", className)}
-			data-state={open ? "open" : "closed"}
-			{...props}
-		>
+		return (
+			<div
+				className={cx(popupVariants(), className)}
+				data-state={open ? "open" : "closed"}
+				{...props}
+			>
 			{children}
 		</div>
 	);
 }
-
-type PopupBackdropProps = HTMLAttributes<HTMLDivElement>;
 
 export function PopupBackdrop({ className, ...props }: PopupBackdropProps) {
 	return (
@@ -47,10 +43,6 @@ export function PopupBackdrop({ className, ...props }: PopupBackdropProps) {
 		/>
 	);
 }
-
-type PopupContentProps = HTMLAttributes<HTMLDivElement> & {
-	width?: CSSProperties["width"];
-};
 
 export function PopupContent({
 	width,
@@ -75,10 +67,6 @@ export function PopupContent({
 	);
 }
 
-type PopupTitleProps = HTMLAttributes<HTMLHeadingElement> & {
-	as?: "h1" | "h2" | "h3";
-};
-
 export function PopupTitle({
 	as: As = "h2",
 	className,
@@ -86,10 +74,6 @@ export function PopupTitle({
 }: PopupTitleProps) {
 	return <As className={cx("pxds-popup-title", className)} {...props} />;
 }
-
-type PopupActionsProps = HTMLAttributes<HTMLDivElement> & {
-	orientation?: "horizontal" | "vertical";
-};
 
 export function PopupActions({
 	orientation = "horizontal",

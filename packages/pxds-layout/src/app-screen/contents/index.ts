@@ -1,2 +1,1 @@
-export { ListContents } from "./ListContents";
-export { TabsContents } from "./TabsContents";
+export { ListContents, TabsContents } from "../../components/app-screen/contents";

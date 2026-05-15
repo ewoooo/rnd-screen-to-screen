@@ -286,6 +286,10 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 
 ```txt
 @pxds/pxds-layout
+@pxds/pxds-layout/components
+@pxds/pxds-layout/components/app-screen
+@pxds/pxds-layout/components/page-stack-contents
+@pxds/pxds-layout/components/section-divider
 @pxds/pxds-layout/app-screen
 @pxds/pxds-layout/patterns
 @pxds/pxds-layout/overlays
@@ -295,10 +299,13 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 
 예상 모듈:
 
-- `app-screen`: root, system header, app header, content, bottom zone
-- `patterns`: form/list/detail/main/completion templates, PageStackContents, PageStackList, section divider, text section preset
-- `overlays`: bottom sheet, popup, backdrop
+- `components`: AI와 신규 화면이 기본으로 소비하는 layout component barrel
+- `components/app-screen`: root, system header, app header, content, bottom zone
+- `components/page-stack-contents`, `components/field-stack`, `components/section-divider`: form/detail section rhythm
+- `components/bottom-sheet`, `components/popup`: overlay layout component
 - `primitives`: tokenized box/stack/grid/rail primitives
+
+`app-screen`, `patterns`, `overlays`, `components/compositions`는 기존 소비자를 위한 compatibility export로 유지한다. 신규 화면과 자동 생성은 `@pxds/pxds-layout/components`를 우선한다.
 
 ## 마이그레이션 순서 제안
 

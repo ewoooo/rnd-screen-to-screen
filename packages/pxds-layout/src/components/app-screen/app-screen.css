@@ -1,0 +1,29 @@
+.app-screen-frame {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.app-screen-chrome-slot {
+	flex-shrink: 0;
+}
+
+.app-screen-chrome-slot--systemHeader {
+	block-size: var(--app-screen-system-header-height);
+}
+
+.app-screen-chrome-slot--header {
+	block-size: var(--app-screen-app-header-height);
+}
+
+.app-screen-chrome-slot--bottom {
+	block-size: var(--app-screen-action-bar-height);
+}
+
+[data-app-screen-slot="systemHeader"][data-app-screen-header-preset] > .status-bar,
+[data-app-screen-slot="header"][data-app-screen-header-preset] > .app-bar,
+[data-app-screen-slot="bottom"][data-app-screen-action-bar-preset] > .action-button {
+	block-size: 100%;
+}

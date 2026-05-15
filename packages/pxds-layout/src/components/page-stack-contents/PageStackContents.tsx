@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Slot } from "../../primitives";
+import { Slot } from "../primitives";
 import type { PageStackContentsProps } from "./PageStackContents.types";
 import { pageStackContentsVariants } from "./page-stack-contents.variants";
 

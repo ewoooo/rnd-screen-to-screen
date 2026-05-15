@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import type { FieldStackProps } from "./FieldStack.types";
+import { fieldStackVariants } from "./field-stack.variants";
 
 const cn = (...values: Array<string | false | null | undefined>) =>
 	values.filter(Boolean).join(" ");
@@ -18,12 +19,12 @@ export const FieldStack = forwardRef<HTMLDivElement, FieldStackProps>(
 	) {
 		return (
 			<div
-				ref={ref}
-				data-figma-render={dataFigmaRender}
-				data-figma-component-id={dataFigmaComponentId}
-				className={cn("field-stack", className)}
-				{...props}
-			>
+					ref={ref}
+					data-figma-render={dataFigmaRender}
+					data-figma-component-id={dataFigmaComponentId}
+					className={cn(fieldStackVariants(), className)}
+					{...props}
+				>
 				<div
 					className="field-stack__content"
 					data-layout-slot="true"

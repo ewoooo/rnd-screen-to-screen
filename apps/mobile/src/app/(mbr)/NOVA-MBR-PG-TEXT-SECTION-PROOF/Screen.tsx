@@ -10,13 +10,13 @@ import {
 	TextField,
 	TitleSection,
 } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/pxds-layout/app-screen";
 import {
+	AppScreen,
 	FieldStack,
 	PageStackContents,
+	SectionDivider,
 	SinglePrimaryAction,
-} from "@pxds/pxds-layout/components/compositions";
-import { SectionDivider } from "@pxds/pxds-layout/patterns";
+} from "@pxds/pxds-layout/components";
 import type { ReactNode } from "react";
 
 type TextSectionProps = {

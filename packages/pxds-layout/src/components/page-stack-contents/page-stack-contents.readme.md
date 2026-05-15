@@ -5,7 +5,7 @@ Page body stack을 표현하는 composition wrapper입니다. 시각 컴포넌�
 ## Import
 
 ```tsx
-import { PageStackContents } from "@pxds/pxds-layout/components/compositions";
+import { PageStackContents } from "@pxds/pxds-layout/components";
 ```
 
 ## Usage
