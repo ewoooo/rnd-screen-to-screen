@@ -2,6 +2,8 @@
 
 SB가 첨부되었을 때 스크린을 생성하는 표준 흐름이다. 핵심은 구현 전에 **SB 기반 제작 Diagram**을 먼저 만들고, 그 Diagram을 정책 충실도, 디자인 패턴, OGN 구현 범위의 계약으로 사용하는 것이다.
 
+Diagram은 `SCREEN_STRUCTURE_PRINCIPLES.md`를 따른다. 먼저 `Screen -> Chrome -> Section -> Slot -> Stack -> Component` 구조로 화면을 단순화하고, 좌표 보정보다 section boundary와 slot 이름을 확정한다.
+
 ```mermaid
 flowchart TD
     A["SB 첨부"] --> B["SB 구조 추출"]
@@ -17,6 +19,7 @@ flowchart TD
     C --> C2[".policy.ts 구조화 정책 조회"]
     C --> C3["DESIGN_PATTERNS.md 조회"]
     C --> C4["DESIGN_FOUNDATION.md 조회"]
+    C --> C5["SCREEN_STRUCTURE_PRINCIPLES.md 조회"]
 
     C1 --> D["정책-화면 요구사항 매트릭스 작성"]
     C2 --> D
@@ -59,6 +62,7 @@ flowchart TD
    - `packages/policy-core/policies/**/*.policy.ts`
    - `DESIGN_PATTERNS.md`
    - `DESIGN_FOUNDATION.md`
+   - `SCREEN_STRUCTURE_PRINCIPLES.md`
 
 3. 정책 요구사항 매트릭스 작성
    - 어떤 정책 문장이 어떤 화면 정보, 에러, 선택지, CTA로 표현되는지 정리한다.
@@ -70,29 +74,42 @@ flowchart TD
 
 5. SB 기반 제작 Diagram 생성
    - Diagram은 AppScreen slot, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여준다.
+   - Diagram은 픽셀 좌표표가 아니라 `AppScreen -> Section -> Slot -> Stack -> Component` 구조 계약이다.
+   - route-level raw spacing으로 기준선을 보정해야 하는 구조라면 구현 전에 layout pattern으로 올릴 수 있는지 검토한다.
    - 예:
 
 ```txt
-┌──────────────────────── AppScreen ────────────────────────┐
-│ StatusBar                                                  │
-│ AppBar                                                     │
-├────────────────────────────────────────────────────────────┤
-│ OGN: ogn-mbr-section-header-page                           │
-│   TitleSection / TitleMain                                 │
-├────────────────────────────────────────────────────────────┤
-│ OGN: ogn-mbr-text-field-member-info                        │
-│   TextField × N                                            │
-│   policy: POL-MBR-INFO-002-*                               │
-├────────────────────────────────────────────────────────────┤
-│ OGN: ogn-mbr-section-message-entry-branch                  │
-│   Notice / Callout                                         │
-└────────────────────────────────────────────────────────────┘
+AppScreen
+  SystemHeader
+    StatusBar
+  Header
+    OGN: ogn-mbr-section-header-page
+      TitleSection / TitleMain
+  Content
+    PageStackContents
+      title: TitleSection
+      content:
+        FieldStack
+          TextField
+          TextField
+      policy: POL-MBR-INFO-002-*
+    SectionDivider
+    PageStackContents
+      title: TitleSection
+      content:
+        Notice / Callout
+      policy: POL-MBR-INFO-003-*
+  Bottom
+    SinglePrimaryAction
+      ActionButton
 ```
 
 6. Diagram 검증
    - 정책서 필수 정보가 Diagram에 있는가?
    - 정책서에 적힌 도메인 모듈 ID/OGN이 모두 들어갔는가?
    - OGN별 책임이 겹치지 않는가?
+   - `Screen -> Chrome -> Section -> Slot -> Stack -> Component` 구조로 설명되는가?
+   - 하단 CTA가 scroll content가 아니라 `Bottom` 또는 `action-area`로 분리되어 있는가?
    - `DESIGN_PATTERNS.md`의 화면 패턴과 맞는가?
    - `DESIGN_FOUNDATION.md`의 spacing, typography, color, radius 규칙을 벗어나지 않는가?
    - 신규 컴포넌트 기준은 `@pxds/cx-components`인가?
