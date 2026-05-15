@@ -1,8 +1,13 @@
 .button {
+	--button-radius: var(--semantic-radius-md);
+	--button-radius-xlarge: 28px;
+	--button-shadow-primary-xlarge: 0 6px 16px
+		rgba(var(--component-button-bg-primary-rgb), 0.24);
+
 	appearance: none;
 	align-items: center;
 	border: 1px solid transparent;
-	border-radius: var(--semantic-radius-md);
+	border-radius: var(--button-radius);
 	box-sizing: border-box;
 	cursor: pointer;
 	display: inline-flex;
@@ -38,6 +43,14 @@
 
 .button--primary:active {
 	background: var(--component-button-bg-primary-pressed);
+}
+
+.button--primary.button--xlarge {
+	box-shadow: var(--button-shadow-primary-xlarge);
+}
+
+.button--primary.button--xlarge:active {
+	box-shadow: none;
 }
 
 .button--secondary {
@@ -80,6 +93,8 @@
 }
 
 .button--xlarge {
+	--button-radius: var(--button-radius-xlarge);
+
 	font-size: var(--16-semi-font-size);
 	min-height: 56px;
 	padding: 0 var(--semantic-spacing-inset-xl);

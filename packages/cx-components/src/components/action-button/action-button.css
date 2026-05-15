@@ -1,9 +1,13 @@
 .action-button {
+	--action-button-backdrop-blur: 16px;
+	--action-button-border-top: 1px solid var(--semantic-color-border-subtle);
+	--action-button-surface: rgba(var(--semantic-color-bg-default-rgb), 0.92);
+
 	align-items: stretch;
-	-webkit-backdrop-filter: blur(16px);
-	backdrop-filter: blur(16px);
-	background: rgba(var(--semantic-color-bg-default-rgb), 0.92);
-	border-top: 1px solid var(--semantic-color-border-subtle);
+	-webkit-backdrop-filter: blur(var(--action-button-backdrop-blur));
+	backdrop-filter: blur(var(--action-button-backdrop-blur));
+	background: var(--action-button-surface);
+	border-top: var(--action-button-border-top);
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
