@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { DatabaseIcon, LayoutTemplateIcon, UploadIcon } from "lucide-react";
+import { NovaMbrPg002Screen, novaMbrPg002Config, novaMbrPg002Registry } from "@screen/mobile/screen-components";
+import { traverseScreen, generateFigmaPluginCode } from "../../../../figma-sync/export";
 import {
 	createPxdsFigmaTokenTree,
 	getComponentFigmaSpec,
@@ -67,8 +70,27 @@ export function PreviewActionRail() {
 				? `PXDS preview: ${componentId}`
 				: "PXDS preview",
 		});
-	const screenExportStatus = "idle";
-	const screenExportError = null;
+	const [screenExportStatus, setScreenExportStatus] = useState<"idle" | "copying" | "copied" | "error">("idle");
+	const [screenExportError, setScreenExportError] = useState<string | null>(null);
+
+	const exportScreenToFigma = async () => {
+		setScreenExportStatus("copying");
+		setScreenExportError(null);
+		try {
+			const spec = traverseScreen(NovaMbrPg002Screen, novaMbrPg002Registry, {
+				id: novaMbrPg002Config.id,
+				name: novaMbrPg002Config.name,
+				width: novaMbrPg002Config.figma?.width,
+				height: novaMbrPg002Config.figma?.height,
+			});
+			const code = generateFigmaPluginCode(spec);
+			await navigator.clipboard.writeText(code);
+			setScreenExportStatus("copied");
+		} catch (e) {
+			setScreenExportError(e instanceof Error ? e.message : "Export 실패");
+			setScreenExportStatus("error");
+		}
+	};
 
 	return (
 		<ActionRail label="Preview actions">
@@ -90,10 +112,10 @@ export function PreviewActionRail() {
 			/>
 			<ActionRailButton
 				defaultIcon={LayoutTemplateIcon}
-				disabled={true}
+				disabled={screenExportStatus === "copying"}
 				error={screenExportError}
-				label={screenExportLabel}
-				onClick={() => undefined}
+				label="NOVA-MBR-PG-002-0 Figma 코드 복사"
+				onClick={() => void exportScreenToFigma()}
 				status={screenExportStatus}
 			/>
 		</ActionRail>

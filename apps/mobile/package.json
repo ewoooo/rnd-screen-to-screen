@@ -3,7 +3,8 @@
   "version": "0.1.0",
 	"private": true,
 	"exports": {
-		"./screens": "./src/scripts/screen-routes/index.ts"
+		"./screens": "./src/scripts/screen-routes/index.ts",
+		"./screen-components": "./src/scripts/screen-components/index.ts"
 	},
   "scripts": {
     "dev": "next dev -p 3001",

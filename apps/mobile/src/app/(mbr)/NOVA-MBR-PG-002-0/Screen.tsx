@@ -4,8 +4,8 @@ import {
 	SectionHeaderPage,
 	SectionMessageEntryBranch,
 	TextFieldMemberInfo,
-} from "@/organisms/mbr";
-import { ProgressAppBar } from "@/patterns/mbr";
+} from "../../../organisms/mbr";
+import { ProgressAppBar } from "../../../patterns/mbr";
 
 export function Screen() {
 	return (
