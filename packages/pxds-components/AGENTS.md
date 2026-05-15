@@ -1,26 +1,22 @@
 # @pxds/pxds-components
 
-WDS component re-export, PXDS-owned atoms/molecules/shared-global, component vocabulary registry를 소유한다. Page/organism React DOM 조립은 앱이 소유하며, 이 패키지는 모바일에서 실제 소비되는 atom/molecule/shared-global 컴포넌트에 집중한다.
+Deprecated legacy PXDS/WDS component adapter다. 최신 컴포넌트 패키지는 `@pxds/cx-components`이며, 신규 화면/컴포넌트 제작의 기준 어휘는 이 패키지가 아니라 `packages/cx-components`를 따른다.
+
+이 패키지는 기존 호환, migration reference, WDS 격리 경계로만 다룬다. 신규 component, variant, slot, public vocabulary를 이 패키지에 추가하지 않는다.
 
 ## 책임
 
-- `core` — WDS component adapter, global CSS, Next adapter. WDS 전체 `export *`가 아니라 PXDS가 허용한 public surface만 명시적으로 연다.
-- `atoms/typography` — WDS `Typography`에 모바일 line break, `maxLines`, truncate 정책을 얹은 `TextBlock`.
-- `atoms/feedback` — `Divider`, `Placeholder` 같은 최소 feedback atom.
-- `molecules` — 모바일이 실제 소비하는 도메인 독립 조합. `FormField`, form controls, `InfoList`, `InfoSection`, `SelectableList`, `ConsentList`, `NoticeBlock`, `SectionCard`, `PrimaryCTABar`, `TextFieldList` 등.
-- `domains/shared/global` — 앱 전역 화면 chrome/flow section. 현재는 모바일이 실제 소비하는 `ProgressTopBar`, `FlowHero`, `FlowNotice`, `FlowSummaryCard`만 둔다.
-- `domains/<domain>` — 현재 소유하지 않는다. 앱/화면 전용 OGN render contract는 `apps/mobile/src/organisms`에 둔다.
-- `registry` — 구현 세부 없는 component vocabulary registry. 컴포넌트 탐색의 SSOT이며 `id/name/layer/owner/importPath/group/status`만 둔다.
+- `core` — legacy WDS component adapter, global CSS, Next adapter.
+- `atoms/*`, `molecules/*`, `domains/shared/global/*` — 기존 화면 호환용 legacy 구현.
+- `registry` — legacy component vocabulary reference. 신규 SB/component 매핑의 SSOT로 사용하지 않는다.
 
 ## WDS 사용 정책
 
-- 앱/패키지는 `@wanteddev/wds`를 직접 보지 않고 `@pxds/pxds-components/core`를 우선 진입점으로 사용한다.
+- 신규 앱/패키지는 `@wanteddev/wds`와 `@pxds/pxds-components`를 직접 보지 않고 `@pxds/cx-components`를 우선 진입점으로 사용한다.
+- 기존 호환이 필요한 경우에만 `@pxds/pxds-components/core`를 제한적으로 사용한다.
 - `@wanteddev/wds` 직접 import는 `src/core/wds-adapter.ts` 안으로 격리한다. 개별 wrapper는 adapter를 통해 WDS에 위임한다.
-- 자체 wrapper는 호출 시그니처 보존이나 PXDS 정책 추가가 있을 때만 둔다.
-- 반복되는 WDS 조합은 앱 로컬 shim 대신 이 패키지 `molecules`와 `@pxds/pxds-components/molecules` 공개 진입점으로 승격한다.
-- 전역 chrome/flow section은 domain이 아니라 `domains/shared/global`와 `@pxds/pxds-components/shared/global` 공개 진입점으로 둔다.
-- 실제 인스턴스로 재사용되는 모바일 화면 영역 컴포넌트는 우선 앱 organism에 두고, 여러 화면에서 안정된 계약이 확인될 때만 `molecules` 또는 `domains/shared/global` 공개 진입점으로 승격한다. Page/OGN React DOM 조립은 앱에 둔다.
-- shared/global 구현은 `@pxds/pxds-layout` primitives/app-screen을 의존할 수 있다.
+- 반복되는 WDS/PXDS legacy 조합은 이 패키지로 승격하지 말고 `@pxds/cx-components` vocabulary 보강 후보로 기록한다.
+- 실제 인스턴스로 재사용되는 모바일 화면 영역 컴포넌트는 우선 앱 organism에 두고, 여러 화면에서 안정된 계약이 확인될 때 `@pxds/cx-components` 승격을 검토한다.
 
 ## WDS prop 참고
 
@@ -31,7 +27,7 @@ WDS component re-export, PXDS-owned atoms/molecules/shared-global, component voc
 
 ## 컴포넌트 폴더 규약
 
-신규 또는 migration 대상 컴포넌트는 아래 구조를 기준으로 한다. `config`는 bridge/editor 대비 discovery metadata만 담고, render-tree/spec language를 만들지 않는다.
+신규 컴포넌트는 이 패키지에 만들지 않는다. 아래 구조는 이 패키지에 남아 있는 legacy 컴포넌트를 읽거나 최소 수정할 때의 참고다. `config`는 bridge/editor 대비 discovery metadata만 담고, render-tree/spec language를 만들지 않는다.
 
 ```txt
 button/

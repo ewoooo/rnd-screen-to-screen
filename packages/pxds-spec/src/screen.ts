@@ -21,6 +21,13 @@ export type ScreenRouteConfig = ScreenConfig & {
 	status: ScreenLifecycleStatus;
 	createdAt: `${number}-${number}-${number}`;
 	domain: string;
+	generation?: {
+		source: string;
+		pattern: string;
+		policyRefs: readonly string[];
+		ognIds: readonly string[];
+		designDocsChecked: readonly string[];
+	};
 };
 
 export type ScreenRouteLike = {

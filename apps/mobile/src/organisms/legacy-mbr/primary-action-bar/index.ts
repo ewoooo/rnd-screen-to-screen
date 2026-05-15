@@ -1,5 +1,5 @@
 export { MembershipPrimaryActionBar } from "./PrimaryActionBar";
 export {
-	primaryActionBarConfig,
 	type PrimaryActionBarProps,
+	primaryActionBarConfig,
 } from "./PrimaryActionBar.config";

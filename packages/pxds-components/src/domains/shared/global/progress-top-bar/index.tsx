@@ -1,17 +1,16 @@
+import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import {
   ProgressIndicator,
   TopNavigation,
   TopNavigationButton,
 } from "@pxds/pxds-components/core";
 import { IconArrowLeft, IconClose } from "@pxds/pxds-icons";
-
 import { Box, VStack } from "@pxds/pxds-layout/primitives";
-import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import {
+	type ComponentRenderReact,
 	renderBoolean,
 	renderRecord,
 	renderString,
-	type ComponentRenderReact,
 } from "../../../../render-react";
 
 export type ProgressTopBarLeading = "back" | "close";

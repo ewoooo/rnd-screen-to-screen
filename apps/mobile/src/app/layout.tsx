@@ -1,5 +1,4 @@
-import { ThemeProvider } from "@pxds/pxds-components/core";
-import { AppRouterCacheProvider } from "@pxds/pxds-components/core";
+import { AppRouterCacheProvider, ThemeProvider } from "@pxds/pxds-components/core";
 import type { PropsWithChildren } from "react";
 
 import "@pxds/pxds-components/core/global.css";

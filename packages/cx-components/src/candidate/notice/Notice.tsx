@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
-import { cn } from "../../lib/cn";
 import { Text } from "../../components/text";
+import { cn } from "../../lib/cn";
 import type { NoticeProps } from "./Notice.types";
 import { noticeVariants } from "./notice.variants";
 

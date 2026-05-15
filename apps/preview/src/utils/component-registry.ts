@@ -1,32 +1,27 @@
 import type {
+	CxComponentPreviewEntry as PreviewComponentRegistryEntry,
+	CxComponentPreviewGroup as ComponentGroup,
+	CxComponentPreviewLayer as ComponentLayer,
+} from "@pxds/cx-components/preview";
+
+export type {
 	ComponentGroup,
 	ComponentLayer,
-	ComponentRegistryEntry,
-} from "@pxds/pxds-components/registry";
-
-export type PreviewComponentRegistryEntry = Omit<
-	ComponentRegistryEntry,
-	"render" | "renderReact"
->;
+	PreviewComponentRegistryEntry,
+};
 
 export const COMPONENT_LAYER_ORDER = [
-	"atom",
-	"molecule",
-	"organism",
-	"template",
+	"base",
 ] as const satisfies readonly ComponentLayer[];
 
 export const COMPONENT_GROUP_ORDER = [
 	"typography",
 	"feedback",
-	"media",
-	"layout",
 	"navigation",
 	"form",
 	"selection",
-	"template",
-	"global",
-	"mbr",
+	"action",
+	"layout",
 ] as const satisfies readonly ComponentGroup[];
 
 export type ComponentLayerGroups = Partial<
@@ -36,21 +31,6 @@ export type ComponentLayerGroups = Partial<
 export type ComponentGroups = Partial<
 	Record<ComponentGroup, PreviewComponentRegistryEntry[]>
 >;
-
-export function toPreviewComponentRegistryEntry(
-	component: ComponentRegistryEntry,
-): PreviewComponentRegistryEntry {
-	const { render, renderReact, ...serializableComponent } = component;
-	void render;
-	void renderReact;
-	return serializableComponent;
-}
-
-export function toPreviewComponentRegistry(
-	components: readonly ComponentRegistryEntry[],
-): PreviewComponentRegistryEntry[] {
-	return components.map(toPreviewComponentRegistryEntry);
-}
 
 export function getComponentLayers(
 	components: readonly PreviewComponentRegistryEntry[],

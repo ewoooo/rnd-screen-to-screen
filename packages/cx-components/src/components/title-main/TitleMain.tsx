@@ -2,7 +2,6 @@ import { forwardRef } from "react";
 import { cn } from "../../lib/cn";
 import { Indicator } from "../indicator";
 import { Text } from "../text";
-import { TitleSection } from "../title-section";
 import type { TitleMainIndicatorProps, TitleMainProps } from "./TitleMain.types";
 import { titleMainVariants } from "./title-main.variants";
 
@@ -43,8 +42,8 @@ export const TitleMain = forwardRef<HTMLElement, TitleMainProps>(
 		},
 		ref,
 	) {
-		const shouldShowTitleSubText = Boolean(titleSubText || subTitle);
 		const shouldShowTopRow = Boolean(titleSubText || media);
+		const shouldShowTitleSubText = shouldShowTopRow;
 		const shouldShowMedia = Boolean(media);
 		const indicatorProps = resolveIndicatorProps(indicator);
 		const shouldShowIndicator = Boolean(indicatorProps);
@@ -79,39 +78,65 @@ export const TitleMain = forwardRef<HTMLElement, TitleMainProps>(
 				)}
 				{...props}
 			>
-				{shouldShowTopRow ? (
-					<div className="title-main__top-row" data-figma-render="layout">
-						{shouldShowMedia ? (
-							<div
-								className="title-main__media"
-								data-figma-render="slot"
-								data-figma-property-name="media"
-							>
-								{media}
-							</div>
-						) : null}
-						{titleSubText ? (
-							<Text
-								as="span"
-								className="title-main__title-sub-text"
-								data-figma-render="slot"
-								data-figma-property-name="title-sub-text"
-								variant="bodySubtle"
-							>
-								{titleSubText}
-							</Text>
-						) : null}
-					</div>
-				) : null}
-				<TitleSection
-					className="title-main__title-section"
-					subTitle={subTitle}
-					title={title}
-				/>
+				<div
+					className="title-main__title-text"
+					data-figma-render="layout"
+					data-figma-property-name="TitleText"
+				>
+					{shouldShowTopRow ? (
+						<div
+							className="title-main__top-row"
+							data-figma-render="layout"
+							data-figma-property-name="TitleSubText"
+						>
+							{shouldShowMedia ? (
+								<div
+									className="title-main__media"
+									data-figma-render="slot"
+									data-figma-property-name="title-sub-text-image"
+								>
+									{media}
+								</div>
+							) : null}
+							{titleSubText ? (
+								<Text
+									as="span"
+									className="title-main__title-sub-text"
+									data-figma-render="primitive"
+									data-figma-property-name="title-sub-text"
+									variant="bodySubtle"
+								>
+									{titleSubText}
+								</Text>
+							) : null}
+						</div>
+					) : null}
+					<Text
+						as="h1"
+						className="title-main__title"
+						data-figma-render="primitive"
+						data-figma-property-name="title"
+						variant={type === "search" ? "sectionTitle" : "displayTitle"}
+					>
+						{title}
+					</Text>
+					{subTitle ? (
+						<Text
+							as="p"
+							className="title-main__sub-title"
+							data-figma-render="primitive"
+							data-figma-property-name="sub-title"
+							variant="bodySubtle"
+						>
+							{subTitle}
+						</Text>
+					) : null}
+				</div>
 				{shouldShowIndicator ? (
 					<Indicator
 						{...indicatorProps}
 						className={cn("title-main__indicator", indicatorProps?.className)}
+						data-figma-property-name="indicator"
 					/>
 				) : null}
 			</section>

@@ -1,0 +1,17 @@
+.pxds-section-divider {
+	box-sizing: border-box;
+	min-width: 0;
+	flex: none;
+	margin-inline: calc(-1 * var(--content-inline-inset, 0px));
+	width: calc(100% + (var(--content-inline-inset, 0px) * 2));
+	border: 0;
+	background: var(--semantic-color-bg-alt, var(--component-list-cell-divider));
+}
+
+.pxds-section-divider--section {
+	height: var(--spacing-4);
+}
+
+.pxds-section-divider--hairline {
+	height: 1px;
+}

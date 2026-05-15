@@ -28,6 +28,19 @@ import { ActionButton } from "@pxds/cx-components";
 		{ label: "맞춤 옵션 바로 선택하기", variant: "primary", onClick: handleSelect },
 	]}
 />
+
+<ActionButton
+	type="ai"
+	text="새 휴대폰으로 데이터를 옮길 수 있어요."
+	actions={[
+		{
+			label: "홈으로 이동",
+			secondaryLabel: "데이터 옮기기",
+			variant: "primary",
+			onClick: handleMoveHome,
+		},
+	]}
+/>
 ```
 
 ## Props
@@ -48,6 +61,7 @@ import { ActionButton } from "@pxds/cx-components";
 | Field | Type | Description |
 | --- | --- | --- |
 | `label` | `ReactNode` | Button label. |
+| `secondaryLabel` | `ReactNode` | Optional split label rendered after an in-button divider for single-surface compound actions. |
 | `variant` | `"primary" \| "secondary" \| "disabled"` | Passed to `Button`. |
 | `disabled` | `boolean` | Passed to `Button`. |
 | `onClick` | `() => void` | Button click handler. |

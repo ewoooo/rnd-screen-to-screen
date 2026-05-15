@@ -1,9 +1,10 @@
 import {
 	type CSSProperties,
 	type ElementType,
-	type ReactNode,
 	forwardRef,
+	type ReactNode,
 } from "react";
+import type { FigmaLayoutBridgeAttributes } from "../../../types/figma-bridge";
 
 type Edge = "top" | "bottom" | "left" | "right";
 
@@ -26,7 +27,10 @@ type FloatOwnProps = {
 	children?: ReactNode;
 };
 
-export type FloatProps = FloatOwnProps;
+export type FloatProps = FloatOwnProps &
+	FigmaLayoutBridgeAttributes & {
+		[key: `data-${string}`]: string | undefined;
+	};
 
 const edgeInsets: Record<Edge, Pick<CSSProperties, "top" | "right" | "bottom" | "left">> = {
 	top: { top: 0, left: 0, right: 0 },
@@ -56,6 +60,12 @@ export const Float = forwardRef<HTMLElement, FloatProps>(function Float(
 		className,
 		style,
 		children,
+		"data-figma-render": dataFigmaRender = "primitive",
+		"data-figma-component-id": dataFigmaComponentId = "float",
+		"data-figma-layout-kind": dataFigmaLayoutKind = "primitive",
+		"data-figma-layout-layer": dataFigmaLayoutLayer = "primitive",
+		"data-figma-layout-auto": dataFigmaLayoutAuto = "false",
+		...rest
 	} = props;
 
 	const base = edge ? edgeInsets[edge] : {};
@@ -64,6 +74,11 @@ export const Float = forwardRef<HTMLElement, FloatProps>(function Float(
 		<As
 			ref={ref}
 			className={className}
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={dataFigmaComponentId}
+			data-figma-layout-kind={dataFigmaLayoutKind}
+			data-figma-layout-layer={dataFigmaLayoutLayer}
+			data-figma-layout-auto={dataFigmaLayoutAuto}
 			style={{
 				position,
 				...base,
@@ -75,6 +90,7 @@ export const Float = forwardRef<HTMLElement, FloatProps>(function Float(
 				...(zIndex !== undefined ? { zIndex } : null),
 				...style,
 			}}
+			{...rest}
 		>
 			{children}
 		</As>

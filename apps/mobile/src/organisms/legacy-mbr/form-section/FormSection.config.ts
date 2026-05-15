@@ -1,5 +1,5 @@
-import { defineComponentConfig } from "@pxds/pxds-spec";
 import type { TextFieldListField } from "@pxds/pxds-components/molecules";
+import { defineComponentConfig } from "@pxds/pxds-spec";
 
 export type FormSectionProps = {
 	fields: readonly TextFieldListField[];

@@ -1,11 +1,11 @@
 import {
-	InfoSection,
 	type InfoListItem,
+	InfoSection,
 } from "../../../../molecules";
 import {
-	renderString,
 	type ComponentRenderReact,
 	type RenderReactPropValue,
+	renderString,
 } from "../../../../render-react";
 
 export type FlowSummaryItem = InfoListItem;

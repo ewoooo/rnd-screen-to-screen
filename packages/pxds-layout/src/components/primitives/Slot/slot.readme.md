@@ -37,9 +37,11 @@ import { Slot } from "@pxds/pxds-layout/primitives";
 ```html
 <div
   data-slot="content"
-  data-layout-slot="true"
   data-figma-render="slot"
   data-figma-property-name="content"
+  data-figma-layout-kind="primitive"
+  data-figma-layout-layer="slot"
+  data-figma-layout-slot="content"
 >
   ...
 </div>

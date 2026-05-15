@@ -1,7 +1,6 @@
-import { Button, Card, ContentBadge } from "@pxds/pxds-components/core";
-
-import { VStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
+import { Button, Card, ContentBadge } from "@pxds/pxds-components/core";
+import { VStack } from "@pxds/pxds-layout/primitives";
 
 type NoticeTone = "info" | "warning" | "critical" | "success";
 

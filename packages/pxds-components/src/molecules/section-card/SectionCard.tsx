@@ -1,9 +1,9 @@
-import { type ReactNode } from "react";
+import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 
 import { Card, CardContent, CardTitle } from "@pxds/pxds-components/core";
 
 import { HStack, VStack } from "@pxds/pxds-layout/primitives";
-import { TextBlock } from "@pxds/pxds-components/atoms/typography";
+import { type ReactNode } from "react";
 
 type Props = {
 	label?: ReactNode;

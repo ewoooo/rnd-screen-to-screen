@@ -1,5 +1,5 @@
 import { AppBar, StatusBar } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/pxds-layout/app-screen";
+import { AppScreen } from "@pxds/pxds-layout/components/chrome";
 import {
 	ListCellAuthMethod,
 	MbrPrimaryCTABar,

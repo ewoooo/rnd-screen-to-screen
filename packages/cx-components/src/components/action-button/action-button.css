@@ -1,5 +1,10 @@
 .action-button {
+	--action-button-border-top: 1px solid var(--semantic-color-border-subtle);
+	--action-button-surface: rgba(var(--semantic-color-bg-default-rgb), 0.92);
+
 	align-items: stretch;
+	background: var(--action-button-surface);
+	border-top: var(--action-button-border-top);
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -44,8 +49,27 @@
 }
 
 .action-button__button-label {
+	align-items: center;
+	display: inline-flex;
+	gap: var(--semantic-spacing-gap-default);
 	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.action-button__button-label-text {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.action-button__button-label-divider {
+	background: currentcolor;
+	border-radius: 999px;
+	flex: none;
+	height: 14px;
+	opacity: 0.38;
+	width: 1px;
 }

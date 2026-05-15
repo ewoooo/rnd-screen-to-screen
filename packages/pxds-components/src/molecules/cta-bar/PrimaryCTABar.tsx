@@ -2,9 +2,9 @@ import { Button } from "@pxds/pxds-components/core";
 
 import { Box } from "@pxds/pxds-layout/primitives";
 import {
+	type ComponentRenderReact,
 	renderBoolean,
 	renderString,
-	type ComponentRenderReact,
 } from "../../render-react";
 
 export type CtaTone = "default" | "destructive";

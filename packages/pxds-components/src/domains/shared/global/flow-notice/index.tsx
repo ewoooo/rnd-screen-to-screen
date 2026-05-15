@@ -1,8 +1,8 @@
+import { ContentSection } from "@pxds/pxds-layout/components/chrome";
 import { NoticeBlock } from "../../../../molecules/notice-block";
-import { ContentSection } from "@pxds/pxds-layout/app-screen";
 import {
-	renderString,
 	type ComponentRenderReact,
+	renderString,
 } from "../../../../render-react";
 
 type Props = {

@@ -1,4 +1,10 @@
 export {
+	ConsentList,
+	type ConsentListItem,
+	type ConsentListState,
+} from "./consent-list";
+export { type CtaTone, PrimaryCTABar } from "./cta-bar";
+export {
 	Checkbox,
 	Option,
 	OptionContent,
@@ -14,30 +20,13 @@ export {
 } from "./form-controls";
 export { FormField } from "./form-field";
 export {
-	ConsentList,
-	type ConsentListItem,
-	type ConsentListState,
-} from "./consent-list";
-export { PrimaryCTABar, type CtaTone } from "./cta-bar";
-export {
 	InfoList,
 	type InfoListItem,
 	type InfoListTrailingKind,
 	type InfoListTrailingTone,
 } from "./info-list";
 export { InfoSection } from "./info-section";
-export { NoticeBlock } from "./notice-block";
-export { SectionCard } from "./section-card";
-export {
-	SelectableList,
-	type SelectableDensity,
-	type SelectableItem,
-	type SelectionMode,
-} from "./selectable-list";
-export {
-	TextFieldList,
-	type TextFieldListField,
-} from "./text-field-list";
+export { formFieldPreviewExample } from "./molecules.mock";
 export {
 	consentListRegistryEntry,
 	formControlsRegistryEntry,
@@ -50,4 +39,15 @@ export {
 	selectableListRegistryEntry,
 	textFieldListRegistryEntry,
 } from "./molecules.registry";
-export { formFieldPreviewExample } from "./molecules.mock";
+export { NoticeBlock } from "./notice-block";
+export { SectionCard } from "./section-card";
+export {
+	type SelectableDensity,
+	type SelectableItem,
+	SelectableList,
+	type SelectionMode,
+} from "./selectable-list";
+export {
+	TextFieldList,
+	type TextFieldListField,
+} from "./text-field-list";

@@ -9,11 +9,11 @@
 		"./component-spec": "./src/component-spec/index.ts",
 		"./component-spec-registry": "./src/component-spec-registry/index.ts",
 		"./component-export": "./src/component-export/index.ts",
+		"./dom-export": "./src/dom-export/index.ts",
 		"./figma-to-component": "./src/figma-to-component/index.ts",
 		"./screen-export": "./src/screen-export/index.ts"
 	},
 	"dependencies": {
-		"@pxds/pxds-components": "0.1.0",
 		"react": "19.2.4"
 	}
 }

@@ -1,6 +1,5 @@
+import { ContentSection } from "@pxds/pxds-layout/components/chrome";
 import type { ReactNode } from "react";
-
-import { ContentSection } from "@pxds/pxds-layout/app-screen";
 import { InfoList, type InfoListItem } from "../info-list";
 import { SectionCard } from "../section-card";
 

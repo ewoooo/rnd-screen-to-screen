@@ -1,5 +1,5 @@
-import { defineComponentConfig } from "@pxds/pxds-spec";
 import type { FlowSummaryItem } from "@pxds/pxds-components/shared/global";
+import { defineComponentConfig } from "@pxds/pxds-spec";
 
 export type SummarySectionProps = {
 	label: string;

@@ -1,5 +1,5 @@
 export { SectionMessageEntryBranch } from "./SectionMessageEntryBranch";
 export {
-	sectionMessageEntryBranchConfig,
 	type SectionMessageEntryBranchProps,
+	sectionMessageEntryBranchConfig,
 } from "./SectionMessageEntryBranch.config";

@@ -2,10 +2,10 @@
 
 import {
 	ContentRail,
-	ContentSection,
 	type ContentRailKind,
+	ContentSection,
 	type ContentSectionInset,
-} from "@pxds/pxds-layout/app-screen";
+} from "@pxds/pxds-layout/components/chrome";
 import { VStack } from "@pxds/pxds-layout/primitives";
 
 type MembershipOgnSectionLayoutProps = {

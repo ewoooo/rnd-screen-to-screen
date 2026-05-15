@@ -1,2 +1,2 @@
 export { MembershipFormSection } from "./FormSection";
-export { formSectionConfig, type FormSectionProps } from "./FormSection.config";
+export { type FormSectionProps, formSectionConfig } from "./FormSection.config";

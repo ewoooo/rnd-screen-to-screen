@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomSheet as LayoutBottomSheet } from "@pxds/pxds-layout/bottom-sheet";
+import { BottomSheet as LayoutBottomSheet } from "@pxds/pxds-layout/components/overlays";
 import { forwardRef } from "react";
 import { cn } from "../../lib/cn";
 import { ActionButton } from "../action-button";

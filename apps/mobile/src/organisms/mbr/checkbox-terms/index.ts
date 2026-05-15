@@ -1,5 +1,5 @@
 export { CheckboxTerms } from "./CheckboxTerms";
 export {
-	checkboxTermsConfig,
 	type CheckboxTermsProps,
+	checkboxTermsConfig,
 } from "./CheckboxTerms.config";

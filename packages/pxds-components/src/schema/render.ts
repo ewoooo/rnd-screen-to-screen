@@ -1,5 +1,5 @@
-import type { ComponentLayer } from "./registry";
 import type { RenderLayoutContract, RenderSlot } from "./layout";
+import type { ComponentLayer } from "./registry";
 
 export type RenderTreeExportMode = "render-tree" | "instance";
 

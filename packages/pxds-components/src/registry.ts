@@ -2,6 +2,9 @@ import {
 	dividerRegistryEntry,
 	placeholderRegistryEntry,
 } from "./atoms/feedback/shared.registry";
+import { textBlockRegistryEntry } from "./atoms/typography/text-block/text-block.registry";
+import { wdsCoreRegistryEntries } from "./core/core.registry";
+import { globalRegistryEntries } from "./domains/shared/global/global.registry";
 import {
 	consentListRegistryEntry,
 	formControlsRegistryEntry,
@@ -14,14 +17,11 @@ import {
 	selectableListRegistryEntry,
 	textFieldListRegistryEntry,
 } from "./molecules/molecules.registry";
-import { globalRegistryEntries } from "./domains/shared/global/global.registry";
-import { textBlockRegistryEntry } from "./atoms/typography/text-block/text-block.registry";
-import { wdsCoreRegistryEntries } from "./core/core.registry";
+import type { ComponentRenderReact } from "./render-react";
 import type {
 	ComponentRegistryExportMode,
 	ComponentRenderTree,
 } from "./schema";
-import type { ComponentRenderReact } from "./render-react";
 
 export type ComponentLayer = "atom" | "molecule" | "organism" | "template";
 
@@ -175,7 +175,7 @@ export const componentRegistry = [
 		name: "AppScreen",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/app-screen",
+		importPath: "@pxds/pxds-layout/components/chrome",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",
@@ -185,7 +185,7 @@ export const componentRegistry = [
 		name: "AppScreenRoot",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/app-screen",
+		importPath: "@pxds/pxds-layout/components/chrome",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",
@@ -195,7 +195,7 @@ export const componentRegistry = [
 		name: "ContentOutlet",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/app-screen",
+		importPath: "@pxds/pxds-layout/components/chrome",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",
@@ -205,7 +205,7 @@ export const componentRegistry = [
 		name: "ContentList",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/app-screen",
+		importPath: "@pxds/pxds-layout/components/chrome",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",
@@ -215,7 +215,7 @@ export const componentRegistry = [
 		name: "ContentSection",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/app-screen",
+		importPath: "@pxds/pxds-layout/components/chrome",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",
@@ -225,7 +225,7 @@ export const componentRegistry = [
 		name: "ContentRail",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/app-screen",
+		importPath: "@pxds/pxds-layout/components/chrome",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",
@@ -235,7 +235,7 @@ export const componentRegistry = [
 		name: "BottomSheet",
 		layer: "template",
 		owner: "@pxds/pxds-layout",
-		importPath: "@pxds/pxds-layout/bottom-sheet",
+		importPath: "@pxds/pxds-layout/components/overlays",
 		group: "template",
 		status: "active",
 		createdAt: "2026-04-30",

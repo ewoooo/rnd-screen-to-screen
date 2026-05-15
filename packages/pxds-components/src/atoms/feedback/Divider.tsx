@@ -1,5 +1,5 @@
-import { Divider as WdsDivider } from "../../core";
 import type { CSSProperties } from "react";
+import { Divider as WdsDivider } from "../../core";
 
 type Props = {
 	orientation?: "horizontal" | "vertical";

@@ -1,8 +1,8 @@
+import { TextBlock } from "@pxds/pxds-components/atoms/typography";
 import { Chip, Thumbnail } from "@pxds/pxds-components/core";
-import type { ReactNode } from "react";
 
 import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
-import { TextBlock } from "@pxds/pxds-components/atoms/typography";
+import type { ReactNode } from "react";
 
 export type InfoListTrailingKind = "value" | "status" | "action";
 export type InfoListTrailingTone =

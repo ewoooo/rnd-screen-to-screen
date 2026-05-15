@@ -1,14 +1,15 @@
 import {
 	type CSSProperties,
 	type ElementType,
-	type ReactNode,
 	forwardRef,
+	type ReactNode,
 } from "react";
+import type { FigmaLayoutBridgeAttributes } from "../../../types/figma-bridge";
 import {
 	type CommonLayoutProps,
+	commonLayoutStyle,
 	type SpacingProps,
 	type SurfaceProps,
-	commonLayoutStyle,
 	spacingStyle,
 	surfaceStyle,
 } from "../style";
@@ -22,8 +23,9 @@ type BoxOwnProps = SpacingProps &
 		children?: ReactNode;
 	};
 
-export type BoxProps = BoxOwnProps & {
-	[key: `data-${string}`]: string | number | boolean | undefined;
+export type BoxProps = BoxOwnProps &
+	FigmaLayoutBridgeAttributes & {
+	[key: `data-${string}`]: string | undefined;
 	onClick?: React.MouseEventHandler<HTMLElement>;
 	role?: string;
 	id?: string;
@@ -60,12 +62,22 @@ export const Box = forwardRef<HTMLElement, BoxProps>(function Box(props, ref) {
 		className,
 		style,
 		children,
+		"data-figma-render": dataFigmaRender = "primitive",
+		"data-figma-component-id": dataFigmaComponentId = "box",
+		"data-figma-layout-kind": dataFigmaLayoutKind = "primitive",
+		"data-figma-layout-layer": dataFigmaLayoutLayer = "primitive",
+		"data-figma-layout-auto": dataFigmaLayoutAuto = "false",
 		...rest
 	} = props;
 	return (
 		<As
 			ref={ref}
 			className={className}
+			data-figma-render={dataFigmaRender}
+			data-figma-component-id={dataFigmaComponentId}
+			data-figma-layout-kind={dataFigmaLayoutKind}
+			data-figma-layout-layer={dataFigmaLayoutLayer}
+			data-figma-layout-auto={dataFigmaLayoutAuto}
 			style={{
 				...spacingStyle({ p, px, py, pt, pr, pb, pl, gap }),
 				...commonLayoutStyle({

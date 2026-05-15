@@ -1,0 +1,19 @@
+.single-primary-action {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-0);
+	padding-block-start: var(--spacing-12);
+	padding-block-end: var(--spacing-40);
+	padding-inline: var(--spacing-12);
+	width: 100%;
+}
+
+.single-primary-action__action {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-0);
+	min-width: 0;
+	width: 100%;
+}

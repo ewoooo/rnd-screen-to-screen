@@ -1,2 +1,2 @@
 export { MembershipHeroSection } from "./HeroSection";
-export { heroSectionConfig, type HeroSectionProps } from "./HeroSection.config";
+export { type HeroSectionProps, heroSectionConfig } from "./HeroSection.config";

@@ -1,6 +1,7 @@
 {
 	"name": "@pxds/pxds-icons",
 	"version": "0.1.0",
+	"description": "Deprecated legacy WDS icon adapter. Use @pxds/cx-icons for new icons.",
 	"private": true,
 	"type": "module",
 	"exports": {

@@ -1,6 +1,7 @@
 {
 	"name": "@pxds/pxds-components",
 	"version": "0.1.0",
+	"description": "Deprecated legacy PXDS/WDS component adapter. Use @pxds/cx-components for new components.",
 	"private": true,
 	"type": "module",
 	"sideEffects": [

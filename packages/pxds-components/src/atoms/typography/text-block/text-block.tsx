@@ -1,9 +1,9 @@
+import type { ComponentProps, CSSProperties } from "react";
 import { Typography } from "../../../core";
-import type { CSSProperties, ComponentProps } from "react";
 import {
+	type ComponentRenderReact,
 	renderString,
 	renderStringArray,
-	type ComponentRenderReact,
 } from "../../../render-react";
 
 type TypographyProps = ComponentProps<typeof Typography>;

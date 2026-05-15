@@ -1,8 +1,8 @@
+import { buttonConfig } from "./button";
 import {
 	wdsButtonRenderReact,
 	wdsSectionMessageRenderReact,
 } from "./core-render-react";
-import { buttonConfig } from "./button";
 import { sectionMessageConfig } from "./section-message";
 
 export const wdsCoreRegistryEntries = [

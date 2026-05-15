@@ -8,6 +8,9 @@
 		"./policies": "./policies/index.ts"
 	},
 	"scripts": {
-		"check:compliance": "node scripts/compliance-check.mjs"
+		"check:policy-source": "node scripts/check-compliance-between-policy-source-and-definition.mjs",
+		"check:screen-generation": "node scripts/check-compliance-between-policy-sb-diagram-and-screen.mjs",
+		"check:screen-generation:strict": "node scripts/check-compliance-between-policy-sb-diagram-and-screen.mjs --strict",
+		"check:compliance": "npm run check:policy-source && npm run check:screen-generation"
 	}
 }

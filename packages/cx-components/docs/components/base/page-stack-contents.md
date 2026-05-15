@@ -22,11 +22,11 @@ Primary Figma component node: [PageStackContents](https://www.figma.com/design/n
 
 ### Implementation Files
 
-- `packages/pxds-layout/src/components/compositions/page-stack-contents/PageStackContents.tsx`
-- `packages/pxds-layout/src/components/compositions/page-stack-contents/PageStackContents.types.ts`
-- `packages/pxds-layout/src/components/compositions/page-stack-contents/page-stack-contents.variants.ts`
-- `packages/pxds-layout/src/components/compositions/page-stack-contents/page-stack-contents.css`
-- `packages/pxds-layout/src/components/compositions/page-stack-contents/index.ts`
+- `packages/pxds-layout/src/components/contents/page-stack-contents/PageStackContents.tsx`
+- `packages/pxds-layout/src/components/contents/page-stack-contents/PageStackContents.types.ts`
+- `packages/pxds-layout/src/components/contents/page-stack-contents/page-stack-contents.variants.ts`
+- `packages/pxds-layout/src/components/contents/page-stack-contents/page-stack-contents.css`
+- `packages/pxds-layout/src/components/contents/page-stack-contents/index.ts`
 
 ## Structure
 
@@ -146,7 +146,7 @@ Purpose: show expected consumer usage.
 ### Import
 
 ```tsx
-import { PageStackContents } from "@pxds/pxds-layout/components/compositions";
+import { PageStackContents } from "@pxds/pxds-layout/components/contents";
 ```
 
 ### Examples

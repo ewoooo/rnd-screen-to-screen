@@ -12,6 +12,7 @@ export type ActionButtonActionLeftItem = ActionButtonLeftItemType | false;
 
 export type ActionButtonAction = {
 	label: ReactNode;
+	secondaryLabel?: ReactNode;
 	variant?: ButtonVariant;
 	disabled?: boolean;
 	onClick?: () => void;

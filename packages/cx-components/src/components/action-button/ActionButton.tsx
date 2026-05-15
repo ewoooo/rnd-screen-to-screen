@@ -37,12 +37,21 @@ function getRenderedActions(
 
 function getActionKey(action: ActionButtonAction, index: number) {
 	const variant = action.variant ?? "primary";
+	const secondaryLabel =
+		typeof action.secondaryLabel === "string" ||
+		typeof action.secondaryLabel === "number"
+			? `-${action.secondaryLabel}`
+			: "";
 
 	if (typeof action.label === "string" || typeof action.label === "number") {
-		return `${variant}-${action.label}-${index}`;
+		return `${variant}-${action.label}${secondaryLabel}-${index}`;
 	}
 
 	return `${variant}-${action.leftItem ?? "none"}-${index}`;
+}
+
+function hasSecondaryLabel(action: ActionButtonAction) {
+	return action.secondaryLabel !== undefined && action.secondaryLabel !== null;
 }
 
 function getDefaultLeftItem(
@@ -154,6 +163,7 @@ export const ActionButton = forwardRef<HTMLDivElement, ActionButtonProps>(
 						const leftItem =
 							action.leftItem ??
 							getDefaultLeftItem(type, index, primaryActionIndex);
+						const hasSplitLabel = hasSecondaryLabel(action);
 
 						return (
 							<Button
@@ -164,10 +174,24 @@ export const ActionButton = forwardRef<HTMLDivElement, ActionButtonProps>(
 								disabled={action.disabled}
 								onClick={action.onClick}
 								className="action-button__button"
+								data-split-label={hasSplitLabel ? "" : undefined}
 							>
 								{leftItem ? <ActionButtonLeftItem type={leftItem} /> : null}
 								<span className="action-button__button-label">
-									{action.label}
+									<span className="action-button__button-label-text">
+										{action.label}
+									</span>
+									{hasSplitLabel ? (
+										<>
+											<span
+												aria-hidden="true"
+												className="action-button__button-label-divider"
+											/>
+											<span className="action-button__button-label-text">
+												{action.secondaryLabel}
+											</span>
+										</>
+									) : null}
 								</span>
 							</Button>
 						);

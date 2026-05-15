@@ -1,11 +1,11 @@
-import { componentRegistry } from "@pxds/pxds-components/registry";
 import { redirect } from "next/navigation";
+import { getDefaultCxComponentPreviewId } from "@pxds/cx-components/preview";
 
 export default function ComponentRenderRoutePage() {
-	const firstComponent = componentRegistry[0];
-	if (!firstComponent) {
+	const firstComponentId = getDefaultCxComponentPreviewId();
+	if (!firstComponentId) {
 		redirect("/component-render/empty");
 	}
 
-	redirect(`/component-render/${firstComponent.id}`);
+	redirect(`/component-render/${firstComponentId}`);
 }

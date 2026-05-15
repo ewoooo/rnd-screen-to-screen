@@ -1,5 +1,5 @@
 export { TextFieldMemberInfo } from "./TextFieldMemberInfo";
 export {
-	textFieldMemberInfoConfig,
 	type TextFieldMemberInfoProps,
+	textFieldMemberInfoConfig,
 } from "./TextFieldMemberInfo.config";

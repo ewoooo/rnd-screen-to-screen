@@ -1,7 +1,8 @@
-import type { ComponentLayer } from "@pxds/pxds-components/registry";
-
 import { ComponentLayerGroup } from "@/components/preview/side-panel/components/ComponentLayerGroup";
-import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
+import type {
+	ComponentLayer,
+	PreviewComponentRegistryEntry,
+} from "@/utils/component-registry";
 
 type ComponentLayerGroupsProps = {
 	layers: readonly ComponentLayer[];

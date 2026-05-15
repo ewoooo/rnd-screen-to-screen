@@ -1,2 +1,2 @@
-export { HStack } from "./HStack";
 export type { HStackProps } from "./HStack";
+export { HStack } from "./HStack";

@@ -1,7 +1,12 @@
-import type { ComponentLayer } from "@pxds/pxds-components/registry";
-
 import { ComponentRouteButton } from "@/components/preview/side-panel/components/ComponentRouteButton";
-import type { PreviewComponentRegistryEntry } from "@/utils/component-registry";
+import type {
+	ComponentLayer,
+	PreviewComponentRegistryEntry,
+} from "@/utils/component-registry";
+
+const COMPONENT_LAYER_LABEL = {
+	base: "Base",
+} as const satisfies Record<ComponentLayer, string>;
 
 type ComponentLayerGroupProps = {
 	layer: ComponentLayer;
@@ -19,7 +24,7 @@ export function ComponentLayerGroup({
 	return (
 		<section className="flex flex-col gap-1">
 			<h2 className="px-3 py-1 text-xs font-semibold uppercase text-neutral-500">
-				{layer}
+				{COMPONENT_LAYER_LABEL[layer]}
 			</h2>
 
 			<div className="flex flex-col gap-1">

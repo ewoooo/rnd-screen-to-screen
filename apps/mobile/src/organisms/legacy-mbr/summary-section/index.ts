@@ -1,5 +1,5 @@
 export { MembershipSummarySection } from "./SummarySection";
 export {
-	summarySectionConfig,
 	type SummarySectionProps,
+	summarySectionConfig,
 } from "./SummarySection.config";

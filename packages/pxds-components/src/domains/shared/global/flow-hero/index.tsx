@@ -1,10 +1,10 @@
-import { Box, VStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
-import { ContentRail, ContentSection } from "@pxds/pxds-layout/app-screen";
+import { ContentRail, ContentSection } from "@pxds/pxds-layout/components/chrome";
+import { Box, VStack } from "@pxds/pxds-layout/primitives";
 import {
+	type ComponentRenderReact,
 	renderString,
 	renderStringArray,
-	type ComponentRenderReact,
 } from "../../../../render-react";
 
 type Props = {

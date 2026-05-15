@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { Checkbox } from "../form-controls";
 import { Divider } from "@pxds/pxds-components/atoms/feedback";
-import { HStack, VStack } from "@pxds/pxds-layout/primitives";
 import { TextBlock } from "@pxds/pxds-components/atoms/typography";
+import { HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { useEffect, useState } from "react";
 import {
-	renderBoolean,
-	renderString,
 	type ComponentRenderReact,
 	type RenderReactPropValue,
+	renderBoolean,
+	renderString,
 } from "../../render-react";
+import { Checkbox } from "../form-controls";
 
 export type ConsentListItem = {
 	id: string;

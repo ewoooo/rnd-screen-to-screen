@@ -5,9 +5,12 @@
 	"type": "module",
 	"exports": {
 		".": "./src/index.ts",
-		"./app-screen": "./src/app-screen/index.ts",
-		"./bottom-sheet": "./src/bottom-sheet/index.ts",
+		"./components": "./src/components/index.ts",
+		"./components/chrome": "./src/components/chrome/index.ts",
 		"./components/compositions": "./src/components/compositions/index.ts",
+		"./components/contents": "./src/components/contents/index.ts",
+		"./components/overlays": "./src/components/overlays/index.ts",
+		"./components/patterns": "./src/components/patterns/index.ts",
 		"./components/primitives": "./src/components/primitives/index.ts",
 		"./primitives": "./src/components/primitives/index.ts",
 		"./styles.css": "./src/styles.css"
