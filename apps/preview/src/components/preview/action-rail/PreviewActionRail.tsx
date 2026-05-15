@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { DatabaseIcon, LayoutTemplateIcon, UploadIcon } from "lucide-react";
-import { NovaMbrPg002Screen, novaMbrPg002Config, novaMbrPg002Registry } from "@screen/mobile/screen-components";
+import { NovaMbrPg002Screen, novaMbrPg002Config, novaMbrPg002Registry, novaMbrPg002LayoutRegistry } from "@screen/mobile/screen-components";
 import { traverseScreen, generateFigmaPluginCode } from "../../../../figma-sync/export";
 import {
 	createPxdsFigmaTokenTree,
@@ -77,7 +77,7 @@ export function PreviewActionRail() {
 		setScreenExportStatus("copying");
 		setScreenExportError(null);
 		try {
-			const spec = traverseScreen(NovaMbrPg002Screen, novaMbrPg002Registry, {
+			const spec = traverseScreen(NovaMbrPg002Screen, novaMbrPg002Registry, novaMbrPg002LayoutRegistry, {
 				id: novaMbrPg002Config.id,
 				name: novaMbrPg002Config.name,
 				width: novaMbrPg002Config.figma?.width,

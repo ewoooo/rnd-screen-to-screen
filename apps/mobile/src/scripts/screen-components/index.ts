@@ -4,12 +4,26 @@
  */
 import type { ComponentType } from "react";
 import { StatusBar, TextField } from "@pxds/cx-components";
+import { VStack } from "@pxds/pxds-layout/primitives";
 import { ProgressAppBar } from "../../patterns/mbr";
 import { SectionHeaderPage } from "../../organisms/mbr";
 
 type FigmaPropsValue = Record<string, boolean | string>;
 type FigmaTextNodesValue = Record<string, string>;
 type NestedInstanceOverride = { properties?: FigmaPropsValue; textOverrides?: FigmaTextNodesValue };
+
+type LayoutEntry = {
+	component: ComponentType<Record<string, unknown>>;
+	name: string;
+	direction?: "VERTICAL" | "HORIZONTAL";
+	mapLayout?: (props: Record<string, unknown>) => {
+		gap?: number;
+		paddingTop?: number;
+		paddingBottom?: number;
+		paddingLeft?: number;
+		paddingRight?: number;
+	};
+};
 
 type RegistryEntry = {
 	component: ComponentType<Record<string, unknown>>;
@@ -95,5 +109,17 @@ export const novaMbrPg002Registry: readonly RegistryEntry[] = [
 				textOverrides: { "버튼": mp.buttonLabel as string },
 			},
 		} : undefined,
+	},
+];
+
+export const novaMbrPg002LayoutRegistry: readonly LayoutEntry[] = [
+	{
+		// VStack → Figma VERTICAL Auto Layout frame
+		component: VStack as unknown as ComponentType<Record<string, unknown>>,
+		name: "VStack",
+		direction: "VERTICAL",
+		mapLayout: (props) => ({
+			gap: typeof props.gap === "number" ? props.gap : 0,
+		}),
 	},
 ];

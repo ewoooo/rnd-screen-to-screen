@@ -18,7 +18,6 @@ export function generateFigmaPluginCode(spec: ScreenFigmaSpec): string {
 async function findOrCreateComponent(name, variant) {
   const all = await figma.root.findAllWithCriteria({ types: ["COMPONENT"] });
 
-  // variant 있으면: 부모 ComponentSet 이름 = name, 컴포넌트 이름 = variant
   if (variant) {
     const found = all.find(function(c) {
       return c.name === variant && c.parent && c.parent.name === name;
@@ -26,11 +25,9 @@ async function findOrCreateComponent(name, variant) {
     if (found) return found;
   }
 
-  // 직접 이름 매칭 (variant 없는 단독 컴포넌트)
   const found = all.find(function(c) { return c.name === name; });
   if (found) return found;
 
-  // 없으면 placeholder 생성 (stub)
   const comp = figma.createComponent();
   comp.name = variant ? (name + " / " + variant) : name;
   comp.layoutMode = "VERTICAL";
@@ -59,7 +56,6 @@ async function findOrCreateComponent(name, variant) {
 async function applyTextOverrides(instance, overrides) {
   var keys = Object.keys(overrides);
   if (keys.length === 0) return;
-  // 인스턴스 내부 TEXT 노드 전체 수집
   var textNodes = instance.findAll(function(n) { return n.type === "TEXT"; });
   for (var i = 0; i < keys.length; i++) {
     var layerName = keys[i];
@@ -81,14 +77,14 @@ async function appendInstance(parent, node) {
   parent.appendChild(instance);
   instance.layoutSizingHorizontal = "FILL";
 
-  // 1. 최상위 component properties (Show Label, HelpText 등)
+  // 1. 최상위 component properties
   if (node.figmaProps && Object.keys(node.figmaProps).length > 0) {
     try { instance.setProperties(node.figmaProps); } catch(e) {
       figma.notify("setProperties failed (" + node.figmaName + "): " + (e && e.message || e), { error: true });
     }
   }
 
-  // 2. 중첩 인스턴스 properties (Button=on 등) — 텍스트 오버라이드 전에 적용해야 레이어 노출됨
+  // 2. 중첩 인스턴스 properties — 텍스트 오버라이드 전에 적용 (레이어 노출)
   if (node.nestedInstanceProps) {
     var nestedKeys = Object.keys(node.nestedInstanceProps);
     for (var ni = 0; ni < nestedKeys.length; ni++) {
@@ -118,10 +114,37 @@ async function appendInstance(parent, node) {
   }
 }
 
+async function appendFrame(parent, node) {
+  var frame = figma.createFrame();
+  frame.name = node.name;
+  frame.layoutMode = node.direction === "HORIZONTAL" ? "HORIZONTAL" : "VERTICAL";
+  frame.primaryAxisSizingMode = "AUTO";
+  frame.counterAxisSizingMode = "FIXED";
+  frame.itemSpacing = node.gap || 0;
+  frame.paddingTop = node.paddingTop || 0;
+  frame.paddingBottom = node.paddingBottom || 0;
+  frame.paddingLeft = node.paddingLeft || 0;
+  frame.paddingRight = node.paddingRight || 0;
+  frame.fills = [];
+  parent.appendChild(frame);
+  frame.layoutSizingHorizontal = "FILL";
+
+  for (var i = 0; i < node.children.length; i++) {
+    await appendNode(frame, node.children[i]);
+  }
+}
+
+async function appendNode(parent, node) {
+  if (node.type === "frame") {
+    await appendFrame(parent, node);
+  } else {
+    await appendInstance(parent, node);
+  }
+}
+
 async function run() {
   await figma.loadAllPagesAsync();
 
-  // 화면 루트 프레임 (AppScreen) — 375×812 고정
   var frame = figma.createFrame();
   frame.name = SPEC.id;
   frame.layoutMode = "VERTICAL";
@@ -138,13 +161,13 @@ async function run() {
   var contentNodes = SPEC.nodes.filter(function(n) { return n.slot === "content"; });
   var bottomNodes  = SPEC.nodes.filter(function(n) { return n.slot === "bottom"; });
 
-  // ── chrome header zone (AppScreen.Header) — 패딩 없음
+  // ── chrome header zone
   for (var i = 0; i < topNodes.length; i++) {
-    try { await appendInstance(frame, topNodes[i]); }
+    try { await appendNode(frame, topNodes[i]); }
     catch(e) { figma.notify("header: " + topNodes[i].figmaName + " — " + (e && e.message || e), { error: true }); }
   }
 
-  // ── content zone (AppScreenContent) — 좌우 12px, 하단 16px, gap 4px
+  // ── content zone — 좌우 12px, 하단 16px, gap 4px
   if (contentNodes.length > 0) {
     var contentFrame = figma.createFrame();
     contentFrame.name = "_content";
@@ -159,15 +182,15 @@ async function run() {
     contentFrame.layoutSizingVertical = "FILL";
 
     for (var j = 0; j < contentNodes.length; j++) {
-      try { await appendInstance(contentFrame, contentNodes[j]); }
-      catch(e) { figma.notify("content: " + contentNodes[j].figmaName + " — " + (e && e.message || e), { error: true }); }
+      try { await appendNode(contentFrame, contentNodes[j]); }
+      catch(e) { figma.notify("content: " + (contentNodes[j].figmaName || contentNodes[j].name) + " — " + (e && e.message || e), { error: true }); }
     }
   }
 
   // ── bottom zone
   for (var k = 0; k < bottomNodes.length; k++) {
-    try { await appendInstance(frame, bottomNodes[k]); }
-    catch(e) { figma.notify("bottom: " + bottomNodes[k].figmaName + " — " + (e && e.message || e), { error: true }); }
+    try { await appendNode(frame, bottomNodes[k]); }
+    catch(e) { figma.notify("bottom: " + (bottomNodes[k].figmaName || bottomNodes[k].name) + " — " + (e && e.message || e), { error: true }); }
   }
 
   figma.viewport.scrollAndZoomIntoView([frame]);
