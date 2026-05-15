@@ -3,6 +3,7 @@ import {
 	forwardRef,
 	type ReactNode,
 } from "react";
+import { Box, Slot } from "../../primitives";
 
 const cn = (...values: Array<string | false | null | undefined>) =>
 	values.filter(Boolean).join(" ");
@@ -27,14 +28,19 @@ type PageStackPartProps = Omit<ComponentPropsWithoutRef<"div">, "children"> &
 const PageStackRoot = forwardRef<HTMLElement, PageStackRootProps>(
 	function PageStackRoot({ children, className, ...props }, ref) {
 		return (
-			<section
+			<Box
+				as="section"
 				ref={ref}
+				data-figma-render="layout"
+				data-figma-component-id="page-stack"
+				data-figma-layout-kind="pattern"
+				data-figma-layout-layer="section"
 				data-pxds-pattern="page-stack"
 				className={cn("pxds-page-stack", className)}
 				{...props}
 			>
 				{children}
-			</section>
+			</Box>
 		);
 	},
 );
@@ -42,14 +48,19 @@ const PageStackRoot = forwardRef<HTMLElement, PageStackRootProps>(
 const PageStackTitle = forwardRef<HTMLDivElement, PageStackPartProps>(
 	function PageStackTitle({ children, className, ...props }, ref) {
 		return (
-			<div
+			<Slot
 				ref={ref}
+				data-figma-render="slot"
+				data-figma-layout-kind="pattern"
+				data-figma-layout-layer="slot"
+				data-figma-layout-slot="title"
 				data-pxds-pattern-part="title"
 				className={cn("pxds-page-stack__title", className)}
+				name="title"
 				{...props}
 			>
 				{children}
-			</div>
+			</Slot>
 		);
 	},
 );
@@ -57,14 +68,19 @@ const PageStackTitle = forwardRef<HTMLDivElement, PageStackPartProps>(
 const PageStackSlot = forwardRef<HTMLDivElement, PageStackPartProps>(
 	function PageStackSlot({ children, className, ...props }, ref) {
 		return (
-			<div
+			<Slot
 				ref={ref}
+				data-figma-render="slot"
+				data-figma-layout-kind="pattern"
+				data-figma-layout-layer="slot"
+				data-figma-layout-slot="content"
 				data-pxds-pattern-part="slot"
 				className={cn("pxds-page-stack__slot", className)}
+				name="content"
 				{...props}
 			>
 				{children}
-			</div>
+			</Slot>
 		);
 	},
 );
@@ -72,14 +88,18 @@ const PageStackSlot = forwardRef<HTMLDivElement, PageStackPartProps>(
 const PageStackItem = forwardRef<HTMLDivElement, PageStackPartProps>(
 	function PageStackItem({ children, className, ...props }, ref) {
 		return (
-			<div
+			<Box
 				ref={ref}
+				data-figma-render="layout"
+				data-figma-component-id="page-stack-item"
+				data-figma-layout-kind="pattern"
+				data-figma-layout-layer="content"
 				data-pxds-pattern-part="item"
 				className={cn("pxds-page-stack__item", className)}
 				{...props}
 			>
 				{children}
-			</div>
+			</Box>
 		);
 	},
 );
@@ -87,14 +107,18 @@ const PageStackItem = forwardRef<HTMLDivElement, PageStackPartProps>(
 const PageStackInner = forwardRef<HTMLDivElement, PageStackPartProps>(
 	function PageStackInner({ children, className, ...props }, ref) {
 		return (
-			<div
+			<Box
 				ref={ref}
+				data-figma-render="layout"
+				data-figma-component-id="page-stack-inner"
+				data-figma-layout-kind="pattern"
+				data-figma-layout-layer="content"
 				data-pxds-pattern-part="inner"
 				className={cn("pxds-page-stack__inner", className)}
 				{...props}
 			>
 				{children}
-			</div>
+			</Box>
 		);
 	},
 );

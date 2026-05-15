@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { Box, Slot } from "../../primitives";
 import type { FieldStackProps } from "./FieldStack.types";
 import { fieldStackVariants } from "./field-stack.variants";
 
@@ -18,24 +19,29 @@ export const FieldStack = forwardRef<HTMLDivElement, FieldStackProps>(
 		ref,
 	) {
 		return (
-			<div
-					ref={ref}
-					data-figma-render={dataFigmaRender}
-					data-figma-component-id={dataFigmaComponentId}
-					className={cn(fieldStackVariants(), className)}
-					{...props}
-				>
-				<div
+			<Box
+				ref={ref}
+				data-figma-render={dataFigmaRender}
+				data-figma-component-id={dataFigmaComponentId}
+				data-figma-layout-kind="composition"
+				data-figma-layout-layer="field-stack"
+				className={cn(fieldStackVariants(), className)}
+				{...props}
+			>
+				<Slot
 					className="field-stack__content"
-					data-layout-slot="true"
-					data-slot="content"
 					data-figma-render="slot"
-					data-figma-property-name="content"
+					data-figma-layout-kind="composition"
+					data-figma-layout-layer="slot"
+					data-figma-layout-slot="content"
+					data-figma-layout-gap="spacing-8"
 					data-figma-property-contents-slot={dataFigmaContentsSlot ?? "slot"}
+					gap="var(--spacing-8)"
+					name="content"
 				>
 					{children}
-				</div>
-			</div>
+				</Slot>
+			</Box>
 		);
 	},
 );

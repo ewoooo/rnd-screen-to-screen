@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { Box, Slot } from "../../primitives";
 import type { PageStackListProps } from "./PageStackList.types";
 import { pageStackListVariants } from "./page-stack-list.variants";
 
@@ -25,10 +26,13 @@ export const PageStackList = forwardRef<HTMLElement, PageStackListProps>(
 		const hasTitle = showTitle ?? Boolean(title);
 
 		return (
-			<section
+			<Box
+				as="section"
 				ref={ref}
 				data-figma-render={dataFigmaRender}
 				data-figma-component-id={dataFigmaComponentId}
+				data-figma-layout-kind="composition"
+				data-figma-layout-layer="section"
 				data-figma-property-contents-title={
 					dataFigmaContentsTitle ?? boolAttr(hasTitle)
 				}
@@ -37,27 +41,33 @@ export const PageStackList = forwardRef<HTMLElement, PageStackListProps>(
 				{...props}
 			>
 				{hasTitle ? (
-					<div
+					<Slot
 						className="page-stack-list__title"
-						data-layout-slot="true"
-						data-slot="title"
 						data-figma-render="slot"
-						data-figma-property-name="title"
+						data-figma-layout-kind="composition"
+						data-figma-layout-layer="slot"
+						data-figma-layout-slot="title"
+						data-figma-layout-gap="spacing-0"
+						gap="var(--spacing-0)"
+						name="title"
 					>
 						{title}
-					</div>
+					</Slot>
 				) : null}
-				<div
+				<Slot
 					className="page-stack-list__content"
-					data-layout-slot="true"
-					data-slot="content"
 					data-figma-render="slot"
-					data-figma-property-name="content"
+					data-figma-layout-kind="composition"
+					data-figma-layout-layer="slot"
+					data-figma-layout-slot="content"
+					data-figma-layout-gap="spacing-0"
 					data-figma-property-contents-slot={dataFigmaContentsSlot ?? "slot"}
+					gap="var(--spacing-0)"
+					name="content"
 				>
 					{children}
-				</div>
-			</section>
+				</Slot>
+			</Box>
 		);
 	},
 );
