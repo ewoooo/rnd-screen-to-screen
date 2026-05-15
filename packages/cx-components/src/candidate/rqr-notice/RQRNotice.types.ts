@@ -1,21 +1,21 @@
 import type { VariantProps } from "class-variance-authority";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import type { FigmaBridgeAttributes } from "../../types";
-import type { noticeVariants } from "./notice.variants";
+import type { rqrNoticeVariants } from "./rqr-notice.variants";
 
-export type NoticeFigmaBridgeProps = FigmaBridgeAttributes & {
+export type RQRNoticeFigmaBridgeProps = FigmaBridgeAttributes & {
 	"data-figma-property-title"?: "true" | "false";
 	"data-figma-property-tone"?: "info" | "negative" | "positive" | "cautionary";
 };
 
-type NativeNoticeProps = Omit<
+type NativeRQRNoticeProps = Omit<
 	ComponentPropsWithoutRef<"div">,
 	"children" | "title"
 >;
 
-export type NoticeProps = NativeNoticeProps &
-	VariantProps<typeof noticeVariants> &
-	NoticeFigmaBridgeProps & {
+export type RQRNoticeProps = NativeRQRNoticeProps &
+	VariantProps<typeof rqrNoticeVariants> &
+	RQRNoticeFigmaBridgeProps & {
 		title?: ReactNode;
 		children: ReactNode;
 	};

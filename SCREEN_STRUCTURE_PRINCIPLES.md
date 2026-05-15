@@ -35,6 +35,8 @@ AppScreen
 - section 사이의 구분은 route margin이 아니라 `SectionDivider` 같은 pattern node로 표현한다.
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
 - 하단 CTA는 본문 마지막 section이 아니라 `Bottom` 또는 `action-area`로 분리한다.
+- component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern으로 표현 가능하면 `reuse`로 기록한다.
+- `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
 - 정책 근거는 해당 section 또는 OGN node에 붙인다.
 
 ## 금지 신호
@@ -46,6 +48,7 @@ AppScreen
 - section title과 content의 책임이 OGN 내부와 layout wrapper에 중복된다.
 - 하단 CTA가 scroll content와 bottom chrome 사이에서 애매하게 섞인다.
 - 새 component가 필요해 보이지만 실제로는 기존 slot 이름이 부족한 상태다.
+- `reuse` 판단 없이 신규 candidate를 만들거나, 신규 candidate에 `RQR` 식별자가 없다.
 
 ## Primitive 사용 방식
 
@@ -78,7 +81,8 @@ AppScreen
     PageStackContents
       title: TitleSection
       content:
-        Notice
+        reuse: Callout
+        or new candidate: RQRNotice
       policy: POL-...
   Bottom
     SinglePrimaryAction
@@ -95,6 +99,7 @@ AppScreen
 3. route-level raw spacing 없이 layout package의 pattern contract로 표현되는가?
 4. Figma bridge가 읽을 수 있도록 layer, slot, auto-layout 의도가 남는가?
 5. 정책 필수 정보와 CTA가 정확한 section 또는 action-area에 연결되는가?
+6. component 후보가 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
 
 ## 관련 문서
 

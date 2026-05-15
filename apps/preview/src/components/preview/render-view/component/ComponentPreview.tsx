@@ -17,13 +17,17 @@ export function ComponentPreview() {
 	if (!selectedComponent) return null;
 
 	const example = getCxComponentPreviewExample(selectedComponent.id);
+	const branchDescription =
+		selectedComponent.status === "candidate"
+			? `${selectedComponent.importPath} · candidate/${selectedComponent.candidateKind}`
+			: selectedComponent.importPath;
 
 	return (
 		<section className="flex min-w-0 flex-col">
 			<PreviewHeader
 				eyebrow={COMPONENT_LAYER_LABEL[selectedComponent.layer]}
 				title={selectedComponent.name}
-				description={selectedComponent.importPath}
+				description={branchDescription}
 			/>
 			<PreviewCanvas layout="stack">
 				{example ? (

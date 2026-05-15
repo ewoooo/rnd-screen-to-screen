@@ -48,5 +48,5 @@
 @import "./components/tooltip/tooltip.css";
 @import "./components/underline-tab/underline-tab.css";
 
-/* Candidate: cx-tokens 어휘로 흡수되기 전 검증 단계의 컴포넌트 */
-@import "./candidate/notice/notice.css";
+/* Candidate: 요구사항 기반 신규 후보는 RQR 식별자를 유지한 채 검증한다. */
+@import "./candidate/rqr-notice/rqr-notice.css";

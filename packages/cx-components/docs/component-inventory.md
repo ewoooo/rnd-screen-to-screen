@@ -17,6 +17,20 @@ Package ownership:
 
 Rule of thumb: if a component needs CX visual styling or Figma component identity, it belongs in `cx-components`; if it describes placement, slots, or screen structure, it belongs in `pxds-layout`; if it is specific to one route family, keep it in app patterns or organisms.
 
+Candidate decision rule:
+
+- `reuse`: existing `components/*`, `candidate/*`, layout pattern, or domain organism composition covers the requirement.
+- `new`: a requirement needs a new CX visual component candidate because existing vocabulary cannot express the policy meaning, state, slot, or Figma bridge identity.
+- New requirement-derived candidates live under `src/candidate/rqr-{name}` and use `RQR{Name}` as the React export.
+- The candidate `componentId`, folder name, import subpath, and default `data-figma-component-id` use `rqr-{name}`.
+- Remove the `RQR` prefix only when the candidate is promoted into the active `components/*` vocabulary.
+
+Candidate registry guidance:
+
+- Active entries use `status: "active"` and must not carry `candidateKind`.
+- Candidate entries use `status: "candidate"` and must declare `candidateKind: "reuse" | "new"`.
+- `candidateKind: "new"` entries should keep the `RQR` name visible in preview until promotion.
+
 ## 2. Component Inventory Table
 
 | Component | Status | Implementation Target | Figma Source | Dependencies | Variants | Properties | Detail |
@@ -76,8 +90,10 @@ Rule of thumb: if a component needs CX visual styling or Figma component identit
 | Bottomsheet | 제작 완료 | cx-components / pxds-layout candidate | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
 | PageStackContents | 제작 완료 | pxds-layout | page-stack-contents | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot | 없음 | `data-figma-property-title-type`: instance swap; `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean; `data-figma-property-title-swap`: instance swap | [문서](components/base/page-stack-contents.md) |
 | PageStackList | 제작 완료 | cx-components / pxds-layout candidate | page-stack-list | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack | 없음 | `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean | [문서](components/base/page-stack-list.md) |
+| RQRNotice | candidate/new | cx-components candidate | rqr-notice | Text | Tone: info/negative/positive/cautionary | `data-figma-property-title`: boolean; `data-figma-property-tone`: tone | [문서](components/candidate/rqr-notice.md) |
 
 Status는 Figma/component 제작 상태만 네 단계로 기록한다: `검수 완료`, `제작 완료`, `제작 예정`, `없음`.
+RQR 후보는 정식 제작 상태가 아니라 생성 분기 상태를 나타내므로 `candidate/new`처럼 따로 표기한다.
 
 ## 3. Dependency Graph
 

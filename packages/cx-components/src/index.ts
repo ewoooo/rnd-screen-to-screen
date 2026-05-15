@@ -1,12 +1,13 @@
 export type {
-	NoticeFigmaBridgeProps,
-	NoticeProps,
-} from "./candidate/notice";
+	RQRNoticeFigmaBridgeProps,
+	RQRNoticeProps,
+} from "./candidate/rqr-notice";
 export {
-	Notice,
-	type NoticeTone,
-	noticeVariants,
-} from "./candidate/notice";
+	RQRNotice as Notice,
+	RQRNotice,
+	type RQRNoticeTone,
+	rqrNoticeVariants,
+} from "./candidate/rqr-notice";
 export type {
 	AccordionFigmaBridgeProps,
 	AccordionProps,

@@ -136,4 +136,14 @@ export const cxComponentPreviewRegistry = [
 		importPath: "@pxds/cx-components/components/divider",
 		status: "active",
 	},
+	{
+		id: "rqr-notice",
+		name: "RQRNotice",
+		layer: "base",
+		group: "feedback",
+		owner: "@pxds/cx-components",
+		importPath: "@pxds/cx-components/candidate/rqr-notice",
+		status: "candidate",
+		candidateKind: "new",
+	},
 ] as const satisfies readonly CxComponentPreviewEntry[];

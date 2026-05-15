@@ -13,17 +13,36 @@ export type CxComponentPreviewGroup =
 
 export type CxComponentPreviewStatus = "active" | "candidate";
 
+export type CxComponentPreviewCandidateKind = "reuse" | "new";
+
 export type CxComponentPreviewOwner = "@pxds/cx-components";
 
-export type CxComponentPreviewEntry = {
+type CxComponentPreviewBaseEntry = {
 	id: string;
 	name: string;
 	layer: CxComponentPreviewLayer;
 	group: CxComponentPreviewGroup;
 	owner: CxComponentPreviewOwner;
 	importPath: string;
-	status: CxComponentPreviewStatus;
 };
+
+export type CxComponentPreviewActiveEntry = CxComponentPreviewBaseEntry & {
+	status: "active";
+	candidateKind?: never;
+	sourceRequirementId?: never;
+	reuseOf?: never;
+};
+
+export type CxComponentPreviewCandidateEntry = CxComponentPreviewBaseEntry & {
+	status: "candidate";
+	candidateKind: CxComponentPreviewCandidateKind;
+	sourceRequirementId?: string;
+	reuseOf?: string;
+};
+
+export type CxComponentPreviewEntry =
+	| CxComponentPreviewActiveEntry
+	| CxComponentPreviewCandidateEntry;
 
 export type CxComponentPreviewCase = {
 	id: string;
