@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { DatabaseIcon, LayoutTemplateIcon, UploadIcon } from "lucide-react";
-import { NovaMbrPg002Screen, novaMbrPg002Config, novaMbrPg002Registry, novaMbrPg002LayoutRegistry } from "@screen/mobile/screen-components";
+import { screenFigmaExportMap } from "@screen/mobile/screen-components";
 import { traverseScreen, generateFigmaPluginCode } from "../../../../figma-sync/export";
 import {
 	createPxdsFigmaTokenTree,
@@ -22,6 +22,7 @@ import { createPxdsTokensStudioJson } from "@pxds/cx-tokens/tokens-studio";
 import { ActionRail } from "./ActionRail";
 import { ActionRailButton } from "./ActionRailButton";
 import { useComponentRegistry } from "@/contexts/component-registry-context";
+import { useScreenRegistry } from "@/contexts/screen-registry-context";
 
 const tokenRegistry = {
 	"_skt/primitive/default": primitiveTokens,
@@ -38,12 +39,14 @@ const tokensStudioJson = createPxdsTokensStudioJson(tokenRegistry);
 
 export function PreviewActionRail() {
 	const { selectedComponent } = useComponentRegistry();
+	const { selectedRoute } = useScreenRegistry();
 	const componentId = selectedComponent?.id ?? null;
 	const figmaSpec = getComponentFigmaSpec(componentId);
+	const screenExportEntry = screenFigmaExportMap[selectedRoute.id] ?? null;
 	const componentExportLabel = figmaSpec
 		? "Figma 플러그인 코드 복사"
 		: "이 컴포넌트의 Figma 스펙이 아직 없습니다";
-	const screenExportLabel = "현재 스크린의 renderable spec이 없습니다";
+	const screenExportLabel = `${selectedRoute.name} → Figma 코드 복사`;
 	const tokensStudioLabel = "Tokens Studio JSON 파일 생성";
 	const {
 		exportTokensStudioJson,
@@ -77,12 +80,17 @@ export function PreviewActionRail() {
 		setScreenExportStatus("copying");
 		setScreenExportError(null);
 		try {
-			const spec = traverseScreen(NovaMbrPg002Screen, novaMbrPg002Registry, novaMbrPg002LayoutRegistry, {
-				id: novaMbrPg002Config.id,
-				name: novaMbrPg002Config.name,
-				width: novaMbrPg002Config.figma?.width,
-				height: novaMbrPg002Config.figma?.height,
-			});
+			const spec = traverseScreen(
+				screenExportEntry?.Screen ?? (() => { throw new Error(`${selectedRoute.name}: Screen 컴포넌트가 등록되지 않았습니다`); }),
+				screenExportEntry?.registry ?? [],
+				screenExportEntry?.layoutRegistry ?? [],
+				{
+					id: selectedRoute.id,
+					name: selectedRoute.name,
+					width: screenExportEntry?.config.width ?? selectedRoute.figma?.width,
+					height: screenExportEntry?.config.height ?? selectedRoute.figma?.height,
+				},
+			);
 			const code = generateFigmaPluginCode(spec);
 			await navigator.clipboard.writeText(code);
 			setScreenExportStatus("copied");
@@ -114,7 +122,7 @@ export function PreviewActionRail() {
 				defaultIcon={LayoutTemplateIcon}
 				disabled={screenExportStatus === "copying"}
 				error={screenExportError}
-				label="NOVA-MBR-PG-002-0 Figma 코드 복사"
+				label={screenExportLabel}
 				onClick={() => void exportScreenToFigma()}
 				status={screenExportStatus}
 			/>

@@ -119,7 +119,6 @@ async function appendFrame(parent, node) {
   frame.name = node.name;
   frame.layoutMode = node.direction === "HORIZONTAL" ? "HORIZONTAL" : "VERTICAL";
   frame.primaryAxisSizingMode = "AUTO";
-  frame.counterAxisSizingMode = "FIXED";
   frame.itemSpacing = node.gap || 0;
   frame.paddingTop = node.paddingTop || 0;
   frame.paddingBottom = node.paddingBottom || 0;

@@ -53,7 +53,8 @@ type FigmaTextNodesValue = Record<string, string>;
 export type RegistryEntry = {
 	component: ComponentType<Record<string, unknown>>;
 	figmaName: string;
-	figmaVariant?: string;
+	/** 정적 variant 문자열, 또는 mappedProps 기반 동적 함수 */
+	figmaVariant?: string | ((mappedProps: Record<string, unknown>) => string | undefined);
 	mapProps?: (props: Record<string, unknown>) => Record<string, unknown>;
 	figmaTextNodes?:
 		| FigmaTextNodesValue
@@ -70,13 +71,8 @@ export type Registry = readonly RegistryEntry[];
 
 export type LayoutEntry = {
 	component: ComponentType<Record<string, unknown>>;
-	/** Figma frame 이름 */
 	name: string;
 	direction?: "VERTICAL" | "HORIZONTAL";
-	/**
-	 * props → frame 레이아웃 수치 매핑.
-	 * gap, paddingTop/Bottom/Left/Right (px 단위 숫자).
-	 */
 	mapLayout?: (props: Record<string, unknown>) => {
 		gap?: number;
 		paddingTop?: number;
@@ -127,7 +123,10 @@ export function traverseScreen(
 					"content",
 					nodes,
 				);
-			} else if (child.type === AppScreen.Bottom) {
+			} else if (
+				child.type === AppScreen.Bottom ||
+				child.type === AppScreen.ActionBar
+			) {
 				collectNodes(
 					(child.props as { children?: ReactNode }).children,
 					registry,
@@ -181,10 +180,15 @@ function resolveEntry(
 			? entry.figmaNestedProps(mappedProps)
 			: entry.figmaNestedProps;
 
+	const resolvedVariant =
+		typeof entry.figmaVariant === "function"
+			? entry.figmaVariant(mappedProps)
+			: entry.figmaVariant;
+
 	return {
 		type: "component",
 		figmaName: entry.figmaName,
-		...(entry.figmaVariant ? { figmaVariant: entry.figmaVariant } : {}),
+		...(resolvedVariant ? { figmaVariant: resolvedVariant } : {}),
 		slot,
 		props: mappedProps,
 		...(textOverrides ? { textOverrides } : {}),
@@ -239,16 +243,29 @@ function collectNodes(
 			continue;
 		}
 
-		// 3. 둘 다 아니면 — children 재귀 또는 컴포넌트 직접 호출
-		const inner = (child.props as { children?: ReactNode }).children;
-		if (inner) {
-			collectNodes(inner, registry, layoutRegistry, slot, out);
-		} else if (typeof child.type === "function") {
+		// 3. 매칭 없음 — 함수형이면 직접 호출 (hooks 없는 순수 컴포넌트만 안전)
+		//    forwardRef / HTML 요소이면 모든 ReactNode prop + children 재귀
+		if (typeof child.type === "function") {
 			try {
 				const rendered = (child.type as (p: unknown) => ReactElement)(child.props);
 				if (rendered) collectNodes(normalizeChildren(rendered), registry, layoutRegistry, slot, out);
 			} catch {
-				// hooks 등으로 실패하면 skip
+				// hooks 등 실패 → children 폴백
+				const inner = (child.props as { children?: ReactNode }).children;
+				if (inner) collectNodes(inner, registry, layoutRegistry, slot, out);
+			}
+		} else {
+			// forwardRef, HTML 요소 등 — children 포함 모든 ReactNode prop을 재귀
+			const props = child.props as Record<string, unknown>;
+			for (const [key, val] of Object.entries(props)) {
+				if (key === "children") {
+					if (val !== undefined && val !== null) {
+						collectNodes(val as ReactNode, registry, layoutRegistry, slot, out);
+					}
+				} else if (isValidElement(val)) {
+					// title, header 같이 prop으로 전달된 JSX도 재귀
+					collectNodes([val], registry, layoutRegistry, slot, out);
+				}
 			}
 		}
 	}
