@@ -12,6 +12,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	padding-block: var(--spacing-32);
 }
 
 .pxds-page-stack__title,
@@ -38,9 +39,10 @@
 
 .pxds-section-divider {
 	flex: none;
-	width: 100%;
+	margin-inline: calc(-1 * var(--content-inline-inset, 0px));
+	width: calc(100% + (var(--content-inline-inset, 0px) * 2));
 	border: 0;
-	background: var(--component-list-cell-divider);
+	background: var(--semantic-color-bg-alt, var(--component-list-cell-divider));
 }
 
 .pxds-section-divider--section {

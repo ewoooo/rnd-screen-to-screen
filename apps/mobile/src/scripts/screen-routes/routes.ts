@@ -9,6 +9,7 @@ import { screenConfig as novaMbrPg0010Route } from "../../app/(mbr)/NOVA-MBR-PG-
 import { screenConfig as novaMbrPg0020Route } from "../../app/(mbr)/NOVA-MBR-PG-002-0/Screen.config";
 import { screenConfig as novaMbrPg0030Route } from "../../app/(mbr)/NOVA-MBR-PG-003-0/Screen.config";
 import { screenConfig as novaMbrPg0050Route } from "../../app/(mbr)/NOVA-MBR-PG-005-0/Screen.config";
+import { screenConfig as novaMbrPgTextSectionProofRoute } from "../../app/(mbr)/NOVA-MBR-PG-TEXT-SECTION-PROOF/Screen.config";
 import type { ScreenRoute } from "./types";
 
 export const screenRoutes = [
@@ -23,6 +24,7 @@ export const screenRoutes = [
 	novaMbrPg0020Route,
 	novaMbrPg0030Route,
 	novaMbrPg0050Route,
+	novaMbrPgTextSectionProofRoute,
 ] as const satisfies readonly ScreenRoute[];
 
 export type ScreenId = (typeof screenRoutes)[number]["id"];

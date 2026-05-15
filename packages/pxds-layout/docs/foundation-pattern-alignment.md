@@ -17,7 +17,7 @@
 - 393 -> 369 -> 329 3단 그리드가 명명된 API가 아니라 padding/inset 조합으로 표현된다.
 - `StatusBar 59px + AppBar 48px = 107px` header contract가 layout API에 고정되어 있지 않다.
 - `BottomNavigation(88)`과 `ActionButton(102)`의 이분법을 막거나 표현하는 bottom zone API가 없다.
-- `Pagestack + Divider(393x4)` 반복 패턴이 layout primitive로 존재하지 않는다.
+- Figma 계층의 `PageStackContents`, `PageStackList + Divider(393x4)` 반복 패턴이 공식 layout composition으로 정리되어 있지 않다.
 - BottomSheet는 WDS modal wrapper에 가까우며, handle/title/content/action/scroll contract가 부족하다.
 - Popup runtime이 없다.
 - primitives가 `CSSProperties` 기반 raw spacing/style을 넓게 허용한다.
@@ -114,45 +114,39 @@ Pattern guide는 메인/브라우즈 화면의 `BottomNavigation(88)`과 상세/
 </AppScreen.ActionBar>
 ```
 
-### P0. Pagestack / section divider layout
+### P0. PageStackContents / PageStackList / section divider layout
 
-상세, 폼, 완료 화면의 기본 구조는 `Pagestack + Divider(393x4)` 반복이다. 현재는 이 계약이 layout에 없다.
+상세, 폼, 완료 화면의 기본 구조는 Figma에 명명된 `PageStackContents + SectionItem + Divider(393x4)` 반복이다. 공식 공개 vocabulary는 Figma 명칭과 맞춘 `PageStackContents`와 실제 content rail을 닫는 `SectionItem`이어야 하며, 일반화된 `PageStack` 패턴은 마이그레이션 중 내부 호환 또는 임시 별칭으로만 남기고 최종적으로 제거한다.
+
+`PageStackList`는 진짜 list-page layout contract가 필요할 때만 사용한다. 실제 `상세_정보 입력_인풋` 프레임은 `PageStackContents -> SectionItem`으로 충분하므로, form/detail 화면에 관성적으로 `PageStackList`를 끼우지 않는다. `@pxds/cx-components`에 있는 `PageStackList`는 기존 소비자를 위한 deprecated bridge로만 취급하고, 신규 화면과 마이그레이션 대상은 `@pxds/pxds-layout`의 Figma-named composition을 사용한다.
 
 필요한 API 후보:
 
-- `PageStack`
-- `PageStack.Title`
-- `PageStack.Slot`
-- `PageStack.Item`
+- `PageStackContents`
+- `PageStackList`
 - `ScreenSection`
 - `SectionDivider thickness="section|hairline"`
-- `LocalContentsFrame` 또는 `SlotItemFrame`
+- `SectionItem` 또는 `SlotItemFrame`
 
 기대 효과:
 
 - `ContentsTitle -> TitleSection`, `ContentsSlot -> item` 구조가 화면마다 같은 이름으로 드러난다.
 - 4px full-bleed section divider와 1px inner divider를 구분한다.
 - SDUI 슬롯 패턴을 route별 markup 관습이 아니라 layout contract로 만든다.
+- `cx-components`의 bridge 구현과 실제 layout contract 소유 위치가 분리되어, 소비자가 `pxds-layout` API로 이동할 수 있다.
 
 Text Section의 Figma 계층은 아래처럼 표현할 수 있어야 한다.
 
 ```tsx
-<PageStack>
-  <PageStack.Title>
-    <TitleSection />
-  </PageStack.Title>
-  <PageStack.Slot>
-    <PageStack.Item>
-      <PageStack.Inner>
-        <TextField />
-      </PageStack.Inner>
-    </PageStack.Item>
-  </PageStack.Slot>
-</PageStack>
+<PageStackContents title={<TitleSection />}>
+  <SectionItem>
+    <TextField />
+  </SectionItem>
+</PageStackContents>
 <SectionDivider thickness="section" />
 ```
 
-이 구조에서 `PageStack.Title`과 `PageStack.Slot`은 section rail 369를 사용하고, 실제 콘텐츠는 inner rail 329를 사용한다.
+이 구조에서 `PageStackContents`는 393px section root와 title slot을 소유하고, `SectionItem`은 실제 콘텐츠의 329px inner rail을 담당한다. 여러 field가 연속될 때만 `FieldStack` 같은 작은 composition을 `SectionItem` 안에 둔다. 기존 `PageStack.*` 형태는 이 구조로 수렴하기 전의 내부/임시 API로 본다.
 
 ### P0. Overlay, BottomSheet, Popup contract
 
@@ -277,7 +271,7 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 - `BottomNavigation`과 `ActionBar` 동시 사용
 - `AppScreen.Content` 밖 scroll container
 - raw 369px/329px width 직접 지정
-- section divider 없이 Pagestack 반복
+- section divider 없이 `PageStackContents`/`PageStackList` 반복
 - Popup content item 과다
 - pattern metadata 누락
 
@@ -302,7 +296,7 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 예상 모듈:
 
 - `app-screen`: root, system header, app header, content, bottom zone
-- `patterns`: form/list/detail/main/completion templates, pagestack, section divider, text section preset
+- `patterns`: form/list/detail/main/completion templates, PageStackContents, PageStackList, section divider, text section preset
 - `overlays`: bottom sheet, popup, backdrop
 - `primitives`: tokenized box/stack/grid/rail primitives
 
@@ -310,18 +304,21 @@ Layout package는 개발 중 생성 화면의 contract 위반을 알려줄 수 �
 
 1. Foundation spacing/radius/color alias와 3단 rail API를 먼저 추가한다.
 2. `AppScreen.Bottom`을 bottom kind 기반 API로 확장하고 기존 API는 compatibility로 유지한다.
-3. `PageStack`, `ScreenSection`, `SectionDivider`를 추가해 Text Section의 completion/form 화면부터 적용한다.
+3. `PageStackContents`, `PageStackList`, `ScreenSection`, `SectionDivider`를 `pxds-layout`에 추가해 Text Section의 completion/form 화면부터 적용한다.
 4. `headerPreset`과 `actionBarPreset`을 추가해 `107/117`, `102/108/154` 차이를 route raw style 없이 표현한다.
 5. BottomSheet compound API를 재정의하고 Popup runtime을 추가한다.
 6. Header overlay mode와 horizontal lane을 추가한다.
-7. primitives의 raw style escape hatch를 줄이고 dev checks를 추가한다.
-8. `apps/mobile`의 대표 화면 한두 개를 새 API로 옮겨 pattern coverage를 검증한다.
+7. `cx-components`의 `PageStackList`는 deprecated bridge로 표시하고 소비자를 `pxds-layout`의 `PageStackList`로 이동시킨다.
+8. 임시/internal `PageStack` API를 제거하거나 비공개 경계로 내린다.
+9. primitives의 raw style escape hatch를 줄이고 dev checks를 추가한다.
+10. `apps/mobile`의 대표 화면 한두 개를 새 API로 옮겨 pattern coverage를 검증한다.
 
 ## 완료 기준
 
 - 주요 화면 패턴(Form, List, Detail, Main, Completion, BottomSheet, Popup)을 route raw spacing 없이 조립할 수 있다.
 - 393/369/329 기준선이 layout API 이름으로 표현된다.
 - header 107/117, bottom navigation 88, action bar 102/108/154, divider 4px, bottom sheet x=32, popup x=16 규칙이 package에 모인다.
-- Text Section의 `PageStackContents -> ContentsTitle -> ContentsSlot -> SectionItem -> inner content` 계층을 layout API로 표현할 수 있다.
+- Text Section의 `PageStackContents -> ContentsTitle -> ContentsSlot -> SectionItem -> inner content` 계층을 `pxds-layout`의 공식 Figma-named layout API로 표현할 수 있다.
+- `cx-components`의 `PageStackList`는 deprecated bridge로 남고, 신규 소비자는 `pxds-layout`의 `PageStackList`를 사용한다.
 - 신규 화면에서 WDS Component를 기본 어휘로 선택하지 않아도 된다.
 - `DESIGN_FOUNDATION.md`와 `DESIGN_PATTERNS.md`의 반복 규칙이 code review 체크리스트가 아니라 layout runtime contract로 내려온다.

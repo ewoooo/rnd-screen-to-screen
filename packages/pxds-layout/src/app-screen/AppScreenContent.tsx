@@ -13,7 +13,8 @@ export type AppScreenHeaderPreset =
 export type AppScreenActionBarPreset =
 	| "pattern-102"
 	| "cx-default-108"
-	| "cx-with-text-154";
+	| "cx-with-text-154"
+	| "single-primary-cta";
 
 export type AppScreenContentProps = {
 	children: ReactNode;
@@ -131,11 +132,24 @@ function AppScreenChromeSlot({
 			style={{
 				flexShrink: 0,
 				background,
+				blockSize: getChromeSlotHeight(slot),
 			}}
 		>
 			{children}
 		</section>
 	);
+}
+
+function getChromeSlotHeight(slot: "systemHeader" | "header" | "bottom") {
+	if (slot === "systemHeader") {
+		return "var(--app-screen-system-header-height)";
+	}
+
+	if (slot === "header") {
+		return "var(--app-screen-app-header-height)";
+	}
+
+	return "var(--app-screen-action-bar-height)";
 }
 
 const headerPresetMetrics = {
@@ -170,6 +184,10 @@ const actionBarPresetMetrics = {
 	"cx-with-text-154": {
 		height: "154px",
 		contentBottomPadding: "154px",
+	},
+	"single-primary-cta": {
+		height: "108px",
+		contentBottomPadding: "108px",
 	},
 } satisfies Record<
 	AppScreenActionBarPreset,
