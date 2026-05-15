@@ -9,6 +9,8 @@
 		"./bottom-sheet": "./src/bottom-sheet/index.ts",
 		"./components/compositions": "./src/components/compositions/index.ts",
 		"./components/primitives": "./src/components/primitives/index.ts",
+		"./overlays": "./src/overlays/index.ts",
+		"./patterns": "./src/patterns/index.ts",
 		"./primitives": "./src/components/primitives/index.ts",
 		"./styles.css": "./src/styles.css"
 	},

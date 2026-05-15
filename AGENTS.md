@@ -17,11 +17,14 @@
 
 1. `packages/policy-core/policies/**/*.md` — 정책서 원문과 정책 항목의 문서 SOT
 2. `packages/policy-core/policies/**/*.policy.ts` — 화면과 카피가 참조할 수 있는 구조화된 정책 정의
-3. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing 등 디자인 foundation SOT
-4. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴 SOT
-5. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
+3. [SKT GenUI Test 0512](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_GenUI_Test_0512?node-id=12001-103520&t=MXbXJQlMpLVcgIv3-1) — 실제 페이지 목업 Figma SOT
+4. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing 등 디자인 foundation SOT
+5. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴 SOT
+6. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
 
 정책과 디자인 문서가 충돌하면 정책 의미를 먼저 보존하고, 표현 방식은 디자인 foundation과 pattern 안에서 해결한다. 문서화된 토큰·패턴·컴포넌트 어휘 밖의 inline UI, 자체 spacing, 자체 fontSize가 필요하면 임의 확장하지 말고 시스템 깨짐 신호로 기록한다.
+
+실제 페이지를 재현하거나 신규 화면의 시각 기준을 확인할 때는 Figma 목업 SOT를 함께 확인한다. Figma 목업은 최종 화면의 구체적 배치와 상태 참고 기준이며, foundation token과 pattern contract를 우회하는 근거로 사용하지 않는다.
 
 ## 핵심 질문
 
@@ -66,11 +69,12 @@
 
 1. `packages/policy-core/policies`에서 관련 정책 md와 `.policy.ts`를 확인한다.
 2. 정책의 필수 요구사항, 선택지, 제한 조건, evidence/sourceRef, 사용자에게 보여줄 copy를 분리한다.
-3. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
-4. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
-5. 구현은 `@pxds/pxds-layout`, `@pxds/pxds-components`, `@pxds/pxds-icons`, `@pxds/cx-tokens`의 공개 surface를 사용한다.
-6. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
-7. preview에서 screen, component, policy registry를 통해 생성 결과를 탐색 가능하게 유지한다.
+3. 실제 페이지 재현이 필요한 경우 Figma 목업 SOT에서 배치, 상태, 콘텐츠 위계를 확인한다.
+4. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
+5. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
+6. 구현은 `@pxds/pxds-layout`, `@pxds/pxds-components`, `@pxds/pxds-icons`, `@pxds/cx-tokens`의 공개 surface를 사용한다.
+7. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
+8. preview에서 screen, component, policy registry를 통해 생성 결과를 탐색 가능하게 유지한다.
 
 ## 패키지 책임
 

@@ -5,7 +5,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-
+import type { AppScreenActionBarPreset } from "./AppScreenContent";
 import { AppScreenContent } from "./AppScreenContent";
 import { AppScreenRoot } from "./AppScreenRoot";
 import { StatusBar } from "./StatusBar";
@@ -14,6 +14,10 @@ type Props = ComponentProps<typeof AppScreenContent>;
 type SlotProps = {
   children: ReactNode;
 };
+type ActionBarSlotProps = {
+  children: ReactNode;
+  preset?: AppScreenActionBarPreset;
+};
 type SystemHeaderSlotProps = {
   children?: ReactNode;
 };
@@ -21,7 +25,8 @@ type AppScreenComponent = ((props: Props) => ReactElement) & {
   SystemHeader: (props: SystemHeaderSlotProps) => ReactElement;
   Header: (props: SlotProps) => ReactElement;
   Content: (props: SlotProps) => ReactElement;
-  Bottom: (props: SlotProps) => ReactElement;
+  Bottom: (props: ActionBarSlotProps) => ReactElement;
+  ActionBar: (props: ActionBarSlotProps) => ReactElement;
 };
 
 const SLOT_KIND = Symbol("AppScreenSlot");
@@ -29,10 +34,17 @@ type SlotKind = "systemHeader" | "header" | "content" | "bottom";
 type SlotComponent = ((props: SlotProps) => ReactElement) & {
   [SLOT_KIND]: SlotKind;
 };
+type ActionBarSlotComponent = ((props: ActionBarSlotProps) => ReactElement) & {
+  [SLOT_KIND]: "bottom";
+};
 type SystemHeaderSlotComponent = ((
   props: SystemHeaderSlotProps,
 ) => ReactElement) & {
   [SLOT_KIND]: "systemHeader";
+};
+
+type CompoundSlots = Partial<Record<SlotKind, ReactNode>> & {
+  actionBarPreset?: AppScreenActionBarPreset;
 };
 
 export const AppScreen = Object.assign(
@@ -52,6 +64,9 @@ export const AppScreen = Object.assign(
           systemHeader={compoundSlots.systemHeader ?? contentProps.systemHeader}
           header={compoundSlots.header ?? contentProps.header}
           bottom={compoundSlots.bottom ?? contentProps.bottom}
+          actionBarPreset={
+            compoundSlots.actionBarPreset ?? contentProps.actionBarPreset
+          }
         >
           {contentChildren}
         </AppScreenContent>
@@ -62,7 +77,8 @@ export const AppScreen = Object.assign(
     SystemHeader: createSystemHeaderSlot(),
     Header: createSlot("header"),
     Content: createSlot("content"),
-    Bottom: createSlot("bottom"),
+    Bottom: createActionBarSlot(),
+    ActionBar: createActionBarSlot(),
   },
 ) satisfies AppScreenComponent;
 
@@ -81,7 +97,7 @@ function createSystemHeaderSlot(): SystemHeaderSlotComponent {
 }
 
 function readCompoundSlots(children: ReactNode) {
-  const slots: Partial<Record<SlotKind, ReactNode>> = {};
+  const slots: CompoundSlots = {};
   const content: ReactNode[] = [];
 
   Children.forEach(children, (child) => {
@@ -104,6 +120,10 @@ function readCompoundSlots(children: ReactNode) {
     }
 
     slots[kind] = kind === "systemHeader" ? child : getSlotChildren(child);
+
+    if (kind === "bottom") {
+      slots.actionBarPreset = getActionBarPreset(child);
+    }
   });
 
   if (content.length > 0) {
@@ -120,4 +140,16 @@ function getSlotKind(element: ReactElement): SlotKind | undefined {
 
 function getSlotChildren(element: ReactElement): ReactNode {
   return (element as ReactElement<SlotProps>).props.children;
+}
+
+function createActionBarSlot(): ActionBarSlotComponent {
+  const Slot: ActionBarSlotComponent = ({ children }) => <>{children}</>;
+  Slot[SLOT_KIND] = "bottom";
+  return Slot;
+}
+
+function getActionBarPreset(
+  element: ReactElement,
+): AppScreenActionBarPreset | undefined {
+  return (element as ReactElement<ActionBarSlotProps>).props.preset;
 }

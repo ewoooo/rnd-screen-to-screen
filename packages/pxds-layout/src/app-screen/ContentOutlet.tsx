@@ -1,9 +1,10 @@
 import type { CSSProperties, PropsWithChildren } from "react";
-
+import type { AppScreenActionBarPreset } from "./AppScreenContent";
 import { ContentLayoutProvider } from "./ContentLayout";
 
 type Props = PropsWithChildren<{
 	inlineInset: string;
+	actionBarPreset?: AppScreenActionBarPreset;
 	style?: CSSProperties;
 }>;
 
@@ -14,10 +15,16 @@ type Props = PropsWithChildren<{
  * 기본은 `flex: 1` + `overflow-y: auto` + 세로 flex.
  * padding(헤더·GNB safe area) 과 gap 같은 콘텐츠 레이아웃은 호출자가 style 로 주입.
  */
-export function ContentOutlet({ children, inlineInset, style }: Props) {
+export function ContentOutlet({
+	actionBarPreset,
+	children,
+	inlineInset,
+	style,
+}: Props) {
 	return (
 		<div
 			className="content-outlet"
+			data-app-screen-action-bar-preset={actionBarPreset}
 			style={{
 				"--content-inline-inset": inlineInset,
 				display: "flex",
