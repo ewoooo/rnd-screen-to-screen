@@ -8,6 +8,7 @@
 - domain: `mbr`
 - pattern: `form-entry` / single-select 인증 수단 선택
 - 단계: 회원 가입 3/5 (legacy `ProgressTopBar.percent=60`)
+- policy map: `Screen.map.md`
 - required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - baseline standard: `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md`
 
@@ -226,17 +227,19 @@ AppScreen
 
 ## Section Specs
 
-| section | title | primary components | policy |
+Policy requirement details live in `Screen.map.md`. This section records only the structural owner for each mapped OGN.
+
+| section | title | primary components | map source |
 | --- | --- | --- | --- |
-| `intro` | `본인 확인을 위해 인증 수단을 선택해주세요` | `PageStackContents`, `TitleMain` | POL-MBR-AUTH-INTRO (TBD) — 회원 가입 3/5 단계와 30일 재인증 면제 안내 |
-| `method` | `인증 수단 선택` | `PageStackContents`, `TitleSection`, `SectionItem`, `RQRListOption`, `Callout` | POL-MBR-AUTH-METHOD (TBD) — kakao/pass/sms/ipin 4종 single-select, Kakao 추천 |
-| `method.policy` | `인증 정책 안내` | `Callout` | POL-MBR-AUTH-LIMIT (TBD) — 인증 5회 연속 실패 시 30분 제한, 인증기관 추가 약관 가능 |
+| `intro` | `본인 확인을 위해 인증 수단을 선택해주세요` | `PageStackContents`, `TitleMain` | `ogn-mbr-auth-intro` in `Screen.map.md` |
+| `method` | `인증 수단 선택` | `PageStackContents`, `TitleSection`, `SectionItem`, `RQRListOption`, `Callout` | `ogn-mbr-auth-method-selector` in `Screen.map.md` |
+| `method.policy` | `인증 정책 안내` | `Callout` | `ogn-mbr-auth-policy-callout` in `Screen.map.md` |
 
 ## Action Contract
 
-| element | label | variant | role | policy |
+| element | label | variant | role | map source |
 | --- | --- | --- | --- | --- |
-| Primary CTA | `인증하기` | `primary` | 선택한 외부 인증 수단으로 진행 | POL-MBR-AUTH-METHOD (TBD) |
+| Primary CTA | `인증하기` | `primary` | 선택한 외부 인증 수단으로 진행 | `ogn-mbr-auth-primary-action` in `Screen.map.md` |
 
 - Initial selected method is `null`, so the CTA is disabled until selection.
 - Kakao remains visually recommended through `badgeText="추천"`, not through default selection.
@@ -262,7 +265,7 @@ AppScreen
 
 ## Open Questions
 
-1. **policy ref 채번** — 인증 수단 선택, 인증 실패 제한, 인증기관 추가 약관 정책 ID가 policy-core에 아직 없다.
+1. **policy conflict 해소** — 상세 정책 불일치와 누락 근거는 `Screen.map.md` 의 `Open Questions / Missing Evidence`가 소유한다.
 2. **default selection 정책** — legacy/current screen은 Kakao를 기본 선택한다. 명시 선택이 필요한 정책이라면 초기값과 CTA disabled 조건을 함께 바꿔야 한다.
 3. **외부 인증 flow trigger** — "인증하기"가 Kakao/PASS/SMS/IPIN 중 어떤 SDK 또는 route를 호출하는지 본 변환 범위 밖이다.
 4. **카피 원문 확정** — option description, "추천" badge, Callout copy는 현재 화면 원문을 보존했다. policy-core 확정 copy와 대조 필요.

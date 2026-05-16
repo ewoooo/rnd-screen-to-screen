@@ -14,4 +14,26 @@ export const screenConfig = defineScreenConfig({
 	node: {
 		kind: "screen",
 	},
+	generation: {
+		source: "legacy-conversion-map-backfill",
+		pattern: "form-entry",
+		policyRefs: [
+			"POL-MBR-AUTH-002-01",
+			"POL-MBR-AUTH-005-01",
+			"POL-MBR-AUTH-005-03",
+		],
+		ognIds: [
+			"ogn-mbr-auth-app-bar",
+			"ogn-mbr-auth-intro",
+			"ogn-mbr-auth-method-selector",
+			"ogn-mbr-auth-policy-callout",
+			"ogn-mbr-auth-primary-action",
+		],
+		designDocsChecked: [
+			"DESIGN_PATTERNS.md",
+			"DESIGN_FOUNDATION.md",
+			"SPACING_PATTERNS.md",
+			"SCREEN_STRUCTURE_PRINCIPLES.md",
+		],
+	},
 } as const satisfies ScreenRouteConfig);
