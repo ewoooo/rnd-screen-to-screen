@@ -41,7 +41,7 @@ AppScreen
 
 ## Diagram 제작 원칙
 
-`Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, component vocabulary로 조립할지만 판단한다.
+`Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, component vocabulary로 조립할지만 판단한다. Phase 3에서는 먼저 유사한 `Screen Wire` reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
 
 - Diagram은 아래 섹션 순서를 고정한다.
   1. `Screen Contract`
@@ -49,6 +49,10 @@ AppScreen
   3. `Section Contracts`
   4. `Policy / OGN Matrix`
   5. `Distortion Gates`
+- `Screen Contract`에는 `wireReference`를 기록한다. 선택한 reference 경로, 유사하게 따른 부분, 의도적으로 따르지 않는 부분, reference 한계를 짧게 남긴다.
+- Wire reference 후보는 `apps/mobile/src/diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.md`에서 찾는다. list 화면은 `apps/mobile/src/diagrams/skt-genui-test-0512/node-14243-28824`, detail/form 성격은 `node-14243-28433`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
+- Wire reference는 AppScreen rail, section order, summary/list/search/filter zones, card density, CTA position, visible divider band 같은 시각 구조만 참고한다. 정책 필수 정보, copy, 에러, CTA 의미는 `Screen.map.md` 기준으로만 확정한다.
+- `reference-only`, `unknown-from-figma-only/TBD`, `unknown/unregistered-from-figma` 값은 policy ID, OGN ID, route 계약, copy 근거로 승격하지 않는다.
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
 - `Screen Wire`는 실제 화면처럼 읽히는 ASCII wire로 작성한다. 상태바, 앱바, 본문 copy, 카드/목록/필드/CTA를 화면에 보이는 형태로 묘사하고, 주요 의미 영역에는 `[intro]`, `[terms]`, `[actions]` 같은 section id를 붙인다.
 - `Screen Wire`에는 AppScreen의 물리 slot rail을 반드시 표시한다. `├─Header─┤`, `├─Content─┤`, `├─Bottom─┤`를 사용해 생성 에이전트가 chrome, scroll body, fixed action zone을 즉시 구분하게 한다.
@@ -59,7 +63,7 @@ AppScreen
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
 - 하단 CTA는 본문 마지막 section이 아니라 `Bottom(preset="...")`으로 분리한다. `AppScreen.Bottom`이 표준 물리 slot이며, `AppScreen.ActionBar`는 같은 bottom slot의 런타임 호환 alias로만 본다. 신규 diagram 표준에는 `AppScreen.ActionBar`를 쓰지 않는다.
 - 버튼, 배지, 아이콘, 라디오/체크 같은 기초 component는 route에 직접 흩뿌리지 않고 `Pattern` 또는 `Organism`의 이름 있는 slot 안에 둔다.
-- component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern으로 표현 가능하면 `reuse`로 기록한다.
+- component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 먼저 wire reference에서 유사 section/part를 찾고, 그 다음 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern, 기존 organism으로 표현 가능하면 `reuse`로 기록한다.
 - `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
 - 정책 근거는 `Screen.map.md` 에서 확정한 요구사항을 기준으로 해당 section 또는 OGN node에 붙인다.
 
@@ -97,6 +101,21 @@ AppScreen
 - `Divider`는 실제 렌더되는 section divider band가 있을 때만 쓴다. 단순 문서 가독성용 선은 `Divider`로 표기하지 않는다.
 - `Screen Wire`에 등장한 section id는 모두 `Section Contracts`에 있어야 한다.
 
+### Wire Reference 기록 형식
+
+`Screen Contract`에는 아래 항목을 포함한다.
+
+```txt
+- wireReference:
+  - source: apps/mobile/src/diagrams/.../frame-xx.diagram.md
+  - matchedParts: AppScreen rail, summary card density, filter chips, dated list rows
+  - intentionalDifferences: policy-required error copy adds a notice section
+  - limitation: reference-only visual structure; policy/copy/OGN ids come from Screen.map.md and Screen.config.ts
+```
+
+- 유사 reference가 없으면 `source: none-found`로 적고, `matchedParts` 대신 `reason`을 남긴다.
+- Reference의 visual part를 그대로 쓰더라도 실제 section id와 OGN id는 현재 화면의 정책/도메인 기준으로 다시 붙인다.
+
 ## OGN별 Layout Strategy
 
 다이어그램은 OGN을 단순 나열하지 않고, 각 OGN이 기존 component vocabulary로 안정적으로 조립 가능한지까지 판단해야 한다. 신규 component 필요 여부는 시각 취향이 아니라 layout contract 충족 여부로 결정한다.
@@ -120,6 +139,13 @@ OGN: ogn-...
     new: RQR{Name}
     reason: 정책 의미, 상태, slot, Figma bridge identity, layout contract 중 충족 실패 항목
 ```
+
+### Reuse / New 판단 순서
+
+1. 현재 화면의 pattern, section role, AppScreen slot 구조가 가까운 wire reference를 찾는다.
+2. Reference의 유사 section/part가 기존 component, layout pattern, 기존 organism으로 구현 가능한지 확인한다.
+3. 구현 가능하면 `vocabularyDecision.reuse`에 reference part와 실제 component/pattern 이름을 함께 기록한다.
+4. Slot, wrapping, state, Figma bridge identity, 정책 의미 중 하나가 맞지 않아 layout contract가 깨지면 `vocabularyDecision.new`로 `RQR{Name}` candidate 또는 신규 organism을 기록한다.
 
 ### Layout Distortion Gate
 
@@ -272,9 +298,10 @@ AppScreen
 4. Figma bridge가 읽을 수 있도록 layer, slot, auto-layout 의도가 남는가?
 5. 정책 필수 정보와 CTA가 정확한 section 또는 `Bottom(preset="...")`에 연결되는가?
 6. 기초 component가 `Pattern` 또는 `Organism` slot 안에 배치되어 화면 의미 단위가 보존되는가?
-7. component 후보가 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
-8. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?
-9. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 reuse 판단을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
+7. `Screen Contract`에 `wireReference`가 있고, reference-only 한계와 의도적 차이가 기록되었는가?
+8. component 후보가 wire reference 탐색 이후 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
+9. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?
+10. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 reuse 판단을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
 
 ## 관련 문서
 
