@@ -123,9 +123,9 @@ export const screenConfig = defineScreenConfig({
 
 - 기존 1 → Phase 1
 - 기존 2 (SOT 6종 일괄 조회) → 해체. 페이즈별 고정 참고 문서로 분산(2단계 포괄 요구 제거)
-- 기존 3·4 → Phase 2
-- 기존 5·6·7 → Phase 3 (패턴 결정 + layoutStrategy + reuse/new + Diagram + Layout Distortion Gate)
-- 기존 8·9·10·11 → Phase 4
+- 기존 3 → Phase 2
+- 기존 4·5·6·7·8 → Phase 3 (패턴 결정 + layoutStrategy + reuse/new + Diagram + Layout Distortion Gate)
+- 기존 9·10·11 → Phase 4
 - 기존 11(route)·12(preview) → Phase 5
 - 기존 13(검증) + 검증 명령 나열 서술 → 절차 밖 공통 검증 게이트로 이동
 
