@@ -278,7 +278,7 @@ AppScreen
 
 ## 관련 문서
 
-- `SCREEN_GENERATION_FLOW.md` — SB 기반 스크린 생성 workflow
+- `SCREEN_GENERATION_FLOW.md` — SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
 - `DESIGN_FOUNDATION.md` — foundation token SOT
 - `DESIGN_PATTERNS.md` — 화면 pattern SOT
 - `SPACING_PATTERNS.md` — 화면·컴포넌트 spacing 실측 운영 규칙
