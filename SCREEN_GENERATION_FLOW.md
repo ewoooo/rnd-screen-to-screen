@@ -8,13 +8,15 @@ SB 기반 신규 생성 절차에서는 Figma SOT를 필수 대조 대상으로 
 
 > **검증은 절차 페이즈가 아니다.** `lint` / `build` / `check:*` 실행과 그 책임은 `AGENTS.md` 의 `## 공통 검증` 섹션이 단독 소유하는 절차 밖 게이트다.
 
+> **레이아웃 보존은 스크린 생성의 최우선 디자인 게이트다.** 정책 충실도는 무엇을 보여줄지 결정하고, 디자인 시스템은 어떻게 표현할지 제한하지만, Phase 3/4의 메인 에이전트 승인은 먼저 SB/wire reference/Diagram의 핵심 레이아웃이 보존됐는지 확인해야 한다. 레이아웃 보존을 해치는 정책 copy, component 선택, spacing 보정, 신규 OGN은 통과하지 않는다.
+
 ## 5 페이즈 계약
 
 | Phase | 책임 (단일) | 참고 문서 (고정) | 산출물 | 완료조건 (DoD) |
 |---|---|---|---|---|
 | **1 · Extract** | SB → 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출 | SB (입력) | 추출 요약 | 화면ID·도메인·OGN ID·정책태그 누락 0으로 목록화 |
 | **2 · Map** | 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정 | `packages/policy-core/policies/**/*.md`, `*.policy.ts`, `packages/policy-core/governance/**/*.md` | `Screen.map.md` | 모든 정책태그가 화면 정보/CTA/에러로 매핑되고, 관련 `UXP`/`UXPT`/`VOT` refs가 선정됨. 누락 시 다음 페이즈 진입 금지 |
-| **3 · Diagram** | 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2의 governance refs | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, OGN별 layoutStrategy·정책연결·governance 적용·reuse/new 표기 |
+| **3 · Diagram** | 유사 wire reference 탐색 + 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `apps/mobile/src/diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2의 governance refs | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, `wireReference`와 한계, OGN별 layoutStrategy·정책연결·governance 적용·reuse/new 표기 |
 | **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout` | `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
 | **5 · Register** | route catalog 등록 + preview 노출 확인 | `apps/mobile/src/scripts/screen-routes/` | `routes.ts` 등록 항목 | route 등록 + preview iframe에서 해당 route 진입 가능 |
 
@@ -26,7 +28,7 @@ SB 기반 신규 생성 절차에서는 Figma SOT를 필수 대조 대상으로 
 flowchart LR
     A["SB 첨부"] --> P1["Phase 1 · Extract<br/>SB → 화면ID/OGN/정책태그"]
     P1 --> P2["Phase 2 · Map<br/>정책 + governance → 요구 매트릭스"]
-    P2 --> P3["Phase 3 · Diagram<br/>패턴 + governance 적용 + layoutStrategy + Diagram"]
+    P2 --> P3["Phase 3 · Diagram<br/>wire reference + 패턴 + governance 적용 + layoutStrategy + Diagram"]
     P3 --> P4["Phase 4 · Build<br/>OGN + Screen + config"]
     P4 --> P5["Phase 5 · Register<br/>route catalog + preview"]
     P5 -.->|절차 밖| G["공통 검증 게이트<br/>(AGENTS.md 공통 검증)"]
@@ -34,21 +36,23 @@ flowchart LR
 
 ## 에이전트 역할 모델
 
-스크린 생성은 기본적으로 **메인 에이전트의 실제 생성**과 **서브 에이전트의 감독/교정**으로 나눈다. 이 역할 분리는 병렬 생성으로 산출물을 쪼개기 위한 규칙이 아니라, 정책 충실도와 디자인 시스템 일관성이 생성 중에 흔들리지 않도록 독립 검토 지점을 두기 위한 운영 모델이다.
+스크린 생성은 기본적으로 **메인 에이전트의 매니징/오케스트레이션**과 **서브 에이전트의 페이즈별 실무 생성**으로 나눈다. 이 역할 분리는 산출물 책임을 흐리기 위한 병렬화가 아니라, 메인 에이전트가 정책 충실도와 디자인 시스템 일관성을 관리하면서 서브 에이전트가 각 페이즈의 조사·작성·구현을 실행하도록 하는 운영 모델이다.
 
-메인 에이전트는 5페이즈 전체의 최종 산출물을 소유한다. SB 해석, `Screen.map.md`, `Screen.diagram.md`, `Screen.tsx`/organisms, `Screen.config.ts`, route 등록, 절차 밖 공통 검증 실행을 이어서 수행하고, 서브 에이전트의 지적을 반영할지 판단한 뒤 최종 코드와 문서를 정합하게 맞춘다.
+메인 에이전트는 5페이즈 전체의 방향과 최종 정합성을 소유하는 매니저다. 작업 범위를 해석하고, 페이즈별 서브 에이전트에게 입력·출력·완료조건을 지정하며, 산출물 사이의 불일치를 조정하고, `Screen.map.md → Screen.diagram.md → 구현 → config → route` 의 연결이 끊기지 않도록 최종 판단을 내린다. Phase 3/4에서는 레이아웃 보존을 최우선 승인 기준으로 삼고, 그 다음 정책 의미와 디자인 시스템 준수를 확인한다. 절차 밖 공통 검증 실행 여부와 실패 처리, deviation 기록 여부도 메인 에이전트가 결정한다.
 
-서브 에이전트는 생성 산출물을 직접 소유하지 않는 독립 reviewer로 둔다. 정책 원문·`.policy.ts`·governance refs 누락, sourceRef 오류, copy 과잉 해석, pattern/spacing/component vocabulary 이탈, OGN reuse/new 판단 오류를 찾고 교정 의견을 낸다. 서브 에이전트가 별도 구현을 맡는 경우에도 메인 에이전트가 `Screen.map.md → Screen.diagram.md → 구현 → config` 정합성의 최종 책임을 가진다.
+서브 에이전트는 메인 에이전트가 위임한 범위 안에서 실제 산출물을 만드는 워커다. Phase 1의 SB 추출, Phase 2의 정책/governance 조사와 `Screen.map.md` 초안, Phase 3의 구조 설계와 `Screen.diagram.md` 초안, Phase 4의 OGN/Screen/config 구현, Phase 5의 route 등록과 preview 확인을 맡을 수 있다. 서브 에이전트가 만든 산출물은 해당 페이즈의 작업 결과로 인정하되, 페이즈 간 최종 연결과 충돌 해결 책임은 메인 에이전트가 가진다.
 
-권장 개입 지점:
+권장 위임/점검 지점:
 
-- Phase 2 직후: `Screen.map.md` 의 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs 누락을 검토한다.
-- Phase 3 직후: `Screen.diagram.md` 의 pattern contract, layoutStrategy, Layout Distortion Gate, spacing 원칙, reuse/new 판단을 검토한다.
-- Phase 4/5 직후: 구현이 diagram과 config의 `policyRefs`/`ognIds`를 빠짐없이 반영하는지 검토한다.
+- Phase 1: 서브 에이전트가 SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy를 추출하고, 메인 에이전트가 누락 0 상태인지 확인한다.
+- Phase 2: 서브 에이전트가 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs를 조사해 `Screen.map.md`를 작성하고, 메인 에이전트가 정책 태그가 화면 정보/CTA/에러로 모두 매핑됐는지 승인한다.
+- Phase 3: 서브 에이전트가 유사 wire reference를 먼저 찾고, pattern contract, layoutStrategy, Layout Distortion Gate, spacing 원칙, reuse/new 판단을 반영해 `Screen.diagram.md`를 작성한다. 메인 에이전트는 SB/wire reference의 핵심 레이아웃이 보존되는지, Section/Slot/Stack 구조가 과도하게 변형되지 않았는지, CTA·navigation·notice·form field의 위치 관계가 task flow를 깨지 않는지 먼저 승인한 뒤 Phase 2의 정책/governance 요구 반영을 확인한다.
+- Phase 4: 서브 에이전트가 OGN, `Screen.tsx`, `Screen.config.ts`를 구현하고, 메인 에이전트가 실제 렌더링에서 `Screen.diagram.md`의 section/slot/stack 배치가 보존되는지 먼저 확인한다. 그 다음 diagram의 모든 OGN/slot과 config의 `generation` 블록이 맞물리는지, raw style 보정 없이 layout primitive와 token으로 구현됐는지, preview에서 layout distortion이 없는지 확인한다.
+- Phase 5: 서브 에이전트가 route catalog 등록과 preview 진입 확인을 수행하고, 메인 에이전트가 최종 검증 범위와 남길 기록을 확정한다.
 
-서브 리뷰는 모든 화면에 같은 강도로 적용하지 않는다. 단순 detail/complete 화면은 메인 에이전트 단독 진행 후 체크리스트로 충분할 수 있다. form, eligibility, error-heavy 화면, 신규 organism 또는 신규 pattern 후보, 정책 해석이 애매한 화면은 서브 에이전트 리뷰를 필수 게이트로 둔다.
+서브 위임은 모든 화면에 같은 강도로 적용하지 않는다. 단순 detail/complete 화면은 메인 에이전트가 직접 처리하거나 하나의 서브 에이전트에게 연속 위임할 수 있다. form, eligibility, error-heavy 화면, 신규 organism 또는 신규 pattern 후보, 정책 해석이 애매한 화면은 Phase 2/3/4를 분리해 위임하고 메인 에이전트의 승인 지점을 명확히 둔다.
 
-서브 에이전트 피드백은 원문을 별도 산출물로 늘리지 않는다. 반영된 결정은 해당 소유 파일에 기록한다. 정책·copy·governance 교정은 `Screen.map.md`, 구조·패턴·reuse/new 교정은 `Screen.diagram.md`, 구현 차이는 `Screen.config.ts` 또는 작업 로그의 `deviationReason`에 남긴다.
+서브 에이전트의 작업 메모나 중간 판단은 원문을 별도 산출물로 늘리지 않는다. 메인 에이전트가 승인한 결정만 해당 소유 파일에 반영한다. 정책·copy·governance 결정은 `Screen.map.md`, 구조·패턴·reuse/new 결정은 `Screen.diagram.md`, 구현 차이는 `Screen.config.ts` 또는 작업 로그의 `deviationReason`에 남긴다.
 
 ## 페이즈별 책임
 
@@ -71,12 +75,15 @@ flowchart LR
 
 ### Phase 3 · Diagram
 
-- 책임: 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + 컴포넌트 reuse/new 분기 + SB 기반 제작 Diagram 작성, Layout Distortion Gate 자체 통과.
-- 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2에서 선정한 `UXP`/`UXPT`/`VOT` refs
+- 책임: `apps/mobile/src/diagrams/` 와 기존 화면 `Screen.diagram.md` 에서 유사 wire reference를 먼저 찾고, 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + 컴포넌트 reuse/new 분기 + SB 기반 제작 Diagram 작성, Layout Distortion Gate 자체 통과.
+- 참고: `apps/mobile/src/diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2에서 선정한 `UXP`/`UXPT`/`VOT` refs
 - 산출: `Screen.diagram.md` — **모든 화면 의무다.** 신규/기존 구분 없이 모든 화면이 이 산출물을 가진다.
-- DoD: Diagram이 `Screen → Chrome → Section → Slot → Stack → Component` 구조로 설명되고, 각 OGN에 layoutStrategy·정책 연결·governance 적용·reuse/new 표기가 있다.
+- DoD: Diagram이 `Screen → Chrome → Section → Slot → Stack → Component` 구조로 설명되고, `Screen Contract`에 `wireReference`와 reference 한계가 기록되며, 각 OGN에 layoutStrategy·정책 연결·governance 적용·reuse/new 표기가 있다.
+- 메인 에이전트 디자인 검수는 레이아웃 보존을 최우선으로 한다. SB/wire reference의 핵심 레이아웃, section 경계, slot 위치, CTA/navigation/notice/form field의 위치 관계, scroll/fixed 영역의 역할이 보존되지 않으면 정책·copy·component 판단이 맞아도 승인하지 않는다.
+- 정책 정보 추가로 레이아웃이 늘어질 위험이 있으면 `Screen.diagram.md`에 접기, 분리, 우선순위 조정, 별도 state 처리 같은 layout preservation decision을 남긴다.
 - 이 페이즈는 governance를 새로 탐색하지 않는다. Phase 2에서 선정된 governance refs를 CTA hierarchy, button label, state handling, error/empty/loading treatment, navigation, writing tone 검증 기준으로 적용한다.
 - 기록 항목: `appliedGovernanceRefs`, `sectionId`, `layoutOrStateDecision`, `copyDecision`, `CTA hierarchy/label decision`, `distortionRisk mitigated by governance`.
+- Wire reference는 시각 구조와 밀도(AppScreen rail, section boundary, card/list/form/CTA placement, divider 사용)만 참고한다. `reference-only`, `unknown-from-figma-only/TBD`, `unknown/unregistered-from-figma` 값은 policy ID, OGN ID, route 계약, copy 근거로 승격하지 않는다.
 - Diagram 작성 규칙, OGN별 layoutStrategy 형식, Layout Distortion Gate, 금지 신호, 설계 체크리스트의 상세는 `SCREEN_STRUCTURE_PRINCIPLES.md` 가 단독 소유한다. 이 문서는 그 규칙을 재서술하지 않고 그 문서를 따른다.
 
 ### Phase 4 · Build
@@ -85,6 +92,8 @@ flowchart LR
 - 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`. `@pxds/pxds-components` / `@pxds/pxds-icons` 는 deprecated 호환 경계로만 다룬다.
 - 산출: `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts`
 - DoD: Diagram의 모든 OGN/슬롯이 코드에 존재하고, `Screen.config.ts` 의 `generation` 블록이 채워진다.
+- 메인 에이전트 구현 검수는 실제 렌더링에서 레이아웃 보존 여부를 먼저 본다. `Screen.diagram.md`의 section/slot/stack 배치, 하단 CTA/fixed 영역, scroll/content 영역, 모바일 viewport 줄바꿈, overflow, 겹침, 과도한 여백을 preview에서 확인한다.
+- route/screen/organism은 raw margin, padding, fontSize, color로 레이아웃을 억지 보정하지 않는다. layout primitive와 foundation token으로 보존할 수 없는 경우 임의 구현하지 않고 `deviationReason` 또는 component vocabulary 보강 후보로 기록한다.
 - 기록 항목: `Screen.config.ts generation.governanceRefs`(지원 시), 또는 구현 PR/작업 로그에 `implementedGovernanceRefs`, `diagramSection`, `component/organism owner`, `deviationReason`(diagram과 다를 때)을 남긴다. Build 단계에서 새 governance 해석을 추가하지 않는다.
 
 ### Phase 5 · Register
@@ -126,7 +135,7 @@ Phase 2 이후 산출물은 governance 확인 결과를 아래처럼 이어 받�
 | File | 책임 | 핵심 질문 | 담지 않는 것 |
 | --- | --- | --- | --- |
 | `Screen.map.md` | 정책 요구와 governance refs를 화면 요구로 번역하는 Phase 2 SOT | 무엇이 왜 화면에 있어야 하고, 어떤 UX/writing/state 규칙을 지켜야 하는가? | layoutStrategy, spacing, component reuse/new, AppScreen slot 구조, route 등록 정보 |
-| `Screen.diagram.md` | 화면 구조와 layout/governance 적용 판단을 기록하는 Phase 3 SOT | 그 요구를 어떤 구조로 조립하고, 선정된 governance를 어떻게 반영하는가? | 정책 원문/sourceRef 상세 매트릭스, route catalog metadata, `createdAt`/`owner`/`status` |
+| `Screen.diagram.md` | 화면 구조와 layout/governance/wire reference 적용 판단을 기록하는 Phase 3 SOT | 그 요구를 어떤 시각 reference와 구조로 조립하고, 선정된 governance를 어떻게 반영하는가? | 정책 원문/sourceRef 상세 매트릭스, route catalog metadata, `createdAt`/`owner`/`status` |
 | `Screen.config.ts` | route 등록과 생성 메타데이터를 담는 기계 계약 | 이 화면을 시스템이 어떻게 식별·노출·검증하는가? | 정책 요구 설명, 사용자 copy 전체, layoutStrategy, Screen Wire, 미결정 질문 |
 
 흐름은 `Policy/SB → Screen.map.md → Screen.diagram.md → Screen.tsx/organisms → Screen.config.ts` 순서다. `Screen.config.ts` 는 map과 diagram의 내용을 재서술하지 않고, `policyRefs` 와 `ognIds` 같은 검증 가능한 최소 ID 색인만 가진다.
@@ -180,7 +189,7 @@ export const screenConfig = defineScreenConfig({
 - 기존 1 → Phase 1
 - 기존 2 (SOT 6종 일괄 조회) → 해체. 페이즈별 고정 참고 문서로 분산(2단계 포괄 요구 제거)
 - 기존 3 → Phase 2 (+ governance refs 선정)
-- 기존 4·5·6·7·8 → Phase 3 (패턴 결정 + governance 적용 + layoutStrategy + reuse/new + Diagram + Layout Distortion Gate)
+- 기존 4·5·6·7·8 → Phase 3 (wire reference 탐색 + 패턴 결정 + governance 적용 + layoutStrategy + reuse/new + Diagram + Layout Distortion Gate)
 - 기존 9·10·11 → Phase 4
 - 기존 11(route)·12(preview) → Phase 5
 - 기존 13(검증) + 검증 명령 나열 서술 → 절차 밖 공통 검증 게이트로 이동

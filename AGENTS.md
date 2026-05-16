@@ -74,11 +74,11 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 
 새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
 
-메인 에이전트와 서브 에이전트의 감독/교정 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
+메인 에이전트의 매니징/오케스트레이션과 서브 에이전트의 페이즈별 실무 생성 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
-3. **Diagram** — 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
@@ -138,6 +138,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 
 ## 디자인 품질 기준
 
+- 레이아웃 보존이 모든 디자인 판단보다 우선한다. 정책 충실도는 무엇을 보여줄지 결정하고, 디자인 시스템은 어떻게 표현할지 제한하지만, 최종 승인은 SB/wire reference/Diagram의 핵심 레이아웃을 지켰는지를 먼저 본다.
 - Foundation token을 직접 값으로 흉내 내지 않는다. 색상은 semantic role, 텍스트는 text style, 간격은 spacing token을 우선한다.
 - 화면 패턴은 사용자의 과업 흐름을 보존해야 한다. form, detail, list, complete, bottom sheet, popup의 역할을 섞지 않는다.
 - 한 화면 안에서 CTA, navigation, error, notice의 위계가 즉시 읽혀야 한다.
