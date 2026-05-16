@@ -1,5 +1,7 @@
 # Screen Structure Principles
 
+> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다.
+
 모바일 화면과 `Screen.diagram.md`를 만들 때 먼저 적용하는 구조 원칙이다. 정책서와 Figma SOT를 읽은 뒤 곧바로 구현으로 가지 않고, 제한된 layout vocabulary로 화면의 뼈대를 먼저 정리한다.
 
 ## 핵심 인사이트
