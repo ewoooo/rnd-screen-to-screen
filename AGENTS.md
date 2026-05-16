@@ -64,29 +64,22 @@
 ├── DESIGN_PATTERNS.md    화면 패턴 SOT
 ├── SPACING_PATTERNS.md   화면·컴포넌트 spacing 실측 운영 규칙
 ├── SCREEN_STRUCTURE_PRINCIPLES.md  Diagram/화면 구조 원칙 SOT
-├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 workflow SOT
+├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
 ├── AGENTS.md             루트 운영 방향
 └── CLAUDE.md             AGENTS.md symlink
 ```
 
 ## 정책서 기반 화면 생성 흐름
 
-새 화면을 만들거나 기존 화면을 고칠 때는 아래 흐름을 기본으로 한다.
+새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
 
-SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다. 이 문서는 SB 구조 추출, 필수 SOT 조회, 제작 Diagram 생성, Diagram 검증, OGN 구현, Screen 조립, preview/검증까지의 표준 순서를 정의한다. Diagram과 화면 조립은 `SCREEN_STRUCTURE_PRINCIPLES.md`의 `Screen -> Chrome -> Section -> Slot -> Stack -> Component` 구조를 먼저 적용한다.
+1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
+2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리. 참고: `packages/policy-core/policies`.
+3. **Diagram** — 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`.
+5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
-1. SB에서 화면 ID, 도메인, 과업, 상태, CTA, 정책 태그, 도메인 모듈 ID, OGN ID, part/slot/hierarchy를 추출한다.
-2. `packages/policy-core/policies`에서 관련 정책 md와 `.policy.ts`를 확인한다.
-3. `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`를 반드시 조회한다.
-4. 정책의 필수 요구사항, 선택지, 제한 조건, evidence/sourceRef, 사용자에게 보여줄 copy를 분리한다.
-5. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
-6. 구현 전에 SB 기반 제작 Diagram을 작성한다. Diagram은 좌표 보정표가 아니라 AppScreen slot, section boundary, slot 이름, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여주어야 한다.
-7. Diagram 단계에서 정책 필수 정보, 정책서의 도메인 모듈 ID/OGN 포함 여부, 패턴/토큰/spacing 위반 여부를 검증한다.
-8. 정책서에 적힌 도메인 모듈 ID/OGN별로 반드시 `apps/mobile/src/organisms/<domain>/` 아래에 컴포넌트를 제작하거나 기존 OGN을 보강한다.
-9. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
-10. 구현은 `@pxds/pxds-layout`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`의 공개 surface를 우선 사용한다. `@pxds/pxds-components`와 `@pxds/pxds-icons`는 deprecated 호환 경계로만 다룬다.
-11. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
-12. preview에서 screen, component, policy registry를 통해 생성 결과를 탐색 가능하게 유지한다.
+페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md` 다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
 
 ## 패키지 책임
 
@@ -153,9 +146,9 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 
 ## 공통 검증
 
-작업 범위에 맞게 실행한다.
+검증은 스크린 생성 절차(`SCREEN_GENERATION_FLOW.md` 의 5페이즈)의 일부가 아니다. 절차 밖 게이트이며 이 섹션과 `@policy/core` 의 `check:*` 스크립트가 검증 명령·책임을 단독 소유한다. 작업 범위에 맞게 실행한다.
 
 - mobile: `npm run lint -w @screen/mobile`, `npm run build -w @screen/mobile`
 - preview: `npm run lint -w @screen/preview`, `npm run build -w @screen/preview`
-- policy: `npm run check:compliance -w @policy/core`
+- policy: `npm run check:compliance -w @policy/core` (= `check:policy-source` + `check:screen-generation`). 신규 화면 생성 정합성 강제는 `npm run check:screen-generation:strict -w @policy/core`.
 - package-only 변경: 관련 package의 타입/consumer build로 검증한다. 이 모노레포는 앱 빌드가 가장 현실적인 통합 검증이다.
