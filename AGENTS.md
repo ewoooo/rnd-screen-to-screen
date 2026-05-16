@@ -74,12 +74,12 @@
 새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
-2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리. 참고: `packages/policy-core/policies`.
+2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리. 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`).
 3. **Diagram** — 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
-페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md` 다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
+페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md`다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
 
 ## 패키지 책임
 
