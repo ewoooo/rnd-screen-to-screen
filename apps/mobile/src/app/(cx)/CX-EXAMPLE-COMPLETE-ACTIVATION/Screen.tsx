@@ -12,7 +12,7 @@ import {
 	AppScreen,
 	PageStackContents,
 	SinglePrimaryAction,
-} from "@pxds/pxds-layout/components";
+} from "@pxds/cx-layout/components";
 
 export function Screen() {
 	return (

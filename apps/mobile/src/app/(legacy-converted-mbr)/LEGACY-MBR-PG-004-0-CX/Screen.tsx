@@ -15,7 +15,7 @@ import {
 	PageStackContents,
 	SectionDivider,
 	SinglePrimaryAction,
-} from "@pxds/pxds-layout/components";
+} from "@pxds/cx-layout/components";
 
 type ImpactItem = {
 	id: string;

@@ -1,5 +1,5 @@
 import { Button, Notice, TextField } from "@pxds/cx-components";
-import { VStack } from "@pxds/pxds-layout/primitives";
+import { VStack } from "@pxds/cx-layout/primitives";
 import type { TextFieldGuardianRequestProps } from "./TextFieldGuardianRequest.config";
 
 export function TextFieldGuardianRequest({

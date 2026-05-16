@@ -251,8 +251,8 @@ AppScreen
 
 - Use `@pxds/cx-components` for `AppBar`, `Button`, `Callout`, `StatusBar`, `TitleMain`, `TitleSection`.
 - Use `ConsentTermsAccordion`, `CONSENT_ITEM_IDS`, `REQUIRED_CONSENT_IDS` from `@/organisms/mbr`.
-- `ConsentTermsAccordion` internally uses `Checkbox`, `AccordionList`, `Text` from `@pxds/cx-components` and `FieldStack` from `@pxds/pxds-layout/components/compositions`.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
+- `ConsentTermsAccordion` internally uses `Checkbox`, `AccordionList`, `Text` from `@pxds/cx-components` and `FieldStack` from `@pxds/cx-layout/components/compositions`.
+- Use `@pxds/cx-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` (deprecated legacy) or `@pxds/pxds-icons` (deprecated legacy).
 - Do NOT reuse `@/organisms/legacy-mbr/*`.
 - 본 화면은 가입 흐름의 첫 진입 화면이므로 `Section(intro) → TitleMain`을 유지한다.

@@ -54,10 +54,10 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 │   └── figma-export/  Figma export 보조 앱
 ├── packages/
 │   ├── policy-core/               Policy / UseCase / UX Governance 순수 문서 도메인
-│   ├── pxds-spec/                 screen/component registry와 UI 비의존 spec 타입
+│   ├── cx-spec/                 screen/component registry와 UI 비의존 spec 타입
 │   ├── cx-tokens/                 CX DS 기반 token SSOT
 │   ├── cx-icons/                  CX DS icon originals + registry + React wrapper
-│   ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
+│   ├── cx-layout/               AppScreen, content layout, bottom-sheet, layout primitives
 │   ├── cx-components/             최신 CX component package + inventory
 │   ├── pxds-figma/                Figma bridge/hooks/spec authoring
 │   └── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
@@ -76,10 +76,12 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 
 메인 에이전트의 매니징/오케스트레이션과 서브 에이전트의 페이즈별 실무 생성 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
 
+Codex 스킬을 사용할 수 있는 환경에서는 화면 생성/수정 요청에 `cx-screen-create`를 메인 오케스트레이션 스킬로 사용하고, 페이즈별로 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용한다. 특히 Phase 3는 `cx-screen-diagram`의 최신 Screen Wire/wireReference 규칙을 건너뛰지 않는다.
+
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
-3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
-4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`.
+3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
 페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md`다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
@@ -89,10 +91,10 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 ## 패키지 책임
 
 - `@policy/core` — 정책서 원문, use case, section, evidence reference, 구조화된 policy definition, UX governance source를 소유한다. Screen, route, component, UI runtime을 모른다.
-- `@pxds/pxds-spec` — screen/component registry와 kind 같은 UI 비의존 spec 타입을 소유한다.
+- `@pxds/cx-spec` — screen/component registry와 kind 같은 UI 비의존 spec 타입을 소유한다.
 - `@pxds/cx-tokens` — 런타임 시각 token 값의 SSOT. CX primitive/semantic token set과 generated CSS를 제공한다.
 - `@pxds/cx-icons` — CX DS Figma 원천 SVG, icon registry, React `Icon` wrapper 초안을 소유한다.
-- `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge를 소유한다.
+- `@pxds/cx-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge를 소유한다.
 - `@pxds/cx-components` — 최신 CX component package. 신규 화면/컴포넌트 제작의 기준 어휘와 구현 surface를 소유한다.
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring을 소유한다.
 - `apps/mobile` — 정책 기반 모바일 화면 route와 PXDS 화면 조립의 SOT. page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다.
@@ -105,14 +107,14 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 
 ```txt
 @policy/core
-  → @pxds/pxds-spec
+  → @pxds/cx-spec
   → apps/mobile screens
   → apps/preview
 
 @pxds/cx-tokens
   → @pxds/cx-icons
   → @pxds/cx-components
-  → @pxds/pxds-layout
+  → @pxds/cx-layout
   → apps/mobile
 
 @pxds/pxds-figma → apps/preview
@@ -123,7 +125,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - 기존 호환이 필요한 WDS/PXDS legacy component/icon은 현재 repo에 남은 실제 package 경계에서만 제한적으로 소비한다. 삭제된 `@pxds/pxds-components`, `@pxds/pxds-icons` import를 새로 추가하지 않는다.
 - 신규 구현은 `@pxds/cx-components`, `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`를 우선한다.
 - `@wanteddev/wds` 직접 import는 adapter/core 경계 안에 격리한다.
-- `@pxds/pxds-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수할 수 있다.
+- `@pxds/cx-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수할 수 있다.
 - `apps/*`는 필요한 공개 패키지만 소비한다.
 - `apps/mobile` 아래에 `src/components`를 두지 않는다.
 
@@ -132,7 +134,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - 정책 요구사항의 중요한 개념이 코드에서 보이게 한다. 화면 route는 큰 구조와 책임이 읽히는 지도여야 한다.
 - optional/fallback은 API/mock/spec 경계에서 처리하고 하위 component에는 확정 값을 넘긴다.
 - `useMemo` / `useCallback`은 기본 금지다. 렌더 비용이나 참조 안정성이 실제 문제가 되면 먼저 컴포넌트 경계, state 위치, 데이터 변환 위치를 조정한다.
-- route/screen에서 margin, padding, raw style로 기준선을 보정하지 않는다. layout 책임은 `@pxds/pxds-layout`의 template과 primitives가 가진다.
+- route/screen에서 margin, padding, raw style로 기준선을 보정하지 않는다. layout 책임은 `@pxds/cx-layout`의 template과 primitives가 가진다.
 - 새 component/variant/slot이 필요하면 먼저 `@pxds/cx-components`의 최신 어휘를 확인하고, 기존 molecule/pattern 축으로 표현 가능한지 검토한다. 삭제된 legacy adapter registry를 신규 기준으로 삼지 않는다.
 - 아름다운 UI는 token과 pattern을 벗어난 장식이 아니라, 정책 정보의 위계, 간격, 상태, 행동이 명확하게 정리된 결과여야 한다.
 

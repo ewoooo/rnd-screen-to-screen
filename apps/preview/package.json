@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@pxds/cx-components": "0.1.0",
+    "@pxds/cx-layout": "0.1.0",
+    "@pxds/cx-spec": "0.1.0",
     "@pxds/pxds-figma": "0.1.0",
     "@pxds/cx-tokens": "^0.1.0",
     "@screen/mobile": "0.1.0",

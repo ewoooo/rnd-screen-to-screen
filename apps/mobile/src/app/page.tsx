@@ -1,4 +1,4 @@
-import { Box, HStack, VStack } from "@pxds/pxds-layout/primitives";
+import { Box, HStack, VStack } from "@pxds/cx-layout/primitives";
 import Link from "next/link";
 import {
   isLegacyScreenId,

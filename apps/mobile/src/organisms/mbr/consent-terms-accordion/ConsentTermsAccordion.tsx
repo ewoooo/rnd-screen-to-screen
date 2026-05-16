@@ -1,7 +1,7 @@
 "use client";
 
 import { AccordionList, Checkbox, Text } from "@pxds/cx-components";
-import { FieldStack } from "@pxds/pxds-layout/components/compositions";
+import { FieldStack } from "@pxds/cx-layout/components/compositions";
 import type { ConsentTermsAccordionProps } from "./ConsentTermsAccordion.config";
 
 type ConsentItem = {

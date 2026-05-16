@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 
 import "@pxds/cx-tokens/style.css";
-import "@pxds/pxds-layout/styles.css";
+import "@pxds/cx-layout/styles.css";
 import "@pxds/cx-components/styles.css";
 import "../patterns/mbr/styles.css";
 import "./globals.css";

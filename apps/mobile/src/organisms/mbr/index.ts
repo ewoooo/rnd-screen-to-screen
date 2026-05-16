@@ -1,4 +1,4 @@
-import { defineRegistry } from "@pxds/pxds-spec";
+import { defineRegistry } from "@pxds/cx-spec";
 import { actionAreaTermsConfig } from "./action-area-terms";
 import { checkboxTermsConfig } from "./checkbox-terms";
 import { consentTermsAccordionConfig } from "./consent-terms-accordion";

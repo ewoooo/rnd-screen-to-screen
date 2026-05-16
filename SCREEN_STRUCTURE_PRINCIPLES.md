@@ -50,7 +50,7 @@ AppScreen
   4. `Policy / OGN Matrix`
   5. `Distortion Gates`
 - `Screen Contract`에는 `wireReference`를 기록한다. 선택한 reference 경로, 유사하게 따른 부분, 의도적으로 따르지 않는 부분, reference 한계를 짧게 남긴다.
-- Wire reference 후보는 `apps/mobile/src/diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.md`에서 찾는다. list 화면은 `apps/mobile/src/diagrams/skt-genui-test-0512/node-14243-28824`, detail/form 성격은 `node-14243-28433`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
+- Wire reference 후보는 `apps/mobile/src/screen-diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.md`에서 찾는다. list 화면은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text`, detail/form 성격은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
 - Wire reference는 AppScreen rail, section order, summary/list/search/filter zones, card density, CTA position, visible divider band 같은 시각 구조만 참고한다. 정책 필수 정보, copy, 에러, CTA 의미는 `Screen.map.md` 기준으로만 확정한다.
 - `reference-only`, `unknown-from-figma-only/TBD`, `unknown/unregistered-from-figma` 값은 policy ID, OGN ID, route 계약, copy 근거로 승격하지 않는다.
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
@@ -63,9 +63,34 @@ AppScreen
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
 - 하단 CTA는 본문 마지막 section이 아니라 `Bottom(preset="...")`으로 분리한다. `AppScreen.Bottom`이 표준 물리 slot이며, `AppScreen.ActionBar`는 같은 bottom slot의 런타임 호환 alias로만 본다. 신규 diagram 표준에는 `AppScreen.ActionBar`를 쓰지 않는다.
 - 버튼, 배지, 아이콘, 라디오/체크 같은 기초 component는 route에 직접 흩뿌리지 않고 `Pattern` 또는 `Organism`의 이름 있는 slot 안에 둔다.
-- component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 먼저 wire reference에서 유사 section/part를 찾고, 그 다음 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern, 기존 organism으로 표현 가능하면 `reuse`로 기록한다.
+- component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 먼저 wire reference에서 유사 section/part를 찾고, 그 다음 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/cx-layout` pattern, 기존 organism으로 표현 가능하면 `reuse`로 기록한다.
 - `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
 - 정책 근거는 `Screen.map.md` 에서 확정한 요구사항을 기준으로 해당 section 또는 OGN node에 붙인다.
+
+### Pattern Analysis Gate
+
+이 gate는 `Screen Wire`를 작성한 직후, `Section Contracts`를 확정하기 전에 통과한다. 목적은 큰 화면 패턴만 맞고 micro pattern이 흐려지는 일을 막는 것이다. 특히 `FieldStack` 간격, contents divider, section divider band, 카드 내부 row separator, field action slot을 서로 대체하지 않는다.
+
+각 section contract에는 아래 판단을 남긴다.
+
+```txt
+patternEvidence:
+  sectionBoundary: none | SectionDivider | contentsDivider | cardBoundary
+  fieldGrouping: none | single | FieldStack | FieldStackWithDividers
+  rowSeparators: none | Divider(type="contents") | Divider(type="section")
+  actionPlacement: none | Content | Bottom(preset="primary-cta") | inline field action
+patternDecision:
+  reuse: PageStackContents + FieldStack + SectionDivider
+  or reuse: FieldStackWithDividers candidate composition
+  or new: RQR{Name} / new organism candidate
+  reason: visible evidence and layout contract
+```
+
+- 실제 화면에 4px section band가 있으면 `sectionBoundary: SectionDivider`로 기록하고 `Screen Wire`에는 `├══Divider 4px / ...══┤`로 표시한다.
+- 같은 section 내부 row 사이 1px 선이 보이면 `rowSeparators: Divider(type="contents")`로 기록한다. 이를 `FieldStack` gap만으로 대체하지 않는다.
+- 입력 필드가 같은 의미 그룹 안에서 `TextField -> Divider -> TextField`로 보이면 `fieldGrouping: FieldStackWithDividers` 또는 신규 pattern 후보로 기록한다.
+- `TextField`의 우측 버튼처럼 필드 안에 들어가는 action은 `actionPlacement: inline field action`으로 기록한다. 별도 외부 버튼으로 분리하지 않는다.
+- evidence가 불분명하면 `patternDecision.reason`에 보류 사유를 남기고, 구현 단계에서 임의로 divider를 추가하거나 제거하지 않는다.
 
 ### Screen Wire 문법
 
@@ -107,7 +132,7 @@ AppScreen
 
 ```txt
 - wireReference:
-  - source: apps/mobile/src/diagrams/.../frame-xx.diagram.md
+  - source: apps/mobile/src/screen-diagrams/.../frame-xx.diagram.md
   - matchedParts: AppScreen rail, summary card density, filter chips, dated list rows
   - intentionalDifferences: policy-required error copy adds a notice section
   - limitation: reference-only visual structure; policy/copy/OGN ids come from Screen.map.md and Screen.config.ts
@@ -300,8 +325,9 @@ AppScreen
 6. 기초 component가 `Pattern` 또는 `Organism` slot 안에 배치되어 화면 의미 단위가 보존되는가?
 7. `Screen Contract`에 `wireReference`가 있고, reference-only 한계와 의도적 차이가 기록되었는가?
 8. component 후보가 wire reference 탐색 이후 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
-9. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?
-10. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 reuse 판단을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
+9. 각 section에 `patternEvidence`와 `patternDecision`이 있으며, section divider와 contents divider, field gap과 row separator를 혼동하지 않았는가?
+10. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?
+11. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 reuse 판단을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
 
 ## 관련 문서
 
@@ -309,5 +335,5 @@ AppScreen
 - `DESIGN_FOUNDATION.md` — foundation token SOT
 - `DESIGN_PATTERNS.md` — 화면 pattern SOT
 - `SPACING_PATTERNS.md` — 화면·컴포넌트 spacing 실측 운영 규칙
-- `packages/pxds-layout/docs/simple-page-structure-insight.md` — 실제 케이스에서 얻은 상세 기록
-- `packages/pxds-layout/docs/figma-attribute.md` — Figma bridge attribute contract
+- `packages/cx-layout/docs/simple-page-structure-insight.md` — 실제 케이스에서 얻은 상세 기록
+- `packages/cx-layout/docs/figma-attribute.md` — Figma bridge attribute contract

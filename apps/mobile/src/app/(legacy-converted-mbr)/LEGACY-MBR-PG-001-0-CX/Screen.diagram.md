@@ -248,7 +248,7 @@ Policy requirement details live in `Screen.map.md`. This section records only th
 ## Implementation Contract
 
 - Use `@pxds/cx-components` for `AppBar`, `Button`, `Callout`, `RQRListOption`, `SectionItem`, `StatusBar`, `TitleMain`, `TitleSection`.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
+- Use `@pxds/cx-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` or `@pxds/pxds-icons`.
 - Do NOT reuse `@/organisms/legacy-mbr/*`. If this selector grows beyond route assembly, create a CX organism under `@/organisms/mbr/`.
 - `AppScreen.Content` is the only scroll owner.

@@ -20,7 +20,7 @@ Checked nodes:
 | Status | 제작 완료 |
 | Implementation Target | removed legacy reference |
 | Figma Source | progress-top-bar pattern; composed from AppBar/progress references, not a standalone CX base node |
-| Dependencies | Historical WDS `TopNavigation`; WDS `TopNavigationButton`; WDS `ProgressIndicator`; legacy icon adapter; `@pxds/pxds-layout/primitives`; `TextBlock` |
+| Dependencies | Historical WDS `TopNavigation`; WDS `TopNavigationButton`; WDS `ProgressIndicator`; legacy icon adapter; `@pxds/cx-layout/primitives`; `TextBlock` |
 | Variants | `leading`: back/close; `progress.showLabel`: false/true |
 | Properties | registry/renderReact props only: `title`, `leading`, `progress.label`, `progress.percent`, `progress.showLabel` |
 
@@ -56,7 +56,7 @@ ProgressTopBar
 | `TopNavigationButton` | removed legacy WDS re-export | Leading icon button. |
 | `ProgressIndicator` | removed legacy WDS re-export | Progress bar visualization. |
 | `IconArrowLeft`, `IconClose` | removed legacy icon adapter | Back/close leading affordance. |
-| `Box`, `VStack` | `@pxds/pxds-layout/primitives` | Labeled progress spacing wrapper. |
+| `Box`, `VStack` | `@pxds/cx-layout/primitives` | Labeled progress spacing wrapper. |
 | `TextBlock` | removed legacy typography adapter | Optional progress label. |
 
 ### Figma Source Difference

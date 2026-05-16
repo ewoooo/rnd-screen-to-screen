@@ -260,7 +260,7 @@ AppScreen
 ## Implementation Contract
 
 - Use `@pxds/cx-components` for `AppBar`, `Button`, `ListSelected`, `SectionItem`, `StatusBar`, `TextField`, `TitleMain`, `TitleSection`.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
+- Use `@pxds/cx-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` (deprecated legacy) or `@pxds/pxds-icons` (deprecated legacy).
 - Do NOT reuse `@/organisms/legacy-mbr/*`.
 - 본 화면은 탈퇴 흐름의 첫 입력 화면이므로 `Section(intro) → TitleMain`을 유지한다.

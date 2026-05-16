@@ -1,8 +1,8 @@
 "use client";
 
 import { Checkbox, Divider, Notice, Text } from "@pxds/cx-components";
-import { HStack, VStack } from "@pxds/pxds-layout/primitives";
-import { useState } from "react";
+import { Box, HStack, VStack } from "@pxds/cx-layout/primitives";
+import { Fragment, useState } from "react";
 
 type ConsentItem = {
 	id: string;
@@ -53,8 +53,18 @@ export function CheckboxTerms() {
 	};
 
 	return (
-		<VStack gap="var(--semantic-spacing-block)">
-			<VStack gap="var(--semantic-spacing-stack)">
+		<VStack
+			data-section-id="terms"
+			gap="var(--semantic-spacing-gap-loose)"
+		>
+			<Box
+				background="var(--component-card-bg-default)"
+				borderColor="var(--component-card-border-default)"
+				borderRadius="var(--semantic-radius-lg)"
+				borderWidth="1px"
+				overflow="hidden"
+				style={{ borderStyle: "solid" }}
+			>
 				<ConsentRow
 					title="전체 동의"
 					caption="필수·선택 약관을 모두 동의합니다"
@@ -63,20 +73,24 @@ export function CheckboxTerms() {
 					emphasis
 				/>
 				<Divider type="contents" />
-				<VStack gap="var(--semantic-spacing-stack)">
-					{CONSENT_ITEMS.map((item) => (
+				{CONSENT_ITEMS.map((item, index) => (
+					<Fragment key={item.id}>
+						{index > 0 ? <Divider type="contents" /> : null}
 						<ConsentRow
-							key={item.id}
 							title={item.title}
 							caption={item.caption}
 							checked={Boolean(checked[item.id])}
 							onCheckedChange={(next) => setItem(item.id, next)}
 						/>
-					))}
-				</VStack>
-			</VStack>
+					</Fragment>
+				))}
+			</Box>
 			{requiredUnchecked.length > 0 ? (
-				<Notice tone="negative" title="필수 약관 동의가 필요합니다">
+				<Notice
+					aria-live="polite"
+					tone="negative"
+					title="필수 약관 동의가 필요합니다"
+				>
 					{requiredUnchecked.length}개의 필수 약관에 동의해 주세요.
 				</Notice>
 			) : null}
@@ -98,9 +112,14 @@ function ConsentRow({
 	emphasis?: boolean;
 }) {
 	return (
-		<HStack align="flex-start" gap="var(--semantic-spacing-stack)">
+		<HStack
+			align="flex-start"
+			gap="var(--semantic-spacing-gap-comfortable)"
+			px="var(--semantic-spacing-inset-lg)"
+			py="var(--semantic-spacing-inset-lg)"
+		>
 			<Checkbox checked={checked} onCheckedChange={onCheckedChange} />
-			<VStack minWidth={0} gap="var(--semantic-spacing-row)">
+			<VStack minWidth={0} gap="var(--semantic-spacing-gap-tight)">
 				<Text variant={emphasis ? "sectionTitle" : "listTitle"}>{title}</Text>
 				<Text variant="helper">{caption}</Text>
 			</VStack>

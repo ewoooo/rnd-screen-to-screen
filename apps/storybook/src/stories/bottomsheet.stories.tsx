@@ -9,7 +9,7 @@ const meta = {
 		docs: {
 			description: {
 				component:
-					"@pxds/pxds-layout의 BottomSheet 런타임 위에 조립되는 cx-components wrapper. 핸들, 타이틀, 콘텐츠, action button 슬롯을 제공합니다.",
+					"@pxds/cx-layout의 BottomSheet 런타임 위에 조립되는 cx-components wrapper. 핸들, 타이틀, 콘텐츠, action button 슬롯을 제공합니다.",
 			},
 		},
 		layer: "base",

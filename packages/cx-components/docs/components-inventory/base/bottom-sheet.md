@@ -7,7 +7,7 @@ Figma SOT: [SKT_SDUI_Test_0512 / Component base](https://www.figma.com/design/n8
 | Field | Value |
 | --- | --- |
 | Status | 없음 |
-| Implementation Target | pxds-layout |
+| Implementation Target | cx-layout |
 | Figma Source | bottom-sheet |
 | Dependencies | 없음 |
 | Variants | 없음 |

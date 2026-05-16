@@ -1,5 +1,5 @@
 import { AppBar, StatusBar } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/pxds-layout/components/chrome";
+import { AppScreen } from "@pxds/cx-layout/components/chrome";
 import {
 	ListCellAuthMethod,
 	MbrPrimaryCTABar,
@@ -22,7 +22,7 @@ export function Screen() {
 				/>
 				<ListCellAuthMethod />
 			</AppScreen.Content>
-			<AppScreen.Bottom>
+			<AppScreen.Bottom preset="primary-cta">
 				<MbrPrimaryCTABar primaryLabel="인증 완료" disabled />
 			</AppScreen.Bottom>
 		</AppScreen>

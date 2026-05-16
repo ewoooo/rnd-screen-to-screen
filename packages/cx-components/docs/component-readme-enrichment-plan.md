@@ -119,7 +119,7 @@ MOCK SOT에서 확인한 frame/node, 반복 사례, variant/property 주의사�
 
 ### Phase 3. 화면 조립과 overlay 컴포넌트
 
-`cx-components`와 `pxds-layout` 경계가 섞이기 쉬운 컴포넌트를 정리한다.
+`cx-components`와 `cx-layout` 경계가 섞이기 쉬운 컴포넌트를 정리한다.
 
 | 우선순위 | 컴포넌트 | 확인할 핵심 질문 |
 | --- | --- | --- |
@@ -172,7 +172,7 @@ Figma Page MOCK SOT를 받으면 컴포넌트별로 바로 문서화하지 않�
 
 README에 기록할 때는 "Figma에서 이렇게 보였다"에 머물지 않고 "생성기가 언제 이 컴포넌트를 선택해야 하는가"까지 적는다.
 
-관찰 중인 내용은 `component-enrichment-plan/` 하위의 컴포넌트별 staging note에 먼저 기록한다. 이 폴더는 최종 SOT가 아니며, 확정된 내용만 component README, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `pxds-layout` 문서, 또는 `component-inventory.md`로 반영한다.
+관찰 중인 내용은 `component-enrichment-plan/` 하위의 컴포넌트별 staging note에 먼저 기록한다. 이 폴더는 최종 SOT가 아니며, 확정된 내용만 component README, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `cx-layout` 문서, 또는 `component-inventory.md`로 반영한다.
 
 ---
 
@@ -204,7 +204,7 @@ screen observation
 | --- | --- |
 | 특정 component가 어떤 부모/slot 안에서 쓰이는지 | 해당 component README의 `Composition` |
 | 여러 component가 만드는 화면 수준 조립 규칙 | `DESIGN_PATTERNS.md` |
-| rail, slot, action-area, overlay shell 같은 layout contract | `@pxds/pxds-layout` 문서 |
+| rail, slot, action-area, overlay shell 같은 layout contract | `@pxds/cx-layout` 문서 |
 | spacing gap, divider, content width 같은 운영 규칙 | `SPACING_PATTERNS.md` |
 | 특정 도메인 정책을 담는 조합 | `apps/mobile/src/organisms/<domain>/` README 또는 diagram |
 
@@ -248,7 +248,7 @@ Decision 값은 아래 중 하나로 적는다.
 
 - `README`: 관련 component README에 조합 용례를 보강한다.
 - `DESIGN_PATTERN`: 화면 패턴 규칙으로 승격한다.
-- `LAYOUT_PATTERN`: `pxds-layout` pattern 또는 slot contract로 분리한다.
+- `LAYOUT_PATTERN`: `cx-layout` pattern 또는 slot contract로 분리한다.
 - `ORGANISM`: 특정 domain organism 내부 조합으로 둔다.
 - `RQR_CANDIDATE`: 반복 조합이 독립 visual component로 승격될 가능성이 높다.
 
@@ -281,7 +281,7 @@ missing in repo
 | 분류 | 처리 위치 | 기준 |
 | --- | --- | --- |
 | 기존 조합으로 표현 가능 | 기존 component README 또는 pattern 문서 보강 | 새 시각 언어 없이 `ListText`, `ListSelected`, `Callout`, `Button`, `TitleSection` 등의 조합으로 의미가 보존된다. |
-| Layout/slot 책임 | `@pxds/pxds-layout` | placement, rail, section, action-area, overlay shell, scroll contract가 핵심이다. |
+| Layout/slot 책임 | `@pxds/cx-layout` | placement, rail, section, action-area, overlay shell, scroll contract가 핵심이다. |
 | Domain organism | `apps/mobile/src/organisms/<domain>/` | 특정 정책 도메인, OGN, 상품/요금/결제 맥락에 강하게 묶여 있다. |
 | CX component 후보 | `packages/cx-components/src/candidate/rqr-*` | 반복 가능하고, 독립적인 visual identity/state/variant가 있으며 Figma component identity가 필요하다. |
 | Inventory gap | `component-inventory.md` 보정 | 실제 구현은 있는데 inventory/detail link/status가 누락되었거나 이름이 다르다. |
@@ -309,7 +309,7 @@ RQR candidate를 만들면 다음을 함께 남긴다.
 아래 경우는 새 component로 만들지 않는다.
 
 - 화면 하나의 정책 의미에만 종속된 조합이면 domain organism으로 둔다.
-- spacing이나 placement 문제만 해결하려는 wrapper라면 `pxds-layout` pattern 또는 기존 slot으로 해결한다.
+- spacing이나 placement 문제만 해결하려는 wrapper라면 `cx-layout` pattern 또는 기존 slot으로 해결한다.
 - 기존 컴포넌트의 README/variant 설명이 부족해서 새 것처럼 보이는 경우, README 또는 variant contract를 먼저 보강한다.
 - Figma의 `Local_*` 이름이 붙어 있어도 실제로는 route/domain 조합이면 app organism 후보로 본다.
 - deprecated `@pxds/pxds-components` 또는 `@pxds/pxds-icons`로만 빠르게 맞추는 방식은 신규 vocabulary 기준으로 삼지 않는다.
@@ -347,7 +347,7 @@ Follow-up:
 - README는 구현과 함께 읽히는 사용 계약이다. 긴 분석 보고서로 만들지 않는다.
 - Figma node id와 화면명은 `Figma Notes`에 짧게 남긴다.
 - 정책 매핑은 구체적인 정책 문장 전체를 복사하지 않고 정보 유형으로 적는다.
-- 컴포넌트가 아닌 layout 책임은 `pxds-layout` 문서나 `DESIGN_PATTERNS.md`로 보낸다.
+- 컴포넌트가 아닌 layout 책임은 `cx-layout` 문서나 `DESIGN_PATTERNS.md`로 보낸다.
 - 같은 규칙을 여러 README에 반복해야 하면 상위 문서로 승격한다.
 - README 보강 중 실제 구현과 문서가 다르면 먼저 코드와 inventory를 확인하고, 단순 문서 보강인지 구현 수정이 필요한지 분리한다.
 

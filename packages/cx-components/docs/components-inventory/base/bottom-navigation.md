@@ -31,7 +31,7 @@ Not implemented yet. Expected files if this remains a standalone `@pxds/cx-compo
 - `packages/cx-components/src/components/bottom-navigation/bottom-navigation.readme.md`
 - `packages/cx-components/src/components/bottom-navigation/index.ts`
 
-If app-shell behavior dominates, the visual item renderer may remain in `cx-components` while route binding and fixed placement live in `apps/mobile` or `@pxds/pxds-layout`.
+If app-shell behavior dominates, the visual item renderer may remain in `cx-components` while route binding and fixed placement live in `apps/mobile` or `@pxds/cx-layout`.
 
 ### Styling Contract
 

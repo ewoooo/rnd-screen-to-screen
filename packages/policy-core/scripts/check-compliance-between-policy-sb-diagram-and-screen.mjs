@@ -82,6 +82,35 @@ function extractWireSectionIds(screenWire) {
 		.filter((id) => !["Header", "Content", "Bottom", "Divider"].includes(id));
 }
 
+function validateScreenWireContract(diagram, screenWire, sectionContracts) {
+	if (!screenWire.trim()) {
+		problem("Screen Wire must include an actual screen-like ASCII wire");
+		return;
+	}
+
+	if (!/┌─AppScreen/.test(screenWire)) {
+		problem("Screen Wire must show the AppScreen top rail, e.g. ┌─AppScreen");
+	}
+	if (!/├─Header/.test(screenWire)) {
+		problem("Screen Wire must show the AppScreen Header rail, e.g. ├─Header");
+	}
+	if (!/├─Content/.test(screenWire)) {
+		problem("Screen Wire must show the AppScreen Content rail, e.g. ├─Content");
+	}
+	if (diagram.includes("Bottom(preset=") && !/├─Bottom/.test(screenWire)) {
+		problem("Screen Wire must show the AppScreen Bottom rail when Bottom(preset=...) is used, e.g. ├─Bottom");
+	}
+	if (/Divider/.test(screenWire) && !/├═+Divider/.test(screenWire)) {
+		problem("Screen Wire divider must use the explicit divider rail form, e.g. ├══Divider");
+	}
+
+	for (const sectionId of extractWireSectionIds(screenWire)) {
+		if (!sectionContracts.includes(sectionId)) {
+			problem(`Section Contracts must include Screen Wire section id [${sectionId}]`);
+		}
+	}
+}
+
 function extractGovernanceRefs(source) {
 	return Array.from(source.matchAll(/\b(UXP_[A-Z0-9_]+|UXPT_[A-Z0-9_]+|VOT_[A-Z0-9_]+)\b/g))
 		.map((match) => match[1]);
@@ -317,26 +346,7 @@ function validateDiagramContract(screen, context, diagramPath, mapText) {
 
 	const screenWire = extractMarkdownSection(diagram, "Screen Wire");
 	const sectionContracts = extractMarkdownSection(diagram, "Section Contracts");
-	if (screenWire) {
-		if (!/├.*Header.*┤/.test(screenWire)) {
-			problem("Screen Wire must show the AppScreen Header rail, e.g. ├─Header─┤");
-		}
-		if (!/├.*Content.*┤/.test(screenWire)) {
-			problem("Screen Wire must show the AppScreen Content rail, e.g. ├─Content─┤");
-		}
-		if (diagram.includes("Bottom(preset=") && !/├.*Bottom.*┤/.test(screenWire)) {
-			problem("Screen Wire must show the AppScreen Bottom rail when Bottom(preset=...) is used");
-		}
-		if (/Divider/.test(screenWire) && !/├═+Divider═+┤/.test(screenWire)) {
-			problem("Screen Wire divider must use the explicit rail form, e.g. ├══Divider══┤");
-		}
-
-		for (const sectionId of extractWireSectionIds(screenWire)) {
-			if (!sectionContracts.includes(sectionId)) {
-				problem(`Section Contracts must include Screen Wire section id [${sectionId}]`);
-			}
-		}
-	}
+	validateScreenWireContract(diagram, screenWire, sectionContracts);
 
 	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
 	if (

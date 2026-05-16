@@ -2,7 +2,7 @@
 
 ## Overview
 
-Purpose: document the planned list-page stack layout contract before implementation, preserving the Figma source while keeping `pxds-layout` free of visual component imports.
+Purpose: document the planned list-page stack layout contract before implementation, preserving the Figma source while keeping `cx-layout` free of visual component imports.
 
 Figma SOT: [SKT_SDUI_Test_0512 / base section](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_SDUI_Test_0512?node-id=14401-29020&t=wZRehc2DOVV8corW-1)
 
@@ -13,7 +13,7 @@ Primary Figma component node: [PageStackList](https://www.figma.com/design/n8pS1
 | Field | Value |
 | --- | --- |
 | Status | 제작 예정 |
-| Implementation Target | pxds-layout |
+| Implementation Target | cx-layout |
 | Figma Source | page-stack-list |
 | Dependencies | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack |
 | Variants | 없음 |
@@ -23,17 +23,17 @@ Primary Figma component node: [PageStackList](https://www.figma.com/design/n8pS1
 
 Not implemented as a named layout component yet.
 
-Planned target in `@pxds/pxds-layout` if the repeated list-page structure graduates from documentation to code:
+Planned target in `@pxds/cx-layout` if the repeated list-page structure graduates from documentation to code:
 
-- `packages/pxds-layout/src/components/compositions/page-stack-list/PageStackList.tsx`
-- `packages/pxds-layout/src/components/compositions/page-stack-list/PageStackList.types.ts`
-- `packages/pxds-layout/src/components/compositions/page-stack-list/page-stack-list.variants.ts`
-- `packages/pxds-layout/src/components/compositions/page-stack-list/page-stack-list.css`
-- `packages/pxds-layout/src/components/compositions/page-stack-list/index.ts`
+- `packages/cx-layout/src/components/compositions/page-stack-list/PageStackList.tsx`
+- `packages/cx-layout/src/components/compositions/page-stack-list/PageStackList.types.ts`
+- `packages/cx-layout/src/components/compositions/page-stack-list/page-stack-list.variants.ts`
+- `packages/cx-layout/src/components/compositions/page-stack-list/page-stack-list.css`
+- `packages/cx-layout/src/components/compositions/page-stack-list/index.ts`
 
 ### Styling Contract
 
-- `PageStackList` belongs in `@pxds/pxds-layout`, not `@pxds/cx-components`.
+- `PageStackList` belongs in `@pxds/cx-layout`, not `@pxds/cx-components`.
 - Layout CSS must not define component-local `--cx-*` custom properties.
 - Consume spacing aliases from `@pxds/cx-tokens/style.css`; do not introduce route-local padding or fixed spacing to compensate for page composition.
 - The layout component may own outer stack rails and slot wrappers. It must not own text, icon, title, or section-item visual styling.
@@ -52,15 +52,15 @@ PageStackList
    └─ children ReactNode
 ```
 
-`PageStackList` is a planned `pxds-layout` compound for list-page stacking. It should own vertical list composition, title-region presence, root Figma bridge metadata, and named slot wrappers. It should not own the visual semantics of `TitleSection`, `Icon`, or `SectionItem` payloads.
+`PageStackList` is a planned `cx-layout` compound for list-page stacking. It should own vertical list composition, title-region presence, root Figma bridge metadata, and named slot wrappers. It should not own the visual semantics of `TitleSection`, `Icon`, or `SectionItem` payloads.
 
 ### Component Consumption
 
 | Consumed component | Used for | Expected implementation |
 | --- | --- | --- |
-| `Slot` | Named `title` and `content` layout wrappers | Import from `@pxds/pxds-layout` primitives. The content slot is always rendered; the title slot is conditional. |
-| `VStack` | Vertical stacking behavior | Treat as a layout dependency only if the local `pxds-layout` primitive exists or the package standardizes on it. Do not replace it with app-local spacing. |
-| `TitleSection/Default` | Example title payload in Figma | Consumer-provided `title` ReactNode. Do not import `TitleSection` into `pxds-layout`. |
+| `Slot` | Named `title` and `content` layout wrappers | Import from `@pxds/cx-layout` primitives. The content slot is always rendered; the title slot is conditional. |
+| `VStack` | Vertical stacking behavior | Treat as a layout dependency only if the local `cx-layout` primitive exists or the package standardizes on it. Do not replace it with app-local spacing. |
+| `TitleSection/Default` | Example title payload in Figma | Consumer-provided `title` ReactNode. Do not import `TitleSection` into `cx-layout`. |
 | `TitleSection.LeftItem` / `TitleSection.RightItem` / `Icon` | Possible nested title affordances | Owned by the title component passed by the consumer, not by `PageStackList`. |
 | `SectionItem_이친구를복붙하세요` | Example content payloads in Figma | Consumer-provided `children`. Do not import or recreate the Figma copy helper inside layout code. |
 
@@ -102,10 +102,10 @@ PageStackList
 | --- | --- | --- |
 | `PageStackList` | Planned `PageStackList` root layout | yes, layout compound |
 | `ContentsTitle` | Optional `Slot name="title"` or title region inside `VStack` | no, normalized slot region |
-| `TitleSection/Default` | Consumer-provided `title` ReactNode | no dependency from `pxds-layout` |
-| `TitleSection.LeftItem` / `TitleSection.RightItem` / `Icon` | Nested inside consumer title content when needed | no dependency from `pxds-layout` |
+| `TitleSection/Default` | Consumer-provided `title` ReactNode | no dependency from `cx-layout` |
+| `TitleSection.LeftItem` / `TitleSection.RightItem` / `Icon` | Nested inside consumer title content when needed | no dependency from `cx-layout` |
 | `contents slot_복사금지` | `Slot name="content"` wrapping `children` | normalized to `Slot` |
-| `SectionItem_이친구를복붙하세요` | Consumer-provided `children` examples | no dependency from `pxds-layout` |
+| `SectionItem_이친구를복붙하세요` | Consumer-provided `children` examples | no dependency from `cx-layout` |
 | `contents-slot` | Always-rendered content slot bridge | yes, slot bridge metadata |
 | `contents-title` | `showTitle ?? Boolean(title)` | yes, bridge boolean |
 
@@ -151,7 +151,7 @@ Purpose: show expected consumer usage after implementation.
 ### Import
 
 ```tsx
-import { PageStackList } from "@pxds/pxds-layout/components/compositions";
+import { PageStackList } from "@pxds/cx-layout/components/compositions";
 ```
 
 ### Examples
@@ -186,12 +186,12 @@ import { PageStackList } from "@pxds/pxds-layout/components/compositions";
 
 ## Implementation Guide
 
-Purpose: constrain implementation decisions and validation for the planned `pxds-layout` component.
+Purpose: constrain implementation decisions and validation for the planned `cx-layout` component.
 
 ### Do
 
-- Keep `PageStackList` in `@pxds/pxds-layout` as a layout compound.
-- Preserve the implementation target from inventory: `pxds-layout`.
+- Keep `PageStackList` in `@pxds/cx-layout` as a layout compound.
+- Preserve the implementation target from inventory: `cx-layout`.
 - Keep the implementation dependency surface centered on `Slot` and, if standardized locally, `VStack`.
 - Preserve root `data-figma-render="layout"`.
 - Preserve root `data-figma-component-id="page-stack-list"` as the default bridge id.
@@ -203,7 +203,7 @@ Purpose: constrain implementation decisions and validation for the planned `pxds
 ### Don't
 
 - Do not implement this in `@pxds/cx-components`.
-- Do not import `TitleSection`, `TitleSection.LeftItem`, `TitleSection.RightItem`, `Icon`, or `SectionItem_이친구를복붙하세요` inside `pxds-layout`.
+- Do not import `TitleSection`, `TitleSection.LeftItem`, `TitleSection.RightItem`, `Icon`, or `SectionItem_이친구를복붙하세요` inside `cx-layout`.
 - Do not promote `ContentsTitle` or `contents slot_복사금지` into visual public components.
 - Do not recreate Figma copy-helper names such as `SectionItem_이친구를복붙하세요` as runtime API names.
 - Do not add page-route margin, padding, or raw font sizing to make list pages align.

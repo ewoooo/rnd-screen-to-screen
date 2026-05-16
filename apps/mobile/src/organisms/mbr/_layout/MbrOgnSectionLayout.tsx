@@ -4,8 +4,8 @@ import {
 	type ContentRailMeasure,
 	ContentSection,
 	type ContentSectionInset,
-} from "@pxds/pxds-layout/components/chrome";
-import { VStack } from "@pxds/pxds-layout/primitives";
+} from "@pxds/cx-layout/components/chrome";
+import { VStack } from "@pxds/cx-layout/primitives";
 
 type MbrOgnSectionLayoutProps = {
 	children: React.ReactNode;

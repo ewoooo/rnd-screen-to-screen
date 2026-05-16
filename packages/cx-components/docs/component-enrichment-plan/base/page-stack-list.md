@@ -1,6 +1,6 @@
 # PageStackList Enrichment Notes
 
-> Staging memo for Figma MOCK SOT observation. Final decisions should be applied to the component README, DESIGN_PATTERNS.md, SPACING_PATTERNS.md, or pxds-layout docs.
+> Staging memo for Figma MOCK SOT observation. Final decisions should be applied to the component README, DESIGN_PATTERNS.md, SPACING_PATTERNS.md, or cx-layout docs.
 
 ## Current Source
 - Inventory: ../../component-inventory.md -> components/base/page-stack-list.md
@@ -28,7 +28,7 @@
 ## States / Variants
 - Observed states: grouped list with title and slot content.
 - Missing states:
-- Variant/property notes: inventory targets `cx-components / pxds-layout candidate`; ownership should be clarified.
+- Variant/property notes: inventory targets `cx-components / cx-layout candidate`; ownership should be clarified.
 
 ## Missing / Reuse Decision
 - Decision: LAYOUT_PATTERN / DESIGN_PATTERN

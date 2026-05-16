@@ -1,4 +1,4 @@
-import { defineComponentConfig } from "@pxds/pxds-spec";
+import { defineComponentConfig } from "@pxds/cx-spec";
 
 export type TextFieldMemberInfoProps = Record<string, never>;
 

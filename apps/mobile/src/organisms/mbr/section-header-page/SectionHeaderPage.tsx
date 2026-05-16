@@ -1,5 +1,5 @@
 import { TitleMain } from "@pxds/cx-components";
-import { PageStackContents } from "@pxds/pxds-layout/components/contents";
+import { PageStackContents } from "@pxds/cx-layout/components/contents";
 
 import type { SectionHeaderPageProps } from "./SectionHeaderPage.config";
 

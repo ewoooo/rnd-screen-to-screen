@@ -1,5 +1,5 @@
-import { defineScreenConfig } from "@pxds/pxds-spec";
-import type { ScreenRouteConfig } from "@pxds/pxds-spec";
+import { defineScreenConfig } from "@pxds/cx-spec";
+import type { ScreenRouteConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "NOVA-MBR-PG-001-0",
@@ -22,8 +22,17 @@ export const screenConfig = defineScreenConfig({
 	generation: {
 		source: "implementation",
 		pattern: "form",
-		policyRefs: [],
-		ognIds: [],
+		policyRefs: [
+			"POL-MBR-TERM-001-06",
+			"POL-MBR-TERM-002-01",
+			"POL-MBR-TERM-002-05",
+		],
+		ognIds: [
+			"ogn-mbr-section-header-page",
+			"ogn-mbr-checkbox-terms",
+			"ogn-mbr-text-field-guardian-request",
+			"ogn-mbr-action-area-terms",
+		],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",

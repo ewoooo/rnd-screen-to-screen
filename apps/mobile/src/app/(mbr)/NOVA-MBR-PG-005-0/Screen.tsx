@@ -1,5 +1,5 @@
 import { AppBar, StatusBar } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/pxds-layout/components/chrome";
+import { AppScreen } from "@pxds/cx-layout/components/chrome";
 import {
 	MbrPrimaryCTABar,
 	SectionHeaderPage,
@@ -22,7 +22,7 @@ export function Screen() {
 				/>
 				<SectionMessageJoinCompleteView />
 			</AppScreen.Content>
-			<AppScreen.Bottom>
+			<AppScreen.Bottom preset="primary-cta">
 				<MbrPrimaryCTABar primaryLabel="홈으로 이동" />
 			</AppScreen.Bottom>
 		</AppScreen>

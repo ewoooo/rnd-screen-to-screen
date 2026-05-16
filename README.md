@@ -12,9 +12,9 @@ PXDX는 정책서 기반 모바일 화면을 제한된 토큰, 컴포넌트 어�
 └── packages/
     ├── cx-tokens/                CX DS token-set SSOT, CSS variables, text style classes
     ├── cx-icons/                 CX DS icon originals, registry, React Icon wrapper
-    ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
+    ├── cx-layout/               AppScreen, content layout, bottom-sheet, layout primitives
     ├── cx-components/             latest CX component package and inventory
-    ├── pxds-spec/                 screen route/config와 kind 같은 UI 비의존 spec 타입
+    ├── cx-spec/                 screen route/config와 kind 같은 UI 비의존 spec 타입
     ├── pxds-figma/                Figma bridge/hooks/export 관련 도구
     ├── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
     └── policy-core/               Policy / UseCase / UX Governance 순수 문서 도메인
@@ -26,11 +26,11 @@ PXDX는 정책서 기반 모바일 화면을 제한된 토큰, 컴포넌트 어�
 @pxds/cx-tokens
   -> @pxds/cx-icons
   -> @pxds/cx-components
-  -> @pxds/pxds-layout
+  -> @pxds/cx-layout
   -> apps/mobile
 
 apps/mobile/screens -> apps/preview
-@policy/core -> @pxds/pxds-spec
+@policy/core -> @pxds/cx-spec
 ```
 
 `apps/mobile`은 실제 화면 DOM 조립의 기준입니다. `apps/preview`는 mobile의 route catalog와 component registry를 읽어 화면과 어휘를 확인하는 도구입니다. 공통 런타임 책임은 packages로 분리하되, 화면별 의미 구조는 앱의 page와 organism에 남깁니다.
@@ -46,6 +46,8 @@ SPACING_PATTERNS.md
 SCREEN_STRUCTURE_PRINCIPLES.md
 SCREEN_GENERATION_FLOW.md
 ```
+
+Codex 작업에서는 `cx-screen-create`를 전체 오케스트레이션 스킬로 사용하고, 5페이즈에 맞춰 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용합니다. 특히 `cx-screen-diagram`은 `apps/mobile/src/screen-diagrams/`의 wire reference와 최신 `Screen Wire` ASCII rail 규칙을 강제하는 Phase 3 스킬입니다.
 
 ```txt
 apps/mobile/src/app/(mbr)/NOVA-MBR-PG-001-0/
@@ -71,7 +73,7 @@ Component -> Pattern -> Organism -> Screen
 ```
 
 - `Component`: `@pxds/cx-components`, `@pxds/cx-icons`, tokenized layout primitive가 제공하는 기초 UI 어휘입니다.
-- `Pattern`: `@pxds/pxds-layout`의 `AppScreen`, `PageStackContents`, `FieldStack`, `SinglePrimaryAction`, `SectionDivider`, overlay/action slot 같은 반복 조합 계약입니다.
+- `Pattern`: `@pxds/cx-layout`의 `AppScreen`, `PageStackContents`, `FieldStack`, `SinglePrimaryAction`, `SectionDivider`, overlay/action slot 같은 반복 조합 계약입니다.
 - `Organism`: 정책 의미와 도메인 OGN을 담는 앱 소유 의미 단위입니다.
 - `Screen`: `AppScreen` slot에 chrome, section, organism을 배치하는 지도입니다.
 - `@pxds/cx-components`: 최신 CX component package입니다. 신규 화면/컴포넌트 제작의 기준 어휘입니다.

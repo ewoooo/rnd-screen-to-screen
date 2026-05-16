@@ -11,11 +11,11 @@ Package ownership:
 - `@pxds/cx-tokens`: token and generated CSS source of truth.
 - `@pxds/cx-icons`: CX icon originals, registry, and icon wrapper.
 - `@pxds/cx-components`: CX visual primitives and compounds.
-- `@pxds/pxds-layout`: layout primitives, screen layout runtime, and layout compounds.
+- `@pxds/cx-layout`: layout primitives, screen layout runtime, and layout compounds.
 - `@pxds/pxds-components`: existing WDS/PXDS molecules, global patterns, and legacy compatibility layer.
 - `apps/mobile`: page routes and organism assembly. App-specific patterns live here until promoted.
 
-Rule of thumb: if a component needs CX visual styling or Figma component identity, it belongs in `cx-components`; if it describes placement, slots, or screen structure, it belongs in `pxds-layout`; if it is specific to one route family, keep it in app patterns or organisms.
+Rule of thumb: if a component needs CX visual styling or Figma component identity, it belongs in `cx-components`; if it describes placement, slots, or screen structure, it belongs in `cx-layout`; if it is specific to one route family, keep it in app patterns or organisms.
 
 Candidate decision rule:
 
@@ -31,7 +31,7 @@ Current screen-generation hierarchy:
 Component -> Pattern -> Organism -> Screen
 ```
 
-`cx-components` owns the `Component` vocabulary and visual compounds. `pxds-layout` owns reusable `Pattern` contracts such as screen chrome, section rail, action area, bottom sheet/popup runtime, and slot structure. `apps/mobile` owns domain `Organism` nodes and final `Screen` assembly. Figma source names such as `Atom` are not carried into this repo as package boundaries.
+`cx-components` owns the `Component` vocabulary and visual compounds. `cx-layout` owns reusable `Pattern` contracts such as screen chrome, section rail, action area, bottom sheet/popup runtime, and slot structure. `apps/mobile` owns domain `Organism` nodes and final `Screen` assembly. Figma source names such as `Atom` are not carried into this repo as package boundaries.
 
 Spacing guidance:
 
@@ -101,10 +101,10 @@ Candidate registry guidance:
 | TitleSection.LeftItem | 제작 완료 | cx-components private | title-section-left-item | Badge, Icon, Text | Type: Text/Icon/Badge | 없음 | [문서](components/base/title-section-left-item.md) |
 | TitleSection.RightItem | 제작 완료 | cx-components private | title-section-right-item | ButtonListOrder, Icon, IconButton, Button, Text | Type: Icon/TextButton/TextItemButton/ButtonListOrder | 없음 | [문서](components/base/title-section-right-item.md) |
 | ProgressTopBar | 제작 완료 | pxds-components | progress-top-bar | 없음 | 없음 | 없음 | [문서](components/base/progress-top-bar.md) |
-| BottomSheet | 없음 | pxds-layout | bottom-sheet | 없음 | 없음 | 없음 | [문서](components/base/bottom-sheet.md) |
-| Bottomsheet | 제작 완료 | pxds-layout runtime + cx-components visual dependencies | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
-| PageStackContents | 제작 완료 | pxds-layout | page-stack-contents | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot | 없음 | `data-figma-property-title-type`: instance swap; `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean; `data-figma-property-title-swap`: instance swap | [문서](components/base/page-stack-contents.md) |
-| PageStackList | 제작 완료 | cx-components / pxds-layout candidate | page-stack-list | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack | 없음 | `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean | [문서](components/base/page-stack-list.md) |
+| BottomSheet | 없음 | cx-layout | bottom-sheet | 없음 | 없음 | 없음 | [문서](components/base/bottom-sheet.md) |
+| Bottomsheet | 제작 완료 | cx-layout runtime + cx-components visual dependencies | bottomsheet | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet | ActionButton: on/off | `data-figma-property-con`: slot; `data-figma-property-show-title-bottom-sheet`: boolean | [문서](components/base/bottomsheet.md) |
+| PageStackContents | 제작 완료 | cx-layout | page-stack-contents | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot | 없음 | `data-figma-property-title-type`: instance swap; `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean; `data-figma-property-title-swap`: instance swap | [문서](components/base/page-stack-contents.md) |
+| PageStackList | 제작 완료 | cx-components / cx-layout candidate | page-stack-list | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot, VStack | 없음 | `data-figma-property-contents-slot`: slot; `data-figma-property-contents-title`: boolean | [문서](components/base/page-stack-list.md) |
 | RQRNotice | candidate/new | cx-components candidate | rqr-notice | Text | Tone: info/negative/positive/cautionary | `data-figma-property-title`: boolean; `data-figma-property-tone`: tone | [문서](components/candidate/rqr-notice.md) |
 
 Status는 Figma/component 제작 상태만 네 단계로 기록한다: `검수 완료`, `제작 완료`, `제작 예정`, `없음`.
@@ -302,7 +302,7 @@ Implementation notes:
 - `Bottomsheet` should map to existing `BottomSheet` naming unless the visual content wrapper needs a separate compound.
 - `FilterSorting` is implemented with a CSS fallback affordance until a registered 16px `filter` icon is added; the Figma source uses a local vector for that glyph.
 - `TitleMain` treats `Image` as a media/asset slot, not a CX component dependency, unless a dedicated image component is introduced later.
-- `Bottomsheet` and `PageStackList` now have conservative `cx-components` composition wrappers per implementation request; keep them eligible for later `pxds-layout` promotion if the layout boundary is formalized.
+- `Bottomsheet` and `PageStackList` now have conservative `cx-components` composition wrappers per implementation request; keep them eligible for later `cx-layout` promotion if the layout boundary is formalized.
 
 ## 5. Figma Bridge Attribute Contract
 
@@ -379,7 +379,7 @@ BottomSheet -> layout runtime
 
 Rules:
 
-- `pxds-layout` must not import `@pxds/cx-components`.
+- `cx-layout` must not import `@pxds/cx-components`.
 - Layout packages may use tokens and layout-safe primitives directly.
 - CX components can be passed into layout slots as children, but layout should not know what those children mean.
 - Slot names are explicit bridge metadata: `data-figma-render="slot"` and `data-figma-property-name="<slot-name>"`.

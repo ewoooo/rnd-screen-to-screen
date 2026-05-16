@@ -259,7 +259,7 @@ AppScreen
 
 - Use `@pxds/cx-components` for `AppBar`, `ActionButton`, `Callout`, `Icon`, `RQRContentsDetail`, `SectionItem`, `StatusBar`, `TitleMain`, `TitleSection`.
 - Use `PageStackContents(title=TitleSection("이 정보로 가입이 완료됐어요")) + RQRContentsDetail(title="가입 정보")` for the `summary` section, following Figma `node 12285:9074`. Keep `ListText.table` on hold for this screen because its current value column is fixed 80px.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
+- Use `@pxds/cx-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` (deprecated legacy) and `@pxds/pxds-icons` (deprecated legacy).
 - Do NOT reuse `@/organisms/legacy-mbr/*`. 본 화면은 단순 조립으로 충분하므로 Screen.tsx에서 직접 조립한다 (CX-EXAMPLE 방식과 동일). 별도 organism이 필요할 만큼 의미 단위가 무거워지면 `@/organisms/mbr/`에 CX 어휘로 신설한다.
 - Progress 정보(5/5, 100%)는 시각 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`에 자연어로 흡수한다.

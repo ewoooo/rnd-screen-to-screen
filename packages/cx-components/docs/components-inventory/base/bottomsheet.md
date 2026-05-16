@@ -2,7 +2,7 @@
 
 ## Overview
 
-Purpose: document the planned Figma `Bottomsheet` compound while preserving the existing `@pxds/pxds-layout` `BottomSheet` runtime as the implementation target.
+Purpose: document the planned Figma `Bottomsheet` compound while preserving the existing `@pxds/cx-layout` `BottomSheet` runtime as the implementation target.
 
 Figma SOT: [SKT_SDUI_Test_0512 / base section](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_SDUI_Test_0512?node-id=14401-29020&t=wZRehc2DOVV8corW-1)
 
@@ -13,7 +13,7 @@ Component node checked in Figma: [Bottomsheet](https://www.figma.com/design/n8pS
 | Field | Value |
 | --- | --- |
 | Status | 제작 예정 |
-| Implementation Target | pxds-layout |
+| Implementation Target | cx-layout |
 | Figma Source | bottomsheet |
 | Dependencies | ActionButton, Button, Handle, Icon, ActionButton.LeftItem, TitleBottomSheet, Tooltip, BottomSheet |
 | Variants | ActionButton: on/off |
@@ -21,22 +21,22 @@ Component node checked in Figma: [Bottomsheet](https://www.figma.com/design/n8pS
 
 ### Implementation Files
 
-Existing runtime target in `@pxds/pxds-layout`:
+Existing runtime target in `@pxds/cx-layout`:
 
-- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheet.tsx`
-- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheetRoot.tsx`
-- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheetContent.tsx`
-- `packages/pxds-layout/src/components/overlays/bottom-sheet/BottomSheetBackdrop.tsx`
-- `packages/pxds-layout/src/components/overlays/bottom-sheet/index.ts`
+- `packages/cx-layout/src/components/overlays/bottom-sheet/BottomSheet.tsx`
+- `packages/cx-layout/src/components/overlays/bottom-sheet/BottomSheetRoot.tsx`
+- `packages/cx-layout/src/components/overlays/bottom-sheet/BottomSheetContent.tsx`
+- `packages/cx-layout/src/components/overlays/bottom-sheet/BottomSheetBackdrop.tsx`
+- `packages/cx-layout/src/components/overlays/bottom-sheet/index.ts`
 
 No new implementation file is required for this documentation task.
 
 ### Styling Contract
 
 - `Bottomsheet` must normalize to the existing `BottomSheet` layout runtime unless the visual content wrapper is explicitly promoted later.
-- Keep modal, dimmer, focus trap, scroll lock, and bottom placement inside `@pxds/pxds-layout`.
+- Keep modal, dimmer, focus trap, scroll lock, and bottom placement inside `@pxds/cx-layout`.
 - Use tokenized spacing and radius from the layout/component layers. Do not correct sheet alignment from route-level margin, padding, or raw style.
-- `@pxds/pxds-layout` may consume WDS bottom-sheet primitives directly at this boundary to avoid a circular dependency with component packages.
+- `@pxds/cx-layout` may consume WDS bottom-sheet primitives directly at this boundary to avoid a circular dependency with component packages.
 - Follow `SPACING_PATTERNS.md` for measured sheet structure. Title rail is `x=32 / w=329`; the general `Con` rail is `x=20 / w=353` unless the child component owns its own padding. `space/5`-style measured exceptions are not new public tokens.
 
 ## Structure
@@ -62,7 +62,7 @@ BottomSheet
 
 | Consumed component | Used for | Contract |
 | --- | --- | --- |
-| `BottomSheet` | Modal/runtime shell | Existing `@pxds/pxds-layout` implementation owns open state, backdrop, focus trap, scroll lock, bottom placement, and content container. |
+| `BottomSheet` | Modal/runtime shell | Existing `@pxds/cx-layout` implementation owns open state, backdrop, focus trap, scroll lock, bottom placement, and content container. |
 | `Handle` | Top drag affordance | Render as the visual handle only. Gesture and lifecycle behavior remain in `BottomSheet`. |
 | `TitleBottomSheet` | Optional sheet header | Controlled by `showTitleBottomSheet`; owns title text, optional close button, and optional sub text. |
 | `ActionButton` | Sticky action area | Present only when `actionButton="on"`. Use the existing action-button vocabulary instead of local button/footer styling. |
@@ -141,7 +141,7 @@ Purpose: define the public API shape and Figma bridge contract expected when thi
 | `peekHeight` | `number` | - | Existing WDS bottom-sheet peek height passthrough. |
 | `gap` | `CSSProperties["gap"]` | `var(--spacing-20)` | Existing content gap passthrough. |
 
-The exact exported prop shape may remain the current `BottomSheet` composition API. The important normalization is that Figma `Bottomsheet` does not create an unrelated runtime component outside `pxds-layout`.
+The exact exported prop shape may remain the current `BottomSheet` composition API. The important normalization is that Figma `Bottomsheet` does not create an unrelated runtime component outside `cx-layout`.
 
 ### Figma Mapping Props
 
@@ -162,12 +162,12 @@ The exact exported prop shape may remain the current `BottomSheet` composition A
 
 ## Usage
 
-Purpose: show expected consumer usage while preserving `pxds-layout` ownership.
+Purpose: show expected consumer usage while preserving `cx-layout` ownership.
 
 ### Import
 
 ```tsx
-import { BottomSheet } from "@pxds/pxds-layout/components/overlays";
+import { BottomSheet } from "@pxds/cx-layout/components/overlays";
 ```
 
 ### Examples
@@ -212,7 +212,7 @@ Purpose: constrain future implementation decisions and validation.
 
 ### Do
 
-- Keep `BottomSheet` in `@pxds/pxds-layout` as the implementation target.
+- Keep `BottomSheet` in `@pxds/cx-layout` as the implementation target.
 - Preserve the naming normalization: Figma `Bottomsheet` maps to code `BottomSheet` unless a scoped visual wrapper is explicitly justified.
 - Compose existing dependencies: `Handle`, `TitleBottomSheet`, `ActionButton`, `Button`, `Tooltip`, and registered `Icon` variants.
 - Keep root radius and bottom placement in the layout runtime, not in screen routes.

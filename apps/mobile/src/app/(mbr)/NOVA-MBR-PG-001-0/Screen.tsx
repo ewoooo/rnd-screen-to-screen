@@ -1,5 +1,5 @@
 import { AppBar, StatusBar } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/pxds-layout/components/chrome";
+import { AppScreen } from "@pxds/cx-layout/components/chrome";
 import {
 	ActionAreaTerms,
 	CheckboxTerms,
@@ -24,7 +24,7 @@ export function Screen() {
 				<CheckboxTerms />
 				<TextFieldGuardianRequest visible={false} />
 			</AppScreen.Content>
-			<AppScreen.Bottom>
+			<AppScreen.Bottom preset="primary-cta">
 				<ActionAreaTerms disabled />
 			</AppScreen.Bottom>
 		</AppScreen>

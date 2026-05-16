@@ -13,7 +13,7 @@ Primary Figma component node: [PageStackContents](https://www.figma.com/design/n
 | Field | Value |
 | --- | --- |
 | Status | 제작 완료 |
-| Implementation Target | pxds-layout |
+| Implementation Target | cx-layout |
 | Figma Source | page-stack-contents |
 | Code dependencies | `Slot` primitive |
 | Figma source dependencies | Icon, TitleSection.LeftItem, TitleSection.RightItem, SectionItem_이친구를복붙하세요, TitleSection/Default, Slot |
@@ -22,11 +22,11 @@ Primary Figma component node: [PageStackContents](https://www.figma.com/design/n
 
 ### Implementation Files
 
-- `packages/pxds-layout/src/components/contents/page-stack-contents/PageStackContents.tsx`
-- `packages/pxds-layout/src/components/contents/page-stack-contents/PageStackContents.types.ts`
-- `packages/pxds-layout/src/components/contents/page-stack-contents/page-stack-contents.variants.ts`
-- `packages/pxds-layout/src/components/contents/page-stack-contents/page-stack-contents.css`
-- `packages/pxds-layout/src/components/contents/page-stack-contents/index.ts`
+- `packages/cx-layout/src/components/contents/page-stack-contents/PageStackContents.tsx`
+- `packages/cx-layout/src/components/contents/page-stack-contents/PageStackContents.types.ts`
+- `packages/cx-layout/src/components/contents/page-stack-contents/page-stack-contents.variants.ts`
+- `packages/cx-layout/src/components/contents/page-stack-contents/page-stack-contents.css`
+- `packages/cx-layout/src/components/contents/page-stack-contents/index.ts`
 
 ## Structure
 
@@ -42,7 +42,7 @@ PageStackContents
    └─ children ReactNode
 ```
 
-`PageStackContents` is a `pxds-layout` layout compound. It owns vertical section stacking, optional title slot presence, root Figma bridge metadata, and named slot wrappers. It does not own visual semantics for the title or content children.
+`PageStackContents` is a `cx-layout` layout compound. It owns vertical section stacking, optional title slot presence, root Figma bridge metadata, and named slot wrappers. It does not own visual semantics for the title or content children.
 
 ### Rendered DOM Contract
 
@@ -106,10 +106,10 @@ PageStackContents
 | --- | --- | --- |
 | `PageStackContents` | `PageStackContents` root `section` | yes, layout compound |
 | `ContentsTitle` | Optional `Slot name="title"` | no, normalized slot region |
-| `TitleSection/Default` | Consumer-provided `title` ReactNode | no dependency from `pxds-layout` |
-| `TitleSection.LeftItem` / `TitleSection.RightItem` / `Icon` | Inside consumer-provided title component | no dependency from `pxds-layout` |
+| `TitleSection/Default` | Consumer-provided `title` ReactNode | no dependency from `cx-layout` |
+| `TitleSection.LeftItem` / `TitleSection.RightItem` / `Icon` | Inside consumer-provided title component | no dependency from `cx-layout` |
 | `ContentsSlot_복사금지` / `contents-slot` | `Slot name="content"` wrapping `children` | normalized to `Slot` |
-| `SectionItem_이친구를복붙하세요` | Consumer-provided `children` examples | no dependency from `pxds-layout` |
+| `SectionItem_이친구를복붙하세요` | Consumer-provided `children` examples | no dependency from `cx-layout` |
 | `contents-title` | `showTitle ?? Boolean(title)` | yes, bridge boolean |
 | `title-swap` / `title-type` | `title` ReactNode composition | no root bridge attribute in current code |
 
@@ -146,7 +146,7 @@ Purpose: show expected consumer usage.
 ### Import
 
 ```tsx
-import { PageStackContents } from "@pxds/pxds-layout/components/contents";
+import { PageStackContents } from "@pxds/cx-layout/components/contents";
 ```
 
 ### Examples
@@ -169,7 +169,7 @@ Purpose: constrain implementation decisions and validation.
 
 ### Do
 
-- Keep `PageStackContents` in `@pxds/pxds-layout` as a layout compound.
+- Keep `PageStackContents` in `@pxds/cx-layout` as a layout compound.
 - Keep the implementation dependency surface centered on the `Slot` primitive.
 - Preserve root `data-figma-render="layout"`.
 - Preserve root `data-figma-component-id="page-stack-contents"` as the default bridge id.
@@ -180,7 +180,7 @@ Purpose: constrain implementation decisions and validation.
 ### Don't
 
 - Do not import `@pxds/cx-components` from `PageStackContents`.
-- Do not import or recreate `TitleSection`, `TitleSection.LeftItem`, `TitleSection.RightItem`, `Icon`, or `SectionItem_이친구를복붙하세요` inside `pxds-layout`.
+- Do not import or recreate `TitleSection`, `TitleSection.LeftItem`, `TitleSection.RightItem`, `Icon`, or `SectionItem_이친구를복붙하세요` inside `cx-layout`.
 - Do not promote Figma-only `ContentsTitle`, `ContentsSlot_복사금지`, `title-swap`, or `title-type` nodes into layout-owned visual APIs.
 - Do not add route/screen-local margin or padding to compensate for this component's stack spacing.
 

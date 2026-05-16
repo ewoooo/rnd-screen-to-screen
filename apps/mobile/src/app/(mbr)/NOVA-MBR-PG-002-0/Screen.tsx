@@ -1,5 +1,5 @@
 import { StatusBar } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/pxds-layout/components/chrome";
+import { AppScreen } from "@pxds/cx-layout/components/chrome";
 import {
 	SectionHeaderPage,
 	SectionMessageEntryBranch,
@@ -14,7 +14,13 @@ export function Screen() {
 				<StatusBar />
 			</AppScreen.SystemHeader>
 			<AppScreen.Header>
-				<ProgressAppBar title="회원 가입" currentStep={2} totalSteps={5} />
+				<ProgressAppBar
+					title="회원 가입"
+					currentStep={2}
+					totalSteps={5}
+					progressLabel="2 / 5"
+					showProgressLabel
+				/>
 			</AppScreen.Header>
 			<AppScreen.Content>
 				<SectionHeaderPage title="개인정보 입력" />

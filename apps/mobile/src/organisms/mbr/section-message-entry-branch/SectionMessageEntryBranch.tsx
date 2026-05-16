@@ -1,5 +1,5 @@
 import { Button, Notice } from "@pxds/cx-components";
-import { VStack } from "@pxds/pxds-layout/primitives";
+import { VStack } from "@pxds/cx-layout/primitives";
 import type { SectionMessageEntryBranchProps } from "./SectionMessageEntryBranch.config";
 
 export function SectionMessageEntryBranch({

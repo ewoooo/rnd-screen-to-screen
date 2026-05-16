@@ -1,5 +1,5 @@
-import type { ScreenRouteConfig } from "@pxds/pxds-spec";
-import { defineScreenConfig } from "@pxds/pxds-spec";
+import type { ScreenRouteConfig } from "@pxds/cx-spec";
+import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "NOVA-MBR-PG-003-0",
@@ -22,8 +22,16 @@ export const screenConfig = defineScreenConfig({
 	generation: {
 		source: "implementation",
 		pattern: "form",
-		policyRefs: [],
-		ognIds: [],
+		policyRefs: [
+			"POL-MBR-AUTH-001-01",
+			"POL-MBR-AUTH-002-01",
+			"POL-MBR-AUTH-002-05",
+			"POL-MBR-AUTH-002-09",
+			"POL-MBR-AUTH-005-01",
+			"POL-MBR-AUTH-005-03",
+			"POL-MBR-AUTH-005-07",
+		],
+		ognIds: ["ogn-mbr-section-header-page", "ogn-mbr-list-cell-auth-method"],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",

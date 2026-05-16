@@ -13,7 +13,7 @@ React로 렌더된 모바일 화면을 Figma 페이지로 옮긴다. 픽셀 캡�
 
 가능하다. 현재 코드베이스에는 이미 필요한 기반이 있다.
 
-- `@pxds/cx-components`와 `@pxds/pxds-layout` 컴포넌트에 `data-figma-render`, `data-figma-component-id`, `data-figma-property-*` attribute가 광범위하게 존재한다.
+- `@pxds/cx-components`와 `@pxds/cx-layout` 컴포넌트에 `data-figma-render`, `data-figma-component-id`, `data-figma-property-*` attribute가 광범위하게 존재한다.
 - `@pxds/pxds-figma`에는 `ScreenFigmaExportSpec`과 `ComponentSpecDraft`를 Figma 실행 코드로 바꾸는 `createScreenFigmaBuildCode` / `createComponentFigmaBuildCode`가 있다.
 - `@pxds/pxds-figma`의 renderer에는 `exportMode: "instance" | "render-tree"` 개념이 이미 들어가 있다.
 - Figma bridge plugin은 생성된 JS를 Figma sandbox에서 실행하는 런처 역할을 이미 수행한다.

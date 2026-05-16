@@ -14,7 +14,7 @@ import {
 	PageStackContents,
 	SectionDivider,
 	SinglePrimaryAction,
-} from "@pxds/pxds-layout/components";
+} from "@pxds/cx-layout/components";
 
 const SIGNUP_COMPLETE_SUMMARY_ROWS = [
 	{ id: "member-id", label: "회원 ID", value: "wooseong****" },

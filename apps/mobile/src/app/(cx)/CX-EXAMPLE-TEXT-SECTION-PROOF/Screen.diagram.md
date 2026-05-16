@@ -124,7 +124,7 @@ Section(email)
 ## Implementation Contract
 
 - Use `@pxds/cx-components` for `AppBar`, `Button`, `Checkbox`, `ListText`, `SectionItem`, `StatusBar`, `TextField`, and `TitleSection`.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, and `SinglePrimaryAction`.
+- Use `@pxds/cx-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, and `SinglePrimaryAction`.
 - Do not import deprecated `@pxds/pxds-components` or deprecated `@pxds/pxds-icons`.
 - Keep `AppScreen.Content` as the only scroll owner.
 - Keep the primary CTA in `AppScreen.Bottom`, not at the end of content.

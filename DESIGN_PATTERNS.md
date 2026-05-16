@@ -37,7 +37,7 @@
 
 화면 패턴을 정한 뒤 각 SB part는 바로 신규 component로 만들지 않고 `reuse` 또는 `new`로 분기한다.
 
-- `reuse`: 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern, 또는 도메인 `Organism` 조합으로 정책 의미와 상태를 표현할 수 있다.
+- `reuse`: 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/cx-layout` pattern, 또는 도메인 `Organism` 조합으로 정책 의미와 상태를 표현할 수 있다.
 - `new`: 기존 vocabulary로 정책 의미, 선택지, 에러, slot, Figma bridge identity를 표현할 수 없어 신규 candidate가 필요하다.
 
 `new` candidate는 생성 가능하지만 반드시 `RQR` 식별자를 붙인다. React 이름은 `RQR{Name}`, 폴더와 `componentId`, `data-figma-component-id`는 `rqr-{name}`을 사용한다. 정식 component vocabulary로 승격할 때는 `RQR` prefix를 제거한다.

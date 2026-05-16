@@ -1,6 +1,6 @@
 # Bottomsheet
 
-Figma `Bottomsheet` compound를 `@pxds/pxds-layout`의 `BottomSheet` 런타임 위에 얇게 조립하는 cx-components wrapper입니다. Overlay, portal, focus trap, scroll lock은 layout runtime이 소유합니다.
+Figma `Bottomsheet` compound를 `@pxds/cx-layout`의 `BottomSheet` 런타임 위에 얇게 조립하는 cx-components wrapper입니다. Overlay, portal, focus trap, scroll lock은 layout runtime이 소유합니다.
 
 ## Import
 

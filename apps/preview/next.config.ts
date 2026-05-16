@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	devIndicators: false,
-	transpilePackages: ["@screen/mobile"],
+	transpilePackages: ["@pxds/cx-layout", "@pxds/cx-spec", "@screen/mobile"],
 };
 
 export default nextConfig;

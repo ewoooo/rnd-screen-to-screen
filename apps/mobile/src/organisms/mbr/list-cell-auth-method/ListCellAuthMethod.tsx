@@ -3,13 +3,12 @@
 import {
 	Button,
 	Divider,
-	Notice,
 	RadioButton,
 	Text,
 	TextField,
 } from "@pxds/cx-components";
-import { HStack, VStack } from "@pxds/pxds-layout/primitives";
-import { useState } from "react";
+import { Box, HStack, VStack } from "@pxds/cx-layout/primitives";
+import { Fragment, useState } from "react";
 
 const AUTH_METHODS = [
 	{
@@ -31,47 +30,56 @@ const AUTH_METHODS = [
 
 export function ListCellAuthMethod() {
 	const [authMethod, setAuthMethod] = useState<string>("phone");
-	const failed = false;
 
 	return (
-		<VStack gap="var(--semantic-spacing-block)">
-			<VStack gap="var(--semantic-spacing-stack)">
+		<VStack
+			data-section-id="authMethods"
+			gap="var(--semantic-spacing-section-gap)"
+		>
+			<Box
+				background="var(--component-card-bg-default)"
+				borderColor="var(--component-card-border-default)"
+				borderRadius="var(--semantic-radius-lg)"
+				borderWidth="1px"
+				overflow="hidden"
+				style={{ borderStyle: "solid" }}
+			>
 				{AUTH_METHODS.map((item, index) => (
-					<VStack key={item.id} gap="var(--semantic-spacing-stack)">
+					<Fragment key={item.id}>
+						{index > 0 ? <Divider type="contents" /> : null}
 						<AuthMethodRow
 							title={item.title}
 							caption={item.caption}
 							checked={authMethod === item.id}
-							onCheckedChange={(next) => {
-								if (next) setAuthMethod(item.id);
-							}}
+							onSelect={() => setAuthMethod(item.id)}
 						/>
-						{index < AUTH_METHODS.length - 1 ? (
-							<Divider type="contents" />
-						) : null}
-					</VStack>
+					</Fragment>
 				))}
+			</Box>
+
+			<VStack gap="var(--semantic-spacing-stack)">
+				<TextField
+					label="인증번호"
+					value=""
+					placeholder="6자리 숫자"
+					helperText="유효시간 02:48"
+					inputMode="numeric"
+					maxLength={6}
+					readOnly
+				/>
+				<HStack
+					display="grid"
+					gap="var(--semantic-spacing-inline)"
+					style={{ gridTemplateColumns: "1fr 1fr" }}
+				>
+					<Button variant="secondary" size="large" fullWidth>
+						재요청
+					</Button>
+					<Button variant="primary" size="large" fullWidth>
+						인증번호 요청
+					</Button>
+				</HStack>
 			</VStack>
-			<TextField
-				label="인증번호"
-				value=""
-				placeholder="6자리 숫자"
-				helperText="유효시간 02:48"
-				readOnly
-			/>
-			<HStack gap="var(--semantic-spacing-inline)">
-				<Button variant="secondary" size="large" fullWidth>
-					재요청
-				</Button>
-				<Button variant="primary" size="large" fullWidth>
-					인증번호 요청
-				</Button>
-			</HStack>
-			{failed ? (
-				<Notice tone="negative" title="인증 실패 한도 초과">
-					10분 후 다시 시도해 주세요.
-				</Notice>
-			) : null}
 		</VStack>
 	);
 }
@@ -80,21 +88,29 @@ function AuthMethodRow({
 	title,
 	caption,
 	checked,
-	onCheckedChange,
+	onSelect,
 }: {
 	title: string;
 	caption: string;
 	checked: boolean;
-	onCheckedChange: (checked: boolean) => void;
+	onSelect: () => void;
 }) {
 	return (
-		<HStack align="flex-start" gap="var(--semantic-spacing-stack)">
+		<HStack
+			align="flex-start"
+			gap="var(--semantic-spacing-gap-comfortable)"
+			onClick={onSelect}
+			px="var(--semantic-spacing-inset-lg)"
+			py="var(--semantic-spacing-inset-lg)"
+		>
 			<RadioButton
 				name="auth-method"
 				checked={checked}
-				onCheckedChange={onCheckedChange}
+				onCheckedChange={(next) => {
+					if (next) onSelect();
+				}}
 			/>
-			<VStack minWidth={0} gap="var(--semantic-spacing-row)">
+			<VStack minWidth={0} gap="var(--semantic-spacing-gap-tight)">
 				<Text variant="listTitle">{title}</Text>
 				<Text variant="helper">{caption}</Text>
 			</VStack>

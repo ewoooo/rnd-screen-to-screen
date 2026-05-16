@@ -1,6 +1,6 @@
 # PageStackContents Enrichment Notes
 
-> Staging memo for Figma MOCK SOT observation. Final decisions should be applied to the component README, DESIGN_PATTERNS.md, SPACING_PATTERNS.md, or pxds-layout docs.
+> Staging memo for Figma MOCK SOT observation. Final decisions should be applied to the component README, DESIGN_PATTERNS.md, SPACING_PATTERNS.md, or cx-layout docs.
 
 ## Current Source
 - Inventory: ../../component-inventory.md -> components/base/page-stack-contents.md
@@ -33,14 +33,14 @@
 ## States / Variants
 - Observed states: title shown with `TitleSection/Default`; completion title uses `TitleMain(Type=Complete)`; content slot uses `SectionItem_이친구를복붙하세요`.
 - Missing states: title-hidden cases should be verified in detail/success frames.
-- Variant/property notes: inventory targets `pxds-layout`, but staging note lives under cx-components docs for inventory continuity.
+- Variant/property notes: inventory targets `cx-layout`, but staging note lives under cx-components docs for inventory continuity.
 
 ## Missing / Reuse Decision
 - Decision: LAYOUT_PATTERN
 - Reason: observed behavior is section/slot structure, not a new visual component.
-- Follow-up: apply final guidance to pxds-layout README rather than cx component README; include completion title/content variant.
+- Follow-up: apply final guidance to cx-layout README rather than cx component README; include completion title/content variant.
 
 ## Apply Later
-- README changes: pxds-layout `PageStackContents` README should document allowed section contents and route-level spacing avoidance.
+- README changes: cx-layout `PageStackContents` README should document allowed section contents and route-level spacing avoidance.
 - Inventory changes:
 - Pattern doc changes: keep form/detail section repetition aligned with `DESIGN_PATTERNS.md`.

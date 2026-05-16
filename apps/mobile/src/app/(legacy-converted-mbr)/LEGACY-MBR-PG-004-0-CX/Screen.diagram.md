@@ -252,7 +252,7 @@ AppScreen
 
 - Use `@pxds/cx-components` for `AppBar`, `Button`, `Callout`, `ListText`, `SectionItem`, `StatusBar`, `TitleMain`, `TitleSection`.
 - Use `ListText(non-table, rightItem=badge)` as the current plain key-value row vocabulary for categorical status. Do not use `ListText.table` for this impact list.
-- Use `@pxds/pxds-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
+- Use `@pxds/cx-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
 - Do NOT import `@pxds/pxds-components/*` or `@pxds/pxds-icons`.
 - Do NOT reuse `@/organisms/legacy-mbr/*`. If secondary impact copy or settlement behavior needs structure, create a CX organism under `@/organisms/mbr/`.
 - `AppScreen.Content` is the only scroll owner.

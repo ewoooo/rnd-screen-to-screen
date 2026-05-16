@@ -16,7 +16,7 @@ import {
 	PageStackContents,
 	SectionDivider,
 	SinglePrimaryAction,
-} from "@pxds/pxds-layout/components";
+} from "@pxds/cx-layout/components";
 import type { ReactNode } from "react";
 
 type TextSectionProps = {

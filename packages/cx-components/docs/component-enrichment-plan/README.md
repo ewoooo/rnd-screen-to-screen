@@ -7,7 +7,7 @@ These notes are not a permanent source of truth. Use them to collect evidence, d
 - component README files
 - `DESIGN_PATTERNS.md`
 - `SPACING_PATTERNS.md`
-- `@pxds/pxds-layout` docs
+- `@pxds/cx-layout` docs
 - `component-inventory.md`
 
 ## Structure

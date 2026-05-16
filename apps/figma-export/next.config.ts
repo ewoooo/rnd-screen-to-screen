@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 		"@pxds/cx-components",
 		"@pxds/cx-icons",
 		"@pxds/pxds-figma",
-		"@pxds/pxds-layout",
+		"@pxds/cx-layout",
 		"@screen/mobile",
 	],
 };

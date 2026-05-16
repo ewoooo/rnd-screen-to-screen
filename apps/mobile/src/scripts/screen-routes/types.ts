@@ -1,7 +1,7 @@
 import type {
 	ScreenRouteConfig,
 	ScreenLifecycleStatus as SpecScreenLifecycleStatus,
-} from "@pxds/pxds-spec";
+} from "@pxds/cx-spec";
 
 export type ScreenGroup = "mbr" | "cx" | "legacy-converted-mbr";
 export type ScreenLifecycleStatus = SpecScreenLifecycleStatus;

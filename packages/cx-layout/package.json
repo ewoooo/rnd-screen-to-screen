@@ -1,0 +1,23 @@
+{
+	"name": "@pxds/cx-layout",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./components": "./src/components/index.ts",
+		"./components/chrome": "./src/components/chrome/index.ts",
+		"./components/compositions": "./src/components/compositions/index.ts",
+		"./components/contents": "./src/components/contents/index.ts",
+		"./components/overlays": "./src/components/overlays/index.ts",
+		"./components/patterns": "./src/components/patterns/index.ts",
+		"./components/primitives": "./src/components/primitives/index.ts",
+		"./primitives": "./src/components/primitives/index.ts",
+		"./styles.css": "./src/styles.css"
+	},
+	"dependencies": {
+		"@pxds/cx-icons": "0.1.0",
+		"@pxds/cx-tokens": "0.1.0",
+		"react": "19.2.4"
+	}
+}

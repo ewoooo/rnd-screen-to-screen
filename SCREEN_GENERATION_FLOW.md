@@ -16,11 +16,26 @@ SB 기반 신규 생성 절차에서는 Figma SOT를 필수 대조 대상으로 
 |---|---|---|---|---|
 | **1 · Extract** | SB → 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출 | SB (입력) | 추출 요약 | 화면ID·도메인·OGN ID·정책태그 누락 0으로 목록화 |
 | **2 · Map** | 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정 | `packages/policy-core/policies/**/*.md`, `*.policy.ts`, `packages/policy-core/governance/**/*.md` | `Screen.map.md` | 모든 정책태그가 화면 정보/CTA/에러로 매핑되고, 관련 `UXP`/`UXPT`/`VOT` refs가 선정됨. 누락 시 다음 페이즈 진입 금지 |
-| **3 · Diagram** | 유사 wire reference 탐색 + 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `apps/mobile/src/diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2의 governance refs | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, `wireReference`와 한계, OGN별 layoutStrategy·정책연결·governance 적용·reuse/new 표기 |
-| **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout` | `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
+| **3 · Diagram** | 유사 wire reference 탐색 + Pattern Analysis Gate + 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2의 governance refs | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, `wireReference`와 한계, section별 patternEvidence/patternDecision, OGN별 layoutStrategy·정책연결·governance 적용·reuse/new 표기 |
+| **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout` | `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
 | **5 · Register** | route catalog 등록 + preview 노출 확인 | `apps/mobile/src/scripts/screen-routes/` | `routes.ts` 등록 항목 | route 등록 + preview iframe에서 해당 route 진입 가능 |
 
 페이즈 이후 `lint` / `build` / `check:*` 는 절차 밖의 공통 검증 게이트(아래 `## 검증` 참조)가 실행한다.
+
+## 운영 스킬
+
+Codex 화면 생성 작업은 아래 `cx-*` 스킬을 사용해 페이즈별 절차를 고정한다. 스킬은 작업 실행 가이드이고, 이 문서와 각 SOT 문서가 절차/판단의 최종 기준이다.
+
+| Phase | Skill | 역할 |
+|---|---|---|
+| 전체 관리 | `cx-screen-create` | 메인 에이전트가 5페이즈를 오케스트레이션하고 phase gate를 승인한다. |
+| **1 · Extract** | `cx-screen-extract` | SB/첨부에서 화면ID·도메인·과업·상태·CTA·정책태그·OGN/slot/part/hierarchy를 추출한다. |
+| **2 · Map** | `cx-screen-map` | 정책서·`.policy.ts`·governance를 `Screen.map.md`로 번역한다. |
+| **3 · Diagram** | `cx-screen-diagram` | wire reference 탐색, Pattern Analysis Gate, 최신 Screen Wire rail, Section Contracts, layoutStrategy, reuse/new 판단을 `Screen.diagram.md`에 기록한다. |
+| **4 · Build** | `cx-screen-build` | 승인된 Map/Diagram만 코드화해 OGN, `Screen.tsx`, `Screen.config.ts`를 만든다. |
+| **5 · Register** | `cx-screen-register-verify` | route catalog 등록과 policy/lint/build/preview 검증을 수행한다. |
+
+작업자가 스킬을 사용할 수 없는 환경이면 같은 이름의 phase 규칙을 이 문서와 관련 SOT에서 직접 따른다. Phase 3에서 `cx-screen-diagram`을 건너뛰지 않는다.
 
 ## 페이즈 흐름
 
@@ -75,11 +90,12 @@ flowchart LR
 
 ### Phase 3 · Diagram
 
-- 책임: `apps/mobile/src/diagrams/` 와 기존 화면 `Screen.diagram.md` 에서 유사 wire reference를 먼저 찾고, 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + 컴포넌트 reuse/new 분기 + SB 기반 제작 Diagram 작성, Layout Distortion Gate 자체 통과.
-- 참고: `apps/mobile/src/diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2에서 선정한 `UXP`/`UXPT`/`VOT` refs
+- 책임: `apps/mobile/src/screen-diagrams/` 와 기존 화면 `Screen.diagram.md` 에서 유사 wire reference를 먼저 찾고, Pattern Analysis Gate로 반복 UI 구조와 divider evidence를 확정한 뒤, 화면 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy 작성 + 컴포넌트 reuse/new 분기 + SB 기반 제작 Diagram 작성, Layout Distortion Gate 자체 통과.
+- 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`, Phase 2에서 선정한 `UXP`/`UXPT`/`VOT` refs
 - 산출: `Screen.diagram.md` — **모든 화면 의무다.** 신규/기존 구분 없이 모든 화면이 이 산출물을 가진다.
-- DoD: Diagram이 `Screen → Chrome → Section → Slot → Stack → Component` 구조로 설명되고, `Screen Contract`에 `wireReference`와 reference 한계가 기록되며, 각 OGN에 layoutStrategy·정책 연결·governance 적용·reuse/new 표기가 있다.
+- DoD: Diagram이 `Screen → Chrome → Section → Slot → Stack → Component` 구조로 설명되고, `Screen Contract`에 `wireReference`와 reference 한계가 기록되며, 각 section에 patternEvidence/patternDecision이 있고, 각 OGN에 layoutStrategy·정책 연결·governance 적용·reuse/new 표기가 있다.
 - 메인 에이전트 디자인 검수는 레이아웃 보존을 최우선으로 한다. SB/wire reference의 핵심 레이아웃, section 경계, slot 위치, CTA/navigation/notice/form field의 위치 관계, scroll/fixed 영역의 역할이 보존되지 않으면 정책·copy·component 판단이 맞아도 승인하지 않는다.
+- Pattern Analysis Gate는 이 페이즈의 필수 선행 판단이다. 각 section에서 `sectionBoundary`, `fieldGrouping`, `rowSeparators`, `actionPlacement`, `patternEvidence`, `patternDecision`을 확인하고 `Screen.diagram.md`의 `Section Contracts`에 기록한다. 실제 reference에 있는 contents divider, section divider band, row separator, field action slot을 단순 spacing gap이나 외부 버튼으로 대체하지 않는다.
 - 정책 정보 추가로 레이아웃이 늘어질 위험이 있으면 `Screen.diagram.md`에 접기, 분리, 우선순위 조정, 별도 state 처리 같은 layout preservation decision을 남긴다.
 - 이 페이즈는 governance를 새로 탐색하지 않는다. Phase 2에서 선정된 governance refs를 CTA hierarchy, button label, state handling, error/empty/loading treatment, navigation, writing tone 검증 기준으로 적용한다.
 - 기록 항목: `appliedGovernanceRefs`, `sectionId`, `layoutOrStateDecision`, `copyDecision`, `CTA hierarchy/label decision`, `distortionRisk mitigated by governance`.
@@ -89,7 +105,7 @@ flowchart LR
 ### Phase 4 · Build
 
 - 책임: 정책서 도메인 모듈 ID/OGN별로 `apps/mobile/src/organisms/<domain>/` 아래에 OGN을 제작하거나 기존 OGN을 보강하고, `Screen.tsx` 를 Diagram 그대로 조립하며, `Screen.config.ts` 에 생성 근거(`generation`)를 담는다.
-- 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`. `@pxds/pxds-components` / `@pxds/pxds-icons` 는 deprecated 호환 경계로만 다룬다.
+- 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`. `@pxds/pxds-components` / `@pxds/pxds-icons` 는 deprecated 호환 경계로만 다룬다.
 - 산출: `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts`
 - DoD: Diagram의 모든 OGN/슬롯이 코드에 존재하고, `Screen.config.ts` 의 `generation` 블록이 채워진다.
 - 메인 에이전트 구현 검수는 실제 렌더링에서 레이아웃 보존 여부를 먼저 본다. `Screen.diagram.md`의 section/slot/stack 배치, 하단 CTA/fixed 영역, scroll/content 영역, 모바일 viewport 줄바꿈, overflow, 겹침, 과도한 여백을 preview에서 확인한다.
@@ -150,8 +166,8 @@ Phase 2 이후 산출물은 governance 확인 결과를 아래처럼 이어 받�
 - `Screen.diagram.md` 의 OGN이 `Screen.map.md` 에 없으면 `structural-only` 같은 사유를 남긴다.
 
 ```ts
-import type { ScreenRouteConfig } from "@pxds/pxds-spec";
-import { defineScreenConfig } from "@pxds/pxds-spec";
+import type { ScreenRouteConfig } from "@pxds/cx-spec";
+import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "NOVA-MBR-PG-001-0",

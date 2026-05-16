@@ -149,7 +149,7 @@ import { SectionItem, TitleSection, Text, Badge } from "@pxds/cx-components";
 </SectionItem>
 ```
 
-`PageStackContents` and `PageStackList` should treat `SectionItem` instances as child content payloads, not as layout primitives owned by `pxds-layout`.
+`PageStackContents` and `PageStackList` should treat `SectionItem` instances as child content payloads, not as layout primitives owned by `cx-layout`.
 
 ## Implementation Guide
 

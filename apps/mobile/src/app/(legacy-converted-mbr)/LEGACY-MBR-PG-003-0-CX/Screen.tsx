@@ -14,7 +14,7 @@ import {
 	PageStackContents,
 	SectionDivider,
 	SinglePrimaryAction,
-} from "@pxds/pxds-layout/components";
+} from "@pxds/cx-layout/components";
 
 const WITHDRAW_COMPLETE_SUMMARY_ROWS = [
 	{
