@@ -17,14 +17,17 @@
 
 1. `packages/policy-core/policies/**/*.md` — 정책서 원문과 정책 항목의 문서 SOT
 2. `packages/policy-core/policies/**/*.policy.ts` — 화면과 카피가 참조할 수 있는 구조화된 정책 정의
-3. [SKT GenUI Test 0512](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_GenUI_Test_0512?node-id=12001-103520&t=MXbXJQlMpLVcgIv3-1) — 실제 페이지 목업 Figma SOT
-4. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing 등 디자인 foundation SOT
-5. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴 SOT
-6. `SPACING_PATTERNS.md` — foundation spacing token을 화면·컴포넌트 실측 간격으로 적용하는 운영 규칙
-7. `SCREEN_STRUCTURE_PRINCIPLES.md` — Diagram과 화면 조립의 단순 구조 원칙
-8. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
+3. `packages/policy-core/governance/**/*.md` — UX 원칙(UXP), UI pattern/state control(UXPT), UX writing/voice(VOT) SOT
+4. [SKT GenUI Test 0512](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_GenUI_Test_0512?node-id=12001-103520&t=MXbXJQlMpLVcgIv3-1) — 실제 페이지 목업 Figma SOT
+5. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing 등 디자인 foundation SOT
+6. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴 SOT
+7. `SPACING_PATTERNS.md` — foundation spacing token을 화면·컴포넌트 실측 간격으로 적용하는 운영 규칙
+8. `SCREEN_STRUCTURE_PRINCIPLES.md` — Diagram과 화면 조립의 단순 구조 원칙
+9. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
 
-정책과 디자인 문서가 충돌하면 정책 의미를 먼저 보존하고, 표현 방식은 디자인 foundation과 pattern 안에서 해결한다. 문서화된 토큰·패턴·컴포넌트 어휘 밖의 inline UI, 자체 spacing, 자체 fontSize가 필요하면 임의 확장하지 말고 시스템 깨짐 신호로 기록한다.
+정책과 governance, 디자인 문서가 충돌하면 정책 의미를 먼저 보존하고, UX governance의 행동·상태·문체 규칙을 적용한 뒤, 표현 방식은 디자인 foundation과 pattern 안에서 해결한다. 문서화된 토큰·패턴·컴포넌트 어휘 밖의 inline UI, 자체 spacing, 자체 fontSize가 필요하면 임의 확장하지 말고 시스템 깨짐 신호로 기록한다.
+
+`Screen.map.md`, `Screen.diagram.md`, `Screen.config.ts`, 실제 구현이 `packages/policy-core/policies` 의 정책 원문/정의와 불일치하면 항상 policy-core를 우선한다. 불일치는 map에 기록하되, 최종 화면 요구·copy·구현은 policy-core 기준으로 수정한다.
 
 SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상으로 삼지 않는다. 실제 페이지를 재현하거나 신규 화면의 시각 기준을 확인하는 작업에서만 Figma 목업 SOT를 함께 확인한다. Figma 목업은 최종 화면의 구체적 배치와 상태 참고 기준이며, foundation token과 pattern contract를 우회하는 근거로 사용하지 않는다.
 
@@ -50,7 +53,7 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 │   ├── storybook/     cx-components와 cx-tokens 카탈로그용 Storybook 셸
 │   └── figma-export/  Figma export 보조 앱
 ├── packages/
-│   ├── policy-core/               Policy / UseCase 순수 문서 도메인
+│   ├── policy-core/               Policy / UseCase / UX Governance 순수 문서 도메인
 │   ├── pxds-spec/                 screen/component registry와 UI 비의존 spec 타입
 │   ├── cx-tokens/                 CX DS 기반 token SSOT
 │   ├── cx-icons/                  CX DS icon originals + registry + React wrapper
@@ -73,9 +76,11 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 
 새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
 
+메인 에이전트와 서브 에이전트의 감독/교정 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
+
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
-2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`).
-3. **Diagram** — 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
+3. **Diagram** — 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
@@ -85,7 +90,7 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 
 ## 패키지 책임
 
-- `@policy/core` — 정책서 원문, use case, section, evidence reference, 구조화된 policy definition을 소유한다. Screen, route, component, UI runtime을 모른다.
+- `@policy/core` — 정책서 원문, use case, section, evidence reference, 구조화된 policy definition, UX governance source를 소유한다. Screen, route, component, UI runtime을 모른다.
 - `@pxds/pxds-spec` — screen/component registry와 kind 같은 UI 비의존 spec 타입을 소유한다.
 - `@pxds/cx-tokens` — 런타임 시각 token 값의 SSOT. CX primitive/semantic token set과 generated CSS를 제공한다.
 - `@pxds/cx-icons` — CX DS Figma 원천 SVG, icon registry, React `Icon` wrapper 초안을 소유한다.

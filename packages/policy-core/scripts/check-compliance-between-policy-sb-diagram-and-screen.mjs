@@ -5,6 +5,7 @@ import process from "node:process";
 
 const repoRoot = path.resolve(import.meta.dirname, "..", "..", "..");
 const policyRoot = path.join(repoRoot, "packages", "policy-core", "policies");
+const governanceRoot = path.join(repoRoot, "packages", "policy-core", "governance");
 const appRoot = path.join(repoRoot, "apps", "mobile", "src", "app");
 const organismsRoot = path.join(repoRoot, "apps", "mobile", "src", "organisms");
 const routesPath = path.join(
@@ -16,7 +17,19 @@ const routesPath = path.join(
 	"screen-routes",
 	"routes.ts",
 );
-const requiredDesignDocs = ["DESIGN_PATTERNS.md", "DESIGN_FOUNDATION.md"];
+const requiredDesignDocs = [
+	"DESIGN_PATTERNS.md",
+	"DESIGN_FOUNDATION.md",
+	"SPACING_PATTERNS.md",
+	"SCREEN_STRUCTURE_PRINCIPLES.md",
+];
+const requiredDiagramSections = [
+	"Screen Contract",
+	"Screen Wire",
+	"Section Contracts",
+	"Policy / OGN Matrix",
+	"Distortion Gates",
+];
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
 
@@ -51,6 +64,27 @@ function readStringArrayProperty(source, propertyName) {
 	return Array.from(match[1].matchAll(/"([^"]*)"|`([^`]*)`/g)).map(
 		(item) => item[1] ?? item[2],
 	);
+}
+
+function extractMarkdownSection(source, heading) {
+	const lines = source.split(/\r?\n/);
+	const start = lines.findIndex((line) => line.trim() === `## ${heading}`);
+	if (start === -1) return "";
+	const end = lines.findIndex(
+		(line, index) => index > start && line.startsWith("## "),
+	);
+	return lines.slice(start + 1, end === -1 ? undefined : end).join("\n");
+}
+
+function extractWireSectionIds(screenWire) {
+	return Array.from(screenWire.matchAll(/\[([A-Za-z][A-Za-z0-9_.-]*)\]/g))
+		.map((match) => match[1])
+		.filter((id) => !["Header", "Content", "Bottom", "Divider"].includes(id));
+}
+
+function extractGovernanceRefs(source) {
+	return Array.from(source.matchAll(/\b(UXP_[A-Z0-9_]+|UXPT_[A-Z0-9_]+|VOT_[A-Z0-9_]+)\b/g))
+		.map((match) => match[1]);
 }
 
 function normalizePath(filePath) {
@@ -121,6 +155,7 @@ function parseScreenConfig(configPath) {
 			pattern: readStringProperty(source, "pattern"),
 			policyRefs: readStringArrayProperty(source, "policyRefs"),
 			ognIds: readStringArrayProperty(source, "ognIds"),
+			governanceRefs: readStringArrayProperty(source, "governanceRefs"),
 			designDocsChecked: readStringArrayProperty(source, "designDocsChecked"),
 		},
 	};
@@ -145,6 +180,14 @@ function collectPolicyIds() {
 		walkFiles(policyRoot, (filePath) => filePath.endsWith(".policy.ts"))
 			.map((filePath) => readStringProperty(readText(filePath), "id"))
 			.filter(Boolean),
+	);
+}
+
+function collectGovernanceIds() {
+	return new Set(
+		walkFiles(governanceRoot, (filePath) =>
+			filePath.endsWith(".md") && path.basename(filePath) !== "README.md",
+		).map((filePath) => path.basename(filePath, ".md")),
 	);
 }
 
@@ -182,6 +225,7 @@ function hasGenerationConfig(screen) {
 			generation.pattern ||
 			generation.policyRefs ||
 			generation.ognIds ||
+			generation.governanceRefs ||
 			generation.designDocsChecked,
 	);
 }
@@ -201,10 +245,129 @@ function validateGenerationShape(generation) {
 	}
 }
 
+function validateScreenMap(screen, context, mapPath) {
+	if (!existsSync(mapPath)) {
+		problem("Screen.map.md is missing; generated screens must record Phase 2 policy/governance mapping");
+		return null;
+	}
+
+	const map = readText(mapPath);
+	ok("Screen.map.md is present");
+
+	if (screen.id && !map.includes(screen.id)) {
+		problem(`Screen.map.md must include screenId ${screen.id}`);
+	}
+
+	if (!includesAll(map, screen.generation.policyRefs ?? [])) {
+		problem("Screen.map.md must include every policyRef from Screen.config generation");
+	}
+
+	if (!includesAll(map, screen.generation.ognIds ?? [])) {
+		problem("Screen.map.md must include every ognId from Screen.config generation");
+	}
+
+	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
+	for (const governanceRef of governanceRefsFromConfig) {
+		if (!context.governanceIds.has(governanceRef)) {
+			problem(`unknown governanceRef: ${governanceRef}`);
+		}
+	}
+
+	if (governanceRefsFromConfig.length > 0 && !includesAll(map, governanceRefsFromConfig)) {
+		problem("Screen.map.md must include every governanceRef from Screen.config generation");
+	}
+
+	const governanceRefsFromMap = extractGovernanceRefs(map);
+	if (
+		governanceRefsFromMap.length === 0 &&
+		!map.includes("governanceRefs") &&
+		!map.includes("notApplicableReason")
+	) {
+		problem("Screen.map.md must record governanceRefs or notApplicableReason");
+	}
+
+	return map;
+}
+
+function validateDiagramContract(screen, context, diagramPath, mapText) {
+	const diagram = readText(diagramPath);
+
+	if (!diagram.includes("AppScreen")) {
+		problem("Screen.diagram.md must include AppScreen");
+	}
+	if (screen.id && !diagram.includes(screen.id)) {
+		problem(`Screen.diagram.md must include screenId ${screen.id}`);
+	}
+	if (!includesAll(diagram, screen.generation.ognIds ?? [])) {
+		problem("Screen.diagram.md must include every ognId from Screen.config generation");
+	}
+	if (!includesAll(diagram, screen.generation.policyRefs ?? [])) {
+		problem("Screen.diagram.md must include every policyRef from Screen.config generation");
+	}
+
+	for (const section of requiredDiagramSections) {
+		if (!diagram.includes(`## ${section}`)) {
+			problem(`Screen.diagram.md must include "## ${section}"`);
+		}
+	}
+
+	if (diagram.includes("AppScreen.ActionBar") || diagram.includes("ActionBar(")) {
+		problem('Screen.diagram.md must use Bottom(preset="...") instead of AppScreen.ActionBar/ActionBar');
+	}
+
+	const screenWire = extractMarkdownSection(diagram, "Screen Wire");
+	const sectionContracts = extractMarkdownSection(diagram, "Section Contracts");
+	if (screenWire) {
+		if (!/├.*Header.*┤/.test(screenWire)) {
+			problem("Screen Wire must show the AppScreen Header rail, e.g. ├─Header─┤");
+		}
+		if (!/├.*Content.*┤/.test(screenWire)) {
+			problem("Screen Wire must show the AppScreen Content rail, e.g. ├─Content─┤");
+		}
+		if (diagram.includes("Bottom(preset=") && !/├.*Bottom.*┤/.test(screenWire)) {
+			problem("Screen Wire must show the AppScreen Bottom rail when Bottom(preset=...) is used");
+		}
+		if (/Divider/.test(screenWire) && !/├═+Divider═+┤/.test(screenWire)) {
+			problem("Screen Wire divider must use the explicit rail form, e.g. ├══Divider══┤");
+		}
+
+		for (const sectionId of extractWireSectionIds(screenWire)) {
+			if (!sectionContracts.includes(sectionId)) {
+				problem(`Section Contracts must include Screen Wire section id [${sectionId}]`);
+			}
+		}
+	}
+
+	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
+	if (
+		governanceRefsFromConfig.length > 0 &&
+		!includesAll(diagram, governanceRefsFromConfig)
+	) {
+		problem("Screen.diagram.md must include every governanceRef from Screen.config generation");
+	}
+
+	if (mapText) {
+		const governanceRefsFromMap = Array.from(new Set(extractGovernanceRefs(mapText)));
+		const appliedGovernanceRefs = extractGovernanceRefs(diagram);
+		for (const governanceRef of governanceRefsFromMap) {
+			if (!context.governanceIds.has(governanceRef)) {
+				problem(`unknown governanceRef in Screen.map.md: ${governanceRef}`);
+				continue;
+			}
+			if (!appliedGovernanceRefs.includes(governanceRef)) {
+				problem(`Screen.diagram.md must apply governanceRef from Screen.map.md: ${governanceRef}`);
+			}
+		}
+	}
+
+	return diagram;
+}
+
 function validateScreen(screen, context) {
 	const screenLabel = screen.id ?? path.basename(screen.dir);
 	const screenRel = normalizePath(screen.dir);
 	const screenPath = path.join(screen.dir, "Screen.tsx");
+	const mapPath = path.join(screen.dir, "Screen.map.md");
 	const diagramPath = path.join(screen.dir, "Screen.diagram.md");
 	const hasGeneration = hasGenerationConfig(screen);
 	const hasDiagram = existsSync(diagramPath);
@@ -247,19 +410,8 @@ function validateScreen(screen, context) {
 		}
 	}
 
-	const diagram = readText(diagramPath);
-	if (!diagram.includes("AppScreen")) {
-		problem("Screen.diagram.md must include AppScreen");
-	}
-	if (screen.id && !diagram.includes(screen.id)) {
-		problem(`Screen.diagram.md must include screenId ${screen.id}`);
-	}
-	if (!includesAll(diagram, generation.ognIds ?? [])) {
-		problem("Screen.diagram.md must include every ognId from Screen.config generation");
-	}
-	if (!includesAll(diagram, generation.policyRefs ?? [])) {
-		problem("Screen.diagram.md must include every policyRef from Screen.config generation");
-	}
+	const mapText = validateScreenMap(screen, context, mapPath);
+	validateDiagramContract(screen, context, diagramPath, mapText);
 
 	const screenSource = existsSync(screenPath) ? readText(screenPath) : "";
 	if (!screenSource) {
@@ -296,6 +448,7 @@ function validateScreen(screen, context) {
 
 const context = {
 	policyIds: collectPolicyIds(),
+	governanceIds: collectGovernanceIds(),
 	organismsById: collectOrganisms(),
 	routesSource: existsSync(routesPath) ? readText(routesPath) : "",
 };

@@ -1,11 +1,12 @@
 # @policy/core
 
-Policy / UseCase 순수 문서 도메인이다.
+Policy / UseCase / UX Governance 순수 문서 도메인이다.
 
 ## 원칙
 
 - Screen, route, component, UI runtime을 모른다.
-- 정책서 원문, use case, section, evidence reference 같은 순수 문서 개념만 소유한다.
+- 정책서 원문, use case, section, evidence reference, UX governance source 같은 순수 문서 개념만 소유한다.
+- `policies/` 는 도메인 업무 정책 SOT이고, `governance/` 는 UX 원칙(`UXP`), UI pattern/state control(`UXPT`), UX writing/voice(`VOT`) SOT다.
 - 정책 문장을 화면으로 번역하는 판단은 `SCREEN_GENERATION_FLOW.md`의 생성 산출물과 `Screen.config.ts`의 `generation` 블록에서 검증한다.
 - 정책 core는 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md` 자체를 해석하지 않는다. 다만 screen generation 검증에서 해당 문서 확인 여부와 policyRefs/ognIds/diagram 정합성은 검사할 수 있다.
 
