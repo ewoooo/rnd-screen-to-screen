@@ -3,8 +3,8 @@ import type { ScreenRouteConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "NOVA-MBR-PG-001-0",
-	name: "MBR 가입 1·약관 동의",
-	label: "MBR 가입 1·약관 동의",
+	name: "1-약관 동의",
+	label: "1-약관 동의",
 	route: "/NOVA-MBR-PG-001-0",
 	group: "nova-mbr-legacy",
 	owner: "@screen/mobile",

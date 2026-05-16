@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "CX-EXAMPLE-PERSONAL-INFO-INPUT",
-	name: "Personal info input",
-	label: "Personal info input",
+	name: "3-개인정보 입력",
+	label: "3-개인정보 입력",
 	route: "/CX-EXAMPLE-PERSONAL-INFO-INPUT",
 	group: "cx-example",
 	owner: "@screen/mobile",

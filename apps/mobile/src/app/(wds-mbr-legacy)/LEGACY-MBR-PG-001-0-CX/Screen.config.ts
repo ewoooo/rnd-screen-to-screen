@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "LEGACY-MBR-PG-001-0-CX",
-	name: "회원 가입 본인인증 (CX 전환)",
-	label: "회원 가입 본인인증 (CX)",
+	name: "1-회원 가입 본인인증",
+	label: "1-회원 가입 본인인증",
 	route: "/LEGACY-MBR-PG-001-0-CX",
 	group: "wds-mbr-legacy",
 	owner: "@screen/mobile",

@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "CX-EXAMPLE-COMPLETE-PLAN-CHANGE",
-	name: "Complete plan change",
-	label: "Complete plan change",
+	name: "2-요금제 변경 완료",
+	label: "2-요금제 변경 완료",
 	route: "/CX-EXAMPLE-COMPLETE-PLAN-CHANGE",
 	group: "cx-example",
 	owner: "@screen/mobile",

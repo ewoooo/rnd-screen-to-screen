@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "LEGACY-MBR-PG-007-0-CX",
-	name: "회원 가입 약관 동의 (CX 전환)",
-	label: "회원 가입 약관 동의 (CX)",
+	name: "7-회원 가입 약관 동의",
+	label: "7-회원 가입 약관 동의",
 	route: "/LEGACY-MBR-PG-007-0-CX",
 	group: "wds-mbr-legacy",
 	owner: "@screen/mobile",

@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "CX-EXAMPLE-COMPLETE-ACTIVATION",
-	name: "Complete activation",
-	label: "Complete activation",
+	name: "1-개통 완료",
+	label: "1-개통 완료",
 	route: "/CX-EXAMPLE-COMPLETE-ACTIVATION",
 	group: "cx-example",
 	owner: "@screen/mobile",

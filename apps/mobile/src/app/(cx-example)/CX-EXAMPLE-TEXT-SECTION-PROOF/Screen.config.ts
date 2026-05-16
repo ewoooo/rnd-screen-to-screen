@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "CX-EXAMPLE-TEXT-SECTION-PROOF",
-	name: "Text Section proof",
-	label: "Text Section proof",
+	name: "4-텍스트 섹션 검증",
+	label: "4-텍스트 섹션 검증",
 	route: "/CX-EXAMPLE-TEXT-SECTION-PROOF",
 	group: "cx-example",
 	owner: "@screen/mobile",

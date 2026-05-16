@@ -3,8 +3,8 @@ import { defineScreenConfig } from "@pxds/cx-spec";
 
 export const screenConfig = defineScreenConfig({
 	id: "NOVA-MBR-PG-003-0",
-	name: "MBR 가입 3·본인인증",
-	label: "MBR 가입 3·본인인증",
+	name: "3-본인인증",
+	label: "3-본인인증",
 	route: "/NOVA-MBR-PG-003-0",
 	group: "nova-mbr-legacy",
 	owner: "@screen/mobile",
