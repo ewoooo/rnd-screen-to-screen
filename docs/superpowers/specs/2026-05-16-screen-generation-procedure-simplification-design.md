@@ -23,9 +23,11 @@
 - **책임 분리**: 절차 문서는 "**언제 / 무엇을 / 어떤 문서 보고**"만 말한다. 참고 문서의 내용을 절차 문서가 다시 서술하지 않는다.
 - **검증 분리**: 검증은 페이즈가 아니다. `AGENTS.md` 공통 검증 + `check:*` 스크립트가 단독 소유하는 절차 밖 게이트.
 
+규칙: **모든 화면은 `Screen.diagram.md`를 가져야 한다.** 신규/기존 구분 없이 의무다. 단, 기존 4개 화면(`NOVA-MBR-PG-001/002/003/005`)의 백필은 이 절차 재구성과 분리된 **확정된 후속 작업**으로 시퀀싱한다(섹션 8).
+
 비목표(YAGNI):
 
-- 기존 4개 화면 `Screen.diagram.md` 백필 — 하지 않는다.
+- 이 구현에서 기존 4개 화면 백필 실행 — 하지 않는다(규칙은 모든 화면 의무, 백필은 후속 작업).
 - `check:*` 스크립트 로직 변경 — 하지 않는다.
 - 검증 항목 자체 축소 — 하지 않는다(위치만 분리).
 - 신규 `VERIFICATION.md` 생성 — 하지 않는다.
@@ -46,7 +48,7 @@ DoD는 검증이 아니라 "이 산출물이 내적으로 완성되어 다음 �
 |---|---|---|---|---|
 | **1 · Extract** | SB → 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출 | SB (입력) | 추출 요약 | 화면ID·도메인·OGN ID·정책태그 누락 0으로 목록화 |
 | **2 · Map** | 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 | `packages/policy-core/policies/**/*.md`, `*.policy.ts` | 정책-화면 요구사항 매트릭스 | 모든 정책태그가 화면 정보/CTA/에러로 매핑. 누락 시 다음 페이즈 진입 금지 |
-| **3 · Diagram** | 화면 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md` | `Screen.diagram.md` (신규 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component`로 설명, OGN별 layoutStrategy·정책연결·reuse/new 표기 |
+| **3 · Diagram** | 화면 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md` | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component`로 설명, OGN별 layoutStrategy·정책연결·reuse/new 표기 |
 | **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/pxds-layout` | `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
 | **5 · Register** | route catalog 등록 + preview 노출 확인 | `apps/mobile/src/scripts/screen-routes/` | `routes.ts` 등록 항목 | route 등록 + preview iframe에서 해당 route 진입 가능 |
 
@@ -74,7 +76,7 @@ DoD는 검증이 아니라 "이 산출물이 내적으로 완성되어 다음 �
 
 `SCREEN_GENERATION_FLOW.md`는 이 게이트를 **포인터 한 줄**로만 가리킨다("검증은 절차 밖 공통 검증 게이트가 소유 → AGENTS.md 공통 검증 참조"). 검증 절차 서술을 절차 문서에 두지 않는다.
 
-`Screen.diagram.md`는 **신규 화면에만 의무**다. 기존 4개 화면은 adoption gap으로 follow-up(섹션 8)에 기록하고 백필하지 않는다. `check:screen-generation`의 기존-화면 adoption warning 동작은 그대로 둔다(스크립트 로직 변경 없음).
+`Screen.diagram.md`는 **모든 화면 의무**다. 신규 화면은 Phase 3에서 즉시 생성한다. 기존 4개 화면은 현재 미충족 상태이며, 백필은 확정된 후속 작업(섹션 8)으로 분리 실행한다. 백필 완료 전까지 `check:screen-generation`의 기존-화면 adoption warning 동작은 그대로 두고(스크립트 로직 변경 없음), `:strict` 게이트는 신규 화면에만 적용한다.
 
 ## 6. 문서 책임 분리 맵
 
@@ -92,7 +94,7 @@ DoD는 검증이 아니라 "이 산출물이 내적으로 완성되어 다음 �
 1. **`SCREEN_GENERATION_FLOW.md`** — 전면 재작성.
    - 5페이즈 계약 테이블(섹션 4) + 페이즈 매핑(섹션 4.1) + "검증은 절차 밖 게이트" 포인터 1줄.
    - 기존 13단계 서술형 본문(60~218줄)과 검증 서술(220~231줄) 삭제.
-   - `Screen.diagram.md` 의무를 "신규 화면만"으로 명시.
+   - `Screen.diagram.md` 의무를 "모든 화면"으로 명시(기존 4개 미충족은 섹션 8 후속 백필로 시퀀싱).
    - mermaid flowchart를 5페이즈 흐름으로 축소.
    - 생성 산출물 폴더 구조(`Screen.tsx`/`Screen.config.ts`/`Screen.diagram.md`)와 `screenConfig` 예시는 Phase 3/4 산출물 정의로 유지(중복 아닌 산출물 계약).
 2. **`SCREEN_STRUCTURE_PRINCIPLES.md`** — 거의 유지. 문서 상단에 "이 문서가 Phase 3 구조/Diagram/layoutStrategy/Distortion Gate 책임을 단독 소유한다" 한 줄 추가. 본문 구조 변경 없음.
@@ -101,15 +103,16 @@ DoD는 검증이 아니라 "이 산출물이 내적으로 완성되어 다음 �
    - "공통 검증" 섹션 유지하되 "검증은 절차 밖 게이트"임을 명시 강화.
    - "SOT 우선순위" 목록의 `SCREEN_GENERATION_FLOW.md` 설명을 "5페이즈 절차 계약"으로 갱신.
    - `CLAUDE.md` 문서 지도에 `AGENTS.md`는 `CLAUDE.md`의 symlink로 명시돼 있으므로 한 파일만 수정한다(구현 첫 단계에서 `ls -l`로 재확인).
-4. **기존 4개 화면 / `check:*` 스크립트** — 변경 없음.
+4. **기존 4개 화면 / `check:*` 스크립트** — 이 구현에서는 변경 없음(규칙만 "모든 화면 의무"로 문서화, 4개 백필은 섹션 8 후속 작업).
 
-## 8. Follow-up (이번 범위 밖, 기록만)
+## 8. Follow-up (이번 구현 범위 밖, 확정된 후속 작업)
 
-- 기존 4개 화면(`NOVA-MBR-PG-001/002/003/005`) `Screen.diagram.md` adoption gap. 추후 별도 작업으로 백필 여부 결정.
-- `check:screen-generation:strict`를 신규 화면에 강제하는 CI 게이트 도입 여부(현재는 문서 정책만).
+- **[확정] 기존 4개 화면 Diagram 백필** — `NOVA-MBR-PG-001/002/003/005` 각 화면을 `SCREEN_STRUCTURE_PRINCIPLES.md` 기준으로 역공학해 `Screen.diagram.md`를 작성한다. "모든 화면 의무" 규칙을 기존 화면까지 충족시키는 별도 워크스트림. 이 절차 재구성 PR과 분리하되, 절차 확정 직후 진행한다.
+- 백필 완료 후 `check:screen-generation:strict`를 전체 화면에 강제하는 CI 게이트 도입 검토(완료 전까지 기존 화면은 warning 유지).
 
 ## 9. 위험과 대응
 
 - **위험**: `CLAUDE.md` 문서 지도는 `AGENTS.md`가 symlink라고 명시하나 실제 파일 상태가 다를 수 있음. **대응**: 구현 첫 단계에서 `ls -l`로 재확인 후, symlink면 한 파일만 수정.
 - **위험**: FLOW 본문 삭제로 기존 절차를 따르던 작업자/에이전트의 컨텍스트 단절. **대응**: 섹션 4.1 페이즈 매핑 테이블을 FLOW에 포함해 13단계 → 5페이즈 추적성 보존.
 - **위험**: 검증 서술 이전 후 `check:*` 명령을 찾기 어려워짐. **대응**: FLOW 포인터 줄에 `AGENTS.md 공통 검증` 정확한 위치를 명시.
+- **위험**: "모든 화면 의무" 규칙 확정과 기존 4개 백필 사이에 규칙-현실 불일치 윈도우 발생. **대응**: 백필 완료 전까지 기존 화면은 adoption warning 유지, `:strict` 게이트는 신규 화면에만 적용(섹션 5·8). 후속 백필을 절차 확정 직후 즉시 진행해 윈도우를 최소화.
