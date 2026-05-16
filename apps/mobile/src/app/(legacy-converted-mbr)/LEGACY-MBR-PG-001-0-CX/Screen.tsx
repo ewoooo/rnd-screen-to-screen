@@ -18,36 +18,29 @@ import {
 } from "@pxds/pxds-layout/components";
 import { useState } from "react";
 
-type AuthMethodId = "kakao" | "pass" | "sms" | "ipin";
+type AuthMethodId = "phone" | "pass" | "certificate";
 
 type AuthMethodOption = {
 	id: AuthMethodId;
 	label: string;
 	subText: string;
-	recommended?: boolean;
 };
 
 const AUTH_METHODS: readonly AuthMethodOption[] = [
 	{
-		id: "kakao",
-		label: "카카오톡",
-		subText: "가장 빠르고 간편하게 인증할 수 있어요",
-		recommended: true,
+		id: "phone",
+		label: "휴대폰 본인인증",
+		subText: "본인 명의 휴대폰으로 인증",
 	},
 	{
 		id: "pass",
-		label: "통신사 PASS",
-		subText: "통신 3사 명의 휴대전화로 인증",
+		label: "PASS 인증",
+		subText: "통신사 PASS로 인증",
 	},
 	{
-		id: "sms",
-		label: "휴대전화 문자",
-		subText: "문자로 받은 인증번호 입력",
-	},
-	{
-		id: "ipin",
-		label: "아이핀(IPIN)",
-		subText: "주민번호 대체 인증 수단",
+		id: "certificate",
+		label: "공동인증서 인증",
+		subText: "공동인증서로 인증",
 	},
 ] as const;
 
@@ -88,11 +81,10 @@ export function Screen() {
 								onCheckedChange={(next) => {
 									if (next) setSelected(method.id);
 								}}
-								badgeText={method.recommended ? "추천" : undefined}
 							/>
 						))}
 						<Callout title="인증 정책 안내">
-							인증 5회 연속 실패 시 30분간 인증이 제한돼요. 인증기관 별 추가 약관에
+							인증 5회 연속 실패 시 10분간 인증이 제한돼요. 인증기관 별 추가 약관에
 							동의가 필요할 수 있어요.
 						</Callout>
 					</SectionItem>

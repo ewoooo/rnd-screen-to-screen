@@ -70,24 +70,22 @@
 │                                         │
 │  ━━━━━━━ SectionDivider ━━━━━━━        │
 │                                         │
-│  OGN: ogn-mbr-auth-method-selector      │
+│  OGN: ogn-mbr-auth-select               │
 │  role: single-select                    │
 │  layoutStrategy                         │
 │   widthTier : content-361               │
 │   stack     : section title + option list│
-│   alignment : option left text / right badge│
+│   alignment : option left text             │
 │   wrapping  : label max 1 / desc max 2  │
 │                                         │
 │  인증 수단 선택                         │
 │                                         │
-│  ○ 카카오톡                    추천     │
-│    가장 빠르고 간편하게 인증할 수 있어요│
-│  ○ 통신사 PASS                          │
-│    통신 3사 명의 휴대전화로 인증       │
-│  ○ 휴대전화 문자                        │
-│    문자로 받은 인증번호 입력            │
-│  ○ 아이핀(IPIN)                         │
-│    주민번호 대체 인증 수단              │
+│  ○ 휴대폰 본인인증                       │
+│    본인 명의 휴대폰으로 인증             │
+│  ○ PASS 인증                             │
+│    통신사 PASS로 인증                    │
+│  ○ 공동인증서 인증                       │
+│    공동인증서로 인증                     │
 │                                         │
 │  OGN: ogn-mbr-auth-policy-callout        │
 │  role: constraint-notice                │
@@ -98,7 +96,7 @@
 │                                         │
 │  ┌───────────────────────────────────┐  │
 │  │ 인증 정책 안내                    │  │
-│  │ 인증 5회 연속 실패 시 30분간 인증이│  │
+│  │ 인증 5회 연속 실패 시 10분간 인증이│  │
 │  │ 제한돼요. 인증기관 별 추가 약관에 │  │
 │  │ 동의가 필요할 수 있어요.          │  │
 │  └───────────────────────────────────┘  │
@@ -154,7 +152,7 @@ AppScreen
 
     SectionDivider(thickness="section")
 
-    OGN: ogn-mbr-auth-method-selector
+    OGN: ogn-mbr-auth-select
       role: single-select
       pattern: form-entry
       layoutStrategy:
@@ -171,19 +169,15 @@ AppScreen
         groupName: "identity-method"
         defaultValue: null
         options:
-          - id: "kakao"
-            title: "카카오톡"
-            description: "가장 빠르고 간편하게 인증할 수 있어요"
-            badgeText: "추천"
+          - id: "phone"
+            title: "휴대폰 본인인증"
+            description: "본인 명의 휴대폰으로 인증"
           - id: "pass"
-            title: "통신사 PASS"
-            description: "통신 3사 명의 휴대전화로 인증"
-          - id: "sms"
-            title: "휴대전화 문자"
-            description: "문자로 받은 인증번호 입력"
-          - id: "ipin"
-            title: "아이핀(IPIN)"
-            description: "주민번호 대체 인증 수단"
+            title: "PASS 인증"
+            description: "통신사 PASS로 인증"
+          - id: "certificate"
+            title: "공동인증서 인증"
+            description: "공동인증서로 인증"
 
     OGN: ogn-mbr-auth-policy-callout
       role: constraint-notice
@@ -199,7 +193,7 @@ AppScreen
         reuse: Callout inside the method SectionItem
       content:
         title: "인증 정책 안내"
-        body: "인증 5회 연속 실패 시 30분간 인증이 제한돼요. 인증기관 별 추가 약관에 동의가 필요할 수 있어요."
+        body: "인증 5회 연속 실패 시 10분간 인증이 제한돼요. 인증기관 별 추가 약관에 동의가 필요할 수 있어요."
   ActionBar
     OGN: ogn-mbr-auth-primary-action
       role: continue-action
@@ -218,7 +212,7 @@ AppScreen
 ## Layout Distortion Gate
 
 - `RQRListOption` rows must remain one radio group. Do not split options into separate `SectionItem` blocks or add custom margins between rows.
-- The "추천" badge belongs to the Kakao option only. It must not change the option row height in a way that misaligns other radio controls.
+- The auth method list follows policy-core (`휴대폰`, `PASS`, `공동인증서`) and latest SB order (`휴대폰 본인인증`, `PASS 인증`, `공동인증서 인증`). Do not restore legacy-only options without updating policy-core first.
 - Option descriptions have a 2-line budget. If policy copy grows beyond that, promote the extra constraint to the Callout rather than shrinking typography.
 - The policy Callout stays inside the method section because it constrains the selected authentication action. If visual separation becomes too heavy inside `SectionItem`, record a CX component gap instead of adding raw padding.
 - `selected == null` is now reachable because the screen starts with no selected method. This keeps the CTA disabled until the user explicitly chooses an authentication method.
@@ -232,7 +226,7 @@ Policy requirement details live in `Screen.map.md`. This section records only th
 | section | title | primary components | map source |
 | --- | --- | --- | --- |
 | `intro` | `본인 확인을 위해 인증 수단을 선택해주세요` | `PageStackContents`, `TitleMain` | `ogn-mbr-auth-intro` in `Screen.map.md` |
-| `method` | `인증 수단 선택` | `PageStackContents`, `TitleSection`, `SectionItem`, `RQRListOption`, `Callout` | `ogn-mbr-auth-method-selector` in `Screen.map.md` |
+| `method` | `인증 수단 선택` | `PageStackContents`, `TitleSection`, `SectionItem`, `RQRListOption`, `Callout` | `ogn-mbr-auth-select` in `Screen.map.md` |
 | `method.policy` | `인증 정책 안내` | `Callout` | `ogn-mbr-auth-policy-callout` in `Screen.map.md` |
 
 ## Action Contract
@@ -242,14 +236,13 @@ Policy requirement details live in `Screen.map.md`. This section records only th
 | Primary CTA | `인증하기` | `primary` | 선택한 외부 인증 수단으로 진행 | `ogn-mbr-auth-primary-action` in `Screen.map.md` |
 
 - Initial selected method is `null`, so the CTA is disabled until selection.
-- Kakao remains visually recommended through `badgeText="추천"`, not through default selection.
+- No option is visually recommended because policy-core does not define a recommended authentication method.
 
 ## State Rules
 
-- `selected: null | "kakao" | "pass" | "sms" | "ipin"` is the single source of truth.
+- `selected: null | "phone" | "pass" | "certificate"` is the single source of truth.
 - `RQRListOption.checked` is derived from `selected === method.id`.
 - `onCheckedChange(next)` updates selection only when `next` is truthy, preserving radio behavior.
-- Kakao carries the static visual hint `badgeText="추천"`; the badge is not a selected-state marker.
 - 인증 실패 누적, 인증기관 약관 동의, and external auth result handling are outside this screen.
 
 ## Implementation Contract
@@ -266,6 +259,6 @@ Policy requirement details live in `Screen.map.md`. This section records only th
 ## Open Questions
 
 1. **policy conflict 해소** — 상세 정책 불일치와 누락 근거는 `Screen.map.md` 의 `Open Questions / Missing Evidence`가 소유한다.
-2. **default selection 정책** — legacy/current screen은 Kakao를 기본 선택한다. 명시 선택이 필요한 정책이라면 초기값과 CTA disabled 조건을 함께 바꿔야 한다.
-3. **외부 인증 flow trigger** — "인증하기"가 Kakao/PASS/SMS/IPIN 중 어떤 SDK 또는 route를 호출하는지 본 변환 범위 밖이다.
-4. **카피 원문 확정** — option description, "추천" badge, Callout copy는 현재 화면 원문을 보존했다. policy-core 확정 copy와 대조 필요.
+2. **default selection 정책** — policy-core는 기본 선택값을 정의하지 않는다. 현재 화면은 명시 선택 전 CTA disabled 상태를 유지한다.
+3. **외부 인증 flow trigger** — "인증하기"가 휴대폰/PASS/공동인증서 중 어떤 SDK 또는 route를 호출하는지 본 변환 범위 밖이다.
+4. **카피 원문 확정** — 30일 재인증 면제와 인증기관 추가 약관 copy는 `Screen.map.md`의 missing evidence로 남아 있다.

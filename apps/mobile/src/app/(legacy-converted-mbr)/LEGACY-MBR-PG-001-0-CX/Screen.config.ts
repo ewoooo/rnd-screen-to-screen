@@ -18,14 +18,17 @@ export const screenConfig = defineScreenConfig({
 		source: "legacy-conversion-map-backfill",
 		pattern: "form-entry",
 		policyRefs: [
+			"POL-MBR-AUTH-001-01",
 			"POL-MBR-AUTH-002-01",
+			"POL-MBR-AUTH-002-05",
+			"POL-MBR-AUTH-002-09",
 			"POL-MBR-AUTH-005-01",
 			"POL-MBR-AUTH-005-03",
 		],
 		ognIds: [
 			"ogn-mbr-auth-app-bar",
 			"ogn-mbr-auth-intro",
-			"ogn-mbr-auth-method-selector",
+			"ogn-mbr-auth-select",
 			"ogn-mbr-auth-policy-callout",
 			"ogn-mbr-auth-primary-action",
 		],
