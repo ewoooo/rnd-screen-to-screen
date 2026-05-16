@@ -6,7 +6,7 @@
 		"./screens": "./src/scripts/screen-routes/index.ts"
 	},
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev --webpack -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "biome lint ../../apps/mobile && node ../../scripts/check-react-hooks-policy.mjs apps/mobile && node ../../scripts/check-mobile-page-folder-contract.mjs"
