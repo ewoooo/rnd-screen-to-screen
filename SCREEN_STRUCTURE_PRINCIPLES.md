@@ -41,7 +41,7 @@ AppScreen
 
 ## Diagram 제작 원칙
 
-`Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, component vocabulary로 조립할지만 판단한다. Phase 3에서는 먼저 유사한 `Screen Wire` reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
+`Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, layout contract로 조립할지 판단한 뒤 component 후보를 나열한다. Phase 3에서는 먼저 유사한 `Screen Wire` reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
 
 - Diagram은 아래 섹션 순서를 고정한다.
   1. `Screen Contract`
@@ -63,8 +63,9 @@ AppScreen
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
 - 하단 CTA는 본문 마지막 section이 아니라 `Bottom(preset="...")`으로 분리한다. `AppScreen.Bottom`이 표준 물리 slot이며, `AppScreen.ActionBar`는 같은 bottom slot의 런타임 호환 alias로만 본다. 신규 diagram 표준에는 `AppScreen.ActionBar`를 쓰지 않는다.
 - 버튼, 배지, 아이콘, 라디오/체크 같은 기초 component는 route에 직접 흩뿌리지 않고 `Pattern` 또는 `Organism`의 이름 있는 slot 안에 둔다.
-- component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 먼저 wire reference에서 유사 section/part를 찾고, 그 다음 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/cx-layout` pattern, 기존 organism으로 표현 가능하면 `reuse`로 기록한다.
-- `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
+- component 후보는 Diagram 단계에서 나열한다. 먼저 wire reference에서 유사 section/part를 찾고, 그 다음 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/cx-layout` pattern, 기존 organism을 후보로 기록한다.
+- Diagram의 component 후보는 Build의 탐색 범위다. 특정 design-system component가 source에서 명시 요구된 경우가 아니면 후보명 자체를 승인 기준으로 삼지 않는다.
+- 기존 후보가 layout contract를 만족하지 못할 가능성이 있으면 `fit: weak` 또는 `risk`를 기록한다. 신규 제작 가능성이 있는 후보만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate` 대상임을 기록한다.
 - 정책 근거는 `Screen.map.md` 에서 확정한 요구사항을 기준으로 해당 section 또는 OGN node에 붙인다.
 
 ### Pattern Analysis Gate
@@ -79,10 +80,15 @@ patternEvidence:
   fieldGrouping: none | single | FieldStack | FieldStackWithDividers
   rowSeparators: none | Divider(type="contents") | Divider(type="section")
   actionPlacement: none | Content | Bottom(preset="primary-cta") | inline field action
+  typography:
+    rowTitle: Text(listTitle) | Text(sectionTitle) | TitleSection | custom
+    rowCaption: Text(helper) | Text(bodySubtle) | none
+    emphasisRule: none | first-row-only | selected-row-only | all-rows
+    controlLabelScale: matches-reference | too-large | too-small | unknown
 patternDecision:
-  reuse: PageStackContents + FieldStack + SectionDivider
-  or reuse: FieldStackWithDividers candidate composition
-  or new: RQR{Name} / new organism candidate
+  pattern: PageStackContents + FieldStack + SectionDivider
+  or pattern: FieldStackWithDividers candidate composition
+  or pattern: RQR{Name} / new organism candidate
   reason: visible evidence and layout contract
 ```
 
@@ -90,6 +96,9 @@ patternDecision:
 - 같은 section 내부 row 사이 1px 선이 보이면 `rowSeparators: Divider(type="contents")`로 기록한다. 이를 `FieldStack` gap만으로 대체하지 않는다.
 - 입력 필드가 같은 의미 그룹 안에서 `TextField -> Divider -> TextField`로 보이면 `fieldGrouping: FieldStackWithDividers` 또는 신규 pattern 후보로 기록한다.
 - `TextField`의 우측 버튼처럼 필드 안에 들어가는 action은 `actionPlacement: inline field action`으로 기록한다. 별도 외부 버튼으로 분리하지 않는다.
+- 선택 리스트의 title/caption 위계는 `typography`에 기록한다. checkbox/radio row의 title이 reference보다 커지거나 모든 row가 `sectionTitle`처럼 보이면 구조가 맞아도 distortion이다.
+- `emphasisRule`은 강조가 허용되는 row를 제한한다. 예를 들어 약관 동의의 `전체 동의`만 강한 title을 쓸 수 있으면 `first-row-only`로 기록하고, 하위 약관 row는 `Text(listTitle)` 위계를 유지한다.
+- `controlLabelScale`이 `too-large` 또는 `too-small`이면 `patternDecision`을 승인하지 않는다. typography mismatch는 divider 누락과 같은 수준의 pattern distortion으로 본다.
 - evidence가 불분명하면 `patternDecision.reason`에 보류 사유를 남기고, 구현 단계에서 임의로 divider를 추가하거나 제거하지 않는다.
 
 ### Screen Wire 문법
@@ -141,9 +150,39 @@ patternDecision:
 - 유사 reference가 없으면 `source: none-found`로 적고, `matchedParts` 대신 `reason`을 남긴다.
 - Reference의 visual part를 그대로 쓰더라도 실제 section id와 OGN id는 현재 화면의 정책/도메인 기준으로 다시 붙인다.
 
+### Layout Contract와 Component Candidates
+
+각 section contract는 구현 어휘보다 먼저 layout contract를 기록한다. Build는 이 contract와 Distortion Gates를 승인 기준으로 삼고, component 후보는 그 기준을 만족하는지 평가한다.
+
+```txt
+layoutContract:
+  role: result-summary | form-entry | notice | action-area
+  structure: card + label-value rows | field stack | list rows
+  alignment: leading | center | split label/value
+  density: matches wire reference | compact | comfortable
+  wrapping: value may wrap, label column must stay stable
+  distortionRisk: fixed narrow value column squeezes policy values
+componentCandidates:
+  - name: RQRContentsDetail
+    source: existing screen reference
+    fit: strong
+    reason: preserves card treatment and label/value alignment
+  - name: SectionItem + ListText(table)
+    source: cx-components
+    fit: weak
+    risk: fixed table column can squeeze values; card treatment may be incomplete
+buildOwner:
+  finalSelection: Phase 4 Build
+  rule: choose or create the smallest implementation that preserves layoutContract
+```
+
+- `componentCandidates`는 후보 목록이다. `required: true`와 source 사유가 없으면 Build가 반드시 그 이름을 사용할 필요는 없다.
+- 후보가 여러 개면 기존 reference에서 같은 visual pattern을 안정적으로 구현한 사례를 우선한다.
+- 모든 후보가 distortion risk를 만들면 Build는 후보명을 억지로 따르지 않고, 재사용 가능한 organism/component 후보를 만들거나 Diagram으로 되돌린다.
+
 ## OGN별 Layout Strategy
 
-다이어그램은 OGN을 단순 나열하지 않고, 각 OGN이 기존 component vocabulary로 안정적으로 조립 가능한지까지 판단해야 한다. 신규 component 필요 여부는 시각 취향이 아니라 layout contract 충족 여부로 결정한다.
+다이어그램은 OGN을 단순 나열하지 않고, 각 OGN이 어떤 layout contract를 지켜야 하며 어떤 component 후보가 그 contract를 만족할 가능성이 있는지까지 기록해야 한다. 신규 component 필요 여부는 시각 취향이 아니라 layout contract 충족 여부로 결정한다.
 
 각 OGN section은 아래 항목을 포함한다.
 
@@ -159,18 +198,28 @@ OGN: ogn-...
     typography: title/body/caption 위계
     wrapping: 제목/본문/값별 maxLines 또는 wrap 금지 사유
     overflow: truncate | multiline | scroll | split row | new component
-  vocabularyDecision:
-    reuse: component/pattern 이름
-    new: RQR{Name}
-    reason: 정책 의미, 상태, slot, Figma bridge identity, layout contract 중 충족 실패 항목
+  layoutContract:
+    role: 사용자 과업에서 section이 수행하는 일
+    structure: 보이는 구성
+    alignment: 정렬/column stability
+    density: reference 대비 간격과 surface 처리
+    wrapping: 줄바꿈/overflow 허용 범위
+    distortionRisk: 구현 시 깨지기 쉬운 조건
+  componentCandidates:
+    - name: component/pattern/organism 이름
+      source: wire reference | existing screen | cx-components
+      fit: strong | medium | weak
+      reason: contract 충족 근거
+      risk: contract 미충족 가능성
 ```
 
-### Reuse / New 판단 순서
+### Component 후보 판단 순서
 
 1. 현재 화면의 pattern, section role, AppScreen slot 구조가 가까운 wire reference를 찾는다.
 2. Reference의 유사 section/part가 기존 component, layout pattern, 기존 organism으로 구현 가능한지 확인한다.
-3. 구현 가능하면 `vocabularyDecision.reuse`에 reference part와 실제 component/pattern 이름을 함께 기록한다.
-4. Slot, wrapping, state, Figma bridge identity, 정책 의미 중 하나가 맞지 않아 layout contract가 깨지면 `vocabularyDecision.new`로 `RQR{Name}` candidate 또는 신규 organism을 기록한다.
+3. 구현 가능해 보이면 `componentCandidates`에 reference part와 실제 component/pattern 이름을 함께 기록하고 `fit`을 평가한다.
+4. Slot, wrapping, state, Figma bridge identity, 정책 의미 중 하나가 맞지 않아 layout contract가 깨질 위험이 있으면 `fit: weak`와 `risk`를 기록한다.
+5. 기존 후보로 해결되지 않을 가능성이 높으면 `RQR{Name}` candidate 또는 신규 organism 후보를 추가한다. 최종 선택과 제작은 Phase 4 Build 책임이다.
 
 ### Layout Distortion Gate
 
@@ -257,8 +306,17 @@ AppScreen
         alignment: leading
         typography: progress caption -> display title -> body
         wrapping: title max 2 lines, body max 2 lines
-      vocabularyDecision:
-        reuse: AppBar + TitleMain inside complete hero organism
+      layoutContract:
+        role: completion hero
+        structure: app bar + leading completion title block
+        alignment: leading
+        density: matches complete reference
+        wrapping: title max 2 lines, body max 2 lines
+        distortionRisk: title/body hierarchy collapses into generic section text
+      componentCandidates:
+        - name: AppBar + TitleMain inside complete hero organism
+          source: cx-components + complete reference
+          fit: strong
   Content
     OGN: ogn-mbr-signup-summary
       role: summary
@@ -270,9 +328,21 @@ AppScreen
         typography: section title -> caption title -> row value/label
         wrapping: row label max 1 line, row value max 2 lines
         overflow: split row when value is long; do not compress label column
-      vocabularyDecision:
-        reuse: key-value summary organism
-        new: RQRSummaryKeyValue if existing list vocabulary cannot hold multiline values without column drift
+      layoutContract:
+        role: result summary
+        structure: card + key-value rows
+        alignment: split label/value
+        density: matches summary card reference
+        wrapping: row label max 1 line, row value max 2 lines
+        distortionRisk: value column compresses or card treatment disappears
+      componentCandidates:
+        - name: key-value summary organism
+          source: existing complete reference
+          fit: strong
+        - name: RQRSummaryKeyValue
+          source: new candidate
+          fit: medium
+          reason: use if existing list vocabulary cannot hold multiline values without column drift
       policy: POL-MBR-...
     OGN: ogn-mbr-withdraw-impact-list
       role: impact-summary
@@ -284,10 +354,26 @@ AppScreen
         typography: section title -> row label/status
         wrapping: row label max 1 line, row status max 1 line
         overflow: status labels stay short; secondary policy copy needs a new row/body slot
-      vocabularyDecision:
-        reuse: ListText(non-table, rightItem=badge) when right side is categorical status
-        reuse: ListText(non-table, rightItem=text) when right side is literal value
-        new: RQRKeyValueList if secondary text, badges, or multiline values are required
+      layoutContract:
+        role: impact summary
+        structure: key-value/status rows
+        alignment: left label flex / right status auto
+        density: matches form-entry reference
+        wrapping: row label max 1 line, row status max 1 line
+        distortionRisk: secondary policy copy is forced into a one-line row
+      componentCandidates:
+        - name: ListText(non-table, rightItem=badge)
+          source: cx-components
+          fit: strong
+          reason: right side is categorical status
+        - name: ListText(non-table, rightItem=text)
+          source: cx-components
+          fit: medium
+          reason: right side is literal short value
+        - name: RQRKeyValueList
+          source: new candidate
+          fit: medium
+          reason: use if secondary text, badges, or multiline values are required
       policy: POL-MBR-...
     SectionDivider
     OGN: ogn-mbr-complete-benefit
@@ -300,9 +386,22 @@ AppScreen
         typography: card title -> body
         wrapping: body max 3 lines or collapsible/scroll handoff
         overflow: keep card height inside scroll content; never hide behind Bottom
-      vocabularyDecision:
-        reuse: Callout/CardSection if text budget fits
-        new: RQRBenefitNotice if card needs title/body/action slots not present
+      layoutContract:
+        role: benefit notice
+        structure: card or callout with title/body
+        alignment: leading
+        density: matches complete benefit reference
+        wrapping: body max 3 lines or collapsible/scroll handoff
+        distortionRisk: benefit card hides behind Bottom or becomes a loose text block
+      componentCandidates:
+        - name: Callout/CardSection
+          source: cx-components
+          fit: medium
+          reason: use if text budget fits
+        - name: RQRBenefitNotice
+          source: new candidate
+          fit: medium
+          reason: use if card needs title/body/action slots not present
   Bottom
     SinglePrimaryAction
       secondary: TextButton or ActionButton
@@ -324,10 +423,11 @@ AppScreen
 5. 정책 필수 정보와 CTA가 정확한 section 또는 `Bottom(preset="...")`에 연결되는가?
 6. 기초 component가 `Pattern` 또는 `Organism` slot 안에 배치되어 화면 의미 단위가 보존되는가?
 7. `Screen Contract`에 `wireReference`가 있고, reference-only 한계와 의도적 차이가 기록되었는가?
-8. component 후보가 wire reference 탐색 이후 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
+8. component 후보가 wire reference 탐색 이후 `componentCandidates`로 나열되고, 각 후보의 `fit`과 `risk`가 기록되었는가?
 9. 각 section에 `patternEvidence`와 `patternDecision`이 있으며, section divider와 contents divider, field gap과 row separator를 혼동하지 않았는가?
-10. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?
-11. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 reuse 판단을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
+10. 선택 리스트와 field/list row의 `typography.rowTitle`, `rowCaption`, `emphasisRule`, `controlLabelScale`이 reference와 맞는가?
+11. 각 OGN section에 `layoutStrategy`와 `layoutContract`가 있고, alignment/text hierarchy/wrapping/overflow 예산과 distortionRisk가 명시되어 있는가?
+12. Layout Distortion Gate를 통과했는가? 통과하지 못했다면 후보명 확정을 보류하고 신규 candidate 또는 pattern 보강 후보를 기록했는가?
 
 ## 관련 문서
 
