@@ -1,4 +1,4 @@
-import { StatusBattery, StatusSignal, StatusWifi } from "@pxds/pxds-icons";
+import { StatusBattery, StatusSignal, StatusWifi } from "@pxds/cx-icons";
 
 /**
  * iOS 상태바 row — 시계 + 신호/WiFi/배터리.

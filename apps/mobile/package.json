@@ -1,10 +1,10 @@
 {
   "name": "@screen/mobile",
   "version": "0.1.0",
-	"private": true,
-	"exports": {
-		"./screens": "./src/scripts/screen-routes/index.ts"
-	},
+  "private": true,
+  "exports": {
+    "./screens": "./src/scripts/screen-routes/index.ts"
+  },
   "scripts": {
     "dev": "next dev --webpack -p 3001",
     "build": "next build",
@@ -13,8 +13,6 @@
   },
   "dependencies": {
     "@pxds/cx-components": "0.1.0",
-    "@pxds/pxds-components": "0.1.0",
-    "@pxds/pxds-icons": "0.1.0",
     "@pxds/pxds-layout": "0.1.0",
     "@pxds/pxds-spec": "0.1.0",
     "@pxds/cx-tokens": "0.1.0",

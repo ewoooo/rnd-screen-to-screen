@@ -1,6 +1,7 @@
 "use client";
 
-import { ModalContainer, ModalContent } from "@wanteddev/wds";
+import { type CSSProperties, useEffect, useRef } from "react";
+import { useBottomSheet } from "./BottomSheet.context";
 import type { BottomSheetContentProps } from "./BottomSheet.types";
 import { BottomSheetBackdrop } from "./BottomSheetBackdrop";
 import { bottomSheetVariants } from "./bottom-sheet.variants";
@@ -12,29 +13,57 @@ export function BottomSheetContent({
 	backdrop = <BottomSheetBackdrop />,
 	children,
 }: BottomSheetContentProps) {
+	const { open, setOpen } = useBottomSheet();
+	const dialogRef = useRef<HTMLDivElement>(null);
+	const contentStyle = {
+		"--pxds-bottom-sheet-gap": gap,
+		"--pxds-bottom-sheet-peek-height":
+			peekHeight !== undefined ? `${peekHeight}px` : undefined,
+	} as CSSProperties;
+
+	useEffect(() => {
+		if (!open) {
+			return;
+		}
+
+		dialogRef.current?.focus();
+	}, [open]);
+
+	useEffect(() => {
+		if (!open) {
+			return;
+		}
+
+		function handleKeyDown(event: KeyboardEvent) {
+			if (event.key === "Escape") {
+				setOpen(false);
+			}
+		}
+
+		document.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			document.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [open, setOpen]);
+
+	if (!open) {
+		return null;
+	}
+
 	return (
-		<ModalContainer
-			variant="bottom"
-			handle={handle}
-			peekHeight={peekHeight}
-				dimmer={backdrop}
-				wrapperProps={{
-					className: bottomSheetVariants(),
-					sx: {
-						width: "100%",
-						height: "100%",
-				},
-			}}
+		<div
+			className={bottomSheetVariants()}
+			role="dialog"
+			aria-modal="true"
+			tabIndex={-1}
+			ref={dialogRef}
 		>
-			<ModalContent
-				gap={gap}
-				sx={{
-					padding:
-						"var(--spacing-16) var(--spacing-24) var(--spacing-24)",
-				}}
-			>
+			{backdrop}
+			<div className="pxds-bottom-sheet__surface" style={contentStyle}>
+				{handle ? <div className="pxds-bottom-sheet__handle" /> : null}
 				{children}
-			</ModalContent>
-		</ModalContainer>
+			</div>
+		</div>
 	);
 }

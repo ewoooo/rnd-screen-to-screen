@@ -6,7 +6,8 @@
 	"exports": {
 		"./package.json": "./package.json",
 		".": "./src/index.ts",
-		"./action-button": "./src/action-button/index.ts"
+		"./action-button": "./src/action-button/index.ts",
+		"./status-icons": "./src/status-icons/index.ts"
 	},
 	"dependencies": {
 		"react": "19.2.4"

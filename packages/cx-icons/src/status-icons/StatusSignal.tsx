@@ -1,6 +1,6 @@
 import { type SVGProps, forwardRef } from "react";
 
-/** iOS 상태바 신호 아이콘. fill = currentColor 로 부모 텍스트 색 상속. */
+/** iOS status bar cellular signal icon. fill = currentColor. */
 export const StatusSignal = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(
 	function StatusSignal(props, ref) {
 		return (

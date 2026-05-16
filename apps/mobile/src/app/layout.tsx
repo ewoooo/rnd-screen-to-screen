@@ -1,7 +1,5 @@
-import { AppRouterCacheProvider, ThemeProvider } from "@pxds/pxds-components/core";
 import type { PropsWithChildren } from "react";
 
-import "@pxds/pxds-components/core/global.css";
 import "@pxds/cx-tokens/style.css";
 import "@pxds/pxds-layout/styles.css";
 import "@pxds/cx-components/styles.css";
@@ -28,11 +26,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 			/>
 		</head>
 		<body>
-			<ThemeProvider>
-				<AppRouterCacheProvider>
-					<main>{children}</main>
-				</AppRouterCacheProvider>
-			</ThemeProvider>
+			<main>{children}</main>
 		</body>
 	</html>
 );

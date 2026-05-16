@@ -5,8 +5,7 @@ const nextConfig: NextConfig = {
 	devIndicators: false,
 	allowedDevOrigins: ["http://localhost:3000", "http://127.0.0.1:3000"],
 	transpilePackages: [
-		"@pxds/pxds-components",
-		"@pxds/pxds-icons",
+		"@pxds/cx-icons",
 		"@pxds/pxds-layout",
 		"@pxds/cx-tokens",
 	],

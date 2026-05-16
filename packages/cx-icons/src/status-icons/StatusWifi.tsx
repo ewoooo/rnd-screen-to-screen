@@ -1,6 +1,6 @@
 import { type SVGProps, forwardRef } from "react";
 
-/** iOS 상태바 WiFi 아이콘. fill = currentColor. */
+/** iOS status bar Wi-Fi icon. fill = currentColor. */
 export const StatusWifi = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(
 	function StatusWifi(props, ref) {
 		return (

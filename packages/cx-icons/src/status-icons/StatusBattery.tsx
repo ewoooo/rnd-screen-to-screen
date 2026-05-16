@@ -1,6 +1,6 @@
 import { type SVGProps, forwardRef } from "react";
 
-/** iOS 상태바 배터리 아이콘. fill = currentColor (캡 nub은 opacity 0.4 유지). */
+/** iOS status bar battery icon. fill = currentColor. */
 export const StatusBattery = forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(
 	function StatusBattery(props, ref) {
 		return (
