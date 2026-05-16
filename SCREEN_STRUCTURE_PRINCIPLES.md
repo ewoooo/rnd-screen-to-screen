@@ -130,6 +130,30 @@ Wire Semantic Tag는 `Screen Wire` 안에서 section의 구조 의미를 짧게 
 - 특정 component 또는 composition은 pattern family의 capability를 만족하는 예시일 뿐이며 기본 정답이 아니다. 같은 capability를 더 안정적으로 만족하는 domain organism이나 새 reusable candidate가 있으면 같은 기준으로 평가한다.
 - 메인 에이전트는 이 규칙을 Phase 3 승인 게이트로 검사한다. Summary card가 component 이름 중심으로 평가됐거나, known structural risk가 core behavior를 침범하는데도 `medium/strong`으로 승격됐으면 Diagram을 승인하지 않는다.
 
+### Pattern-Family Precedent Gate
+
+후보를 `fit`으로 깎거나 `reject`로 확정하기 전에, 그 후보가 다른 화면에서 같은 pattern family의 확립된 primary convention인지 확인한다. 얇은 Figma proof, structural-only 예시, text-section proof는 제품 의도를 모두 담지 못할 수 있다. 이 소스가 기존 화면들의 표준 pattern-family convention과 충돌하면, 후보 결함이 아니라 소스가 pattern family 대비 under-specified라는 신호일 수 있다.
+
+Section Contract에는 아래 항목을 기록한다.
+
+```txt
+sourceCompleteness: complete | under-specified-proof | conflict-with-convention
+establishedConvention:
+  patternFamily: card-key-value-summary
+  primaryCandidate: RQRContentsDetail
+  evidence: LEGACY-MBR-PG-002-0-CX, LEGACY-MBR-PG-003-0-CX
+  confidence: high | medium | low
+decisionRequired:
+  question: 이 proof 화면도 기존 완료 요약처럼 card title/header를 authoring해서 표준 convention을 따를 것인가?
+  defaultAssumption: confidence가 높고 누락된 부분이 정책 의미가 아닌 구조 UI copy라면 established convention을 적용한다.
+```
+
+- `under-specified-proof`: 현재 proof가 structural-only이거나 card/list/form의 일부만 보여 주는 경우.
+- `conflict-with-convention`: wire에는 없는 구조가, 같은 pattern-family의 기존 primary convention에는 반복적으로 있는 경우.
+- established primary 후보는 proof wire에 title/header 같은 authorable structural part가 없다는 이유만으로 `reject`하지 않는다. 이 경우는 "컴포넌트가 안 맞음"이 아니라 "소스가 얇음"일 수 있다.
+- 누락된 title/header가 구조 UI copy라면 `assumption`을 기록하고 convention 적용을 기본값으로 둔다. 누락된 값이 정책 의미, 가격, 자격, 선택지, navigation을 발명해야 하는 경우에는 `decisionRequired`로 멈추고 메인 에이전트가 사용자 결정 질문으로 surface한다.
+- 최종적으로 convention 후보를 reject하려면 실제 `layoutContract`, 정책 의미, slot/state/wrapping 충돌을 증명해야 한다. "proof wire에 title/header가 없다"는 단독 reject 근거가 될 수 없다. 얇은 proof wire를 slot/header 유무의 최종 fidelity 기준으로 삼지 않는다.
+
 ### Screen Wire 문법
 
 `Screen Wire`는 정확한 픽셀/토큰/컴포넌트 판정표가 아니다. 사람이 실제 화면을 먼저 이해하고, 생성 에이전트가 AppScreen slot과 section boundary를 놓치지 않게 하는 진입점이다.
@@ -219,6 +243,10 @@ buildOwner:
 - `reject`: Distortion Gate를 위반하거나, required slot/state/wrapping을 지원하지 않거나, deprecated import가 필요하거나, wire reference의 핵심 레이아웃을 바꾼다.
 
 고정 폭 column, surface/padding 부재, slot 부재, wrapping 제한처럼 section의 핵심 행동을 건드리는 알려진 한계가 있으면 `weak` 또는 `reject`로 기록한다.
+
+단, reject 사유가 thin/proof/no-policy 소스의 slot/header 부재뿐이고 후보가 다른 화면 같은 pattern family의 established primary convention이면 확정하지 말고 Pattern-Family Precedent Gate를 적용한다.
+
+금지 판단: "현재 값이 짧아서 괜찮다", "current values are short enough", "current proof copy fits"처럼 현재 샘플 길이를 후보 승인/거절 근거로 쓰지 않는다. 현재 샘플은 wrapping 검증용 입력일 뿐이며, `fit`, `patternDecision`, `buildSelections.reason`, `rejected.reason`의 acceptance evidence가 될 수 없다.
 
 ## OGN별 Layout Strategy
 

@@ -93,6 +93,10 @@ When a complete/detail wire shows 2+ label-value rows inside a card-like summary
 - A component or composition name is only an implementation candidate for the pattern family, not the default answer. Domain organisms and new reusable candidates are evaluated by the same capability contract.
 - Main-agent review must return the Diagram to Phase 3 if summary-card scoring is component-name driven, or if a known structural risk is upgraded to `medium/strong` without proving the core behavior is preserved.
 
+## Pattern-Family Precedent Gate
+
+Before candidate scoring or reject finalization, run `SCREEN_STRUCTURE_PRINCIPLES.md` → `Pattern-Family Precedent Gate`. If a thin/proof/no-policy source conflicts with an established primary convention from the same pattern family, record the gate fields in the section contract and keep the conflict open as `decisionRequired` or a documented `assumption`; do not auto-reject the convention candidate only because the proof wire omitted an authorable structural title/header.
+
 ## Fit Scoring
 
 Score fit by component capability against `layoutContract`, not by current copy length or component-name similarity.
@@ -103,6 +107,8 @@ Score fit by component capability against `layoutContract`, not by current copy 
 - `reject`: violates a Distortion Gate, requires deprecated imports, lacks a required slot/state/wrapping behavior, or would change the wire reference's core layout.
 
 When a candidate has a known fixed-width, missing surface, missing slot, or wrapping limitation that affects the section's core behavior, mark it `weak` or `reject` even if the current sample text is short.
+
+Forbidden rationale: do not write or accept claims like "current values are short enough", "current proof copy fits", "현재 값이 짧아서 괜찮다", or any equivalent current-sample-length argument. Current sample length may be used only as a test case to verify wrapping, never as evidence that a candidate satisfies `fit`, `patternDecision`, or `layoutContract`.
 
 ## Screen Wire Rules
 

@@ -14,7 +14,7 @@
 
 - Phase 1: 서브 에이전트가 SB에서 화면ID·도메인·과업·상태·CTA·정책태그·OGN ID·slot/part/hierarchy를 추출하고, 메인 에이전트가 누락 0 상태인지 확인한다.
 - Phase 2: 서브 에이전트가 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs를 조사해 `Screen.map.md`를 작성하고, 메인 에이전트가 정책 태그가 화면 정보/CTA/에러로 모두 매핑됐는지 승인한다.
-- Phase 3: 서브 에이전트가 유사 wire reference를 찾고, Screen Wire, Wire Semantic Tags, pattern contract, layoutStrategy/layoutContract, Layout Distortion Gate, componentCandidates를 반영해 `Screen.diagram.md`를 작성한다. 메인 에이전트는 컴포넌트 후보가 아니라 레이아웃 보존과 구조 계약을 먼저 승인한다. `[... | key-value-summary | card]`로 읽히는 summary card는 `patternFamily: card-key-value-summary`와 required capability가 먼저 정의됐는지 확인하고, 후보 평가가 component-name preference나 현재 샘플 길이에 기대면 반려한다.
+- Phase 3: 서브 에이전트가 유사 wire reference를 찾고, Screen Wire, Wire Semantic Tags, pattern contract, layoutStrategy/layoutContract, Layout Distortion Gate, componentCandidates를 반영해 `Screen.diagram.md`를 작성한다. 메인 에이전트는 컴포넌트 후보가 아니라 레이아웃 보존과 구조 계약을 먼저 승인한다. `[... | key-value-summary | card]`로 읽히는 summary card는 `patternFamily: card-key-value-summary`와 required capability가 먼저 정의됐는지 확인하고, 후보 평가가 component-name preference나 현재 샘플 길이에 기대면 반려한다. 후보가 타 화면 pattern family 선례와 thin 소스에서만 충돌하면 모순을 reject로 굳히지 말고 `SCREEN_STRUCTURE_PRINCIPLES.md`의 Pattern-Family Precedent Gate로 사용자 결정 또는 assumption을 surface한다.
 - Phase 4: 서브 에이전트가 componentCandidates를 capability 기준으로 평가해 layoutContract를 만족하는 컴포넌트/조합을 선택하거나 필요한 OGN/component를 만든다. 메인 에이전트는 실제 렌더링에서 section/slot/stack 배치와 layoutContract가 보존되는지 먼저 확인한다.
 - Phase 5: 서브 에이전트가 route catalog 등록과 preview 진입 확인을 수행하고, 메인 에이전트가 최종 검증 범위와 남길 기록을 확정한다.
 

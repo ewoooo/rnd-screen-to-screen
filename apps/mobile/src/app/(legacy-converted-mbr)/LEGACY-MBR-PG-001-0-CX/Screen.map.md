@@ -10,6 +10,8 @@
 - primaryCta: `인증하기`
 - source: legacy CX converted screen + policy-core backfill
 - generationMode: `legacy-conversion-map-backfill`
+- reverseEngineeringSource: current `Screen.tsx` is the visual/structural truth for this metadata pass.
+- evidenceMode: policy-backed where IDs are listed; otherwise `missing-policy-source` or `structural-only`.
 
 ## Source Inputs
 
@@ -19,7 +21,7 @@
 | Latest SB organism | `/Users/wooseong/Desktop/SB-MBR-UC01_02-0513/organism/ogn-mbr-auth-select.md` | 허용 인증수단, 기본 노출 수단, 노출 순서 |
 | Latest SB organism | `/Users/wooseong/Desktop/SB-MBR-UC01_02-0513/organism/ogn-mbr-auth-request.md` | 본인인증 적용, 실패/제한 안내 근거 |
 | Converted screen | `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-001-0-CX/Screen.tsx` | 현재 화면 copy, 선택지, CTA 상태 |
-| Existing diagram | `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-001-0-CX/Screen.diagram.md` | OGN ID, section 의미, 기존 open questions |
+| Current diagram | `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-001-0-CX/Screen.diagram.md` | 최신 Screen Contract, section contract, layoutContract, component candidate 연결 |
 | Policy MD | `packages/policy-core/policies/MBR/AUTH/POL-MBR-AUTH-001.md` | 회원 가입 본인인증 적용 정책 |
 | Policy TS | `packages/policy-core/policies/MBR/AUTH/POL-MBR-AUTH-001-01.policy.ts` | 본인인증 적용 sourceRef/copy |
 | Policy MD | `packages/policy-core/policies/MBR/AUTH/POL-MBR-AUTH-002.md` | 허용 인증수단 정책 |
@@ -45,6 +47,7 @@
 | `LEGACY-MBR-AUTH-INTRO` | converted screen copy | notice | 회원 가입 본인인증 단계와 재인증 면제 조건을 먼저 안내한다. | `회원 가입 3단계 (3/5)`, `한 번 인증하면 같은 단말에서 30일간 재인증이 면제돼요.` | intro title/subtitle | `ogn-mbr-auth-intro` | `missing-policy-source` |
 | `LEGACY-MBR-AUTH-EXTERNAL-TERMS` | converted screen copy | notice | 인증기관별 추가 약관 동의가 필요할 수 있다. | `인증기관 별 추가 약관에 동의가 필요할 수 있어요.` | callout notice | `ogn-mbr-auth-policy-callout` | `missing-policy-source` |
 | `LEGACY-MBR-AUTH-CTA` | converted screen behavior | action | 인증 수단 선택 후 외부 인증 flow로 진행한다. | `인증하기` | primary CTA, disabled until selection | `ogn-mbr-auth-primary-action` | `missing-policy-source` |
+| `STRUCTURAL-MBR-AUTH-APP-BAR` | current `Screen.tsx` | structural-only | 본인인증 화면의 header navigation chrome을 제공한다. | `본인인증` | AppBar with left affordance | `ogn-mbr-auth-app-bar` | `structural-only` |
 
 ## User Copy
 
@@ -65,12 +68,21 @@
 
 | OGN ID | Role | Policy Inputs | Required Screen Content | Notes |
 | --- | --- | --- | --- | --- |
-| `ogn-mbr-auth-app-bar` | navigation | screen task | app bar title `본인인증` and back affordance | structural OGN; no policy-core ref |
+| `ogn-mbr-auth-app-bar` | navigation | `STRUCTURAL-MBR-AUTH-APP-BAR` | app bar title `본인인증` and back affordance | structural OGN; no policy-core ref |
 | `ogn-mbr-auth-intro` | intro | `POL-MBR-AUTH-001-01`, `LEGACY-MBR-AUTH-INTRO`, `POL-MBR-AUTH-002-01` | step caption, main title, 30-day reauth exemption copy | 30-day exemption needs policy-core source |
 | `ogn-mbr-auth-select` | choice | `POL-MBR-AUTH-002-01`, `POL-MBR-AUTH-002-05`, `POL-MBR-AUTH-002-09` | single-select auth options: 휴대폰 본인인증, PASS 인증, 공동인증서 인증 in that order | preserves latest SB OGN identity |
 | `ogn-mbr-auth-policy-callout` | notice / constraint | `POL-MBR-AUTH-005-01`, `POL-MBR-AUTH-005-03`, `LEGACY-MBR-AUTH-EXTERNAL-TERMS` | failure limit notice and external terms notice | policy-core 10-minute restriction wins over previous 30-minute copy |
 | `ogn-mbr-auth-request` | request / error | `POL-MBR-AUTH-003-01`, `POL-MBR-AUTH-003-03`, `POL-MBR-AUTH-004-01`, `POL-MBR-AUTH-004-02`, `POL-MBR-AUTH-005-07` | 인증번호 입력/타이머/재요청/오류 UI | out of scope for this selection-only screen |
 | `ogn-mbr-auth-primary-action` | action | `LEGACY-MBR-AUTH-CTA` | disabled `인증하기` CTA until a method is selected | external auth route/SDK is outside this screen |
+
+## Section Mapping
+
+| Diagram Section | OGN IDs | Map Basis | Current Screen Evidence | Policy Status |
+| --- | --- | --- | --- | --- |
+| `[appBar]` | `ogn-mbr-auth-app-bar` | `STRUCTURAL-MBR-AUTH-APP-BAR` | `AppBar(title="본인인증", showLeftItem, showTitle)` | `structural-only` |
+| `[intro]` | `ogn-mbr-auth-intro` | `POL-MBR-AUTH-001-01`, `POL-MBR-AUTH-002-01`, `LEGACY-MBR-AUTH-INTRO` | `TitleMain` step caption, task title, 30-day reauth copy | mixed; 30-day copy is `missing-policy-source` |
+| `[authMethod]` | `ogn-mbr-auth-select`, `ogn-mbr-auth-policy-callout` | `POL-MBR-AUTH-002-*`, `POL-MBR-AUTH-005-*`, `LEGACY-MBR-AUTH-EXTERNAL-TERMS` | `TitleSection`, three `RQRListOption(type="radio")`, `Callout` | mixed; external terms copy is `missing-policy-source` |
+| `[actions]` | `ogn-mbr-auth-primary-action` | `LEGACY-MBR-AUTH-CTA` | bottom `Button` disabled until `selected != null` | `missing-policy-source` |
 
 ## Policy Coverage Checklist
 

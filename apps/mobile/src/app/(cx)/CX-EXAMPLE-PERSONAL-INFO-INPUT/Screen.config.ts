@@ -33,5 +33,49 @@ export const screenConfig = defineScreenConfig({
 			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
 		],
+		buildSelections: [
+			{
+				section: "intro",
+				selected: "PageStackContents(title=TitleMain)",
+				source: "componentCandidates",
+				reason: "Reverse-engineered from the current perfect screen; preserves the title-only intro without adding body content or a card surface.",
+			},
+			{
+				section: "phone",
+				selected: "PageStackContents + TitleSection + SectionItem + TextField(disabled)",
+				source: "componentCandidates",
+				reason: "Preserves the implemented section title, content padding, and disabled phone field state.",
+			},
+			{
+				section: "authComplete",
+				selected: "PageStackContents + TitleSection + SectionItem + ListText(showRightItem=false)",
+				source: "componentCandidates",
+				reason: "Preserves the quiet read-only authentication completion message with no right item or invented alert state.",
+			},
+			{
+				section: "address",
+				selected: "PageStackContents + TitleSection + SectionItem + FieldStack + TextField(actionButton)",
+				source: "componentCandidates",
+				reason: "Preserves the implemented address field stack, disabled/typed states, and inline address lookup action.",
+			},
+			{
+				section: "homeArea",
+				selected: "PageStackContents + TitleSection + SectionItem + FieldStack + Checkbox + TextField(actionButton, helperText)",
+				source: "componentCandidates",
+				reason: "Preserves the checkbox, mirrored address fields, inline address action, and helper text ownership inside TextField.",
+			},
+			{
+				section: "email",
+				selected: "PageStackContents + TitleSection + SectionItem + TextField(typed)",
+				source: "componentCandidates",
+				reason: "Preserves the implemented typed email field without adding validation or helper states.",
+			},
+			{
+				section: "actions",
+				selected: "Bottom(preset=\"primary-cta\") + SinglePrimaryAction + Button(fullWidth, size=\"xlarge\", variant=\"primary\")",
+				source: "componentCandidates",
+				reason: "Preserves the fixed bottom primary CTA instead of moving the action into scroll content.",
+			},
+		],
 	},
 } as const satisfies ScreenRouteConfig);

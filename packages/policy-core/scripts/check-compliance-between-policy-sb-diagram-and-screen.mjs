@@ -421,6 +421,62 @@ function includesAll(text, values) {
 	return values.every((value) => text.includes(value));
 }
 
+const forbiddenSampleLengthRationalePatterns = [
+	/\bshort enough\b/i,
+	/\bcurrent\b[^\n]{0,120}\b(?:sample|proof|copy|data|values?|figma proof)\b[^\n]{0,120}\b(?:short|fit|fits|sufficient|enough)\b/i,
+	/\b(?:sample|proof|copy|data|values?|figma proof)\b[^\n]{0,120}\b(?:short|fit|fits|sufficient|enough)\b[^\n]{0,120}\bcurrent\b/i,
+	/현재[\s\S]{0,80}(?:샘플|증빙|값|데이터|문구|카피|copy)[\s\S]{0,80}(?:짧|맞|충분|들어맞)/,
+	/(?:샘플|증빙|값|데이터|문구|카피|copy)[\s\S]{0,80}(?:짧|맞|충분|들어맞)[\s\S]{0,80}현재/,
+];
+
+function hasForbiddenSampleLengthRationale(text) {
+	return forbiddenSampleLengthRationalePatterns.some((pattern) => pattern.test(text));
+}
+
+function validateNoForbiddenSampleLengthRationale(label, text) {
+	if (!text || !hasForbiddenSampleLengthRationale(text)) return;
+	problem(
+		`${label} must not use current sample/proof/copy length as fit or selection evidence; prove component capability against layoutContract and Distortion Gates instead`,
+	);
+}
+
+function extractNamedCandidateBlocks(diagram) {
+	const starts = Array.from(diagram.matchAll(/^\s*-\s+name:\s*(.+)$/gm)).map(
+		(match) => ({
+			index: match.index,
+			name: match[1],
+		}),
+	);
+	return starts.map((start, index) => {
+		const end = starts[index + 1]?.index ?? diagram.length;
+		return {
+			name: start.name,
+			body: diagram.slice(start.index, end),
+		};
+	});
+}
+
+function hasUnderSpecifiedConventionMarker(text) {
+	return /sourceCompleteness:\s*(?:under-specified-proof|conflict-with-convention)|establishedConvention:|decisionRequired:|assumption:/i.test(
+		text,
+	);
+}
+
+function validateNoUnderSpecifiedConventionAutoReject(label, text) {
+	if (!text) return;
+	const rejectsRqrForMissingHeader =
+		/RQRContentsDetail/i.test(text) &&
+		/fit:\s*reject|candidate:\s*["'`]RQRContentsDetail["'`]/i.test(text) &&
+		/(?:no|without|missing|not present|lacks?)[^\n.]{0,80}(?:card\s*)?(?:title|header)|(?:title|header)[^\n.]{0,80}(?:not present|missing|lacks?)/i.test(
+			text,
+		);
+	if (!rejectsRqrForMissingHeader) return;
+	if (hasUnderSpecifiedConventionMarker(text)) return;
+	problem(
+		`${label} must pass Pattern-Family Precedent Gate before rejecting an established summary-card convention candidate only because a structural proof wire lacks an authorable title/header; record sourceCompleteness, establishedConvention, and decisionRequired or assumption`,
+	);
+}
+
 function hasDeprecatedImport(filePath) {
 	return existsSync(filePath) && readText(filePath).includes("@pxds/pxds-components");
 }
@@ -476,6 +532,8 @@ function validateBuildSelectionsShape(generation) {
 				problem(`${itemLabel}.${field} must be a non-empty string`);
 			}
 		}
+		validateNoForbiddenSampleLengthRationale(itemLabel, item.body);
+		validateNoUnderSpecifiedConventionAutoReject(itemLabel, item.body);
 
 		const source = readRawObjectStringProperty(item.body, "source");
 		if (source && !buildSelectionSources.has(source)) {
@@ -500,6 +558,8 @@ function validateBuildSelectionsShape(generation) {
 							problem(`${rejectedLabel}.${field} must be a non-empty string`);
 						}
 					}
+					validateNoForbiddenSampleLengthRationale(rejectedLabel, rejectedBody);
+					validateNoUnderSpecifiedConventionAutoReject(rejectedLabel, rejectedBody);
 				}
 			}
 		}
@@ -582,6 +642,14 @@ function validateScreenMap(screen, context, mapPath) {
 
 function validateDiagramContract(screen, context, diagramPath, mapText) {
 	const diagram = readText(diagramPath);
+	validateNoForbiddenSampleLengthRationale("Screen.diagram.md", diagram);
+	for (const candidate of extractNamedCandidateBlocks(diagram)) {
+		if (!/RQRContentsDetail/i.test(candidate.name)) continue;
+		validateNoUnderSpecifiedConventionAutoReject(
+			`Screen.diagram.md candidate ${candidate.name}`,
+			candidate.body,
+		);
+	}
 
 	if (!diagram.includes("AppScreen")) {
 		problem("Screen.diagram.md must include AppScreen");

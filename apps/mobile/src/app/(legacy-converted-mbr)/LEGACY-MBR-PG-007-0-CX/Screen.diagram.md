@@ -1,268 +1,214 @@
-# LEGACY-MBR-PG-007-0 — 회원 가입 약관 동의 (CX 전환)
+# LEGACY-MBR-PG-007-0-CX — 회원 가입 약관 동의
 
 ## Screen Contract
 
-- legacy source: `apps/mobile/src/app/(legacy-mbr)/LEGACY-MBR-PG-007-0/Screen.tsx`
-- target route: `/LEGACY-MBR-PG-007-0-CX`
+- route: `/LEGACY-MBR-PG-007-0-CX`
 - group: `legacy-converted-mbr`
-- domain: `mbr`
-- pattern: `form-entry` (DESIGN_PATTERNS.md `상세_정보 입력` / 확인·동의형)
-- 단계: 회원 가입 1/5 (legacy `ProgressTopBar.percent=20`)
-- required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
-- design SOT (참고): `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md`, Figma `SKT_GenUI_Test_0512` / `detail-information` (`14243:28433`)
+- domain: `membership`
+- source: current `Screen.tsx`
+- reverseEngineeringSource: current `Screen.tsx` is treated as the visual/structural truth for this legacy-converted screen.
+- pattern: `form-entry`
+- policy refs: `structural-only`
+- governance refs: `TBD`; legacy conversion metadata does not establish policy-core governance mapping.
+- wireReference:
+  - source: `apps/mobile/src/app/(mbr)/NOVA-MBR-PG-001-0/Screen.diagram.md`
+  - matchedParts: membership agreement task, all-agree row, required/optional terms rows, fixed primary CTA.
+  - intentionalDifferences: legacy-converted screen uses `TitleMain` intro, `ConsentTermsAccordion`, and an in-section legal guardian `Callout` instead of the NOVA membership organisms.
+  - limitation: reference-only visual structure; policy/copy/OGN ids come from current `Screen.tsx`, `Screen.map.md`, and `Screen.config.ts`.
 
-## Conversion Intent (Legacy → CX)
-
-| Legacy 어휘 | CX 대체 | 비고 |
-| --- | --- | --- |
-| `ProgressTopBar(title, leading, progress)` | `AppBar(title="회원 가입", showLeftItem, showTitle)` + `TitleMain.titleSubText="회원 가입 1단계 (1/5)"` | CX `AppBar`에는 progress slot이 없다. 단계 정보는 eyebrow로 흡수하고 progress bar는 폐기한다. |
-| `MembershipHeroSection(titleLines, description)` | `Section(intro)` → `PageStackContents(title=TitleMain)` | 가입 흐름의 첫 진입 화면이므로 hero/intro를 유지한다. |
-| `MembershipTermsSection` | `Section(terms)` → `PageStackContents(title=TitleSection("약관 동의"))` + `SectionItem` + `ConsentTermsAccordion` | 약관 묶음은 `apps/mobile/src/organisms/mbr/consent-terms-accordion`의 OGN으로 승격되어 있다. |
-| `MembershipNoticeSection(badge, text)` | `Section(terms)` 내부 `SectionItem` 마지막 자식 `Callout(title, children)` | 별도 section으로 분리하면 두꺼운 divider가 Callout 위/아래에 생겨 안내와 입력의 연결성이 깨진다. |
-| `MembershipPrimaryActionBar(primaryLabel)` | `AppScreen.ActionBar(preset="primary-cta")` + `SinglePrimaryAction` + `Button` | CTA는 필수 약관 동의 여부에 따라 활성화한다. |
-
-폐기 대상 import:
-- `@pxds/pxds-components/shared/global` (`ProgressTopBar`)
-- `@/organisms/legacy-mbr` (`MembershipHeroSection`, `MembershipNoticeSection`, `MembershipPrimaryActionBar`, `MembershipTermsSection`)
-
-## Slot Ownership Map
+## Screen Wire
 
 ```txt
-┌─────────────────────────────────────────┐
-│ AppScreen(headerPreset="form-entry")    │
-│ pattern: form-entry / consent           │
-│ viewport: 393w                          │
-├─────────────────────────────────────────┤
-│ SystemHeader                            │
-│  9:41                              ▮▮▮  │
-├─────────────────────────────────────────┤
-│ OGN: ogn-mbr-consent-app-bar            │
-│ role: step-navigation                   │
-│ layoutStrategy                          │
-│  widthTier : full-bleed                 │
-│  stack     : horizontal chrome          │
-│  alignment : leading title + back       │
-│  wrapping  : title max 1 line           │
-│ vocabularyDecision                      │
-│  reuse: AppBar                          │
-├─────────────────────────────────────────┤
-│  ‹   회원 가입                          │
-├─────────────────────────────────────────┤
-│ Content: only scroll owner              │
-│                                         │
-│  OGN: ogn-mbr-consent-hero              │
-│  role: intro                            │
-│  layoutStrategy                         │
-│   widthTier : content-361               │
-│   stack     : vertical                  │
-│   alignment : leading                   │
-│   typography: step caption -> title -> body│
-│   wrapping  : title max 2 / body max 2  │
-│ vocabularyDecision                      │
-│  reuse: PageStackContents + TitleMain   │
-│                                         │
-│  회원 가입 1단계 (1/5)                  │
-│                                         │
-│  약관에 동의하고                        │
-│  가입을 시작하세요                      │
-│                                         │
-│  필수 약관에 동의하면 다음 단계로       │
-│  진행할 수 있어요. 선택 약관은 나중에   │
-│  변경할 수 있습니다.                   │
-│                                         │
-│  ━━━━━━━ SectionDivider ━━━━━━━        │
-│                                         │
-│  OGN: ogn-mbr-consent-terms-section     │
-│  role: required-consent                 │
-│  layoutStrategy                         │
-│   widthTier : content-361               │
-│   stack     : section title + organism  │
-│               + callout                 │
-│   alignment : leading                   │
-│   wrapping  : terms title max 2 lines   │
-│ vocabularyDecision                      │
-│  reuse: PageStackContents + TitleSection│
-│         + SectionItem + Callout         │
-│  new: ConsentTermsAccordion             │
-│                                         │
-│  약관 동의                              │
-│  ┌───────────────────────────────────┐  │
-│  │ OGN: ogn-mbr-consent-terms-accordion│ │
-│  │ layoutStrategy                    │  │
-│  │  stack: all checkbox + accordion  │  │
-│  │  selection: required/optional     │  │
-│  │  overflow: accordion body expands │  │
-│  │ vocabularyDecision                │  │
-│  │  reuse: Checkbox + AccordionList  │  │
-│  │                                   │  │
-│  │ □ 전체 동의 (필수·선택 약관 모두) │  │
-│  │                                   │  │
-│  │ ▸ □ [필수] T 우주 서비스 이용약관 │  │
-│  │ ▸ □ [필수] 개인정보 수집·이용 동의│  │
-│  │ ▸ □ [선택] 혜택·이벤트 정보 수신  │  │
-│  └───────────────────────────────────┘  │
-│                                         │
-│  ┌───────────────────────────────────┐  │
-│  │ 법정대리인 동의 안내              │  │
-│  │ 만 14세 미만 고객은 법정대리인    │  │
-│  │ 동의 요청이 함께 진행됩니다.      │  │
-│  └───────────────────────────────────┘  │
-├─────────────────────────────────────────┤
-│ ActionBar(preset="primary-cta")         │
-│ OGN: ogn-mbr-consent-actions            │
-│ layoutStrategy                          │
-│  widthTier : content-361                │
-│  stack     : single full-width button   │
-│  wrapping  : button label max 1 line    │
-│                                         │
-│  ┌───────────────────────────────────┐  │
-│  │ 동의하고 계속하기                 │  │
-│  └───────────────────────────────────┘  │
-└─────────────────────────────────────────┘
+┌─AppScreen(headerPreset="form-entry")──────────────────────┐
+├─SystemHeader──────────────────────────────────────────────┤
+│ StatusBar                                                 │
+├─Header────────────────────────────────────────────────────┤
+│ AppBar(title="회원 가입", showLeftItem, showTitle)          │
+├─Content(scroll)───────────────────────────────────────────┤
+│ [intro | form-intro-title | content]                      │
+│ 회원 가입 1단계 (1/5)                                     │
+│ 약관에 동의하고                                           │
+│ 가입을 시작하세요                                         │
+│ 필수 약관에 동의하면 다음 단계로 진행할 수 있어요. 선택    │
+│ 약관은 나중에 변경할 수 있습니다.                         │
+├══Divider 4px / SectionDivider(thickness="section")════════┤
+│ [terms | consent-accordion-section | section-divider]     │
+│ 약관 동의                                                 │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │ [termsAccordion | consent-control-group | organism]  │   │
+│ │ □ 전체 동의 (필수·선택 약관 모두)                    │   │
+│ │ ▸ □ [필수] T 우주 서비스 이용약관 (v3.2)             │   │
+│ │ ▸ □ [필수] 개인정보 수집·이용 동의 (v5.1)            │   │
+│ │ ▸ □ [선택] 혜택·이벤트 정보 수신 동의                │   │
+│ └──────────────────────────────────────────────────────┘   │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │ 법정대리인 동의 안내                                 │   │
+│ │ 만 14세 미만 고객은 법정대리인 동의 요청이 함께      │   │
+│ │ 진행됩니다.                                          │   │
+│ └──────────────────────────────────────────────────────┘   │
+├─Bottom(preset="primary-cta")──────────────────────────────┤
+│ [actions | bottom-primary-action | bottom-fixed]          │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │                    동의하고 계속하기                 │   │
+│ └──────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────┘
 ```
 
-## Content Flow
+## Section Contracts
 
-```txt
-AppScreen
-  SystemHeader
-    StatusBar
-  Header
-    OGN: ogn-mbr-consent-app-bar
-      role: step-navigation
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: full-bleed
-        stack: horizontal chrome
-        alignment: leading title + back
-        typography: app-bar title
-        wrapping: title max 1 line
-      vocabularyDecision:
-        reuse: AppBar
-      content:
-        title: "회원 가입"
-  Content
-    OGN: ogn-mbr-consent-hero
-      role: intro
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: vertical
-        alignment: leading
-        typography: step caption -> display title -> body
-        wrapping: title max 2 lines, body max 3 lines
-      vocabularyDecision:
-        reuse: PageStackContents + TitleMain
-      content:
-        titleSubText: "회원 가입 1단계 (1/5)"
-        title: "약관에 동의하고\n가입을 시작하세요"
-        subTitle: "필수 약관에 동의하면 다음 단계로 진행할 수 있어요. 선택 약관은 나중에 변경할 수 있습니다."
+### [intro]
 
-    SectionDivider(thickness="section")
+- patternEvidence:
+  - wireSemanticTag: `[intro | form-intro-title | content]`
+  - sectionBoundary: `none`
+  - fieldGrouping: `none`
+  - rowSeparators: `none`
+  - actionPlacement: `none`
+  - typography: `TitleMain` with step caption, two-line title, and explanatory subtitle.
+- patternDecision:
+  - patternFamily: `form-intro-title`
+  - pattern: existing composition
+  - reason: current screen uses `PageStackContents` with `TitleMain` before the first divider.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: `PageStackContents` owns horizontal content padding.
+  - stack: vertical intro text.
+  - alignment: leading
+  - wrapping: title intentionally wraps at the newline; subtitle may wrap to multiple lines.
+  - overflow: normal content scroll.
+- layoutContract:
+  - role: introduce the signup consent step and explain required vs optional consent behavior.
+  - structure: `PageStackContents` title slot containing `TitleMain`.
+  - alignment: leading text hierarchy.
+  - density: intro spacing owned by page-stack layout.
+  - wrapping: preserve explicit title line break and keep subtitle within content width.
+  - distortionRisk: adding a progress bar, card, or extra policy notice would diverge from the implemented screen.
+- componentCandidates:
+  - name: `PageStackContents(title=TitleMain)`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: directly preserves the implemented step caption, title, and subtitle slots.
+    risk: none when subtitle remains in `TitleMain`.
 
-    OGN: ogn-mbr-consent-terms-section
-      role: required-consent
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: section title + consent organism + callout
-        alignment: leading
-        typography: section title -> checkbox rows -> callout title/body
-        wrapping: accordion title max 2 lines; callout body max 2 lines preferred
-      vocabularyDecision:
-        reuse: PageStackContents + TitleSection + SectionItem + Callout
-        new: ConsentTermsAccordion as domain OGN
-      content:
-        sectionTitle: "약관 동의"
-        calloutTitle: "법정대리인 동의 안내"
-        calloutBody: "만 14세 미만 고객은 법정대리인 동의 요청이 함께 진행됩니다."
+### [terms]
 
-      OGN: ogn-mbr-consent-terms-accordion
-        role: consent-control-group
-        source: apps/mobile/src/organisms/mbr/consent-terms-accordion/ConsentTermsAccordion.tsx
-        layoutStrategy:
-          widthTier: inherited content-361
-          stack: FieldStack(all checkbox + AccordionList)
-          alignment: checkbox leading + accordion title leading
-          selection: required/optional checkbox state
-          overflow: accordion content expands inside scroll content
-        vocabularyDecision:
-          reuse: Checkbox + AccordionList + Text
-          new: OGN wrapper because terms state/copy is domain-specific
-        content:
-          allLabel: "전체 동의 (필수·선택 약관 모두)"
-          items:
-            - id: "service"; required: true; title: "[필수] T 우주 서비스 이용약관 (v3.2)"; caption: "회원 가입 및 서비스 이용을 위한 기본 약관입니다."
-            - id: "privacy"; required: true; title: "[필수] 개인정보 수집·이용 동의 (v5.1)"; caption: "이름, 연락처 등 회원 식별·운영에 필요한 정보를 수집합니다."
-            - id: "marketing"; required: false; title: "[선택] 혜택·이벤트 정보 수신 동의"; caption: "동의하지 않아도 가입할 수 있어요."
-  ActionBar
-    OGN: ogn-mbr-consent-actions
-      role: primary-progress
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: single full-width button
-        alignment: stretch
-        wrapping: label max 1 line
-      vocabularyDecision:
-        reuse: SinglePrimaryAction + Button
-      actions:
-        - primary: "동의하고 계속하기"
-```
+- patternEvidence:
+  - wireSemanticTag: `[terms | consent-accordion-section | section-divider]`
+  - sectionBoundary: `SectionDivider`
+  - fieldGrouping: `FieldStack` inside `ConsentTermsAccordion`
+  - rowSeparators: `AccordionList` internal row separation
+  - actionPlacement: `none`
+  - typography: `TitleSection`; checkbox control label scale; callout title/body scale from `Callout`.
+- patternDecision:
+  - patternFamily: `sectioned-consent-control-group`
+  - pattern: existing composition plus existing domain organism
+  - reason: current screen renders `ConsentTermsAccordion` followed by a `Callout` inside one `SectionItem` so the legal guardian notice stays attached to terms consent.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: `PageStackContents` + `SectionItem`
+  - stack: section title, consent organism, then callout.
+  - alignment: leading control labels and callout text.
+  - wrapping: long accordion titles and callout body wrap within content width.
+  - overflow: accordion expansion occurs inside the content scroll region.
+- layoutContract:
+  - role: collect required/optional terms consent and present the legal guardian notice as related guidance.
+  - structure: titled section + consent accordion organism + callout in one section item.
+  - alignment: checkbox and accordion rows align leading; callout remains below the consent control group.
+  - density: consent group and callout share the section rhythm; no divider between them.
+  - wrapping: terms titles may wrap without colliding with checkbox controls; callout body remains readable.
+  - distortionRisk: splitting callout into a separate section, duplicating terms rows in the route, or moving accordion content outside scroll would break the implemented relationship.
+- componentCandidates:
+  - name: `PageStackContents + TitleSection + SectionItem + ConsentTermsAccordion + Callout`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: preserves the implemented section title, domain consent organism, and attached legal guardian callout.
+    risk: accordion title wrapping must remain inside the organism contract.
 
-## Layout Distortion Gate
+### [termsAccordion]
 
-- `AppScreen.Content`가 유일한 scroll owner여야 하며 CTA는 `AppScreen.ActionBar` 안에만 둔다.
-- Header는 progress bar를 되살리지 않는다. 단계 정보는 `TitleMain.titleSubText`의 텍스트로만 유지한다.
-- 법정대리인 `Callout`은 terms section 내부에 둔다. 별도 section으로 분리해 divider를 추가하면 안내가 약관 동의와 과도하게 분절된다.
-- `ConsentTermsAccordion`은 `apps/mobile/src/organisms/mbr/` 아래 OGN이므로 route에서 약관 rows를 직접 반복하지 않는다.
-- Accordion title이 361px 폭에서 2줄을 넘어가거나 checkbox와 충돌하면 title copy 또는 AccordionList contract를 조정한다. route-level raw padding/width 보정은 금지한다.
-- Accordion content는 scroll content 안에서 확장되어야 하며 ActionBar에 가려지면 안 된다.
-- 약관 전문 placeholder를 실제 약관처럼 보이게 장식하지 않는다. sourceRef가 없으면 placeholder 상태를 명시한다.
-- Deprecated `@pxds/pxds-components`, `@pxds/pxds-icons`, `@/organisms/legacy-mbr` import는 금지한다.
+- patternEvidence:
+  - wireSemanticTag: `[termsAccordion | consent-control-group | organism]`
+  - sectionBoundary: `none`
+  - fieldGrouping: `FieldStack`
+  - rowSeparators: `AccordionList` internal rows
+  - actionPlacement: `none`
+  - typography: checkbox label scale for all-agree; accordion title plus helper/body text inside expanded content.
+- patternDecision:
+  - patternFamily: `consent-control-accordion`
+  - pattern: existing domain organism
+  - reason: current screen imports `ConsentTermsAccordion`, `CONSENT_ITEM_IDS`, and `REQUIRED_CONSENT_IDS` from `@/organisms/mbr`.
+- layoutStrategy:
+  - widthTier: `inherited content`
+  - padding: organism inherits section item width.
+  - stack: all-agree checkbox followed by multi-expand accordion terms list.
+  - alignment: leading checkbox controls and accordion titles.
+  - wrapping: term titles and body placeholders wrap inside accordion row content.
+  - overflow: expanded body content remains in `AppScreen.Content` scroll.
+- layoutContract:
+  - role: manage all/individual consent state for required and optional terms.
+  - structure: `FieldStack` with all-agree checkbox and `AccordionList` containing checkbox left content.
+  - alignment: control affordances align with titles; expanded content follows each accordion row.
+  - density: organism owns its internal field-stack and accordion density.
+  - wrapping: placeholder body copy must not be mistaken for final legal source text.
+  - distortionRisk: reimplementing rows directly in the route would duplicate state/copy ownership and weaken the organism boundary.
+- componentCandidates:
+  - name: `ConsentTermsAccordion`
+    source: `existing-composition`
+    fit: strong
+    reason: preserves the existing domain organism boundary, all/required consent constants, and accordion behavior.
+    risk: legal body text is placeholder copy until a policy/sourceRef is confirmed.
 
-## Section Specs
+### [actions]
 
-| section | title | primary components | policy |
-| --- | --- | --- | --- |
-| `intro` | `약관에 동의하고 가입을 시작하세요` | `PageStackContents`, `TitleMain` | POL-MBR-CONSENT-INTRO (TBD) |
-| `terms` | `약관 동의` | `PageStackContents`, `TitleSection`, `SectionItem`, `ConsentTermsAccordion`, `Callout` | POL-MBR-CONSENT-TERMS (TBD) + POL-MBR-MINOR-CONSENT (TBD) — 필수/선택 약관 분류, 마케팅 동의는 선택. 법정대리인 안내 Callout 포함 |
+- patternEvidence:
+  - wireSemanticTag: `[actions | bottom-primary-action | bottom-fixed]`
+  - sectionBoundary: `none`
+  - fieldGrouping: `none`
+  - rowSeparators: `none`
+  - actionPlacement: `Bottom(preset="primary-cta")`
+  - typography: xlarge primary button label.
+- patternDecision:
+  - patternFamily: `fixed-primary-cta`
+  - pattern: existing bottom composition
+  - reason: current screen uses `AppScreen.ActionBar preset="primary-cta"` with one full-width primary button.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: action-bar preset owns safe-area and CTA width.
+  - stack: single action.
+  - alignment: full-width
+  - wrapping: button label one line.
+  - overflow: fixed bottom action stays outside scroll content.
+- layoutContract:
+  - role: progress to the next signup step when required consents are satisfied.
+  - structure: fixed bottom primary CTA.
+  - alignment: full-width button inside primary action bar.
+  - density: `primary-cta` preset.
+  - wrapping: label remains one line.
+  - distortionRisk: placing the button in scroll content or adding secondary actions would change the implemented action model.
+- componentCandidates:
+  - name: `ActionBar(preset="primary-cta") + SinglePrimaryAction + Button(fullWidth, size="xlarge", variant="primary")`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: exactly preserves the implemented action bar and disabled/enabled button surface.
+    risk: none.
 
-## Action Contract
+## Policy / OGN Matrix
 
-| element | label | variant | role | policy |
-| --- | --- | --- | --- | --- |
-| Primary CTA | `동의하고 계속하기` | `primary` | 필수 약관 동의 후 다음 가입 단계 진입 | POL-MBR-CONSENT-TERMS — 필수 약관 미동의 시 진행 불가 |
+| requirement | sourceRef | policy | OGN | section | governance | layout decision |
+| --- | --- | --- | --- | --- | --- | --- |
+| `LEGACY-MBR-CONSENT-INTRO` | current `Screen.tsx` | structural-only | `ogn-mbr-consent-intro` | `intro` | TBD | Preserve step caption, two-line title, and required/optional consent subtitle. |
+| `LEGACY-MBR-CONSENT-TERMS` | current `Screen.tsx` + `ConsentTermsAccordion.tsx` | TBD; no policy-core source confirmed | `ogn-mbr-consent-terms-section` | `terms` | TBD | Preserve the titled consent section with domain consent organism and attached callout. |
+| `LEGACY-MBR-CONSENT-TERMS-ACCORDION` | `apps/mobile/src/organisms/mbr/consent-terms-accordion/ConsentTermsAccordion.tsx` | TBD; body text is placeholder | `ogn-mbr-consent-terms-accordion` | `termsAccordion` | TBD | Preserve all-agree checkbox, required service/privacy terms, optional marketing term, and accordion behavior. |
+| `LEGACY-MBR-CONSENT-ACTIONS` | current `Screen.tsx` | structural-only | `ogn-mbr-consent-actions` | `actions` | TBD | Preserve disabled primary CTA until `REQUIRED_CONSENT_IDS` are all checked. |
 
-- CTA 기본 상태는 `disabled`.
-- `service`, `privacy` 필수 약관이 모두 checked일 때 활성화한다.
-- `marketing` 선택 약관은 CTA 활성 조건에 포함하지 않는다.
+## Distortion Gates
 
-## State Rules
-
-- `checkedById: Record<string, boolean>` — `service`, `privacy`, `marketing` 체크 상태를 보유한다.
-- `allChecked = CONSENT_ITEM_IDS.every((id) => checkedById[id])`.
-- `requiredSatisfied = REQUIRED_CONSENT_IDS.every((id) => checkedById[id])`.
-- CTA `disabled = !requiredSatisfied`.
-- "전체 동의" Checkbox 체크 시 3개 약관을 모두 true로, 해제 시 모두 false로 set한다.
-- 개별 약관 checkbox 변경은 `checkedById[id]`만 갱신한다.
-
-## Implementation Contract
-
-- Use `@pxds/cx-components` for `AppBar`, `Button`, `Callout`, `StatusBar`, `TitleMain`, `TitleSection`.
-- Use `ConsentTermsAccordion`, `CONSENT_ITEM_IDS`, `REQUIRED_CONSENT_IDS` from `@/organisms/mbr`.
-- `ConsentTermsAccordion` internally uses `Checkbox`, `AccordionList`, `Text` from `@pxds/cx-components` and `FieldStack` from `@pxds/cx-layout/components/compositions`.
-- Use `@pxds/cx-layout/components` for `AppScreen`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
-- Do NOT import `@pxds/pxds-components/*` (deprecated legacy) or `@pxds/pxds-icons` (deprecated legacy).
-- Do NOT reuse `@/organisms/legacy-mbr/*`.
-- 본 화면은 가입 흐름의 첫 진입 화면이므로 `Section(intro) → TitleMain`을 유지한다.
-- Progress 정보(1/5, 20%)는 시각 progress 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`에 자연어로 흡수한다.
-- Section 사이는 `SectionDivider(thickness="section")` 외 다른 wrapper로 구분하지 않는다.
-
-## Open Questions
-
-1. **약관 본문 콘텐츠 출처** — `ConsentTermsAccordion`의 `bodyPlaceholder`는 실제 약관 전문이 아니다. policy-core 또는 별도 약관 sourceRef에서 v3.2/v5.1 전문을 연결해야 한다.
-2. **Accordion checkbox hit area** — `AccordionList.leftText`에 `Checkbox`를 넣는 구조가 row expand click과 checkbox click 이벤트를 충돌시키지 않는지 확인 필요.
-3. **법정대리인 동의 flow trigger** — 본 변환은 Callout 안내까지만 보존한다. 실제 만 14세 미만 식별 후 별도 화면/trigger 진입은 별도 트랙이다.
-4. **전체 동의 해제 semantics** — 현재 전체 동의 해제 시 선택 약관뿐 아니라 필수 약관도 모두 해제한다. 정책상 허용되는지 확인 필요.
-5. **policy ref 채번** — legacy 화면이 정책 ref를 들고 있지 않다. POL-MBR-CONSENT-* ID 부여는 별도 트랙이다.
+- Treat current `Screen.tsx` as the truth; do not redesign or reinterpret the legacy-converted screen while editing metadata.
+- Keep `AppScreen.Content` as the only scroll owner and keep the primary CTA in `AppScreen.ActionBar preset="primary-cta"`.
+- Preserve `SectionDivider(thickness="section")` between intro and terms sections.
+- Preserve `ConsentTermsAccordion` as an `@/organisms/mbr` boundary; do not inline its terms rows in the route or metadata selection.
+- Preserve the legal guardian `Callout` inside the terms section after the accordion; do not split it into a new section with another divider.
+- Preserve CTA enablement based on `REQUIRED_CONSENT_IDS`; optional marketing consent does not block progression.
+- Treat accordion body placeholders as placeholder copy, not verified legal policy text.
+- Do not invent policy IDs, final terms sourceRefs, minor-consent branching, validation errors, or alternate all-agree semantics without a policy/source update.
+- Do not add route-level raw margin, padding, width, fontSize, color, or deprecated imports to recreate this layout.

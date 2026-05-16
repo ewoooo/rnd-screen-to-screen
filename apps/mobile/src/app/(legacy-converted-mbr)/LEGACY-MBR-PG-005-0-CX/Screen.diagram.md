@@ -1,277 +1,216 @@
-# LEGACY-MBR-PG-005-0 — 탈퇴 사유 (CX 전환)
+# LEGACY-MBR-PG-005-0-CX — 회원 탈퇴 사유
 
 ## Screen Contract
 
-- legacy source: `apps/mobile/src/app/(legacy-mbr)/LEGACY-MBR-PG-005-0/Screen.tsx`
-- target route: `/LEGACY-MBR-PG-005-0-CX`
+- route: `/LEGACY-MBR-PG-005-0-CX`
 - group: `legacy-converted-mbr`
-- domain: `mbr`
-- pattern: `form-entry` (DESIGN_PATTERNS.md `상세_정보 입력` — 다중 선택 + 자유 의견 입력 혼합)
-- 단계: 회원 탈퇴 2/6 (legacy `ProgressTopBar.percent=33.33`)
-- required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
-- design SOT (참고): `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md`, `apps/mobile/src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-007-0-CX/Screen.diagram.md`, `apps/mobile/src/app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md`
+- domain: `membership`
+- source: current `Screen.tsx`
+- reverseEngineeringSource: current `Screen.tsx` is treated as the visual/structural truth for this legacy-converted screen.
+- pattern: `form-entry`
+- policy refs: `structural-only`
+- governance refs: `TBD`; legacy conversion metadata does not establish policy-core governance mapping.
+- wireReference:
+  - source: `apps/mobile/src/app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md`
+  - matchedParts: `AppScreen(headerPreset="form-entry")`, header app bar, `TitleMain` intro, section divider bands, field-stack sections, fixed primary CTA.
+  - intentionalDifferences: withdrawal reason screen uses checkbox choice rows and an optional free-text field instead of personal-info text fields.
+  - limitation: reference-only visual structure; policy/copy/OGN ids come from current `Screen.tsx`, `Screen.map.md`, and `Screen.config.ts`.
 
-## Conversion Intent (Legacy → CX)
-
-| Legacy 어휘 | CX 대체 | 비고 |
-| --- | --- | --- |
-| `ProgressTopBar(title="탈퇴 사유", leading="back", progress)` | `AppBar(title="탈퇴 사유", showLeftItem, showTitle)` + `TitleMain.titleSubText="회원 탈퇴 2/6"` | CX `AppBar`에는 progress slot이 없다. 단계 정보는 제목 상단 eyebrow slot으로 흡수하고 progress bar는 폐기한다. |
-| `MembershipHeroSection(titleLines, description)` | `Section(intro)` → `PageStackContents(title=TitleMain)` | 탈퇴 흐름의 첫 입력 화면이므로 hero/intro를 유지한다. |
-| `MembershipSelectableSection(selectionMode="multi", items=6)` | `Section(reasons)` → `PageStackContents(title=TitleSection)` + `SectionItem` + `FieldStack` + `ListSelected` checkbox rows | 다중 선택 그룹 의미는 route state가 보유한다. 각 row는 `data-figma-property-type="checkbox"`로 표현한다. |
-| `MembershipFormSection(fields=[free-text])` | `Section(freeText)` → `PageStackContents(title=TitleSection)` + `SectionItem` + `TextField` | CX `TextField`가 multiline을 지원하지 않으므로 500자 자유 의견은 단행 입력으로 임시 수용한다. Open Questions에 system gap으로 기록한다. |
-| `MembershipPrimaryActionBar(primaryLabel="다음", disabled)` | `AppScreen.ActionBar(preset="primary-cta")` + `SinglePrimaryAction` + `Button` | CTA는 scroll content가 아니라 ActionBar 소유다. |
-
-폐기 대상 import:
-- `@pxds/pxds-components/shared/global` (`ProgressTopBar`)
-- `@/organisms/legacy-mbr` (`MembershipHeroSection`, `MembershipSelectableSection`, `MembershipFormSection`, `MembershipPrimaryActionBar`)
-
-## Slot Ownership Map
+## Screen Wire
 
 ```txt
-┌─────────────────────────────────────────┐
-│ AppScreen(headerPreset="form-entry")    │
-│ pattern: form-entry / withdraw reason   │
-│ viewport: 393w                          │
-├─────────────────────────────────────────┤
-│ SystemHeader                            │
-│  9:41                              ▮▮▮  │
-├─────────────────────────────────────────┤
-│ OGN: ogn-mbr-withdraw-reason-app-bar    │
-│ role: step-navigation                   │
-│ layoutStrategy                          │
-│  widthTier : full-bleed                 │
-│  stack     : horizontal chrome          │
-│  alignment : leading title + back       │
-│  wrapping  : title max 1 line           │
-│ vocabularyDecision                      │
-│  reuse: AppBar                          │
-├─────────────────────────────────────────┤
-│  ‹   탈퇴 사유                          │
-├─────────────────────────────────────────┤
-│ Content: only scroll owner              │
-│                                         │
-│  OGN: ogn-mbr-withdraw-reason-hero      │
-│  role: intro                            │
-│  layoutStrategy                         │
-│   widthTier : content-361               │
-│   stack     : vertical                  │
-│   alignment : leading                   │
-│   typography: step caption -> title -> body│
-│   wrapping  : title max 2 / body max 2  │
-│ vocabularyDecision                      │
-│  reuse: PageStackContents + TitleMain   │
-│                                         │
-│  회원 탈퇴 2/6                          │
-│                                         │
-│  탈퇴하시는 이유가                      │
-│  무엇인가요?                            │
-│                                         │
-│  더 나은 서비스를 위해 알려주세요.      │
-│  (1개 이상 선택)                        │
-│                                         │
-│  ━━━━━━━ SectionDivider ━━━━━━━        │
-│                                         │
-│  OGN: ogn-mbr-withdraw-reason-options   │
-│  role: required-choice                  │
-│  layoutStrategy                         │
-│   widthTier : content-361               │
-│   stack     : section title + field rows│
-│   alignment : row label leading         │
-│   selection : multi checkbox            │
-│   wrapping  : label max 1 line preferred│
-│ vocabularyDecision                      │
-│  reuse: PageStackContents + TitleSection│
-│         + SectionItem + FieldStack      │
-│         + ListSelected                  │
-│                                         │
-│  탈퇴 사유                              │
-│  ┌───────────────────────────────────┐  │
-│  │ □ 가격이 부담돼요                 │  │
-│  │ □ 이용 빈도가 낮아요              │  │
-│  │ □ 다른 서비스로 옮겨요            │  │
-│  │ □ 사용이 불편해요                 │  │
-│  │ □ 오류·결제 문제가 있었어요       │  │
-│  │ □ 기타 (직접 입력)                │  │
-│  └───────────────────────────────────┘  │
-│                                         │
-│  ━━━━━━━ SectionDivider ━━━━━━━        │
-│                                         │
-│  OGN: ogn-mbr-withdraw-free-text        │
-│  role: optional-comment                 │
-│  layoutStrategy                         │
-│   widthTier : content-361               │
-│   stack     : section title + input     │
-│   alignment : leading                   │
-│   wrapping  : placeholder may wrap risk │
-│ vocabularyDecision                      │
-│  reuse: TextField                       │
-│  hold: multiline TextArea vocabulary    │
-│                                         │
-│  자유 의견 (선택)                      │
-│  ┌───────────────────────────────────┐  │
-│  │ 자유 의견 (선택)                  │  │
-│  │ 자세한 의견을 입력해주세요        │  │
-│  │ 0/500자                           │  │
-│  └───────────────────────────────────┘  │
-├─────────────────────────────────────────┤
-│ ActionBar(preset="primary-cta")         │
-│ OGN: ogn-mbr-withdraw-reason-actions    │
-│ layoutStrategy                          │
-│  widthTier : content-361                │
-│  stack     : single full-width button   │
-│  wrapping  : button label max 1 line    │
-│                                         │
-│  ┌───────────────────────────────────┐  │
-│  │ 다음                              │  │
-│  └───────────────────────────────────┘  │
-└─────────────────────────────────────────┘
+┌─AppScreen(headerPreset="form-entry")──────────────────────┐
+├─SystemHeader──────────────────────────────────────────────┤
+│ StatusBar                                                 │
+├─Header────────────────────────────────────────────────────┤
+│ AppBar(title="탈퇴 사유", showLeftItem, showTitle)          │
+├─Content(scroll)───────────────────────────────────────────┤
+│ [intro | form-intro-title | content]                      │
+│ 회원 탈퇴 2/6                                             │
+│ 탈퇴하시는 이유가                                         │
+│ 무엇인가요?                                               │
+│ 더 나은 서비스를 위해 알려주세요. (1개 이상 선택)          │
+├══Divider 4px / SectionDivider(thickness="section")════════┤
+│ [reasons | checkbox-field-stack-section | section-divider]│
+│ 탈퇴 사유                                                 │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │ □ 가격이 부담돼요                                    │   │
+│ │ □ 이용 빈도가 낮아요                                 │   │
+│ │ □ 다른 서비스로 옮겨요                               │   │
+│ │ □ 사용이 불편해요                                    │   │
+│ │ □ 오류·결제 문제가 있었어요                          │   │
+│ │ □ 기타 (직접 입력)                                   │   │
+│ └──────────────────────────────────────────────────────┘   │
+├══Divider 4px / SectionDivider(thickness="section")════════┤
+│ [freeText | optional-text-field-section | section-divider]│
+│ 자유 의견 (선택)                                         │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │ 자유 의견 (선택)                                     │   │
+│ │ 자세한 의견을 입력해주세요                           │   │
+│ │ 0/500자                                              │   │
+│ └──────────────────────────────────────────────────────┘   │
+├─Bottom(preset="primary-cta")──────────────────────────────┤
+│ [actions | bottom-primary-action | bottom-fixed]          │
+│ ┌──────────────────────────────────────────────────────┐   │
+│ │                         다음                         │   │
+│ └──────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────┘
 ```
 
-## Content Flow
+## Section Contracts
 
-```txt
-AppScreen
-  SystemHeader
-    StatusBar
-  Header
-    OGN: ogn-mbr-withdraw-reason-app-bar
-      role: step-navigation
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: full-bleed
-        stack: horizontal chrome
-        alignment: leading title + back
-        typography: app-bar title
-        wrapping: title max 1 line
-      vocabularyDecision:
-        reuse: AppBar
-  Content
-    OGN: ogn-mbr-withdraw-reason-hero
-      role: intro
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: vertical
-        alignment: leading
-        typography: step caption -> display title -> body
-        wrapping: title max 2 lines, body max 2 lines
-      vocabularyDecision:
-        reuse: PageStackContents + TitleMain
-      content:
-        titleSubText: "회원 탈퇴 2/6"
-        title: "탈퇴하시는 이유가\n무엇인가요?"
-        subTitle: "더 나은 서비스를 위해 알려주세요. (1개 이상 선택)"
+### [intro]
 
-    SectionDivider(thickness="section")
+- patternEvidence:
+  - wireSemanticTag: `[intro | form-intro-title | content]`
+  - sectionBoundary: `none`
+  - fieldGrouping: `none`
+  - rowSeparators: `none`
+  - actionPlacement: `none`
+  - typography: `TitleMain` with step caption, two-line title, and short subtitle.
+- patternDecision:
+  - patternFamily: `form-intro-title`
+  - pattern: existing composition
+  - reason: current screen uses `PageStackContents` with `TitleMain` before the first section divider.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: `PageStackContents` owns horizontal content padding.
+  - stack: vertical intro text.
+  - alignment: leading
+  - wrapping: title intentionally wraps at the newline; subtitle may wrap inside content width.
+  - overflow: normal content scroll.
+- layoutContract:
+  - role: introduce the withdrawal-reason step and minimum selection requirement.
+  - structure: `PageStackContents` title slot containing `TitleMain`.
+  - alignment: leading text hierarchy.
+  - density: intro spacing owned by page-stack layout.
+  - wrapping: preserve explicit title line break and keep subtitle readable.
+  - distortionRisk: adding a card, progress bar, or body wrapper would diverge from the implemented screen.
+- componentCandidates:
+  - name: `PageStackContents(title=TitleMain)`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: directly preserves the implemented intro hierarchy and copy slots.
+    risk: none when the title remains in `TitleMain`.
 
-    OGN: ogn-mbr-withdraw-reason-options
-      role: required-choice
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: section title + field rows
-        alignment: row label leading, no right item
-        selection: multi checkbox
-        wrapping: labels max 1 line preferred; long labels must not collide with checkbox
-      vocabularyDecision:
-        reuse: PageStackContents + TitleSection + SectionItem + FieldStack + ListSelected
-      content:
-        sectionTitle: "탈퇴 사유"
-        items:
-          - id: "price"; label: "가격이 부담돼요"
-          - id: "rare-use"; label: "이용 빈도가 낮아요"
-          - id: "alt-service"; label: "다른 서비스로 옮겨요"
-          - id: "ux"; label: "사용이 불편해요"
-          - id: "error"; label: "오류·결제 문제가 있었어요"
-          - id: "etc"; label: "기타 (직접 입력)"
+### [reasons]
 
-    SectionDivider(thickness="section")
+- patternEvidence:
+  - wireSemanticTag: `[reasons | checkbox-field-stack-section | section-divider]`
+  - sectionBoundary: `SectionDivider`
+  - fieldGrouping: `FieldStack`
+  - rowSeparators: `none`
+  - actionPlacement: `none`
+  - typography: `TitleSection`; checkbox row labels use control label scale with no subText.
+- patternDecision:
+  - patternFamily: `sectioned-checkbox-field-stack`
+  - pattern: existing composition
+  - reason: current screen renders six `ListSelected` rows in one `FieldStack` and sets `data-figma-property-type="checkbox"`.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: `PageStackContents` + `SectionItem`
+  - stack: vertical field stack under a section title.
+  - alignment: leading row labels; right item and subText slots are closed.
+  - wrapping: labels should stay readable without colliding with checkbox affordance.
+  - overflow: rows remain in the content scroll region.
+- layoutContract:
+  - role: collect one or more withdrawal reasons.
+  - structure: titled section + `SectionItem` + multi-select row stack.
+  - alignment: uniform leading checkbox rows.
+  - density: `FieldStack` owns row rhythm; section divider separates it from intro and free text.
+  - wrapping: long reason labels may wrap within row bounds but must not add route-level spacing.
+  - distortionRisk: using standalone checkboxes, cards, or right-side adornments would change the implemented list-selection rhythm.
+- componentCandidates:
+  - name: `PageStackContents + TitleSection + SectionItem + FieldStack + ListSelected(checkbox)`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: preserves the implemented title, section padding, multi-select rows, and disabled right/subText slots.
+    risk: long labels need the row component's own wrapping behavior.
 
-    OGN: ogn-mbr-withdraw-free-text
-      role: optional-comment
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: section title + input
-        alignment: leading
-        typography: field label -> placeholder -> helper
-        wrapping: placeholder may wrap; helper max 1 line
-      vocabularyDecision:
-        reuse: TextField
-        hold: multiline TextArea because CX TextField is single-line
-      content:
-        sectionTitle: "자유 의견 (선택)"
-        label: "자유 의견 (선택)"
-        placeholder: "자세한 의견을 입력해주세요"
-        helperText: "{freeText.length}/500자"
-        maxLength: 500
-  ActionBar
-    OGN: ogn-mbr-withdraw-reason-actions
-      role: primary-progress
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: single full-width button
-        alignment: stretch
-        wrapping: label max 1 line
-      vocabularyDecision:
-        reuse: SinglePrimaryAction + Button
-      actions:
-        - primary: "다음"
-```
+### [freeText]
 
-## Layout Distortion Gate
+- patternEvidence:
+  - wireSemanticTag: `[freeText | optional-text-field-section | section-divider]`
+  - sectionBoundary: `SectionDivider`
+  - fieldGrouping: `single`
+  - rowSeparators: `none`
+  - actionPlacement: `none`
+  - typography: `TitleSection` plus `TextField` label, placeholder, and helper text.
+- patternDecision:
+  - patternFamily: `sectioned-optional-text-field`
+  - pattern: existing composition
+  - reason: current screen renders an optional single `TextField` with a 500-character helper counter.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: `PageStackContents` + `SectionItem`
+  - stack: vertical section title and one text field.
+  - alignment: leading
+  - wrapping: placeholder and helper stay inside field contract.
+  - overflow: typed text remains in field; section scrolls with content.
+- layoutContract:
+  - role: collect optional free-form withdrawal feedback.
+  - structure: titled section + one text field with helper counter.
+  - alignment: leading field label/value/helper.
+  - density: single-field density owned by `SectionItem` and `TextField`.
+  - wrapping: helper counter stays one line; placeholder must not overflow content width.
+  - distortionRisk: replacing this with raw textarea or route-level styling would invent a component vocabulary not present in the current screen.
+- componentCandidates:
+  - name: `PageStackContents + TitleSection + SectionItem + TextField(helperText, maxLength=500)`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: preserves the implemented optional input, label, placeholder, counter helper, and max length.
+    risk: multiline behavior is not represented by the current `TextField`; do not invent it in metadata.
 
-- `AppScreen.Content`가 유일한 scroll owner여야 하며 CTA는 `AppScreen.ActionBar` 밖으로 내려오면 안 된다.
-- Header는 progress bar를 되살리지 않는다. 단계 정보는 `TitleMain.titleSubText`의 텍스트로만 유지한다.
-- `ListSelected` rows는 right item과 subText slot을 닫는다. 우측 장식이나 임의 badge로 선택지를 보강하지 않는다.
-- `오류·결제 문제가 있었어요` 같은 긴 label은 checkbox와 충돌하지 않아야 한다. 필요 시 row 내부의 표준 wrapping/ellipsis contract를 따른다.
-- 자유 의견은 현 구현상 단행 `TextField`다. 500자 장문 입력을 raw `<textarea>`나 route-level style로 임시 구현하지 않는다.
-- `TextField` placeholder가 361px content 폭에서 과하게 길어 보이면 copy를 줄이거나 CX multiline vocabulary를 보강한다. route-level width/padding 보정은 금지한다.
-- Section 사이는 `SectionDivider(thickness="section")`만 사용한다. 임의 margin/padding wrapper를 추가하지 않는다.
-- Deprecated `@pxds/pxds-components`, `@pxds/pxds-icons`, `@/organisms/legacy-mbr` import는 금지한다.
+### [actions]
 
-## Section Specs
+- patternEvidence:
+  - wireSemanticTag: `[actions | bottom-primary-action | bottom-fixed]`
+  - sectionBoundary: `none`
+  - fieldGrouping: `none`
+  - rowSeparators: `none`
+  - actionPlacement: `Bottom(preset="primary-cta")`
+  - typography: xlarge primary button label.
+- patternDecision:
+  - patternFamily: `fixed-primary-cta`
+  - pattern: existing bottom composition
+  - reason: current screen uses `AppScreen.ActionBar preset="primary-cta"` with one full-width primary button.
+- layoutStrategy:
+  - widthTier: `content`
+  - padding: action-bar preset owns safe-area and CTA width.
+  - stack: single action.
+  - alignment: full-width
+  - wrapping: button label one line.
+  - overflow: fixed bottom action stays outside scroll content.
+- layoutContract:
+  - role: progress to the next withdrawal step once at least one reason is selected.
+  - structure: fixed bottom primary CTA.
+  - alignment: full-width button inside primary action bar.
+  - density: `primary-cta` preset.
+  - wrapping: label remains one line.
+  - distortionRisk: placing the button in scroll content or adding secondary actions would change the implemented action model.
+- componentCandidates:
+  - name: `ActionBar(preset="primary-cta") + SinglePrimaryAction + Button(fullWidth, size="xlarge", variant="primary")`
+    source: `current Screen.tsx`
+    fit: strong
+    reason: exactly preserves the implemented action bar and disabled/enabled button surface.
+    risk: none.
 
-| section | title | primary components | policy |
-| --- | --- | --- | --- |
-| `intro` | `탈퇴하시는 이유가 무엇인가요?` | `PageStackContents`, `TitleMain` | POL-MBR-WITHDRAW-REASON-INTRO (TBD) |
-| `reasons` | `탈퇴 사유` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `ListSelected` | TBD — 다중 선택, 최소 1개 |
-| `freeText` | `자유 의견 (선택)` | `PageStackContents`, `TitleSection`, `SectionItem`, `TextField` | TBD — 자유 의견 최대 500자, 선택 입력 |
+## Policy / OGN Matrix
 
-## Action Contract
+| requirement | sourceRef | policy | OGN | section | governance | layout decision |
+| --- | --- | --- | --- | --- | --- | --- |
+| `LEGACY-MBR-WITHDRAW-REASON-INTRO` | current `Screen.tsx` | structural-only | `ogn-mbr-withdraw-reason-intro` | `intro` | TBD | Preserve the step caption, two-line question, and minimum-selection subtitle. |
+| `LEGACY-MBR-WITHDRAW-REASON-OPTIONS` | current `Screen.tsx` | TBD; no policy-core source confirmed | `ogn-mbr-withdraw-reason-options` | `reasons` | TBD | Preserve six checkbox `ListSelected` rows and minimum-one-selection action dependency. |
+| `LEGACY-MBR-WITHDRAW-REASON-FREE-TEXT` | current `Screen.tsx` | TBD; no policy-core source confirmed | `ogn-mbr-withdraw-reason-free-text` | `freeText` | TBD | Preserve optional text field, placeholder, `maxLength=500`, and helper counter. |
+| `LEGACY-MBR-WITHDRAW-REASON-ACTIONS` | current `Screen.tsx` | structural-only | `ogn-mbr-withdraw-reason-actions` | `actions` | TBD | Preserve disabled primary CTA until `selected.size > 0`. |
 
-| element | label | variant | role | policy |
-| --- | --- | --- | --- | --- |
-| Primary CTA | `다음` | `primary` | 탈퇴 사유 제출 후 다음 단계 진입 | TBD — 사유 미선택 시 진행 불가 |
+## Distortion Gates
 
-- CTA 기본 상태는 `disabled`.
-- `selected.size >= 1`일 때만 CTA를 활성화한다.
-- 자유 의견은 선택 입력이므로 CTA 활성 조건에 포함하지 않는다.
-
-## State Rules
-
-- `selected: Set<string>` — 6개 사유 ID 중 선택된 집합. `ListSelected.onChange`가 `toggle(id, checked)`를 호출한다.
-- `freeText: string` — `TextField.value`. `maxLength=500`으로 입력 상한을 보장한다.
-- `helperText`는 `${freeText.length}/500자` 형태로 표시한다.
-- CTA `disabled = selected.size === 0`.
-- "기타 (직접 입력)" 선택 시 자유 의견 필수 여부는 아직 정책 확정 전이다. 현 화면은 단순 선택 토글과 선택 자유 의견으로만 표현한다.
-
-## Implementation Contract
-
-- Use `@pxds/cx-components` for `AppBar`, `Button`, `ListSelected`, `SectionItem`, `StatusBar`, `TextField`, `TitleMain`, `TitleSection`.
-- Use `@pxds/cx-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, `SinglePrimaryAction`.
-- Do NOT import `@pxds/pxds-components/*` (deprecated legacy) or `@pxds/pxds-icons` (deprecated legacy).
-- Do NOT reuse `@/organisms/legacy-mbr/*`.
-- 본 화면은 탈퇴 흐름의 첫 입력 화면이므로 `Section(intro) → TitleMain`을 유지한다.
-- Progress 정보(2/6, 33.33%)는 시각 progress 컴포넌트로 표현하지 않고 `TitleMain.titleSubText`에 자연어로 흡수한다.
-- 단순 route composition으로 충분하므로 현재는 Screen.tsx에서 직접 조립한다. 사유 목록/자유 의견이 정책 데이터와 결합되면 `apps/mobile/src/organisms/mbr/` 아래 OGN으로 승격한다.
-- Section 사이는 `SectionDivider(thickness="section")` 외 다른 wrapper로 구분하지 않는다.
-
-## Open Questions
-
-1. **TextField multiline 부재** — CX `TextField`는 단행 입력이다. 500자 자유 의견 UX가 실제로 장문 입력을 요구하면 `@pxds/cx-components`에 multiline TextField variant 또는 TextArea vocabulary를 보강해야 한다.
-2. **"기타" 선택 시 자유 의견 필수 여부** — 현재는 `etc` 선택만으로 진행 가능하다. 정책상 직접 입력이 필수라면 CTA 조건과 error copy가 추가되어야 한다.
-3. **사유 코드 정합** — 6개 사유 ID는 화면 내부 값이다. policy-core 사유 코드 체계와 매핑 필요.
-4. **다음 단계 trigger** — "다음" CTA가 탈퇴 확인/검증 중 어느 단계로 이동하는지 정책 ref와 함께 확정 필요.
-5. **policy ref 채번** — legacy 화면이 정책 ref를 들고 있지 않다. 다이어그램에는 TBD로 표기한다.
+- Treat current `Screen.tsx` as the truth; do not redesign or reinterpret the legacy-converted screen while editing metadata.
+- Keep `AppScreen.Content` as the only scroll owner and keep the primary CTA in `AppScreen.ActionBar preset="primary-cta"`.
+- Preserve `SectionDivider(thickness="section")` between intro, reasons, and free-text sections.
+- Preserve `ListSelected` checkbox rows with `showListSelectedRightItem={false}` and `showSubText={false}`.
+- Preserve the CTA enablement rule: disabled when no reason is selected; free text does not participate in CTA activation.
+- Preserve `TextField maxLength={500}` and helper counter ownership inside the field.
+- Do not invent policy IDs, validation copy, required free-text behavior for "기타", or multiline textarea behavior without a policy/source update.
+- Do not add route-level raw margin, padding, width, fontSize, color, or deprecated imports to recreate this layout.
