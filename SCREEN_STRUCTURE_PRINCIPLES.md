@@ -132,7 +132,7 @@ patternDecision:
 
 ```txt
 - wireReference:
-  - source: apps/mobile/src/screen-diagrams/.../frame-xx.diagram.md
+  - source: apps/mobile/src/screen-diagrams/.../<semantic-name>.diagram.md
   - matchedParts: AppScreen rail, summary card density, filter chips, dated list rows
   - intentionalDifferences: policy-required error copy adds a notice section
   - limitation: reference-only visual structure; policy/copy/OGN ids come from Screen.map.md and Screen.config.ts
