@@ -3,8 +3,7 @@
 import {
 	ActionButton,
 	AppBar,
-	ListText,
-	SectionItem,
+	RQRContentsDetail,
 	StatusBar,
 	TitleMain,
 } from "@pxds/cx-components";
@@ -15,9 +14,9 @@ import {
 } from "@pxds/cx-layout/components";
 
 const planChangeSummaryRows = [
-	{ label: "변경한 요금제", value: "5GX 프라임" },
-	{ label: "적용일", value: "2026.05.16" },
-	{ label: "월정액", value: "89,000원" },
+	{ id: "changed-plan", label: "변경한 요금제", value: "5GX 프라임" },
+	{ id: "effective-date", label: "적용일", value: "2026.05.16" },
+	{ id: "monthly-price", label: "월정액", value: "89,000원" },
 ] as const;
 
 export function Screen() {
@@ -39,16 +38,7 @@ export function Screen() {
 						/>
 					}
 				>
-					<SectionItem type="card">
-						{planChangeSummaryRows.map((row) => (
-							<ListText
-								key={row.label}
-								table
-								text={row.label}
-								tableText={row.value}
-							/>
-						))}
-					</SectionItem>
+					<RQRContentsDetail title="변경 정보" rows={planChangeSummaryRows} />
 				</PageStackContents>
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="primary-cta">

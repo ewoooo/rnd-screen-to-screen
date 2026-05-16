@@ -40,17 +40,17 @@ export const screenConfig = defineScreenConfig({
 			},
 			{
 				section: "completionSummary",
-				selected: "`SectionItem(type=\"card\")` + `ListText(table)`",
+				selected: "RQRContentsDetail",
 				source: "componentCandidates",
-				reason: "Selected as the medium-fit composition that satisfies the completionSummary layoutContract: SectionItem(type=\"card\") owns the card surface, background, radius, and padding, and ListText(table) renders the three peer label-value rows at the compact proof density. Acceptance is on layoutContract capability, not proof value length; the ListText(table) fixed-column squeeze under longer values is a documented secondary risk Build must verify, escalating to a stronger no-header key-value candidate or back to Diagram if it occurs.",
+				reason: "RQRContentsDetail is force-applied per the design decision. Its mandatory `title` prop is satisfied by the authored card title \"변경 정보\" — an intentional structural-proof header, not policy copy. RQRContentsDetail natively owns the card surface, authored header, internal header-to-rows spacing (16px), card padding (24px), border-radius (20px), and stable label/value rows without route-level CSS. Mirrors the LEGACY-MBR-PG-002-0-CX consumer pattern with `{ id, label, value }` rows passed to `rows={...}`.",
 				rejected: [
 					{
-						candidate: "RQRContentsDetail",
-						reason: "RQRContentsDetail requires a title prop (card header title; required, not optional) plus 16px header-to-rows spacing, 24px padding, border-radius 20px, and bg semantic-color-bg-dim. The proof summary wire has no card title or header row — only three bare label-value rows. Applying RQRContentsDetail would force a card header not present in the wire, changing the reference's core layout and failing the requiredCapability 'No section heading/header slot needed' check. Rejected unconditionally for this no-title structural-only proof screen.",
+						candidate: "SectionItem(type=\"card\") + ListText(table)",
+						reason: "Valid no-header card composition but not selected: this screen authors a card title header that RQRContentsDetail owns natively.",
 					},
 					{
 						candidate: "domain key-value summary organism",
-						reason: "Rejected because a new reusable domain organism is unnecessary for structural-only plan-change facts and would add more ownership risk than the selected existing component pair.",
+						reason: "Rejected because a new reusable domain organism is unnecessary for structural-only plan-change facts and would add more ownership risk than the selected component.",
 					},
 				],
 			},

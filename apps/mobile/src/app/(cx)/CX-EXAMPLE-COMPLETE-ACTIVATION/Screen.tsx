@@ -3,8 +3,7 @@
 import {
 	ActionButton,
 	AppBar,
-	ListText,
-	SectionItem,
+	RQRContentsDetail,
 	StatusBar,
 	TitleMain,
 } from "@pxds/cx-components";
@@ -15,9 +14,9 @@ import {
 } from "@pxds/cx-layout/components";
 
 const completionSummaryRows = [
-	{ label: "개통 휴대폰", value: "갤럭시 S25" },
-	{ label: "요금제", value: "5GX 프라임" },
-	{ label: "개통일", value: "2026.05.15" },
+	{ id: "activation-device", label: "개통 휴대폰", value: "갤럭시 S25" },
+	{ id: "plan", label: "요금제", value: "5GX 프라임" },
+	{ id: "activation-date", label: "개통일", value: "2026.05.15" },
 ] as const;
 
 export function Screen() {
@@ -39,16 +38,7 @@ export function Screen() {
 						/>
 					}
 				>
-					<SectionItem type="card">
-						{completionSummaryRows.map((row) => (
-							<ListText
-								key={row.label}
-								table
-								text={row.label}
-								tableText={row.value}
-							/>
-						))}
-					</SectionItem>
+					<RQRContentsDetail title="개통 정보" rows={completionSummaryRows} />
 				</PageStackContents>
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="guided-action">

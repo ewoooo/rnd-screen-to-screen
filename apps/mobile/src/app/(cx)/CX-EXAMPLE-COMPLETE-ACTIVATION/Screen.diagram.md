@@ -43,6 +43,7 @@
 │                                                        │
 │ [completionSummary | key-value-summary | card]        │
 │ ┌─Result Summary Card──────────────────────────────┐  │
+│ │ 개통 정보  (authored card title)                │  │
 │ │ 개통 휴대폰                         갤럭시 S25  │  │
 │ │ 요금제                              5GX 프라임  │  │
 │ │ 개통일                              2026.05.15  │  │
@@ -116,29 +117,30 @@
   - rowSeparators: `none`
   - actionPlacement: `none`
   - typography:
+    - cardHeader: authored card title "개통 정보" (structural proof, not policy copy)
     - rowTitle: key label text
     - rowCaption: none
     - emphasisRule: none; all rows are peer result facts
     - controlLabelScale: `matches-reference`
 - patternDecision:
-  - pattern: compact result summary card with label-value rows
-  - reason: Wire Semantic Tag `[completionSummary | key-value-summary | card]` drives this decision. The tag signals a card-boundary summary zone with repeating label-value pairs; Summary Card Decision Rule applies. DESIGN_PATTERNS.md Completion case A recommends a summary card after the success heading. Three peer activation-fact rows exist with no contents divider, no card title, and no total row.
+  - pattern: compact result summary card with authored card title header and label-value rows
+  - reason: Wire Semantic Tag `[completionSummary | key-value-summary | card]` plus an AUTHORED card title drives this decision. The tag signals a card-boundary summary zone with repeating label-value pairs; Summary Card Decision Rule applies. Per user instruction, RQRContentsDetail is force-applied and its mandatory `title` prop is satisfied by the authored card title "개통 정보" (intentional structural-proof header, not policy copy). DESIGN_PATTERNS.md Completion case A recommends a summary card after the success heading.
 
 #### Summary Card Decision Rule
 
 - patternFamily: `card-key-value-summary`
 - requiredCapability:
-  1. section heading/header slot (optional for this compact card; no heading present in proof wire)
+  1. section heading/header slot REQUIRED — an authored card title (`개통 정보`) is provided to satisfy RQRContentsDetail's mandatory `title` prop; intentional structural-proof header, not policy copy.
   2. card surface ownership (the candidate or composition must own padding, background, and radius — not the route)
   3. padding/radius ownership (card surface provides its own visual boundary; no route-level box-shadow or border patch)
   4. stable label-value relationship (label column must remain stable; values must not push labels off-axis)
   5. value wrapping without column squeeze (longer values must wrap within the value column only; label column must not compress)
-  6. reference density preservation (compact three-row card from the Figma proof frame; no extra row dividers, no title row, no stretched height)
+  6. reference density preservation (compact three-row card; no extra row dividers, no stretched height)
 
 Candidate evaluation against requiredCapability:
 
-- `` `SectionItem(type="card")` + `ListText(table)` ``: card surface must be proven by `SectionItem(type="card")` (capability 2, 3); `ListText(table)` renders label/value rows (capability 4); compact three-row configuration maps to the proof density (capability 6). Secondary concern: `ListText(table)` column widths may be fixed, which could squeeze values when real data includes longer policy values (capability 5 — Build must verify). Core structure is acceptable only if Build proves the layout contract without relying on proof value length. → **fit: medium**
-- `RQRContentsDetail` or stronger detail contract: provides full heading slot, detail header, and richer row hierarchy (capability 1 bonus) but over-specifies this compact no-title card; the Figma wire does not show a card title, section heading, or total row. → **fit: reject** (introduces visual parts not present in the wire; distorts reference density)
+- `RQRContentsDetail`: with the authored card title "개통 정보" its mandatory `title` prop is satisfied (capability 1 ✓); natively owns card surface, background, 20px radius, 24px padding, header/16px spacing, 8px row gap (capability 2, 3 ✓); renders stable label/value rows via internal `ListText` rows (capability 4 ✓); value column wrapping contained within component contract (capability 5 ✓); three-row compact configuration (capability 6 ✓). → **fit: strong** ✓ SELECTED (force-applied per design decision)
+- `` `SectionItem(type="card")` + `ListText(table)` ``: card surface owned by `SectionItem(type="card")` (capability 2, 3 ✓); `ListText(table)` renders label/value rows (capability 4 ✓); compact three-row configuration maps to the proof density (capability 6 ✓). Does not own a header slot (capability 1 — not selected because this screen authors a card title header that RQRContentsDetail owns natively). → **fit: medium** NOT selected
 - domain key-value summary organism (`apps/mobile/src/organisms/mbr` candidate): satisfies structural capabilities but adds domain ownership and semantic weight without any policy-bound activation facts to justify it. → **fit: reject** (no `Screen.map.md` policy binding present)
 
 - layoutStrategy:
@@ -151,22 +153,21 @@ Candidate evaluation against requiredCapability:
   - overflow: if wrapping destabilizes row rhythm, Build must choose a stronger key-value summary candidate or return to Diagram
 - layoutContract:
   - role: completed activation facts summary
-  - structure: one card surface containing exactly three label-value rows: activation device, plan, activation date
+  - structure: one RQRContentsDetail card: authored card title header `개통 정보` + three label-value rows (activation device, plan, activation date)
   - alignment: stable split label/value rows with readable value column and no label/value collision
   - density: compact card; no internal row dividers and no outer section divider
   - wrapping: values should remain one line for current copy; future longer values must not squeeze labels into unreadable width
-  - distortionRisk: a narrow fixed value column, missing card surface, or arbitrary route CSS would make key-value alignment drift.
+  - distortionRisk: patching the card with route CSS or losing the component-owned card surface/header/padding/radius would break the layout contract; do not bypass RQRContentsDetail's native card ownership.
 - componentCandidates:
+  - name: `RQRContentsDetail`
+    source: `packages/cx-components/src/candidate/rqr-contents-detail/RQRContentsDetail.tsx` (exported from `@pxds/cx-components`)
+    fit: strong
+    reason: with the authored card title "개통 정보" its mandatory `title` prop is satisfied; natively owns card surface (section element), background, 20px radius, 24px padding, header 16px spacing, 8px row gap, and stable label/value rows — no route CSS needed. Force-applied per design decision.
   - name: `` `SectionItem(type="card")` + `ListText(table)` ``
     source: `@pxds/cx-components`
     fit: medium
-    reason: card surface owned by `SectionItem(type="card")`; `ListText(table)` maps three label-value rows to the compact proof density. Core structure satisfied for this structural-only proof screen.
-    risk: fixed column widths in `ListText(table)` may squeeze values when real data includes longer policy values; Build must verify the layoutContract rather than rely on the candidate name or proof value length. If squeeze is confirmed, choose a stronger candidate or return to Diagram.
-  - name: `RQRContentsDetail`
-    source: existing complete/reference summary candidate
-    fit: reject
-    reason: over-specifies the compact proof summary with a card title, detail header, and richer row hierarchy not present in the wire; distorts reference density.
-    risk: introduces visual parts not present in the Figma proof and may expand card height beyond proof density.
+    reason: valid no-header card composition; card surface owned by `SectionItem(type="card")`; `ListText(table)` maps three label-value rows to the compact proof density. NOT selected: this screen authors a card title header that RQRContentsDetail owns natively.
+    risk: does not own a header slot; would require additional wrapper for the authored card title.
   - name: domain key-value summary organism
     source: `apps/mobile/src/organisms/mbr` candidate
     fit: reject
@@ -223,14 +224,14 @@ Candidate evaluation against requiredCapability:
 | requirement | sourceRef | policy | OGN | section | appliedGovernanceRefs | layoutContract summary |
 | --- | --- | --- | --- | --- | --- | --- |
 | `CX-COMPLETE-ACTIVATION-HERO` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionHero` | none; component proof screen | Success title and supporting sentence above summary card, leading alignment, no standalone hero surface. |
-| `CX-COMPLETE-ACTIVATION-SUMMARY` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionSummary` | none; component proof screen | Compact card with three stable label-value rows; card surface owned by composition, no route CSS. |
+| `CX-COMPLETE-ACTIVATION-SUMMARY` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionSummary` | none; component proof screen | RQRContentsDetail card with authored card title header `개통 정보` (structural-proof, not policy copy) and three stable label-value rows; card surface, header, padding, and radius owned by RQRContentsDetail, no route CSS. |
 | `CX-COMPLETE-ACTIVATION-ACTION` | Figma Text Section / 완료_개통 | structural-only | structural-only | `actions` | none; component proof screen | Fixed guided bottom area with left secondary and right primary AI action; prompt stays inside Bottom. |
 
 ## Distortion Gates
 
 - Preserve the rail order: `Header`, then `Content`, then `Bottom(preset="guided-action")`; do not convert the bottom prompt/actions into scroll content.
 - Keep `completionHero` and `completionSummary` in the same simple-completion content flow; no `SectionDivider`, extra cross-sell gap, standalone hero card, or inserted section wrapper.
-- Summary acceptance is the layout contract, not the candidate component name: card surface ownership, compact density, stable label/value rows, and readable values are mandatory. If `SectionItem(type="card")` + `ListText(table)` causes fixed-column squeeze, missing card padding, or label/value collision, Build must choose a stronger key-value candidate or return to Diagram; route-level CSS patching is not allowed.
+- The card title `개통 정보` is an intentionally authored structural-proof header (not policy-bound, no policy ID); RQRContentsDetail owns card surface, header, padding, and radius — do not patch with route CSS or replace the component-owned card surface.
 - The `[completionSummary | key-value-summary | card]` tag and its layoutContract override any component-name preference; candidate evaluation must satisfy the Summary Card Decision Rule's `requiredCapability` list.
 - Preserve action hierarchy and order: `홈으로 이동` is secondary/left, `데이터 옮기기` is primary/right with AI treatment.
 - The guided prompt may wrap inside `Bottom`, but button labels must remain one line and the bottom safe area must remain owned by the bottom pattern; only the `Bottom(preset="...")` contract is allowed and the deprecated action-bar alias must not be used in the diagram or implementation.

@@ -40,17 +40,17 @@ export const screenConfig = defineScreenConfig({
 			},
 			{
 				section: "completionSummary",
-				selected: "`SectionItem(type=\"card\")` + `ListText(table)`",
+				selected: "RQRContentsDetail",
 				source: "componentCandidates",
-				reason: "Selected as the medium-fit composition that satisfies the completionSummary layoutContract: SectionItem(type=\"card\") owns the card surface, background, radius, and padding, and ListText(table) renders the three peer label-value rows at the compact proof density. Acceptance is on layoutContract capability, not proof value length; the ListText(table) fixed-column squeeze under longer values is a documented secondary risk Build must verify, escalating to a stronger no-header key-value candidate or back to Diagram if it occurs.",
+				reason: "RQRContentsDetail force-applied per the design decision with an authored card title (`개통 정보`) satisfying its mandatory `title` prop; owns the card surface (section element), background, 20px radius, 24px padding, header 16px spacing, 8px row gap, and stable label/value rows natively without route CSS. The authored card title is structural-proof copy, not policy.",
 				rejected: [
 					{
-						candidate: "RQRContentsDetail",
-						reason: "RQRContentsDetail over-specifies the compact proof summary by adding a card title, detail header, and richer row hierarchy not present in the wire. The proof summary wire has no card title or header row — only three bare label-value rows. Applying RQRContentsDetail would distort reference density and violate the requiredCapability 'No section heading/header slot needed' check. Rejected unconditionally for this no-title structural-only proof screen.",
+						candidate: "SectionItem(type=\"card\") + ListText(table)",
+						reason: "Valid no-header card composition but not selected: this screen authors a card title header that RQRContentsDetail owns natively.",
 					},
 					{
 						candidate: "domain key-value summary organism",
-						reason: "Rejected because a new reusable domain organism is unnecessary for structural-only activation facts and would add more ownership risk than the selected existing component pair.",
+						reason: "Rejected because a new reusable domain organism is unnecessary for structural-only activation facts and would add more ownership risk than the selected existing component.",
 					},
 				],
 			},
