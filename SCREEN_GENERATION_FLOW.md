@@ -26,6 +26,8 @@ SB 기반 신규 생성 절차에서는 Figma SOT를 필수 대조 대상으로 
 
 Codex 화면 생성 작업은 아래 `cx-*` 스킬을 사용해 페이즈별 절차를 고정한다. 스킬은 작업 실행 가이드이고, 이 문서와 각 SOT 문서가 절차/판단의 최종 기준이다.
 
+프로젝트 로컬 스킬은 `.codex/skills/` 아래에 둔다. Phase 3 diagram 작업의 로컬 스킬 SOT는 `.codex/skills/cx-screen-diagram/SKILL.md`다.
+
 | Phase | Skill | 역할 |
 |---|---|---|
 | 전체 관리 | `cx-screen-create` | 메인 에이전트가 5페이즈를 오케스트레이션하고 phase gate를 승인한다. |
