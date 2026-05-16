@@ -17,12 +17,12 @@ const legacyScreenRoutes = screenRoutes.filter((screen) =>
 const sections = [
   {
     id: "reference",
-    label: "MBR Reference",
+    label: "NOVA MBR Legacy",
     routes: referenceScreenRoutes,
   },
   {
     id: "legacy",
-    label: "Membership Legacy",
+    label: "WDS MBR Legacy",
     routes: legacyScreenRoutes,
   },
 ] as const satisfies readonly {
@@ -45,7 +45,7 @@ export default function Home() {
             margin: "4px 0 0",
           }}
         >
-          MBR {referenceScreenRoutes.length}개 · Membership{" "}
+          NOVA MBR Legacy {referenceScreenRoutes.length}개 · Membership{" "}
           {legacyScreenRoutes.length}개
         </p>
       </Box>

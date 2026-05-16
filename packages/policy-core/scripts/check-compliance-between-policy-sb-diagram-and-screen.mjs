@@ -36,6 +36,7 @@ const buildSelectionSources = new Set([
 	"new-organism",
 	"new-component",
 ]);
+const routeGroupDomainAliases = new Map([["nova-mbr-legacy", "mbr"]]);
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
 
@@ -303,6 +304,10 @@ function componentNameFromOgnId(ognId) {
 	return kebabToPascal(ognId.replace(/^ogn-[a-z]+-/i, ""));
 }
 
+function domainFromRouteGroup(routeGroup) {
+	return routeGroupDomainAliases.get(routeGroup) ?? routeGroup;
+}
+
 function color(text, code) {
 	return process.stdout.isTTY ? `\u001B[${code}m${text}\u001B[0m` : text;
 }
@@ -372,7 +377,7 @@ function parseOrganismConfig(configPath) {
 	const source = readText(configPath);
 	const id = readStringProperty(source, "id");
 	if (!id) return null;
-	const domain = path.basename(path.dirname(path.dirname(configPath)));
+	const domain = domainFromRouteGroup(path.basename(path.dirname(path.dirname(configPath))));
 	return {
 		id,
 		name: readStringProperty(source, "name") ?? componentNameFromOgnId(id),

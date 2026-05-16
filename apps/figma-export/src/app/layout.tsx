@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 import "@pxds/cx-tokens/style.css";
 import "@pxds/cx-layout/styles.css";
 import "@pxds/cx-components/styles.css";
-import "../../../mobile/src/patterns/mbr/styles.css";
+import "../../../mobile/src/patterns/nova-mbr-legacy/styles.css";
 import "./globals.css";
 
 export default function RootLayout({ children }: PropsWithChildren) {

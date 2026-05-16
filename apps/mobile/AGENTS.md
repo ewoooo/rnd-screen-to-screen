@@ -4,7 +4,7 @@ Active 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 la
 
 ## 화면 구조
 
-- 화면 route는 `src/app/(mbr)/<screen>/page.tsx`, `src/app/(legacy-converted-mbr)/<screen>/page.tsx`처럼 route group으로 분리한다.
+- 화면 route는 `src/app/(nova-mbr-legacy)/<screen>/page.tsx`, `src/app/(wds-mbr-legacy)/<screen>/page.tsx`처럼 route group으로 분리한다.
 - 버전 폴더(`v?-?`)를 만들지 않는다.
 - 인덱스(`/`)는 `src/scripts/screen-routes`의 route catalog를 읽어 화면 목록을 보여준다.
 - mock은 화면 재현용 임시 입력이며 API 연결 시 교체한다.
@@ -12,9 +12,9 @@ Active 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 la
 
 ## Current / Legacy 경계
 
-- Current reference는 MBR이다: `src/app/(mbr)/NOVA-MBR-PG-*` page가 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. MBR organism은 `src/organisms/mbr`의 React 컴포넌트로 표현한다.
-- Legacy converted MBR은 보존된 membership 비교군의 CX 전환 화면이다: `src/app/(legacy-converted-mbr)/LEGACY-MBR-PG-*-CX`는 React DOM 기준으로 남기되 신규 기준으로 승격하지 않는다.
-- MBR과 legacy-converted-mbr을 제외한 legacy route는 삭제되어야 한다.
+- Current reference는 MBR이다: `src/app/(nova-mbr-legacy)/NOVA-MBR-PG-*` page가 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다. MBR organism은 `src/organisms/nova-mbr-legacy`의 React 컴포넌트로 표현한다.
+- Legacy converted MBR은 보존된 membership 비교군의 CX 전환 화면이다: `src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-*-CX`는 React DOM 기준으로 남기되 신규 기준으로 승격하지 않는다.
+- MBR과 wds-mbr-legacy을 제외한 legacy route는 삭제되어야 한다.
 - `@screen/mobile/screens`는 `src/scripts/screen-routes/index.ts`를 통해 route catalog와 조회/분류 helper만 노출한다.
 
 ## 화면 조립 규칙
@@ -66,14 +66,14 @@ Screen
 - `@pxds/cx-components` — 최신 CX component vocabulary와 구현 surface. 신규 component/pattern 후보의 기준이다.
 - `@pxds/cx-icons` — 최신 CX icon vocabulary와 React `Icon` wrapper 기준이다.
 - `domains/<domain>` — 현재 모바일 소비 기준에서는 별도 도메인 컴포넌트를 두지 않는다. MBR의 화면별 의미 구조는 앱 organism이 소유한다.
-- `src/organisms/mbr` — MBR 화면 영역 React 컴포넌트. MBR OGN은 page가 실제 DOM으로 조립하는 화면 어휘이며 render-tree registry를 소유하지 않는다.
+- `src/organisms/nova-mbr-legacy` — MBR 화면 영역 React 컴포넌트. MBR OGN은 page가 실제 DOM으로 조립하는 화면 어휘이며 render-tree registry를 소유하지 않는다.
 - 신규/legacy 모두 organism render-tree registry를 소유하지 않는다.
 - `templates` — 화면 슬롯과 렌더링 컨텍스트. 실체는 `@pxds/cx-layout/components/chrome`, `@pxds/cx-layout/components/overlays`.
 - 화면 route가 `Button`, `Badge`, `RadioButton`, `CheckBox`, `Icon` 같은 기초 component를 직접 나열해야 한다면 먼저 `Pattern` 또는 `Organism` slot으로 올릴 수 있는지 검토한다.
 
 허용 import:
 
-- screen → `@pxds/cx-layout/*`, `@pxds/cx-components`, `@/organisms/mbr`
+- screen → `@pxds/cx-layout/*`, `@pxds/cx-components`, `@/organisms/nova-mbr-legacy`
 - app organism → `@pxds/cx-components`, `@pxds/cx-layout/*`, `@pxds/cx-icons`
 - CX component internals → `@pxds/cx-tokens`, `@pxds/cx-icons`, 필요한 primitive
 

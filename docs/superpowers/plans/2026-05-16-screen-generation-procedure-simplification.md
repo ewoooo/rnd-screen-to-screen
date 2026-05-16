@@ -77,7 +77,7 @@ SB가 첨부됐을 때 스크린을 생성하는 절차 계약이다. 이 문서
 | **1 · Extract** | SB → 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출 | SB (입력) | 추출 요약 | 화면ID·도메인·OGN ID·정책태그 누락 0으로 목록화 |
 | **2 · Map** | 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 | `packages/policy-core/policies/**/*.md`, `*.policy.ts` | 정책-화면 요구사항 매트릭스 | 모든 정책태그가 화면 정보/CTA/에러로 매핑. 누락 시 다음 페이즈 진입 금지 |
 | **3 · Diagram** | 화면 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md` | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, OGN별 layoutStrategy·정책연결·reuse/new 표기 |
-| **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout` | `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
+| **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout` | `apps/mobile/src/organisms/<route-group-or-domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
 | **5 · Register** | route catalog 등록 + preview 노출 확인 | `apps/mobile/src/scripts/screen-routes/` | `routes.ts` 등록 항목 | route 등록 + preview iframe에서 해당 route 진입 가능 |
 
 페이즈 이후 `lint` / `build` / `check:*` 는 절차 밖의 공통 검증 게이트(아래 `## 검증` 참조)가 실행한다.
@@ -121,9 +121,9 @@ flowchart LR
 
 ### Phase 4 · Build
 
-- 책임: 정책서 도메인 모듈 ID/OGN별로 `apps/mobile/src/organisms/<domain>/` 아래에 OGN을 제작하거나 기존 OGN을 보강하고, `Screen.tsx` 를 Diagram 그대로 조립하며, `Screen.config.ts` 에 생성 근거(`generation`)를 담는다.
+- 책임: 정책서 도메인 모듈 ID/OGN별로 `apps/mobile/src/organisms/<route-group-or-domain>/` 아래에 OGN을 제작하거나 기존 OGN을 보강하고, `Screen.tsx` 를 Diagram 그대로 조립하며, `Screen.config.ts` 에 생성 근거(`generation`)를 담는다.
 - 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`. `@pxds/pxds-components` / `@pxds/pxds-icons` 는 deprecated 호환 경계로만 다룬다.
-- 산출: `apps/mobile/src/organisms/<domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts`
+- 산출: `apps/mobile/src/organisms/<route-group-or-domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts`
 - DoD: Diagram의 모든 OGN/슬롯이 코드에 존재하고, `Screen.config.ts` 의 `generation` 블록이 채워진다.
 
 ### Phase 5 · Register
@@ -138,7 +138,7 @@ flowchart LR
 SB 기반 화면 폴더는 다음 산출물을 가진다. `Screen.diagram.md` 는 **모든 화면 의무**다.
 
 ```txt
-apps/mobile/src/app/(<domain>)/<screen-id>/
+apps/mobile/src/app/(<route-group>)/<screen-id>/
 ├── Screen.tsx
 ├── Screen.config.ts
 ├── Screen.diagram.md
@@ -157,7 +157,7 @@ export const screenConfig = defineScreenConfig({
 	name: "MBR 가입 1·약관 동의",
 	label: "MBR 가입 1·약관 동의",
 	route: "/NOVA-MBR-PG-001-0",
-	group: "mbr",
+	group: "nova-mbr-legacy",
 	owner: "@screen/mobile",
 	status: "active",
 	createdAt: "2026-05-11",
@@ -308,7 +308,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 5. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
 6. 구현 전에 SB 기반 제작 Diagram을 작성한다. Diagram은 좌표 보정표가 아니라 AppScreen slot, section boundary, slot 이름, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여주어야 한다.
 7. Diagram 단계에서 정책 필수 정보, 정책서의 도메인 모듈 ID/OGN 포함 여부, 패턴/토큰/spacing 위반 여부를 검증한다.
-8. 정책서에 적힌 도메인 모듈 ID/OGN별로 반드시 `apps/mobile/src/organisms/<domain>/` 아래에 컴포넌트를 제작하거나 기존 OGN을 보강한다.
+8. 정책서에 적힌 도메인 모듈 ID/OGN별로 반드시 `apps/mobile/src/organisms/<route-group-or-domain>/` 아래에 컴포넌트를 제작하거나 기존 OGN을 보강한다.
 9. 시각 표현은 `DESIGN_FOUNDATION.md`의 semantic token, text style, spacing, radius, icon 규칙을 우선한다.
 10. 구현은 `@pxds/cx-layout`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`의 공개 surface를 우선 사용한다. `@pxds/pxds-components`와 `@pxds/pxds-icons`는 deprecated 호환 경계로만 다룬다.
 11. 화면 route는 정책 의미와 화면 구조가 읽히는 지도여야 한다. 복잡한 의미 단위는 `apps/mobile/src/organisms`에 둔다.
@@ -324,7 +324,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리. 참고: `packages/policy-core/policies`.
 3. **Diagram** — 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
-4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
+4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<route-group-or-domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
 페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md` 다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
@@ -442,20 +442,20 @@ Expected: Task 1·2·3 커밋 3개 + 스펙 커밋이 보임. Part A 작업 트�
 
 - `Screen.diagram.md` 와 `Screen.config.ts` 의 `generation` 블록은 **반드시 함께** 추가한다(둘 중 하나만 있으면 `check:screen-generation` 이 `problem`/exit 1).
 - `generation.policyRefs` 의 각 ID는 `packages/policy-core/policies/**/*.policy.ts` 의 실제 `id` 여야 한다(미존재 시 `unknown policyRef` problem).
-- `generation.ognIds` 의 각 ID는 `apps/mobile/src/organisms/<domain>/*/*.config.ts` 의 실제 `id` 여야 하고, 해당 OGN의 `domain` 이 화면 `domain` 과 같아야 하며, 그 OGN의 React 컴포넌트 이름이 `Screen.tsx` 에 등장해야 한다.
+- `generation.ognIds` 의 각 ID는 `apps/mobile/src/organisms/<route-group-or-domain>/*/*.config.ts` 의 실제 `id` 여야 하고, 해당 OGN의 resolved domain 이 화면 `domain` 과 같아야 하며, 그 OGN의 React 컴포넌트 이름이 `Screen.tsx` 에 등장해야 한다. 예: `nova-mbr-legacy` route group은 검증에서 `mbr` domain으로 해석된다.
 - `generation.designDocsChecked` 는 최소 `"DESIGN_PATTERNS.md"`, `"DESIGN_FOUNDATION.md"` 를 포함해야 한다.
 - `Screen.diagram.md` 본문은 `AppScreen`, 화면 ID 문자열, 모든 `ognIds`, 모든 `policyRefs` 문자열을 포함해야 한다.
 - Diagram 구조는 `SCREEN_STRUCTURE_PRINCIPLES.md` 형식(`AppScreen → SystemHeader/Header/Content/Bottom`, OGN별 `layoutStrategy`)을 따른다.
 
 ## 화면당 Task 템플릿 (4회 반복: 001-0, 002-0, 003-0, 005-0)
 
-대상 화면 디렉터리: `apps/mobile/src/app/(mbr)/<SCREEN_ID>/` (`<SCREEN_ID>` ∈ {`NOVA-MBR-PG-001-0`, `NOVA-MBR-PG-002-0`, `NOVA-MBR-PG-003-0`, `NOVA-MBR-PG-005-0`})
+대상 화면 디렉터리: `apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/` (`<SCREEN_ID>` ∈ {`NOVA-MBR-PG-001-0`, `NOVA-MBR-PG-002-0`, `NOVA-MBR-PG-003-0`, `NOVA-MBR-PG-005-0`})
 
 - [ ] **Step 1: 화면이 사용하는 OGN 식별 (discover)**
 
-Run: `cat "apps/mobile/src/app/(mbr)/<SCREEN_ID>/Screen.tsx"`
-그리고: `ls apps/mobile/src/organisms/mbr/` 및 각 후보 OGN의 `*.config.ts` 의 `id` 확인:
-Run: `grep -rn "id:" apps/mobile/src/organisms/mbr/*/*.config.ts`
+Run: `cat "apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.tsx"`
+그리고: `ls apps/mobile/src/organisms/nova-mbr-legacy/` 및 각 후보 OGN의 `*.config.ts` 의 `id` 확인:
+Run: `grep -rn "id:" apps/mobile/src/organisms/nova-mbr-legacy/*/*.config.ts`
 → `Screen.tsx` 가 실제 import/사용하는 organism 컴포넌트와 매칭해 `ognIds` 목록 확정.
 
 - [ ] **Step 2: 화면이 표현하는 정책 ID 식별 (discover)**
@@ -465,11 +465,11 @@ Run: `grep -rn "id:" packages/policy-core/policies/**/*.policy.ts | grep -i mbr`
 
 - [ ] **Step 3: `Screen.diagram.md` 작성**
 
-`apps/mobile/src/app/(mbr)/<SCREEN_ID>/Screen.diagram.md` 생성. `SCREEN_STRUCTURE_PRINCIPLES.md` 의 "추천 Diagram 형태"를 따르고, 첫 줄에 화면 ID를 명시하며, 본문에 `AppScreen`, 모든 `ognIds`, 모든 `policyRefs` 를 포함한다. 각 OGN section에 `layoutStrategy`(widthTier/stack/alignment/typography/wrapping/overflow)와 `vocabularyDecision`(reuse/new)을 기록한다.
+`apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.diagram.md` 생성. `SCREEN_STRUCTURE_PRINCIPLES.md` 의 "추천 Diagram 형태"를 따르고, 첫 줄에 화면 ID를 명시하며, 본문에 `AppScreen`, 모든 `ognIds`, 모든 `policyRefs` 를 포함한다. 각 OGN section에 `layoutStrategy`(widthTier/stack/alignment/typography/wrapping/overflow)와 `vocabularyDecision`(reuse/new)을 기록한다.
 
 - [ ] **Step 4: `Screen.config.ts` 에 `generation` 블록 추가**
 
-`apps/mobile/src/app/(mbr)/<SCREEN_ID>/Screen.config.ts` 의 객체에 `domain` 다음 위치로 `generation` 블록 추가(`as const satisfies ScreenRouteConfig` 유지). Step 1·2에서 확정한 `ognIds`, `policyRefs` 사용, `designDocsChecked` 는 `["DESIGN_PATTERNS.md","DESIGN_FOUNDATION.md","SPACING_PATTERNS.md","SCREEN_STRUCTURE_PRINCIPLES.md"]`, `source: "SB"`, `pattern` 은 화면 유형(form/complete 등).
+`apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.config.ts` 의 객체에 `domain` 다음 위치로 `generation` 블록 추가(`as const satisfies ScreenRouteConfig` 유지). Step 1·2에서 확정한 `ognIds`, `policyRefs` 사용, `designDocsChecked` 는 `["DESIGN_PATTERNS.md","DESIGN_FOUNDATION.md","SPACING_PATTERNS.md","SCREEN_STRUCTURE_PRINCIPLES.md"]`, `source: "SB"`, `pattern` 은 화면 유형(form/complete 등).
 
 - [ ] **Step 5: 해당 화면 정합성 검증 (red→green)**
 
@@ -485,8 +485,8 @@ Expected: PASS (`generation` 블록이 `ScreenRouteConfig.generation?` 와 형 �
 - [ ] **Step 7: Commit (화면당 1커밋)**
 
 ```bash
-git add "apps/mobile/src/app/(mbr)/<SCREEN_ID>/Screen.diagram.md" "apps/mobile/src/app/(mbr)/<SCREEN_ID>/Screen.config.ts"
-git commit -m "docs(mbr): backfill Screen.diagram.md + generation for <SCREEN_ID>
+git add "apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.diagram.md" "apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.config.ts"
+git commit -m "docs(nova-mbr-legacy): backfill Screen.diagram.md + generation for <SCREEN_ID>
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 ```

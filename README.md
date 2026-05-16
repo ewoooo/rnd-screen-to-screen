@@ -50,19 +50,20 @@ SCREEN_GENERATION_FLOW.md
 Codex 작업에서는 `cx-screen-create`를 전체 오케스트레이션 스킬로 사용하고, 5페이즈에 맞춰 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용합니다. 특히 `cx-screen-diagram`은 `apps/mobile/src/screen-diagrams/`의 wire reference와 최신 `Screen Wire` ASCII rail 규칙을 강제하는 Phase 3 스킬입니다.
 
 ```txt
-apps/mobile/src/app/(mbr)/NOVA-MBR-PG-001-0/
+apps/mobile/src/app/(nova-mbr-legacy)/NOVA-MBR-PG-001-0/
 ├── page.tsx          Next route entry. Screen을 감싸는 얇은 wrapper
 ├── Screen.tsx        화면 DOM 조립의 기준
 ├── Screen.config.ts  route catalog용 화면 설정
 └── index.ts          screen module export
 ```
 
-현재 화면 그룹은 두 축으로 나눕니다.
+현재 화면 그룹은 세 축으로 나눕니다.
 
-- `mbr`: `NOVA-MBR-PG-*` current reference 화면
-- `legacy-converted-mbr`: `LEGACY-MBR-PG-*-CX` membership legacy CX 전환 비교군
+- `nova-mbr-legacy`: `NOVA-MBR-PG-*` legacy NOVA MBR reference 화면
+- `wds-mbr-legacy`: `LEGACY-MBR-PG-*-CX` WDS 기반 membership legacy CX 전환 비교군
+- `cx`: CX component proof/reference 화면
 
-`@screen/mobile/screens`는 `apps/mobile/src/scripts/screen-routes`를 통해 route catalog와 조회 helper만 공개합니다. 페이지의 실제 UI 조립은 각 screen 폴더와 `apps/mobile/src/organisms/mbr`가 소유합니다.
+`@screen/mobile/screens`는 `apps/mobile/src/scripts/screen-routes`를 통해 route catalog와 조회 helper만 공개합니다. 페이지의 실제 UI 조립은 각 screen 폴더와 `apps/mobile/src/organisms/nova-mbr-legacy`가 소유합니다.
 
 ## Component And Layout Structure
 
