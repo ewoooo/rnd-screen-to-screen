@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import primitive from "@pxds/cx-tokens/originals/_skt/primitive/default.json";
+import semanticLight from "@pxds/cx-tokens/originals/_skt/semantic/light.json";
+import semanticDark from "@pxds/cx-tokens/originals/_skt/semantic/dark.json";
+import { ColorSwatchGrid } from "../../token-blocks/ColorSwatchGrid";
+
+<Meta title="Tokens/Color" />
+
+# Color
+
+`@pxds/cx-tokens`의 색상 토큰은 세 단계로 쌓여 있습니다.
+
+1. **Primitive** — `color.{family}.{shade}`. 디자인 시스템 외에서는 직접 쓰지 않는 raw 팔레트입니다.
+2. **Semantic** — `color.{role}.{state}`. UI 의미에 묶인 토큰이며 light / dark에서 서로 다른 primitive를 가리킵니다.
+3. **Component** — `theme-aliases.css`가 `data-theme="light|dark"` scope 안에서 매핑하는 컴포넌트 레벨 alias. 시각 swatch 비교는 _Theme aliases_ 페이지에서 확인하세요.
+
+## Primitive
+
+<ColorSwatchGrid source={primitive.color} heading="color.*" />
+
+## Semantic (light)
+
+<ColorSwatchGrid
+	source={semanticLight.color}
+	resolveAgainst={[primitive]}
+	heading="color.* — light"
+/>
+
+## Semantic (dark)
+
+<ColorSwatchGrid
+	source={semanticDark.color}
+	resolveAgainst={[primitive]}
+	heading="color.* — dark"
+/>

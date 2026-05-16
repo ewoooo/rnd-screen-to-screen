@@ -10,14 +10,17 @@
     "dev": "concurrently -n mobile,preview -c cyan,magenta \"npm:dev:mobile\" \"npm:dev:preview\"",
     "dev:mobile": "npm run dev -w @screen/mobile",
     "dev:preview": "npm run dev -w @screen/preview",
+    "dev:storybook": "npm run dev -w @screen/storybook",
     "build:mobile": "npm run build -w @screen/mobile",
     "build:preview": "npm run build -w @screen/preview",
+    "build:storybook": "npm run build -w @screen/storybook",
     "doctor": "react-doctor . --yes",
     "doctor:verbose": "react-doctor . --yes --verbose",
-    "lint": "npm run lint:mobile && npm run lint:preview && npm run lint:cx-components",
+    "lint": "npm run lint:mobile && npm run lint:preview && npm run lint:cx-components && npm run lint:storybook",
     "lint:mobile": "npm run lint -w @screen/mobile",
     "lint:preview": "npm run lint -w @screen/preview",
-    "lint:cx-components": "npm run lint -w @pxds/cx-components"
+    "lint:cx-components": "npm run lint -w @pxds/cx-components",
+    "lint:storybook": "npm run lint -w @screen/storybook"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",

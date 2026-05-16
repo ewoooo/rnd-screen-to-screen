@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "@pxds/cx-tokens/style.css";
+@import "@pxds/cx-components/styles.css";
+
+html,
+body,
+#storybook-root,
+.sb-show-main {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--component-screen-bg-default, #ffffff);
+	color: var(--component-text-fg-default, #111111);
+}
+
+.sbdocs-wrapper {
+	background: var(--component-screen-bg-default, #ffffff);
+}

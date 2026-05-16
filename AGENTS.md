@@ -47,6 +47,7 @@
 ├── apps/
 │   ├── mobile/        정책 기반 모바일 화면 route와 PXDS 화면 조립
 │   ├── preview/       화면·컴포넌트·정책 registry를 탐색하는 브라우저 프리뷰 셸
+│   ├── storybook/     cx-components와 cx-tokens 카탈로그용 Storybook 셸
 │   └── figma-export/  Figma export 보조 앱
 ├── packages/
 │   ├── policy-core/               Policy / UseCase 순수 문서 도메인
@@ -100,6 +101,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring을 소유한다.
 - `apps/mobile` — 정책 기반 모바일 화면 route와 PXDS 화면 조립의 SOT. page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다.
 - `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. screen/component/policy registry 탐색, Figma export 요청, spec 조회 UI를 소유한다.
+- `apps/storybook` — Storybook 셸. `@pxds/cx-components`의 preview registry/examples를 자동으로 스토리로 변환하고 `@pxds/cx-tokens` 카탈로그(color/typography/spacing/radius/theme aliases) MDX를 제공한다. 컴포넌트와 토큰 어휘를 한 화면에서 확인할 때 사용한다.
 
 ## 의존 방향
 

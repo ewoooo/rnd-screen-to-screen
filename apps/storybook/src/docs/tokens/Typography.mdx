@@ -1,0 +1,13 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import primitive from "@pxds/cx-tokens/originals/_skt/primitive/default.json";
+import { TypeScaleTable } from "../../token-blocks/TypeScaleTable";
+
+<Meta title="Tokens/Typography" />
+
+# Typography
+
+`@pxds/cx-tokens`가 발행한 typography composite 토큰입니다. 각 composite는 fontSize, fontWeight, lineHeight, letterSpacing을 묶은 단위이며, `text-styles.css`가 동일 이름의 `.text-<size>-<weight>` 유틸 클래스로 노출합니다.
+
+문장 단위 텍스트에는 raw 폰트 속성 대신 항상 이 utility class 또는 컴포넌트 lookup(예: `<Text variant="body-16-med" />`)을 사용하세요.
+
+<TypeScaleTable source={primitive} />
