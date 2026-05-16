@@ -41,16 +41,59 @@ AppScreen
 
 `Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다.
 
+- Diagram은 아래 섹션 순서를 고정한다.
+  1. `Screen Contract`
+  2. `Screen Wire`
+  3. `Section Contracts`
+  4. `Policy / OGN Matrix`
+  5. `Distortion Gates`
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
+- `Screen Wire`는 실제 화면처럼 읽히는 ASCII wire로 작성한다. 상태바, 앱바, 본문 copy, 카드/목록/필드/CTA를 화면에 보이는 형태로 묘사하고, 주요 의미 영역에는 `[intro]`, `[terms]`, `[actions]` 같은 section id를 붙인다.
+- `Screen Wire`에는 AppScreen의 물리 slot rail을 반드시 표시한다. `├─Header─┤`, `├─Content─┤`, `├─Bottom─┤`를 사용해 생성 에이전트가 chrome, scroll body, fixed action zone을 즉시 구분하게 한다.
+- 실제 화면에 section divider band가 있으면 `├══Divider══...┤`로 명시한다. `Divider`는 독립 section id를 갖지 않고, 앞뒤 section의 시각적 boundary evidence로 취급한다.
 - 본문은 section 단위로 나누고, 각 section의 `title`, `content`, `action`, `body` slot을 이름으로 기록한다.
 - 각 OGN section마다 `layoutStrategy`를 별도로 기록한다. section의 역할, grid/padding tier, 텍스트 위계, 주요 content alignment, 허용되는 wrapping 범위, overflow 처리 방식을 먼저 결정한다.
 - section 사이의 구분은 route margin이 아니라 `SectionDivider` 같은 pattern node로 표현한다.
 - 입력 필드 묶음은 개별 field 좌표가 아니라 `FieldStack` 같은 stack composition으로 표현한다.
-- 하단 CTA는 본문 마지막 section이 아니라 `Bottom` 또는 `action-area`로 분리한다.
+- 하단 CTA는 본문 마지막 section이 아니라 `Bottom(preset="...")`으로 분리한다. `AppScreen.Bottom`이 표준 물리 slot이며, `AppScreen.ActionBar`는 같은 bottom slot의 런타임 호환 alias로만 본다. 신규 diagram 표준에는 `AppScreen.ActionBar`를 쓰지 않는다.
 - 버튼, 배지, 아이콘, 라디오/체크 같은 기초 component는 route에 직접 흩뿌리지 않고 `Pattern` 또는 `Organism`의 이름 있는 slot 안에 둔다.
 - component 후보는 Diagram 단계에서 `reuse` 또는 `new`로 결정한다. 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/pxds-layout` pattern으로 표현 가능하면 `reuse`로 기록한다.
 - `new`로 분기한 component만 `RQR{Name}` / `rqr-{name}` 식별자를 사용해 `packages/cx-components/src/candidate`에 둔다.
 - 정책 근거는 해당 section 또는 OGN node에 붙인다.
+
+### Screen Wire 문법
+
+`Screen Wire`는 정확한 픽셀/토큰/컴포넌트 판정표가 아니다. 사람이 실제 화면을 먼저 이해하고, 생성 에이전트가 AppScreen slot과 section boundary를 놓치지 않게 하는 진입점이다.
+
+```txt
+┌─AppScreen───────────────────────────────┐
+├─Header──────────────────────────────────┤
+│ 9:41                              ▮▮▮  │
+│ ‹  가입자 정보 입력                     │
+├─Content─────────────────────────────────┤
+│ [phone]                                 │
+│ 기기변경 휴대폰 번호                    │
+│ ┌─────────────────────────────────────┐ │
+│ │ 010-1234-5678                       │ │
+│ └─────────────────────────────────────┘ │
+├══Divider════════════════════════════════┤
+│ [summary]                               │
+│ 이 정보로 가입이 완료됐어요             │
+│ 가입 정보                               │
+│ 선택 약정 할인 금액        78,650원     │
+├─Bottom──────────────────────────────────┤
+│ [actions]                               │
+│ ┌─────────────────────────────────────┐ │
+│ │                 다음                │ │
+│ └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+```
+
+- `Header`는 `StatusBar + AppBar` 또는 `ProgressAppBar` 같은 상단 chrome을 포함한다.
+- `Content`는 scrollable body의 시작을 나타낸다.
+- `Bottom`은 `Bottom(preset="...")` 계약으로 연결한다.
+- `Divider`는 실제 렌더되는 section divider band가 있을 때만 쓴다. 단순 문서 가독성용 선은 `Divider`로 표기하지 않는다.
+- `Screen Wire`에 등장한 section id는 모두 `Section Contracts`에 있어야 한다.
 
 ## OGN별 Layout Strategy
 
@@ -225,7 +268,7 @@ AppScreen
 2. 새 wrapper 없이 기존 `PageStackContents`, `FieldStack`, `SinglePrimaryAction`, `SectionDivider`, `Slot` 조합으로 표현 가능한가?
 3. route-level raw spacing 없이 layout package의 pattern contract로 표현되는가?
 4. Figma bridge가 읽을 수 있도록 layer, slot, auto-layout 의도가 남는가?
-5. 정책 필수 정보와 CTA가 정확한 section 또는 action-area에 연결되는가?
+5. 정책 필수 정보와 CTA가 정확한 section 또는 `Bottom(preset="...")`에 연결되는가?
 6. 기초 component가 `Pattern` 또는 `Organism` slot 안에 배치되어 화면 의미 단위가 보존되는가?
 7. component 후보가 `reuse` 또는 `new`로 분기되었고, `new` candidate는 `RQR{Name}` / `rqr-{name}` 규칙을 따르는가?
 8. 각 OGN section에 `layoutStrategy`가 있고, alignment/text hierarchy/wrapping/overflow 예산이 명시되어 있는가?

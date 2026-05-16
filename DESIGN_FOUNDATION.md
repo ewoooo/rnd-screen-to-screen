@@ -667,7 +667,7 @@ Form body, detail content, two-column grid      → 361px (content-horizontal)
 TitleSection, ListText, TextField, Accordion   → 329px (card-horizontal-pagestack)
 ```
 
-`space/5`처럼 Figma 실측에서만 등장하는 값은 정식 primitive token으로 승격하지 않는다. 먼저 컴포넌트별 spacing evidence로 기록하고, 반복 사용이 확인될 때 token 추가를 검토한다.
+Figma 실측에서 token scale에 없는 값이 보이면 임의 primitive token으로 승격하지 않는다. 먼저 가장 가까운 정식 spacing token으로 정렬하고, 반복 사용이 확인될 때 token 추가를 검토한다.
 
 #### 3. Inner Spacing (카드·컨테이너 내부)
 | 컴포넌트 | 적용 토큰 |

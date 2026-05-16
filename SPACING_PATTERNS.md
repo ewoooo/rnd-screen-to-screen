@@ -8,7 +8,7 @@
 
 ## 1. Spacing Token 적용
 
-정식 token scale은 `DESIGN_FOUNDATION.md`의 `space/*` primitive를 따른다. 전달 SOT에서 관찰된 `space/5`는 현재 정식 token으로 승격하지 않고, Chip row gap 같은 컴포넌트 실측 예외로 기록한다.
+정식 token scale은 `DESIGN_FOUNDATION.md`의 `space/*` primitive를 따른다. Figma 실측에서 token에 없는 값이 보이면 임의 token으로 승격하지 않고 가장 가까운 정식 token으로 정렬한다.
 
 ```txt
 space/2   아이콘 내부 미세 간격, 인디케이터 점 간격
@@ -86,7 +86,7 @@ underline  : height 2px, bottom aligned
 ChipItem height : 37px
 padding         : top/bottom 10px, left/right 12px
 icon-text gap   : 2px
-row gap         : 5px 실측 예외
+row gap         : 4px
 row padding     : top/bottom 10px, left 20px, right 0
 row height      : 57px
 ```
@@ -121,6 +121,7 @@ InfoTextList
 Handle area : height 32px, padT 12px
 Title area  : height 68px, left/right 32px
 Con slot    : 콘텐츠 유형별 자식이 padding 책임을 가진다
+ActionButton: height 102px, padT 10px, padB 36px, padL/R 12px
 ```
 
 단순 선택형은 `RadioText` 목록, 필터형은 필요한 경우 `UnderlineTab`, 약관 동의형은 `전체 동의 -> Divider -> 개별 항목` 구조를 따른다.
@@ -128,12 +129,15 @@ Con slot    : 콘텐츠 유형별 자식이 padding 책임을 가진다
 ### Popup
 
 ```txt
-Popup card padding : 24px
-title-body gap     : 12px
+Popup card width   : 361px (393px - 16px x 2 margin)
+Popup card radius  : 28px
+text inset         : left/right 32px
+button inset       : left/right 24px
+title-body gap     : 16px
 body-checkbox gap  : 16px
 checkbox gap       : 8px
 content-button gap : 24px
-PopupActionButton  : height 60px, top padding 12px, button gap 8px
+PopupActionButton  : width 361px, height 60px, top padding 12px, button gap 8px
 ```
 
 Popup 내부에 스크롤이 생기는 구성은 BottomSheet로 전환한다.
@@ -144,6 +148,8 @@ Popup 내부에 스크롤이 생기는 구성은 BottomSheet로 전환한다.
 공통 상단 chrome : 107px = StatusBar 59px + AppBar 48px
 메인 탭 상단     : 167px = StatusBar 59px + AppBar 48px + UnderlineTab 60px
 하단 safe area   : 36px
+BottomNavigation : 88px = padT 12px + content 40px + padB 36px
+ActionButton     : 102px = padT 10px + button 56px + padB 36px
 ```
 
 ### Main
@@ -152,7 +158,7 @@ Popup 내부에 스크롤이 생기는 구성은 BottomSheet로 전환한다.
 Pagestack padT/B : 28px
 Pagestack padL/R : 12px
 Chip/List area   : gap 8px, padB 16px, padL/R 20px
-카드 사이 gap     : 12px
+관리형 CardSectionList gap: 0px
 섹션 타이틀 상단  : 24px
 섹션 타이틀 하단  : 12px
 ```
@@ -160,7 +166,7 @@ Chip/List area   : gap 8px, padB 16px, padL/R 20px
 ### List
 
 ```txt
-Chip row       : height 57px, gap 5px, padL 20px
+Chip row       : height 57px, gap 4px, padL 20px
 FilterSorting  : height 52px, padL/R 32px
 ProductListGroup: padT/B 12px, padL/R 12px
 ContentsTitle  : padL/R 20px
@@ -194,7 +200,8 @@ Full bleed    : 393px, chrome/hero/divider/overlay
 Section       : 369px, 12px x 2, card section/list group
 Content       : 361px, 16px x 2, 일반 본문/상세/폼/2열 grid
 Inner content : 329px, 20px x 2 또는 32px x 2 맥락, title/list/field/accordion
-Popup card    : 345px, 24px x 2 margin
+Popup card    : 361px, 16px x 2 margin
+Popup text    : 297px, card edge에서 32px x 2 inset
 ```
 
 간격 선택 기준:

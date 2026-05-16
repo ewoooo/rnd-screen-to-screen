@@ -95,55 +95,74 @@ flowchart TD
    - `RQR`은 정식 승격 전 staging 식별자다. `components/*`로 승격할 때는 `RQR` prefix를 제거한다.
 
 7. SB 기반 제작 Diagram 생성
+   - Diagram은 `Screen Contract`, `Screen Wire`, `Section Contracts`, `Policy / OGN Matrix`, `Distortion Gates` 순서로 작성한다.
    - Diagram은 AppScreen slot, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여준다.
-   - Diagram은 픽셀 좌표표가 아니라 `AppScreen -> Section -> Slot -> Stack -> Component` 구조 계약이다.
-   - Diagram은 각 OGN의 layoutStrategy를 포함해야 한다.
+   - Diagram은 픽셀 좌표표가 아니라 실제 화면 묘사용 `Screen Wire`와 authoritative generation contract인 `Section Contracts`의 조합이다.
+   - `Screen Wire`는 AppScreen 물리 slot rail을 반드시 포함한다. `├─Header─┤`, `├─Content─┤`, `├─Bottom─┤`를 사용해 상단 chrome, scroll body, fixed action zone을 구분한다.
+   - 실제 화면에 section divider band가 있으면 `├══Divider══...┤`로 명시한다. `Divider`는 독립 section id가 아니라 앞뒤 section의 boundary evidence다.
+   - `Section Contracts`는 `Screen Wire`의 section id별로 `OGN`, `role`, `policy`, `layoutStrategy`, `vocabularyDecision`, `distortionRisk`를 포함해야 한다.
    - route-level raw spacing으로 기준선을 보정해야 하는 구조라면 구현 전에 layout pattern으로 올릴 수 있는지 검토한다.
    - 신규 candidate가 필요한 경우 Diagram에 `RQR{Name}`과 `candidateKind: new` 판단 근거를 남긴다.
    - 기존 컴포넌트를 재사용하는 경우 Diagram에 재사용 대상 component/pattern 이름을 명시한다.
    - 예:
 
 ```txt
-AppScreen
-  SystemHeader
-    StatusBar
-  Header
-    OGN: ogn-mbr-section-header-page
-      TitleSection / TitleMain
-  Content
-    PageStackContents
-      layoutStrategy:
-        widthTier: content-361
-        stack: vertical
-        alignment: leading
-        typography: section title -> field label/body
-        wrapping: title max 2 lines, field label max 1 line
-        overflow: multiline help text only
-      title: TitleSection
-      content:
-        FieldStack
-          TextField
-          TextField
-      policy: POL-MBR-INFO-002-*
-    SectionDivider
-    PageStackContents
-      title: TitleSection
-      content:
-        reuse: Callout
-        or new candidate: RQRNotice
-      policy: POL-MBR-INFO-003-*
-  Bottom
-    SinglePrimaryAction
-      ActionButton
+# Screen Contract
+- screenId: NOVA-MBR-PG-...
+- pattern: form
+- bottom: Bottom(preset="primary-cta")
+
+# Screen Wire
+┌─AppScreen───────────────────────────────┐
+├─Header──────────────────────────────────┤
+│ 9:41                              ▮▮▮  │
+│ ‹  가입자 정보 입력                     │
+├─Content─────────────────────────────────┤
+│ [phone]                                 │
+│ 기기변경 휴대폰 번호                    │
+│ ┌─────────────────────────────────────┐ │
+│ │ 010-1234-5678                       │ │
+│ └─────────────────────────────────────┘ │
+├══Divider════════════════════════════════┤
+│ [notice]                                │
+│ 안내 메시지                             │
+├─Bottom──────────────────────────────────┤
+│ [actions]                               │
+│ ┌─────────────────────────────────────┐ │
+│ │                 다음                │ │
+│ └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+
+# Section Contracts
+## [phone]
+- OGN: ogn-mbr-text-field-member-info
+- role: form
+- policy: POL-MBR-INFO-002-*
+- layoutStrategy: FieldStack inside PageStackContents, leading title, multiline help only
+- vocabularyDecision: reuse TextField / FieldStack
+- distortionRisk: long values must not compress the trailing action slot
+
+## [actions]
+- OGN: ogn-mbr-primary-cta
+- role: action
+- policy: POL-MBR-...
+- layoutStrategy: Bottom(preset="primary-cta"), one full-width primary action
+- vocabularyDecision: reuse SinglePrimaryAction / ActionButton
+- distortionRisk: CTA must not become the last scroll content section
 ```
 
 8. Diagram 검증
+   - Diagram에 `Screen Contract`, `Screen Wire`, `Section Contracts`, `Policy / OGN Matrix`, `Distortion Gates`가 모두 있는가?
+   - `Screen Wire`에 `├─Header─┤`, `├─Content─┤`, 필요한 경우 `├─Bottom─┤` AppScreen slot rail이 명시되어 있는가?
+   - 실제 divider band가 있는 화면은 `├══Divider══...┤`로 명시되어 있는가?
+   - `Screen Wire`의 section id가 `Section Contracts`에 모두 존재하는가?
    - 정책서 필수 정보가 Diagram에 있는가?
    - 정책서에 적힌 도메인 모듈 ID/OGN이 모두 들어갔는가?
    - OGN별 책임이 겹치지 않는가?
    - OGN별 layoutStrategy가 역할, width tier, padding, stack, alignment, typography, wrapping, overflow를 설명하는가?
    - `Screen -> Chrome -> Section -> Slot -> Stack -> Component` 구조로 설명되는가?
-   - 하단 CTA가 scroll content가 아니라 `Bottom` 또는 `action-area`로 분리되어 있는가?
+   - 하단 CTA가 scroll content가 아니라 `Bottom(preset="...")`으로 분리되어 있는가?
+   - 신규 표준 Diagram에서 `AppScreen.ActionBar` 표기를 쓰지 않았는가?
    - `DESIGN_PATTERNS.md`의 화면 패턴과 맞는가?
    - `DESIGN_FOUNDATION.md`의 spacing, typography, color, radius 규칙을 벗어나지 않는가?
    - `SPACING_PATTERNS.md`의 화면 유형별 padding/gap 실측 규칙과 충돌하지 않는가?

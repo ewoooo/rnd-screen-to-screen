@@ -28,7 +28,7 @@
 ## States / Variants
 - Observed states: selected/off chip items; horizontal row.
 - Missing states: disabled/unavailable chips not observed yet.
-- Variant/property notes: `ChipItem` owns selected state; row gap `space/5` is measured exception in spacing doc.
+- Variant/property notes: `ChipItem` owns selected state; row gap aligns to `space/4` in the spacing doc.
 
 ## Missing / Reuse Decision
 - Decision: README / DESIGN_PATTERN
