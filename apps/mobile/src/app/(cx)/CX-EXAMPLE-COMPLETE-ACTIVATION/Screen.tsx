@@ -14,6 +14,12 @@ import {
 	SinglePrimaryAction,
 } from "@pxds/cx-layout/components";
 
+const completionSummaryRows = [
+	{ label: "개통 휴대폰", value: "갤럭시 S25" },
+	{ label: "요금제", value: "5GX 프라임" },
+	{ label: "개통일", value: "2026.05.15" },
+] as const;
+
 export function Screen() {
 	return (
 		<AppScreen headerPreset="standard">
@@ -34,9 +40,14 @@ export function Screen() {
 					}
 				>
 					<SectionItem type="card">
-						<ListText table text="개통 휴대폰" tableText="갤럭시 S25" />
-						<ListText table text="요금제" tableText="5GX 프라임" />
-						<ListText table text="개통일" tableText="2026.05.15" />
+						{completionSummaryRows.map((row) => (
+							<ListText
+								key={row.label}
+								table
+								text={row.label}
+								tableText={row.value}
+							/>
+						))}
 					</SectionItem>
 				</PageStackContents>
 			</AppScreen.Content>

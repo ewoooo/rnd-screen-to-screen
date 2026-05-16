@@ -22,6 +22,7 @@ Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference ap
 2. Record `wireReference` in `Screen Contract`.
 3. Draw `Screen Wire` from the reference and current Map before naming components.
 4. Run Pattern Analysis Gate before finalizing section contracts:
+   - `wireSemanticTag`: section id + semantic role + boundary/placement, such as `[summary | key-value-summary | card]`
    - `sectionBoundary`: `none | SectionDivider | contentsDivider | cardBoundary`
    - `fieldGrouping`: `none | single | FieldStack | FieldStackWithDividers`
    - `rowSeparators`: `none | Divider(type="contents") | Divider(type="section")`
@@ -65,6 +66,32 @@ Do not make a component name the acceptance criterion when the real requirement 
 `componentCandidates` names possible components, compositions, patterns, or organisms after `layoutContract`. Each candidate must record `fit: strong | medium | weak | reject`, `source`, `reason`, and `risk`. Candidates are search space for Build, not acceptance criteria. Do not make component names final unless the Diagram marks `required: true` with `sourceReason`.
 
 For summary/detail cards with label-value rows, the contract must protect the key-value behavior itself: stable label/value alignment, readable value column, component-owned card background/radius/padding, and no narrow fixed column squeeze.
+
+## Wire Semantic Tags
+
+Add semantic tags to important `Screen Wire` sections before component scoring:
+
+```txt
+│ [summary | key-value-summary | card]       │
+│ 가입 정보                                  │
+│ 선택 약정 할인 금액          78,650원      │
+```
+
+- First field: section id.
+- Second field: semantic role, such as `key-value-summary`, `form-field-group`, `choice-list`, `notice`, or `bottom-primary-action`.
+- Third and later fields: boundary/placement, such as `card`, `contents-divider`, or `bottom-fixed`.
+- Tags are layout meaning, not component names. They must flow into `patternDecision` and `layoutContract.role/structure`.
+- If a tag and component scoring conflict, revise the scoring to preserve the tag/layout contract.
+
+## Summary Card Decision Rule
+
+When a complete/detail wire shows 2+ label-value rows inside a card-like summary section, classify it as `[... | key-value-summary | card]`.
+
+- First choose `patternFamily: card-key-value-summary`, then write required capabilities before naming candidates.
+- Required capabilities include section heading/header slot fit, card surface ownership, padding/radius ownership, stable label-value relationship, value wrapping without column squeeze, and reference-density preservation.
+- Score candidates by those capabilities: `strong` when they directly guarantee them, `medium` when only secondary concerns need verification, and `weak/reject` when a known structural risk touches core behavior or needs wrappers, fixed columns, spacers, or route-level CSS.
+- A component or composition name is only an implementation candidate for the pattern family, not the default answer. Domain organisms and new reusable candidates are evaluated by the same capability contract.
+- Main-agent review must return the Diagram to Phase 3 if summary-card scoring is component-name driven, or if a known structural risk is upgraded to `medium/strong` without proving the core behavior is preserved.
 
 ## Fit Scoring
 

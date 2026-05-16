@@ -14,6 +14,12 @@ import {
 	SinglePrimaryAction,
 } from "@pxds/cx-layout/components";
 
+const planChangeSummaryRows = [
+	{ label: "변경한 요금제", value: "5GX 프라임" },
+	{ label: "적용일", value: "2026.05.16" },
+	{ label: "월정액", value: "89,000원" },
+] as const;
+
 export function Screen() {
 	return (
 		<AppScreen headerPreset="standard">
@@ -34,9 +40,14 @@ export function Screen() {
 					}
 				>
 					<SectionItem type="card">
-						<ListText table text="변경한 요금제" tableText="5GX 프라임" />
-						<ListText table text="적용일" tableText="2026.05.16" />
-						<ListText table text="월정액" tableText="89,000원" />
+						{planChangeSummaryRows.map((row) => (
+							<ListText
+								key={row.label}
+								table
+								text={row.label}
+								tableText={row.value}
+							/>
+						))}
 					</SectionItem>
 				</PageStackContents>
 			</AppScreen.Content>

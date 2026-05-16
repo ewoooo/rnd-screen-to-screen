@@ -1,6 +1,6 @@
 # Screen Structure Principles
 
-> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다.
+> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다. 긴 작성 예시는 `docs/screen-structure-diagram-examples.md`에 둔다.
 
 모바일 화면과 `Screen.diagram.md`를 만들 때 먼저 적용하는 구조 원칙이다. SB와 `Screen.map.md`의 정책 요구를 확인한 뒤 곧바로 구현으로 가지 않고, 제한된 layout vocabulary로 화면의 뼈대를 먼저 정리한다.
 
@@ -55,6 +55,7 @@ AppScreen
 - `reference-only`, `unknown-from-figma-only/TBD`, `unknown/unregistered-from-figma` 값은 policy ID, OGN ID, route 계약, copy 근거로 승격하지 않는다.
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
 - `Screen Wire`는 실제 화면처럼 읽히는 ASCII wire로 작성한다. 상태바, 앱바, 본문 copy, 카드/목록/필드/CTA를 화면에 보이는 형태로 묘사하고, 주요 의미 영역에는 `[intro]`, `[terms]`, `[actions]` 같은 section id를 붙인다.
+- 주요 의미 영역에는 section id와 함께 Wire Semantic Tag를 붙인다. 예: `[summary | key-value-summary | card]`, `[actions | bottom-primary-action]`. 이 tag는 컴포넌트 이름이 아니라 wire가 요구하는 구조 의미이며, `Section Contracts.patternDecision`과 `layoutContract.role/structure`에 이어져야 한다.
 - `Screen Wire`에는 AppScreen의 물리 slot rail을 반드시 표시한다. `├─Header─┤`, `├─Content─┤`, `├─Bottom─┤`를 사용해 생성 에이전트가 chrome, scroll body, fixed action zone을 즉시 구분하게 한다.
 - 실제 화면에 section divider band가 있으면 `├══Divider══...┤`로 명시한다. `Divider`는 독립 section id를 갖지 않고, 앞뒤 section의 시각적 boundary evidence로 취급한다.
 - 본문은 section 단위로 나누고, 각 section의 `title`, `content`, `action`, `body` slot을 이름으로 기록한다.
@@ -92,6 +93,7 @@ patternDecision:
   reason: visible evidence and layout contract
 ```
 
+- Wire Semantic Tag는 `patternEvidence`보다 먼저 확인한다. tag가 `[summary | key-value-summary | card]`처럼 summary/detail 의미와 key-value 반복을 동시에 가리키면 Summary Card Decision Rule을 적용한다.
 - 실제 화면에 4px section band가 있으면 `sectionBoundary: SectionDivider`로 기록하고 `Screen Wire`에는 `├══Divider 4px / ...══┤`로 표시한다.
 - 같은 section 내부 row 사이 1px 선이 보이면 `rowSeparators: Divider(type="contents")`로 기록한다. 이를 `FieldStack` gap만으로 대체하지 않는다.
 - 입력 필드가 같은 의미 그룹 안에서 `TextField -> Divider -> TextField`로 보이면 `fieldGrouping: FieldStackWithDividers` 또는 신규 pattern 후보로 기록한다.
@@ -100,6 +102,33 @@ patternDecision:
 - `emphasisRule`은 강조가 허용되는 row를 제한한다. 예를 들어 약관 동의의 `전체 동의`만 강한 title을 쓸 수 있으면 `first-row-only`로 기록하고, 하위 약관 row는 `Text(listTitle)` 위계를 유지한다.
 - `controlLabelScale`이 `too-large` 또는 `too-small`이면 `patternDecision`을 승인하지 않는다. typography mismatch는 divider 누락과 같은 수준의 pattern distortion으로 본다.
 - evidence가 불분명하면 `patternDecision.reason`에 보류 사유를 남기고, 구현 단계에서 임의로 divider를 추가하거나 제거하지 않는다.
+
+### Wire Semantic Tags
+
+Wire Semantic Tag는 `Screen Wire` 안에서 section의 구조 의미를 짧게 고정하는 표식이다. 메인 에이전트가 wire를 검수할 때 시각 모양을 컴포넌트 후보로 너무 빨리 번역하지 않도록, section id 옆에 의미 tag를 남긴다.
+
+```txt
+│ [summary | key-value-summary | card]       │
+│ 가입 정보                                  │
+│ 선택 약정 할인 금액          78,650원      │
+│ 부가서비스                  미가입         │
+```
+
+- 첫 항목은 section id다. 예: `summary`, `terms`, `actions`.
+- 두 번째 항목은 semantic role이다. 예: `key-value-summary`, `form-field-group`, `choice-list`, `notice`, `bottom-primary-action`.
+- 세 번째 이후 항목은 boundary 또는 placement다. 예: `card`, `contents-divider`, `bottom-fixed`.
+- tag는 `layoutContract.role`과 `layoutContract.structure`를 결정하는 근거다. Build 후보명이나 최종 컴포넌트명을 직접 뜻하지 않는다.
+- tag와 후보 평가가 충돌하면 tag와 layoutContract를 우선하고, 후보 평가는 반려하거나 낮춘다.
+
+### Summary Card Decision Rule
+
+완료/상세 화면에서 `[... | key-value-summary | card]` 또는 같은 의미의 wire가 보이면 summary card로 판정한다. 같은 section 안에 label-value 행이 2개 이상 있고 카드형 surface가 요구되면 현재 샘플 값이 짧아 보여도 이 규칙을 적용한다.
+
+- 먼저 `patternFamily: card-key-value-summary`를 결정하고, 그 다음 required capability를 적는다. 후보 이름은 그 뒤에 평가한다.
+- Required capability는 section heading/header slot 필요 여부, card surface ownership, padding/radius ownership, stable label-value relationship, value wrapping without column squeeze, reference density 보존을 포함한다.
+- 후보가 required capability를 직접 보장하면 `strong`, secondary concern만 검증이 필요하면 `medium`, core behavior를 wrapper/spacer/고정 column/route-level CSS에 의존하면 `weak` 또는 `reject`로 평가한다.
+- 특정 component 또는 composition은 pattern family의 capability를 만족하는 예시일 뿐이며 기본 정답이 아니다. 같은 capability를 더 안정적으로 만족하는 domain organism이나 새 reusable candidate가 있으면 같은 기준으로 평가한다.
+- 메인 에이전트는 이 규칙을 Phase 3 승인 게이트로 검사한다. Summary card가 component 이름 중심으로 평가됐거나, known structural risk가 core behavior를 침범하는데도 `medium/strong`으로 승격됐으면 Diagram을 승인하지 않는다.
 
 ### Screen Wire 문법
 
@@ -163,14 +192,14 @@ layoutContract:
   wrapping: value may wrap, label column must stay stable
   distortionRisk: fixed narrow value column squeezes policy values
 componentCandidates:
-  - name: RQRContentsDetail
-    source: existing screen reference
+  - name: existing card key-value summary organism
+    source: existing screen reference or cx-components
     fit: strong
-    reason: preserves card treatment and label/value alignment
-  - name: SectionItem + ListText(table)
-    source: cx-components
+    reason: directly owns the required surface, heading slot, label/value relationship, and wrapping behavior
+  - name: generic card + row composition
+    source: cx-components or layout composition
     fit: weak
-    risk: fixed table column can squeeze values; card treatment may be incomplete
+    risk: known column, surface, slot, or wrapping limits may touch the pattern family's core behavior
 buildOwner:
   finalSelection: Phase 4 Build
   rule: choose or create the smallest implementation that preserves layoutContract
@@ -271,157 +300,9 @@ OGN: ogn-...
 - wrapper는 `Box`로, 이름 있는 내부 영역은 `Slot`으로 표현한다.
 - `data-figma-layout-kind`, `data-figma-layout-layer`, `data-figma-layout-slot`을 함께 남긴다.
 
-## 추천 Diagram 형태
+## Diagram 예시
 
-```txt
-AppScreen
-  SystemHeader
-    StatusBar
-  Header
-    OGN: ogn-... / AppBar or ProgressTopBar
-  Content
-    PageStackContents
-      title: TitleSection
-      content:
-        FieldStack
-          TextField
-          TextField
-      policy: POL-...
-    SectionDivider
-    PageStackContents
-      title: TitleSection
-      content:
-        reuse: Callout
-        or new candidate: RQRNotice
-      policy: POL-...
-  Bottom
-    SinglePrimaryAction
-      ActionButton
-      policy: POL-...
-```
-
-### 완료 화면 Diagram 예시
-
-완료 화면은 상단 완료 메시지, 가입/신청 결과 요약, 혜택/안내, 하단 action이 서로 다른 OGN 전략을 가진다. 각 section을 같은 stack으로 밀어 넣지 않는다.
-
-```txt
-AppScreen
-  SystemHeader
-    StatusBar
-  Header
-    OGN: ogn-mbr-complete-header
-      pattern: complete
-      layoutStrategy:
-        widthTier: content-361
-        stack: vertical
-        alignment: leading
-        typography: progress caption -> display title -> body
-        wrapping: title max 2 lines, body max 2 lines
-      layoutContract:
-        role: completion hero
-        structure: app bar + leading completion title block
-        alignment: leading
-        density: matches complete reference
-        wrapping: title max 2 lines, body max 2 lines
-        distortionRisk: title/body hierarchy collapses into generic section text
-      componentCandidates:
-        - name: AppBar + TitleMain inside complete hero organism
-          source: cx-components + complete reference
-          fit: strong
-  Content
-    OGN: ogn-mbr-signup-summary
-      role: summary
-      pattern: complete
-      layoutStrategy:
-        widthTier: content-361
-        stack: key-value
-        alignment: split
-        typography: section title -> caption title -> row value/label
-        wrapping: row label max 1 line, row value max 2 lines
-        overflow: split row when value is long; do not compress label column
-      layoutContract:
-        role: result summary
-        structure: card + key-value rows
-        alignment: split label/value
-        density: matches summary card reference
-        wrapping: row label max 1 line, row value max 2 lines
-        distortionRisk: value column compresses or card treatment disappears
-      componentCandidates:
-        - name: key-value summary organism
-          source: existing complete reference
-          fit: strong
-        - name: RQRSummaryKeyValue
-          source: new candidate
-          fit: medium
-          reason: use if existing list vocabulary cannot hold multiline values without column drift
-      policy: POL-MBR-...
-    OGN: ogn-mbr-withdraw-impact-list
-      role: impact-summary
-      pattern: form-entry
-      layoutStrategy:
-        widthTier: content-361
-        stack: key-value
-        alignment: left label flex / right status auto
-        typography: section title -> row label/status
-        wrapping: row label max 1 line, row status max 1 line
-        overflow: status labels stay short; secondary policy copy needs a new row/body slot
-      layoutContract:
-        role: impact summary
-        structure: key-value/status rows
-        alignment: left label flex / right status auto
-        density: matches form-entry reference
-        wrapping: row label max 1 line, row status max 1 line
-        distortionRisk: secondary policy copy is forced into a one-line row
-      componentCandidates:
-        - name: ListText(non-table, rightItem=badge)
-          source: cx-components
-          fit: strong
-          reason: right side is categorical status
-        - name: ListText(non-table, rightItem=text)
-          source: cx-components
-          fit: medium
-          reason: right side is literal short value
-        - name: RQRKeyValueList
-          source: new candidate
-          fit: medium
-          reason: use if secondary text, badges, or multiline values are required
-      policy: POL-MBR-...
-    SectionDivider
-    OGN: ogn-mbr-complete-benefit
-      role: benefit
-      pattern: complete
-      layoutStrategy:
-        widthTier: section-369
-        stack: vertical
-        alignment: leading
-        typography: card title -> body
-        wrapping: body max 3 lines or collapsible/scroll handoff
-        overflow: keep card height inside scroll content; never hide behind Bottom
-      layoutContract:
-        role: benefit notice
-        structure: card or callout with title/body
-        alignment: leading
-        density: matches complete benefit reference
-        wrapping: body max 3 lines or collapsible/scroll handoff
-        distortionRisk: benefit card hides behind Bottom or becomes a loose text block
-      componentCandidates:
-        - name: Callout/CardSection
-          source: cx-components
-          fit: medium
-          reason: use if text budget fits
-        - name: RQRBenefitNotice
-          source: new candidate
-          fit: medium
-          reason: use if card needs title/body/action slots not present
-  Bottom
-    SinglePrimaryAction
-      secondary: TextButton or ActionButton
-      primary: ActionButton
-      layoutStrategy:
-        widthTier: content-361
-        stack: horizontal
-        wrapping: button label max 1 line
-```
+긴 작성 예시는 `docs/screen-structure-diagram-examples.md`를 참조한다. 이 문서는 원칙과 gate만 소유한다.
 
 ## 설계 체크리스트
 
@@ -443,6 +324,7 @@ AppScreen
 ## 관련 문서
 
 - `SCREEN_GENERATION_FLOW.md` — SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
+- `docs/screen-structure-diagram-examples.md` — Screen.diagram.md 작성 예시
 - `DESIGN_FOUNDATION.md` — foundation token SOT
 - `DESIGN_PATTERNS.md` — 화면 pattern SOT
 - `SPACING_PATTERNS.md` — 화면·컴포넌트 spacing 실측 운영 규칙

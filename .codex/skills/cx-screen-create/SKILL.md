@@ -21,7 +21,10 @@ Use this as the manager skill for the full screen-generation workflow. Keep the 
 - Treat `packages/policy-core/policies` as the policy SOT and `packages/policy-core/governance` as governance SOT.
 - Treat `SCREEN_STRUCTURE_PRINCIPLES.md` as the Phase 3 diagram contract SOT.
 - Record approved decisions in owned files: policy/copy/governance in `Screen.map.md`, structure/layoutContract/componentCandidates in `Screen.diagram.md`, implementation metadata in `Screen.config.ts`.
+- Main-agent review is an approval gate, not a passive summary. The main agent must block the next phase when a delegated artifact misses required structure, weakens wire semantics, or leaves candidate scoring unsupported.
+- In Phase 3, verify Wire Semantic Tags before candidate scoring. Summary/detail cards with `[... | key-value-summary | card]` must follow the Summary Card Decision Rule before Build starts.
 - Return to Phase 3 if the Diagram over-specifies exact components as acceptance criteria, omits `layoutContract`, omits `componentCandidates`, lists candidates without fit/reason/risk, or assigns `medium/strong` because sample data is short despite known structural risk.
+- Return to Phase 3 if a summary card skips `patternFamily` and required capabilities, scores by component-name preference, or upgrades a candidate with known structural risk without proving the required capabilities are preserved.
 - Return to Phase 3 if Build cannot preserve the layout contract from available candidates and the Diagram does not describe the contract or risk clearly enough to choose an alternative.
 - Return to the failing phase before continuing when a phase output fails its checker or contract.
 

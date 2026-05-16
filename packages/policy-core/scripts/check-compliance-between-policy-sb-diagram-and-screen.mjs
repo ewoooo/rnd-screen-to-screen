@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
@@ -30,6 +30,12 @@ const requiredDiagramSections = [
 	"Policy / OGN Matrix",
 	"Distortion Gates",
 ];
+const buildSelectionSources = new Set([
+	"componentCandidates",
+	"existing-composition",
+	"new-organism",
+	"new-component",
+]);
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
 
@@ -64,6 +70,171 @@ function readStringArrayProperty(source, propertyName) {
 	return Array.from(match[1].matchAll(/"([^"]*)"|`([^`]*)`/g)).map(
 		(item) => item[1] ?? item[2],
 	);
+}
+
+function isIdentifierChar(char) {
+	return /[A-Za-z0-9_$]/.test(char ?? "");
+}
+
+function findPropertyValueStart(source, propertyName) {
+	let quote = null;
+	let escaped = false;
+	for (let index = 0; index < source.length; index += 1) {
+		const char = source[index];
+		if (quote) {
+			if (escaped) {
+				escaped = false;
+			} else if (char === "\\") {
+				escaped = true;
+			} else if (char === quote) {
+				quote = null;
+			}
+			continue;
+		}
+		if (char === "\"" || char === "'" || char === "`") {
+			quote = char;
+			continue;
+		}
+		if (!source.startsWith(propertyName, index)) continue;
+		if (isIdentifierChar(source[index - 1])) continue;
+		let colonIndex = index + propertyName.length;
+		while (/\s/.test(source[colonIndex] ?? "")) colonIndex += 1;
+		if (source[colonIndex] !== ":") continue;
+		let valueStart = colonIndex + 1;
+		while (/\s/.test(source[valueStart] ?? "")) valueStart += 1;
+		return valueStart;
+	}
+	return -1;
+}
+
+function findMatchingBracket(source, startIndex, openChar, closeChar) {
+	let depth = 0;
+	let quote = null;
+	let escaped = false;
+	for (let index = startIndex; index < source.length; index += 1) {
+		const char = source[index];
+		if (quote) {
+			if (escaped) {
+				escaped = false;
+			} else if (char === "\\") {
+				escaped = true;
+			} else if (char === quote) {
+				quote = null;
+			}
+			continue;
+		}
+		if (char === "\"" || char === "'" || char === "`") {
+			quote = char;
+			continue;
+		}
+		if (char === openChar) {
+			depth += 1;
+		} else if (char === closeChar) {
+			depth -= 1;
+			if (depth === 0) return index;
+		}
+	}
+	return -1;
+}
+
+function readRawArrayProperty(source, propertyName) {
+	const start = findPropertyValueStart(source, propertyName);
+	if (start === -1) return { present: false, isArray: false, raw: null };
+	const valueStart = source.slice(start).search(/\S/);
+	if (valueStart === -1) return { present: true, isArray: false, raw: null };
+	const arrayStart = start + valueStart;
+	if (source[arrayStart] !== "[") {
+		return { present: true, isArray: false, raw: null };
+	}
+	const arrayEnd = findMatchingBracket(source, arrayStart, "[", "]");
+	if (arrayEnd === -1) {
+		return { present: true, isArray: false, raw: null };
+	}
+	return {
+		present: true,
+		isArray: true,
+		raw: source.slice(arrayStart + 1, arrayEnd),
+	};
+}
+
+function splitTopLevelItems(source) {
+	const items = [];
+	let start = 0;
+	let depth = 0;
+	let quote = null;
+	let escaped = false;
+	for (let index = 0; index < source.length; index += 1) {
+		const char = source[index];
+		if (quote) {
+			if (escaped) {
+				escaped = false;
+			} else if (char === "\\") {
+				escaped = true;
+			} else if (char === quote) {
+				quote = null;
+			}
+			continue;
+		}
+		if (char === "\"" || char === "'" || char === "`") {
+			quote = char;
+			continue;
+		}
+		if (char === "{" || char === "[") {
+			depth += 1;
+		} else if (char === "}" || char === "]") {
+			depth -= 1;
+		} else if (char === "," && depth === 0) {
+			const item = source.slice(start, index).trim();
+			if (item) items.push(item);
+			start = index + 1;
+		}
+	}
+	const item = source.slice(start).trim();
+	if (item) items.push(item);
+	return items;
+}
+
+function trimObjectLiteral(source) {
+	const trimmed = source.trim();
+	if (!trimmed.startsWith("{")) return null;
+	const end = findMatchingBracket(trimmed, 0, "{", "}");
+	if (end === -1) return null;
+	return trimmed.slice(1, end);
+}
+
+function readRawObjectStringProperty(source, propertyName) {
+	const start = findPropertyValueStart(source, propertyName);
+	if (start === -1) return null;
+	const quote = source[start];
+	if (quote !== "\"" && quote !== "'" && quote !== "`") return null;
+	let value = "";
+	let escaped = false;
+	for (let index = start + 1; index < source.length; index += 1) {
+		const char = source[index];
+		if (escaped) {
+			value += char;
+			escaped = false;
+		} else if (char === "\\") {
+			escaped = true;
+		} else if (char === quote) {
+			return value;
+		} else {
+			value += char;
+		}
+	}
+	return null;
+}
+
+function readBuildSelections(source) {
+	const array = readRawArrayProperty(source, "buildSelections");
+	if (!array.present || !array.isArray) return { ...array, items: [] };
+	return {
+		...array,
+		items: splitTopLevelItems(array.raw).map((item) => ({
+			raw: item,
+			body: trimObjectLiteral(item),
+		})),
+	};
 }
 
 function extractMarkdownSection(source, heading) {
@@ -144,6 +315,7 @@ const dim = (text) => color(text, "2");
 const report = {
 	problems: 0,
 	warnings: 0,
+	infos: 0,
 	checked: 0,
 	adoptionWarnings: 0,
 };
@@ -156,6 +328,11 @@ function problem(message) {
 function warning(message) {
 	report.warnings += 1;
 	console.log(`      ${yellow("·")} ${message}`);
+}
+
+function info(message) {
+	report.infos += 1;
+	console.log(`      ${dim("·")} ${message}`);
 }
 
 function adoptionWarning(message) {
@@ -186,6 +363,7 @@ function parseScreenConfig(configPath) {
 			ognIds: readStringArrayProperty(source, "ognIds"),
 			governanceRefs: readStringArrayProperty(source, "governanceRefs"),
 			designDocsChecked: readStringArrayProperty(source, "designDocsChecked"),
+			buildSelections: readBuildSelections(source),
 		},
 	};
 }
@@ -255,7 +433,8 @@ function hasGenerationConfig(screen) {
 			generation.policyRefs ||
 			generation.ognIds ||
 			generation.governanceRefs ||
-			generation.designDocsChecked,
+			generation.designDocsChecked ||
+			generation.buildSelections?.present,
 	);
 }
 
@@ -270,6 +449,89 @@ function validateGenerationShape(generation) {
 	for (const field of requiredArrays) {
 		if (!Array.isArray(generation[field])) {
 			problem(`Screen.config.ts generation.${field} must be an array`);
+		}
+	}
+}
+
+function validateBuildSelectionsShape(generation) {
+	const buildSelections = generation.buildSelections;
+	if (!buildSelections?.present) return;
+
+	if (!buildSelections.isArray) {
+		problem("Screen.config.ts generation.buildSelections must be an array when present");
+		return;
+	}
+
+	for (const [index, item] of buildSelections.items.entries()) {
+		const itemLabel = `Screen.config.ts generation.buildSelections[${index}]`;
+		if (!item.body) {
+			problem(`${itemLabel} must be an object`);
+			continue;
+		}
+
+		const requiredStrings = ["section", "selected", "source", "reason"];
+		for (const field of requiredStrings) {
+			const value = readRawObjectStringProperty(item.body, field);
+			if (typeof value !== "string" || value.trim().length === 0) {
+				problem(`${itemLabel}.${field} must be a non-empty string`);
+			}
+		}
+
+		const source = readRawObjectStringProperty(item.body, "source");
+		if (source && !buildSelectionSources.has(source)) {
+			problem(`${itemLabel}.source must be one of ${Array.from(buildSelectionSources).join(", ")}`);
+		}
+
+		const rejected = readRawArrayProperty(item.body, "rejected");
+		if (rejected.present) {
+			if (!rejected.isArray) {
+				problem(`${itemLabel}.rejected must be an array when present`);
+			} else {
+				for (const [rejectedIndex, rejectedItem] of splitTopLevelItems(rejected.raw).entries()) {
+					const rejectedLabel = `${itemLabel}.rejected[${rejectedIndex}]`;
+					const rejectedBody = trimObjectLiteral(rejectedItem);
+					if (!rejectedBody) {
+						problem(`${rejectedLabel} must be an object`);
+						continue;
+					}
+					for (const field of ["candidate", "reason"]) {
+						const value = readRawObjectStringProperty(rejectedBody, field);
+						if (typeof value !== "string" || value.trim().length === 0) {
+							problem(`${rejectedLabel}.${field} must be a non-empty string`);
+						}
+					}
+				}
+			}
+		}
+
+		const deviationReasonStart = findPropertyValueStart(item.body, "deviationReason");
+		if (deviationReasonStart !== -1) {
+			const deviationReason = readRawObjectStringProperty(item.body, "deviationReason");
+			if (typeof deviationReason !== "string" || deviationReason.trim().length === 0) {
+				problem(`${itemLabel}.deviationReason must be a non-empty string when present`);
+			} else {
+				info(`${itemLabel}.deviationReason recorded: ${deviationReason}`);
+			}
+		}
+	}
+}
+
+function validateBuildSelectionsAgainstDiagram(generation, diagram) {
+	const buildSelections = generation.buildSelections;
+	if (!buildSelections?.present || !buildSelections.isArray) return;
+
+	for (const [index, item] of buildSelections.items.entries()) {
+		if (!item.body) continue;
+		const itemLabel = `Screen.config.ts generation.buildSelections[${index}]`;
+		const section = readRawObjectStringProperty(item.body, "section");
+		const selected = readRawObjectStringProperty(item.body, "selected");
+
+		if (section && !diagram.includes(`[${section}]`) && !diagram.includes(section)) {
+			problem(`${itemLabel}.section "${section}" must appear in Screen.diagram.md`);
+		}
+
+		if (selected && !diagram.includes(selected)) {
+			warning(`${itemLabel}.selected "${selected}" does not appear verbatim in Screen.diagram.md`);
 		}
 	}
 }
@@ -347,6 +609,7 @@ function validateDiagramContract(screen, context, diagramPath, mapText) {
 	const screenWire = extractMarkdownSection(diagram, "Screen Wire");
 	const sectionContracts = extractMarkdownSection(diagram, "Section Contracts");
 	validateScreenWireContract(diagram, screenWire, sectionContracts);
+	validateBuildSelectionsAgainstDiagram(screen.generation, diagram);
 
 	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
 	if (
@@ -399,6 +662,7 @@ function validateScreen(screen, context) {
 
 	const generation = screen.generation;
 	validateGenerationShape(generation);
+	validateBuildSelectionsShape(generation);
 
 	for (const doc of requiredDesignDocs) {
 		if (!generation.designDocsChecked?.includes(doc)) {
@@ -479,6 +743,7 @@ console.log(color("─── summary ───", "1"));
 console.log(`  current screens     : ${screens.length}`);
 console.log(`  generation checked  : ${report.checked}`);
 console.log(`  adoption warnings   : ${report.adoptionWarnings}`);
+console.log(`  info                : ${report.infos}`);
 console.log(`  warnings            : ${report.warnings > 0 ? yellow(String(report.warnings)) : green("0")}`);
 console.log(`  problems            : ${report.problems > 0 ? red(String(report.problems)) : green("0")}`);
 console.log("");
