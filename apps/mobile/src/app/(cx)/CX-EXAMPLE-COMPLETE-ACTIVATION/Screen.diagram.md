@@ -17,6 +17,7 @@
 - AppScreen rails: `SystemHeader`, `Header`, `Content`, `Bottom`
 - header contract: visible title `개통 완료`; completion pattern must not imply a back-navigation requirement from this proof screen.
 - bottom contract: `Bottom(preset="guided-action")`; guided prompt and two actions stay fixed outside scroll content.
+- configBuildSelections: preserve selected candidate names from Screen.config.ts verbatim.
 - referenceSearch:
   - checked: `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text/*`, `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/*`, nearby complete `Screen.diagram.md` files
   - result: no dedicated complete reference exists under `apps/mobile/src/screen-diagrams`; use the closest existing complete screen diagram plus the sibling CX complete proof screen for density comparison.
@@ -36,11 +37,11 @@
 │ 개통 완료                                             │
 ├─Content───────────────────────────────────────────────┤
 │                                                        │
-│ [completionHero]                                      │
+│ [completionHero | completion-hero | leading]          │
 │ 개통이 완료되었어요                                  │
 │ 지금부터 새로운 휴대폰 사용이 가능해요.              │
 │                                                        │
-│ [completionSummary]                                   │
+│ [completionSummary | key-value-summary | card]        │
 │ ┌─Result Summary Card──────────────────────────────┐  │
 │ │ 개통 휴대폰                         갤럭시 S25  │  │
 │ │ 요금제                              5GX 프라임  │  │
@@ -48,7 +49,7 @@
 │ └──────────────────────────────────────────────────┘  │
 │                                                        │
 ├─Bottom(preset="guided-action")────────────────────────┤
-│ [actions]                                             │
+│ [actions | bottom-guided-action | bottom-fixed]       │
 │ 사진이나 연락처, 앱도 새 휴대폰으로 한 번에 옮겨볼까요? │
 │ ┌──────────────────────┐ ┌─────────────────────────┐ │
 │ │ 홈으로 이동          │ │ 데이터 옮기기           │ │
@@ -65,7 +66,6 @@
 - policy: none; component proof screen
 - appliedGovernanceRefs: none; component proof screen
 - patternEvidence:
-  - Pattern Analysis Gate evidence: hero has no divider, no field/list grouping, and no action surface; it is the first content stack in a simple complete screen.
   - sectionBoundary: `none`
   - fieldGrouping: `none`
   - rowSeparators: `none`
@@ -77,7 +77,7 @@
     - controlLabelScale: `matches-reference`
 - patternDecision:
   - pattern: `PageStackContents` complete-title composition
-  - reason: DESIGN_PATTERNS.md Completion case A and Pattern G place `TitleMain(type="complete")` before the summary card in one content flow; no visible divider or standalone card boundary separates the hero.
+  - reason: Wire Semantic Tag `[completionHero | completion-hero | leading]` identifies a leading completion hero with no card boundary or divider. DESIGN_PATTERNS.md Completion case A places `TitleMain(type="complete")` before the summary card in one content flow; no visible divider or standalone card boundary separates the hero from the summary.
 - layoutStrategy:
   - widthTier: `content-361`
   - padding: completion block follows SPACING_PATTERNS.md Completion spacing through the parent page stack; no route-level padding patch
@@ -94,16 +94,15 @@
   - wrapping: title and subtitle may wrap naturally, but must not force the fixed bottom area into scroll content
   - distortionRisk: rendering the hero as a standalone card, inserting a section divider, or centering the text would break the reference complete pattern.
 - componentCandidates:
-  - name: `PageStackContents` title slot + `TitleMain(type="complete")`
+  - name: `` `PageStackContents` title slot + `TitleMain(type="complete")` ``
     source: `@pxds/cx-layout` + `@pxds/cx-components`
     fit: strong
-    reason: matches the selected `Screen.config.ts` build selection and directly supports the complete hero title/subtitle without route-level spacing.
-    risk: none for the current copy.
+    reason: directly supports the completion-hero role and leading structure; `PageStackContents` owns the page-stack rail and content padding, `TitleMain(type="complete")` owns the completion title/subtitle hierarchy — no route-level spacing patch needed.
   - name: standalone `TitleMain(type="complete")`
     source: `@pxds/cx-components`
     fit: weak
-    reason: the title component can render the text hierarchy, but does not own the page-stack rail or summary spacing contract by itself.
-    risk: route-level wrappers would be needed to preserve the reference density.
+    reason: renders the title hierarchy but does not own the page-stack rail or summary spacing contract by itself.
+    risk: route-level wrappers would be needed to preserve the reference density, violating the no-route-padding rule.
 
 ### [completionSummary]
 
@@ -112,7 +111,6 @@
 - policy: none; component proof screen
 - appliedGovernanceRefs: none; component proof screen
 - patternEvidence:
-  - Pattern Analysis Gate evidence: the summary is a single card boundary with three peer key-value rows; no visible 1px contents dividers or section divider band appear in the proof wire.
   - sectionBoundary: `cardBoundary`
   - fieldGrouping: `none`
   - rowSeparators: `none`
@@ -124,7 +122,25 @@
     - controlLabelScale: `matches-reference`
 - patternDecision:
   - pattern: compact result summary card with label-value rows
-  - reason: DESIGN_PATTERNS.md Completion case A recommends a summary card after the success heading; the current Figma proof contains only short activation facts and does not show a card title, contents divider, total row, or richer detail header.
+  - reason: Wire Semantic Tag `[completionSummary | key-value-summary | card]` drives this decision. The tag signals a card-boundary summary zone with repeating label-value pairs; Summary Card Decision Rule applies. DESIGN_PATTERNS.md Completion case A recommends a summary card after the success heading. Three peer activation-fact rows exist with no contents divider, no card title, and no total row.
+
+#### Summary Card Decision Rule
+
+- patternFamily: `card-key-value-summary`
+- requiredCapability:
+  1. section heading/header slot (optional for this compact card; no heading present in proof wire)
+  2. card surface ownership (the candidate or composition must own padding, background, and radius — not the route)
+  3. padding/radius ownership (card surface provides its own visual boundary; no route-level box-shadow or border patch)
+  4. stable label-value relationship (label column must remain stable; values must not push labels off-axis)
+  5. value wrapping without column squeeze (longer values must wrap within the value column only; label column must not compress)
+  6. reference density preservation (compact three-row card from the Figma proof frame; no extra row dividers, no title row, no stretched height)
+
+Candidate evaluation against requiredCapability:
+
+- `` `SectionItem(type="card")` + `ListText(table)` ``: card surface must be proven by `SectionItem(type="card")` (capability 2, 3); `ListText(table)` renders label/value rows (capability 4); compact three-row configuration maps to the proof density (capability 6). Secondary concern: `ListText(table)` column widths may be fixed, which could squeeze values when real data includes longer policy values (capability 5 — Build must verify). Core structure is acceptable only if Build proves the layout contract without relying on proof value length. → **fit: medium**
+- `RQRContentsDetail` or stronger detail contract: provides full heading slot, detail header, and richer row hierarchy (capability 1 bonus) but over-specifies this compact no-title card; the Figma wire does not show a card title, section heading, or total row. → **fit: reject** (introduces visual parts not present in the wire; distorts reference density)
+- domain key-value summary organism (`apps/mobile/src/organisms/mbr` candidate): satisfies structural capabilities but adds domain ownership and semantic weight without any policy-bound activation facts to justify it. → **fit: reject** (no `Screen.map.md` policy binding present)
+
 - layoutStrategy:
   - widthTier: `content-361` outer stack, `inner-329` row content
   - padding: card-owned result summary padding, aligned to SPACING_PATTERNS.md Completion result summary card padding
@@ -141,21 +157,21 @@
   - wrapping: values should remain one line for current copy; future longer values must not squeeze labels into unreadable width
   - distortionRisk: a narrow fixed value column, missing card surface, or arbitrary route CSS would make key-value alignment drift.
 - componentCandidates:
-  - name: `SectionItem(type="card")` + `ListText(table)`
+  - name: `` `SectionItem(type="card")` + `ListText(table)` ``
     source: `@pxds/cx-components`
     fit: medium
-    reason: matches the selected `Screen.config.ts` build selection and fits the visible compact card/table rows for this proof screen.
-    risk: longer values may reveal fixed-column squeeze; Build must verify the layout contract rather than rely on the candidate name.
+    reason: card surface owned by `SectionItem(type="card")`; `ListText(table)` maps three label-value rows to the compact proof density. Core structure satisfied for this structural-only proof screen.
+    risk: fixed column widths in `ListText(table)` may squeeze values when real data includes longer policy values; Build must verify the layoutContract rather than rely on the candidate name or proof value length. If squeeze is confirmed, choose a stronger candidate or return to Diagram.
   - name: `RQRContentsDetail`
     source: existing complete/reference summary candidate
     fit: reject
-    reason: rejected for this structural-only proof screen because the stronger detail contract is unnecessary without a card title or detail header.
-    risk: over-specifies the compact proof summary and may introduce visual parts not present in the wire.
+    reason: over-specifies the compact proof summary with a card title, detail header, and richer row hierarchy not present in the wire; distorts reference density.
+    risk: introduces visual parts not present in the Figma proof and may expand card height beyond proof density.
   - name: domain key-value summary organism
     source: `apps/mobile/src/organisms/mbr` candidate
     fit: reject
-    reason: rejected because no policy-bound activation facts or reusable domain behavior are present in `Screen.map.md`.
-    risk: adds ownership and semantic weight that the component proof screen does not justify.
+    reason: no policy-bound activation facts are present in `Screen.map.md`; adds ownership and semantic weight the component proof screen does not justify.
+    risk: adds domain coupling and reuse overhead incompatible with this structural-only proof context.
 
 ### [actions]
 
@@ -164,7 +180,6 @@
 - policy: none; component proof screen
 - appliedGovernanceRefs: none; component proof screen
 - patternEvidence:
-  - Pattern Analysis Gate evidence: the action prompt and CTA row are in the physical Bottom rail; there is no content-section action and no inline field action.
   - sectionBoundary: `none`
   - fieldGrouping: `none`
   - rowSeparators: `none`
@@ -176,7 +191,7 @@
     - controlLabelScale: `matches-reference`
 - patternDecision:
   - pattern: fixed guided action area with prompt text and two CTAs
-  - reason: DESIGN_PATTERNS.md Completion copy guidance keeps two-button completion actions in the bottom action area, with the left action secondary and the right action primary; this proof screen adds an AI treatment to the recommended next-step action.
+  - reason: Wire Semantic Tag `[actions | bottom-guided-action | bottom-fixed]` identifies a bottom-fixed guided action zone. DESIGN_PATTERNS.md Completion copy guidance keeps two-button completion actions in the bottom action area, with the left action secondary and the right action primary; this proof screen adds an AI treatment to the recommended next-step action.
 - layoutStrategy:
   - widthTier: `content-361`
   - padding: bottom action area owns safe-area and CTA spacing
@@ -193,32 +208,31 @@
   - wrapping: prompt can wrap within the bottom area; button labels must not wrap
   - distortionRisk: moving the prompt or CTAs into `Content`, reversing action hierarchy, or dropping AI treatment would break the completion action model.
 - componentCandidates:
-  - name: `AppScreen.Bottom(preset="guided-action")` + `SinglePrimaryAction` + `ActionButton(type="ai", buttonCount=2)`
+  - name: `` `AppScreen.Bottom(preset="guided-action")` + `SinglePrimaryAction` + `ActionButton(type="ai", buttonCount=2)` ``
     source: `@pxds/cx-layout` + `@pxds/cx-components`
     fit: strong
-    reason: matches the selected `Screen.config.ts` build selection and supports guided text, two CTAs, right-primary ordering, AI treatment, and bottom safe-area behavior.
-    risk: none for the current action count/copy.
-  - name: `AppScreen.Bottom(preset="primary-cta")` + `SinglePrimaryAction` + `ActionButton(type="default", buttonCount=2)`
+    reason: directly owns the guided-text slot, two-CTA row, right-primary ordering, AI treatment, and bottom safe-area behavior; no route-level spacing or CSS patch needed.
+  - name: `` `AppScreen.Bottom(preset="primary-cta")` + `SinglePrimaryAction` + `ActionButton(type="default", buttonCount=2)` ``
     source: sibling complete proof screen pattern
     fit: reject
-    reason: primary-cta/default action treatment lacks the guided prompt and AI-specific next-step affordance required by this wire.
-    risk: would either drop the guide copy or push it into scroll content.
+    reason: primary-cta/default action treatment lacks the guided prompt slot and AI-specific next-step affordance required by the wire tag `[actions | bottom-guided-action | bottom-fixed]`.
+    risk: would either drop the guided copy or push it into scroll content, breaking the bottom-fixed contract.
 
 ## Policy / OGN Matrix
 
 | requirement | sourceRef | policy | OGN | section | appliedGovernanceRefs | layoutContract summary |
 | --- | --- | --- | --- | --- | --- | --- |
-| `CX-COMPLETE-ACTIVATION-HERO` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionHero` | none; component proof screen | Success title and supporting sentence above summary card. |
-| `CX-COMPLETE-ACTIVATION-SUMMARY` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionSummary` | none; component proof screen | Compact card with three stable label-value rows. |
-| `CX-COMPLETE-ACTIVATION-ACTION` | Figma Text Section / 완료_개통 | structural-only | structural-only | `actions` | none; component proof screen | Fixed guided bottom area with left secondary and right primary AI action. |
+| `CX-COMPLETE-ACTIVATION-HERO` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionHero` | none; component proof screen | Success title and supporting sentence above summary card, leading alignment, no standalone hero surface. |
+| `CX-COMPLETE-ACTIVATION-SUMMARY` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionSummary` | none; component proof screen | Compact card with three stable label-value rows; card surface owned by composition, no route CSS. |
+| `CX-COMPLETE-ACTIVATION-ACTION` | Figma Text Section / 완료_개통 | structural-only | structural-only | `actions` | none; component proof screen | Fixed guided bottom area with left secondary and right primary AI action; prompt stays inside Bottom. |
 
 ## Distortion Gates
 
 - Preserve the rail order: `Header`, then `Content`, then `Bottom(preset="guided-action")`; do not convert the bottom prompt/actions into scroll content.
 - Keep `completionHero` and `completionSummary` in the same simple-completion content flow; no `SectionDivider`, extra cross-sell gap, standalone hero card, or inserted section wrapper.
-- Summary acceptance is the layout contract, not the candidate component name: card surface, compact density, stable label/value rows, and readable values are mandatory.
-- If `SectionItem(type="card")` + `ListText(table)` causes fixed-column squeeze, missing card padding, or label/value collision, Build must choose a stronger key-value candidate or return to Diagram; route-level CSS patching is not allowed.
+- Summary acceptance is the layout contract, not the candidate component name: card surface ownership, compact density, stable label/value rows, and readable values are mandatory. If `SectionItem(type="card")` + `ListText(table)` causes fixed-column squeeze, missing card padding, or label/value collision, Build must choose a stronger key-value candidate or return to Diagram; route-level CSS patching is not allowed.
+- The `[completionSummary | key-value-summary | card]` tag and its layoutContract override any component-name preference; candidate evaluation must satisfy the Summary Card Decision Rule's `requiredCapability` list.
 - Preserve action hierarchy and order: `홈으로 이동` is secondary/left, `데이터 옮기기` is primary/right with AI treatment.
-- The guided prompt may wrap inside `Bottom`, but button labels must remain one line and the bottom safe area must remain owned by the bottom pattern.
+- The guided prompt may wrap inside `Bottom`, but button labels must remain one line and the bottom safe area must remain owned by the bottom pattern; only the `Bottom(preset="...")` contract is allowed and the deprecated action-bar alias must not be used in the diagram or implementation.
 - Do not invent policy ids, OGN ids, activation business rules, data-transfer eligibility, or navigation behavior from the Figma proof screen.
 - Do not use deprecated `@pxds/pxds-components`, deprecated `@pxds/pxds-icons`, raw route padding/margin/width/font-size patches, or hidden spacer nodes to match the wire.

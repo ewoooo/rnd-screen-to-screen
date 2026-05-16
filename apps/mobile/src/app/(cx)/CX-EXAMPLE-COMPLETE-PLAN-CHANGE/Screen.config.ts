@@ -42,11 +42,11 @@ export const screenConfig = defineScreenConfig({
 				section: "completionSummary",
 				selected: "`SectionItem(type=\"card\")` + `ListText(table)`",
 				source: "componentCandidates",
-				reason: "Satisfies the layoutContract for one compact card with exactly three label-value proof rows; the current summary proof values are short enough for SectionItem(type=\"card\") + ListText(table), while rejected candidates are unnecessary or riskier for this structural-only proof screen.",
+				reason: "Selected as the medium-fit composition that satisfies the completionSummary layoutContract: SectionItem(type=\"card\") owns the card surface, background, radius, and padding, and ListText(table) renders the three peer label-value rows at the compact proof density. Acceptance is on layoutContract capability, not proof value length; the ListText(table) fixed-column squeeze under longer values is a documented secondary risk Build must verify, escalating to a stronger no-header key-value candidate or back to Diagram if it occurs.",
 				rejected: [
 					{
 						candidate: "RQRContentsDetail",
-						reason: "Rejected because its stronger dedicated detail contract is unnecessary while the current proof values fit the compact card/table layout, and it risks over-specifying a screen with no card title or detail header.",
+						reason: "RQRContentsDetail requires a title prop (card header title; required, not optional) plus 16px header-to-rows spacing, 24px padding, border-radius 20px, and bg semantic-color-bg-dim. The proof summary wire has no card title or header row — only three bare label-value rows. Applying RQRContentsDetail would force a card header not present in the wire, changing the reference's core layout and failing the requiredCapability 'No section heading/header slot needed' check. Rejected unconditionally for this no-title structural-only proof screen.",
 					},
 					{
 						candidate: "domain key-value summary organism",
