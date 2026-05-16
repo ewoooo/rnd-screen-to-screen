@@ -1,3 +1,5 @@
+import { screenConfig as cxExampleCompleteActivationRoute } from "../../app/(cx)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.config";
+import { screenConfig as cxExampleCompletePlanChangeRoute } from "../../app/(cx)/CX-EXAMPLE-COMPLETE-PLAN-CHANGE/Screen.config";
 import { screenConfig as cxExamplePersonalInfoInputRoute } from "../../app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.config";
 import { screenConfig as cxExampleTextSectionProofRoute } from "../../app/(cx)/CX-EXAMPLE-TEXT-SECTION-PROOF/Screen.config";
 import { screenConfig as legacyConvertedMbrPg0010CxRoute } from "../../app/(legacy-converted-mbr)/LEGACY-MBR-PG-001-0-CX/Screen.config";
@@ -25,6 +27,8 @@ export const screenRoutes = [
 	novaMbrPg0020Route,
 	novaMbrPg0030Route,
 	novaMbrPg0050Route,
+	cxExampleCompleteActivationRoute,
+	cxExampleCompletePlanChangeRoute,
 	cxExamplePersonalInfoInputRoute,
 	cxExampleTextSectionProofRoute,
 ] as const satisfies readonly ScreenRoute[];

@@ -18,18 +18,18 @@ Checked nodes:
 | Field | Value |
 | --- | --- |
 | Status | 제작 완료 |
-| Implementation Target | pxds-components |
+| Implementation Target | removed legacy reference |
 | Figma Source | progress-top-bar pattern; composed from AppBar/progress references, not a standalone CX base node |
-| Dependencies | WDS `TopNavigation`; WDS `TopNavigationButton`; WDS `ProgressIndicator`; `@pxds/pxds-icons`; `@pxds/pxds-layout/primitives`; `TextBlock` |
+| Dependencies | Historical WDS `TopNavigation`; WDS `TopNavigationButton`; WDS `ProgressIndicator`; legacy icon adapter; `@pxds/pxds-layout/primitives`; `TextBlock` |
 | Variants | `leading`: back/close; `progress.showLabel`: false/true |
 | Properties | registry/renderReact props only: `title`, `leading`, `progress.label`, `progress.percent`, `progress.showLabel` |
 
 ### Implementation Files
 
-- `packages/pxds-components/src/domains/shared/global/progress-top-bar/index.tsx`
-- `packages/pxds-components/src/domains/shared/global/progress-top-bar/registry.ts`
+- Historical source was removed with the legacy pxds-components adapter.
+- Rebuild as CX vocabulary or app organism before using it in new screens.
 
-`ProgressTopBar` is a `@pxds/pxds-components` shared/global pattern. It is not a CX base component and should not be documented or consumed as a `@pxds/cx-components` primitive.
+`ProgressTopBar` was a legacy shared/global pattern. It is not a CX base component and should not be documented or consumed as a `@pxds/cx-components` primitive until rebuilt.
 
 ## Structure
 
@@ -52,12 +52,12 @@ ProgressTopBar
 
 | Consumed component | Source | Used for |
 | --- | --- | --- |
-| `TopNavigation` | `@pxds/pxds-components/core` WDS re-export | Top navigation shell and title. |
-| `TopNavigationButton` | `@pxds/pxds-components/core` WDS re-export | Leading icon button. |
-| `ProgressIndicator` | `@pxds/pxds-components/core` WDS re-export | Progress bar visualization. |
-| `IconArrowLeft`, `IconClose` | `@pxds/pxds-icons` | Back/close leading affordance. |
+| `TopNavigation` | removed legacy WDS re-export | Top navigation shell and title. |
+| `TopNavigationButton` | removed legacy WDS re-export | Leading icon button. |
+| `ProgressIndicator` | removed legacy WDS re-export | Progress bar visualization. |
+| `IconArrowLeft`, `IconClose` | removed legacy icon adapter | Back/close leading affordance. |
 | `Box`, `VStack` | `@pxds/pxds-layout/primitives` | Labeled progress spacing wrapper. |
-| `TextBlock` | `@pxds/pxds-components/atoms/typography` | Optional progress label. |
+| `TextBlock` | removed legacy typography adapter | Optional progress label. |
 
 ### Figma Source Difference
 
@@ -115,7 +115,7 @@ The current `ProgressTopBar` React DOM does not write direct bridge attributes s
 
 Bridge behavior is registry/renderReact centered:
 
-- `registry.ts` registers `id: "progress-top-bar"`, `name: "ProgressTopBar"`, `owner: "@pxds/pxds-components"`, `group: "global"`, and `renderReact: progressTopBarRenderReact`.
+- Historical `registry.ts` registered `id: "progress-top-bar"`, `name: "ProgressTopBar"`, `owner: "@pxds/pxds-components"`, `group: "global"`, and `renderReact: progressTopBarRenderReact`.
 - Figma/export assembly can infer pattern props from the component spec, but the component itself does not emit direct DOM bridge markers.
 - Do not copy the legacy app-owned `ProgressAppBar` bridge attributes onto this component unless the registry contract is intentionally changed.
 
@@ -126,7 +126,8 @@ Purpose: show expected consumer usage.
 ### Import
 
 ```tsx
-import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
+// Historical import only. The legacy adapter package has been removed.
+// import { ProgressTopBar } from "@pxds/pxds-components/shared/global";
 ```
 
 ### Examples
@@ -152,11 +153,11 @@ Purpose: constrain future edits and validation.
 
 ### Do
 
-- Keep `ProgressTopBar` under `@pxds/pxds-components/shared/global`.
+- Do not add new imports from the removed legacy adapter package.
 - Treat it as a PXDS shared/global pattern, not as a CX base component.
 - Keep top navigation behavior delegated to WDS `TopNavigation` and `TopNavigationButton`.
 - Keep progress visualization delegated to WDS `ProgressIndicator`.
-- Use `@pxds/pxds-icons` for leading icons.
+- Use `@pxds/cx-icons` or rebuilt CX component slots for leading icons.
 - Use `Box` and `VStack` layout primitives for labeled progress spacing.
 - Use `TextBlock` for the optional visible progress label.
 - Keep screen routes free of margin/padding patches around this top bar.

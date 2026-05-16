@@ -19,4 +19,16 @@ export const screenConfig = defineScreenConfig({
 		width: 375,
 		height: 812,
 	},
+	generation: {
+		source: "implementation",
+		pattern: "complete",
+		policyRefs: [],
+		ognIds: [],
+		designDocsChecked: [
+			"DESIGN_PATTERNS.md",
+			"DESIGN_FOUNDATION.md",
+			"SPACING_PATTERNS.md",
+			"SCREEN_STRUCTURE_PRINCIPLES.md",
+		],
+	},
 } as const satisfies ScreenRouteConfig);

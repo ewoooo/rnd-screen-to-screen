@@ -12,14 +12,12 @@ PXDX는 정책서 기반 모바일 화면을 제한된 토큰, 컴포넌트 어�
 └── packages/
     ├── cx-tokens/                CX DS token-set SSOT, CSS variables, text style classes
     ├── cx-icons/                 CX DS icon originals, registry, React Icon wrapper
-    ├── pxds-icons/                deprecated legacy WDS icon adapter
     ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
     ├── cx-components/             latest CX component package and inventory
-    ├── pxds-components/           deprecated legacy PXDS/WDS component adapter
     ├── pxds-spec/                 screen route/config와 kind 같은 UI 비의존 spec 타입
     ├── pxds-figma/                Figma bridge/hooks/export 관련 도구
     ├── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
-    └── policy-core/               Policy / UseCase 순수 문서 도메인
+    └── policy-core/               Policy / UseCase / UX Governance 순수 문서 도메인
 ```
 
 책임 방향은 아래 흐름을 기본으로 둡니다.
@@ -30,8 +28,6 @@ PXDX는 정책서 기반 모바일 화면을 제한된 토큰, 컴포넌트 어�
   -> @pxds/cx-components
   -> @pxds/pxds-layout
   -> apps/mobile
-
-@pxds/pxds-icons -> legacy compatibility only
 
 apps/mobile/screens -> apps/preview
 @policy/core -> @pxds/pxds-spec
@@ -62,9 +58,9 @@ apps/mobile/src/app/(mbr)/NOVA-MBR-PG-001-0/
 현재 화면 그룹은 두 축으로 나눕니다.
 
 - `mbr`: `NOVA-MBR-PG-*` current reference 화면
-- `legacy-mbr`: `LEGACY-MBR-PG-*` membership legacy 비교군
+- `legacy-converted-mbr`: `LEGACY-MBR-PG-*-CX` membership legacy CX 전환 비교군
 
-`@screen/mobile/screens`는 `apps/mobile/src/scripts/screen-routes`를 통해 route catalog와 조회 helper만 공개합니다. 페이지의 실제 UI 조립은 각 screen 폴더와 `apps/mobile/src/organisms/{mbr,legacy-mbr}`가 소유합니다.
+`@screen/mobile/screens`는 `apps/mobile/src/scripts/screen-routes`를 통해 route catalog와 조회 helper만 공개합니다. 페이지의 실제 UI 조립은 각 screen 폴더와 `apps/mobile/src/organisms/mbr`가 소유합니다.
 
 ## Component And Layout Structure
 
@@ -79,10 +75,8 @@ Component -> Pattern -> Organism -> Screen
 - `Organism`: 정책 의미와 도메인 OGN을 담는 앱 소유 의미 단위입니다.
 - `Screen`: `AppScreen` slot에 chrome, section, organism을 배치하는 지도입니다.
 - `@pxds/cx-components`: 최신 CX component package입니다. 신규 화면/컴포넌트 제작의 기준 어휘입니다.
-- `@pxds/pxds-components`: deprecated legacy PXDS/WDS adapter입니다. 기존 호환이나 migration reference가 필요할 때만 제한적으로 봅니다.
 - `@pxds/cx-icons`: 최신 CX icon package입니다. 신규 icon vocabulary와 React `Icon` wrapper의 기준입니다.
-- `@pxds/pxds-icons`: deprecated legacy WDS icon adapter입니다. 기존 호환이나 migration reference가 필요할 때만 제한적으로 봅니다.
-- `organisms`: MBR 또는 legacy-mbr 화면 영역의 의미 구조입니다. 현재 앱이 소유하며 package registry로 올리지 않습니다.
+- `organisms`: MBR 화면 영역의 의미 구조입니다. 현재 앱이 소유하며 package registry로 올리지 않습니다.
 - `screen/page`: route 단위의 최종 화면 조립입니다.
 
 새 컴포넌트가 필요할 때는 먼저 기존 token, layout primitive, molecule로 표현 가능한지 확인합니다. 반복되는 조합이 확인될 때만 package component로 승격합니다.
@@ -94,7 +88,7 @@ Component -> Pattern -> Organism -> Screen
 | Area | Status | Note |
 | --- | --- | --- |
 | Token | CSS Variable화 완료 | `@pxds/cx-tokens`가 Tokens Studio token-set을 SSOT로 두고 `tokens.css` CSS custom properties와 `text-styles.css` 합성 텍스트 스타일 클래스를 생성합니다. |
-| Icon | 최신 패키지 기준 | 신규 icon vocabulary는 `@pxds/cx-icons`를 기준으로 하며, `@pxds/pxds-icons`는 deprecated legacy WDS icon adapter입니다. |
-| Component | 최신 패키지 기준 | 신규 component vocabulary는 `@pxds/cx-components`를 기준으로 하며, `@pxds/pxds-components`는 deprecated legacy 호환 경계입니다. |
+| Icon | 최신 패키지 기준 | 신규 icon vocabulary는 `@pxds/cx-icons`를 기준으로 합니다. 삭제된 legacy icon adapter import를 새로 추가하지 않습니다. |
+| Component | 최신 패키지 기준 | 신규 component vocabulary는 `@pxds/cx-components`를 기준으로 합니다. 삭제된 legacy component adapter import를 새로 추가하지 않습니다. |
 
 현재는 token 기반을 먼저 고정하고, component vocabulary를 모바일 화면에서 실제로 쓰이는 어휘 위주로 좁히는 단계입니다.

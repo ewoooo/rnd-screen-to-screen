@@ -11,37 +11,34 @@
 - policy refs: `POL-MBR-INFO-002-08`, `POL-MBR-AUTH-002-01`
 - required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 
-## Slot Ownership Map
+## Screen Wire
 
 ```txt
-┌─ AppScreen(headerPreset="form-entry") ─────────────────────┐
-│ [SystemHeader]                                             │
-│   StatusBar                                                │
-├────────────────────────────────────────────────────────────┤
-│ [Header]                                                   │
-│   AppBar(title="가입자 정보 입력", showLeftItem, showTitle) │
-├────────────────────────────────────────────────────────────┤
-│ [Content: scroll owner]                                    │
+┌─AppScreen──────────────────────────────────────────────────┐
+│ SystemHeader: StatusBar                                    │
+├─Header─────────────────────────────────────────────────────┤
+│ AppBar(title="가입자 정보 입력", showLeftItem, showTitle)   │
+├─Content────────────────────────────────────────────────────┤
 │   Section(intro)                                           │
-│   SectionDivider(thickness="section")                      │
+├══Divider════════════════════════════════════════════════════┤
 │   Section(phone)                                           │
-│   SectionDivider(thickness="section")                      │
+├══Divider════════════════════════════════════════════════════┤
 │   Section(authComplete)                                    │
-│   SectionDivider(thickness="section")                      │
+├══Divider════════════════════════════════════════════════════┤
 │   Section(address)                                         │
-│   SectionDivider(thickness="section")                      │
+├══Divider════════════════════════════════════════════════════┤
 │   Section(homeArea)                                        │
-│   SectionDivider(thickness="section")                      │
+├══Divider════════════════════════════════════════════════════┤
 │   Section(email)                                           │
-├────────────────────────────────────────────────────────────┤
-│ [ActionBar: primary screen action]                         │
+├─Bottom─────────────────────────────────────────────────────┤
+│ [Bottom: primary screen action]                            │
 │   SinglePrimaryAction                                      │
 │     Button(text="다음", fullWidth, size="xlarge",           │
 │            variant="primary")                              │
 └────────────────────────────────────────────────────────────┘
 ```
 
-## Content Flow
+## Section Contracts
 
 ```txt
 [Content: scroll owner]
@@ -106,18 +103,31 @@ Section(email)
    └─ SectionItem
       └─ TextField(defaultValue="example@plus-ex.com",
                    state="typed")
+
+[Bottom]
+└─ Bottom(preset="primary-cta")
+   └─ SinglePrimaryAction
+      └─ Button(text="다음", variant="primary")
 ```
 
-## Section Specs
+## Policy / OGN Matrix
 
-| section | title | primary components | policy |
-| --- | --- | --- | --- |
-| `intro` | `개인정보 입력` | `PageStackContents`, `TitleMain` | - |
-| `phone` | `기기변경 휴대폰 번호` | `PageStackContents`, `TitleSection`, `SectionItem`, `TextField` | `POL-MBR-INFO-002-08` |
-| `authComplete` | `본인인증 완료` | `PageStackContents`, `TitleSection`, `SectionItem`, `ListText` | `POL-MBR-AUTH-002-01` |
-| `address` | `가입자 주소` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `TextField` | - |
-| `homeArea` | `주 생활지역` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `Checkbox`, `TextField` | - |
-| `email` | `이메일` | `PageStackContents`, `TitleSection`, `SectionItem`, `TextField` | - |
+| section | title | primary components | policy | OGN |
+| --- | --- | --- | --- | --- |
+| `intro` | `개인정보 입력` | `PageStackContents`, `TitleMain` | - | structural-only |
+| `phone` | `기기변경 휴대폰 번호` | `PageStackContents`, `TitleSection`, `SectionItem`, `TextField` | `POL-MBR-INFO-002-08` | structural-only |
+| `authComplete` | `본인인증 완료` | `PageStackContents`, `TitleSection`, `SectionItem`, `ListText` | `POL-MBR-AUTH-002-01` | structural-only |
+| `address` | `가입자 주소` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `TextField` | - | structural-only |
+| `homeArea` | `주 생활지역` | `PageStackContents`, `TitleSection`, `SectionItem`, `FieldStack`, `Checkbox`, `TextField` | - | structural-only |
+| `email` | `이메일` | `PageStackContents`, `TitleSection`, `SectionItem`, `TextField` | - | structural-only |
+| `actions` | `다음` | `Bottom(preset="primary-cta")`, `SinglePrimaryAction`, `Button` | - | structural-only |
+
+## Distortion Gates
+
+- Content remains the only scroll owner.
+- Bottom CTA is isolated in `Bottom(preset="primary-cta")`.
+- Section boundaries are expressed with `SectionDivider(thickness="section")`, not route margins.
+- No deprecated `@pxds/pxds-components` or `@pxds/pxds-icons` import is allowed.
 
 ## Implementation Contract
 
@@ -125,5 +135,5 @@ Section(email)
 - Use `@pxds/pxds-layout/components` for `AppScreen`, `FieldStack`, `PageStackContents`, `SectionDivider`, and `SinglePrimaryAction`.
 - Do not import deprecated `@pxds/pxds-components` or deprecated `@pxds/pxds-icons`.
 - Keep `AppScreen.Content` as the only scroll owner.
-- Keep the primary CTA in `AppScreen.ActionBar`, not at the end of content.
+- Keep the primary CTA in `AppScreen.Bottom`, not at the end of content.
 - Keep section boundaries as `SectionDivider(thickness="section")` between sections.

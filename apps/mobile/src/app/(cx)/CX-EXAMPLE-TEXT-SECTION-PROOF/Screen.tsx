@@ -111,13 +111,13 @@ export function Screen() {
 					<TextField defaultValue="example@plus-ex.com" state="typed" />
 				</TextSection>
 			</AppScreen.Content>
-			<AppScreen.ActionBar preset="primary-cta">
+			<AppScreen.Bottom preset="primary-cta">
 				<SinglePrimaryAction>
 					<Button fullWidth size="xlarge" variant="primary">
 						다음
 					</Button>
 				</SinglePrimaryAction>
-			</AppScreen.ActionBar>
+			</AppScreen.Bottom>
 		</AppScreen>
 	);
 }

@@ -57,9 +57,7 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 │   ├── pxds-spec/                 screen/component registry와 UI 비의존 spec 타입
 │   ├── cx-tokens/                 CX DS 기반 token SSOT
 │   ├── cx-icons/                  CX DS icon originals + registry + React wrapper
-│   ├── pxds-icons/                Deprecated legacy WDS icon adapter
 │   ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
-│   ├── pxds-components/           Deprecated legacy PXDS/WDS component adapter
 │   ├── cx-components/             최신 CX component package + inventory
 │   ├── pxds-figma/                Figma bridge/hooks/spec authoring
 │   └── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
@@ -94,10 +92,8 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 - `@pxds/pxds-spec` — screen/component registry와 kind 같은 UI 비의존 spec 타입을 소유한다.
 - `@pxds/cx-tokens` — 런타임 시각 token 값의 SSOT. CX primitive/semantic token set과 generated CSS를 제공한다.
 - `@pxds/cx-icons` — CX DS Figma 원천 SVG, icon registry, React `Icon` wrapper 초안을 소유한다.
-- `@pxds/pxds-icons` — deprecated legacy WDS icon adapter. 신규 화면/컴포넌트 제작의 기준 icon vocabulary로 삼지 않고, 기존 호환이 필요한 경우에만 제한적으로 소비한다.
 - `@pxds/pxds-layout` — `AppScreen`, `Content*`, bottom-sheet, layout primitives, screen export bridge를 소유한다.
 - `@pxds/cx-components` — 최신 CX component package. 신규 화면/컴포넌트 제작의 기준 어휘와 구현 surface를 소유한다.
-- `@pxds/pxds-components` — deprecated legacy PXDS/WDS component adapter. 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않고, 기존 호환이 필요한 경우에만 제한적으로 소비한다.
 - `@pxds/pxds-figma` — Figma variables, component/page export, Figma renderer, Figma capture/hooks/spec authoring을 소유한다.
 - `apps/mobile` — 정책 기반 모바일 화면 route와 PXDS 화면 조립의 SOT. page와 organism이 실제 React DOM을 직접 그리는 구조를 기준으로 삼는다.
 - `apps/preview` — mobile을 iframe으로 소비하는 프리뷰 도구. screen/component/policy registry 탐색, Figma export 요청, spec 조회 UI를 소유한다.
@@ -119,15 +115,12 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
   → @pxds/pxds-layout
   → apps/mobile
 
-@pxds/pxds-icons → legacy compatibility only
-
 @pxds/pxds-figma → apps/preview
 ```
 
-WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS Component, `@pxds/pxds-components`, `@pxds/pxds-icons`는 deprecated이며 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않는다.**
+WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS Component와 삭제된 legacy adapter(`@pxds/pxds-components`, `@pxds/pxds-icons`)는 신규 화면/컴포넌트 제작의 기준 어휘로 삼지 않는다.**
 
-- 기존 호환이 필요한 WDS/PXDS legacy component는 `@pxds/pxds-components` 경계를 통해 제한적으로 소비한다.
-- 기존 호환이 필요한 WDS/PXDS legacy icon은 `@pxds/pxds-icons` 경계를 통해 제한적으로 소비한다.
+- 기존 호환이 필요한 WDS/PXDS legacy component/icon은 현재 repo에 남은 실제 package 경계에서만 제한적으로 소비한다. 삭제된 `@pxds/pxds-components`, `@pxds/pxds-icons` import를 새로 추가하지 않는다.
 - 신규 구현은 `@pxds/cx-components`, `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`를 우선한다.
 - `@wanteddev/wds` 직접 import는 adapter/core 경계 안에 격리한다.
 - `@pxds/pxds-layout`의 bottom-sheet처럼 layout runtime 자체를 구성하는 WDS primitive는 순환 의존을 피하기 위해 layout 패키지 경계에서 직접 흡수할 수 있다.
@@ -140,7 +133,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - optional/fallback은 API/mock/spec 경계에서 처리하고 하위 component에는 확정 값을 넘긴다.
 - `useMemo` / `useCallback`은 기본 금지다. 렌더 비용이나 참조 안정성이 실제 문제가 되면 먼저 컴포넌트 경계, state 위치, 데이터 변환 위치를 조정한다.
 - route/screen에서 margin, padding, raw style로 기준선을 보정하지 않는다. layout 책임은 `@pxds/pxds-layout`의 template과 primitives가 가진다.
-- 새 component/variant/slot이 필요하면 먼저 `@pxds/cx-components`의 최신 어휘를 확인하고, 기존 molecule/pattern 축으로 표현 가능한지 검토한다. `@pxds/pxds-components/registry`는 deprecated legacy 참고로만 사용한다.
+- 새 component/variant/slot이 필요하면 먼저 `@pxds/cx-components`의 최신 어휘를 확인하고, 기존 molecule/pattern 축으로 표현 가능한지 검토한다. 삭제된 legacy adapter registry를 신규 기준으로 삼지 않는다.
 - 아름다운 UI는 token과 pattern을 벗어난 장식이 아니라, 정책 정보의 위계, 간격, 상태, 행동이 명확하게 정리된 결과여야 한다.
 
 ## 디자인 품질 기준
@@ -149,7 +142,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 - 화면 패턴은 사용자의 과업 흐름을 보존해야 한다. form, detail, list, complete, bottom sheet, popup의 역할을 섞지 않는다.
 - 한 화면 안에서 CTA, navigation, error, notice의 위계가 즉시 읽혀야 한다.
 - 정책상 중요한 제한 조건과 에러는 숨기지 않는다. 단, 긴 정책 문장은 사용자가 행동할 수 있는 UI copy로 정리한다.
-- WDS Component, deprecated `@pxds/pxds-components`, deprecated `@pxds/pxds-icons`, 임의 inline UI로 빠르게 맞춘 결과가 반복되면 `@pxds/cx-components` / `@pxds/cx-icons` vocabulary를 보강할 후보로 기록한다.
+- WDS Component, 삭제된 legacy adapter import, 임의 inline UI로 빠르게 맞춘 결과가 반복되면 `@pxds/cx-components` / `@pxds/cx-icons` vocabulary를 보강할 후보로 기록한다.
 
 ## 공통 검증
 
