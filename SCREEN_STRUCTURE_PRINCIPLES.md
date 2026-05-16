@@ -180,6 +180,17 @@ buildOwner:
 - 후보가 여러 개면 기존 reference에서 같은 visual pattern을 안정적으로 구현한 사례를 우선한다.
 - 모든 후보가 distortion risk를 만들면 Build는 후보명을 억지로 따르지 않고, 재사용 가능한 organism/component 후보를 만들거나 Diagram으로 되돌린다.
 
+#### Fit 산정 기준
+
+`fit`은 현재 샘플 copy가 짧아서 맞아 보이는지가 아니라, 후보의 capability가 `layoutContract`를 구조적으로 보장하는지로 판단한다.
+
+- `strong`: `role`, `structure`, `alignment`, `density`, `wrapping`, slot을 직접 지원하고, 알려진 Distortion Gate 위험이 없으며, route-level CSS 없이 구현 가능하다. 가까운 reference에서 같은 visual pattern을 안정적으로 구현한 사례가 있으면 우선한다.
+- `medium`: 핵심 structure는 맞지만 `density`, `wrapping`, state, slot 중 하나가 검증에 의존한다. 단, 알려진 구조적 위험이 layoutContract의 핵심을 건드리면 현재 값이 짧아도 `medium`이 아니다.
+- `weak`: 역할은 비슷하지만 structure/alignment/density/wrapping/card treatment 중 하나 이상이 부족하거나, wrapper/spacer/임의 width/route-level CSS 없이는 맞추기 어렵다.
+- `reject`: Distortion Gate를 위반하거나, required slot/state/wrapping을 지원하지 않거나, deprecated import가 필요하거나, wire reference의 핵심 레이아웃을 바꾼다.
+
+고정 폭 column, surface/padding 부재, slot 부재, wrapping 제한처럼 section의 핵심 행동을 건드리는 알려진 한계가 있으면 `weak` 또는 `reject`로 기록한다.
+
 ## OGN별 Layout Strategy
 
 다이어그램은 OGN을 단순 나열하지 않고, 각 OGN이 어떤 layout contract를 지켜야 하며 어떤 component 후보가 그 contract를 만족할 가능성이 있는지까지 기록해야 한다. 신규 component 필요 여부는 시각 취향이 아니라 layout contract 충족 여부로 결정한다.
@@ -208,7 +219,7 @@ OGN: ogn-...
   componentCandidates:
     - name: component/pattern/organism 이름
       source: wire reference | existing screen | cx-components
-      fit: strong | medium | weak
+      fit: strong | medium | weak | reject
       reason: contract 충족 근거
       risk: contract 미충족 가능성
 ```
