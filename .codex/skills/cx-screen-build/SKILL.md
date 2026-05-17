@@ -7,6 +7,8 @@ description: Implement Phase 4 CX mobile screens in this repository from approve
 
 Use this for Phase 4 only. Build translates approved Map and Diagram decisions into code. Do not reinterpret policy or redesign layout during Build.
 
+This skill executes Step 7-8 from `SCREEN_GENERATION_FLOW.md`: Build Plan and Implementation. The flow document owns the procedure and document routing; this skill enforces it during code changes.
+
 ## Required Reading
 
 - The target screen's `Screen.map.md`
@@ -14,6 +16,20 @@ Use this for Phase 4 only. Build translates approved Map and Diagram decisions i
 - `DESIGN_FOUNDATION.md`
 - `DESIGN_PATTERNS.md`
 - package AGENTS files nearest the files being edited
+
+## Build Plan Gate
+
+Before editing files, publish a Build Plan:
+
+- `Create`: new route, organism, config, registry, docs, or tests.
+- `Modify`: existing files that will change.
+- `Remove`: files to delete.
+- `No-touch`: nearby files intentionally left alone.
+- `Layout Risk`: rail owner, padding owner, bottom CTA owner, wrapping/overflow risk.
+- `CSS / token risk`: whether any CSS is needed, and why it is not a route-level layout patch.
+- `Shared Ownership`: files that must not be edited in parallel without coordination.
+
+Do not implement until route-level margin/padding patch, raw color, raw spacing, raw font-size, and deleted legacy imports are either absent or explicitly rejected in the plan.
 
 ## Implementation Rules
 
@@ -25,6 +41,8 @@ Use this for Phase 4 only. Build translates approved Map and Diagram decisions i
 - Treat Diagram component names as candidates unless the Diagram says they are required. Select by capability against the contract, not by name match. A component name match alone is not acceptance evidence.
 - Reject candidates that violate Distortion Gates. If no candidate passes, create or adapt a reusable organism/component, or return to `cx-screen-diagram` when the Diagram contract itself is insufficient.
 - Avoid route-level raw margin/padding fixes. If layout distorts, fix the organism/component selection instead of masking it.
+- Keep layout ownership explicit: `Screen.tsx` owns AppScreen rails and slots, OGN owns policy-bearing body composition, `@pxds/cx-layout` owns layout rails/primitives, and `@pxds/cx-components` owns internal component alignment/state visuals.
+- If implementation reveals a wrong boundary, wrong reference, missing layoutContract, or candidate vocabulary gap, stop and return to the relevant Step 3-6 decision instead of quietly redesigning in code.
 
 ## Component Selection
 

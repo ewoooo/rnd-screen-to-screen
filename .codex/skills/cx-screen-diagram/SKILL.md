@@ -5,22 +5,34 @@ description: Create or review latest-spec Phase 3 Screen.diagram.md for CX mobil
 
 # CX Screen Diagram
 
-Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference application, layout strategy, layout contract, governance application, and component candidate discovery. It must not invent policy meaning or make component names the acceptance criteria.
+Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference application, layout strategy, layout contract, governance application, OGN boundary decisions, and component candidate discovery. It must not invent policy meaning or make component names the acceptance criteria.
+
+This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract. The SOT is the flow document; this skill only operationalizes it.
 
 ## Required Reading
 
 - `SCREEN_STRUCTURE_PRINCIPLES.md`
 - `SCREEN_GENERATION_FLOW.md`
 - `DESIGN_PATTERNS.md`
+- `DESIGN_FOUNDATION.md`
 - Phase 2 `Screen.map.md`
 - closest references under `apps/mobile/src/screen-diagrams/`
 
 ## Workflow
 
-1. Search `apps/mobile/src/screen-diagrams/` and nearby existing `Screen.diagram.md` files for the closest visual wire reference.
+1. Run Reference Decision:
+   - choose `patternFamily`
+   - identify the official `DESIGN_PATTERNS.md` pattern
+   - search `apps/mobile/src/screen-diagrams/`, nearby existing `Screen.diagram.md`, and `cx-example`
+   - record accepted and rejected references with reasons
 2. Record `wireReference` in `Screen Contract`.
 3. Draw `Screen Wire` from the reference and current Map before naming components.
-4. Run Pattern Analysis Gate before finalizing section contracts:
+4. Run OGN Boundary Decision:
+   - map SB OGN IDs to actual organism boundaries
+   - choose `reuse | extend | new | structural-only`
+   - record screen-owned slots, organism-owned policy meaning, and layout rhythm owner
+   - keep AppBar/Header/Bottom chrome out of OGN organisms
+5. Run Pattern Analysis Gate before finalizing section contracts:
    - `wireSemanticTag`: section id + semantic role + boundary/placement, such as `[summary | key-value-summary | card]`
    - `sectionBoundary`: `none | SectionDivider | contentsDivider | cardBoundary`
    - `fieldGrouping`: `none | single | FieldStack | FieldStackWithDividers`
@@ -28,15 +40,20 @@ Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference ap
    - `actionPlacement`: `none | Content | Bottom(preset="primary-cta") | inline field action`
    - `typography`: row title/caption roles, emphasis rule, and control label scale
    - `patternDecision`: existing pattern, existing composition, or new candidate
-5. Write sections in this exact order:
+6. Run Component Candidate Decision:
+   - score candidates as `strong | medium | weak | reject`
+   - score by capability against layout behavior, not name similarity or current copy length
+   - reject candidates that need route-level CSS, raw spacing/color/font-size, deprecated imports, or known wrapping/alignment distortion
+   - record vocabulary gaps instead of disguising them as custom screen CSS
+7. Write sections in this exact order:
    1. `Screen Contract`
    2. `Screen Wire`
    3. `Section Contracts`
    4. `Policy / OGN Matrix`
    5. `Distortion Gates`
-6. Apply Phase 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
-7. For each section/OGN, write fields in this order: `patternEvidence`, `patternDecision`, `layoutStrategy`, `layoutContract`, then `componentCandidates`.
-8. Run the checker before moving to Build.
+8. Apply Phase 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
+9. For each section/OGN, write fields in this order: `patternEvidence`, `patternDecision`, `ognBoundaryDecision`, `layoutStrategy`, `layoutContract`, then `componentCandidates`.
+10. Run the checker before moving to Build.
 
 ## Pattern Analysis Gate
 

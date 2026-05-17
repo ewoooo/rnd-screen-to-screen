@@ -79,6 +79,7 @@
 - patternDecision:
   - pattern: `PageStackContents` title slot + `TitleMain(type="complete")` composition inside the first content stack
   - reason: Wire Semantic Tag `[completionHero | completion-hero | leading]` confirms this section's role is a leading completion hero — no standalone card surface, no divider, no centering. DESIGN_PATTERNS.md Completion case A and Pattern G place the success heading before the summary card in one content flow with no visible divider or standalone hero boundary separating the two sections.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns this proof hero slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content-361`
   - padding: parent page stack owns completion spacing; follows  Completion message block spacing.
@@ -125,6 +126,7 @@
 - patternDecision:
   - pattern: compact completion result summary card with an authored card title header and label-value rows
   - reason: Wire Semantic Tag `[completionSummary | key-value-summary | card]` triggers the Summary Card Decision Rule. Three label-value rows appear inside a card-bounded surface with no internal dividers. Per user instruction, RQRContentsDetail is force-applied and its mandatory `title` prop is satisfied by the authored card title "변경 정보" — an intentional structural-proof header, not policy copy.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns the authored summary-card slot and proof rows, with no organism-owned plan-change policy meaning.
 
 #### Summary Card Decision Rule
 
@@ -194,6 +196,7 @@
 - patternDecision:
   - pattern: fixed simple-completion primary CTA area
   - reason: Wire Semantic Tag `[actions | bottom-primary-action | bottom-fixed]` confirms the section is a fixed bottom primary action zone — not scroll content. Completion case A and Pattern G place the completion confirmation action in the fixed bottom action zone. `bottom-fixed` boundary prevents treating the CTA as the last scroll section.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; `AppScreen.Bottom` owns the proof action slot and no organism-owned navigation or policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content-361`
   - padding: bottom action area owns safe-area and CTA spacing.

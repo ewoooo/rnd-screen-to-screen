@@ -37,7 +37,6 @@ const buildSelectionSources = new Set([
 ]);
 const routeGroupDomainAliases = new Map([
 	["nova-mbr-legacy", "mbr"],
-	["nova-mbr-fp", "mbr"],
 ]);
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
@@ -603,6 +602,51 @@ function validateBuildSelectionsAgainstDiagram(generation, diagram) {
 	}
 }
 
+function validateDiagramProcessGates(diagram) {
+	if (!/wireReference\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record wireReference in Screen Contract");
+	}
+	if (!/ognBoundaryDecision\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record ognBoundaryDecision for each policy-bearing section/OGN");
+	}
+	if (!/layoutContract\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record layoutContract before Build");
+	}
+	if (!/componentCandidates\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record componentCandidates before Build");
+	}
+}
+
+function validateFoundationScan(label, source) {
+	if (!source) return;
+	const rawStylePatterns = [
+		{ name: "raw hex color", pattern: /#[0-9a-fA-F]{3,8}\b/ },
+		{ name: "raw fontSize", pattern: /\bfontSize\s*[:=]/ },
+		{ name: "raw font-size", pattern: /\bfont-size\s*:/ },
+		{ name: "route-level margin", pattern: /\bmargin(?:Top|Right|Bottom|Left)?\s*[:=]/ },
+		{ name: "route-level padding", pattern: /\bpadding(?:Top|Right|Bottom|Left)?\s*[:=]/ },
+	];
+	for (const { name, pattern } of rawStylePatterns) {
+		if (pattern.test(source)) {
+			warning(`${label} contains ${name}; confirm DESIGN_FOUNDATION.md token/component ownership`);
+		}
+	}
+}
+
+function validateCompletionPattern(screen, screenSource, organismSources) {
+	if (screen.generation.pattern !== "complete") return;
+	const combinedSource = `${screenSource}\n${organismSources.join("\n")}`;
+	if (!/TitleMain[\s\S]{0,300}type=["']complete["']/.test(combinedSource)) {
+		warning('complete pattern should render TitleMain type="complete"');
+	}
+	if (/type=["']back["']|leftLabel=["']뒤로["']|title=["']뒤로["']/.test(screenSource)) {
+		warning("complete pattern should not expose back navigation as the primary AppBar action");
+	}
+	if (!/AppScreen\.Bottom[\s\S]{0,200}preset=["']primary-cta["']/.test(screenSource)) {
+		warning('complete pattern should keep the primary CTA in AppScreen.Bottom preset="primary-cta"');
+	}
+}
+
 function validateScreenMap(screen, context, mapPath) {
 	if (!existsSync(mapPath)) {
 		problem("Screen.map.md is missing; generated screens must record Phase 2 policy/governance mapping");
@@ -684,6 +728,7 @@ function validateDiagramContract(screen, context, diagramPath, mapText) {
 	const screenWire = extractMarkdownSection(diagram, "Screen Wire");
 	const sectionContracts = extractMarkdownSection(diagram, "Section Contracts");
 	validateScreenWireContract(diagram, screenWire, sectionContracts);
+	validateDiagramProcessGates(diagram);
 	validateBuildSelectionsAgainstDiagram(screen.generation, diagram);
 
 	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
@@ -767,6 +812,8 @@ function validateScreen(screen, context) {
 		problem("Screen.tsx is missing");
 	}
 
+	validateFoundationScan("Screen.tsx", screenSource);
+	const organismSources = [];
 	for (const ognId of generation.ognIds ?? []) {
 		const organism = context.organismsById.get(ognId);
 		if (!organism) {
@@ -779,10 +826,17 @@ function validateScreen(screen, context) {
 		if (!screenSource.includes(organism.name)) {
 			problem(`Screen.tsx must use organism component ${organism.name} for ${ognId}`);
 		}
-		if (hasDeprecatedImport(path.join(organism.dir, `${organism.name}.tsx`))) {
+		const organismPath = path.join(organism.dir, `${organism.name}.tsx`);
+		if (existsSync(organismPath)) {
+			const organismSource = readText(organismPath);
+			organismSources.push(organismSource);
+			validateFoundationScan(`organism ${ognId}`, organismSource);
+		}
+		if (hasDeprecatedImport(organismPath)) {
 			problem(`organism ${ognId} imports deprecated @pxds/pxds-components`);
 		}
 	}
+	validateCompletionPattern(screen, screenSource, organismSources);
 
 	if (hasDeprecatedImport(screenPath)) {
 		problem("Screen.tsx imports deprecated @pxds/pxds-components");

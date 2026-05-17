@@ -82,6 +82,7 @@
   - alignment: leading
   - wrapping: title intentionally wraps at the newline; subtitle may wrap to multiple lines.
   - overflow: normal content scroll.
+- ognBoundaryDecision: `structural-or-policy-intro` — the intro section owns task framing copy inside Content; screen owns section placement and no new OGN id is introduced.
 - layoutContract:
   - role: introduce the signup basic-info step and explain data use at a high level.
   - structure: `PageStackContents` title slot containing `TitleMain`.
@@ -116,6 +117,7 @@
   - alignment: leading field labels and values.
   - wrapping: helper text may wrap inside field bounds; numeric examples stay readable.
   - overflow: no horizontal overflow for placeholders or helpers.
+- ognBoundaryDecision: `input-section` — profile fields stay grouped in the field-stack section; screen owns placement only.
 - layoutContract:
   - role: collect basic identity/contact fields needed by the implemented step.
   - structure: titled section + `SectionItem` + three text fields in one stack.
@@ -150,6 +152,7 @@
   - alignment: leading row labels; right item and subText slots are closed.
   - wrapping: labels stay one line in current copy.
   - overflow: rows remain in scroll content above the fixed action.
+- ognBoundaryDecision: `choice-section` — gender radio choice stays grouped in the list-selected section; screen owns placement only.
 - layoutContract:
   - role: collect one gender option, including the visible "선택 안 함" option.
   - structure: titled section + `SectionItem` + single-select row stack.
@@ -184,6 +187,7 @@
   - alignment: full-width
   - wrapping: button label one line.
   - overflow: fixed bottom action stays outside scroll content.
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: progress to the next signup step when required implemented inputs are present.
   - structure: fixed bottom primary CTA.

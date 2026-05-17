@@ -338,7 +338,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 
 `new_string`:
 ```
-├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
+├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 절차·문서 라우팅·공개 체크포인트 SOT
 ```
 
 - [ ] **Step 4: `## 공통 검증` 섹션을 "절차 밖 게이트"로 강화**

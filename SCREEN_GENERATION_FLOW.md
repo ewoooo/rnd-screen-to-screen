@@ -4,11 +4,140 @@ SB가 첨부됐을 때 스크린을 생성하는 절차 계약이다. 이 문서
 
 SB 기반 신규 생성 절차에서는 Figma SOT를 필수 대조 대상으로 삼지 않는다. Figma SOT는 실제 페이지 재현 또는 시각 기준 확인이 명시된 작업에서만 참조한다.
 
-절차는 5개 책임 페이즈로 구성된다. 각 페이즈는 단일 책임, 고정 참고 문서, 고정 산출물, 완료조건(DoD)을 가진다. DoD는 검증이 아니라 "이 산출물이 내적으로 완성되어 다음 페이즈로 넘어갈 수 있는가"의 자체 판단 기준이다. `lint` / `build` / `check:*` 는 DoD가 아니다.
+절차의 기본 책임 단위는 5개 페이즈다. 실제 SB 수신형 제작에서는 이 5페이즈를 0-10 공개 체크포인트로 세분화해 운영한다. 0-10은 5페이즈를 대체하지 않고, 메인 에이전트가 어떤 판단을 언제 공개하고 승인해야 하는지 고정한다.
+
+각 페이즈는 단일 책임, 고정 참고 문서, 고정 산출물, 완료조건(DoD)을 가진다. DoD는 검증이 아니라 "이 산출물이 내적으로 완성되어 다음 페이즈로 넘어갈 수 있는가"의 자체 판단 기준이다. `lint` / `build` / `check:*` 는 DoD가 아니다.
 
 > **검증은 절차 페이즈가 아니다.** `lint` / `build` / `check:*` 실행과 그 책임은 `AGENTS.md` 의 `## 공통 검증` 섹션이 단독 소유하는 절차 밖 게이트다.
 
 > **레이아웃 보존은 스크린 생성의 최우선 디자인 게이트다.** 정책 충실도는 무엇을 보여줄지 결정하고, 디자인 시스템은 어떻게 표현할지 제한하지만, Phase 3/4의 메인 에이전트 승인은 먼저 SB/wire reference/Diagram의 핵심 레이아웃이 보존됐는지 확인해야 한다. 레이아웃 보존을 해치는 정책 copy, component 선택, spacing 보정, 신규 OGN은 통과하지 않는다.
+
+## 0-10 운영 순서
+
+| Step | Phase | 책임 | 공개/산출물 | 다음 단계 진입 조건 |
+|---:|---|---|---|---|
+| **0 · Intake** | Pre-phase | 입력 파일과 작업 범위의 존재성을 확인한다. | `Intake Summary` | target screen, screen spec, OGN spec, 기존 구현 여부가 확인됨 |
+| **1 · SB Extract** | Phase 1 | SB에 적힌 화면/OGN 사실을 추출한다. | `Extract Summary` | screenId, OGN list, state, CTA, transition/case branch가 목록화됨 |
+| **2 · Policy Map** | Phase 2 | 정책 의미, sourceRef, governance, copy 근거를 확정한다. | `Screen.map.md` | 요구사항이 policy/governance/copy와 연결됨 |
+| **3 · Reference Decision** | Phase 3 | 공식 패턴과 가까운 구현/wire reference를 선택한다. | `Reference Decision Log` | patternFamily, official pattern, rejected references가 명시됨 |
+| **4 · OGN Boundary Decision** | Phase 3 | 정책 의미와 layout rhythm의 소유자를 결정한다. | `OGN Boundary Decision` | reuse/extend/new/structural-only와 owner가 정해짐 |
+| **5 · Component Candidate Decision** | Phase 3 | 구현 어휘와 레이아웃 후보를 capability 기준으로 평가한다. | `Component Candidate Decision` | selected/rejected candidates와 reject 이유가 기록됨 |
+| **6 · Diagram Contract** | Phase 3 | 화면 구조, layoutContract, Distortion Gate를 구현 전 계약으로 고정한다. | `Screen.diagram.md` | 모든 section에 patternEvidence, layoutStrategy, layoutContract, componentCandidates가 있음 |
+| **7 · Build Plan** | Phase 4 | 파일 변경 범위와 raw CSS/layout patch 위험을 공개한다. | `Build Plan` | create/modify/remove/no-touch와 layout risk가 명시됨 |
+| **8 · Implementation** | Phase 4 | 승인된 map/diagram/build plan을 코드화한다. | `Screen.tsx`, `Screen.config.ts`, organisms, registry/route | 구현이 diagram contract와 OGN boundary를 보존함 |
+| **9 · Verification** | Phase 5 | 자동 검증과 브라우저/pattern/foundation 검사를 수행한다. | check/lint/build/browser 결과 | strict check, lint, build, pattern checklist가 통과함 |
+| **10 · Report** | Post-phase | 사용한 source, 결정, reject, 검증, 남은 위험을 보고한다. | `Final Report` | 변경 범위와 판단 근거를 추적할 수 있음 |
+
+5페이즈와의 매핑:
+
+```txt
+Phase 1 = Step 1
+Phase 2 = Step 2
+Phase 3 = Step 3-6
+Phase 4 = Step 7-8
+Phase 5 = Step 9
+Pre/Post = Step 0, Step 10
+```
+
+구현 전 반드시 공개해야 하는 체크포인트:
+
+```txt
+1. SB Extract 결과
+2. Reference Decision
+3. Component Candidate Decision
+4. Build Plan
+```
+
+이 체크포인트는 긴 회의록이 아니라 다음 위험을 구현 전에 잡기 위한 승인 가능한 작업 로그다: 잘못된 reference 선택, OGN boundary 오류, 패턴과 맞지 않는 component 후보, raw CSS나 route-level layout patch, 예상 밖 파일 수정.
+
+서브 에이전트에게 구현을 위임할 때도 이 네 지점은 생략하지 않는다. 긴 설명 대신 아래 짧은 형식으로 공개하면 충분하다.
+
+```txt
+Reference Decision
+- official pattern:
+- wire/reference:
+- rejected:
+
+Component Candidate Decision
+- selected:
+- rejected:
+- layout risk:
+
+Build Plan
+- worker:
+- write scope:
+- no-touch:
+- approval checks:
+```
+
+메인 에이전트는 하위 에이전트의 완료 보고를 그대로 승인하지 않는다. 승인 전에 반드시 `git diff --stat`, scoped diff, checker/lint/build, 그리고 실제 렌더의 layout evidence를 확인한다.
+
+## 문서 라우팅
+
+문서는 SOT이고, 스킬은 실행자다. 스킬이 문서 역할 분리의 유일한 출처가 되면 repo 밖에서 절차가 drift 되므로, phase별로 읽어야 할 문서는 이 표가 소유한다.
+
+| Step | 반드시 읽는 문서/입력 | 읽지 않는 것 |
+|---|---|---|
+| **0 · Intake** | SB input, `AGENTS.md`, 기존 target route/organism 파일, `git status` | 디자인 판단 |
+| **1 · SB Extract** | SB `screen/*.md`, SB `organism/*.md` | policy-core, 디자인 문서 |
+| **2 · Policy Map** | `packages/policy-core/policies/**/*.md`, `packages/policy-core/policies/**/*.policy.ts`, `packages/policy-core/governance/**/*.md` | `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md` |
+| **3 · Reference Decision** | `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `apps/mobile/src/screen-diagrams/`, nearby `Screen.diagram.md`, `cx-example` | 구현 코드 변경 |
+| **4 · OGN Boundary Decision** | `Screen.map.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, existing organisms | 새 component API 확정 |
+| **5 · Component Candidate Decision** | `Screen.diagram.md` draft, `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-layout` | route-level CSS 보정 |
+| **6 · Diagram Contract** | `SCREEN_STRUCTURE_PRINCIPLES.md`, `DESIGN_PATTERNS.md`, `Screen.map.md` | 구현 편의에 따른 구조 변경 |
+| **7 · Build Plan** | `Screen.map.md`, `Screen.diagram.md`, `DESIGN_FOUNDATION.md`, existing route/organism files, `git status` | 새로운 정책 해석 |
+| **8 · Implementation** | `Screen.map.md`, `Screen.diagram.md`, `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-layout`, `@pxds/cx-icons` | 새 reference/pattern 판단 |
+| **9 · Verification** | `AGENTS.md` 공통 검증, `Screen.diagram.md` Distortion Gates, pattern-specific checklist, foundation-specific scan | checker 약화 |
+| **10 · Report** | 작업 로그, 사용 source, 결정/reject 기록, 검증 결과 | 숨겨진 내부 판단 |
+
+`DESIGN_PATTERNS.md`는 Step 3-6에서 화면 구조와 pattern/layout contract를 결정하고, `DESIGN_FOUNDATION.md`는 Step 3에서 제약을 확인한 뒤 Step 5/7/8/9에서 token·typography·spacing·radius 위반을 차단한다. Phase 2는 정책 의미가 디자인 표현에 의해 미리 걸러지지 않도록 디자인 문서를 읽지 않는다.
+
+## 레이아웃 책임
+
+레이아웃은 Implementation에서 즉흥적으로 맞추지 않는다.
+
+```txt
+Reference Decision
+- 기준 레이아웃 선택
+
+OGN Boundary Decision
+- layout rhythm 소유자 결정
+
+Component Candidate Decision
+- 정렬 / width / wrapping 가능한 후보만 통과
+
+Diagram Contract
+- layoutStrategy / layoutContract / Distortion Gates 확정
+
+Build Plan
+- route-level patch와 raw CSS 위험 차단
+
+Implementation
+- layout owner를 코드에 반영
+
+Verification
+- 실제 렌더에서 정렬 / 겹침 / 패턴 이탈 확인
+```
+
+실제 렌더 확인은 텍스트 존재 여부만으로 끝내지 않는다. 상위 승인 gate는 최소한 다음 중 하나를 남긴다.
+
+- screenshot 확인
+- Playwright/Browser bounding box 검사
+- Header / Content / Bottom rail의 상대 위치 검사
+- CTA가 viewport 밖으로 밀리거나 content와 겹치지 않는지 검사
+
+작고 단순한 문서-only 변경이 아니면, Completion/Form/Detail 같은 화면 패턴 변경은 bounding box 또는 screenshot 기반 layout evidence를 포함해야 한다.
+
+소유권:
+
+| Owner | 책임 |
+|---|---|
+| `Screen.tsx` | `AppScreen` rails, SystemHeader/Header/Content/Bottom slot 조립 |
+| OGN organism | 정책 의미가 있는 body composition과 section 내부 구조 |
+| `@pxds/cx-layout` | PageStackContents, FieldStack, bottom fixed rail, content rail/padding |
+| `@pxds/cx-components` | card 내부 padding, row alignment, button internal alignment, component state visuals |
+
+구현 중 정렬이 안 맞으면 CSS 보정 문제가 아니라 후보 선택 실패, Diagram layoutContract 부족, pattern reference 선택 오류, component vocabulary gap 중 하나로 본다. 이 경우 필요한 단계로 되돌아간다.
 
 ## 5 페이즈 계약
 
@@ -43,11 +172,17 @@ Codex 화면 생성 작업은 아래 `cx-*` 스킬을 사용해 페이즈별 절
 
 ```mermaid
 flowchart LR
-    A["SB 첨부"] --> P1["Phase 1 · Extract<br/>SB → 화면ID/OGN/정책태그"]
-    P1 --> P2["Phase 2 · Map<br/>정책 + governance → 요구 매트릭스"]
-    P2 --> P3["Phase 3 · Diagram<br/>wire reference + 패턴 + OGN 결정 + governance 적용 + layoutStrategy + Diagram"]
-    P3 --> P4["Phase 4 · Build<br/>결정된 OGN 계약 + Screen + config"]
-    P4 --> P5["Phase 5 · Register<br/>route catalog + preview"]
+    A["SB 첨부"] --> S0["0 · Intake<br/>범위/파일/기존 구현 확인"]
+    S0 --> P1["1 · SB Extract<br/>Phase 1"]
+    P1 --> P2["2 · Policy Map<br/>Phase 2"]
+    P2 --> P3A["3 · Reference Decision"]
+    P3A --> P3B["4 · OGN Boundary Decision"]
+    P3B --> P3C["5 · Component Candidate Decision"]
+    P3C --> P3D["6 · Diagram Contract<br/>Phase 3"]
+    P3D --> P4A["7 · Build Plan"]
+    P4A --> P4B["8 · Implementation<br/>Phase 4"]
+    P4B --> P5["9 · Verification/Register<br/>Phase 5"]
+    P5 --> R["10 · Report"]
     P5 -.->|절차 밖| G["공통 검증 게이트<br/>(AGENTS.md 공통 검증)"]
 ```
 

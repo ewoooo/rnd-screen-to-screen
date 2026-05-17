@@ -16,7 +16,7 @@
 - required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - AppScreen rails: `SystemHeader`, `Header`, `Content`, `Bottom`
 - header contract: visible title `개통 완료`; completion pattern must not imply a back-navigation requirement from this proof screen.
-- bottom contract: `Bottom(preset="guided-action")`; guided prompt and two actions stay fixed outside scroll content.
+- bottom contract: `Bottom(preset="primary-cta")`; the left secondary CTA and right primary CTA stay fixed outside scroll content.
 - configBuildSelections: preserve selected candidate names from Screen.config.ts verbatim.
 - referenceSearch:
   - checked: `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text/*`, `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/*`, nearby complete `Screen.diagram.md` files
@@ -24,7 +24,7 @@
 - wireReference:
   - source: `apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md`
   - matchedParts: complete-screen AppScreen rail, success hero before result summary, compact result summary card, fixed bottom action placement
-  - intentionalDifferences: current proof screen has no progress/close affordance, no benefit notice, no section divider band, and uses a guided two-action bottom area instead of the legacy membership two-button exit area
+  - intentionalDifferences: current proof screen has no progress/close affordance, no benefit notice, no section divider band, and uses a primary-cta two-action bottom area with activation-specific labels
   - secondaryReference: `apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-PLAN-CHANGE/Screen.diagram.md` for sibling proof-screen density and structural-only treatment
   - limitation: reference-only visual structure; policy/copy/OGN ids come from `Screen.map.md` and `Screen.config.ts`
 
@@ -49,12 +49,11 @@
 │ │ 개통일                              2026.05.15  │  │
 │ └──────────────────────────────────────────────────┘  │
 │                                                        │
-├─Bottom(preset="guided-action")────────────────────────┤
-│ [actions | bottom-guided-action | bottom-fixed]       │
-│ 사진이나 연락처, 앱도 새 휴대폰으로 한 번에 옮겨볼까요? │
+├─Bottom(preset="primary-cta")──────────────────────────┤
+│ [actions | bottom-primary-action | bottom-fixed]      │
 │ ┌──────────────────────┐ ┌─────────────────────────┐ │
 │ │ 홈으로 이동          │ │ 데이터 옮기기           │ │
-│ └──── secondary CTA ───┘ └──── primary CTA + AI ───┘ │
+│ └──── secondary CTA ───┘ └──── primary CTA ─────────┘ │
 └───────────────────────────────────────────────────────┘
 ```
 
@@ -79,6 +78,7 @@
 - patternDecision:
   - pattern: `PageStackContents` complete-title composition
   - reason: Wire Semantic Tag `[completionHero | completion-hero | leading]` identifies a leading completion hero with no card boundary or divider. DESIGN_PATTERNS.md Completion case A places `TitleMain(type="complete")` before the summary card in one content flow; no visible divider or standalone card boundary separates the hero from the summary.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns this proof hero slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content-361`
   - padding: completion block follows DESIGN_PATTERNS.md Completion spacing through the parent page stack; no route-level padding patch
@@ -125,6 +125,7 @@
 - patternDecision:
   - pattern: compact result summary card with authored card title header and label-value rows
   - reason: Wire Semantic Tag `[completionSummary | key-value-summary | card]` plus an AUTHORED card title drives this decision. The tag signals a card-boundary summary zone with repeating label-value pairs; Summary Card Decision Rule applies. Per user instruction, RQRContentsDetail is force-applied and its mandatory `title` prop is satisfied by the authored card title "개통 정보" (intentional structural-proof header, not policy copy). DESIGN_PATTERNS.md Completion case A recommends a summary card after the success heading.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns the authored summary-card slot and proof rows, with no organism-owned activation policy meaning.
 
 #### Summary Card Decision Rule
 
@@ -184,40 +185,36 @@ Candidate evaluation against requiredCapability:
   - sectionBoundary: `none`
   - fieldGrouping: `none`
   - rowSeparators: `none`
-  - actionPlacement: `Bottom(preset="guided-action")`
+  - actionPlacement: `Bottom(preset="primary-cta")`
   - typography:
-    - rowTitle: guided action prompt text
+    - rowTitle: none
     - rowCaption: none
     - emphasisRule: right primary action only
     - controlLabelScale: `matches-reference`
 - patternDecision:
-  - pattern: fixed guided action area with prompt text and two CTAs
-  - reason: Wire Semantic Tag `[actions | bottom-guided-action | bottom-fixed]` identifies a bottom-fixed guided action zone. DESIGN_PATTERNS.md Completion copy guidance keeps two-button completion actions in the bottom action area, with the left action secondary and the right action primary; this proof screen adds an AI treatment to the recommended next-step action.
+  - pattern: fixed primary-cta bottom area with two CTAs
+  - reason: Wire Semantic Tag `[actions | bottom-primary-action | bottom-fixed]` identifies a bottom-fixed completion action zone. DESIGN_PATTERNS.md Completion copy guidance keeps two-button completion actions in the bottom action area, with the left action secondary and the right action primary; the new checker requires complete patterns to keep the primary CTA in `AppScreen.Bottom(preset="primary-cta")`.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; `AppScreen.Bottom` owns the proof action slot and no organism-owned navigation or policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content-361`
   - padding: bottom action area owns safe-area and CTA spacing
-  - stack: prompt above horizontal two-button row
-  - alignment: prompt leading; buttons equal-width stretch
-  - typography: body prompt and xlarge CTA labels
-  - wrapping: prompt may wrap; button labels max 1 line
+  - stack: horizontal two-button row
+  - alignment: buttons equal-width stretch
+  - typography: xlarge CTA labels
+  - wrapping: button labels max 1 line
   - overflow: fixed bottom slot; never converted to the last scroll section
 - layoutContract:
   - role: exit plus recommended post-activation transfer action
-  - structure: guidance text followed by secondary left CTA and primary right AI CTA
+  - structure: secondary left CTA and primary right CTA
   - alignment: fixed bottom action area, equal button widths, primary action on the right
-  - density: guided-action bottom height may exceed primary-only CTA; content must remain above it and not be hidden
-  - wrapping: prompt can wrap within the bottom area; button labels must not wrap
-  - distortionRisk: moving the prompt or CTAs into `Content`, reversing action hierarchy, or dropping AI treatment would break the completion action model.
+  - density: primary-cta bottom rail; content must remain above it and not be hidden
+  - wrapping: button labels must not wrap
+  - distortionRisk: moving CTAs into `Content`, reversing action hierarchy, or using a non-primary-cta bottom preset would break the completion action model and checker contract.
 - componentCandidates:
-  - name: `` `AppScreen.Bottom(preset="guided-action")` + `SinglePrimaryAction` + `ActionButton(type="ai", buttonCount=2)` ``
+  - name: `` `AppScreen.Bottom(preset="primary-cta")` + `SinglePrimaryAction` + `ActionButton(type="default", buttonCount=2)` ``
     source: `@pxds/cx-layout` + `@pxds/cx-components`
     fit: strong
-    reason: directly owns the guided-text slot, two-CTA row, right-primary ordering, AI treatment, and bottom safe-area behavior; no route-level spacing or CSS patch needed.
-  - name: `` `AppScreen.Bottom(preset="primary-cta")` + `SinglePrimaryAction` + `ActionButton(type="default", buttonCount=2)` ``
-    source: sibling complete proof screen pattern
-    fit: reject
-    reason: primary-cta/default action treatment lacks the guided prompt slot and AI-specific next-step affordance required by the wire tag `[actions | bottom-guided-action | bottom-fixed]`.
-    risk: would either drop the guided copy or push it into scroll content, breaking the bottom-fixed contract.
+    reason: directly owns the two-CTA row, right-primary ordering, and bottom safe-area behavior required by the completion pattern checker; no route-level spacing or CSS patch needed.
 
 ## Policy / OGN Matrix
 
@@ -225,15 +222,15 @@ Candidate evaluation against requiredCapability:
 | --- | --- | --- | --- | --- | --- | --- |
 | `CX-COMPLETE-ACTIVATION-HERO` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionHero` | none; component proof screen | Success title and supporting sentence above summary card, leading alignment, no standalone hero surface. |
 | `CX-COMPLETE-ACTIVATION-SUMMARY` | Figma Text Section / 완료_개통 | structural-only | structural-only | `completionSummary` | none; component proof screen | RQRContentsDetail card with authored card title header `개통 정보` (structural-proof, not policy copy) and three stable label-value rows; card surface, header, padding, and radius owned by RQRContentsDetail, no route CSS. |
-| `CX-COMPLETE-ACTIVATION-ACTION` | Figma Text Section / 완료_개통 | structural-only | structural-only | `actions` | none; component proof screen | Fixed guided bottom area with left secondary and right primary AI action; prompt stays inside Bottom. |
+| `CX-COMPLETE-ACTIVATION-ACTION` | Figma Text Section / 완료_개통 | structural-only | structural-only | `actions` | none; component proof screen | Fixed primary-cta bottom area with left secondary and right primary action. |
 
 ## Distortion Gates
 
-- Preserve the rail order: `Header`, then `Content`, then `Bottom(preset="guided-action")`; do not convert the bottom prompt/actions into scroll content.
+- Preserve the rail order: `Header`, then `Content`, then `Bottom(preset="primary-cta")`; do not convert the bottom actions into scroll content.
 - Keep `completionHero` and `completionSummary` in the same simple-completion content flow; no `SectionDivider`, extra cross-sell gap, standalone hero card, or inserted section wrapper.
 - The card title `개통 정보` is an intentionally authored structural-proof header (not policy-bound, no policy ID); RQRContentsDetail owns card surface, header, padding, and radius — do not patch with route CSS or replace the component-owned card surface.
 - The `[completionSummary | key-value-summary | card]` tag and its layoutContract override any component-name preference; candidate evaluation must satisfy the Summary Card Decision Rule's `requiredCapability` list.
-- Preserve action hierarchy and order: `홈으로 이동` is secondary/left, `데이터 옮기기` is primary/right with AI treatment.
-- The guided prompt may wrap inside `Bottom`, but button labels must remain one line and the bottom safe area must remain owned by the bottom pattern; only the `Bottom(preset="...")` contract is allowed and the deprecated action-bar alias must not be used in the diagram or implementation.
+- Preserve action hierarchy and order: `홈으로 이동` is secondary/left, `데이터 옮기기` is primary/right.
+- Button labels must remain one line and the bottom safe area must remain owned by `Bottom(preset="primary-cta")`; only the `Bottom(preset="...")` contract is allowed and the deprecated action-bar alias must not be used in the diagram or implementation.
 - Do not invent policy ids, OGN ids, activation business rules, data-transfer eligibility, or navigation behavior from the Figma proof screen.
 - Do not use deprecated `@pxds/pxds-components`, deprecated `@pxds/pxds-icons`, raw route padding/margin/width/font-size patches, or hidden spacer nodes to match the wire.

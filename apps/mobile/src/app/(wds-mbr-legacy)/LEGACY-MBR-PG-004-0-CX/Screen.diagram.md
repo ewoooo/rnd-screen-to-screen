@@ -96,6 +96,7 @@
   - typography: app bar title
   - wrapping: title max 1 line
   - overflow: title truncates only if localized copy exceeds header width
+- ognBoundaryDecision: `chrome-owned` — AppScreen/Header owns placement; the listed app-bar OGN/config id is treated as route chrome, not body policy content.
 - layoutContract:
   - role: provide withdrawal step navigation and title.
   - structure: one header rail with visible `회원 탈퇴` title.
@@ -142,6 +143,7 @@
   - typography: step caption -> main title -> body copy
   - wrapping: title max 2 lines; subtitle may wrap naturally within the rail
   - overflow: no truncation for current support copy
+- ognBoundaryDecision: `structural-intro` — impact task framing copy is owned by the content intro section; screen owns placement only.
 - layoutContract:
   - role: introduce the withdrawal impact review step and the 30-day rejoin restriction message.
   - structure: one content stack with step caption, two-line title, and one support sentence.
@@ -188,6 +190,7 @@
   - typography: `TitleSection` -> list row label/status badge
   - wrapping: row labels max 1 line in current fixture; badges max 1 line
   - overflow: if labels become long, label may wrap without pushing badge off the rail
+- ognBoundaryDecision: `policy-list-section` — impact items stay grouped in the list section; screen must not split list rows into route-local fragments.
 - layoutContract:
   - role: summarize what disappears, is cancelled, or is retained after withdrawal.
   - structure: one titled section containing four status rows and then the unpaid blocking callout.
@@ -234,6 +237,7 @@
   - typography: callout title and readable body
   - wrapping: body may wrap to multiple lines
   - overflow: callout remains visible above the fixed bottom action
+- ognBoundaryDecision: `notice-section` — unpaid warning remains a callout/notice inside the impact flow; no independent route-level alert is invented.
 - layoutContract:
   - role: explain the blocking unpaid amount state that prevents continuing.
   - structure: one titled callout after the impact rows, inside the same section item group.
@@ -280,6 +284,7 @@
   - typography: CTA label scale
   - wrapping: label max 1 line
   - overflow: fixed and safe-area aware
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: block continuation while unpaid state is present.
   - structure: one full-width primary button with disabled state.

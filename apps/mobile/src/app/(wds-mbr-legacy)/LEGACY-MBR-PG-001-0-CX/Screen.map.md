@@ -17,7 +17,7 @@
 
 | Source | Reference | Used For |
 | --- | --- | --- |
-| Latest SB screen | `/Users/wooseong/Desktop/SB-MBR-UC01_02-0513/screen/NOVA-MBR-FP-003-0.md` | 본인인증 화면 task, auth-select/auth-request slot 근거 |
+| Latest SB screen | `/Users/wooseong/Desktop/SB-MBR-UC01_02-0513/screen/<본인인증 화면>.md` | 본인인증 화면 task, auth-select/auth-request slot 근거 |
 | Latest SB organism | `/Users/wooseong/Desktop/SB-MBR-UC01_02-0513/organism/ogn-mbr-auth-select.md` | 허용 인증수단, 기본 노출 수단, 노출 순서 |
 | Latest SB organism | `/Users/wooseong/Desktop/SB-MBR-UC01_02-0513/organism/ogn-mbr-auth-request.md` | 본인인증 적용, 실패/제한 안내 근거 |
 | Converted screen | `apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-001-0-CX/Screen.tsx` | 현재 화면 copy, 선택지, CTA 상태 |

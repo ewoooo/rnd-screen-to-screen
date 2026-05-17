@@ -76,6 +76,7 @@
   - alignment: leading
   - wrapping: title intentionally wraps at the newline; subtitle may wrap to multiple lines.
   - overflow: normal content scroll.
+- ognBoundaryDecision: `structural-or-policy-intro` — the intro section owns task framing copy inside Content; screen owns section placement and no new OGN id is introduced.
 - layoutContract:
   - role: introduce the signup consent step and explain required vs optional consent behavior.
   - structure: `PageStackContents` title slot containing `TitleMain`.
@@ -110,6 +111,7 @@
   - alignment: leading control labels and callout text.
   - wrapping: long accordion titles and callout body wrap within content width.
   - overflow: accordion expansion occurs inside the content scroll region.
+- ognBoundaryDecision: `policy-terms-section` — terms agreement and notice behavior stay grouped in the terms section; screen owns placement only.
 - layoutContract:
   - role: collect required/optional terms consent and present the legal guardian notice as related guidance.
   - structure: titled section + consent accordion organism + callout in one section item.
@@ -144,6 +146,7 @@
   - alignment: leading checkbox controls and accordion titles.
   - wrapping: term titles and body placeholders wrap inside accordion row content.
   - overflow: expanded body content remains in `AppScreen.Content` scroll.
+- ognBoundaryDecision: `terms-detail-section` — accordion rows own expand/collapse details; screen must not flatten them into route-local text.
 - layoutContract:
   - role: manage all/individual consent state for required and optional terms.
   - structure: `FieldStack` with all-agree checkbox and `AccordionList` containing checkbox left content.
@@ -178,6 +181,7 @@
   - alignment: full-width
   - wrapping: button label one line.
   - overflow: fixed bottom action stays outside scroll content.
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: progress to the next signup step when required consents are satisfied.
   - structure: fixed bottom primary CTA.

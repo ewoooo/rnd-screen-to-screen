@@ -90,6 +90,7 @@
   - patternFamily: `form-intro-title`
   - pattern: existing composition
   - reason: current screen uses `PageStackContents` with only a `TitleMain` title slot before the first divider.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns this proof intro slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content`
   - padding: `PageStackContents` owns horizontal content padding.
@@ -124,6 +125,7 @@
   - patternFamily: `sectioned-single-field`
   - pattern: existing composition
   - reason: implemented as titled section with one disabled field.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns the proof field composition while phone policy meaning remains map-level evidence, not an organism boundary.
 - layoutStrategy:
   - widthTier: `content`
   - padding: `PageStackContents` + `SectionItem`
@@ -158,6 +160,7 @@
   - patternFamily: `sectioned-readonly-message`
   - pattern: existing composition
   - reason: implemented as titled section with one read-only message row.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns the proof message composition while auth policy meaning remains map-level evidence, not an organism boundary.
 - layoutStrategy:
   - widthTier: `content`
   - padding: `PageStackContents` + `SectionItem`
@@ -192,6 +195,7 @@
   - patternFamily: `sectioned-field-stack`
   - pattern: existing composition
   - reason: implemented as three text fields inside one `FieldStack`, with the postal-code action inside the first field.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns this proof address field-stack slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content`
   - padding: `PageStackContents` + `SectionItem`
@@ -226,6 +230,7 @@
   - patternFamily: `sectioned-checkbox-field-stack`
   - pattern: existing composition
   - reason: implemented as checked checkbox followed by mirrored disabled address fields inside one `FieldStack`.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns this proof checkbox/address slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content`
   - padding: `PageStackContents` + `SectionItem`
@@ -260,6 +265,7 @@
   - patternFamily: `sectioned-single-field`
   - pattern: existing composition
   - reason: implemented as titled section with one typed email field.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; the screen owns this proof email field slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content`
   - padding: `PageStackContents` + `SectionItem`
@@ -294,6 +300,7 @@
   - patternFamily: `fixed-primary-cta`
   - pattern: existing bottom composition
   - reason: implemented in `AppScreen.Bottom`, not as scroll content.
+- ognBoundaryDecision: `structural-only` — no config OGN id is bound; `AppScreen.Bottom` owns the proof action slot and no organism-owned policy meaning is introduced.
 - layoutStrategy:
   - widthTier: `content`
   - padding: bottom preset owns safe-area and horizontal CTA width

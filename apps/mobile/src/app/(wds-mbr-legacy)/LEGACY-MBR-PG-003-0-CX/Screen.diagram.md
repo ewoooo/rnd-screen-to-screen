@@ -97,6 +97,7 @@
   - typography: app bar title
   - wrapping: title max 1 line
   - overflow: title truncates only if localized copy exceeds header width
+- ognBoundaryDecision: `chrome-owned` — AppScreen/Header owns placement; the listed app-bar OGN/config id is treated as route chrome, not body policy content.
 - layoutContract:
   - role: completion exit and screen title.
   - structure: one close affordance and one title in the header rail.
@@ -143,6 +144,7 @@
   - typography: step caption -> complete display title -> body copy
   - wrapping: title max 2 lines; subtitle may wrap naturally within the content rail
   - overflow: no truncation for the current support copy
+- ognBoundaryDecision: `completion-hero` — completion title/subtitle are owned by the completion hero section; screen owns Content placement and no extra policy OGN is invented.
 - layoutContract:
   - role: communicate that withdrawal processing is complete and summarize the 30-day grace/disposal expectation.
   - structure: one content stack with step caption, two-line completion title, and one supporting paragraph.
@@ -189,6 +191,7 @@
   - typography: `TitleSection` -> card title -> row label/value
   - wrapping: labels max 1 line; values should remain readable and may wrap if real data is longer
   - overflow: long dates must not squeeze labels into an unreadable fixed column
+- ognBoundaryDecision: `completion-summary` — the summary section owns card/key-value result structure from existing rows; no new policy meaning or OGN id is introduced.
 - layoutContract:
   - role: summarize the withdrawal processing facts the user may need after completion.
   - structure: one titled content section containing one detail card titled `처리 정보` with three label-value rows.
@@ -235,6 +238,7 @@
   - typography: callout title and readable body
   - wrapping: body may wrap to multiple lines
   - overflow: must remain visible above the fixed bottom actions
+- ognBoundaryDecision: `notice-section` — revoke/restore notice copy remains inside the callout section; screen owns placement only.
 - layoutContract:
   - role: explain how a user can revoke withdrawal during the grace period.
   - structure: one titled callout inside a content section.
@@ -281,6 +285,7 @@
   - typography: CTA label scale
   - wrapping: labels max 1 line
   - overflow: action group remains fixed and safe-area aware
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: provide completion exit and optional revocation entry.
   - structure: two adjacent CTA buttons: secondary `철회하기`, primary `홈으로 가기`.

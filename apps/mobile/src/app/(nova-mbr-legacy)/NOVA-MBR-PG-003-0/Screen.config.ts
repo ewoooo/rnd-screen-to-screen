@@ -37,5 +37,28 @@ export const screenConfig = defineScreenConfig({
 			"DESIGN_FOUNDATION.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
 		],
+		buildSelections: [
+			{
+				section: "intro",
+				selected: "SectionHeaderPage",
+				source: "componentCandidates",
+				reason:
+					"Preserves the authentication step intro as a content-owned title/subtitle organism; the Screen only places it in the Content rail.",
+			},
+			{
+				section: "authMethods",
+				selected: "ListCellAuthMethod",
+				source: "componentCandidates",
+				reason:
+					"Preserves authentication method rows, request-code controls, and policy ordering inside the OGN without route-local control reconstruction.",
+			},
+			{
+				section: "actions",
+				selected: "MbrPrimaryCTABar",
+				source: "componentCandidates",
+				reason:
+					"Preserves the disabled verification completion action in `AppScreen.Bottom(preset=\"primary-cta\")`; the bar remains structural-only while cx-layout owns fixed rail placement.",
+			},
+		],
 	},
 } as const satisfies ScreenRouteConfig);

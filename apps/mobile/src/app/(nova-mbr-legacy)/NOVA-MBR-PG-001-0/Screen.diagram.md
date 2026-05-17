@@ -77,7 +77,10 @@
 - visibleContent: `회원 가입을 위한 필수·선택 약관에 동의해 주세요`
 - policy: supports `POL-MBR-TERM-001-06` by making the agreement task explicit before the blocking action
 - appliedGovernanceRefs: `UXPT_NAV`, `VOT_RUL`
+- ognBoundaryDecision: reuse `ogn-mbr-section-header-page`; the organism owns intro title/subtitle copy while the screen owns only Content placement.
 - layoutStrategy: first content section below `Header`; no divider before the opening page header
+- layoutContract: role=step intro; structure=title plus supporting copy; alignment=leading; density=comfortable opening section; wrapping=subtitle may wrap within content rail; distortionRisk=intro must not become header chrome or policy prose.
+- componentCandidates: `SectionHeaderPage` (fit: strong, source: current organism, reason: directly owns page-intro copy, risk: low).
 - vocabularyDecision: reuse `SectionHeaderPage`
 - distortionRisk: low; risk appears if the intro is collapsed into the header or expanded with policy prose
 
@@ -89,7 +92,10 @@
 - visibleContent: terms checklist with all-agree affordance, individual agreement rows, and required-agreement negative notice while required items are unchecked
 - policy: primary visible contract for `POL-MBR-TERM-001-06`
 - appliedGovernanceRefs: `UXPT_BTN`, `UXPT_ERR`, `VOT_RUL`
+- ognBoundaryDecision: reuse `ogn-mbr-checkbox-terms`; agreement state, all-agree behavior, required/optional hierarchy, and negative notice stay inside the OGN.
 - layoutStrategy: placed directly after `intro` in `Content(scroll)`; checklist ownership stays inside the OGN
+- layoutContract: role=terms choice and blocking-state explanation; structure=checklist card/list plus negative notice; alignment=leading rows with stable checkbox-label relationship; density=grouped form rhythm; wrapping=row captions may wrap without changing row order; distortionRisk=required/optional hierarchy or error state becomes unclear if split across route markup.
+- componentCandidates: `CheckboxTerms` (fit: strong, source: current organism, reason: owns checklist logic and visible negative notice, risk: medium if recreated as route-local rows).
 - vocabularyDecision: reuse `CheckboxTerms`; do not invent route-local checkbox rows
 - distortionRisk: medium; required/optional hierarchy and error states can be distorted if agreement logic is moved outside the OGN
 
@@ -101,7 +107,10 @@
 - visibleContent: none in the current state; section is mounted with `visible={false}`
 - policy: `POL-MBR-TERM-002-01`, `POL-MBR-TERM-002-05`
 - appliedGovernanceRefs: `UXPT_ERR`, `VOT_RUL`
+- ognBoundaryDecision: reuse hidden `ogn-mbr-text-field-guardian-request`; the organism remains mounted for the guardian state but contributes no visible layout in this state.
 - layoutStrategy: keep after `terms` in logical content order but do not draw fields, timer, helper, or error copy while hidden
+- layoutContract: role=reserved guardian consent state; structure=hidden mounted section only; alignment=none visible; density=no visible spacing contribution; wrapping=not applicable while hidden; distortionRisk=visible fields or timers would imply a different state.
+- componentCandidates: `TextFieldGuardianRequest` (fit: strong, source: current hidden organism, reason: preserves current `visible={false}` boundary, risk: high if shown in initial state).
 - vocabularyDecision: reuse `TextFieldGuardianRequest`
 - distortionRisk: high; showing this section in the wire would imply a different screen state
 
@@ -113,7 +122,10 @@
 - visibleContent: disabled primary CTA
 - policy: enforces `POL-MBR-TERM-001-06`
 - appliedGovernanceRefs: `UXPT_BTN`, `UXPT_ERR`, `UXPT_NAV`, `VOT_RUL`
+- ognBoundaryDecision: reuse `ogn-mbr-action-area-terms`; the OGN owns disabled progression state while `Bottom(preset="primary-cta")` owns fixed rail placement.
 - layoutStrategy: fixed `Bottom(preset="primary-cta")`; content never creates fixed CTA chrome
+- layoutContract: role=bottom primary progression action; structure=single disabled primary CTA in Bottom rail; alignment=full-width rail button; density=standard primary-cta bottom spacing; wrapping=button label remains centered; distortionRisk=enabled state or secondary actions would change the policy state.
+- componentCandidates: `ActionAreaTerms` (fit: strong, source: current organism, reason: owns disabled terms action state, risk: medium if replaced by generic enabled CTA).
 - vocabularyDecision: reuse `ActionAreaTerms disabled`
 - distortionRisk: medium; risk appears if the action is documented as enabled or if secondary actions are added
 

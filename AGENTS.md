@@ -63,18 +63,20 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 ├── DESIGN_FOUNDATION.md  디자인 foundation SOT
 ├── DESIGN_PATTERNS.md    화면 패턴 + layout/spacing contract SOT
 ├── SCREEN_STRUCTURE_PRINCIPLES.md  Diagram/화면 구조 원칙 SOT
-├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
+├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 절차·문서 라우팅·공개 체크포인트 SOT
 ├── AGENTS.md             루트 운영 방향
 └── CLAUDE.md             AGENTS.md symlink
 ```
 
 ## 정책서 기반 화면 생성 흐름
 
-새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
+새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **0-10 운영 순서와 5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
 
 메인 에이전트의 매니징/오케스트레이션과 서브 에이전트의 페이즈별 실무 생성 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
 
 Codex 스킬을 사용할 수 있는 환경에서는 화면 생성/수정 요청에 `cx-screen-create`를 메인 오케스트레이션 스킬로 사용하고, 페이즈별로 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용한다. 특히 Phase 3는 `cx-screen-diagram`의 최신 Screen Wire/wireReference 규칙을 건너뛰지 않는다.
+
+구현 전 공개 체크포인트는 `SCREEN_GENERATION_FLOW.md`가 소유한다. 메인 에이전트는 최소한 SB Extract 결과, Reference Decision, Component Candidate Decision, Build Plan을 사용자에게 확인 가능한 형태로 공개한 뒤 구현에 들어간다.
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
@@ -147,7 +149,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 
 ## 공통 검증
 
-검증은 스크린 생성 절차(`SCREEN_GENERATION_FLOW.md` 의 5페이즈)의 일부가 아니다. 절차 밖 게이트이며 이 섹션과 `@policy/core` 의 `check:*` 스크립트가 검증 명령·책임을 단독 소유한다. 작업 범위에 맞게 실행한다.
+검증은 스크린 생성 절차(`SCREEN_GENERATION_FLOW.md` 의 5페이즈/0-10 운영 순서)의 일부가 아니다. 절차 밖 게이트이며 이 섹션과 `@policy/core` 의 `check:*` 스크립트가 검증 명령·책임을 단독 소유한다. 작업 범위에 맞게 실행한다.
 
 - mobile: `npm run lint -w @screen/mobile`, `npm run build -w @screen/mobile`
 - preview: `npm run lint -w @screen/preview`, `npm run build -w @screen/preview`

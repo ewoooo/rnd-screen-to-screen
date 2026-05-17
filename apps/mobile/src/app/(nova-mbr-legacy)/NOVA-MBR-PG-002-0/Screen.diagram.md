@@ -81,7 +81,10 @@
 - visibleTitle: `개인정보 입력`
 - policy: structural title from implementation; field validation policy is owned by `memberInfo`
 - appliedGovernanceRefs: `UXPT_NAV`, `VOT_RUL`
+- ognBoundaryDecision: reuse `ogn-mbr-section-header-page`; the organism owns the visible task title while the progress header remains screen chrome.
 - layoutStrategy: first content section under the progress header; no duplicate progress text inside content
+- layoutContract: role=step task intro; structure=single section title; alignment=leading; density=compact form opening; wrapping=title should remain stable in content rail; distortionRisk=duplicating progress or adding unsupported explanatory copy.
+- componentCandidates: `SectionHeaderPage` (fit: strong, source: current organism, reason: matches current intro title contract, risk: low).
 - vocabularyDecision: reuse `SectionHeaderPage`
 - distortionRisk: low; risk is adding explanatory copy that is not visible in the current contract
 
@@ -93,7 +96,10 @@
 - visibleContent: stacked member information fields for id, password, password confirmation, email, and phone; id field includes `중복확인`
 - policy: `POL-MBR-INFO-002-03`, `POL-MBR-INFO-002-04`, `POL-MBR-INFO-002-05`, `POL-MBR-INFO-002-06`, `POL-MBR-INFO-002-08`
 - appliedGovernanceRefs: `UXPT_ERR`, `VOT_RUL`, `UXP_ACT`
+- ognBoundaryDecision: reuse `ogn-mbr-text-field-member-info`; the organism owns field labels, helper text, validation copy, and the id duplicate-check action.
 - layoutStrategy: dense stacked form rhythm in `Content(scroll)`; field copy and errors are not duplicated by the route
+- layoutContract: role=member information form; structure=stacked input fields with inline id action and field-level helpers/errors; alignment=leading inputs with stable inline button alignment; density=dense form rhythm; wrapping=helper/error text may wrap under its field without becoming global notices; distortionRisk=validation meaning is distorted if policies are rendered outside the field organism.
+- componentCandidates: `TextFieldMemberInfo` (fit: strong, source: current organism, reason: owns all member-info fields and validation behavior, risk: medium if split into route-level fields/notices).
 - vocabularyDecision: reuse `TextFieldMemberInfo`
 - distortionRisk: medium; validation rules become confusing if rendered as separate notices outside the field organism
 
@@ -105,7 +111,10 @@
 - visibleContent: none in current state; section is mounted with `visible={false}`
 - policy: no visible policy requirement in this state
 - appliedGovernanceRefs: `VOT_RUL`
+- ognBoundaryDecision: reuse hidden `ogn-mbr-section-message-entry-branch`; the organism remains mounted for branch states but contributes no visible content here.
 - layoutStrategy: keep after `memberInfo` in logical content order but hidden
+- layoutContract: role=reserved entry-branch messaging state; structure=hidden mounted section only; alignment=none visible; density=no visible spacing contribution; wrapping=not applicable while hidden; distortionRisk=visible branch copy or placeholder spacing would imply a state change.
+- componentCandidates: `SectionMessageEntryBranch` (fit: strong, source: current hidden organism, reason: preserves current `visible={false}` branch boundary, risk: medium if surfaced).
 - vocabularyDecision: reuse `SectionMessageEntryBranch`
 - distortionRisk: medium; visible branch copy, CTA, or spacing placeholder would imply a state change
 

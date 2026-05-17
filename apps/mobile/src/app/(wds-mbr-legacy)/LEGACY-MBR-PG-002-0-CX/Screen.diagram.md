@@ -92,6 +92,7 @@
   - alignment: left close affordance plus title.
   - wrapping: title max 1 line.
   - overflow: title truncates within AppBar rules.
+- ognBoundaryDecision: `chrome-owned` — AppScreen/Header owns placement; the listed app-bar OGN/config id is treated as route chrome, not body policy content.
 - layoutContract:
   - role: provide completion exit chrome and screen title.
   - structure: one AppBar with close leading icon and `가입 완료` title.
@@ -134,6 +135,7 @@
   - alignment: leading.
   - wrapping: title intentionally breaks into two lines; subtitle may wrap.
   - overflow: normal content scroll.
+- ognBoundaryDecision: `completion-hero` — completion title/subtitle are owned by the completion hero section; screen owns Content placement and no extra policy OGN is invented.
 - layoutContract:
   - role: confirm successful signup and announce service availability.
   - structure: leading completion hero with no card surface.
@@ -176,6 +178,7 @@
   - alignment: stable split label/value rows.
   - wrapping: labels max 1 line; values may wrap only if the card preserves readable value column.
   - overflow: card remains in scroll content and must not collide with the next divider.
+- ognBoundaryDecision: `completion-summary` — the summary section owns card/key-value result structure from existing rows; no new policy meaning or OGN id is introduced.
 - layoutContract:
   - role: summarize completed signup facts.
   - structure: section title plus one card with `가입 정보` title and exactly three label-value rows.
@@ -223,6 +226,7 @@
   - alignment: leading.
   - wrapping: body may wrap to multiple lines.
   - overflow: notice stays visible in scroll content above Bottom.
+- ognBoundaryDecision: `notice-section` — benefit notice copy remains inside the notice/callout section; screen owns placement only.
 - layoutContract:
   - role: notify the user that a signup benefit has been applied.
   - structure: one callout block, no outer section title.
@@ -265,6 +269,7 @@
   - alignment: secondary action left, primary action right.
   - wrapping: button labels max 1 line.
   - overflow: fixed bottom slot; never converted to scroll content.
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: offer completion exit choices with home as primary.
   - structure: two CTA labels in one action component inside `SinglePrimaryAction`.

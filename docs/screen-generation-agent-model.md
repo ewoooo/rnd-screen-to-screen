@@ -8,7 +8,15 @@
 
 메인 에이전트는 5페이즈 전체의 방향과 최종 정합성을 소유하는 매니저다. 작업 범위를 해석하고, 페이즈별 서브 에이전트에게 입력·출력·완료조건을 지정하며, 산출물 사이의 불일치를 조정하고, `Screen.map.md -> Screen.diagram.md -> 구현 -> config -> route` 연결이 끊기지 않도록 최종 판단을 내린다. Phase 3/4에서는 레이아웃 보존을 최우선 승인 기준으로 삼고, 그 다음 정책 의미와 디자인 시스템 준수를 확인한다. 이 검수는 소극적 리뷰가 아니라 승인 게이트다. 산출물이 wire semantic tag, layoutContract, Summary Card Decision Rule, Distortion Gate 중 하나라도 약하게 처리하면 메인 에이전트가 다음 페이즈 진입을 보류하고 해당 페이즈로 되돌린다.
 
+메인 에이전트는 작업이 블랙박스가 되지 않도록 구현 전에 네 가지 공개 체크포인트를 사용자에게 표면화한다: SB Extract 결과, Reference Decision, Component Candidate Decision, Build Plan. 서브 에이전트가 초안을 만들 수는 있지만, 이 네 지점은 메인이 승인 가능한 형태로 정리하고 다음 단계 진입 여부를 결정한다.
+
+하위 에이전트 구현 위임 전 Build Plan에는 worker 이름, write scope, no-touch 파일, 승인 검사 항목을 반드시 포함한다. P0 수정처럼 작은 작업도 예외가 아니다. 짧게 쓰더라도 사용자가 “누가 무엇을 어디까지 만지는지” 볼 수 있어야 한다.
+
 서브 에이전트는 메인 에이전트가 위임한 범위 안에서 실제 산출물을 만드는 워커다. Phase 1의 SB 추출, Phase 2의 정책/governance 조사와 `Screen.map.md` 초안, Phase 3의 구조 설계와 `Screen.diagram.md` 초안, Phase 4의 OGN/Screen/config 구현, Phase 5의 route 등록과 preview 확인을 맡을 수 있다. 서브 에이전트가 만든 산출물은 해당 페이즈의 작업 결과로 인정하되, 페이즈 간 최종 연결과 충돌 해결 책임은 메인 에이전트가 가진다.
+
+서브 에이전트는 위임받은 phase의 산출물 책임만 가진다. Reference Decision, OGN Boundary Decision, Component Candidate Decision, Build Plan에서 생긴 판단은 메인 에이전트 승인 전까지 최종 결정이 아니며, 승인된 결정만 `Screen.map.md`, `Screen.diagram.md`, `Screen.config.ts`, 또는 작업 로그에 남긴다.
+
+하위 에이전트 완료 후 메인 에이전트는 결과 보고를 신뢰하되, 승인 전에는 반드시 별도 확인한다. 최소 확인은 `git diff --stat`, worker별 scoped diff, 공통 checker/lint/build, 그리고 UI 변경 시 screenshot 또는 bounding box 기반 layout evidence다. 텍스트 존재 확인만으로 레이아웃 마이그레이션을 승인하지 않는다.
 
 ## 멀티 화면 배치 위임
 

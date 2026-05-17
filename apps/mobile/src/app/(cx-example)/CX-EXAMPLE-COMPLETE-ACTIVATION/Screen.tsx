@@ -41,13 +41,11 @@ export function Screen() {
 					<RQRContentsDetail title="개통 정보" rows={completionSummaryRows} />
 				</PageStackContents>
 			</AppScreen.Content>
-			<AppScreen.Bottom preset="guided-action">
+			<AppScreen.Bottom preset="primary-cta">
 				<SinglePrimaryAction>
 					<ActionButton
-						type="ai"
+						type="default"
 						buttonCount={2}
-						showText
-						text="사진이나 연락처, 앱도 새 휴대폰으로 한 번에 옮겨볼까요?"
 						actions={[
 							{ label: "홈으로 이동", variant: "secondary" },
 							{ label: "데이터 옮기기", variant: "primary" },

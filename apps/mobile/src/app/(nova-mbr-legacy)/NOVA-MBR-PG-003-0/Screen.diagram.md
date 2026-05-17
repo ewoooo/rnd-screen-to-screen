@@ -76,7 +76,10 @@
 - visibleContent: `본인 명의 인증 수단으로 가입자를 확인해 주세요`
 - policy: `POL-MBR-AUTH-001-01`, `POL-MBR-AUTH-002-01`
 - appliedGovernanceRefs: `UXPT_NAV`, `VOT_RUL`
+- ognBoundaryDecision: reuse `ogn-mbr-section-header-page`; the organism owns identity-verification title/subtitle while the screen owns only Content placement.
 - layoutStrategy: first content section under `Header`; title precedes subtitle with no route-level typography overrides
+- layoutContract: role=auth step intro; structure=title plus supporting copy; alignment=leading; density=comfortable opening section; wrapping=subtitle may wrap within content rail; distortionRisk=legacy step copy or custom typography would change the current route intent.
+- componentCandidates: `SectionHeaderPage` (fit: strong, source: current organism, reason: owns visible intro title/subtitle, risk: low).
 - vocabularyDecision: reuse `SectionHeaderPage`
 - distortionRisk: low; risk is replacing current copy with legacy step copy during recreation
 
@@ -88,7 +91,10 @@
 - visibleContent: radio method list, 인증번호 field, `재요청`, and `인증번호 요청` controls owned by `ListCellAuthMethod`
 - policy: `POL-MBR-AUTH-002-01`, `POL-MBR-AUTH-002-05`, `POL-MBR-AUTH-002-09`
 - appliedGovernanceRefs: `UXPT_ERR`, `VOT_RUL`
+- ognBoundaryDecision: reuse `ogn-mbr-list-cell-auth-method`; method rows, request-code controls, and policy ordering stay inside the OGN.
 - layoutStrategy: full method list remains in `Content(scroll)`; generated row order must preserve policy order
+- layoutContract: role=authentication method choice and code request; structure=ordered method list plus 인증번호 field and request controls; alignment=leading rows with stable control grouping; density=form-list rhythm inside scroll content; wrapping=method captions may wrap without reordering rows or separating controls; distortionRisk=unsupported labels, row order changes, or route-local controls break policy ordering.
+- componentCandidates: `ListCellAuthMethod` (fit: strong, source: current organism, reason: owns method list and request controls, risk: medium if replaced by custom route markup).
 - vocabularyDecision: reuse `ListCellAuthMethod`; do not replace with custom list markup in the route
 - distortionRisk: medium; unsupported method labels or reordered rows would distort the policy contract
 
@@ -100,7 +106,10 @@
 - visibleContent: disabled primary CTA `인증 완료`
 - policy: action state is current implementation behavior; auth failure and restriction policies remain state-bound
 - appliedGovernanceRefs: `UXPT_BTN`, `UXPT_NAV`
+- ognBoundaryDecision: structural-only; current `MbrPrimaryCTABar` has no config OGN ID, so the screen documents rail placement without adding a new OGN.
 - layoutStrategy: fixed `Bottom(preset="primary-cta")`; content never creates fixed or absolute CTA chrome
+- layoutContract: role=bottom verification completion action; structure=single disabled primary CTA in Bottom rail; alignment=full-width centered label; density=standard primary-cta bottom spacing; wrapping=label remains centered and does not create secondary action; distortionRisk=treating the bar as a registered OGN or enabling it would change the current state.
+- componentCandidates: `MbrPrimaryCTABar` (fit: strong, source: current structural component, reason: existing bottom CTA implementation, risk: medium because it remains structural-only); `structural-only Bottom(preset="primary-cta")` (fit: strong, source: layout contract, reason: owns fixed rail placement, risk: low).
 - vocabularyDecision: reuse `MbrPrimaryCTABar`; do not add a non-existent OGN ID to config
 - distortionRisk: medium; future recreation could incorrectly treat the bottom bar as a registered OGN
 
