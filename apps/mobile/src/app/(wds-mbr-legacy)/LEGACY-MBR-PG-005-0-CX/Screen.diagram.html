@@ -130,16 +130,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses a TitleMain intro for the withdrawal-reason step, question, and minimum-selection guidance."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Withdrawal reason task framing stays in the intro section while screen placement remains structural."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "intro",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Step caption, two-line withdrawal reason question, and one subtitle requiring at least one selected reason.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -169,16 +169,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail renders six withdrawal reasons as checkbox ListSelected rows inside one FieldStack."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "All reason choices stay grouped in the reasons section and drive the minimum-one-selection action dependency."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "reasons",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Titled section with SectionItem, FieldStack, and six checkbox rows including 기타 (직접 입력).",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -208,16 +208,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses one optional TextField with placeholder, maxLength=500, and helper counter."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Free-text feedback and its helper/max-length behavior stay inside the freeText input section."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "freeText",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Titled optional free-text section with one TextField, 자세한 의견을 입력해주세요 placeholder, and 0/500자 helper counter.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -247,16 +247,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail fixes one primary 다음 CTA in the bottom action area and disables it until at least one reason is selected."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The action OGN owns button state and label while AppScreen.ActionBar owns fixed bottom placement."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Fixed bottom primary CTA labeled 다음, disabled while selected.size is 0.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",

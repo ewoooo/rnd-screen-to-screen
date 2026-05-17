@@ -132,16 +132,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses a TitleMain intro for the first signup step and required/optional consent guidance."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Consent task framing stays in the intro section while screen placement remains structural."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "intro",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Step caption, two-line terms consent title, and subtitle explaining required and optional consent behavior.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -172,16 +172,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail groups the consent accordion and legal guardian callout in one titled terms section."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Terms consent and related guardian guidance remain attached inside the same terms section."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "terms",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Titled 약관 동의 section with ConsentTermsAccordion followed by 법정대리인 동의 안내 Callout.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -212,16 +212,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail delegates all-agree and individual required/optional consent rows to ConsentTermsAccordion."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Accordion rows own consent state and expand/collapse behavior; the route does not flatten legal rows."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "termsAccordion",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "ConsentTermsAccordion organism with all-agree checkbox, two required terms, one optional marketing term, and accordion detail rows.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -252,16 +252,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail fixes one primary 동의하고 계속하기 CTA in Bottom and enables it only when required consents are checked."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The action OGN owns required-consent CTA state while AppScreen.ActionBar owns fixed bottom placement."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Fixed bottom primary CTA labeled 동의하고 계속하기, disabled until REQUIRED_CONSENT_IDS are all checked.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",

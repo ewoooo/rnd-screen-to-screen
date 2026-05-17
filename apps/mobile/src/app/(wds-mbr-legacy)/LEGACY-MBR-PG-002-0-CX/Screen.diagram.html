@@ -10,7 +10,7 @@
 </head>
 <body>
 	<main>
-		<header class="diagram-title"><h1>LEGACY-MBR-PG-002-0-CX</h1><p>Screen.diagram.html 표준으로 변환된 시각 계약 다이어그램입니다.</p></header>
+		<header class="diagram-title"><h1>LEGACY-MBR-PG-002-0-CX</h1><p>가입 완료 화면의 완료 hero, 가입 정보 요약, 혜택 callout, 2버튼 Bottom rail을 보여줍니다.</p></header>
 		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="LEGACY-MBR-PG-002-0-CX" data-route="/LEGACY-MBR-PG-002-0-CX" data-pattern="complete" data-wire-reference="apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.diagram.md">
 			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
 			<header class="app-header" data-rail="Header" data-section-id="appBar" data-ogn-id="ogn-mbr-complete-app-bar" data-pattern-role="completion-exit" data-boundary="none" data-layout-contract="Close affordance, accessible label, and one-line title."><span aria-hidden="true">×</span><span>가입 완료</span></header>
@@ -131,16 +131,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses a completion-exit AppBar with close affordance, close label, and 가입 완료 title."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Completion header chrome is owned by AppScreen.Header and the app-bar OGN, not body policy content."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "appBar",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "One AppBar with close leading icon, accessible 닫기 label, and one-line 가입 완료 title.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -166,16 +166,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses TitleMain(type=complete) for step caption, welcome title, and completion support copy."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Completion result copy is owned by the completion hero section while placement remains in Content."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "completionHero",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Leading completion hero with step caption, two-line welcome title, and service-availability subtitle; no card surface.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -201,16 +201,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail shows a titled signup summary section with one RQRContentsDetail card and three label-value rows."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Signup completion facts stay grouped in the summary card section; no new policy meaning is invented."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "completionSummary",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Section title plus 가입 정보 detail card containing 회원 ID, 가입일, and 자동 로그인 rows.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -236,16 +236,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail places a single 혜택 callout after the second section divider."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Benefit notice copy remains inside its notice section and does not create bottom-action or summary ownership."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "benefitNotice",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "One Callout titled 혜택 with membership benefit body copy inside scroll content.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -271,16 +271,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail fixes the completion actions in Bottom with secondary 내정보 확인 and primary 홈으로 가기."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Completion action OGN owns action labels and hierarchy while the bottom rail owns fixed placement."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Fixed bottom two-action treatment ordered secondary 내정보 확인 then primary 홈으로 가기.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -306,7 +306,7 @@
       "ogn": "structural-only",
       "section": "appBar",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Completion-exit AppBar with close affordance, 닫기 label, and 가입 완료 title."
     },
     {
       "requirement": "completionHero",
@@ -315,7 +315,7 @@
       "ogn": "structural-only",
       "section": "completionHero",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Leading complete hero preserves step caption, welcome title, and service availability copy."
     },
     {
       "requirement": "completionSummary",
@@ -324,7 +324,7 @@
       "ogn": "structural-only",
       "section": "completionSummary",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Titled 가입 정보 detail card preserves member ID, signup date, and auto-login rows."
     },
     {
       "requirement": "benefitNotice",
@@ -333,7 +333,7 @@
       "ogn": "structural-only",
       "section": "benefitNotice",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Single 혜택 callout remains a scroll-content notice after the summary divider."
     },
     {
       "requirement": "actions",
@@ -342,7 +342,7 @@
       "ogn": "structural-only",
       "section": "actions",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Fixed bottom actions preserve secondary 내정보 확인 and primary 홈으로 가기 hierarchy."
     }
   ],
   "distortionGates": [

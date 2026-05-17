@@ -10,23 +10,23 @@
 </head>
 <body>
 	<main>
-		<header class="diagram-title"><h1>NOVA-CHG-FP-003-0</h1><p>Screen.diagram.html 표준으로 변환된 시각 계약 다이어그램입니다.</p></header>
+		<header class="diagram-title"><h1>NOVA-CHG-FP-003-0</h1><p>변경 내용 확인 화면: 현재/변경 요금제 비교, 예상 변경 정보, 유의사항 동의, 비활성 제출 CTA를 실제 표시 문구로 고정한 시각 계약입니다.</p></header>
 		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="NOVA-CHG-FP-003-0" data-route="/NOVA-CHG-FP-003-0" data-pattern="detail-confirmation" data-wire-reference="none-found">
 			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
-			<header class="app-header" data-rail="Header">NOVA-CHG-FP-003-0</header>
+			<header class="app-header" data-rail="Header">‹&nbsp; 요금제 변경</header>
 			<div class="content" data-rail="Content"><div class="page-stack">
-					<section class="wire-section" data-section-id="planComparison" data-ogn-id="structural-only" data-pattern-role="planComparison" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>planComparison</strong><span>planComparison · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="expectedChange" data-ogn-id="structural-only" data-pattern-role="expectedChange" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>expectedChange</strong><span>expectedChange · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="noticeAgreement" data-ogn-id="structural-only" data-pattern-role="noticeAgreement" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>noticeAgreement</strong><span>noticeAgreement · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="actions" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>actions</strong><span>actions · Migrated from legacy markdown.</span></section>
+					<section class="wire-section" data-section-id="planComparison" data-ogn-id="ogn-chg-plan-comparison" data-pattern-role="before-after-summary" data-boundary="card-stack" data-layout-contract="TitleMain followed by two RQRContentsDetail cards with stable label/value rows."><strong>변경할 요금제를 확인해 주세요</strong><span>현재 요금제와 변경 후 요금제의 월정액, 데이터, 주요 혜택을 비교해 보세요.</span><span>현재 요금제: 5GX 레귤러 / 월정액 69,000원 / 데이터 110GB / 주요 혜택 공유 데이터 18GB</span><span>변경할 요금제: 5GX 프라임 / 월정액 89,000원 / 데이터 무제한 / 주요 혜택 스마트기기 1회선 무료</span></section>
+					<section class="wire-section" data-section-id="expectedChange" data-ogn-id="ogn-chg-plan-comparison" data-pattern-role="key-value-summary" data-boundary="SectionDivider + section-card" data-layout-contract="Expected monthly amount and effective date appear as table rows with an inline billing Callout."><strong>예상 변경 정보</strong><span>예상 월정액: 89,000원</span><span>예상 적용일: 2026.05.18</span><span>요금 변동 안내: 월 중 변경으로 이번 달 청구 금액은 실제 사용 기간과 할인 적용 조건에 따라 달라질 수 있어요.</span></section>
+					<section class="wire-section" data-section-id="noticeAgreement" data-ogn-id="ogn-chg-plan-notice-agree" data-pattern-role="required-notice-checkbox" data-boundary="SectionDivider + section-card" data-layout-contract="Required notice list precedes the FieldStack checkbox and controls CTA enablement."><strong>변경 전 유의사항</strong><span>월 중 변경 시 이용 기간에 따라 요금이 일할 계산될 수 있어요.</span><span>할인 또는 결합 혜택 금액이 변경되거나 종료될 수 있어요.</span><span>일부 부가서비스는 변경할 요금제에서 이용이 제한될 수 있어요.</span><span>□ 유의사항을 모두 확인했어요</span></section>
+					<section class="wire-section" data-section-id="actions" data-ogn-id="ogn-chg-plan-notice-agree" data-pattern-role="bottom-primary-action" data-boundary="bottom-fixed" data-layout-contract="Submit CTA remains disabled until noticeAgreement checkbox is checked."><strong>하단 고정 CTA</strong><span>변경 신청 (동의 전 비활성)</span></section>
 			</div></div>
-			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">CTA</button></footer>
+			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">변경 신청</button></footer>
 		</section>
-		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: detail-confirmation</span><span class="token">그룹: chg</span><span class="token">도메인: chg</span><span class="token">정책 참조: 0</span><span class="token">OGN ID: 0</span></p><p>정책/구조 계약은 내장 JSON을 기준으로 검증합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">확인</span><span>detail-confirmation 패턴으로 이관되었습니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인</span><span>none-found</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">확인 필요</span><span>실제 렌더 기준으로 최종 확인합니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">확인</span><span>JSON 계약과 config를 대조합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: none-found</span><span class="token">패턴: detail-confirmation</span></p><ul><li>matchedParts는 JSON 계약을 확인합니다.</li><li>intentionalDifferences는 JSON 계약을 확인합니다.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
-				<div class="section-card"><h3>planComparison</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>planComparison</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</strong><p>Preserves the SB comparison task as two stable label/value summary cards while cx-layout owns the content rail and spacing.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>expectedChange</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>expectedChange</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</strong><p>Preserves the expected monthly amount, effective date, and pro-rated billing notice without route-level spacing or bespoke table UI.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>noticeAgreement</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>noticeAgreement</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</strong><p>Preserves required notices and gates the fixed primary CTA until the confirmation checkbox is selected.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>actions</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>AppScreen.Bottom(preset=\</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AppScreen.Bottom(preset=\</strong><p>Keeps the submit action in the mobile bottom action rail and reflects SB case NOVA-CHG-FP-003-E1 with a disabled CTA before required confirmation.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: detail-confirmation</span><span class="token">그룹: chg</span><span class="token">도메인: chg</span><span class="token">정책 참조: SB-only</span><span class="token">OGN: 2</span></p><p>비교, 예상 적용, 필수 유의사항 확인을 제출 전 한 화면에서 검수합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">통과</span><span>비교 카드가 유의사항보다 먼저 나오고, 동의가 CTA 활성 조건을 소유합니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인 필요</span><span>직접 reference는 없지만 detail confirmation 구조를 Screen.tsx와 대조했습니다.</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">통과</span><span>section divider가 비교/예상/유의사항 그룹 경계를 나눕니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">통과</span><span>plan-comparison과 notice-agree SB 요구를 section별로 연결합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: none-found</span><span class="token">패턴: detail-confirmation</span></p><ul><li>현재/변경 요금제 비교 후 예상 변경 정보와 필수 유의사항을 순차 확인합니다.</li><li>하단 변경 신청은 checkbox 전까지 disabled 상태로 해석합니다.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
+				<div class="section-card"><h3>planComparison</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>현재 요금제와 변경할 요금제의 월정액, 데이터, 혜택을 두 카드로 비교합니다.</dd><dt>경계</dt><dd>TitleMain + card stack</dd><dt>후보</dt><dd>PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</strong><p>두 요금제의 좌측 label과 우측 value alignment가 유지되어 비교 과업에 맞습니다.</p><p class="risk">위험: 두 카드를 list row로 합치면 현재/변경 구분과 상세 항목 비교가 흐려집니다.</p></div></div></details></div>
+				<div class="section-card"><h3>expectedChange</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>예상 월정액, 적용일, 월 중 변경 요금 안내를 제출 전 확인합니다.</dd><dt>경계</dt><dd>SectionDivider + SectionItem</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</strong><p>table row와 Callout 조합으로 금액/일자와 변동 사유 안내를 분리합니다.</p><p class="risk">위험: Callout을 삭제하면 일할 계산 조건이 CTA 바로 앞에서 누락됩니다.</p></div></div></details></div>
+				<div class="section-card"><h3>noticeAgreement</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>요금 일할 계산, 할인/결합 혜택 변경, 부가서비스 제한을 확인하고 동의합니다.</dd><dt>경계</dt><dd>SectionDivider + SectionItem + FieldStack</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</strong><p>필수 유의사항 copy를 checkbox 앞에 노출해 확인 후 제출 흐름을 보존합니다.</p><p class="risk">위험: checkbox가 notice보다 먼저 나오면 사용자가 확인하지 않고 제출하는 구조가 됩니다.</p></div></div></details></div>
+				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Bottom</dd><dt>역할</dt><dd>동의 완료 후 요금제 변경 신청을 제출합니다.</dd><dt>경계</dt><dd>bottom-fixed</dd><dt>후보</dt><dd>AppScreen.Bottom(preset="primary-cta") + SinglePrimaryAction + ActionButton</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AppScreen.Bottom(preset="primary-cta") + SinglePrimaryAction + ActionButton</strong><p>하단 rail에서 submit action을 유지하고 checkbox 상태로 disabled/enabled를 제어합니다.</p><p class="risk">위험: 동의 전 enabled로 보이면 NOVA-CHG-FP-003-E1 처리와 충돌합니다.</p></div></div></details></div>
 			</section><section class="panel"><h2>왜곡 방지 게이트</h2><ul><li>The comparison remains before notices.</li><li>Required notice copy is visible before the confirmation checkbox.</li><li>The submit CTA cannot appear enabled before required confirmation.</li><li>No shared organism dependency is required; route catalog registration is handled by the main integration step.</li></ul></section><section class="panel debug-panel"><h2>MD 계약 이관 상태</h2><p>기존 Screen.diagram.md의 계약 정보를 JSON으로 이관했습니다.</p><details><summary>전체 계약 JSON 보기</summary><pre id="diagram-contract-preview"></pre></details></section></aside>
 	</main>
 	<script type="application/json" id="diagram-contract">
@@ -40,7 +40,10 @@
     "pattern": "detail-confirmation",
     "frame": "",
     "policyRefs": [],
-    "ognIds": [],
+    "ognIds": [
+      "ogn-chg-plan-comparison",
+      "ogn-chg-plan-notice-agree"
+    ],
     "governanceRefs": [],
     "notApplicableReason": "",
     "requiredDesignDocs": [
@@ -88,22 +91,22 @@
       {
         "sectionId": "planComparison",
         "slot": "Content",
-        "ogn": "structural-only"
+        "ogn": "ogn-chg-plan-comparison"
       },
       {
         "sectionId": "expectedChange",
         "slot": "Content",
-        "ogn": "structural-only"
+        "ogn": "ogn-chg-plan-comparison"
       },
       {
         "sectionId": "noticeAgreement",
         "slot": "Content",
-        "ogn": "structural-only"
+        "ogn": "ogn-chg-plan-notice-agree"
       },
       {
         "sectionId": "actions",
-        "slot": "Content",
-        "ogn": "structural-only"
+        "slot": "Bottom",
+        "ogn": "ogn-chg-plan-notice-agree"
       }
     ]
   },
@@ -111,26 +114,26 @@
     {
       "sectionId": "planComparison",
       "slot": "Content",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-comparison",
       "policy": "from Screen.config.ts buildSelections",
       "appliedGovernanceRefs": [],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Visible rail shows TitleMain copy followed by two RQRContentsDetail cards for 현재 요금제 and 변경할 요금제."
       },
       "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "pattern": "before-after-summary",
+        "reason": "Screen.tsx renders 현재 요금제 and 변경할 요금제 detail cards under 변경할 요금제를 확인해 주세요."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "Screen.map.md maps current/changed plan comparison to ogn-chg-plan-comparison; this section owns the before/after summary boundary."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "PageStackContents title plus a spacing-16 stack of two detail cards preserves side-by-side comparison semantics in a vertical mobile rail."
       },
       "layoutContract": {
-        "role": "planComparison",
-        "structure": "Migrated from legacy markdown.",
+        "role": "현재/변경 요금제 비교",
+        "structure": "TitleMain plus two RQRContentsDetail cards for current and selected plans.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -150,26 +153,26 @@
     {
       "sectionId": "expectedChange",
       "slot": "Content",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-comparison",
       "policy": "from Screen.config.ts buildSelections",
       "appliedGovernanceRefs": [],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Visible rail places 예상 월정액, 예상 적용일, and 요금 변동 안내 after a section divider."
       },
       "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "pattern": "key-value-summary with callout",
+        "reason": "Screen.tsx renders 예상 변경 정보 as table rows plus 요금 변동 안내 Callout."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "expectedChange shares ogn-chg-plan-comparison and separates calculated amount/effective date from the before/after cards."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "TitleSection plus SectionItem contains table rows first, then an inline Callout for pro-rated billing guidance."
       },
       "layoutContract": {
-        "role": "expectedChange",
-        "structure": "Migrated from legacy markdown.",
+        "role": "예상 월정액과 적용일 확인",
+        "structure": "TitleSection, ListText(table) rows for 예상 월정액 and 예상 적용일, plus Callout titled 요금 변동 안내.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -189,26 +192,26 @@
     {
       "sectionId": "noticeAgreement",
       "slot": "Content",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-notice-agree",
       "policy": "from Screen.config.ts buildSelections",
       "appliedGovernanceRefs": [],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Visible rail lists required notices before the checkbox label 유의사항을 모두 확인했어요."
       },
       "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "pattern": "required-notice-checkbox",
+        "reason": "Screen.tsx renders required notices before the confirmation checkbox, matching NOVA-CHG-FP-003-E1 CTA gating."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "Screen.map.md maps the required notice agreement gate to ogn-chg-plan-notice-agree."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Notice ListText rows precede the checkbox so the agreement control follows the required information."
       },
       "layoutContract": {
-        "role": "noticeAgreement",
-        "structure": "Migrated from legacy markdown.",
+        "role": "변경 전 유의사항 확인과 동의",
+        "structure": "Required notice ListText rows followed by Checkbox label 유의사항을 모두 확인했어요.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -227,27 +230,27 @@
     },
     {
       "sectionId": "actions",
-      "slot": "Content",
-      "ogn": "structural-only",
+      "slot": "Bottom",
+      "ogn": "ogn-chg-plan-notice-agree",
       "policy": "from Screen.config.ts buildSelections",
       "appliedGovernanceRefs": [],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Visible rail shows 변경 신청 in Bottom with disabled-before-agreement semantics."
       },
       "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "pattern": "bottom-primary-action",
+        "reason": "Screen.tsx keeps 변경 신청 in AppScreen.Bottom and ties enablement to noticeAgreement."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "The Bottom action shares ogn-chg-plan-notice-agree because checkbox agreement controls submit enablement."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "AppScreen.Bottom owns the fixed submit CTA while the Content section owns the prerequisite agreement."
       },
       "layoutContract": {
-        "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "role": "변경 신청 제출 CTA",
+        "structure": "AppScreen.Bottom fixed primary CTA labeled 변경 신청; disabled until notice agreement.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -255,7 +258,7 @@
       },
       "componentCandidates": [
         {
-          "name": "AppScreen.Bottom(preset=\\",
+          "name": "AppScreen.Bottom(preset=\"primary-cta\") + SinglePrimaryAction + ActionButton",
           "source": "componentCandidates",
           "fit": "strong",
           "selected": true,
@@ -267,40 +270,40 @@
   ],
   "policyOgnMatrix": [
     {
-      "requirement": "planComparison",
-      "sourceRef": "Screen.diagram.md legacy migration",
+      "requirement": "현재/변경 요금제 비교",
+      "sourceRef": "Screen.map.md OGN ogn-chg-plan-comparison",
       "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-comparison",
       "section": "planComparison",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "현재/변경 요금제 comparison stays before notices as two detail cards under the main confirmation title."
     },
     {
-      "requirement": "expectedChange",
-      "sourceRef": "Screen.diagram.md legacy migration",
+      "requirement": "예상 월정액과 적용일 확인",
+      "sourceRef": "Screen.map.md OGN ogn-chg-plan-comparison",
       "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-comparison",
       "section": "expectedChange",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "예상 월정액 and 예상 적용일 stay in table rows with 요금 변동 안내 as an inline Callout."
     },
     {
-      "requirement": "noticeAgreement",
-      "sourceRef": "Screen.diagram.md legacy migration",
+      "requirement": "필수 유의사항 확인과 체크박스 동의",
+      "sourceRef": "Screen.map.md OGN ogn-chg-plan-notice-agree",
       "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-notice-agree",
       "section": "noticeAgreement",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Required notice copy stays visible before the confirmation checkbox."
     },
     {
-      "requirement": "actions",
-      "sourceRef": "Screen.diagram.md legacy migration",
+      "requirement": "변경 신청 제출",
+      "sourceRef": "Screen.map.md transition to NOVA-CHG-FP-004-0",
       "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
+      "ogn": "ogn-chg-plan-notice-agree",
       "section": "actions",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "변경 신청 remains a fixed Bottom CTA and is disabled until noticeAgreement is checked."
     }
   ],
   "distortionGates": [

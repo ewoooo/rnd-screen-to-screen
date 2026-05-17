@@ -10,7 +10,7 @@
 </head>
 <body>
 	<main>
-		<header class="diagram-title"><h1>LEGACY-MBR-PG-001-0-CX</h1><p>Screen.diagram.html 표준으로 변환된 시각 계약 다이어그램입니다.</p></header>
+		<header class="diagram-title"><h1>LEGACY-MBR-PG-001-0-CX</h1><p>본인인증 수단 선택 화면의 실제 Header, Content, Bottom rail과 인증 선택/정책 안내 구조를 보여줍니다.</p></header>
 		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="LEGACY-MBR-PG-001-0-CX" data-route="/LEGACY-MBR-PG-001-0-CX" data-pattern="form-entry" data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md">
 			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
 			<header class="app-header" data-rail="Header" data-section-id="appBar" data-ogn-id="ogn-mbr-auth-app-bar" data-pattern-role="navigation-bar" data-boundary="none" data-layout-contract="AppBar owns left affordance and one-line title."><span aria-hidden="true">‹</span><span>본인인증</span></header>
@@ -129,16 +129,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses the form-entry header with back affordance and the title 본인인증."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Header chrome is owned by AppScreen.Header and the app-bar OGN, not by body policy content."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "appBar",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "One AppBar with left navigation affordance and one-line 본인인증 title.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -164,16 +164,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses a leading TitleMain stack for step caption, task title, and 30-day reauth support copy before the divider."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Intro copy maps to the task-framing OGN while placement remains owned by the content rail."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "intro",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Leading form intro with step caption, two-line identity-verification title, and one supporting sentence; no card or controls.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -199,16 +199,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail groups the three allowed authentication methods as one radio section with an attached policy callout."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Auth method selection and policy callout remain grouped under the auth-method OGN boundary."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "authMethod",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Titled single-select radio group for 휴대폰, PASS, 공동인증서 followed by same-section 인증 정책 안내 callout.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -234,16 +234,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail fixes one primary CTA in the bottom action area and disables it until a method is selected."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The primary action OGN owns CTA state and label while AppScreen.ActionBar owns fixed bottom placement."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Fixed bottom primary CTA labeled 인증하기, disabled in the initial no-selection state.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -269,7 +269,7 @@
       "ogn": "structural-only",
       "section": "appBar",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "AppBar header with back affordance and one-line 본인인증 title."
     },
     {
       "requirement": "intro",
@@ -278,7 +278,7 @@
       "ogn": "structural-only",
       "section": "intro",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Leading intro preserves signup step, two-line auth task title, and 30-day reauth copy."
     },
     {
       "requirement": "authMethod",
@@ -287,7 +287,7 @@
       "ogn": "structural-only",
       "section": "authMethod",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Single radio group preserves three policy-ordered auth methods plus same-section failure and terms notice."
     },
     {
       "requirement": "actions",
@@ -296,7 +296,7 @@
       "ogn": "structural-only",
       "section": "actions",
       "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Fixed bottom 인증하기 CTA remains disabled until an auth method is selected."
     }
   ],
   "distortionGates": [

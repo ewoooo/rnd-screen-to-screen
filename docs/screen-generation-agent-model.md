@@ -14,7 +14,7 @@
 - **Design iteration approval**: 렌더 evidence에서 발견한 visual/layout 문제를 어떤 방향으로 고칠지 결정하고, iteration 결과가 정책 의미와 디자인 시스템을 해치지 않았는지 승인한다.
 - **Contract sync final approval**: Design Iteration 이후 변경된 실제 구현과 `Screen.map.md`, `Screen.diagram.html`, `Screen.config.ts`, route/preview 노출이 서로 같은 화면 계약을 말하는지 최종 승인한다.
 
-서브 에이전트는 위임받은 stage의 산출물을 만드는 워커다. Thin Diagram 초안, Fast Build 구현, Render Geometry Evidence 수집, Design Iteration 패치, Contract Sync 초안 작성은 맡을 수 있다. 하지만 geometry evidence의 승인, design iteration 방향 승인, contract sync의 최종 승인, 산출물 간 충돌 해결은 메인 에이전트가 직접 수행한다.
+서브 에이전트는 위임받은 stage의 산출물을 만드는 워커다. Diagram 초안, Fast Build 구현, Render Geometry Evidence 수집, Design Iteration 패치, Contract Sync 초안 작성은 맡을 수 있다. 하지만 geometry evidence의 승인, design iteration 방향 승인, contract sync의 최종 승인, 산출물 간 충돌 해결은 메인 에이전트가 직접 수행한다.
 
 기본 실행은 continuous execution이다. 사용자가 특정 stage까지만 하라고 명시하지 않는 한, 메인 에이전트는 stage마다 진행 허락을 묻지 않는다. 다만 구현 전 공개 체크포인트가 필요한 작업에서는 Reference Decision, Component Candidate Decision, Build Plan을 사용자에게 승인 가능한 형태로 보여주고, 사용자 승인/수정/중단 지시를 받은 뒤 Fast Build로 진입한다.
 
@@ -28,17 +28,17 @@
 
 | Stage | Subagent 가능 작업 | Main agent 책임 |
 |---|---|---|
-| Thin Diagram | wire reference 탐색, 핵심 section/slot/OGN 구조, layoutContract, componentCandidates 초안 작성 | Reference/OGN/component 결정 승인, Diagram이 정책 의미와 구조 계약을 담는지 승인 |
-| Fast Build | 승인된 Thin Diagram 기준으로 OGN/Screen/config 구현 또는 보강 | write scope 충돌 조정, 구현이 승인된 계약에서 벗어나지 않는지 검수 |
+| Diagram | wire reference 탐색, 핵심 section/slot/OGN 구조, layoutContract, componentCandidates 초안 작성 | Reference/OGN/component 결정 승인, Diagram이 정책 의미와 구조 계약을 담는지 승인 |
+| Fast Build | 승인된 Diagram 기준으로 OGN/Screen/config 구현 또는 보강 | write scope 충돌 조정, 구현이 승인된 계약에서 벗어나지 않는지 검수 |
 | Render Geometry Evidence | preview/mobile 렌더 확인, bounding box, section geometry, viewport, scroll/rail, overflow/overlap evidence 수집 | geometry evidence approval 소유. 실제 렌더가 layoutContract를 지키는지 최종 판단 |
 | Design Iteration | evidence 기반 spacing/stack/component 조정 패치, 필요 시 후보 component 보강 | design iteration approval 소유. 수정 방향, 반복 종료 여부, 정책/DS 훼손 여부 판단 |
 | Contract Sync | 실제 구현과 맞도록 `Screen.diagram.html`, `Screen.config.ts`, route/preview 메타 초안 동기화 | contract sync final approval 소유. map/diagram/config/implementation/route 최종 정합성 승인 |
 
-### Thin Diagram
+### Diagram
 
-Thin Diagram은 완성형 명세가 아니라 Fast Build를 시작할 수 있는 최소 구조 계약이다. 서브 에이전트는 유사 wire reference, 화면 pattern, 주요 section/slot, OGN boundary, layoutContract, componentCandidates를 빠르게 정리한다. 세부 시각 완성도와 모든 edge copy를 여기서 끝내려 하지 않는다.
+Diagram은 완성형 명세가 아니라 Fast Build를 시작할 수 있는 최소 구조 계약이다. 서브 에이전트는 유사 wire reference, 화면 pattern, 주요 section/slot, OGN boundary, layoutContract, componentCandidates를 빠르게 정리한다. 세부 시각 완성도와 모든 edge copy를 여기서 끝내려 하지 않는다.
 
-메인 에이전트는 Thin Diagram 단계에서 다음을 승인한다.
+메인 에이전트는 Diagram 단계에서 다음을 승인한다.
 
 - 정책 의미상 반드시 보여야 하는 정보/선택지/제약/에러가 구조에서 빠지지 않았는가
 - OGN boundary와 section hierarchy가 구현 가능한가
@@ -47,7 +47,7 @@ Thin Diagram은 완성형 명세가 아니라 Fast Build를 시작할 수 있는
 
 ### Fast Build
 
-Fast Build는 승인된 Thin Diagram을 실제 React 화면으로 빠르게 옮기는 stage다. 서브 에이전트는 `apps/mobile/src/organisms/`, `Screen.tsx`, `Screen.config.ts` 등 승인된 write scope 안에서만 작업한다. 같은 organism/component 파일을 여러 worker가 동시에 수정할 가능성이 있으면 메인 에이전트가 파일 소유 범위를 나누거나 순차화한다.
+Fast Build는 승인된 Diagram을 실제 React 화면으로 빠르게 옮기는 stage다. 서브 에이전트는 `apps/mobile/src/organisms/`, `Screen.tsx`, `Screen.config.ts` 등 승인된 write scope 안에서만 작업한다. 같은 organism/component 파일을 여러 worker가 동시에 수정할 가능성이 있으면 메인 에이전트가 파일 소유 범위를 나누거나 순차화한다.
 
 Fast Build의 목적은 첫 렌더 가능한 화면을 만드는 것이다. 완성 판단은 코드 모양이 아니라 다음 stage의 Render Geometry Evidence에서 한다.
 
@@ -74,19 +74,19 @@ Contract Sync는 구현 후 실제 화면 계약을 문서와 registry에 맞추
 
 최종 승인은 메인 에이전트가 한다. 특히 Design Iteration에서 실제 구조가 바뀌었다면, 변경이 `Screen.map.md`, `Screen.diagram.html`, 구현, config, route에 같은 의미로 반영됐는지 확인한다. 서브 에이전트가 만든 sync artifact는 초안이며, 최종 cross-artifact consistency는 메인 소유다.
 
-## Phase-Batch 병렬화 규칙
+## Step-Batch 병렬화 규칙
 
 여러 화면 제작 요청에서는 기본 위임 단위가 “한 화면 end-to-end 완주”가 아니라 “같은 stage의 화면별 batch 산출물”이다. 메인 에이전트는 전체 화면 inventory와 파일 소유 범위를 먼저 만든 뒤, stage별 병렬 작업을 실행하고, stage gate를 통합 승인한 뒤 다음 stage로 넘어간다.
 
 권장 진행 표시는 화면별 완료가 아니라 stage batch 상태를 보여야 한다.
 
 ```txt
-Batch 1 · Thin Diagram 병렬 진행
-  - FP-001 Thin Diagram
-  - FP-002 Thin Diagram
-  - FP-003 Thin Diagram
-  - FP-005 Thin Diagram
-  - Main Gate: Thin Diagram 통합 승인
+Batch 1 · Diagram 병렬 진행
+  - FP-001 Diagram
+  - FP-002 Diagram
+  - FP-003 Diagram
+  - FP-005 Diagram
+  - Main Gate: Diagram 통합 승인
 
 Batch 2 · Fast Build 병렬 진행
 Batch 3 · Render Geometry Evidence 병렬 수집
@@ -96,8 +96,8 @@ Batch 5 · Contract Sync 통합
 
 병렬화 규칙은 다음과 같다.
 
-- Thin Diagram은 화면별 병렬 실행을 기본으로 한다. 메인은 전체 batch의 policy coverage, OGN boundary, wire reference, componentCandidates가 서로 충돌하지 않는지 통합 승인한다.
-- Fast Build는 승인된 Thin Diagram만 병렬 제작한다. 같은 파일, 같은 organism, 같은 shared component를 여러 worker가 만질 수 있으면 메인이 write scope를 분리하거나 순차화한다.
+- Diagram은 화면별 병렬 실행을 기본으로 한다. 메인은 전체 batch의 policy coverage, OGN boundary, wire reference, componentCandidates가 서로 충돌하지 않는지 통합 승인한다.
+- Fast Build는 승인된 Diagram만 병렬 제작한다. 같은 파일, 같은 organism, 같은 shared component를 여러 worker가 만질 수 있으면 메인이 write scope를 분리하거나 순차화한다.
 - Render Geometry Evidence는 화면별 병렬 수집할 수 있다. 단, evidence format과 viewport 기준은 batch 시작 전에 메인이 통일한다.
 - Design Iteration은 evidence issue 단위로 병렬화할 수 있다. 한 화면의 같은 layout stack을 여러 worker가 동시에 고치지 않는다.
 - Contract Sync는 최종 통합 stage다. 초안 작성은 병렬 가능하지만, 최종 승인과 cross-artifact consistency 판정은 메인 에이전트가 단일 gate로 처리한다.
@@ -110,7 +110,7 @@ Batch 5 · Contract Sync 통합
 서브 에이전트가 생성한 artifact 사이에 불일치가 있으면 마지막으로 쓴 worker가 아니라 메인 에이전트가 해결한다. 특히 다음 불일치는 메인 승인이 필요하다.
 
 - `Screen.map.md`의 필수 정책 정보가 Diagram 또는 구현에서 누락됨
-- Thin Diagram의 layoutContract와 Fast Build의 DOM 구조가 다름
+- Diagram의 layoutContract와 Fast Build의 DOM 구조가 다름
 - Render Geometry Evidence가 layoutContract 위반을 보여주는데 Contract Sync가 통과 처리함
 - Design Iteration에서 componentCandidates 또는 OGN boundary가 바뀜
 - route/preview 노출명, config generation metadata, 화면 파일의 screen ID가 서로 다름

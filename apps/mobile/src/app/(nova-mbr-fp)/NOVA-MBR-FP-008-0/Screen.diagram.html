@@ -10,23 +10,23 @@
 </head>
 <body>
 	<main>
-		<header class="diagram-title"><h1>NOVA-MBR-FP-008-0</h1><p>Screen.diagram.html 표준으로 변환된 시각 계약 다이어그램입니다.</p></header>
+		<header class="diagram-title"><h1>NOVA-MBR-FP-008-0</h1><p>휴면 해제 본인 확인 화면의 intro, 인증수단 선택, 인증번호 입력, 하단 완료 CTA를 실제 카피로 펼친 시각 다이어그램입니다.</p></header>
 		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="NOVA-MBR-FP-008-0" data-route="/NOVA-MBR-FP-008-0" data-pattern="form" data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md">
 			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
-			<header class="app-header" data-rail="Header">NOVA-MBR-FP-008-0</header>
+			<header class="app-header" data-rail="Header">‹ 휴면 해제</header>
 			<div class="content" data-rail="Content"><div class="page-stack">
-					<section class="wire-section" data-section-id="intro" data-ogn-id="structural-only" data-pattern-role="intro" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>intro</strong><span>intro · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="authSelect" data-ogn-id="structural-only" data-pattern-role="authSelect" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>authSelect</strong><span>authSelect · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="authRequest" data-ogn-id="structural-only" data-pattern-role="authRequest" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>authRequest</strong><span>authRequest · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="actions" data-boundary="Created from buildSelections during migration." data-layout-contract="Migrated from legacy markdown."><strong>actions</strong><span>actions · Migrated from legacy markdown.</span></section>
+					<section class="wire-section" data-section-id="intro" data-ogn-id="structural-only" data-pattern-role="flow-context-title" data-boundary="PageStack title slot" data-layout-contract="Thin leading text only; no callout/hero surface"><strong>휴면 해제를 위해 본인 확인이 필요해요</strong><span>휴면 해제 문맥을 알리는 sectionTitle 텍스트<br />intro와 인증수단 선택 사이에는 section divider 없음</span></section>
+					<section class="wire-section" data-section-id="authSelect" data-ogn-id="ogn-mbr-auth-select" data-pattern-role="single-choice-list" data-boundary="cardBoundary with contents dividers" data-layout-contract="Same OGN as FP-003; three radio rows in fixed policy order"><strong>본인인증 수단을 선택해 주세요</strong><span>○ 휴대폰<br />─ contents divider<br />○ PASS<br />─ contents divider<br />○ 공동인증서<br />로딩: 동일 3행 skeleton · 오류: 사용 가능한 인증수단을 불러오지 못했습니다</span></section>
+					<section class="wire-section" data-section-id="authRequest" data-ogn-id="ogn-mbr-auth-request" data-pattern-role="verification-code-field" data-boundary="FieldStack + secondary action after section divider" data-layout-contract="Numeric TextField maxLength 6 with inline resend action, timer helper, state Notice, secondary confirm"><strong>인증번호 6자리 입력</strong><span>필드 라벨: 인증번호 입력<br />inline action: 재요청<br />helper: 유효시간 3분 · 재요청은 최대 5회 · 남은 시간 03:00<br />상태 Notice 예: 인증 제한 / 인증 실패 한도(5회)를 초과했습니다 · 10분 후 다시 시도해 주세요<br />영역 내 보조 버튼: 인증 확인</span></section>
+					<section class="wire-section" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="bottom-primary-action" data-boundary="Bottom fixed primary-cta" data-layout-contract="Single fixed Bottom primary; disabled until identity confirmation is complete"><strong>Bottom CTA</strong><span>본인 확인 완료 전 비활성<br />완료 후 NOVA-MBR-FP-009-0 약관 재동의로 진행</span></section>
 			</div></div>
-			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">CTA</button></footer>
+			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">본인 확인 완료하기</button></footer>
 		</section>
 		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: form</span><span class="token">그룹: nova-mbr-fp</span><span class="token">도메인: mbr</span><span class="token">정책 참조: 11</span><span class="token">OGN ID: 2</span></p><p>정책/구조 계약은 내장 JSON을 기준으로 검증합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">확인</span><span>form 패턴으로 이관되었습니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인</span><span>apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">확인 필요</span><span>실제 렌더 기준으로 최종 확인합니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">확인</span><span>JSON 계약과 config를 대조합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md</span><span class="token">패턴: form</span></p><ul><li>AppScreen Header + scrollable Content + fixed Bottom(preset=&quot;primary-cta&quot;); choice-list selectable list rows under a section title (ref [bundleDiscount]/[phoneDeliveryMethod]); choice-list-with-callout where a notice follows interactive controls in the same section (ref [usimEsim]); 4px SectionDivider band between major sections.</li><li>policy adds a 6-digit numeric code field with an inline resend action and a live validity timer (not in reference); policy-required cautionary/negative notices are state-driven message sections, not static callouts; intro/title copy uses 휴면 해제 context, not 가입.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
-				<div class="section-card"><h3>intro</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>intro</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>PageStackContents title slot + Text(sectionTitle)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents title slot + Text(sectionTitle)</strong><p>휴면 해제 문맥을 알리는 얇은 leading 텍스트 한 줄을 PageStackContents title slot에 둠 — route CSS 없이 callout/hero가 아닌 muted intro. POL-MBR-AUTH-001-01 의도를 휴면 해제 문맥으로 표현하고 새 정책을 발명하지 않음.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>authSelect</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>authSelect</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>AuthSelect (ogn-mbr-auth-select)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AuthSelect (ogn-mbr-auth-select)</strong><p>FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TitleSection + 단일 card surface + 3행 ListSelected(radio) + contents divider로 layoutContract/Distortion Gate 충족.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>authRequest</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>authRequest</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>AuthRequest (ogn-mbr-auth-request)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AuthRequest (ogn-mbr-auth-request)</strong><p>FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>actions</dd><dt>경계</dt><dd>Created from buildSelections during migration.</dd><dt>후보</dt><dd>SinglePrimaryAction + ActionButton(primary)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> SinglePrimaryAction + ActionButton(primary)</strong><p>AppScreen.Bottom(preset=primary-cta) 고정 rail + 단일 Primary solid &#39;본인 확인 완료하기&#39;, 본인 확인 완료 전 disabled (POL-MBR-AUTH-001-01). route-level CSS 없음.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>intro</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>intro</dd><dt>경계</dt><dd>PageStack title slot, no divider before authSelect</dd><dt>후보</dt><dd>PageStackContents title slot + Text(sectionTitle)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents title slot + Text(sectionTitle)</strong><p>휴면 해제 문맥을 알리는 얇은 leading 텍스트 한 줄을 PageStackContents title slot에 둠 — route CSS 없이 callout/hero가 아닌 muted intro. POL-MBR-AUTH-001-01 의도를 휴면 해제 문맥으로 표현하고 새 정책을 발명하지 않음.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>authSelect</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>authSelect</dd><dt>경계</dt><dd>cardBoundary with contents dividers</dd><dt>후보</dt><dd>AuthSelect (ogn-mbr-auth-select)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AuthSelect (ogn-mbr-auth-select)</strong><p>FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TitleSection + 단일 card surface + 3행 ListSelected(radio) + contents divider로 layoutContract/Distortion Gate 충족.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>authRequest</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>authRequest</dd><dt>경계</dt><dd>FieldStack + inline resend after section divider</dd><dt>후보</dt><dd>AuthRequest (ogn-mbr-auth-request)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AuthRequest (ogn-mbr-auth-request)</strong><p>FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>actions</dd><dt>경계</dt><dd>Bottom fixed primary-cta</dd><dt>후보</dt><dd>SinglePrimaryAction + ActionButton(primary)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> SinglePrimaryAction + ActionButton(primary)</strong><p>AppScreen.Bottom(preset=primary-cta) 고정 rail + 단일 Primary solid &#39;본인 확인 완료하기&#39;, 본인 확인 완료 전 disabled (POL-MBR-AUTH-001-01). route-level CSS 없음.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
 			</section><section class="panel"><h2>왜곡 방지 게이트</h2><ul><li>Preserve AppScreen rails: Header, scrollable Content, fixed Bottom(preset=&quot;primary-cta&quot;). CTA never moves into scroll content.</li><li>intro is a thin context note only — not a callout/hero, no invented 휴면 정책 facts. It carries POL-MBR-AUTH-001-01 intent in 휴면 해제 framing.</li><li>One visible 4px SectionDivider band between authSelect and authRequest. No plain-gap substitute; no extra section bands. intro→authSelect has no band.</li><li>authSelect: 3 rows in one card surface separated by Divider(type=&quot;contents&quot;) (1px). Not FieldStack gaps, not a section band. Fixed order 휴대폰 → PASS → 공동인증서 (POL-MBR-AUTH-002-09). Single-select only (POL-MBR-AUTH-002-01).</li><li>authSelect typography: all 3 labels equal Text(listTitle); emphasisRule: selected-row-only. Any section-title-scale row = controlLabelScale: too-large → do not approve.</li><li>authSelect loading: identical-layout 3-row skeleton (UXPT_LOD). No bare spinner, no layout jump.</li></ul></section><section class="panel debug-panel"><h2>MD 계약 이관 상태</h2><p>기존 Screen.diagram.md의 계약 정보를 JSON으로 이관했습니다.</p><details><summary>전체 계약 JSON 보기</summary><pre id="diagram-contract-preview"></pre></details></section></aside>
 	</main>
 	<script type="application/json" id="diagram-contract">
@@ -94,7 +94,7 @@
     "patternRecheck": {
       "source": "DESIGN_PATTERNS.md",
       "result": "legacy-migrated",
-      "reason": "Migrated from deprecated Screen.diagram.md to Screen.diagram.html standard."
+      "reason": "Form pattern confirmed from the visible 휴면 해제 intro, authentication method selection, code request section, and fixed identity-confirmation CTA."
     }
   },
   "screenWire": {
@@ -142,22 +142,22 @@
         "VOT_RUL"
       ],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Intro text frames the dormant-account release task: \"휴면 해제를 위해 본인 확인이 필요해요\"."
       },
       "patternDecision": {
         "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "reason": "Screen.config.ts selects PageStackContents title slot + Text(sectionTitle) for the thin flow-context note."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "Intro is structural-only and carries the POL-MBR-AUTH-001-01 gate in 휴면 해제 context without creating a new OGN."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Place a single leading section-title text before authSelect; no callout, hero card, or divider before the choice list."
       },
       "layoutContract": {
         "role": "intro",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Thin PageStack title note that introduces 본인 확인 as required for 휴면 해제.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -187,22 +187,22 @@
         "VOT_RUL"
       ],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Auth selection rail shows three radio rows in policy order: 휴대폰, PASS, 공동인증서."
       },
       "patternDecision": {
         "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "reason": "Screen.config.ts selects AuthSelect (ogn-mbr-auth-select), reused from the FP-003 authentication OGN."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "authSelect is the ogn-mbr-auth-select boundary and owns the single-choice list plus loading/error states."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Use one card surface with three ListSelected(radio) rows separated by contents dividers."
       },
       "layoutContract": {
         "role": "authSelect",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "CardBoundary choice list with 휴대폰, PASS, 공동인증서 rows and same-layout loading skeleton.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -232,22 +232,22 @@
         "VOT_RUL"
       ],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Auth request rail shows a 6-digit numeric code field, timer/helper text, resend action, state notices, and secondary confirmation."
       },
       "patternDecision": {
         "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "reason": "Screen.config.ts selects AuthRequest (ogn-mbr-auth-request), reused from the FP-003 authentication request OGN."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "authRequest is the ogn-mbr-auth-request boundary and owns verification-code entry, resend limits, timer, and error states."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Place the code field after the authSelect section divider with inline resend, timer helper, state Notice, and secondary 인증 확인."
       },
       "layoutContract": {
         "role": "authRequest",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "FieldStack verification-code section with maxLength 6 numeric input, inline resend action, timer helper, and state notices.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -277,22 +277,22 @@
         "VOT_RUL"
       ],
       "patternEvidence": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Bottom rail contains the single primary CTA \"본인 확인 완료하기\" and remains gated until identity confirmation completes."
       },
       "patternDecision": {
         "pattern": "legacy migration",
-        "reason": "Created from Screen.config.ts buildSelections."
+        "reason": "Screen.config.ts selects SinglePrimaryAction + ActionButton(primary) for the fixed Bottom gate."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Created from buildSelections during migration."
+        "reason": "actions is structural-only because AppScreen.Bottom owns the physical CTA rail."
       },
       "layoutStrategy": {
-        "raw": "Created from buildSelections during migration."
+        "raw": "Keep the primary CTA fixed in Bottom(preset=\"primary-cta\") and disabled before 본인 확인 completion."
       },
       "layoutContract": {
         "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Single fixed Bottom primary action that advances to NOVA-MBR-FP-009-0 after identity confirmation.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -324,7 +324,7 @@
         "UXPT_NAV",
         "VOT_RUL"
       ],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Thin flow-context note before authentication choices; no callout or divider."
     },
     {
       "requirement": "authSelect",
@@ -339,7 +339,7 @@
         "UXPT_NAV",
         "VOT_RUL"
       ],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Three-option single-choice card in fixed policy order with contents dividers."
     },
     {
       "requirement": "authRequest",
@@ -354,7 +354,7 @@
         "UXPT_NAV",
         "VOT_RUL"
       ],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Verification-code FieldStack with inline resend, timer, state notices, and secondary confirmation."
     },
     {
       "requirement": "actions",
@@ -369,7 +369,7 @@
         "UXPT_NAV",
         "VOT_RUL"
       ],
-      "layoutContractSummary": "Migrated from legacy markdown."
+      "layoutContractSummary": "Fixed Bottom primary CTA gated by completed identity confirmation."
     }
   ],
   "distortionGates": [

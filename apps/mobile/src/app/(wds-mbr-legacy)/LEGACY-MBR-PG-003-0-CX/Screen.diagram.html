@@ -10,18 +10,18 @@
 </head>
 <body>
 	<main>
-		<header class="diagram-title"><h1>LEGACY-MBR-PG-003-0-CX</h1><p>Screen.diagram.html 표준으로 변환된 시각 계약 다이어그램입니다.</p></header>
+		<header class="diagram-title"><h1>LEGACY-MBR-PG-003-0-CX</h1><p>회원 탈퇴 완료 화면의 close header, 처리 정보 요약, 철회 안내, 2버튼 Bottom rail을 보여줍니다.</p></header>
 		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="LEGACY-MBR-PG-003-0-CX" data-route="/LEGACY-MBR-PG-003-0-CX" data-pattern="complete" data-wire-reference="apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md">
 			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
-			<header class="app-header" data-rail="Header">close-style completion exit with visible title 탈퇴 완료.</header>
+			<header class="app-header" data-rail="Header" data-section-id="appBar" data-ogn-id="ogn-mbr-withdraw-complete-app-bar" data-pattern-role="completion-exit" data-boundary="none" data-layout-contract="Close completion header with visible one-line title."><span aria-hidden="true">×</span><span>탈퇴 완료</span></header>
 			<div class="content" data-rail="Content"><div class="page-stack">
-					<section class="wire-section" data-section-id="appBar" data-ogn-id="structural-only" data-pattern-role="appBar" data-boundary="unknown" data-layout-contract="Migrated from legacy markdown."><strong>appBar</strong><span>appBar · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="completionHero" data-ogn-id="structural-only" data-pattern-role="completionHero" data-boundary="unknown" data-layout-contract="Migrated from legacy markdown."><strong>completionHero</strong><span>completionHero · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="completionSummary" data-ogn-id="structural-only" data-pattern-role="completionSummary" data-boundary="unknown" data-layout-contract="Migrated from legacy markdown."><strong>completionSummary</strong><span>completionSummary · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="revokeNotice" data-ogn-id="structural-only" data-pattern-role="revokeNotice" data-boundary="unknown" data-layout-contract="Migrated from legacy markdown."><strong>revokeNotice</strong><span>revokeNotice · Migrated from legacy markdown.</span></section>
-					<section class="wire-section" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="actions" data-boundary="unknown" data-layout-contract="Migrated from legacy markdown."><strong>actions</strong><span>actions · Migrated from legacy markdown.</span></section>
+					<section class="wire-section" data-section-id="completionHero" data-ogn-id="ogn-mbr-withdraw-complete-hero" data-pattern-role="completion-hero" data-boundary="none" data-layout-contract="Leading complete hero with step caption, two-line result title, and grace-period copy."><strong>회원 탈퇴 6/6</strong><h2>탈퇴 처리가<br />완료되었습니다</h2><span>30일 이내에 다시 가입하시면 일부 정보를 복원할 수 있어요. 그 이후엔 모두 파기됩니다.</span></section>
+					<div class="token" aria-hidden="true">├══ SectionDivider 4px ══┤</div>
+					<section class="wire-section" data-section-id="completionSummary" data-ogn-id="ogn-mbr-withdraw-complete-summary" data-pattern-role="titled-key-value-summary" data-boundary="SectionDivider" data-layout-contract="TitleSection plus detail card with readable label/value rows."><strong>이 내용으로 처리됐어요</strong><div class="wire-section"><strong>처리 정보</strong><span>탈퇴 처리 시각 <b style="float:right">2026년 4월 30일 (수) 19:24</b></span><span>철회 가능 기간 <b style="float:right">5월 30일까지 (30일 유예)</b></span><span>개인정보 파기 <b style="float:right">유예 종료 시 자동 파기</b></span></div></section>
+					<div class="token" aria-hidden="true">├══ SectionDivider 4px ══┤</div>
+					<section class="wire-section" data-section-id="revokeNotice" data-ogn-id="ogn-mbr-withdraw-revoke-notice" data-pattern-role="informational-callout" data-boundary="SectionDivider" data-layout-contract="One titled callout in scroll content above fixed bottom actions."><strong>철회 안내</strong><span>유예 기간 내 철회를 원하시면 탈퇴 시 사용한 본인인증으로 마이페이지에서 진행할 수 있어요.</span></section>
 			</div></div>
-			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">CTA</button></footer>
+			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta" data-section-id="actions" data-ogn-id="ogn-mbr-withdraw-complete-actions" data-pattern-role="dual-completion-actions" data-boundary="bottom-fixed" data-layout-contract="Secondary revoke action and primary home action stay fixed in Bottom."><button class="cta" type="button" style="width:176px;background:#eef1f5;color:#171719">철회하기</button><button class="cta" type="button" style="width:176px;margin-left:8px">홈으로 가기</button></footer>
 		</section>
 		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: complete</span><span class="token">그룹: wds-mbr-legacy</span><span class="token">도메인: membership</span><span class="token">정책 참조: 0</span><span class="token">OGN ID: 5</span></p><p>Legacy-converted screen metadata backfill. Current Screen.tsx is treated as the visual and structural truth; no policy-core source has been bound, so policy meaning remains structural-only/TBD.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">확인</span><span>complete 패턴으로 이관되었습니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인</span><span>apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">확인 필요</span><span>실제 렌더 기준으로 최종 확인합니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">확인</span><span>JSON 계약과 config를 대조합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md</span><span class="token">패턴: complete</span></p><ul><li>complete-screen rail, close app bar, leading completion hero, section divider bands, card-like result summary, callout notice, and fixed two-action completion exit.</li><li>current screen uses withdrawal completion copy, processing/grace/disposal rows, revoke guidance, and actions 철회하기 plus 홈으로 가기.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
 				<div class="section-card"><h3>appBar</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>appBar</dd><dt>경계</dt><dd>기록 없음</dd><dt>후보</dt><dd>`AppBar` + `Icon(type=\</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> `AppBar` + `Icon(type=\</strong><p>Satisfies the completion header layoutContract by keeping a leading close affordance and one-line title in the header rail without route-level spacing.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
@@ -142,16 +142,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses a close-style completion header with the one-line title 탈퇴 완료."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Completion header chrome is owned by AppScreen.Header and the app-bar OGN."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "appBar",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "One close completion AppBar with visible 탈퇴 완료 title and no progress chrome.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -177,16 +177,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail uses a leading completion hero for withdrawal result, step caption, and grace-period guidance."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Withdrawal completion copy is owned by the completion hero section while screen placement stays structural."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "completionHero",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Leading complete hero with 회원 탈퇴 6/6 caption, two-line completion title, and 30-day grace/disposal support copy.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -212,16 +212,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail shows a titled processing summary with a detail card and three withdrawal fact rows."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Processing facts remain grouped in the completion summary section without inventing policy IDs."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "completionSummary",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Section title plus 처리 정보 detail card containing 탈퇴 처리 시각, 철회 가능 기간, and 개인정보 파기 rows.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -247,16 +247,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail keeps withdrawal revocation guidance as a titled callout after the summary divider."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "Revoke guidance stays in the notice section and is not moved into bottom actions."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "revokeNotice",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "One titled 철회 안내 callout explaining revocation during the grace period.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",
@@ -282,16 +282,16 @@
       "patternEvidence": {},
       "patternDecision": {
         "pattern": "",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The visible rail fixes dual completion actions in Bottom with 철회하기 secondary and 홈으로 가기 primary."
       },
       "ognBoundaryDecision": {
         "decision": "structural-only",
-        "reason": "Migrated from legacy markdown."
+        "reason": "The action OGN owns labels and hierarchy while AppScreen.ActionBar owns fixed bottom placement."
       },
       "layoutStrategy": {},
       "layoutContract": {
         "role": "actions",
-        "structure": "Migrated from legacy markdown.",
+        "structure": "Fixed bottom dual actions ordered secondary 철회하기 and primary 홈으로 가기.",
         "alignment": "see visual screen",
         "density": "match reference",
         "wrapping": "preserve readable wrapping",

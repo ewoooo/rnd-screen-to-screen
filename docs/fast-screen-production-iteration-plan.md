@@ -21,7 +21,7 @@ Extract
 → Verification
 ```
 
-이 방식은 정책 충실도와 문서 정합성을 지키는 데 강하지만, 화면을 실제로 보기 전까지 판단 비용이 크다. 특히 Phase 3 Diagram 단계에서 구조, 패턴, component 후보, layoutContract를 모두 높은 완성도로 고정하려고 하면서 제작 속도가 느려지고, 실제 렌더에서만 보이는 spacing, density, component fit 문제를 너무 늦게 발견한다.
+이 방식은 정책 충실도와 문서 정합성을 지키는 데 강하지만, 화면을 실제로 보기 전까지 판단 비용이 크다. 특히 Step 3 Diagram 단계에서 구조, 패턴, component 후보, layoutContract를 모두 높은 완성도로 고정하려고 하면서 제작 속도가 느려지고, 실제 렌더에서만 보이는 spacing, density, component fit 문제를 너무 늦게 발견한다.
 
 개선 가설은 다음과 같다.
 
@@ -143,7 +143,7 @@ Extract
 ```txt
 0. Intake
 1. Policy Coverage / Thin Map
-2. Thin Reference + Thin Diagram
+2. Thin Reference + Diagram
 3. Fast Build
 4. Render Evidence Capture
 5. Design Iteration Pass 1: Pattern Match
@@ -179,7 +179,7 @@ Extract
 
 `red`는 구현하지 않는다. `yellow`는 사용자 승인 없이는 실제 화면 요구로 확정하지 않는다.
 
-### 2. Thin Reference + Thin Diagram
+### 2. Thin Reference + Diagram
 
 초기 화면 방향을 빠르게 고정한다.
 
@@ -395,7 +395,7 @@ UI 변경은 텍스트 존재만으로 승인하지 않는다.
 | 디자인 검수 | 구현 전 문서 중심 | 구현 후 실제 화면 중심 반복 |
 | 속도 | 초기 판단이 무거움 | 빠르게 렌더 대상 확보 |
 | 위험 | 느리지만 안전함 | 빠르지만 contract sync 누락 위험 |
-| 보완책 | phase gate | iteration pass + final contract sync |
+| 보완책 | step gate | iteration pass + final contract sync |
 
 ## 운영 규칙
 
@@ -437,8 +437,8 @@ iteration 중간 메모는 최종 산출물로 남기지 않는다. 다만 최�
 이 계획을 채택하면 아래 문서를 조정한다.
 
 - `SCREEN_GENERATION_FLOW.md`
-  - Phase 3 Diagram의 역할을 “초기 방향 계약 + 최종 sync”로 재정의
-  - Phase 4 뒤에 Design Iteration Pass를 공식 단계로 추가
+  - Step 3 Diagram의 역할을 “초기 방향 계약 + 최종 sync”로 재정의
+  - Step 4 뒤에 Design Iteration Pass를 공식 단계로 추가
 - `.codex/skills/cx-screen-diagram/SKILL.md`
   - 초기 Diagram mode와 final sync mode를 분리
 - `.codex/skills/cx-screen-build/SKILL.md`
@@ -486,7 +486,7 @@ iteration 중간 메모는 최종 산출물로 남기지 않는다. 다만 최�
 
 ```txt
 Step 0-2: 기존과 동일하게 Intake / Extract / Policy Map
-Step 3-6: Thin Reference + Thin Diagram으로 축소하되 최소 계약은 작성
+Step 3-6: Thin Reference + Diagram으로 축소하되 최소 계약은 작성
 Step 7-8: Fast Build + Render Evidence Capture + Design Iteration Pass
 Step 8.5: Contract Sync
 Step 9-10: 기존 Verification / Report

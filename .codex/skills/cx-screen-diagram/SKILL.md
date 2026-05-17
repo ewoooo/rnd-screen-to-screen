@@ -1,24 +1,24 @@
 ---
 name: cx-screen-diagram
-description: Compatibility/phase entrypoint for Phase 3 Screen.diagram.html work. Use when Codex must select a screen-diagrams wire reference, run Pattern Analysis Gate, write visual mobile rail diagrams, Section Inspector, layoutStrategy, layoutContract, componentCandidates, Policy / OGN Matrix, and Distortion Gates before implementation; route to newer stage skills when available.
+description: Compatibility entrypoint for Step 3 Screen.diagram.html work. Use when Codex must select a screen-diagrams wire reference, run Pattern Analysis Gate, write visual mobile rail diagrams, Section Inspector, layoutStrategy, layoutContract, componentCandidates, Policy / OGN Matrix, and Distortion Gates before implementation; route to newer stage skills when available.
 ---
 
 # CX Screen Diagram
 
-Use this as the compatibility entrypoint for Phase 3 only. `Screen.diagram.html` owns structure, wire reference application, layout strategy, layout contract, governance application, OGN boundary decisions, and component candidate discovery. Existing `Screen.diagram.md` is a migration source/reference during transition and must not be deleted just because an HTML diagram is created. The HTML diagram must not invent policy meaning or make component names the acceptance criteria.
+Use this as the compatibility entrypoint for Step 3 Diagram work. `Screen.diagram.html` owns structure, wire reference application, layout strategy, layout contract, governance application, OGN boundary decisions, and component candidate discovery. Existing `Screen.diagram.md` is a migration source/reference during transition and must not be deleted just because an HTML diagram is created. The HTML diagram must not invent policy meaning or make component names the acceptance criteria.
 
 This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract. The flow and structure documents are the SOT; this skill only operationalizes them.
 
 ## Compatibility Routing
 
-If newer stage-specific skills are available in the current Codex environment, route to them when they better match the work and use this file as the Phase 3 compatibility contract:
+If newer stage-specific skills are available in the current Codex environment, route to them when they better match the work and use this file as the Step 3 compatibility contract:
 
 - Use `cx-screen-thin-diagram` for scoped Screen.diagram.html updates where Map, pattern family, wire reference, and OGN ownership are already clear.
 - Use `cx-screen-design-iterate` when rendered evidence or review feedback requires a deliberate Diagram/Build/Render loop.
 - Use `cx-screen-contract-sync` when the diagram only needs consistency alignment with Map/config/implementation metadata and no new design decision.
 - Use this compatibility entrypoint directly for full Step 3-6 work: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract.
 
-When no newer stage skill is available, execute the workflow below directly. Do not split routing by creating files or ad-hoc local skills. Stage routing must preserve the same `Screen.diagram.html` output, hidden `#diagram-contract`, and Phase 3 validation gates.
+When no newer stage skill is available, execute the workflow below directly. Do not split routing by creating files or ad-hoc local skills. Stage routing must preserve the same `Screen.diagram.html` output, hidden `#diagram-contract`, and Step 3 validation gates.
 
 ## Required Reading
 
@@ -27,7 +27,7 @@ When no newer stage skill is available, execute the workflow below directly. Do 
 - `SCREEN_GENERATION_FLOW.md`
 - `DESIGN_PATTERNS.md`
 - `DESIGN_FOUNDATION.md`
-- Phase 2 `Screen.map.md`
+- Step 2 `Screen.map.md`
 - closest references under `apps/mobile/src/screen-diagrams/`
 
 ## Workflow
@@ -69,9 +69,9 @@ When no newer stage skill is available, execute the workflow below directly. Do 
    4. `Section Inspector` with candidate evaluation details
    5. `Distortion Gates`
    6. hidden `<script type="application/json" id="diagram-contract">`
-9. Apply Phase 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
+9. Apply Step 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
 10. For each section/OGN in `diagram-contract.sections`, write fields in this order: `patternEvidence`, `patternDecision`, `ognBoundaryDecision`, `layoutStrategy`, `layoutContract`, then `componentCandidates`.
-11. Run the required Phase 3 validation before moving to Build.
+11. Run the required Step 3 validation before moving to Build.
 
 ## Pattern Analysis Gate
 
@@ -169,7 +169,7 @@ If no reference exists, use `source: none-found` and record `reason`.
 
 ## Pattern Recheck
 
-After drawing the draft `Screen Wire`, reopen `DESIGN_PATTERNS.md` and compare the selected official pattern against the draft diagram. This is a required pause inside Phase 3: draw, check the pattern SOT, revise the diagram, then continue to Build planning.
+After drawing the draft `Screen Wire`, reopen `DESIGN_PATTERNS.md` and compare the selected official pattern against the draft diagram. This is a required pause inside Step 3: draw, check the pattern SOT, revise the diagram, then continue to Build planning.
 
 `diagram-contract.screenContract` must include:
 
@@ -185,4 +185,4 @@ If the recheck changes section boundaries, divider behavior, CTA placement, dens
 
 ## Done Criteria
 
-Run the Phase 3 validation required by `SCREEN_GENERATION_FLOW.md`. Do not proceed to Build while validation or the diagram contract fails.
+Run the Step 3 validation required by `SCREEN_GENERATION_FLOW.md`. Do not proceed to Build while validation or the diagram contract fails.
