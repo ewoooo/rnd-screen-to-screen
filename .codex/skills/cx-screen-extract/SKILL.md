@@ -49,8 +49,11 @@ Produce an `Extract Summary` containing:
 ## Rules
 
 - Extract only facts present in SB files.
+- Keep the result table-first: screen rows, OGN rows, transition rows, case branch rows, and policy ref rows.
 - Treat SB component IDs as intent/vocabulary hints, not implementation component names.
 - Do not invent policy refs, OGN IDs, eligibility rules, validation rules, or copy from visual material alone.
+- Do not redesign OGN boundaries in this phase. Record the SB OGN links as-is; boundary decisions belong to Diagram.
+- Do not write long screen-by-screen UX narratives. If explanation is needed, keep it as `missing` or `ambiguous` notes.
 - Check nearby existing screens only to disambiguate naming or route conventions.
 
 ## Done Criteria

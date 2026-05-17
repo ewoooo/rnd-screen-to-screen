@@ -16,6 +16,9 @@ Read in order:
 ## Rules
 
 - `policy-core` outranks SB when they conflict.
-- If SB references a policy ID that does not exist in `policy-core`, record the gap and stop unless the user explicitly chooses simulation/backfill mode.
+- Run Coverage Map before Implementation Map. First classify SB policy refs against `policy-core` as `green`, `yellow`, or `red`.
+- If SB references a policy ID that does not exist in `policy-core`, record the gap as `missingPolicyIds` and stop that row unless the user explicitly chooses simulation/backfill mode.
+- Do not infer missing policies from SB prose.
+- Do not expand `red` rows into copy, governance, or sourceRef matrices.
 - `Screen.map.md` owns policy meaning, source refs, required information, constraints, choices, errors, and governance refs.
 - Do not solve layout here; that belongs to Diagram.

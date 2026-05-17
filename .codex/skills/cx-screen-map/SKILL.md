@@ -20,12 +20,28 @@ Do not read `DESIGN_PATTERNS.md` or `DESIGN_FOUNDATION.md` in this phase. Policy
 ## Workflow
 
 1. Start from the Phase 1 extraction summary.
-2. Resolve every policy tag or unresolved hint against policy-core.
-3. Separate source facts from user-facing copy.
-4. Record required information, choices, constraints, error states, recovery states, and CTA meaning.
-5. Select relevant `UXP`, `UXPT`, and `VOT` governance refs, or record `notApplicableReason`.
-6. Connect each requirement to an OGN ID when known; otherwise record why it remains unresolved.
-7. Write or update `Screen.map.md`.
+2. Run Coverage Map first: resolve every SB policy ID or unresolved hint against policy-core and classify each screen/OGN as `green`, `yellow`, or `red`.
+3. For `red` items, stop mapping and record `missingPolicyIds`, `blockedReason`, and `neededDecision`. Do not infer missing policy from SB prose.
+4. For `yellow` items, separate policy-backed facts from SB-only facts and require user approval before using SB-only facts as implementation requirements.
+5. For `green` items and approved `yellow` items only, separate source facts from user-facing copy.
+6. Record required information, choices, constraints, error states, recovery states, and CTA meaning.
+7. Select relevant `UXP`, `UXPT`, and `VOT` governance refs, or record `notApplicableReason`.
+8. Connect each requirement to an OGN ID when known; otherwise record why it remains unresolved.
+9. Write or update `Screen.map.md` only for mappable items.
+
+## Coverage Matrix
+
+Before writing `Screen.map.md`, produce a compact `Policy Coverage Matrix`:
+
+- screen ID
+- OGN ID
+- SB policy IDs
+- present policy IDs
+- missing policy IDs
+- coverage verdict: `green`, `yellow`, or `red`
+- next action: `map`, `needs-user-decision`, or `blocked`
+
+Do not expand `red` rows into copy, governance, or sourceRef matrices.
 
 ## Screen.map.md Minimum Content
 
@@ -42,6 +58,7 @@ Do not read `DESIGN_PATTERNS.md` or `DESIGN_FOUNDATION.md` in this phase. Policy
 
 ## Done Criteria
 
+- Coverage Matrix exists before Implementation Map work starts.
 - Every policy tag is mapped to screen information, CTA, state, or error treatment.
 - Every policyRef and OGN ID expected in `Screen.config.ts generation` appears in the map.
 - Phase 3 can design structure without re-reading policy meaning from scratch.

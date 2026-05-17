@@ -10,6 +10,8 @@
 
 메인 에이전트는 작업이 블랙박스가 되지 않도록 구현 전에 네 가지 공개 체크포인트를 사용자에게 표면화한다: SB Extract 결과, Reference Decision, Component Candidate Decision, Build Plan. 서브 에이전트가 초안을 만들 수는 있지만, 이 네 지점은 메인이 승인 가능한 형태로 정리하고 다음 단계 진입 여부를 결정한다.
 
+기본 실행은 continuous execution이다. 사용자가 특정 step까지만 하라고 명시하지 않는 한, 메인 에이전트는 사용자에게 phase마다 "다음 phase를 진행해도 되는지" 묻지 않는다. phase 전환은 메인 에이전트의 내부 승인 gate로 처리한다. 다만 구현 전 공개 체크포인트인 Reference Decision, Component Candidate Decision, Build Plan은 사용자 지시를 받는 gate다. 메인 에이전트는 이 세 항목을 공개한 뒤 구현을 시작하지 않고 사용자 승인/수정/중단 지시를 기다린다.
+
 하위 에이전트 구현 위임 전 Build Plan에는 worker 이름, write scope, no-touch 파일, 승인 검사 항목을 반드시 포함한다. P0 수정처럼 작은 작업도 예외가 아니다. 짧게 쓰더라도 사용자가 “누가 무엇을 어디까지 만지는지” 볼 수 있어야 한다.
 
 서브 에이전트는 메인 에이전트가 위임한 범위 안에서 실제 산출물을 만드는 워커다. Phase 1의 SB 추출, Phase 2의 정책/governance 조사와 `Screen.map.md` 초안, Phase 3의 구조 설계와 `Screen.diagram.md` 초안, Phase 4의 OGN/Screen/config 구현, Phase 5의 route 등록과 preview 확인을 맡을 수 있다. 서브 에이전트가 만든 산출물은 해당 페이즈의 작업 결과로 인정하되, 페이즈 간 최종 연결과 충돌 해결 책임은 메인 에이전트가 가진다.
@@ -39,6 +41,7 @@ Phase 5 Register/Verify 통합
 ```
 
 - Phase 1/2/3은 화면별 병렬 실행을 기본으로 하며, 메인 에이전트가 전체 화면 세트의 누락, 정책·governance 일관성, wire semantics, layoutContract, componentCandidates fit 근거를 승인한다.
+- Step 0-2의 병렬 위임은 긴 분석 회의가 아니라 기계적 분할 추출이다. 하위 에이전트는 같은 문서를 중복 정독하지 않고, screen group / OGN group / policy ID coverage처럼 분리된 표를 만든다. 메인 에이전트는 하위 산출물이 narrative 중심이거나 Coverage Map과 Implementation Map을 섞으면 승인하지 않고 표/판정 중심으로 재작업시킨다.
 - Phase 4는 승인된 Diagram만 병렬 제작한다. 같은 organism/component 파일을 여러 서브 에이전트가 동시에 수정할 수 있으면 메인이 파일 소유 범위를 분리하거나 순차화한다.
 - Phase 5는 route 등록과 preview/check 결과를 통합 검수한다.
 - 단일 화면 요청이나 명확히 독립적인 단순 proof/detail 화면은 예외적으로 page end-to-end 위임할 수 있다. 멀티 화면 배치에서 이 예외를 쓰면 예외 사유와 메인 gate 위치를 명시한다.
@@ -71,7 +74,7 @@ Pre/Post = Step 0, Step 10
 ```
 
 - Phase 1: 서브 에이전트가 SB에서 화면ID·도메인·과업·상태·CTA·정책태그·OGN ID·slot/part/hierarchy를 추출하고, 메인 에이전트가 누락 0 상태인지 확인한다.
-- Phase 2: 서브 에이전트가 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs를 조사해 `Screen.map.md`를 작성하고, 메인 에이전트가 정책 태그가 화면 정보/CTA/에러로 모두 매핑됐는지 승인한다.
+- Phase 2: 서브 에이전트가 먼저 Coverage Map으로 SB policy ID와 `policy-core` 존재 여부를 대조하고, `green`/`yellow`/`red`를 판정한다. `red`는 missing/blocked로 종료하고, `yellow`는 사용자 승인 gate로 올린다. `green` 또는 승인된 `yellow`만 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs를 조사해 `Screen.map.md`를 작성한다. 메인 에이전트는 Coverage Map과 Implementation Map이 섞였거나 없는 정책을 추정한 산출물을 반려한다.
 - Phase 3: 서브 에이전트가 유사 wire reference를 찾고, Screen Wire, Wire Semantic Tags, pattern contract, layoutStrategy/layoutContract, Layout Distortion Gate, componentCandidates를 반영해 `Screen.diagram.md`를 작성한다. 메인 에이전트는 컴포넌트 후보가 아니라 레이아웃 보존과 구조 계약을 먼저 승인한다. `[... | key-value-summary | card]`로 읽히는 summary card는 `patternFamily: card-key-value-summary`와 required capability가 먼저 정의됐는지 확인하고, 후보 평가가 component-name preference나 현재 샘플 길이에 기대면 반려한다. 후보가 타 화면 pattern family 선례와 thin 소스에서만 충돌하면 모순을 reject로 굳히지 말고 `SCREEN_STRUCTURE_PRINCIPLES.md`의 Pattern-Family Precedent Gate로 사용자 결정 또는 assumption을 surface한다.
 - Phase 4: 서브 에이전트가 componentCandidates를 capability 기준으로 평가해 layoutContract를 만족하는 컴포넌트/조합을 선택하거나 필요한 OGN/component를 만든다. 메인 에이전트는 실제 렌더링에서 section/slot/stack 배치와 layoutContract가 보존되는지 먼저 확인한다.
 - Phase 5: 서브 에이전트가 route catalog 등록과 preview 진입 확인을 수행하고, 메인 에이전트가 최종 검증 범위와 남길 기록을 확정한다.

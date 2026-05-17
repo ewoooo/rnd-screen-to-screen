@@ -18,7 +18,7 @@ SB 기반 신규 생성 절차에서는 Figma SOT를 필수 대조 대상으로 
 |---:|---|---|---|---|
 | **0 · Intake** | Pre-phase | 입력 파일과 작업 범위의 존재성을 확인한다. | `Intake Summary` | target screen, screen spec, OGN spec, 기존 구현 여부가 확인됨 |
 | **1 · SB Extract** | Phase 1 | SB에 적힌 화면/OGN 사실을 추출한다. | `Extract Summary` | screenId, OGN list, state, CTA, transition/case branch가 목록화됨 |
-| **2 · Policy Map** | Phase 2 | 정책 의미, sourceRef, governance, copy 근거를 확정한다. | `Screen.map.md` | 요구사항이 policy/governance/copy와 연결됨 |
+| **2 · Policy Map** | Phase 2 | 먼저 policy-core coverage를 판정하고, 진행 가능한 화면만 정책 의미/sourceRef/governance/copy 근거를 확정한다. | `Policy Coverage Matrix`, `Screen.map.md` | coverage가 green인 요구사항만 policy/governance/copy와 연결됨. 결손은 missing/blocked로 종료됨 |
 | **3 · Reference Decision** | Phase 3 | 공식 패턴과 가까운 구현/wire reference를 선택한다. | `Reference Decision Log` | patternFamily, official pattern, rejected references가 명시됨 |
 | **4 · OGN Boundary Decision** | Phase 3 | 정책 의미와 layout rhythm의 소유자를 결정한다. | `OGN Boundary Decision` | reuse/extend/new/structural-only와 owner가 정해짐 |
 | **5 · Component Candidate Decision** | Phase 3 | 구현 어휘와 레이아웃 후보를 capability 기준으로 평가한다. | `Component Candidate Decision` | selected/rejected candidates와 reject 이유가 기록됨 |
@@ -48,7 +48,32 @@ Pre/Post = Step 0, Step 10
 4. Build Plan
 ```
 
-이 체크포인트는 긴 회의록이 아니라 다음 위험을 구현 전에 잡기 위한 승인 가능한 작업 로그다: 잘못된 reference 선택, OGN boundary 오류, 패턴과 맞지 않는 component 후보, raw CSS나 route-level layout patch, 예상 밖 파일 수정.
+이 체크포인트는 긴 회의록이 아니라 다음 위험을 구현 전에 잡기 위한 사용자 검토 지점이다: 잘못된 reference 선택, OGN boundary 오류, 패턴과 맞지 않는 component 후보, raw CSS나 route-level layout patch, 예상 밖 파일 수정.
+
+## 기본 실행 모드
+
+화면 생성 요청의 기본 모드는 **autonomous continuous execution**이다. 사용자가 특정 step까지만 하라고 제한하지 않는 한, 메인 에이전트는 Step 0 Intake부터 Step 10 Report까지 멈추지 않고 진행한다. 각 phase 사이에는 메인/서브 내부 승인 gate를 사용하며, 사용자에게 매번 "다음 phase 진행" 승인을 요구하지 않는다.
+
+사용자 승인 gate와 내부 승인 gate는 분리한다.
+
+| Gate | 승인 주체 | 쓰임 |
+|---|---|---|
+| 사용자 승인 gate | 사용자 | 공개 체크포인트 승인, 작업 범위, 정책 결손 처리, legacy reference 사용, 신규 component/variant/slot 추가, 큰 구조 변경, 자동 수정 불가 검증 실패 |
+| 내부 승인 gate | 메인 에이전트 | Extract/Map/Diagram/Build/Register phase 산출물의 DoD 통과와 다음 phase 진입 |
+
+메인 에이전트는 다음 경우에만 진행을 멈추고 사용자 확인을 요청한다.
+
+- `policy-core`에 없는 정책을 보강해야 하거나, SB-only 근거로 실제 구현을 확정해야 하는 경우
+- SB와 `policy-core`가 충돌해 화면 요구, copy, CTA, 분기, 상태 처리가 달라지는 경우
+- reference 우선순위를 벗어나 legacy 화면을 기준 reference로 써야 할 가능성이 생긴 경우
+- 기존 component vocabulary로 layoutContract를 만족할 수 없어 신규 component/variant/slot이 필요한 경우
+- Diagram Contract를 만족하는 구현 후보가 없고 CSS 보정 없이 해결할 수 없는 경우
+- 사용자가 명시하지 않은 파일 삭제, route/group 재구성, 공용 package 변경이 필요한 경우
+- 검증 실패가 해당 phase의 자동 재작업 범위를 넘는 경우
+
+위 항목에 해당하지 않는 일반 phase 전환은 메인 에이전트가 내부 승인 gate로 처리한다. 단, 공개 체크포인트는 생략하지 않는다.
+
+단, 구현 전 공개 체크포인트 중 **Reference Decision**, **Component Candidate Decision**, **Build Plan**은 사용자 지시를 받는 gate다. 메인 에이전트는 이 세 항목을 공개한 뒤 구현을 시작하지 말고 사용자의 승인/수정/중단 지시를 기다린다. `SB Extract 결과`는 진행 로그로 공개하되, 사용자가 초기 추출 검토를 요청했거나 결손이 다음 phase를 막는 경우에만 사용자 승인 gate로 격상한다.
 
 서브 에이전트에게 구현을 위임할 때도 이 네 지점은 생략하지 않는다. 긴 설명 대신 아래 짧은 형식으로 공개하면 충분하다.
 
@@ -91,6 +116,21 @@ Build Plan
 | **10 · Report** | 작업 로그, 사용 source, 결정/reject 기록, 검증 결과 | 숨겨진 내부 판단 |
 
 `DESIGN_PATTERNS.md`는 Step 3-6에서 화면 구조와 pattern/layout contract를 결정하고, `DESIGN_FOUNDATION.md`는 Step 3에서 제약을 확인한 뒤 Step 5/7/8/9에서 token·typography·spacing·radius 위반을 차단한다. Phase 2는 정책 의미가 디자인 표현에 의해 미리 걸러지지 않도록 디자인 문서를 읽지 않는다.
+
+## Step 0-2 경량 라우팅 규칙
+
+Step 0-2는 설계가 아니라 **분류와 라우팅**이다. 이 구간에서 구현 판단, reference 판단, layout 판단, component 후보 판단, legacy 비교를 시작하지 않는다.
+
+| Step | 해야 하는 일 | 하지 않는 일 |
+|---|---|---|
+| **0 · Intake** | SB path, `screen/*.md`, `organism/*.md`, target route/group, 기존 구현 존재 여부, dirty worktree 범위 확인 | 정책 의미 해석, 디자인 문서 읽기, legacy 구현 분석 |
+| **1 · SB Extract** | SB에 적힌 screen/OGN/transition/case/policy ref를 표로 추출 | OGN 경계 재설계, copy 개선, validation 추론, component/API 후보 선정 |
+| **2A · Coverage Map** | SB policy ID와 `policy-core` 존재 여부 대조, screen/OGN별 `green`/`yellow`/`red` 판정 | 없는 정책 복원, SB-only 요구를 정책처럼 확정, governance/copy 매트릭스 작성 |
+| **2B · Implementation Map** | `green` 또는 사용자 승인된 `yellow` 요구만 `Screen.map.md` 수준으로 확장 | `red` 요구를 추정으로 채우기, 디자인 문서로 정책 결손 우회 |
+
+Step 2는 Coverage Map을 먼저 통과해야 한다. Coverage 결과가 `red`인 screen/OGN은 `Screen.map.md`를 작성하지 않고 `missingPolicyIds`, `blockedReason`, `neededDecision`만 남긴다. `yellow`는 부분 정책 근거와 SB-only 범위를 분리해 표시하고, 실제 구현 근거로 사용할지는 사용자 승인 gate로 올린다. `green`만 Implementation Map으로 들어간다.
+
+Step 0-2 산출물은 표와 ID 목록 중심이어야 한다. 긴 narrative, 화면별 UX 해석, OGN별 설계 설명, pattern 비교는 Step 3 이후로 미룬다. 하위 에이전트가 이 구간에서 긴 리포트를 작성하면 메인 에이전트는 요약하지 말고 재작업시킨다.
 
 ## 레이아웃 책임
 
@@ -144,7 +184,7 @@ Verification
 | Phase | 책임 (단일) | 참고 문서 (고정) | 산출물 | 완료조건 (DoD) |
 |---|---|---|---|---|
 | **1 · Extract** | SB → 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출 | SB (입력) | 추출 요약 | 화면ID·도메인·OGN ID·정책태그 누락 0으로 목록화 |
-| **2 · Map** | 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정 | `packages/policy-core/policies/**/*.md`, `*.policy.ts`, `packages/policy-core/governance/**/*.md` | `Screen.map.md` | 모든 정책태그가 화면 정보/CTA/에러로 매핑되고, 관련 `UXP`/`UXPT`/`VOT` refs가 선정됨. 누락 시 다음 페이즈 진입 금지 |
+| **2 · Map** | 먼저 SB policy ID와 `policy-core` coverage를 대조해 진행 가능성을 판정한다. 이후 `green` 또는 승인된 `yellow` 요구만 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정으로 확장한다. | `packages/policy-core/policies/**/*.md`, `*.policy.ts`, `packages/policy-core/governance/**/*.md` | `Policy Coverage Matrix`, `Screen.map.md` | Coverage Matrix에 screen/OGN별 present/missing policy ID와 `green`/`yellow`/`red` 판정이 있고, `green`/승인된 `yellow` 요구만 화면 정보/CTA/에러와 governance refs로 매핑됨. `red`는 missing/blocked로 남기고 다음 페이즈 진입 금지 |
 | **3 · Diagram** | Map 이후 유사 wire reference 탐색 + Pattern Analysis Gate + reference pattern 분석 + 화면 패턴 결정 + OGN boundary/reuse/new/extend 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy/layoutContract 작성 + componentCandidates 나열 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, Phase 2의 governance refs | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, `wireReference`와 한계, section별 patternEvidence/patternDecision, OGN별 `ognBoundaryDecision`·layoutStrategy·layoutContract·componentCandidates·정책연결·governance 적용 표기 |
 | **4 · Build** | Diagram에서 이미 결정된 OGN boundary/reuse/new/extend 계약을 코드화 + layoutContract를 만족하는 컴포넌트/조합 선택 + 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout` | `apps/mobile/src/organisms/<route-group-or-domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재하고 `ognBoundaryDecision`·layoutContract/Distortion Gates를 보존, `config.generation` 블록 채워짐 |
 | **5 · Register** | route catalog 등록 + preview 노출 확인 | `apps/mobile/src/scripts/screen-routes/` | `routes.ts` 등록 항목 | route 등록 + preview iframe에서 해당 route 진입 가능 |
@@ -212,10 +252,12 @@ flowchart LR
 
 ### Phase 2 · Map
 
-- 책임: 정책 필수정보·선택지·제약·에러·sourceRef를 화면 요구 매트릭스로 정리하고, 사용자에게 보여줄 copy를 분리한 뒤 적용 가능한 governance refs를 선정한다.
+- 책임: 먼저 SB가 참조한 policy ID가 `policy-core`에 존재하는지 coverage를 판정한다. 그 다음 `green` 또는 사용자 승인된 `yellow` 요구만 정책 필수정보·선택지·제약·에러·sourceRef를 화면 요구 매트릭스로 정리하고, 사용자에게 보여줄 copy를 분리한 뒤 적용 가능한 governance refs를 선정한다.
 - 참고: `packages/policy-core/policies/**/*.md`, `packages/policy-core/policies/**/*.policy.ts`, `packages/policy-core/governance/**/*.md`
-- 산출: `Screen.map.md` — 정책-화면 요구사항 매트릭스를 영구 기록한다.
-- DoD: 모든 정책 태그가 화면 정보/CTA/에러로 매핑되고, 관련 `UXP`/`UXPT`/`VOT` refs가 선정된다. 정책 필수 정보 또는 필요한 governance refs가 누락되면 Phase 3로 진입하지 않는다.
+- 산출: `Policy Coverage Matrix`, `Screen.map.md` — coverage는 진행 가능성을 판정하고, map은 정책-화면 요구사항 매트릭스를 영구 기록한다.
+- DoD: Coverage Matrix에 screen/OGN별 present/missing policy ID와 `green`/`yellow`/`red` 판정이 있다. `green` 또는 사용자 승인된 `yellow` 요구만 화면 정보/CTA/에러로 매핑되고, 관련 `UXP`/`UXPT`/`VOT` refs가 선정된다. 정책 필수 정보 또는 필요한 governance refs가 누락된 `red` 요구는 Phase 3로 진입하지 않는다.
+- Coverage Map과 Implementation Map을 섞지 않는다. policy ID 존재 여부가 확인되기 전에는 copy/governance/sourceRef 매트릭스를 작성하지 않는다.
+- `policy-core`에 없는 정책은 SB 문장으로 복원하지 않는다. 빠르게 `missingPolicyIds`, `blockedReason`, `neededDecision`으로 기록한다. 정책 backfill이 필요하면 사용자 승인 gate로 올리고, 그 전에는 구현 요구로 확정하지 않는다.
 - Governance 확인 시점은 이 페이즈다. 도메인 정책 매핑 직후 CTA, 상태, 에러/로딩/복구, navigation, writing tone에 영향을 주는 `UXP`/`UXPT`/`VOT` 항목을 `Screen.map.md`에 기록한다.
 - 기록 항목: `governanceRefs`, `selectionReason`, `affectedRequirement`, `copy/state/CTA impact`, `notApplicableReason`(검토했지만 적용하지 않는 경우).
 - 이 페이즈는 디자인 문서를 참조하지 않는다. 정책 충실도와 UX governance 적용 대상(무엇을 지켜야 하는가)이 디자인 표현(어떻게)에 의해 미리 걸러지지 않도록 의도적으로 분리한다.
@@ -257,7 +299,7 @@ flowchart LR
 
 ## 생성 산출물 계약
 
-SB 기반 화면 폴더는 다음 산출물을 가진다. `Screen.map.md` 와 `Screen.diagram.md` 는 **모든 화면 의무**다.
+Phase 2 coverage를 통과해 구현 대상으로 승인된 SB 기반 화면 폴더는 다음 산출물을 가진다. `Screen.map.md` 와 `Screen.diagram.md` 는 **구현 진행 화면의 의무 산출물**이다. Coverage가 `red`로 blocked 된 화면은 화면 폴더를 만들지 않고 Coverage Matrix에 `missingPolicyIds`, `blockedReason`, `neededDecision`을 남긴다.
 
 ```txt
 apps/mobile/src/app/(<route-group>)/<screen-id>/

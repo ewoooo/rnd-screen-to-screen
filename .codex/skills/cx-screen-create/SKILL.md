@@ -7,6 +7,8 @@ description: Orchestrate the full CX policy-based mobile screen creation workflo
 
 Use this as the manager skill for the full screen-generation workflow. Keep the main agent in a manager role: define phase inputs and outputs, delegate phase work when useful, approve each phase before moving on, and keep `Screen.map.md -> Screen.diagram.md -> implementation -> Screen.config.ts -> route` consistent.
 
+Default to autonomous continuous execution. Unless the user explicitly limits the turn to a specific step or asks for analysis only, continue through internal phase gates without asking for approval on every phase transition. However, stop for user direction at the pre-implementation public checkpoints: Reference Decision, Component Candidate Decision, and Build Plan. Also stop when other `SCREEN_GENERATION_FLOW.md` user approval gate conditions apply.
+
 This skill is an executor, not the SOT. The procedure, document routing, public checkpoints, and layout gates are owned by `SCREEN_GENERATION_FLOW.md`; read that file first and follow its 0-10 operating sequence.
 
 ## Workflow
@@ -33,7 +35,7 @@ This skill is an executor, not the SOT. The procedure, document routing, public 
 - Treat `DESIGN_PATTERNS.md` as the screen pattern and layout/spacing contract SOT.
 - Treat `DESIGN_FOUNDATION.md` as the visual foundation/token SOT.
 - Record approved decisions in owned files: policy/copy/governance in `Screen.map.md`, structure/layoutContract/componentCandidates in `Screen.diagram.md`, implementation metadata in `Screen.config.ts`.
-- The main agent must publicly surface these checkpoints before implementation: SB Extract result, Reference Decision, Component Candidate Decision, Build Plan.
+- The main agent must publicly surface these checkpoints before implementation: SB Extract result, Reference Decision, Component Candidate Decision, Build Plan. Reference Decision, Component Candidate Decision, and Build Plan are user-direction gates; do not start implementation until the user approves or revises them.
 - Main-agent review is an approval gate, not a passive summary. The main agent must block the next phase when a delegated artifact misses required structure, weakens wire semantics, or leaves candidate scoring unsupported.
 - Before worker implementation starts, the main agent must expose a short Build Plan with worker name, write scope, no-touch files, and approval checks. For tiny P0 fixes, this can be compact, but it must exist.
 - After workers finish, the main agent must inspect `git diff --stat` and scoped diffs for each worker-owned path before accepting. If a worker edits outside scope, either justify the expansion in the report or return the work for correction.
