@@ -95,7 +95,7 @@ Build Plan
 - approval checks:
 ```
 
-메인 에이전트는 하위 에이전트의 완료 보고를 그대로 승인하지 않는다. 승인 전에 반드시 `git diff --stat`, scoped diff, checker/lint/build, 그리고 실제 렌더의 layout evidence를 확인한다.
+메인 에이전트는 하위 에이전트의 완료 보고를 그대로 승인하지 않는다. 승인 전에 반드시 `git diff --stat`, scoped diff, validation/lint/build, 그리고 실제 렌더의 layout evidence를 확인한다.
 
 ## 문서 라우팅
 
@@ -112,7 +112,7 @@ Build Plan
 | **6 · Diagram Contract** | `SCREEN_STRUCTURE_PRINCIPLES.md`, `DESIGN_PATTERNS.md`, `Screen.map.md` | 구현 편의에 따른 구조 변경 |
 | **7 · Build Plan** | `Screen.map.md`, `Screen.diagram.md`, `DESIGN_FOUNDATION.md`, existing route/organism files, `git status` | 새로운 정책 해석 |
 | **8 · Implementation** | `Screen.map.md`, `Screen.diagram.md`, `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-layout`, `@pxds/cx-icons` | 새 reference/pattern 판단 |
-| **9 · Verification** | `AGENTS.md` 공통 검증, `Screen.diagram.md` Distortion Gates, pattern-specific checklist, foundation-specific scan | checker 약화 |
+| **9 · Verification** | `AGENTS.md` 공통 검증, `Screen.diagram.md` Distortion Gates, pattern-specific checklist, foundation-specific scan | validation 약화 |
 | **10 · Report** | 작업 로그, 사용 source, 결정/reject 기록, 검증 결과 | 숨겨진 내부 판단 |
 
 `DESIGN_PATTERNS.md`는 Step 3-6에서 화면 구조와 pattern/layout contract를 결정하고, `DESIGN_FOUNDATION.md`는 Step 3에서 제약을 확인한 뒤 Step 5/7/8/9에서 token·typography·spacing·radius 위반을 차단한다. Phase 2는 정책 의미가 디자인 표현에 의해 미리 걸러지지 않도록 디자인 문서를 읽지 않는다.

@@ -2,6 +2,8 @@
 
 Use this command for Phase 5 registration and verification.
 
+This command is a thin Claude Code bridge. Registration steps and verification expectations are owned by `SCREEN_GENERATION_FLOW.md`, `AGENTS.md`, and the register/verify skill.
+
 ## Required Reading
 
 Read in order:
@@ -10,19 +12,8 @@ Read in order:
 2. `SCREEN_GENERATION_FLOW.md`
 3. `.codex/skills/cx-screen-register-verify/SKILL.md`
 
-## Required Work
+## Scope
 
-- Register screen route entries in `apps/mobile/src/scripts/screen-routes/routes.ts`.
-- Update route group typing when needed.
-- Confirm preview/mobile exposure.
-- Run relevant checks from `AGENTS.md` common verification.
-
-## Standard Checks
-
-Run these when the scope touches mobile screens or screen generation contracts:
-
-- `npm run check:screen-generation:strict -w @policy/core`
-- `npm run lint -w @screen/mobile`
-- `npm run build -w @screen/mobile`
-
-Report warnings separately from failures.
+- Register the screen according to the Phase 5 SOT and confirm mobile/preview exposure.
+- Run the relevant checks from `AGENTS.md` common verification and the register/verify skill.
+- Report warnings separately from failures.

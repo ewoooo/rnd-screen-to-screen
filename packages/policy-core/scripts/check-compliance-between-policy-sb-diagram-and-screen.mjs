@@ -427,7 +427,7 @@ function includesAll(text, values) {
 	return values.every((value) => text.includes(value));
 }
 
-const forbiddenSampleLengthRationalePatterns = [
+const sampleLengthAcceptanceEvidencePatterns = [
 	/\bshort enough\b/i,
 	/\bcurrent\b[^\n]{0,120}\b(?:sample|proof|copy|data|values?|figma proof)\b[^\n]{0,120}\b(?:short|fit|fits|sufficient|enough)\b/i,
 	/\b(?:sample|proof|copy|data|values?|figma proof)\b[^\n]{0,120}\b(?:short|fit|fits|sufficient|enough)\b[^\n]{0,120}\bcurrent\b/i,
@@ -435,14 +435,14 @@ const forbiddenSampleLengthRationalePatterns = [
 	/(?:샘플|증빙|값|데이터|문구|카피|copy)[\s\S]{0,80}(?:짧|맞|충분|들어맞)[\s\S]{0,80}현재/,
 ];
 
-function hasForbiddenSampleLengthRationale(text) {
-	return forbiddenSampleLengthRationalePatterns.some((pattern) => pattern.test(text));
+function hasSampleLengthAcceptanceEvidence(text) {
+	return sampleLengthAcceptanceEvidencePatterns.some((pattern) => pattern.test(text));
 }
 
-function validateNoForbiddenSampleLengthRationale(label, text) {
-	if (!text || !hasForbiddenSampleLengthRationale(text)) return;
+function validateCapabilityBasedFitEvidence(label, text) {
+	if (!text || !hasSampleLengthAcceptanceEvidence(text)) return;
 	problem(
-		`${label} must not use current sample/proof/copy length as fit or selection evidence; prove component capability against layoutContract and Distortion Gates instead`,
+		`${label} fit and selection rationale must be capability-based; prove reusable layout behavior against layoutContract and Distortion Gates`,
 	);
 }
 
@@ -538,7 +538,7 @@ function validateBuildSelectionsShape(generation) {
 				problem(`${itemLabel}.${field} must be a non-empty string`);
 			}
 		}
-		validateNoForbiddenSampleLengthRationale(itemLabel, item.body);
+		validateCapabilityBasedFitEvidence(itemLabel, item.body);
 		validateNoUnderSpecifiedConventionAutoReject(itemLabel, item.body);
 
 		const source = readRawObjectStringProperty(item.body, "source");
@@ -564,7 +564,7 @@ function validateBuildSelectionsShape(generation) {
 							problem(`${rejectedLabel}.${field} must be a non-empty string`);
 						}
 					}
-					validateNoForbiddenSampleLengthRationale(rejectedLabel, rejectedBody);
+					validateCapabilityBasedFitEvidence(rejectedLabel, rejectedBody);
 					validateNoUnderSpecifiedConventionAutoReject(rejectedLabel, rejectedBody);
 				}
 			}
@@ -693,7 +693,7 @@ function validateScreenMap(screen, context, mapPath) {
 
 function validateDiagramContract(screen, context, diagramPath, mapText) {
 	const diagram = readText(diagramPath);
-	validateNoForbiddenSampleLengthRationale("Screen.diagram.md", diagram);
+	validateCapabilityBasedFitEvidence("Screen.diagram.md", diagram);
 	for (const candidate of extractNamedCandidateBlocks(diagram)) {
 		if (!/RQRContentsDetail/i.test(candidate.name)) continue;
 		validateNoUnderSpecifiedConventionAutoReject(

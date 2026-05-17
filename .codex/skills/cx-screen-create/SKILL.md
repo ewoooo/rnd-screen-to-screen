@@ -19,7 +19,7 @@ This skill is an executor, not the SOT. The procedure, document routing, public 
 4. Run Step 1 / Phase 1 with `cx-screen-extract`.
 5. Public checkpoint: report the SB Extract result before Map/Diagram decisions.
 6. Run Step 2 / Phase 2 with `cx-screen-map`; do not enter Diagram until policy tags, policy refs, copy, constraints, errors, and governance refs are mapped or explicitly marked not applicable.
-7. Run Step 3-6 / Phase 3 with `cx-screen-diagram`; do not enter Build until every section/OGN has `layoutContract` and `componentCandidates`, candidates include fit/reason/risk scored by capability, and acceptance is expressed as layout behavior rather than component-name usage.
+7. Run Step 3-6 / Phase 3 with `cx-screen-diagram`; do not enter Build until every section/OGN has `layoutContract` and capability-scored `componentCandidates`, and acceptance is expressed as layout behavior rather than component-name usage.
 8. Public checkpoint: report Reference Decision and Component Candidate Decision before implementation.
 9. Run Step 7 Build Plan before editing files: list Create/Modify/Remove/No-touch, layout risk, raw CSS/token risk, and shared file ownership.
 10. Public checkpoint: report the Build Plan before implementation.
@@ -40,27 +40,18 @@ This skill is an executor, not the SOT. The procedure, document routing, public 
 - Before worker implementation starts, the main agent must expose a short Build Plan with worker name, write scope, no-touch files, and approval checks. For tiny P0 fixes, this can be compact, but it must exist.
 - After workers finish, the main agent must inspect `git diff --stat` and scoped diffs for each worker-owned path before accepting. If a worker edits outside scope, either justify the expansion in the report or return the work for correction.
 - For multi-screen batches, main-agent review is a batch gate. Approve or reject the phase across the screen set before moving the batch forward; per-screen completion badges do not replace the phase gate.
-- In Phase 3, verify Wire Semantic Tags before candidate scoring. Summary/detail cards with `[... | key-value-summary | card]` must follow the Summary Card Decision Rule before Build starts.
-- In Phase 3, enforce `SCREEN_STRUCTURE_PRINCIPLES.md` → `Pattern-Family Precedent Gate`: if a candidate is an established primary convention for the same pattern family but conflicts only with a thin/proof/no-policy source, do not let the worker auto-reject it; require `sourceCompleteness`, `establishedConvention`, and either `decisionRequired` or a recorded `assumption`.
-- Return to Phase 3 if the Diagram over-specifies exact components as acceptance criteria, omits `layoutContract`, omits `componentCandidates`, lists candidates without fit/reason/risk, or assigns `medium/strong` because sample data is short despite known structural risk.
-- Return to Phase 3 or Phase 4 if any artifact uses current sample/proof/copy length as fit or selection evidence. "Current values are short enough", "current proof copy fits", and equivalent Korean wording are forbidden rationales, not weak warnings.
+- In Phase 3, verify Wire Semantic Tags before candidate scoring and apply `SCREEN_STRUCTURE_PRINCIPLES.md` for summary-card and pattern-family precedent decisions.
+- Return to Phase 3 if the Diagram over-specifies exact components as acceptance criteria, omits `layoutContract`, omits `componentCandidates`, lists candidates without fit/reason/risk, or uses sample/proof/copy length as fit evidence despite known structural risk.
+- Return to Phase 3 or Phase 4 if any artifact uses current sample/proof/copy length as fit or selection evidence. Sample length may verify wrapping only; it cannot justify selection, rejection, or risk downgrade.
 - Return to Phase 3 if a summary card skips `patternFamily` and required capabilities, scores by component-name preference, or upgrades a candidate with known structural risk without proving the required capabilities are preserved.
-- Return to Phase 3 if an established primary convention candidate is rejected only because the proof wire is missing an authorable structural part such as a card title/header. That is a Pattern-Family Precedent Gate conflict, not a normal `fit: reject`.
+- Return to Phase 3 if a Pattern-Family Precedent Gate conflict from `SCREEN_STRUCTURE_PRINCIPLES.md` is resolved as an unsupported reject instead of a recorded decision or assumption.
 - Return to Phase 3 if Build cannot preserve the layout contract from available candidates and the Diagram does not describe the contract or risk clearly enough to choose an alternative.
 - Return to Reference Decision, OGN Boundary Decision, Component Candidate Decision, or Diagram Contract when implementation reveals layout distortion. Do not hide the problem with route-level margin/padding, raw spacing, raw color, or custom font-size.
-- Return to the failing phase before continuing when a phase output fails its checker or contract.
+- Return to the failing phase before continuing when a phase output fails validation or contract requirements.
 
 ## Required Final Verification
 
-Run at least:
-
-```bash
-npm run check:screen-generation:strict -w @policy/core
-npm run lint -w @screen/mobile
-npm run build -w @screen/mobile
-```
-
-Add preview, figma-export, storybook, or package checks when the change touches those surfaces.
+Run the common verification from `AGENTS.md` for each touched surface, with strict screen-generation compliance for new or changed screens. Add preview, figma-export, storybook, or package checks when the change touches those surfaces.
 
 For UI-affecting screen work, also verify rendered layout with Browser/Playwright evidence. Text presence alone is not enough for layout migration. Capture or compute at least one of:
 

@@ -7,7 +7,7 @@ description: Create or review latest-spec Phase 3 Screen.diagram.md for CX mobil
 
 Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference application, layout strategy, layout contract, governance application, OGN boundary decisions, and component candidate discovery. It must not invent policy meaning or make component names the acceptance criteria.
 
-This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract. The SOT is the flow document; this skill only operationalizes it.
+This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract. The flow and structure documents are the SOT; this skill only operationalizes them.
 
 ## Required Reading
 
@@ -42,7 +42,7 @@ This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decisio
    - `patternDecision`: existing pattern, existing composition, or new candidate
 6. Run Component Candidate Decision:
    - score candidates as `strong | medium | weak | reject`
-   - score by capability against layout behavior, not name similarity or current copy length
+   - score by capability against layout behavior, not name similarity or sample/proof/copy length
    - reject candidates that need route-level CSS, raw spacing/color/font-size, deprecated imports, or known wrapping/alignment distortion
    - record vocabulary gaps instead of disguising them as custom screen CSS
 7. Write sections in this exact order:
@@ -53,7 +53,7 @@ This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decisio
    5. `Distortion Gates`
 8. Apply Phase 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
 9. For each section/OGN, write fields in this order: `patternEvidence`, `patternDecision`, `ognBoundaryDecision`, `layoutStrategy`, `layoutContract`, then `componentCandidates`.
-10. Run the checker before moving to Build.
+10. Run the required Phase 3 validation before moving to Build.
 
 ## Pattern Analysis Gate
 
@@ -99,19 +99,9 @@ Add semantic tags to important `Screen Wire` sections before component scoring:
 - Tags are layout meaning, not component names. They must flow into `patternDecision` and `layoutContract.role/structure`.
 - If a tag and component scoring conflict, revise the scoring to preserve the tag/layout contract.
 
-## Summary Card Decision Rule
+## Structure Gates
 
-When a complete/detail wire shows 2+ label-value rows inside a card-like summary section, classify it as `[... | key-value-summary | card]`.
-
-- First choose `patternFamily: card-key-value-summary`, then write required capabilities before naming candidates.
-- Required capabilities include section heading/header slot fit, card surface ownership, padding/radius ownership, stable label-value relationship, value wrapping without column squeeze, and reference-density preservation.
-- Score candidates by those capabilities: `strong` when they directly guarantee them, `medium` when only secondary concerns need verification, and `weak/reject` when a known structural risk touches core behavior or needs wrappers, fixed columns, spacers, or route-level CSS.
-- A component or composition name is only an implementation candidate for the pattern family, not the default answer. Domain organisms and new reusable candidates are evaluated by the same capability contract.
-- Main-agent review must return the Diagram to Phase 3 if summary-card scoring is component-name driven, or if a known structural risk is upgraded to `medium/strong` without proving the core behavior is preserved.
-
-## Pattern-Family Precedent Gate
-
-Before candidate scoring or reject finalization, run `SCREEN_STRUCTURE_PRINCIPLES.md` → `Pattern-Family Precedent Gate`. If a thin/proof/no-policy source conflicts with an established primary convention from the same pattern family, record the gate fields in the section contract and keep the conflict open as `decisionRequired` or a documented `assumption`; do not auto-reject the convention candidate only because the proof wire omitted an authorable structural title/header.
+Apply the relevant gates from `SCREEN_STRUCTURE_PRINCIPLES.md` before final candidate scoring, including summary-card classification and Pattern-Family Precedent Gate handling. Record required gate fields, decisions, assumptions, and unresolved `decisionRequired` items in the section contract; do not resolve conflicts with unsupported component-name preference or proof-only omissions.
 
 ## Fit Scoring
 
@@ -124,7 +114,7 @@ Score fit by component capability against `layoutContract`, not by current copy 
 
 When a candidate has a known fixed-width, missing surface, missing slot, or wrapping limitation that affects the section's core behavior, mark it `weak` or `reject` even if the current sample text is short.
 
-Forbidden rationale: do not write or accept claims like "current values are short enough", "current proof copy fits", "현재 값이 짧아서 괜찮다", or any equivalent current-sample-length argument. Current sample length may be used only as a test case to verify wrapping, never as evidence that a candidate satisfies `fit`, `patternDecision`, or `layoutContract`.
+Sample/proof/copy length may be used only as a wrapping test case, never as evidence for `fit`, `patternDecision`, `layoutContract`, candidate selection, rejection, or risk downgrade.
 
 ## Screen Wire Rules
 
@@ -160,10 +150,4 @@ If no reference exists, use `source: none-found` and record `reason`.
 
 ## Done Criteria
 
-Run:
-
-```bash
-npm run check:screen-generation:strict -w @policy/core
-```
-
-Do not proceed to Build while the checker fails.
+Run the Phase 3 validation required by `SCREEN_GENERATION_FLOW.md`. Do not proceed to Build while validation or the diagram contract fails.

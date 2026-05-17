@@ -25,7 +25,7 @@ Use this for Step 9 / Phase 5 and final verification only. This skill executes `
 
 ## Verify
 
-Run the repository common verification that applies to the touched surface. For normal mobile screen work, default to:
+Run the repository common verification from `AGENTS.md` that applies to the touched surface. For normal mobile screen work, default to:
 
 ```bash
 npm run check:screen-generation:strict -w @policy/core
@@ -61,11 +61,11 @@ For UI-affecting changes, produce layout evidence beyond text existence:
 
 Completion/Form/Detail migrations must not be approved by text-only checks. If a fixed bottom rail is involved, verify that the rail stays inside the viewport and does not cover the final content section.
 
-If a layoutContract fails, return to Implementation or Diagram instead of weakening the checker.
+If a layoutContract, Distortion Gate, or command check fails, return to the relevant phase instead of weakening validation.
 
 ## Report
 
 - State which checks passed.
 - State pattern/foundation checks separately from command checks.
-- If a check fails, fix the contract violation instead of weakening the checker.
+- If a check fails, fix the contract violation or return to the relevant phase instead of weakening validation.
 - Mention remaining audit warnings separately from build failures.

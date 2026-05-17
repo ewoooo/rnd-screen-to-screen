@@ -2,6 +2,8 @@
 
 Use this command for Phase 4 implementation from approved `Screen.map.md` and `Screen.diagram.md`.
 
+This command is a thin Claude Code bridge. Build procedure, component vocabulary, layout contracts, and implementation constraints are owned by the SOT docs and build skill.
+
 ## Required Reading
 
 Read in order:
@@ -14,11 +16,9 @@ Read in order:
 6. Approved `Screen.map.md`
 7. Approved `Screen.diagram.md`
 
-## Rules
+## Scope
 
-- Build only after the Build Plan Gate is explicit.
-- Use `@pxds/cx-layout`, `@pxds/cx-components`, `@pxds/cx-icons`, and `@pxds/cx-tokens`.
-- Do not add deleted legacy adapter imports or direct WDS app-level imports.
-- Screen/page code should assemble approved OGN and layout contracts, not invent layout.
-- Route/screen code must not patch alignment with raw margin, padding, or font sizes.
-- For UI changes, provide screenshot or bounding-box/layout evidence before completion.
+- Build only after the Build Plan gate is explicit.
+- Implement the approved OGN and layout contracts in the established mobile screen locations.
+- Use the repository component, icon, token, and layout packages as directed by `AGENTS.md`, design SOT docs, and the build skill.
+- For UI-affecting work, provide the visual/layout evidence required by the SOT before completion.

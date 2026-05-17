@@ -1,8 +1,10 @@
 # Screen Generation Workflow Improvement Plan
 
+> 상태: historical / archive candidate. 이 문서는 SB 기반 화면 생성 절차를 보강하기 위해 작성된 마이그레이션 계획과 당시 문제의식의 기록이다. 현재 작업 지시는 `AGENTS.md`, `SCREEN_GENERATION_FLOW.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`를 우선하며, 이 문서를 active SOT나 에이전트 실행 절차로 해석하지 않는다.
+
 이 문서는 SB 파일 수신형 화면 생성 작업이 블랙박스화되는 문제를 줄이고, 패턴 무시·정렬 불량·임의 CSS 보정을 제작 중에 잡기 위한 개선 계획이다.
 
-`SCREEN_GENERATION_FLOW.md`는 현재 5페이즈 절차 계약을 소유한다. 이 문서는 그 계약을 즉시 대체하지 않고, 실제 작업 루프에 추가해야 할 공개 게이트와 책임 분리를 정의한다.
+`SCREEN_GENERATION_FLOW.md`는 현재 5페이즈 절차 계약을 소유한다. 이 문서는 그 계약을 대체하지 않으며, 공개 게이트와 책임 분리를 도입하던 당시의 migration context를 남긴다.
 
 ## 문제 정의
 
@@ -30,7 +32,7 @@
 - 자동 검증은 문서 존재, 타입, lint, build를 잘 잡지만 패턴 의미 위반과 정렬 불량은 충분히 잡지 못한다.
 - 구현 중 레이아웃 문제가 생겼을 때 이전 단계로 돌아가지 않고 raw CSS나 임의 spacing으로 보정할 위험이 있다.
 
-## 개선 목표
+## 당시 개선 목표
 
 1. SB 입력을 신뢰 가능한 작업 단위로 정리한다.
 2. 판단 단계와 구현 단계를 명확히 분리한다.
@@ -39,7 +41,7 @@
 5. 레이아웃 ownership을 `Screen`, `OGN`, `cx-layout`, `cx-components`로 분리해 임의 보정을 줄인다.
 6. 구현 중 정렬이 깨지면 CSS 보정이 아니라 `Component Candidate Decision` 또는 `Diagram Contract`로 되돌아간다.
 
-## 보강 후 운영 순서
+## 제안했던 보강 운영 순서
 
 ```txt
 0. Intake
@@ -55,7 +57,7 @@
 10. Report
 ```
 
-0-10 단계는 기존 5페이즈를 대체하지 않는다. 0-10은 SB 기반 화면 제작 중 메인 에이전트가 공개하고 승인해야 할 세부 checkpoint를 확장한 것이다.
+0-10 단계는 기존 5페이즈를 대체하지 않는 보강안이었다. 현재 활성 절차와 공개 checkpoint는 `SCREEN_GENERATION_FLOW.md`를 기준으로 확인한다.
 
 5페이즈와의 매핑:
 
@@ -84,11 +86,11 @@ Phase 5 = Step 9
 Pre/Post = Step 0, Step 10
 ```
 
-메인/서브 구조는 유지한다. 단, `Reference Decision`, `OGN Boundary Decision`, `Component Candidate Decision`, `Build Plan`은 서브가 초안을 만들 수 있어도 메인이 사용자에게 공개하고 승인해야 한다.
+메인/서브 구조에 대한 현재 책임 모델은 `docs/screen-generation-agent-model.md`를 기준으로 확인한다. 아래 표와 단계 설명은 그 모델을 정리하기 전의 migration detail이다.
 
-### 보강된 스크린 제작 순서와 책임 요약
+### 당시 제안한 스크린 제작 순서와 책임 요약
 
-이 순서는 실제 SB 기반 신규 생성, 기존 화면 재작성, legacy 화면 보정에 공통으로 적용한다. 각 단계는 단일 책임을 가지며, 이전 단계의 판단이 부족하면 다음 단계에서 조용히 보정하지 않고 해당 단계로 되돌아간다.
+이 순서는 SB 기반 신규 생성, 기존 화면 재작성, legacy 화면 보정에 공통 적용하려던 제안이었다. 현재 작업자가 실행할 절차로는 `SCREEN_GENERATION_FLOW.md`와 관련 SOT를 우선한다.
 
 | 순서 | 단계 | 단일 책임 | 주요 산출/공개물 | 다음 단계 진입 조건 |
 |---:|---|---|---|---|
@@ -104,7 +106,7 @@ Pre/Post = Step 0, Step 10
 | 9 | Verification | 자동 검증과 브라우저/pattern/foundation 검사를 수행한다. | check/lint/build/browser 결과 | strict check, lint, build, pattern checklist가 통과함 |
 | 10 | Report | 사용한 source, 결정, reject, 검증, 남은 위험을 보고한다. | `Final Report` | 사용자가 변경 범위와 판단 근거를 추적할 수 있음 |
 
-구현 전 반드시 공개해야 하는 지점은 아래 네 개다.
+당시 구현 전 공개 지점으로 제안했던 항목은 아래 네 개다. 현재 공개 checkpoint의 활성 정의는 `SCREEN_GENERATION_FLOW.md`를 따른다.
 
 ```txt
 1. SB Extract 결과
@@ -113,7 +115,9 @@ Pre/Post = Step 0, Step 10
 4. Build Plan
 ```
 
-## 단계별 책임
+## 단계별 책임 초안
+
+아래 0-10 단계 설명은 개선 계획 수립 당시의 초안이다. 최신 책임·산출물·완료조건은 `SCREEN_GENERATION_FLOW.md`와 각 phase별 SOT 문서를 따른다.
 
 ### 0. Intake
 
@@ -592,9 +596,9 @@ Final Report
 - Residual risks
 ```
 
-## 구현 전 공개 체크포인트
+## 당시 제안한 구현 전 공개 체크포인트
 
-작업자는 모든 세부 판단을 길게 보고할 필요는 없지만, 구현 전에 아래 네 가지는 공개해야 한다.
+이 개선안은 모든 세부 판단을 길게 보고하기보다, 구현 전에 아래 네 가지를 공개하는 방식을 제안했다. 현재 active checkpoint는 `SCREEN_GENERATION_FLOW.md`를 따른다.
 
 ```txt
 1. SB Extract 결과
@@ -611,9 +615,9 @@ Final Report
 - raw CSS나 route-level layout patch
 - 예상 밖 파일 수정
 
-## 디자인 문서 적용 시점
+## 디자인 문서 적용 시점 초안
 
-`DESIGN_PATTERNS.md`와 `DESIGN_FOUNDATION.md`는 한 번만 읽는 문서가 아니다. 단계별 책임이 다르다.
+`DESIGN_PATTERNS.md`와 `DESIGN_FOUNDATION.md`를 phase별로 다르게 적용하자는 당시 초안이다. 최신 문서 라우팅과 적용 책임은 `SCREEN_GENERATION_FLOW.md`와 각 SOT 문서를 따른다.
 
 ```txt
 3 Reference Decision        처음 읽고 patternFamily 판정
@@ -630,9 +634,9 @@ Final Report
 - `DESIGN_PATTERNS.md`는 이 화면이 어떤 구조여야 하는지 정한다.
 - `DESIGN_FOUNDATION.md`는 그 구조를 어떤 시각 어휘로만 표현할 수 있는지 제한한다.
 
-## 레이아웃 관리 책임
+## 레이아웃 관리 책임 초안
 
-레이아웃은 Implementation에서 즉흥적으로 맞추지 않는다.
+레이아웃을 Implementation에서 즉흥적으로 맞추지 않기 위해 정리했던 migration-era 책임 흐름이다. 현재 세부 구조 원칙과 fit gate는 `SCREEN_STRUCTURE_PRINCIPLES.md`가 소유한다.
 
 ```txt
 Reference Decision
@@ -668,7 +672,7 @@ Verification
 
 이 경우 CSS로 즉시 보정하지 않고 필요한 단계로 되돌아간다.
 
-## 적용 계획
+## 적용 계획 이력
 
 ### 1차: 작업 로그 운영 반영
 
@@ -677,7 +681,7 @@ Verification
 
 ### 2차: 문서 역할 분리와 문서 라우팅 정리
 
-문서가 늘어나면서 "무엇을 읽어야 하는지 판단하는 문서"가 다시 늘어나는 문제를 막아야 한다. 절차와 문서 라우팅의 SOT는 repo 안에 두고, Codex skill은 그 SOT를 실행하는 어댑터로 둔다.
+문서가 늘어나면서 "무엇을 읽어야 하는지 판단하는 문서"가 다시 늘어나는 문제를 막기 위한 당시 정리안이다. 절차와 문서 라우팅의 현재 SOT는 repo 안의 활성 문서가 소유하고, Codex skill은 그 SOT를 실행하는 어댑터로 둔다.
 
 원칙:
 
@@ -819,14 +823,14 @@ cx-screen-register-verify
 - route 등록과 검증만 담당
 ```
 
-정리 순서:
+당시 정리 순서:
 
 1. 이 개선 계획 문서에서 영구 규칙만 추린다.
 2. `SCREEN_GENERATION_FLOW.md`에 문서 라우팅, 공개 체크포인트, 레이아웃 게이트 섹션을 추가한다.
 3. `cx-screen-create`, `cx-screen-diagram`, `cx-screen-build` 스킬을 그 라우팅에 맞게 축소 갱신한다.
 4. 이 개선 계획 문서는 적용 이력으로 남기거나 이후 archive한다.
 
-성공 기준:
+당시 성공 기준:
 
 - 문서가 늘어나도 phase별로 읽어야 할 문서가 명확하다.
 - skill이 repo SOT를 대체하지 않는다.
@@ -854,7 +858,7 @@ cx-screen-register-verify
 - target files에 raw hex color, raw spacing, raw font-size가 있는지
 - `Screen.config.ts generation.ognIds`가 map과 diagram에 모두 등장하는지
 
-## 성공 기준
+## 당시 성공 기준
 
 - 사용자가 구현 전에 reference, OGN boundary, component 후보, 변경 파일을 확인할 수 있다.
 - `Screen.diagram.md`가 component 이름이 아니라 layout behavior를 계약으로 기록한다.

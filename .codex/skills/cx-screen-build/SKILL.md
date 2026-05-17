@@ -49,9 +49,9 @@ Do not implement until route-level margin/padding patch, raw color, raw spacing,
 For each section, decide in this order:
 
 1. Read `layoutContract` and Distortion Gates as acceptance criteria.
-2. Evaluate `componentCandidates` by capability: role, structure, alignment, density, wrapping, state handling, and slot fit. Use the Diagram fit scoring rules; do not upgrade a candidate because the current sample data is short.
+2. Evaluate `componentCandidates` by capability: role, structure, alignment, density, wrapping, state handling, and slot fit. Use the Diagram fit scoring rules; sample/proof/copy length is not selection evidence.
 3. Prefer the smallest existing component/composition that preserves the contract and matches nearby screen/reference behavior.
-4. If the Diagram records `sourceCompleteness: under-specified-proof` or `conflict-with-convention` from `SCREEN_STRUCTURE_PRINCIPLES.md` → `Pattern-Family Precedent Gate`, follow the recorded `assumption` or stop on unresolved `decisionRequired`; do not downgrade an established primary convention because the thin proof wire omitted an authorable structural title/header.
+4. If the Diagram records a Pattern-Family Precedent Gate outcome from `SCREEN_STRUCTURE_PRINCIPLES.md`, follow the recorded `assumption` or stop on unresolved `decisionRequired`.
 5. If every candidate violates a gate, create or adapt a reusable organism/component instead of forcing a named candidate.
 6. Record the selection in `Screen.config.ts generation.buildSelections` when the config schema supports it, or in the work log with the section id.
 7. For each selected candidate/composition, include a reason that explains how it satisfies the section `layoutContract` and Distortion Gates; do not cite component name similarity as sufficient rationale.
@@ -59,9 +59,9 @@ For each section, decide in this order:
 9. Record rejected candidates as `{ candidate, reason }`, especially when they fail role, structure, alignment, density, wrapping, state handling, slot fit, or any Distortion Gate. Treat `weak` as reject unless no stronger candidate exists and the contract can still be proven without route-level CSS.
 10. When the implemented composition deviates from the Diagram candidate or contract, record the deviation with `deviationReason`; use deviations only when policy meaning and layout intent remain intact.
 
-Forbidden rationale: `buildSelections.reason`, `rejected.reason`, and work logs must not use current sample/proof/copy length as acceptance evidence. Phrases such as "current values are short enough", "current proof copy fits", or "현재 값이 짧아서 괜찮다" are invalid. Short current data is only a verification input for wrapping tests; it cannot upgrade `weak` to `medium`, justify rejection of a stronger candidate, or override a known Distortion Gate risk.
+Invalid rationale: `buildSelections.reason`, `rejected.reason`, and work logs must not use sample/proof/copy length as acceptance evidence. Short data is only a wrapping verification input and cannot upgrade fit, justify rejection, or override a Distortion Gate risk.
 
-Forbidden under-reach: do not reject an established primary convention candidate only because the proof source omitted an authorable structural part. If Build needs a title/header to use the convention, consume the Diagram's Pattern-Family Precedent Gate assumption or return to Phase 3 for `decisionRequired`; do not silently fall back to a weaker no-header composition.
+If Build cannot satisfy a recorded structure gate or needs an unresolved authorable structural part, return to Phase 3 instead of silently falling back to a weaker composition.
 
 ## Done Criteria
 

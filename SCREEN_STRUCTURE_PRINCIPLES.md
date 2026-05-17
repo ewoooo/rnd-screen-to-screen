@@ -122,7 +122,7 @@ Wire Semantic Tag는 `Screen Wire` 안에서 section의 구조 의미를 짧게 
 
 ### Summary Card Decision Rule
 
-완료/상세 화면에서 `[... | key-value-summary | card]` 또는 같은 의미의 wire가 보이면 summary card로 판정한다. 같은 section 안에 label-value 행이 2개 이상 있고 카드형 surface가 요구되면 현재 샘플 값이 짧아 보여도 이 규칙을 적용한다.
+완료/상세 화면에서 `[... | key-value-summary | card]` 또는 같은 의미의 wire가 보이면 summary card로 판정한다. 같은 section 안에 label-value 행이 2개 이상 있고 카드형 surface가 요구되면 샘플 값의 길이와 무관하게 이 규칙을 적용한다.
 
 - 먼저 `patternFamily: card-key-value-summary`를 결정하고, 그 다음 required capability를 적는다. 후보 이름은 그 뒤에 평가한다.
 - Required capability는 section heading/header slot 필요 여부, card surface ownership, padding/radius ownership, stable label-value relationship, value wrapping without column squeeze, reference density 보존을 포함한다.
@@ -235,10 +235,10 @@ buildOwner:
 
 #### Fit 산정 기준
 
-`fit`은 현재 샘플 copy가 짧아서 맞아 보이는지가 아니라, 후보의 capability가 `layoutContract`를 구조적으로 보장하는지로 판단한다.
+`fit`은 현재 샘플/proof/copy 길이가 아니라, 후보의 capability가 `layoutContract`를 구조적으로 보장하는지로 판단한다.
 
 - `strong`: `role`, `structure`, `alignment`, `density`, `wrapping`, slot을 직접 지원하고, 알려진 Distortion Gate 위험이 없으며, route-level CSS 없이 구현 가능하다. 가까운 reference에서 같은 visual pattern을 안정적으로 구현한 사례가 있으면 우선한다.
-- `medium`: 핵심 structure는 맞지만 `density`, `wrapping`, state, slot 중 하나가 검증에 의존한다. 단, 알려진 구조적 위험이 layoutContract의 핵심을 건드리면 현재 값이 짧아도 `medium`이 아니다.
+- `medium`: 핵심 structure는 맞지만 `density`, `wrapping`, state, slot 중 하나가 검증에 의존한다. 단, 알려진 구조적 위험이 layoutContract의 핵심을 건드리면 샘플 길이만으로 `medium`이 될 수 없다.
 - `weak`: 역할은 비슷하지만 structure/alignment/density/wrapping/card treatment 중 하나 이상이 부족하거나, wrapper/spacer/임의 width/route-level CSS 없이는 맞추기 어렵다.
 - `reject`: Distortion Gate를 위반하거나, required slot/state/wrapping을 지원하지 않거나, deprecated import가 필요하거나, wire reference의 핵심 레이아웃을 바꾼다.
 
@@ -246,7 +246,7 @@ buildOwner:
 
 단, reject 사유가 thin/proof/no-policy 소스의 slot/header 부재뿐이고 후보가 다른 화면 같은 pattern family의 established primary convention이면 확정하지 말고 Pattern-Family Precedent Gate를 적용한다.
 
-금지 판단: "현재 값이 짧아서 괜찮다", "current values are short enough", "current proof copy fits"처럼 현재 샘플 길이를 후보 승인/거절 근거로 쓰지 않는다. 현재 샘플은 wrapping 검증용 입력일 뿐이며, `fit`, `patternDecision`, `buildSelections.reason`, `rejected.reason`의 acceptance evidence가 될 수 없다.
+샘플/proof/copy 길이는 후보 승인/거절 근거가 될 수 없다. 현재 샘플은 wrapping 검증용 입력일 뿐이며, `fit`, `patternDecision`, `buildSelections.reason`, `rejected.reason`의 acceptance evidence는 reusable layout capability와 Distortion Gate 충족 여부로 증명해야 한다.
 
 ## OGN별 Layout Strategy
 

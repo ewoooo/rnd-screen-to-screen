@@ -2,6 +2,8 @@
 
 Use this command for Phase 3 diagram and layout contract work.
 
+This command is a thin Claude Code bridge. Diagram procedure, wire-reference selection, pattern rules, and distortion gates are owned by the SOT docs and diagram skill.
+
 ## Required Reading
 
 Read in order:
@@ -15,14 +17,8 @@ Read in order:
 7. `apps/mobile/src/screen-diagrams/` relevant references
 8. Nearby existing `Screen.diagram.md` files only when they are approved references for the current task
 
-## Required Gates
+## Scope
 
-Produce and expose these decisions before Build:
-
-- Reference Decision
-- OGN Boundary Decision
-- Component Candidate Decision
-- Diagram Contract
-- Layout Distortion Gate
-
-Do not use WDS/NOVA legacy screens as references for a new FP unless the user explicitly approves that reference.
+- Use approved `Screen.map.md` as input and produce/update `Screen.diagram.md`.
+- Follow `SCREEN_GENERATION_FLOW.md` and the diagram skill for required public decisions: Reference Decision, OGN Boundary Decision, Component Candidate Decision, Diagram Contract, and Layout Distortion Gate.
+- Stop for user direction at pre-implementation gates before Build.

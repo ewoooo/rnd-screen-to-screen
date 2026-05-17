@@ -6,7 +6,7 @@
 
 스크린 생성은 기본적으로 **메인 에이전트의 매니징/오케스트레이션**과 **서브 에이전트의 페이즈별 실무 생성**으로 나눈다. 이 역할 분리는 산출물 책임을 흐리기 위한 병렬화가 아니라, 메인 에이전트가 정책 충실도와 디자인 시스템 일관성을 관리하면서 서브 에이전트가 각 페이즈의 조사·작성·구현을 실행하도록 하는 운영 모델이다.
 
-메인 에이전트는 5페이즈 전체의 방향과 최종 정합성을 소유하는 매니저다. 작업 범위를 해석하고, 페이즈별 서브 에이전트에게 입력·출력·완료조건을 지정하며, 산출물 사이의 불일치를 조정하고, `Screen.map.md -> Screen.diagram.md -> 구현 -> config -> route` 연결이 끊기지 않도록 최종 판단을 내린다. Phase 3/4에서는 레이아웃 보존을 최우선 승인 기준으로 삼고, 그 다음 정책 의미와 디자인 시스템 준수를 확인한다. 이 검수는 소극적 리뷰가 아니라 승인 게이트다. 산출물이 wire semantic tag, layoutContract, Summary Card Decision Rule, Distortion Gate 중 하나라도 약하게 처리하면 메인 에이전트가 다음 페이즈 진입을 보류하고 해당 페이즈로 되돌린다.
+메인 에이전트는 5페이즈 전체의 방향과 최종 정합성을 소유하는 매니저다. 작업 범위를 해석하고, 페이즈별 서브 에이전트에게 입력·출력·완료조건을 지정하며, 산출물 사이의 불일치를 조정하고, `Screen.map.md -> Screen.diagram.md -> 구현 -> config -> route` 연결이 끊기지 않도록 최종 판단을 내린다. Phase 3/4에서는 레이아웃 보존을 최우선 승인 기준으로 삼고, 그 다음 정책 의미와 디자인 시스템 준수를 확인한다. 이 검수는 소극적 리뷰가 아니라 승인 게이트다. Phase 3의 구조·fit·summary card·distortion 세부 규칙은 `SCREEN_STRUCTURE_PRINCIPLES.md`가 소유하며, 메인 에이전트는 해당 SOT를 기준으로 서브 에이전트 산출물을 승인하거나 되돌린다.
 
 메인 에이전트는 작업이 블랙박스가 되지 않도록 구현 전에 네 가지 공개 체크포인트를 사용자에게 표면화한다: SB Extract 결과, Reference Decision, Component Candidate Decision, Build Plan. 서브 에이전트가 초안을 만들 수는 있지만, 이 네 지점은 메인이 승인 가능한 형태로 정리하고 다음 단계 진입 여부를 결정한다.
 
@@ -18,7 +18,7 @@
 
 서브 에이전트는 위임받은 phase의 산출물 책임만 가진다. Reference Decision, OGN Boundary Decision, Component Candidate Decision, Build Plan에서 생긴 판단은 메인 에이전트 승인 전까지 최종 결정이 아니며, 승인된 결정만 `Screen.map.md`, `Screen.diagram.md`, `Screen.config.ts`, 또는 작업 로그에 남긴다.
 
-하위 에이전트 완료 후 메인 에이전트는 결과 보고를 신뢰하되, 승인 전에는 반드시 별도 확인한다. 최소 확인은 `git diff --stat`, worker별 scoped diff, 공통 checker/lint/build, 그리고 UI 변경 시 screenshot 또는 bounding box 기반 layout evidence다. 텍스트 존재 확인만으로 레이아웃 마이그레이션을 승인하지 않는다.
+하위 에이전트 완료 후 메인 에이전트는 결과 보고를 신뢰하되, 승인 전에는 반드시 별도 확인한다. 최소 확인은 `git diff --stat`, worker별 scoped diff, 공통 validation/lint/build, 그리고 UI 변경 시 screenshot 또는 bounding box 기반 layout evidence다. 텍스트 존재 확인만으로 레이아웃 마이그레이션을 승인하지 않는다.
 
 ## 멀티 화면 배치 위임
 
@@ -40,7 +40,7 @@ Phase 4 Build 병렬 진행
 Phase 5 Register/Verify 통합
 ```
 
-- Phase 1/2/3은 화면별 병렬 실행을 기본으로 하며, 메인 에이전트가 전체 화면 세트의 누락, 정책·governance 일관성, wire semantics, layoutContract, componentCandidates fit 근거를 승인한다.
+- Phase 1/2/3은 화면별 병렬 실행을 기본으로 하며, 메인 에이전트가 전체 화면 세트의 누락, 정책·governance 일관성, 구조 계약, componentCandidates 판단이 각 SOT에 연결됐는지 승인한다. Phase 3의 상세 fit 규칙은 `SCREEN_STRUCTURE_PRINCIPLES.md`를 따른다.
 - Step 0-2의 병렬 위임은 긴 분석 회의가 아니라 기계적 분할 추출이다. 하위 에이전트는 같은 문서를 중복 정독하지 않고, screen group / OGN group / policy ID coverage처럼 분리된 표를 만든다. 메인 에이전트는 하위 산출물이 narrative 중심이거나 Coverage Map과 Implementation Map을 섞으면 승인하지 않고 표/판정 중심으로 재작업시킨다.
 - Phase 4는 승인된 Diagram만 병렬 제작한다. 같은 organism/component 파일을 여러 서브 에이전트가 동시에 수정할 수 있으면 메인이 파일 소유 범위를 분리하거나 순차화한다.
 - Phase 5는 route 등록과 preview/check 결과를 통합 검수한다.
@@ -75,7 +75,7 @@ Pre/Post = Step 0, Step 10
 
 - Phase 1: 서브 에이전트가 SB에서 화면ID·도메인·과업·상태·CTA·정책태그·OGN ID·slot/part/hierarchy를 추출하고, 메인 에이전트가 누락 0 상태인지 확인한다.
 - Phase 2: 서브 에이전트가 먼저 Coverage Map으로 SB policy ID와 `policy-core` 존재 여부를 대조하고, `green`/`yellow`/`red`를 판정한다. `red`는 missing/blocked로 종료하고, `yellow`는 사용자 승인 gate로 올린다. `green` 또는 승인된 `yellow`만 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs를 조사해 `Screen.map.md`를 작성한다. 메인 에이전트는 Coverage Map과 Implementation Map이 섞였거나 없는 정책을 추정한 산출물을 반려한다.
-- Phase 3: 서브 에이전트가 유사 wire reference를 찾고, Screen Wire, Wire Semantic Tags, pattern contract, layoutStrategy/layoutContract, Layout Distortion Gate, componentCandidates를 반영해 `Screen.diagram.md`를 작성한다. 메인 에이전트는 컴포넌트 후보가 아니라 레이아웃 보존과 구조 계약을 먼저 승인한다. `[... | key-value-summary | card]`로 읽히는 summary card는 `patternFamily: card-key-value-summary`와 required capability가 먼저 정의됐는지 확인하고, 후보 평가가 component-name preference나 현재 샘플 길이에 기대면 반려한다. 후보가 타 화면 pattern family 선례와 thin 소스에서만 충돌하면 모순을 reject로 굳히지 말고 `SCREEN_STRUCTURE_PRINCIPLES.md`의 Pattern-Family Precedent Gate로 사용자 결정 또는 assumption을 surface한다.
+- Phase 3: 서브 에이전트가 유사 wire reference를 찾고, Screen Wire, Wire Semantic Tags, pattern contract, layoutStrategy/layoutContract, Layout Distortion Gate, componentCandidates를 반영해 `Screen.diagram.md`를 작성한다. 메인 에이전트는 컴포넌트 후보명이 아니라 레이아웃 보존과 구조 계약을 먼저 승인한다. summary card 판정, pattern-family precedent, fit/reject 기준 같은 세부 규칙은 `SCREEN_STRUCTURE_PRINCIPLES.md`의 Phase 3 구조 원칙을 기준으로 검수한다.
 - Phase 4: 서브 에이전트가 componentCandidates를 capability 기준으로 평가해 layoutContract를 만족하는 컴포넌트/조합을 선택하거나 필요한 OGN/component를 만든다. 메인 에이전트는 실제 렌더링에서 section/slot/stack 배치와 layoutContract가 보존되는지 먼저 확인한다.
 - Phase 5: 서브 에이전트가 route catalog 등록과 preview 진입 확인을 수행하고, 메인 에이전트가 최종 검증 범위와 남길 기록을 확정한다.
 
