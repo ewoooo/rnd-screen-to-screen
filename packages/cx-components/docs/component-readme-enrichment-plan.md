@@ -26,11 +26,11 @@
 | 문서 | 책임 | 쓰지 않는 내용 |
 | --- | --- | --- |
 | `DESIGN_PATTERNS.md` | 화면 유형, section 구조, CTA/overlay/list/form 같은 조립 규칙 | 개별 컴포넌트의 모든 용례 |
-| `SPACING_PATTERNS.md` | token을 실제 화면/컴포넌트 간격에 적용하는 운영 규칙 | 컴포넌트 선택 기준 |
+|  | token을 실제 화면/컴포넌트 간격에 적용하는 운영 규칙 | 컴포넌트 선택 기준 |
 | `component-inventory.md` | 컴포넌트 목록, 상태, source, dependency, variant/property 현황 | 상세 UX 사용 계약 |
 | component README | 해당 컴포넌트의 사용 목적, props, states, allowed context, anti-pattern | 화면 패턴 전체 설명 |
 
-README에 보강한 내용이 화면 패턴 전반에 영향을 주면 `DESIGN_PATTERNS.md`로 승격한다. 여러 컴포넌트에 반복되는 spacing 규칙이면 `SPACING_PATTERNS.md`로 승격한다.
+README에 보강한 내용이 화면 패턴 전반에 영향을 주면 `DESIGN_PATTERNS.md`로 승격한다. 여러 컴포넌트에 반복되는 spacing 규칙이면 로 승격한다.
 
 ---
 
@@ -89,7 +89,7 @@ MOCK SOT에서 확인한 frame/node, 반복 사례, variant/property 주의사�
 
 - `DESIGN_PATTERNS.md`
 - `DESIGN_FOUNDATION.md`
-- `SPACING_PATTERNS.md`
+- 
 - `SCREEN_STRUCTURE_PRINCIPLES.md`
 - `packages/cx-components/docs/component-inventory.md`
 - 대상 component의 현재 README, types, variants, CSS
@@ -172,7 +172,7 @@ Figma Page MOCK SOT를 받으면 컴포넌트별로 바로 문서화하지 않�
 
 README에 기록할 때는 "Figma에서 이렇게 보였다"에 머물지 않고 "생성기가 언제 이 컴포넌트를 선택해야 하는가"까지 적는다.
 
-관찰 중인 내용은 `component-enrichment-plan/` 하위의 컴포넌트별 staging note에 먼저 기록한다. 이 폴더는 최종 SOT가 아니며, 확정된 내용만 component README, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `cx-layout` 문서, 또는 `component-inventory.md`로 반영한다.
+관찰 중인 내용은 `component-enrichment-plan/` 하위의 컴포넌트별 staging note에 먼저 기록한다. 이 폴더는 최종 SOT가 아니며, 확정된 내용만 component README, `DESIGN_PATTERNS.md`, `cx-layout` 문서, 또는 `component-inventory.md`로 반영한다.
 
 ---
 
@@ -205,7 +205,7 @@ screen observation
 | 특정 component가 어떤 부모/slot 안에서 쓰이는지 | 해당 component README의 `Composition` |
 | 여러 component가 만드는 화면 수준 조립 규칙 | `DESIGN_PATTERNS.md` |
 | rail, slot, action-area, overlay shell 같은 layout contract | `@pxds/cx-layout` 문서 |
-| spacing gap, divider, content width 같은 운영 규칙 | `SPACING_PATTERNS.md` |
+| spacing gap, divider, content width 같은 운영 규칙 |  |
 | 특정 도메인 정책을 담는 조합 | `apps/mobile/src/organisms/<domain>/` README 또는 diagram |
 
 ### 6-3. Composition 기록 형식
@@ -374,5 +374,5 @@ Follow-up:
 - 업데이트된 component README
 - 반복 composition 결정표
 - 필요 시 `component-inventory.md`의 Detail 링크, status, variant/property 보정
-- 반복 규칙으로 승격해야 할 경우 `DESIGN_PATTERNS.md` 또는 `SPACING_PATTERNS.md` 보정
+- 반복 규칙으로 승격해야 할 경우 `DESIGN_PATTERNS.md` 또는  보정
 - 신규 표현이 필요하면 `src/candidate/rqr-*` 후보 생성 여부 기록

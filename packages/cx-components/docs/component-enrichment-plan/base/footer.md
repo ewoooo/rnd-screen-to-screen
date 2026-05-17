@@ -1,6 +1,6 @@
 # Footer Enrichment Notes
 
-> Staging memo for Figma MOCK SOT observation. Final decisions should be applied to the component README, DESIGN_PATTERNS.md, SPACING_PATTERNS.md, or cx-layout docs.
+> Staging memo for Figma MOCK SOT observation. Final decisions should be applied to the component README, DESIGN_PATTERNS.md, or cx-layout docs.
 
 ## Current Source
 - Inventory: ../../component-inventory.md -> components/base/footer.md

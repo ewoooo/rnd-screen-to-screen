@@ -13,7 +13,7 @@
 - ognIds: []
 - governanceRefs: []
 - notApplicableReason: Figma component proof screen. It records layout and component contract only; no policy source has been bound yet.
-- required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
+- required design docs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - AppScreen rails: `SystemHeader`, `Header`, `Content`, `Bottom`
 - header contract: visible title `개통 완료`; completion pattern must not imply a back-navigation requirement from this proof screen.
 - bottom contract: `Bottom(preset="guided-action")`; guided prompt and two actions stay fixed outside scroll content.
@@ -81,7 +81,7 @@
   - reason: Wire Semantic Tag `[completionHero | completion-hero | leading]` identifies a leading completion hero with no card boundary or divider. DESIGN_PATTERNS.md Completion case A places `TitleMain(type="complete")` before the summary card in one content flow; no visible divider or standalone card boundary separates the hero from the summary.
 - layoutStrategy:
   - widthTier: `content-361`
-  - padding: completion block follows SPACING_PATTERNS.md Completion spacing through the parent page stack; no route-level padding patch
+  - padding: completion block follows DESIGN_PATTERNS.md Completion spacing through the parent page stack; no route-level padding patch
   - stack: vertical title/subtitle
   - alignment: leading
   - typography: display/headline completion title followed by body supporting copy
@@ -91,7 +91,7 @@
   - role: success-result hero
   - structure: title plus one supporting sentence above the result summary card
   - alignment: leading text inside the content rail; no independent hero surface
-  - density: simple-completion density with title/subtitle spacing from SPACING_PATTERNS.md Completion; no cross-sell gap
+  - density: simple-completion density with title/subtitle spacing from DESIGN_PATTERNS.md Completion; no cross-sell gap
   - wrapping: title and subtitle may wrap naturally, but must not force the fixed bottom area into scroll content
   - distortionRisk: rendering the hero as a standalone card, inserting a section divider, or centering the text would break the reference complete pattern.
 - componentCandidates:
@@ -145,7 +145,7 @@ Candidate evaluation against requiredCapability:
 
 - layoutStrategy:
   - widthTier: `content-361` outer stack, `inner-329` row content
-  - padding: card-owned result summary padding, aligned to SPACING_PATTERNS.md Completion result summary card padding
+  - padding: card-owned result summary padding, aligned to DESIGN_PATTERNS.md Completion result summary card padding
   - stack: key-value rows
   - alignment: split label/value; labels stable on the left, values readable on the right
   - typography: body-level label/value rows; no emphasized total row

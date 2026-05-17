@@ -27,7 +27,6 @@ export const screenConfig = defineScreenConfig({
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
-			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
 		],
 		buildSelections: [

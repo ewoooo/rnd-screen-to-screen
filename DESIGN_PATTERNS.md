@@ -44,6 +44,61 @@
 
 ---
 
+## 공통 Layout / Spacing Contract
+
+이 문서는 화면 패턴 구조와 spacing 운영을 함께 소유한다. 과거 spacing 전용 문서의 실측 운영 규칙은 이 섹션과 각 패턴의 `Spacing Contract`로 흡수했다.
+
+정식 spacing token scale과 semantic token의 원천은 `DESIGN_FOUNDATION.md`다. Figma 실측에서 token scale에 없는 값이 보이면 임의 token으로 승격하지 않고 가장 가까운 정식 token 또는 component-owned layout으로 정렬한다.
+
+### Width Rails
+
+| Rail | Width | 용도 |
+|---|---:|---|
+| Full bleed | 393px | StatusBar, AppBar, ActionButton, Divider, BottomSheet shell |
+| Section | 369px | Pagestack, CardCarousel, CardSection, card/list group |
+| Content | 361px | 일반 본문, 상세/폼 콘텐츠, 2열 grid |
+| Inner content | 329px | TitleSection, ListText, TextField, Accordion |
+| Popup text | 297px | 361px Popup card 내부에서 좌우 32px inset |
+
+361px tier는 393/369/329 grid를 대체하지 않는다. 369px는 카드형 section wrapper와 리스트 그룹, 361px는 일반 본문 콘텐츠와 폼/상세 화면의 기본 콘텐츠 폭으로 사용한다.
+
+### Chrome Sizes
+
+| Element | Size / Rhythm |
+|---|---|
+| StatusBar | 393×59px |
+| AppBar | 393×48px |
+| Header total | 107px = StatusBar 59 + AppBar 48 |
+| BottomNavigation | 393×88px |
+| ActionButton | 393×102px |
+| Bottom safe area | 36px |
+
+### Component Measurement Cheatsheet
+
+| Component | Contract |
+|---|---|
+| Button | Small 28px, Medium 36px, Large 48px, XLarge 56px; 버튼은 action pattern 또는 organism slot 안에서 사용 |
+| TextField | input 48px, field gap 12px, group title gap 8px, group vertical rhythm 24px |
+| Chip | ChipItem 37px, row 57px, icon-text gap 2px, row gap 4px |
+| CardSection | outer width 369px, inner padding 28px, inner gap 24px |
+| ListText | row 22px + padB 4px, left flex / right fixed, gap 16px |
+| InfoTextList | row gap 4px, key-value gap 40px, total row top Divider required |
+| BottomSheet | Handle 32px, Title 68px, ActionButton 102px |
+| Popup | card 361px, text inset 32px, PopupActionButton 361×60px |
+
+### Spacing 운영 원칙
+
+- 0-4px: 같은 원자적 요소 내부.
+- 8-12px: 같은 컴포넌트 내부 인접 요소.
+- 16-20px: 카드/컨테이너 내부 padding, 화면 기본 좌우 padding.
+- 24-28px: 카드 상하 padding, section 구분.
+- 32-40px: 큰 영역 구분, bottom sheet title, footer/filter sorting 계열.
+- 컴포넌트 간 간격은 외부 margin보다 부모 container의 `gap` 또는 `padding`으로 제어한다.
+- 화면 route에서 raw spacing으로 기준선을 보정해야 하면 pattern 또는 layout primitive로 올릴 수 있는지 먼저 확인한다.
+- section 간 구분은 gap 보정보다 `Divider`나 해당 pattern의 section contract를 우선한다.
+
+---
+
 <a name="section-main"></a>
 ## 섹션 패턴 — 메인 (Main)
 
@@ -179,6 +234,14 @@
 - Local_ButtonSection (버튼 CTA 섹션)
 - Local_ButtonItem (더보기)
 
+**Spacing Contract**
+- Main chrome은 `StatusBar + AppBar = 107px`를 기본으로 한다.
+- 검색형 SearchBar는 content rail 353px 기준으로 x=20에 둔다.
+- Chip row는 57px 높이, left 20px, row gap 4px를 기준으로 한다.
+- 쇼핑형/관리형 카드 섹션은 section rail 369px(x=12)을 사용한다.
+- CardSection 내부 padding은 28px, 내부 gap은 24px를 기준으로 한다.
+- Main 계열은 `BottomNavigation(88px)`을 사용하고 `ActionButton`과 동시에 쓰지 않는다.
+
 ---
 
 <a name="section-list-card"></a>
@@ -244,6 +307,13 @@
 - Chips가 있을 때 배치: AppBar → Chips(57) → FilterSorting(50~52) → 콘텐츠
 - 카드는 반드시 x=12 배치 (369px 섹션 너비)
 - 카드 간 구분은 Divider(329×1px) 사용 금지 → 카드 자체의 여백으로 구분
+
+**Spacing Contract**
+- Chips는 57px, FilterSorting은 50~52px 높이를 기준으로 한다.
+- ProductListGroup은 section rail 369px(x=12)을 기준으로 반복한다.
+- ProductListGroup 내부 padding은 top/bottom 12px, left/right 12px를 기준으로 한다.
+- TitleSection과 ListText류 내부 콘텐츠는 inner rail 329px를 기준으로 한다.
+- 카드 간 구분은 1px Divider가 아니라 카드 자체 여백과 group rhythm으로 처리한다.
 
 ---
 
@@ -330,6 +400,13 @@
 - ListText 사이 구분은 반드시 `329×1px` Divider 사용
 - Pagestack 없이 Local_ListInfo 직접 배치 가능 (공지 목록형)
 - AccordionList는 반드시 `Accordion + Divider` 교번 구조 유지
+
+**Spacing Contract**
+- ListText는 inner rail 329px, row 22px + padB 4px를 기준으로 한다.
+- ListText의 left/right 관계는 left flex / right fixed, gap 16px를 기본으로 한다.
+- 항목 구분은 `Divider(329×1px)`를 사용하고, 단순 vertical gap으로 대체하지 않는다.
+- Summary 배너는 section rail 369px(x=12)을 사용한다.
+- FAQ/이용안내형의 Chips row는 57px, Tab은 full bleed 393px를 기준으로 한다.
 
 ---
 
@@ -445,6 +522,14 @@ Footer
 - ActionButton은 콘텐츠 스크롤과 무관하게 화면 최하단에 고정
 - Footer는 ActionButton 위 콘텐츠의 마지막 요소
 
+**Spacing Contract**
+- 상세 hero는 full bleed 393px로 시작하고, overlay header는 y=0에서 107px를 점유한다.
+- Local_Thumbnail은 full bleed 393px, 높이 480px를 기준으로 한다.
+- ProductInfo는 full bleed 393px, 높이 170~177px 범위를 기준으로 한다.
+- Pagestack 섹션 간 구분은 `Divider(393×4px)`를 사용하고 gap으로 대체하지 않는다.
+- Card형 상세 정보는 section rail 369px, 텍스트/약관 정보는 inner rail 329px를 기준으로 한다.
+- Bottom ActionButton은 393×102px fixed rail로 둔다.
+
 ---
 
 <a name="section-detail-form"></a>
@@ -539,6 +624,14 @@ Footer
 - CheckboxText + Callout 조합 시: Callout이 CheckboxText 위 또는 아래 배치
 - Local_Summary는 항상 마지막 Pagestack 섹션에 배치
 
+**Spacing Contract**
+- 일반 form/detail body는 content rail 361px 또는 inner rail 329px를 section contract에 따라 사용한다.
+- TextField input은 48px, field 간 gap은 12px를 기준으로 한다.
+- form group title과 첫 field 간격은 8px, group 간 vertical rhythm은 24px를 기준으로 한다.
+- Pagestack 섹션 간 구분은 `Divider(393×4px)`를 사용한다.
+- 입력, 확인, 동의, 요약은 의미 단위로 분리하고 외부 margin으로 섹션 구분을 흉내내지 않는다.
+- Bottom ActionButton은 393×102px fixed rail로 둔다.
+
 ---
 
 <a name="section-complete"></a>
@@ -620,6 +713,14 @@ Footer
 - AppBar에는 '닫기(X)' 또는 '홈' 버튼만 배치 — 뒤로가기 금지 (완료 후 재진입 방지)
 - 단순 완료형은 1뷰포트(852px)로 제한 — 스크롤 없는 단일 화면 권장
 - 성공 일러스트/아이콘이 필요하면 TitleMain의 Image 슬롯 활용
+
+**Spacing Contract**
+- 완료 TitleMain은 inner title rail을 사용하며, title/subtitle 간격은 `TitleMain` component-owned rhythm을 따른다.
+- 완료 메시지 block의 좌우 기준은 20px inset을 사용한다.
+- 완료 제목과 보조 문구의 vertical rhythm은 component-owned spacing을 우선하고, route-level margin으로 보정하지 않는다.
+- 요약 카드는 `Card 0/PagestackItem` 또는 card-key-value-summary component가 padding/radius를 소유해야 한다.
+- 결과 요약 카드 padding은 20px를 기준으로 하되, 선택된 component의 card contract가 있으면 component-owned 값을 우선한다.
+- 단순 완료형은 Bottom ActionButton 393×102px를 포함해 1 viewport 안에 들어오는지 확인한다.
 
 ---
 
@@ -726,6 +827,14 @@ Bottomsheet 최소 높이 = Handle(32) + Title(68 기준) + 콘텐츠 + ActionBu
 - TitleBottomSheet는 x=32 (바텀시트 내 양쪽 32px 마진 적용)
 - Con 슬롯은 기본 x=20, w=353을 사용한다. 단, ActionButton이 있는 시트처럼 자식 component가 자체 padding을 정의하는 구조에서는 Con 슬롯 padding을 0으로 두고 자식의 contract를 따른다.
 - 아이템이 많을 경우 Con 슬롯 내에서 스크롤 처리 (Bottomsheet 높이 고정)
+
+**Spacing Contract**
+- BottomSheet shell은 full bleed 393px를 기준으로 하단에 anchor된다.
+- Handle area는 32px, Title area는 68px를 기준으로 한다.
+- TitleBottomSheet는 좌우 32px inset으로 inner width 329px를 사용한다.
+- 일반 Con 슬롯은 x=20, w=353을 기본으로 한다.
+- ActionButton이 있는 BottomSheet의 Con 슬롯은 자식 component padding contract를 우선하며 중복 padding을 만들지 않는다.
+- BottomSheet ActionButton은 102px를 기준으로 하고, 내부 변형은 component contract를 따른다.
 
 ---
 
@@ -850,6 +959,13 @@ PopupActionButton: 361×60  (팝업 전체 너비, 하단 배치)
 - SubText 없이 Title + PopupActionButton만으로도 완성 가능
 - Contents 슬롯 아이템이 4개를 초과하면 바텀시트로 전환 권장
 - Dim 오버레이는 팝업 아래에 별도 프레임으로 반드시 포함
+
+**Spacing Contract**
+- Popup card는 361px width, x=16을 기준으로 한다.
+- Popup text content는 297px width, card edge에서 좌우 32px inset을 기준으로 한다.
+- title-body gap은 16px, content-button gap은 24px를 기준으로 한다.
+- checkbox/list 내부 gap은 8px를 기준으로 한다.
+- PopupActionButton은 361×60px로 popup 하단에 붙인다.
 
 ---
 

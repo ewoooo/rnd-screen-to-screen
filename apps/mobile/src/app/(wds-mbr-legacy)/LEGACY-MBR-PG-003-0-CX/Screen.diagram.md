@@ -12,7 +12,7 @@
 - ognIds: `ogn-mbr-withdraw-complete-app-bar`, `ogn-mbr-withdraw-complete-hero`, `ogn-mbr-withdraw-complete-summary`, `ogn-mbr-withdraw-revoke-notice`, `ogn-mbr-withdraw-complete-actions`
 - governanceRefs: []
 - notApplicableReason: Legacy-converted screen metadata backfill. Current `Screen.tsx` is treated as the visual and structural truth; no policy-core source has been bound, so policy meaning remains structural-only/TBD.
-- requiredDesignDocs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
+- requiredDesignDocs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - mapSource: `Screen.map.md`
 - configBuildSelections: selected strings in `Screen.config.ts` must appear verbatim in this diagram.
 - AppScreen rails: `SystemHeader`, `Header`, `Content`, `Bottom`

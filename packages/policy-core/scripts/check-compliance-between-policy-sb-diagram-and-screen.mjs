@@ -20,7 +20,6 @@ const routesPath = path.join(
 const requiredDesignDocs = [
 	"DESIGN_PATTERNS.md",
 	"DESIGN_FOUNDATION.md",
-	"SPACING_PATTERNS.md",
 	"SCREEN_STRUCTURE_PRINCIPLES.md",
 ];
 const requiredDiagramSections = [
@@ -36,7 +35,10 @@ const buildSelectionSources = new Set([
 	"new-organism",
 	"new-component",
 ]);
-const routeGroupDomainAliases = new Map([["nova-mbr-legacy", "mbr"]]);
+const routeGroupDomainAliases = new Map([
+	["nova-mbr-legacy", "mbr"],
+	["nova-mbr-fp", "mbr"],
+]);
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
 

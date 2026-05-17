@@ -10,11 +10,12 @@ Use this as the manager skill for the full screen-generation workflow. Keep the 
 ## Workflow
 
 1. Read `AGENTS.md` and `SCREEN_GENERATION_FLOW.md`.
-2. Run Phase 1 with `cx-screen-extract`.
-3. Run Phase 2 with `cx-screen-map`; do not enter Diagram until policy tags, policy refs, copy, constraints, errors, and governance refs are mapped or explicitly marked not applicable.
-4. Run Phase 3 with `cx-screen-diagram`; do not enter Build until every section/OGN has `layoutContract` and `componentCandidates`, candidates include fit/reason/risk scored by capability, and acceptance is expressed as layout behavior rather than component-name usage.
-5. Run Phase 4 with `cx-screen-build`; accept implementation by `layoutContract` and Distortion Gate preservation, not by whether it used candidate names.
-6. Run Phase 5 with `cx-screen-register-verify`; register the route and run applicable checks.
+2. For multi-screen requests, create the full screen inventory first. Use phase-batch execution by default: run the same phase across screens in parallel, then approve the phase gate for the whole batch before starting the next phase. Do not default to one screen completing all five phases while the rest wait.
+3. Run Phase 1 with `cx-screen-extract`.
+4. Run Phase 2 with `cx-screen-map`; do not enter Diagram until policy tags, policy refs, copy, constraints, errors, and governance refs are mapped or explicitly marked not applicable.
+5. Run Phase 3 with `cx-screen-diagram`; do not enter Build until every section/OGN has `layoutContract` and `componentCandidates`, candidates include fit/reason/risk scored by capability, and acceptance is expressed as layout behavior rather than component-name usage.
+6. Run Phase 4 with `cx-screen-build`; accept implementation by `layoutContract` and Distortion Gate preservation, not by whether it used candidate names. Build only screens whose Map and Diagram passed the batch gate, and split file ownership when workers may touch shared organisms/components.
+7. Run Phase 5 with `cx-screen-register-verify`; register the route and run applicable checks.
 
 ## Manager Gates
 
@@ -22,6 +23,7 @@ Use this as the manager skill for the full screen-generation workflow. Keep the 
 - Treat `SCREEN_STRUCTURE_PRINCIPLES.md` as the Phase 3 diagram contract SOT.
 - Record approved decisions in owned files: policy/copy/governance in `Screen.map.md`, structure/layoutContract/componentCandidates in `Screen.diagram.md`, implementation metadata in `Screen.config.ts`.
 - Main-agent review is an approval gate, not a passive summary. The main agent must block the next phase when a delegated artifact misses required structure, weakens wire semantics, or leaves candidate scoring unsupported.
+- For multi-screen batches, main-agent review is a batch gate. Approve or reject the phase across the screen set before moving the batch forward; per-screen completion badges do not replace the phase gate.
 - In Phase 3, verify Wire Semantic Tags before candidate scoring. Summary/detail cards with `[... | key-value-summary | card]` must follow the Summary Card Decision Rule before Build starts.
 - In Phase 3, enforce `SCREEN_STRUCTURE_PRINCIPLES.md` → `Pattern-Family Precedent Gate`: if a candidate is an established primary convention for the same pattern family but conflicts only with a thin/proof/no-policy source, do not let the worker auto-reject it; require `sourceCompleteness`, `establishedConvention`, and either `decisionRequired` or a recorded `assumption`.
 - Return to Phase 3 if the Diagram over-specifies exact components as acceptance criteria, omits `layoutContract`, omits `componentCandidates`, lists candidates without fit/reason/risk, or assigns `medium/strong` because sample data is short despite known structural risk.

@@ -12,7 +12,7 @@
 - ognIds: `ogn-mbr-withdraw-impact-app-bar`, `ogn-mbr-withdraw-impact-intro`, `ogn-mbr-withdraw-impact-list`, `ogn-mbr-withdraw-unpaid-callout`, `ogn-mbr-withdraw-impact-action`
 - governanceRefs: []
 - notApplicableReason: Legacy-converted screen metadata backfill. Current `Screen.tsx` is treated as the visual and structural truth; no policy-core source has been bound, so impact and unpaid rules remain structural-only/TBD.
-- requiredDesignDocs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
+- requiredDesignDocs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - mapSource: `Screen.map.md`
 - configBuildSelections: selected strings in `Screen.config.ts` must appear verbatim in this diagram.
 - AppScreen rails: `SystemHeader`, `Header`, `Content`, `Bottom`

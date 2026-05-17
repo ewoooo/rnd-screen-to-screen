@@ -13,7 +13,7 @@
 - ognIds: []
 - governanceRefs: []
 - notApplicableReason: Figma component proof screen. It records layout and component contract only; no policy source has been bound yet.
-- requiredDesignDocs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
+- requiredDesignDocs: `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - mapSource: `Screen.map.md`
 - configBuildSelections: preserve selected candidate names from `Screen.config.ts` verbatim.
 - AppScreen rails: `SystemHeader`, `Header`, `Content`, `Bottom`
@@ -81,7 +81,7 @@
   - reason: Wire Semantic Tag `[completionHero | completion-hero | leading]` confirms this section's role is a leading completion hero — no standalone card surface, no divider, no centering. DESIGN_PATTERNS.md Completion case A and Pattern G place the success heading before the summary card in one content flow with no visible divider or standalone hero boundary separating the two sections.
 - layoutStrategy:
   - widthTier: `content-361`
-  - padding: parent page stack owns completion spacing; follows `SPACING_PATTERNS.md` Completion message block spacing.
+  - padding: parent page stack owns completion spacing; follows  Completion message block spacing.
   - stack: vertical title/subtitle
   - alignment: leading
   - typography: complete display/headline title, then body-level support copy
@@ -139,7 +139,7 @@
 
 - layoutStrategy:
   - widthTier: `content-361` outer card rail, `inner-329` row content
-  - padding: card-owned result summary padding; aligns to `SPACING_PATTERNS.md` Completion result summary card padding.
+  - padding: card-owned result summary padding; aligns to  Completion result summary card padding.
   - stack: key-value rows
   - alignment: split label/value with stable left labels and readable right values
   - typography: body-level label/value rows; no emphasized total row

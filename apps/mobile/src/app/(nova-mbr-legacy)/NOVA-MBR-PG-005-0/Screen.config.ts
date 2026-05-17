@@ -20,7 +20,7 @@ export const screenConfig = defineScreenConfig({
 		height: 812,
 	},
 	generation: {
-		source: "implementation",
+		source: "policy+design-pattern",
 		pattern: "complete",
 		policyRefs: [
 			"POL-MBR-ACCT-001-09",
@@ -29,14 +29,49 @@ export const screenConfig = defineScreenConfig({
 			"POL-MBR-PROF-001-08",
 		],
 		ognIds: [
-			"ogn-mbr-section-header-page",
-			"ogn-mbr-section-message-join-complete-view",
+			"ogn-mbr-join-complete-result",
 		],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
-			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
+		],
+		buildSelections: [
+			{
+				section: "completeHero",
+				selected: "JoinCompleteResult",
+				source: "existing-composition",
+				reason:
+					"Uses PageStackContents with TitleMain(type=\"complete\") so the completion title and subtitle follow DESIGN_PATTERNS.md Completion without route-level spacing patches.",
+				rejected: [
+					{
+						candidate: "SectionHeaderPage",
+						reason:
+							"Generic page header does not enforce completion type/copy and would split the hero from the summary card.",
+					},
+				],
+			},
+			{
+				section: "completionSummary",
+				selected: "RQRContentsDetail",
+				source: "componentCandidates",
+				reason:
+					"Satisfies the simple-completion summary-card contract with a component-owned card surface, title slot, native key-value rows, padding/radius, and wrapping behavior without custom green success styling.",
+				rejected: [
+					{
+						candidate: "Notice(tone=\"positive\") + custom guide list",
+						reason:
+							"Notice/bullet structure is not the Completion summary-card pattern and encourages unapproved success color treatment.",
+					},
+				],
+			},
+			{
+				section: "actions",
+				selected: "MbrPrimaryCTABar",
+				source: "existing-composition",
+				reason:
+					"Keeps the only explicit follow-up action in AppScreen.Bottom with the existing single-primary action-bar capability.",
+			},
 		],
 	},
 } as const satisfies ScreenRouteConfig);

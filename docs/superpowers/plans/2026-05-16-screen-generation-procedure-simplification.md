@@ -76,7 +76,7 @@ SB가 첨부됐을 때 스크린을 생성하는 절차 계약이다. 이 문서
 |---|---|---|---|---|
 | **1 · Extract** | SB → 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출 | SB (입력) | 추출 요약 | 화면ID·도메인·OGN ID·정책태그 누락 0으로 목록화 |
 | **2 · Map** | 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 | `packages/policy-core/policies/**/*.md`, `*.policy.ts` | 정책-화면 요구사항 매트릭스 | 모든 정책태그가 화면 정보/CTA/에러로 매핑. 누락 시 다음 페이즈 진입 금지 |
-| **3 · Diagram** | 화면 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md` | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, OGN별 layoutStrategy·정책연결·reuse/new 표기 |
+| **3 · Diagram** | 화면 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 자체 통과 | `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md` | `Screen.diagram.md` (모든 화면 의무) | `Screen→Chrome→Section→Slot→Stack→Component` 로 설명, OGN별 layoutStrategy·정책연결·reuse/new 표기 |
 | **4 · Build** | 정책서 OGN 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(생성근거 포함) | `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout` | `apps/mobile/src/organisms/<route-group-or-domain>/<ogn>/`, `Screen.tsx`, `Screen.config.ts` | Diagram의 모든 OGN/슬롯이 코드에 존재, `config.generation` 블록 채워짐 |
 | **5 · Register** | route catalog 등록 + preview 노출 확인 | `apps/mobile/src/scripts/screen-routes/` | `routes.ts` 등록 항목 | route 등록 + preview iframe에서 해당 route 진입 가능 |
 
@@ -114,7 +114,7 @@ flowchart LR
 ### Phase 3 · Diagram
 
 - 책임: 화면 패턴 결정 + OGN별 layoutStrategy 작성 + 컴포넌트 reuse/new 분기 + SB 기반 제작 Diagram 작성, Layout Distortion Gate 자체 통과.
-- 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`
+- 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`
 - 산출: `Screen.diagram.md` — **모든 화면 의무다.** 신규/기존 구분 없이 모든 화면이 이 산출물을 가진다.
 - DoD: Diagram이 `Screen → Chrome → Section → Slot → Stack → Component` 구조로 설명되고, 각 OGN에 layoutStrategy·정책 연결·reuse/new 표기가 있다.
 - Diagram 작성 규칙, OGN별 layoutStrategy 형식, Layout Distortion Gate, 금지 신호, 설계 체크리스트의 상세는 `SCREEN_STRUCTURE_PRINCIPLES.md` 가 단독 소유한다. 이 문서는 그 규칙을 재서술하지 않고 그 문서를 따른다.
@@ -172,7 +172,6 @@ export const screenConfig = defineScreenConfig({
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
-			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
 		],
 	},
@@ -200,7 +199,7 @@ export const screenConfig = defineScreenConfig({
 ## 관련 문서
 
 - `SCREEN_STRUCTURE_PRINCIPLES.md` — Phase 3 구조/Diagram/layoutStrategy/Layout Distortion Gate 단독 소유
-- `DESIGN_PATTERNS.md` / `DESIGN_FOUNDATION.md` / `SPACING_PATTERNS.md` — Phase 3/4 패턴·시각·spacing 참고
+- `DESIGN_PATTERNS.md` / `DESIGN_FOUNDATION.md` /  — Phase 3/4 패턴·시각·spacing 참고
 - `packages/policy-core/policies` — Phase 2 정책 원천
 - `AGENTS.md` `## 공통 검증` — 검증 게이트 (절차 밖)
 ````
@@ -303,7 +302,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 
 1. SB에서 화면 ID, 도메인, 과업, 상태, CTA, 정책 태그, 도메인 모듈 ID, OGN ID, part/slot/hierarchy를 추출한다.
 2. `packages/policy-core/policies`에서 관련 정책 md와 `.policy.ts`를 확인한다.
-3. `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`를 반드시 조회한다.
+3. `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`를 반드시 조회한다.
 4. 정책의 필수 요구사항, 선택지, 제한 조건, evidence/sourceRef, 사용자에게 보여줄 copy를 분리한다.
 5. 화면 유형을 `DESIGN_PATTERNS.md`의 패턴 중 하나로 매핑한다. 맞는 패턴이 없으면 새 패턴을 만들기 전에 기존 패턴의 변형으로 표현 가능한지 검토한다.
 6. 구현 전에 SB 기반 제작 Diagram을 작성한다. Diagram은 좌표 보정표가 아니라 AppScreen slot, section boundary, slot 이름, OGN 배치, 주요 컴포넌트, 정책 연결을 함께 보여주어야 한다.
@@ -323,7 +322,7 @@ SB가 첨부된 신규 화면 생성은 `SCREEN_GENERATION_FLOW.md`를 따른다
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리. 참고: `packages/policy-core/policies`.
-3. **Diagram** — 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+3. **Diagram** — 패턴 결정 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무). 참고: `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<route-group-or-domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
@@ -469,7 +468,7 @@ Run: `grep -rn "id:" packages/policy-core/policies/**/*.policy.ts | grep -i mbr`
 
 - [ ] **Step 4: `Screen.config.ts` 에 `generation` 블록 추가**
 
-`apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.config.ts` 의 객체에 `domain` 다음 위치로 `generation` 블록 추가(`as const satisfies ScreenRouteConfig` 유지). Step 1·2에서 확정한 `ognIds`, `policyRefs` 사용, `designDocsChecked` 는 `["DESIGN_PATTERNS.md","DESIGN_FOUNDATION.md","SPACING_PATTERNS.md","SCREEN_STRUCTURE_PRINCIPLES.md"]`, `source: "SB"`, `pattern` 은 화면 유형(form/complete 등).
+`apps/mobile/src/app/(nova-mbr-legacy)/<SCREEN_ID>/Screen.config.ts` 의 객체에 `domain` 다음 위치로 `generation` 블록 추가(`as const satisfies ScreenRouteConfig` 유지). Step 1·2에서 확정한 `ognIds`, `policyRefs` 사용, `designDocsChecked` 는 `["DESIGN_PATTERNS.md","DESIGN_FOUNDATION.md","SCREEN_STRUCTURE_PRINCIPLES.md"]`, `source: "SB"`, `pattern` 은 화면 유형(form/complete 등).
 
 - [ ] **Step 5: 해당 화면 정합성 검증 (red→green)**
 

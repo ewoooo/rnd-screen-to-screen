@@ -25,5 +25,5 @@
 - 화면 구조, section boundary, scroll, chrome, bottom sheet/popup runtime은 `@pxds/cx-layout` 책임이다.
 - 정책 의미와 도메인 OGN은 `apps/mobile/src/organisms/<domain>/` 책임이다.
 - `ActionButton`, `PopupActionButton`, `TitleBottomSheet`, `ListText`, `ListSelected`처럼 조합 의미가 있는 component는 자체 내부 spacing과 slot contract를 소유하고, route가 raw padding으로 보정하지 않게 한다.
-- component spacing 수치는 `DESIGN_FOUNDATION.md` token을 기반으로 하며, 실측 적용 규칙은 `SPACING_PATTERNS.md`를 따른다.
+- component spacing 수치는 `DESIGN_FOUNDATION.md` token을 기반으로 하며, 실측 적용 규칙은 `DESIGN_PATTERNS.md`의 layout/spacing contract를 따른다.
 - `space/5`처럼 정식 token이 아닌 실측값은 package token으로 임의 추가하지 않고 문서 evidence로 남긴다.

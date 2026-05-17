@@ -10,7 +10,7 @@ shadcn/Tailwind 기반 브라우저 프리뷰 셸이다. WDS 모바일 화면을
 - mobile route iframe preview
 - component render iframe preview
 - Figma export / Figma MCP 요청 workflow 생성
-- screen generation 산출물이 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`를 확인했는지 탐색/검증할 수 있게 한다.
+- screen generation 산출물이 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`를 확인했는지 탐색/검증할 수 있게 한다.
 
 ## 구조
 

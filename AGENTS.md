@@ -19,11 +19,10 @@
 2. `packages/policy-core/policies/**/*.policy.ts` — 화면과 카피가 참조할 수 있는 구조화된 정책 정의
 3. `packages/policy-core/governance/**/*.md` — UX 원칙(UXP), UI pattern/state control(UXPT), UX writing/voice(VOT) SOT
 4. [SKT GenUI Test 0512](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_GenUI_Test_0512?node-id=12001-103520&t=MXbXJQlMpLVcgIv3-1) — 실제 페이지 목업 Figma SOT
-5. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing 등 디자인 foundation SOT
-6. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴 SOT
-7. `SPACING_PATTERNS.md` — foundation spacing token을 화면·컴포넌트 실측 간격으로 적용하는 운영 규칙
-8. `SCREEN_STRUCTURE_PRINCIPLES.md` — Diagram과 화면 조립의 단순 구조 원칙
-9. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
+5. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing token 등 디자인 foundation SOT
+6. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴과 layout/spacing contract SOT
+7. `SCREEN_STRUCTURE_PRINCIPLES.md` — Diagram과 화면 조립의 단순 구조 원칙
+8. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
 
 정책과 governance, 디자인 문서가 충돌하면 정책 의미를 먼저 보존하고, UX governance의 행동·상태·문체 규칙을 적용한 뒤, 표현 방식은 디자인 foundation과 pattern 안에서 해결한다. 문서화된 토큰·패턴·컴포넌트 어휘 밖의 inline UI, 자체 spacing, 자체 fontSize가 필요하면 임의 확장하지 말고 시스템 깨짐 신호로 기록한다.
 
@@ -62,8 +61,7 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 │   ├── pxds-figma/                Figma bridge/hooks/spec authoring
 │   └── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
 ├── DESIGN_FOUNDATION.md  디자인 foundation SOT
-├── DESIGN_PATTERNS.md    화면 패턴 SOT
-├── SPACING_PATTERNS.md   화면·컴포넌트 spacing 실측 운영 규칙
+├── DESIGN_PATTERNS.md    화면 패턴 + layout/spacing contract SOT
 ├── SCREEN_STRUCTURE_PRINCIPLES.md  Diagram/화면 구조 원칙 SOT
 ├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
 ├── AGENTS.md             루트 운영 방향
@@ -80,7 +78,7 @@ Codex 스킬을 사용할 수 있는 환경에서는 화면 생성/수정 요청
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
-3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<route-group-or-domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 

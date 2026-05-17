@@ -10,7 +10,57 @@
 
 서브 에이전트는 메인 에이전트가 위임한 범위 안에서 실제 산출물을 만드는 워커다. Phase 1의 SB 추출, Phase 2의 정책/governance 조사와 `Screen.map.md` 초안, Phase 3의 구조 설계와 `Screen.diagram.md` 초안, Phase 4의 OGN/Screen/config 구현, Phase 5의 route 등록과 preview 확인을 맡을 수 있다. 서브 에이전트가 만든 산출물은 해당 페이즈의 작업 결과로 인정하되, 페이즈 간 최종 연결과 충돌 해결 책임은 메인 에이전트가 가진다.
 
+## 멀티 화면 배치 위임
+
+여러 화면 제작 요청에서는 기본 위임 단위가 “한 화면 5페이즈 완주”가 아니라 “같은 phase의 화면별 병렬 산출물”이다. 메인 에이전트는 전체 화면 inventory를 먼저 만든 뒤, phase별로 서브 에이전트를 나누고, phase gate를 통합 승인한 뒤에 다음 phase를 시작한다.
+
+권장 진행 표시는 화면별 end-to-end 완료가 아니라 phase batch 상태를 보여야 한다.
+
+```txt
+Phase 1 Extract 병렬 진행
+  - FP-001 Extract
+  - FP-002 Extract
+  - FP-003 Extract
+  - FP-005 Extract
+  - Main Gate: Extract 통합 승인
+
+Phase 2 Map 병렬 진행
+Phase 3 Diagram 병렬 진행
+Phase 4 Build 병렬 진행
+Phase 5 Register/Verify 통합
+```
+
+- Phase 1/2/3은 화면별 병렬 실행을 기본으로 하며, 메인 에이전트가 전체 화면 세트의 누락, 정책·governance 일관성, wire semantics, layoutContract, componentCandidates fit 근거를 승인한다.
+- Phase 4는 승인된 Diagram만 병렬 제작한다. 같은 organism/component 파일을 여러 서브 에이전트가 동시에 수정할 수 있으면 메인이 파일 소유 범위를 분리하거나 순차화한다.
+- Phase 5는 route 등록과 preview/check 결과를 통합 검수한다.
+- 단일 화면 요청이나 명확히 독립적인 단순 proof/detail 화면은 예외적으로 page end-to-end 위임할 수 있다. 멀티 화면 배치에서 이 예외를 쓰면 예외 사유와 메인 gate 위치를 명시한다.
+
 ## 점검 지점
+
+0-10 세부 단계는 5페이즈를 대체하지 않는다. 0-10은 phase 내부의 공개/검수 checkpoint를 세분화한 것이다.
+
+| 0-10 단계 | 기존 Phase | 담당 구조 |
+|---:|---|---|
+| 0. Intake | Pre-phase | 메인 에이전트 only |
+| 1. SB Extract | Phase 1 · Extract | 서브 가능, 메인 승인 |
+| 2. Policy Map | Phase 2 · Map | 서브 가능, 메인 승인 |
+| 3. Reference Decision | Phase 3 · Diagram | 서브 초안 가능, 메인 승인 필수 |
+| 4. OGN Boundary Decision | Phase 3 · Diagram | 서브 초안 가능, 메인 승인 필수 |
+| 5. Component Candidate Decision | Phase 3 · Diagram | 서브 초안 가능, 메인 승인 필수 |
+| 6. Diagram Contract | Phase 3 · Diagram | 서브 작성 가능, 메인 승인 |
+| 7. Build Plan | Phase 4 · Build | 메인 주도, 서브 보조 가능 |
+| 8. Implementation | Phase 4 · Build | 서브 가능, 메인 검수 |
+| 9. Verification | Phase 5 · Register/Verify | 서브 가능, 메인 통합 승인 |
+| 10. Report | Post-phase | 메인 에이전트 only |
+
+```txt
+Phase 1 = Step 1
+Phase 2 = Step 2
+Phase 3 = Step 3-6
+Phase 4 = Step 7-8
+Phase 5 = Step 9
+Pre/Post = Step 0, Step 10
+```
 
 - Phase 1: 서브 에이전트가 SB에서 화면ID·도메인·과업·상태·CTA·정책태그·OGN ID·slot/part/hierarchy를 추출하고, 메인 에이전트가 누락 0 상태인지 확인한다.
 - Phase 2: 서브 에이전트가 정책 필수정보, 선택지, 제약, 에러, sourceRef, governance refs를 조사해 `Screen.map.md`를 작성하고, 메인 에이전트가 정책 태그가 화면 정보/CTA/에러로 모두 매핑됐는지 승인한다.
@@ -18,6 +68,6 @@
 - Phase 4: 서브 에이전트가 componentCandidates를 capability 기준으로 평가해 layoutContract를 만족하는 컴포넌트/조합을 선택하거나 필요한 OGN/component를 만든다. 메인 에이전트는 실제 렌더링에서 section/slot/stack 배치와 layoutContract가 보존되는지 먼저 확인한다.
 - Phase 5: 서브 에이전트가 route catalog 등록과 preview 진입 확인을 수행하고, 메인 에이전트가 최종 검증 범위와 남길 기록을 확정한다.
 
-서브 위임은 모든 화면에 같은 강도로 적용하지 않는다. 단순 detail/complete 화면은 메인 에이전트가 직접 처리하거나 하나의 서브 에이전트에게 연속 위임할 수 있다. form, eligibility, error-heavy 화면, 신규 organism 또는 신규 pattern 후보, 정책 해석이 애매한 화면은 Phase 2/3/4를 분리해 위임하고 메인 에이전트의 승인 지점을 명확히 둔다.
+서브 위임은 모든 화면에 같은 강도로 적용하지 않는다. 단일 화면 요청의 단순 detail/complete 화면은 메인 에이전트가 직접 처리하거나 하나의 서브 에이전트에게 연속 위임할 수 있다. 멀티 화면 배치에서는 phase batch를 기본으로 하며, form, eligibility, error-heavy 화면, 신규 organism 또는 신규 pattern 후보, 정책 해석이 애매한 화면은 특히 Phase 2/3/4를 분리해 위임하고 메인 에이전트의 승인 지점을 명확히 둔다.
 
 서브 에이전트의 작업 메모나 중간 판단은 원문을 별도 산출물로 늘리지 않는다. 메인 에이전트가 승인한 결정만 해당 소유 파일에 반영한다. 정책·copy·governance 결정은 `Screen.map.md`, 구조·패턴·layoutContract·componentCandidates는 `Screen.diagram.md`, 구현 선택과 차이는 `Screen.config.ts` 또는 작업 로그의 `deviationReason`에 남긴다.

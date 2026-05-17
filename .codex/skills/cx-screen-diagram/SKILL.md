@@ -12,7 +12,6 @@ Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference ap
 - `SCREEN_STRUCTURE_PRINCIPLES.md`
 - `SCREEN_GENERATION_FLOW.md`
 - `DESIGN_PATTERNS.md`
-- `SPACING_PATTERNS.md`
 - Phase 2 `Screen.map.md`
 - closest references under `apps/mobile/src/screen-diagrams/`
 
