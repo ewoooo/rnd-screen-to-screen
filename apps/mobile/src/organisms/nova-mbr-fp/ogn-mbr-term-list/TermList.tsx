@@ -24,7 +24,8 @@ const SKELETON_KEYS = TERM_ITEMS.map((item) => item.id);
 export function TermList({ state = "ready" }: TermListProps) {
 	return (
 		<VStack
-			data-section-id="term-list"
+			data-section-id="termList"
+			data-ogn-id="ogn-mbr-term-list"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			<Card>

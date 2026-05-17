@@ -59,7 +59,7 @@ export function TermAgree({
 
 	return (
 		<VStack
-			data-section-id="term-agree"
+			data-section-id="termAgree"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			{/* card surface = RQRCard 후보 (DESIGN_PATTERNS §13.1 — component-owned
@@ -87,7 +87,11 @@ export function TermAgree({
 			{/* C1: 필수 미동의 그룹 에러 — 동의 그룹에 인접. 상단 통합 알림 금지(ERR_1).
 			    copy = POL-MBR-TERM-001-06.copy.error 원문. */}
 			{showRequiredError ? (
-				<Notice aria-live="polite" tone="negative">
+				<Notice
+					aria-live="polite"
+					data-section-id="termAgreeError"
+					tone="negative"
+				>
 					필수 약관에 동의해 주세요
 				</Notice>
 			) : null}

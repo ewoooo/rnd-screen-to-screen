@@ -43,6 +43,13 @@ export const screenConfig = defineScreenConfig({
 		],
 		buildSelections: [
 			{
+				section: "progress",
+				selected: "ProgressAppBar (nova-mbr-fp pattern)",
+				source: "new-component",
+				reason:
+					"FP 001/002/003 share the form-entry 가입 progress chrome. The progress header keeps step state in Header and avoids raw route-level chrome patches.",
+			},
+			{
 				section: "authSelect",
 				selected: "AuthSelect (ogn-mbr-auth-select)",
 				source: "new-organism",

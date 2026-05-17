@@ -6,7 +6,6 @@ import {
 import {
 	AppScreen,
 	PageStackContents,
-	SectionDivider,
 	SinglePrimaryAction,
 } from "@pxds/cx-layout/components";
 import { EntryCheck } from "@/organisms/nova-mbr-fp/ogn-mbr-entry-check";
@@ -35,17 +34,18 @@ export function Screen() {
 					title="회원 가입"
 					currentStep={2}
 					totalSteps={5}
-					progressLabel="약관 동의 > 개인정보 입력"
+					progressLabel="개인정보 입력"
 					showProgressLabel
 				/>
 			</AppScreen.Header>
 			<AppScreen.Content>
-				<PageStackContents title={<TitleSection title="회원 정보 입력" />}>
+				<PageStackContents
+					data-section-id="memberInput"
+					data-ogn-id="ogn-mbr-member-input"
+					title={<TitleSection title="회원 정보 입력" />}
+				>
 					<MemberInput />
 				</PageStackContents>
-
-				<SectionDivider thickness="section" />
-
 				<EntryCheck visible={false} />
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="primary-cta">

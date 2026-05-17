@@ -23,7 +23,7 @@ export const screenConfig = defineScreenConfig({
 		source: "SB-only",
 		pattern: "complete",
 		policyRefs: [],
-		ognIds: [],
+		ognIds: ["ogn-chg-change-complete"],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
@@ -40,14 +40,14 @@ export const screenConfig = defineScreenConfig({
 			},
 			{
 				section: "completionHero",
-				selected: "PageStackContents title slot + TitleMain(type=\"complete\")",
+				selected: "ChangeComplete organism + PageStackContents title slot + TitleMain(type=\"complete\")",
 				source: "componentCandidates",
 				reason:
 					"Preserves the completion result as a top success message in the standard complete pattern.",
 			},
 			{
 				section: "completionSummary",
-				selected: "RQRContentsDetail",
+				selected: "ChangeComplete organism + RQRContentsDetail",
 				source: "componentCandidates",
 				reason:
 					"Preserves result, effective date, and changed plan as stable label/value rows in a titled summary card.",

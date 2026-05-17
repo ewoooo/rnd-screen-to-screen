@@ -41,7 +41,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "ProgressAppBar (NEW pattern: cx-components AppBar + token-styled progress track)",
 				source: "new-component",
 				reason:
-					"cx-components app-bar has no progress slot; the NEW pat-mbr-fp-progress-app-bar composes AppBar (back+title chrome) with a semantic-token progress bar so the multi-step path stays in Header chrome without route-level CSS. Legacy ProgressAppBar reuse forbidden per Diagram.",
+					"cx-components app-bar has no progress slot; pat-mbr-fp-progress-app-bar composes AppBar (back+title chrome) with a semantic-token progress bar so the multi-step path stays in Header chrome without route-level CSS. FP 001/002/003 use the same progress header convention.",
 				rejected: [
 					{
 						candidate: "app-bar (cx-components, title+back only)",
@@ -76,7 +76,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "ogn-mbr-entry-check (reserved, visible=false → renders null)",
 				source: "new-organism",
 				reason:
-					"INFO-003 absent (Screen.map.md B-2). Conditional/out-of-state OGN not surfaced in default wire; renders null when hidden (zero spacing, no layout jump). blocked-from-config: excluded from policyRefs, included in ognIds.",
+					"INFO-003 absent (Screen.map.md B-2). Conditional/out-of-state OGN is not surfaced in the default wire and no SectionDivider is rendered before it. visible=false or missing server message returns null, so the default screen has zero spacing and no placeholder copy. blocked-from-config: excluded from policyRefs, included in ognIds.",
 			},
 			{
 				section: "actions",

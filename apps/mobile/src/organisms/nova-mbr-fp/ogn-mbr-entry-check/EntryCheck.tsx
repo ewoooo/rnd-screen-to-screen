@@ -32,7 +32,11 @@ export function EntryCheck({
 	if (!visible || !message) return null;
 
 	return (
-		<Notice tone={TONE_BY_VARIANT[variant]} data-section-id="entryCheck">
+		<Notice
+			tone={TONE_BY_VARIANT[variant]}
+			data-section-id="entryCheck"
+			data-ogn-id="ogn-mbr-entry-check"
+		>
 			{message}
 		</Notice>
 	);

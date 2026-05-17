@@ -3,310 +3,128 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>NOVA-CHG-FP-002-0 다이어그램</title>
+	<title>NOVA-CHG-FP-002-0 Screen Diagram</title>
 	<style>
-		:root{--bg:#f5f6f8;--ink:#171719;--muted:#6b7280;--line:#d9dde3;--surface:#fff;--soft:#eef1f5;--brand:#2563eb;--rail:361px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:minmax(393px,430px) minmax(360px,1fr);gap:32px;align-items:start;max-width:1120px;margin:0 auto;padding:32px}.diagram-title{grid-column:1/-1}.diagram-title h1{margin:0 0 8px;font-size:24px;line-height:32px}.diagram-title p,.panel p,.panel li{color:#374151;font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid #cbd5e1;border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 48px rgb(15 23 42 / 16%)}.system-header{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:600}.app-header{display:flex;align-items:center;height:56px;padding:0 16px;font-size:18px;font-weight:700}.content{min-height:654px;padding:28px 16px;background:#fff}.page-stack{width:var(--rail);margin:0 auto;display:grid;gap:14px}.wire-section{display:grid;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:#fbfcfe}.wire-section strong{font-size:14px}.wire-section span{font-size:13px;line-height:20px;color:#475569}.bottom{min-height:98px;padding:12px 16px 22px;border-top:1px solid var(--soft);background:#fff}.cta{width:var(--rail);height:56px;margin:0 auto;border:0;border-radius:14px;background:var(--brand);color:#fff;font-size:17px;font-weight:700}.meta{display:grid;gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px}.panel h2{margin:0 0 12px;font-size:16px;line-height:24px}.token{display:inline-flex;align-items:center;min-height:24px;margin:0 4px 4px 0;padding:2px 8px;border-radius:999px;background:var(--soft);color:#334155;font-size:12px;line-height:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.review-item,.section-card,.candidate{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfcfe}.review-item strong,.candidate strong{display:block;margin-bottom:6px;font-size:13px;line-height:18px}.review-item span,.candidate p{font-size:12px;line-height:18px}.status,.fit-strong{background:#dcfce7;color:#166534}.fit-medium,.fit-weak{background:#fef3c7;color:#92400e}.fit-reject{background:#fee2e2;color:#991b1b}.status{display:inline-flex;min-height:22px;margin-bottom:8px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}.section-card+.section-card{margin-top:10px}.section-card h3{margin:0 0 8px;font-size:14px}.section-card dl{display:grid;grid-template-columns:82px 1fr;gap:6px 10px;margin:0;font-size:13px;line-height:19px}.section-card dt{color:var(--muted)}.section-card dd{margin:0}.candidate-list{display:grid;gap:8px;margin-top:12px}.risk{color:#7c2d12}.debug-panel{display:none}@media(max-width:860px){main{grid-template-columns:1fr;padding:20px}.phone{width:100%;max-width:393px;justify-self:center}.page-stack,.cta{width:100%}}
+		:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111827;background:#f3f4f6}.page{display:grid;grid-template-columns:393px minmax(360px,1fr);gap:28px;max-width:1080px;margin:0 auto;padding:28px}.phone{width:393px;min-height:852px;background:#fff;border:1px solid #d1d5db;border-radius:28px;overflow:hidden}.system{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:13px;font-weight:700}.header{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;font-size:18px;font-weight:800}.content{min-height:654px;background:#fff}.chip-row{height:57px;display:flex;align-items:center;gap:8px;padding:10px 20px}.chip{padding:8px 12px;border-radius:999px;background:#eef2ff;color:#3617ce;font-weight:700;font-size:13px}.sorting{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 20px;border-top:1px solid #eef2f7;border-bottom:1px solid #eef2f7;font-size:13px}.list{padding:20px 12px;display:grid;gap:12px}.title{font-weight:800}.card{border:1px solid #e5e7eb;border-radius:16px;background:#fbfcfe;overflow:hidden}.option{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:center;padding:16px;border-bottom:1px solid #eef2f7}.option:last-child{border-bottom:0}.radio{width:20px;height:20px;border-radius:999px;border:6px solid #421ed8}.option small{display:block;margin-top:4px;color:#6b7280}.badge{padding:4px 8px;border-radius:999px;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:800}.notice{margin:0 16px 24px;padding:14px;border:1px solid #e5e7eb;border-radius:14px;background:#fbfcfe;font-size:13px;line-height:20px}.bottom{height:98px;padding:12px 16px 22px;border-top:1px solid #eef2f7}.cta{width:361px;height:56px;border:0;border-radius:14px;background:#421ed8;color:#fff;font-weight:800;font-size:17px}.panel{background:#fff;border:1px solid #d1d5db;border-radius:16px;padding:18px;margin-bottom:14px}.panel h2{margin:0 0 10px;font-size:16px}.panel p,.panel li,.panel dd,.panel dt{font-size:13px;line-height:20px}.token{display:inline-flex;padding:2px 8px;margin:0 4px 4px 0;border-radius:999px;background:#eef2f7;font-size:12px}.section{border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:10px}.section dl{display:grid;grid-template-columns:86px 1fr;gap:6px 10px;margin:0}.section dt{color:#6b7280}.section dd{margin:0}@media(max-width:860px){.page{grid-template-columns:1fr}.phone{justify-self:center}}
 	</style>
 </head>
 <body>
-	<main>
-		<header class="diagram-title"><h1>NOVA-CHG-FP-002-0</h1><p>요금제 선택 화면: 필터 칩, 정렬 바, 추천 요금제 카드 리스트, 선택 안내와 하단 다음 CTA를 실제 표시 문구로 고정한 시각 계약입니다.</p></header>
-		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="NOVA-CHG-FP-002-0" data-route="/NOVA-CHG-FP-002-0" data-pattern="filterable-product-card-list" data-wire-reference="Figma SKT GenUI Test 0512 / page-list-card / 리스트_요금제">
-			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
-			<header class="app-header" data-rail="Header">‹&nbsp; 요금제 선택</header>
-			<div class="content" data-rail="Content"><div class="page-stack">
-					<section class="wire-section" data-section-id="planFilter" data-ogn-id="ogn-chg-plan-filter" data-pattern-role="filter-controls" data-boundary="content-section-bleed" data-layout-contract="Full-width Chips band followed by FilterSorting row and contents divider.">
-						<strong>요금제 필터</strong>
-						<span>칩: 전체 · 데이터 무제한 · 7만원 이하</span>
-						<span>정렬 바: 변경 가능 2개 / 추천순 / 필터</span>
-					</section>
-					<section class="wire-section" data-section-id="planList" data-ogn-id="ogn-chg-plan-list" data-pattern-role="product-card-list" data-boundary="PageStackList card" data-layout-contract="TitleSection plus SectionItem card containing radio rows with right price badges.">
-						<strong>추천 요금제</strong>
-						<span>● 5GX 프라임 · 데이터 무제한 · 공유/테더링 50GB · 월 89,000원</span>
-						<span>○ 5GX 레귤러 · 데이터 110GB · 소진 후 5Mbps · 월 69,000원</span>
-					</section>
-					<section class="wire-section" data-section-id="selectionNotice" data-ogn-id="ogn-chg-plan-list" data-pattern-role="notice" data-boundary="content" data-layout-contract="Inline informational notice stays below the list and above the fixed CTA.">
-						<strong>선택 안내</strong>
-						<span>회선 조건에 맞지 않는 요금제는 선택 후에도 사유 안내와 함께 선택이 해제될 수 있어요.</span>
-					</section>
-					<section class="wire-section" data-section-id="actions" data-ogn-id="ogn-chg-plan-list" data-pattern-role="bottom-primary-action" data-boundary="bottom-fixed" data-layout-contract="Next action is fixed in AppScreen.Bottom after one plan is selected.">
-						<strong>하단 고정 CTA</strong><span>다음</span>
-					</section>
-			</div></div>
-			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">다음</button></footer>
+	<main class="page">
+		<section class="phone" data-screen-id="NOVA-CHG-FP-002-0" data-route="/NOVA-CHG-FP-002-0" data-pattern="filterable-product-card-list" data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-card">
+			<div class="system" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
+			<header class="header" data-rail="Header"><span>‹</span><span>요금제 선택</span></header>
+			<div class="content" data-rail="Content">
+				<section data-section-id="planFilter" data-ogn-id="ogn-chg-plan-filter" data-pattern-role="filter-sort-control" data-boundary="bleed-section" data-layout-contract="PlanFilter organism renders Chips then FilterSorting on full-width list rails.">
+					<div class="chip-row"><span class="chip">전체</span><span class="chip">데이터 무제한</span><span class="chip">7만원 이하</span></div>
+					<div class="sorting"><strong>변경 가능 2개</strong><span>추천순 · 필터</span></div>
+				</section>
+				<section class="list" data-section-id="planList" data-ogn-id="ogn-chg-plan-list" data-pattern-role="radio-product-list" data-boundary="card-list" data-layout-contract="PlanList organism renders PageStackList + SectionItem card + RQRListOption radio rows.">
+					<div class="title">추천 요금제</div>
+					<div class="card">
+						<div class="option"><span class="radio"></span><div><strong>5GX 프라임</strong><small>데이터 무제한 · 공유/테더링 50GB</small></div><span class="badge">월 89,000원</span></div>
+						<div class="option"><span class="radio" style="border-width:1px;border-color:#cbd5e1"></span><div><strong>5GX 레귤러</strong><small>데이터 110GB · 소진 후 5Mbps</small></div><span class="badge">월 69,000원</span></div>
+					</div>
+				</section>
+				<section class="notice" data-section-id="selectionNotice" data-ogn-id="ogn-chg-plan-list" data-pattern-role="inline-notice" data-boundary="content" data-layout-contract="Selection notice remains inside PlanList organism below the card list.">
+					<strong>선택 안내</strong><br />회선 조건에 맞지 않는 요금제는 선택 후에도 사유 안내와 함께 선택이 해제될 수 있어요.
+				</section>
+			</div>
+			<footer class="bottom" data-rail="Bottom" data-section-id="actions" data-ogn-id="ogn-chg-plan-list" data-pattern-role="bottom-primary-action" data-boundary="bottom-fixed" data-layout-contract="CTA is fixed in AppScreen.Bottom."><button class="cta" type="button">다음</button></footer>
 		</section>
-		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: filterable-product-card-list</span><span class="token">그룹: chg</span><span class="token">도메인: chg</span><span class="token">정책 참조: SB-only</span><span class="token">OGN: 2</span></p><p>탐색 조건 제어와 단일 요금제 선택을 PageStackList 기반 리스트 화면으로 검수합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">통과</span><span>filter chip, sorting row, card list, fixed CTA가 목록 선택 흐름을 유지합니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">통과</span><span>Figma page-list-card의 full-width control band와 list rail을 따릅니다.</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">통과</span><span>ContentSection bleed와 PageStackList 경계가 필터/목록 밀도를 분리합니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">통과</span><span>필터/정렬, 요금제 목록, 다음 진행 요구를 화면에 노출합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: Figma SKT GenUI Test 0512 / page-list-card / 리스트_요금제</span><span class="token">패턴: filterable-product-card-list</span></p><ul><li>full-width chip band, full-width filter/sort band, PageStackList section rail을 유지합니다.</li><li>SB flow 때문에 선택 안내 notice와 하단 다음 CTA를 추가합니다.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
-				<div class="section-card"><h3>planFilter</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>전체, 데이터 무제한, 7만원 이하 필터와 추천순/필터 조작을 제공합니다.</dd><dt>경계</dt><dd>content-section-bleed + contents divider</dd><dt>후보</dt><dd>ContentSection(inset="bleed") + Chips + FilterSorting(divider=true)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> ContentSection(inset="bleed") + Chips + FilterSorting(divider=true)</strong><p>Figma page-list-card SOT의 full-width control band와 정렬 행을 그대로 표현합니다.</p><p class="risk">위험: 필터를 카드 내부 form field로 바꾸면 목록 제어 영역의 폭과 위계가 깨집니다.</p></div></div></details></div>
-				<div class="section-card"><h3>planList</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>추천 요금제 중 하나를 radio row로 선택하고 우측 월정액 badge를 비교합니다.</dd><dt>경계</dt><dd>PageStackList + SectionItem card</dd><dt>후보</dt><dd>ContentSection(inset="bleed") + PageStackList + TitleSection + SectionItem + RQRListOption(type="radio")</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> ContentSection(inset="bleed") + PageStackList + TitleSection + SectionItem + RQRListOption(type="radio")</strong><p>요금제명/데이터 설명/월정액 badge/선택 상태를 한 row에서 비교할 수 있습니다.</p><p class="risk">위험: ListProductHorizontal 후보가 정식화되기 전까지 RQRListOption fallback의 row density를 확인해야 합니다.</p></div></div></details></div>
-				<div class="section-card"><h3>selectionNotice</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>선택 후 조건 불일치로 선택이 해제될 수 있음을 안내합니다.</dd><dt>경계</dt><dd>content notice</dd><dt>후보</dt><dd>PageStackContents + RQRNotice</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + RQRNotice</strong><p>목록 아래에 조건 안내를 붙이되 목록 카드와 CTA 경계를 침범하지 않습니다.</p><p class="risk">위험: 안내를 목록 row로 섞으면 selectable product와 notice가 혼동됩니다.</p></div></div></details></div>
-				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Bottom</dd><dt>역할</dt><dd>actions</dd><dt>경계</dt><dd>기록 없음</dd><dt>후보</dt><dd>AppScreen.Bottom + SinglePrimaryAction + ActionButton</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AppScreen.Bottom + SinglePrimaryAction + ActionButton</strong><p>Keeps the next CTA fixed and ready for selected-state enablement without route-level fixed positioning.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-			</section><section class="panel"><h2>왜곡 방지 게이트</h2><ul><li>Do not convert filters into stacked form fields.</li><li>Do not place 다음 as the last scroll item.</li><li>Do not use deprecated legacy imports or route-level card styling.</li><li>If ListProductHorizontal is promoted to @pxds/cx-components, replace the RQRListOption fallback while keeping PageStackList + SectionItem rails unchanged.</li></ul></section><section class="panel debug-panel"><h2>MD 계약 이관 상태</h2><p>기존 Screen.diagram.md의 계약 정보를 JSON으로 이관했습니다.</p><details><summary>전체 계약 JSON 보기</summary><pre id="diagram-contract-preview"></pre></details></section></aside>
+		<aside>
+			<section class="panel"><h1>NOVA-CHG-FP-002-0</h1><p><span class="token">filterable-product-card-list</span><span class="token">SB-only</span><span class="token">synced</span></p><p>변경 가능한 요금제를 필터링하고 단일 선택 후 다음 단계로 진행합니다.</p></section>
+			<section class="panel"><h2>Review Summary</h2><ul><li>패턴: 통과 - filter/sort controls, card list, bottom CTA 순서입니다.</li><li>레퍼런스: 통과 - list-card reference의 bleed filter rail과 card list density를 따릅니다.</li><li>스페이싱: 통과 - ContentSection bleed와 PageStackList rails가 구분됩니다.</li><li>정책/OGN: 통과 - planFilter와 planList OGN이 분리됩니다.</li><li>왜곡 게이트: 통과 - radio row label, description, price badge 관계를 유지합니다.</li></ul></section>
+			<section class="panel"><h2>Reference Summary</h2><p>`skt-genui-test-0512/list-card`의 chip/filter row, product card list, fixed bottom CTA 구조를 현재 요금제 선택 task에 적용했습니다.</p></section>
+			<section class="panel"><h2>Section Inspector</h2>
+				<div class="section"><h3>planFilter</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>요금제 탐색 조건과 정렬/필터 진입</dd><dt>후보</dt><dd>PlanFilter organism + ContentSection(inset="bleed") + Chips + FilterSorting</dd></dl></div>
+				<div class="section"><h3>planList</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>변경 가능한 요금제 단일 선택</dd><dt>후보</dt><dd>PlanList organism + ContentSection(inset="bleed") + PageStackList + TitleSection + SectionItem + RQRListOption(type="radio")</dd></dl></div>
+				<div class="section"><h3>actions</h3><dl><dt>slot</dt><dd>Bottom</dd><dt>역할</dt><dd>선택한 요금제로 확인 단계 이동</dd><dt>후보</dt><dd>AppScreen.Bottom + SinglePrimaryAction + ActionButton</dd></dl></div>
+			</section>
+			<section class="panel"><h2>Distortion Gates</h2><ul><li>필터/정렬 controls를 list card 안으로 넣지 않습니다.</li><li>요금제 row의 radio, plan name, description, price badge alignment를 유지합니다.</li><li>다음 CTA는 fixed Bottom rail에 둡니다.</li></ul></section>
+		</aside>
 	</main>
 	<script type="application/json" id="diagram-contract">
 {
+  "lifecycle": "synced",
   "screenContract": {
     "screenId": "NOVA-CHG-FP-002-0",
     "route": "/NOVA-CHG-FP-002-0",
     "group": "chg",
     "domain": "chg",
-    "source": "SKT GenUI Test 0512",
+    "source": "SB-only",
     "pattern": "filterable-product-card-list",
-    "frame": "",
     "policyRefs": [],
-    "ognIds": [
-      "ogn-chg-plan-filter",
-      "ogn-chg-plan-list"
-    ],
+    "ognIds": ["ogn-chg-plan-filter", "ogn-chg-plan-list"],
     "governanceRefs": [],
-    "notApplicableReason": "",
-    "requiredDesignDocs": [
-      "DESIGN_PATTERNS.md",
-      "DESIGN_FOUNDATION.md",
-      "SCREEN_STRUCTURE_PRINCIPLES.md",
-      "Figma SKT GenUI Test 0512 node 14243:28727"
-    ],
+    "requiredDesignDocs": ["DESIGN_PATTERNS.md", "DESIGN_FOUNDATION.md", "SCREEN_STRUCTURE_PRINCIPLES.md"],
     "mapSource": "Screen.map.md",
-    "configBuildSelections": [
-      "ContentSection(inset=\"bleed\") + Chips + FilterSorting(divider=true)",
-      "ContentSection(inset=\"bleed\") + PageStackList + TitleSection + SectionItem + RQRListOption(type=\"radio\")",
-      "AppScreen.Bottom + SinglePrimaryAction + ActionButton"
-    ],
-    "appScreenRails": [
-      "SystemHeader",
-      "Header",
-      "Content",
-      "Bottom"
-    ],
-    "headerContract": "",
-    "bottomContract": "",
+    "appScreenRails": ["SystemHeader", "Header", "Content", "Bottom"],
+    "headerContract": "StatusBar plus AppBar title 요금제 선택 with back affordance.",
+    "bottomContract": "Bottom(preset=\"primary-cta\") contains ActionButton labeled 다음.",
     "wireReference": {
-      "source": "Figma SKT GenUI Test 0512 / page-list-card / 리스트_요금제",
-      "matchedParts": "full-width chip band, full-width filter/sort band with contents divider, PageStackList section rail, SectionItem product-list payload.",
-      "intentionalDifferences": "this screen adds bottom CTA and a selection notice because SB flow requires a single selected plan before confirmation.",
-      "limitation": "reference-only visual structure; copy and OGN ids come from SB."
+      "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-card",
+      "matchedParts": "filter chip row, sorting row, card list rows, fixed bottom CTA",
+      "intentionalDifferences": "static FP screen renders two concrete plan options from SB",
+      "limitation": "SB-only filtering behavior is represented as static selected controls"
     },
-    "referenceSearch": [],
-    "patternRecheck": {
-      "source": "DESIGN_PATTERNS.md",
-      "result": "legacy-migrated",
-      "reason": "Migrated from deprecated Screen.diagram.md to Screen.diagram.html standard."
-    }
+    "patternRecheck": {"source": "DESIGN_PATTERNS.md", "result": "pass", "reason": "list-card pattern uses bleed controls and card list without route-level raw spacing"}
   },
-  "screenWire": {
-    "rails": [
-      "SystemHeader",
-      "Header",
-      "Content",
-      "Bottom"
-    ],
-    "raw": "```txt\n┌─AppScreen 393x852─────────────────────────────────────┐\n├─SystemHeader──────────────────────────────────────────┤\n│ 9:41                                      ▮▮▮ wifi ▰ │\n├─Header────────────────────────────────────────────────┤\n│ ‹  요금제 선택                                        │\n├─Content───────────────────────────────────────────────┤\n│                                                        │\n│ [planFilter | filter-controls | content]              │\n│ ┌─Chips / full-width band──────────────────────────┐  │\n│ │ 전체   데이터 무제한   7만원 이하               │  │\n│ └──────────────────────────────────────────────────┘  │\n│ ─ FilterSorting contents divider ─────────────────── │\n│ 변경 가능 2개                         추천순   필터  │\n│                                                        │\n│ [planList | product-card-list | PageStackList]        │\n│ 추천 요금제                                           │\n│ ┌─SectionItem / product list payload───────────────┐  │\n│ │ ● 5GX 프라임                         월 89,000원 │  │\n│ │   데이터 무제한 · 공유/테더링 50GB               │  │\n│ │ ○ 5GX 레귤러                         월 69,000원 │  │\n│ │   데이터 110GB · 소진 후 5Mbps                  │  │\n│ └──────────────────────────────────────────────────┘  │\n│                                                        │\n│ [selectionNotice | notice | content]                  │\n│ ┌─선택 안내────────────────────────────────────────┐  │\n│ │ 회선 조건에 맞지 않는 요금제는 선택 해제될 수... │  │\n│ └──────────────────────────────────────────────────┘  │\n├─Bottom(preset=\"primary-cta\")──────────────────────────┤\n│ [actions | bottom-primary-action | bottom-fixed]      │\n│ ┌──────────────────────────────────────────────────┐  │\n│ │                         다음                    │  │\n│ └──────────────────── full-width primary CTA ──────┘  │\n└───────────────────────────────────────────────────────┘\n```",
-    "sections": [
-      {
-        "sectionId": "planFilter",
-        "slot": "Content",
-        "ogn": "ogn-chg-plan-filter"
-      },
-      {
-        "sectionId": "planList",
-        "slot": "Content",
-        "ogn": "ogn-chg-plan-list"
-      },
-      {
-        "sectionId": "selectionNotice",
-        "slot": "Content",
-        "ogn": "ogn-chg-plan-list"
-      },
-      {
-        "sectionId": "actions",
-        "slot": "Bottom",
-        "ogn": "ogn-chg-plan-list"
-      }
-    ]
-  },
+  "screenWire": {"rails": ["SystemHeader", "Header", "Content", "Bottom"], "raw": "Header 요금제 선택 / Content planFilter chips and sorting then planList radio card rows and notice / Bottom 다음"},
   "sections": [
     {
       "sectionId": "planFilter",
       "slot": "Content",
       "ogn": "ogn-chg-plan-filter",
-      "policy": "SB-only source hint; policy-core ref unavailable",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {},
-      "patternDecision": {
-        "pattern": "filter-controls",
-        "reason": "The visible rail and Screen.tsx render chips plus FilterSorting before the plan list, matching Screen.map.md 필터/정렬."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "planFilter owns the content control band for ogn-chg-plan-filter without policy-core OGN promotion in Screen.config.ts."
-      },
-      "layoutStrategy": {},
-      "layoutContract": {
-        "role": "요금제 필터와 정렬 제어",
-        "structure": "Full-width Chips row plus FilterSorting row with 변경 가능 2개, 추천순, 필터.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "ContentSection(inset=\"bleed\") + Chips + FilterSorting(divider=true)",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Matches the Figma page-list-card SOT: full-width Chips followed by FilterSorting with a contents divider.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "organism-owned", "reason": "PlanFilter owns filter chips and sort/filter controls."},
+      "layoutContract": {"role": "filter and sorting controls", "structure": "ContentSection bleed Chips then FilterSorting", "alignment": "full-width controls with content inset recovery", "density": "list-card control density", "wrapping": "chips may horizontal-scroll in runtime", "distortionRisk": "placing controls in card would blur list controls"},
+      "componentCandidates": [{"name": "PlanFilter organism + ContentSection(inset=\"bleed\") + Chips + FilterSorting", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The organism keeps exploration controls together while ContentSection and CX components own bleed rail and control spacing.", "risk": "Low; interactive filter state is static in this FP route."}]
     },
     {
       "sectionId": "planList",
       "slot": "Content",
       "ogn": "ogn-chg-plan-list",
-      "policy": "SB-only source hint; policy-core ref unavailable",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {},
-      "patternDecision": {
-        "pattern": "product-card-list",
-        "reason": "Screen.map.md maps 요금제 목록 to ogn-chg-plan-list, and the visible rail renders 추천 요금제 radio rows with price comparison."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "planList is the selectable product-list boundary; selectionNotice and actions reuse the same ogn-chg-plan-list flow boundary."
-      },
-      "layoutStrategy": {},
-      "layoutContract": {
-        "role": "추천 요금제 단일 선택 목록",
-        "structure": "PageStackList titled 추천 요금제 with SectionItem card and radio product rows.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "ContentSection(inset=\"bleed\") + PageStackList + TitleSection + SectionItem + RQRListOption(type=\"radio\")",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Uses the Figma SOT list-card rails while recording ListProductHorizontal as the stronger future component gap.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "organism-owned", "reason": "PlanList owns selectable plan rows and selection notice."},
+      "layoutContract": {"role": "selectable product list", "structure": "PageStackList title + SectionItem card + RQRListOption radio rows", "alignment": "radio leading, text body, price trailing", "density": "card-list", "wrapping": "description wraps under plan name", "distortionRisk": "price badge must not squeeze plan title"},
+      "componentCandidates": [{"name": "PlanList organism + ContentSection(inset=\"bleed\") + PageStackList + TitleSection + SectionItem + RQRListOption(type=\"radio\")", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The organism preserves the OGN boundary while RQRListOption provides the required radio, description, and trailing price slots.", "risk": "Medium; a future dedicated product-row component could improve price badge semantics."}]
     },
     {
       "sectionId": "selectionNotice",
       "slot": "Content",
       "ogn": "ogn-chg-plan-list",
-      "policy": "SB-only source hint; policy-core ref unavailable",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {
-        "raw": "Inline notice below selected plan list."
-      },
-      "patternDecision": {
-        "pattern": "notice under product list",
-        "reason": "The SB flow warns that unavailable plan conditions can clear the selected plan."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "Implemented with RQRNotice inside route content."
-      },
-      "layoutStrategy": {
-        "raw": "PageStackContents notice after list and before fixed bottom CTA."
-      },
-      "layoutContract": {
-        "role": "선택 조건 안내",
-        "structure": "RQRNotice titled 선택 안내 with one explanatory sentence.",
-        "alignment": "leading text inside content rail",
-        "density": "match reference",
-        "wrapping": "notice body may wrap within rail",
-        "distortionRisk": "If presented as a selectable row, it can be confused with product options."
-      },
-      "componentCandidates": [
-        {
-          "name": "PageStackContents + RQRNotice",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Keeps non-selectable guidance visually separate from the product options.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "same-organism-subsection", "reason": "Selection limitations are part of the plan-list OGN state handling."},
+      "layoutContract": {"role": "selection caveat", "structure": "RQRNotice info block", "alignment": "leading", "density": "comfortable", "wrapping": "notice body wraps in content rail", "distortionRisk": "omitting notice hides E3 selection behavior"},
+      "componentCandidates": [{"name": "PlanList organism + RQRNotice", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The selected organism keeps eligibility caveat near the selectable list without introducing a blocking popup.", "risk": "Low."}]
     },
     {
       "sectionId": "actions",
       "slot": "Bottom",
       "ogn": "ogn-chg-plan-list",
-      "policy": "SB-only source hint; policy-core ref unavailable",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {},
-      "patternDecision": {
-        "pattern": "bottom-primary-action",
-        "reason": "Screen.map.md maps 다음 진행 to ogn-chg-plan-list, and Screen.tsx renders 다음 in the fixed AppScreen.Bottom rail."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "The action is structurally tied to the selected plan list and remains outside scroll Content."
-      },
-      "layoutStrategy": {},
-      "layoutContract": {
-        "role": "선택 후 다음 진행 CTA",
-        "structure": "AppScreen.Bottom fixed primary CTA labeled 다음.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "AppScreen.Bottom + SinglePrimaryAction + ActionButton",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Keeps the next CTA fixed and ready for selected-state enablement without route-level fixed positioning.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "screen-owned-action", "reason": "The action submits the selected plan to the next screen."},
+      "layoutContract": {"role": "bottom primary action", "structure": "SinglePrimaryAction with ActionButton", "alignment": "full-width bottom rail", "density": "standard bottom safe area", "wrapping": "single-line CTA", "distortionRisk": "content placement would make progression scroll-dependent"},
+      "componentCandidates": [{"name": "AppScreen.Bottom + SinglePrimaryAction + ActionButton", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "Bottom rail ownership preserves the primary progression action and safe-area behavior.", "risk": "Low."}]
     }
   ],
   "policyOgnMatrix": [
-    {
-      "requirement": "필터/정렬",
-      "sourceRef": "Screen.map.md requirement: 필터/정렬",
-      "policy": "SB-only source hint",
-      "ogn": "ogn-chg-plan-filter",
-      "section": "planFilter",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Filter chips and the 변경 가능/추천순/필터 sorting row remain a full-width content control band."
-    },
-    {
-      "requirement": "요금제 목록",
-      "sourceRef": "Screen.map.md requirement: 요금제 목록",
-      "policy": "SB-only source hint",
-      "ogn": "ogn-chg-plan-list",
-      "section": "planList",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "추천 요금제 list uses a PageStackList card with radio rows and right-side monthly price badges."
-    },
-    {
-      "requirement": "다음 진행",
-      "sourceRef": "Screen.map.md requirement: 다음 진행",
-      "policy": "SB-only source hint",
-      "ogn": "ogn-chg-plan-list",
-      "section": "actions",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "다음 remains a fixed Bottom primary CTA after plan selection."
-    }
+    {"section": "planFilter", "ogn": "ogn-chg-plan-filter", "policyRefs": [], "source": "Screen.map.md SB-only"},
+    {"section": "planList", "ogn": "ogn-chg-plan-list", "policyRefs": [], "source": "Screen.map.md SB-only"},
+    {"section": "actions", "ogn": "ogn-chg-plan-list", "policyRefs": [], "source": "Screen.map.md SB-only"}
   ],
   "distortionGates": [
-    "Do not convert filters into stacked form fields.",
-    "Do not place 다음 as the last scroll item.",
-    "Do not use deprecated legacy imports or route-level card styling.",
-    "If ListProductHorizontal is promoted to @pxds/cx-components, replace the RQRListOption fallback while keeping PageStackList + SectionItem rails unchanged."
+    "Do not move filter and sorting controls into the plan card.",
+    "Do not flatten plan rows into plain text; preserve radio selection and trailing price.",
+    "Do not move the Next CTA out of Bottom(preset=\"primary-cta\")."
   ],
-  "migrationGovernanceRefs": []
+  "renderEvidence": {
+    "geometryEvidence": "Static contract sync after CHG organism rebuild: Header 100px, Content rail with bleed filter controls, Bottom primary CTA 98px; list content scrolls independently of fixed bottom rail.",
+    "viewport": {"width": 393, "height": 852},
+    "rails": {"SystemHeader": "0-44", "Header": "44-100", "Content": "100-754", "Bottom": "754-852"},
+    "overlap": "Bottom CTA is outside Content; list rows and notice are scroll content."
+  },
+  "iterationPasses": [
+    {"pass": 1, "change": "Moved filter/sort and plan list body into CHG organisms and synced diagram/config.", "result": "planFilter and planList OGN boundaries aligned"}
+  ],
+  "contractSync": {"status": "synced", "syncedFiles": ["Screen.tsx", "Screen.config.ts", "Screen.diagram.html", "apps/mobile/src/organisms/chg"], "notes": "SB-only filter/list requirements preserved."}
 }
 	</script>
-	<script>const c=document.getElementById('diagram-contract'),p=document.getElementById('diagram-contract-preview');if(c&&p){p.textContent=JSON.stringify(JSON.parse(c.textContent),null,2);}</script>
 </body>
 </html>

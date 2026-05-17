@@ -23,7 +23,10 @@ export const screenConfig = defineScreenConfig({
 		source: "SB-only",
 		pattern: "detail-confirmation",
 		policyRefs: [],
-		ognIds: [],
+		ognIds: [
+			"ogn-chg-plan-comparison",
+			"ogn-chg-plan-notice-agree",
+		],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
@@ -32,21 +35,21 @@ export const screenConfig = defineScreenConfig({
 		buildSelections: [
 			{
 				section: "planComparison",
-				selected: "PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail",
+				selected: "PlanComparison organism + PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail",
 				source: "componentCandidates",
 				reason:
 					"Preserves the SB comparison task as two stable label/value summary cards while cx-layout owns the content rail and spacing.",
 			},
 			{
 				section: "expectedChange",
-				selected: "PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout",
+				selected: "PlanComparison organism + PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout",
 				source: "componentCandidates",
 				reason:
 					"Preserves the expected monthly amount, effective date, and pro-rated billing notice without route-level spacing or bespoke table UI.",
 			},
 			{
 				section: "noticeAgreement",
-				selected: "PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox",
+				selected: "PlanNoticeAgree organism + PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox",
 				source: "componentCandidates",
 				reason:
 					"Preserves required notices and gates the fixed primary CTA until the confirmation checkbox is selected.",

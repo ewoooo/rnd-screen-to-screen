@@ -5,6 +5,7 @@ import {
 	TitleMain,
 } from "@pxds/cx-components";
 import { PageStackContents } from "@pxds/cx-layout/components/contents";
+import { VStack } from "@pxds/cx-layout/primitives";
 
 export type JoinCompleteProps = {
 	/**
@@ -29,6 +30,7 @@ export function JoinComplete({
 
 	return (
 		<PageStackContents
+			data-section-id="completeHero"
 			title={
 				<TitleMain
 					type="complete"
@@ -37,15 +39,28 @@ export function JoinComplete({
 				/>
 			}
 		>
-			<RQRNotice tone="positive">가입이 정상적으로 완료됐어요.</RQRNotice>
-			{hasSummary ? (
-				<RQRContentsDetail title="가입 정보" rows={summaryRows} />
-			) : null}
-			{sessionError ? (
-				<RQRNotice tone="cautionary" title="로그인 세션을 만들지 못했습니다">
-					다시 로그인하면 바로 이용할 수 있어요.
-				</RQRNotice>
-			) : null}
+			<VStack gap="var(--semantic-spacing-gap-comfortable)">
+				{sessionError ? (
+					<RQRNotice
+						data-section-id="sessionErrorNotice"
+						tone="cautionary"
+						title="로그인 세션을 만들지 못했습니다"
+					>
+						가입은 완료됐어요. 다시 로그인하면 바로 이용할 수 있어요.
+					</RQRNotice>
+				) : (
+					<RQRNotice data-section-id="joinSuccessNotice" tone="positive">
+						가입이 정상적으로 완료됐어요.
+					</RQRNotice>
+				)}
+				{hasSummary ? (
+					<RQRContentsDetail
+						data-section-id="completionSummary"
+						title="가입 정보"
+						rows={summaryRows}
+					/>
+				) : null}
+			</VStack>
 		</PageStackContents>
 	);
 }

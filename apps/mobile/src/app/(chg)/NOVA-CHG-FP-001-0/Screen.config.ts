@@ -16,7 +16,10 @@ export const screenConfig = defineScreenConfig({
 		source: "SB-only",
 		pattern: "detail-entry",
 		policyRefs: [],
-		ognIds: [],
+		ognIds: [
+			"ogn-chg-current-plan-summary",
+			"ogn-chg-change-eligibility",
+		],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
@@ -25,14 +28,14 @@ export const screenConfig = defineScreenConfig({
 		buildSelections: [
 			{
 				section: "currentPlanSummary",
-				selected: "VStack(gap=spacing-16) + RQRContentsDetail",
+				selected: "CurrentPlanSummary organism + RQRContentsDetail",
 				source: "componentCandidates",
 				reason:
 					"Preserves the SB current-plan summary as a card-key-value section with component-owned surface and stable label/value rows while the parent stack owns spacing to adjacent notices.",
 			},
 			{
 				section: "changeEligibility",
-				selected: "VStack(gap=spacing-16) + RQRNotice",
+				selected: "ChangeEligibility organism + VStack(gap=spacing-16) + RQRNotice",
 				source: "componentCandidates",
 				reason:
 					"Preserves change availability and restriction guidance as inline content notices without popup or route-level spacing patches.",

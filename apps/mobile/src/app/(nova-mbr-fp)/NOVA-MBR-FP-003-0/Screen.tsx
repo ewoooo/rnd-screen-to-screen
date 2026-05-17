@@ -1,10 +1,12 @@
 "use client";
 
-import { ActionButton, AppBar, StatusBar } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/cx-layout/components/chrome";
-import { SinglePrimaryAction } from "@pxds/cx-layout/components/compositions";
-import { PageStackContents } from "@pxds/cx-layout/components/contents";
-import { SectionDivider } from "@pxds/cx-layout/components/patterns";
+import { ActionButton, StatusBar } from "@pxds/cx-components";
+import {
+	AppScreen,
+	PageStackContents,
+	SectionDivider,
+	SinglePrimaryAction,
+} from "@pxds/cx-layout/components";
 import { useState } from "react";
 import {
 	AuthRequest,
@@ -14,6 +16,7 @@ import {
 	AuthSelect,
 	type AuthMethodId,
 } from "@/organisms/nova-mbr-fp/ogn-mbr-auth-select";
+import { ProgressAppBar } from "@/patterns/nova-mbr-fp";
 
 /**
  * NOVA-MBR-FP-003-0 · 본인인증 (가입 플로우)
@@ -45,24 +48,39 @@ export function Screen() {
 	}
 
 	return (
-		<AppScreen>
+		<AppScreen
+			headerPreset="form-entry"
+			background="var(--semantic-surface-page-normal)"
+		>
 			<AppScreen.SystemHeader>
 				<StatusBar />
 			</AppScreen.SystemHeader>
 			<AppScreen.Header>
-				<AppBar title="회원 가입" showLeftItem showTitle />
+				<ProgressAppBar
+					title="회원 가입"
+					currentStep={3}
+					totalSteps={5}
+					progressLabel="본인인증"
+					showProgressLabel
+				/>
 			</AppScreen.Header>
 			<AppScreen.Content>
-				<PageStackContents showTitle={false}>
+				<PageStackContents
+					data-section-id="authSelect"
+					data-ogn-id="ogn-mbr-auth-select"
+					showTitle={false}
+				>
 					<AuthSelect
 						selected={selectedMethod}
 						onSelect={setSelectedMethod}
 					/>
 				</PageStackContents>
-				{/* section 경계 = SectionDivider(393×4) between PageStackContents.
-				    route-level gap 금지(C2). */}
 				<SectionDivider thickness="section" />
-				<PageStackContents showTitle={false}>
+				<PageStackContents
+					data-section-id="authRequest"
+					data-ogn-id="ogn-mbr-auth-request"
+					showTitle={false}
+				>
 					<AuthRequest
 						errorState={errorState}
 						blocked={errorState === "blocked"}

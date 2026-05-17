@@ -70,7 +70,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "ActionButton (single) in AppScreen.Bottom(preset=\"primary-cta\")",
 				source: "componentCandidates",
 				reason:
-					"단일 Solid Primary 홈 이동. Bottom physical rail은 Screen.tsx 소유, action 의미는 OGN. UXPT_BTN 화면당 Primary 1개·동사형 라벨('홈으로 이동하기'). DESIGN_PATTERNS Completion A Bottom ActionButton 393×102 component-owned, route-level spacing 없음.",
+					"단일 Solid Primary 홈 이동. Bottom physical rail은 Screen.tsx 소유, action 의미는 OGN. UXPT_BTN 화면당 Primary 1개·동사형 라벨('홈으로 이동하기'). Header는 완료 후 뒤로가기/닫기 재진입을 제공하지 않고, 플로우 종료 행동은 Bottom CTA가 소유한다. DESIGN_PATTERNS Completion A Bottom ActionButton 393×102 component-owned, route-level spacing 없음.",
 			},
 		],
 	},

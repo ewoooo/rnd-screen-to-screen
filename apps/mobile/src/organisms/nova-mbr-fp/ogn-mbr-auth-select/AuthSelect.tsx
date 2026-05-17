@@ -66,6 +66,7 @@ export function AuthSelect({
 	return (
 		<VStack
 			data-section-id="authSelect"
+			data-ogn-id="ogn-mbr-auth-select"
 			gap="var(--semantic-spacing-section-gap)"
 		>
 			<TitleSection title="본인인증 수단을 선택해 주세요" />

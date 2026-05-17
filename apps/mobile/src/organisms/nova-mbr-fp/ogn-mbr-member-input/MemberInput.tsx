@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Notice, TextField } from "@pxds/cx-components";
 import { FieldStack } from "@pxds/cx-layout/components/compositions";
-import { VStack } from "@pxds/cx-layout/components/primitives";
+import { VStack } from "@pxds/cx-layout/primitives";
 
 /**
  * ogn-mbr-member-input — NEW organism.

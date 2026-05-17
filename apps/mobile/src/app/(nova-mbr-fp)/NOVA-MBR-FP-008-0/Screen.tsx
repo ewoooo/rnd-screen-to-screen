@@ -5,6 +5,7 @@ import { AppScreen } from "@pxds/cx-layout/components/chrome";
 import { SinglePrimaryAction } from "@pxds/cx-layout/components/compositions";
 import { PageStackContents } from "@pxds/cx-layout/components/contents";
 import { SectionDivider } from "@pxds/cx-layout/components/patterns";
+import { VStack } from "@pxds/cx-layout/primitives";
 import { useState } from "react";
 import {
 	AuthRequest,
@@ -54,32 +55,31 @@ export function Screen() {
 				<AppBar title="휴면 해제" showLeftItem showTitle />
 			</AppScreen.Header>
 			<AppScreen.Content>
-				{/* [intro] flow-context note = 첫 섹션 title. intro→authSelect 사이
-				    section band 없음(Diagram 명시). */}
-				<PageStackContents
-					title={
-						<Text variant="sectionTitle">
+				<VStack data-section-id="identityVerificationFlow">
+					<PageStackContents
+						data-section-id="intro"
+						title={
+							<Text variant="sectionTitle">
 							휴면 해제를 위해 본인 확인이 필요해요
-						</Text>
-					}
-				>
-					<AuthSelect
-						selected={selectedMethod}
-						onSelect={setSelectedMethod}
-					/>
-				</PageStackContents>
-				{/* section 경계 = SectionDivider(393×4) between PageStackContents.
-				    route-level gap 금지(C2). */}
-				<SectionDivider thickness="section" />
-				<PageStackContents showTitle={false}>
-					<AuthRequest
-						errorState={errorState}
-						blocked={errorState === "blocked"}
-						confirmDisabled={confirmDisabled}
-						onCodeChange={(code) => setCodeLength(code.length)}
-						onConfirm={handleConfirm}
-					/>
-				</PageStackContents>
+							</Text>
+						}
+					>
+						<AuthSelect
+							selected={selectedMethod}
+							onSelect={setSelectedMethod}
+						/>
+					</PageStackContents>
+					<SectionDivider thickness="section" />
+					<PageStackContents data-section-id="authRequest" showTitle={false}>
+						<AuthRequest
+							errorState={errorState}
+							blocked={errorState === "blocked"}
+							confirmDisabled={confirmDisabled}
+							onCodeChange={(code) => setCodeLength(code.length)}
+							onConfirm={handleConfirm}
+						/>
+					</PageStackContents>
+				</VStack>
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="primary-cta">
 				<SinglePrimaryAction>

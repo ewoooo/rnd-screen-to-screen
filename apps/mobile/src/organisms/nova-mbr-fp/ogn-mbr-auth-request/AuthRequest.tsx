@@ -161,6 +161,7 @@ export function AuthRequest({
 	return (
 		<VStack
 			data-section-id="authRequest"
+			data-ogn-id="ogn-mbr-auth-request"
 			gap="var(--semantic-spacing-section-gap)"
 		>
 			<TitleSection title="인증번호 6자리 입력" />

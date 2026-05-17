@@ -23,7 +23,7 @@ export function GuardianInput({
 
 	return (
 		<VStack
-			data-section-id="guardian-input"
+			data-section-id="guardianInput"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			{/* REQ-002 requirement copy 원문(POL-MBR-TERM-002-01). */}

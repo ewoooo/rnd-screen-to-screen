@@ -16,7 +16,7 @@ export const screenConfig = defineScreenConfig({
 		source: "SB-only",
 		pattern: "filterable-product-card-list",
 		policyRefs: [],
-		ognIds: [],
+		ognIds: ["ogn-chg-plan-filter", "ogn-chg-plan-list"],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
@@ -26,14 +26,14 @@ export const screenConfig = defineScreenConfig({
 		buildSelections: [
 			{
 				section: "planFilter",
-				selected: "ContentSection(inset=\"bleed\") + Chips + FilterSorting(divider=true)",
+				selected: "PlanFilter organism + ContentSection(inset=\"bleed\") + Chips + FilterSorting",
 				source: "componentCandidates",
 				reason:
 					"Matches the Figma page-list-card SOT: full-width Chips followed by FilterSorting with a contents divider.",
 			},
 			{
 				section: "planList",
-				selected: "ContentSection(inset=\"bleed\") + PageStackList + TitleSection + SectionItem + RQRListOption(type=\"radio\")",
+				selected: "PlanList organism + ContentSection(inset=\"bleed\") + PageStackList + TitleSection + SectionItem + RQRListOption(type=\"radio\")",
 				source: "componentCandidates",
 				reason:
 					"Uses the Figma SOT list-card rails while recording ListProductHorizontal as the stronger future component gap.",

@@ -63,7 +63,7 @@ export const screenConfig = defineScreenConfig({
 				selected: 'AppScreen.Bottom(preset="primary-cta") + ActionButton primary',
 				source: "componentCandidates",
 				reason:
-					"화면 진행 Primary 1개를 fixed Bottom rail이 소유(C6/BTN_4_RULE_2) → FP-010. 필수 약관 미동의 시 disabled, 진행 시도 시 term-agree 인접 안내. CTA를 Content 마지막에 두지 않는다.",
+					"화면 진행 Primary 1개를 fixed Bottom rail이 소유(C6/BTN_4_RULE_2) → FP-010. 필수 약관 미동의 상태에서는 Screen이 진행을 차단하고 term-agree 인접 negative Notice를 노출한 뒤 해당 오류 위치로 scrollIntoView 한다(REQ-001/ERR_1). CTA를 Content 마지막에 두지 않고 route-level spacing 보정도 쓰지 않는다.",
 			},
 		],
 	},

@@ -3,34 +3,51 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>NOVA-CHG-FP-003-0 다이어그램</title>
+	<title>NOVA-CHG-FP-003-0 Screen Diagram</title>
 	<style>
-		:root{--bg:#f5f6f8;--ink:#171719;--muted:#6b7280;--line:#d9dde3;--surface:#fff;--soft:#eef1f5;--brand:#2563eb;--rail:361px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:minmax(393px,430px) minmax(360px,1fr);gap:32px;align-items:start;max-width:1120px;margin:0 auto;padding:32px}.diagram-title{grid-column:1/-1}.diagram-title h1{margin:0 0 8px;font-size:24px;line-height:32px}.diagram-title p,.panel p,.panel li{color:#374151;font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid #cbd5e1;border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 48px rgb(15 23 42 / 16%)}.system-header{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:600}.app-header{display:flex;align-items:center;height:56px;padding:0 16px;font-size:18px;font-weight:700}.content{min-height:654px;padding:28px 16px;background:#fff}.page-stack{width:var(--rail);margin:0 auto;display:grid;gap:14px}.wire-section{display:grid;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:#fbfcfe}.wire-section strong{font-size:14px}.wire-section span{font-size:13px;line-height:20px;color:#475569}.bottom{min-height:98px;padding:12px 16px 22px;border-top:1px solid var(--soft);background:#fff}.cta{width:var(--rail);height:56px;margin:0 auto;border:0;border-radius:14px;background:var(--brand);color:#fff;font-size:17px;font-weight:700}.meta{display:grid;gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px}.panel h2{margin:0 0 12px;font-size:16px;line-height:24px}.token{display:inline-flex;align-items:center;min-height:24px;margin:0 4px 4px 0;padding:2px 8px;border-radius:999px;background:var(--soft);color:#334155;font-size:12px;line-height:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.review-item,.section-card,.candidate{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfcfe}.review-item strong,.candidate strong{display:block;margin-bottom:6px;font-size:13px;line-height:18px}.review-item span,.candidate p{font-size:12px;line-height:18px}.status,.fit-strong{background:#dcfce7;color:#166534}.fit-medium,.fit-weak{background:#fef3c7;color:#92400e}.fit-reject{background:#fee2e2;color:#991b1b}.status{display:inline-flex;min-height:22px;margin-bottom:8px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}.section-card+.section-card{margin-top:10px}.section-card h3{margin:0 0 8px;font-size:14px}.section-card dl{display:grid;grid-template-columns:82px 1fr;gap:6px 10px;margin:0;font-size:13px;line-height:19px}.section-card dt{color:var(--muted)}.section-card dd{margin:0}.candidate-list{display:grid;gap:8px;margin-top:12px}.risk{color:#7c2d12}.debug-panel{display:none}@media(max-width:860px){main{grid-template-columns:1fr;padding:20px}.phone{width:100%;max-width:393px;justify-self:center}.page-stack,.cta{width:100%}}
+		:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111827;background:#f3f4f6}.page{display:grid;grid-template-columns:393px minmax(360px,1fr);gap:28px;max-width:1080px;margin:0 auto;padding:28px}.phone{width:393px;min-height:852px;background:#fff;border:1px solid #d1d5db;border-radius:28px;overflow:hidden}.system{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:13px;font-weight:700}.header{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;font-size:18px;font-weight:800}.content{min-height:654px;background:#fff}.section{padding:24px 16px;display:grid;gap:14px}.title h2{margin:0;font-size:22px;line-height:30px}.title p{margin:6px 0 0;color:#6b7280;font-size:14px;line-height:21px}.card{display:grid;gap:10px;padding:16px;border:1px solid #e5e7eb;border-radius:14px;background:#fbfcfe}.kv{display:grid;gap:8px}.kv div{display:grid;grid-template-columns:104px 1fr;gap:12px;font-size:13px}.kv dt{color:#6b7280}.kv dd{margin:0;text-align:right;font-weight:700}.divider{height:8px;background:#f4f5fa}.info-row{display:flex;justify-content:space-between;font-size:13px}.callout{padding:12px;border-radius:12px;background:#eef2ff;color:#3730a3;font-size:13px;line-height:20px}.notice-list{display:grid;gap:10px;font-size:13px;line-height:20px;color:#374151}.checkbox{display:flex;gap:10px;align-items:center;padding-top:8px;font-weight:700}.box{width:20px;height:20px;border-radius:6px;border:2px solid #421ed8}.bottom{height:98px;padding:12px 16px 22px;border-top:1px solid #eef2f7}.cta{width:361px;height:56px;border:0;border-radius:14px;background:#d2d9eb;color:#8990b2;font-weight:800;font-size:17px}.panel{background:#fff;border:1px solid #d1d5db;border-radius:16px;padding:18px;margin-bottom:14px}.panel h2{margin:0 0 10px;font-size:16px}.panel p,.panel li,.panel dd,.panel dt{font-size:13px;line-height:20px}.token{display:inline-flex;padding:2px 8px;margin:0 4px 4px 0;border-radius:999px;background:#eef2f7;font-size:12px}.inspect{border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:10px}.inspect dl{display:grid;grid-template-columns:86px 1fr;gap:6px 10px;margin:0}.inspect dt{color:#6b7280}.inspect dd{margin:0}@media(max-width:860px){.page{grid-template-columns:1fr}.phone{justify-self:center}}
 	</style>
 </head>
 <body>
-	<main>
-		<header class="diagram-title"><h1>NOVA-CHG-FP-003-0</h1><p>변경 내용 확인 화면: 현재/변경 요금제 비교, 예상 변경 정보, 유의사항 동의, 비활성 제출 CTA를 실제 표시 문구로 고정한 시각 계약입니다.</p></header>
-		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="NOVA-CHG-FP-003-0" data-route="/NOVA-CHG-FP-003-0" data-pattern="detail-confirmation" data-wire-reference="none-found">
-			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
-			<header class="app-header" data-rail="Header">‹&nbsp; 요금제 변경</header>
-			<div class="content" data-rail="Content"><div class="page-stack">
-					<section class="wire-section" data-section-id="planComparison" data-ogn-id="ogn-chg-plan-comparison" data-pattern-role="before-after-summary" data-boundary="card-stack" data-layout-contract="TitleMain followed by two RQRContentsDetail cards with stable label/value rows."><strong>변경할 요금제를 확인해 주세요</strong><span>현재 요금제와 변경 후 요금제의 월정액, 데이터, 주요 혜택을 비교해 보세요.</span><span>현재 요금제: 5GX 레귤러 / 월정액 69,000원 / 데이터 110GB / 주요 혜택 공유 데이터 18GB</span><span>변경할 요금제: 5GX 프라임 / 월정액 89,000원 / 데이터 무제한 / 주요 혜택 스마트기기 1회선 무료</span></section>
-					<section class="wire-section" data-section-id="expectedChange" data-ogn-id="ogn-chg-plan-comparison" data-pattern-role="key-value-summary" data-boundary="SectionDivider + section-card" data-layout-contract="Expected monthly amount and effective date appear as table rows with an inline billing Callout."><strong>예상 변경 정보</strong><span>예상 월정액: 89,000원</span><span>예상 적용일: 2026.05.18</span><span>요금 변동 안내: 월 중 변경으로 이번 달 청구 금액은 실제 사용 기간과 할인 적용 조건에 따라 달라질 수 있어요.</span></section>
-					<section class="wire-section" data-section-id="noticeAgreement" data-ogn-id="ogn-chg-plan-notice-agree" data-pattern-role="required-notice-checkbox" data-boundary="SectionDivider + section-card" data-layout-contract="Required notice list precedes the FieldStack checkbox and controls CTA enablement."><strong>변경 전 유의사항</strong><span>월 중 변경 시 이용 기간에 따라 요금이 일할 계산될 수 있어요.</span><span>할인 또는 결합 혜택 금액이 변경되거나 종료될 수 있어요.</span><span>일부 부가서비스는 변경할 요금제에서 이용이 제한될 수 있어요.</span><span>□ 유의사항을 모두 확인했어요</span></section>
-					<section class="wire-section" data-section-id="actions" data-ogn-id="ogn-chg-plan-notice-agree" data-pattern-role="bottom-primary-action" data-boundary="bottom-fixed" data-layout-contract="Submit CTA remains disabled until noticeAgreement checkbox is checked."><strong>하단 고정 CTA</strong><span>변경 신청 (동의 전 비활성)</span></section>
-			</div></div>
-			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">변경 신청</button></footer>
+	<main class="page">
+		<section class="phone" data-screen-id="NOVA-CHG-FP-003-0" data-route="/NOVA-CHG-FP-003-0" data-pattern="detail-confirmation" data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form">
+			<div class="system" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
+			<header class="header" data-rail="Header"><span>‹</span><span>요금제 변경</span></header>
+			<div class="content" data-rail="Content">
+				<section class="section" data-section-id="planComparison" data-ogn-id="ogn-chg-plan-comparison" data-pattern-role="comparison-summary-cards" data-boundary="content" data-layout-contract="PlanComparison organism renders title and two RQRContentsDetail cards.">
+					<div class="title"><h2>변경할 요금제를 확인해 주세요</h2><p>현재 요금제와 변경 후 요금제의 월정액, 데이터, 주요 혜택을 비교해 보세요.</p></div>
+					<div class="card"><strong>현재 요금제</strong><dl class="kv"><div><dt>요금제</dt><dd>5GX 레귤러</dd></div><div><dt>월정액</dt><dd>69,000원</dd></div><div><dt>데이터</dt><dd>110GB</dd></div><div><dt>주요 혜택</dt><dd>공유 데이터 18GB</dd></div></dl></div>
+					<div class="card"><strong>변경할 요금제</strong><dl class="kv"><div><dt>요금제</dt><dd>5GX 프라임</dd></div><div><dt>월정액</dt><dd>89,000원</dd></div><div><dt>데이터</dt><dd>무제한</dd></div><div><dt>주요 혜택</dt><dd>스마트기기 1회선 무료</dd></div></dl></div>
+				</section>
+				<div class="divider" data-boundary="section-divider"></div>
+				<section class="section" data-section-id="expectedChange" data-ogn-id="ogn-chg-plan-comparison" data-pattern-role="expected-change-summary" data-boundary="card" data-layout-contract="Expected monthly fee and effective date remain in PlanComparison below a section divider.">
+					<strong>예상 변경 정보</strong>
+					<div class="card"><div class="info-row"><span>예상 월정액</span><strong>89,000원</strong></div><div class="info-row"><span>예상 적용일</span><strong>2026.05.18</strong></div><div class="callout"><strong>요금 변동 안내</strong><br />월 중 변경으로 이번 달 청구 금액은 실제 사용 기간과 할인 적용 조건에 따라 달라질 수 있어요.</div></div>
+				</section>
+				<div class="divider" data-boundary="section-divider"></div>
+				<section class="section" data-section-id="noticeAgreement" data-ogn-id="ogn-chg-plan-notice-agree" data-pattern-role="required-notice-agreement" data-boundary="card" data-layout-contract="PlanNoticeAgree organism renders required notices and confirmation Checkbox.">
+					<strong>변경 전 유의사항</strong>
+					<div class="card"><div class="notice-list"><span>월 중 변경 시 이용 기간에 따라 요금이 일할 계산될 수 있어요.</span><span>할인 또는 결합 혜택 금액이 변경되거나 종료될 수 있어요.</span><span>일부 부가서비스는 변경할 요금제에서 이용이 제한될 수 있어요.</span></div><div class="checkbox"><span class="box"></span><span>유의사항을 모두 확인했어요</span></div></div>
+				</section>
+			</div>
+			<footer class="bottom" data-rail="Bottom" data-section-id="actions" data-ogn-id="ogn-chg-plan-notice-agree" data-pattern-role="bottom-primary-action" data-boundary="bottom-fixed" data-layout-contract="CTA is disabled until PlanNoticeAgree checkbox is selected."><button class="cta" type="button">변경 신청</button></footer>
 		</section>
-		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: detail-confirmation</span><span class="token">그룹: chg</span><span class="token">도메인: chg</span><span class="token">정책 참조: SB-only</span><span class="token">OGN: 2</span></p><p>비교, 예상 적용, 필수 유의사항 확인을 제출 전 한 화면에서 검수합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">통과</span><span>비교 카드가 유의사항보다 먼저 나오고, 동의가 CTA 활성 조건을 소유합니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인 필요</span><span>직접 reference는 없지만 detail confirmation 구조를 Screen.tsx와 대조했습니다.</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">통과</span><span>section divider가 비교/예상/유의사항 그룹 경계를 나눕니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">통과</span><span>plan-comparison과 notice-agree SB 요구를 section별로 연결합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: none-found</span><span class="token">패턴: detail-confirmation</span></p><ul><li>현재/변경 요금제 비교 후 예상 변경 정보와 필수 유의사항을 순차 확인합니다.</li><li>하단 변경 신청은 checkbox 전까지 disabled 상태로 해석합니다.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
-				<div class="section-card"><h3>planComparison</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>현재 요금제와 변경할 요금제의 월정액, 데이터, 혜택을 두 카드로 비교합니다.</dd><dt>경계</dt><dd>TitleMain + card stack</dd><dt>후보</dt><dd>PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</strong><p>두 요금제의 좌측 label과 우측 value alignment가 유지되어 비교 과업에 맞습니다.</p><p class="risk">위험: 두 카드를 list row로 합치면 현재/변경 구분과 상세 항목 비교가 흐려집니다.</p></div></div></details></div>
-				<div class="section-card"><h3>expectedChange</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>예상 월정액, 적용일, 월 중 변경 요금 안내를 제출 전 확인합니다.</dd><dt>경계</dt><dd>SectionDivider + SectionItem</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</strong><p>table row와 Callout 조합으로 금액/일자와 변동 사유 안내를 분리합니다.</p><p class="risk">위험: Callout을 삭제하면 일할 계산 조건이 CTA 바로 앞에서 누락됩니다.</p></div></div></details></div>
-				<div class="section-card"><h3>noticeAgreement</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>요금 일할 계산, 할인/결합 혜택 변경, 부가서비스 제한을 확인하고 동의합니다.</dd><dt>경계</dt><dd>SectionDivider + SectionItem + FieldStack</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</strong><p>필수 유의사항 copy를 checkbox 앞에 노출해 확인 후 제출 흐름을 보존합니다.</p><p class="risk">위험: checkbox가 notice보다 먼저 나오면 사용자가 확인하지 않고 제출하는 구조가 됩니다.</p></div></div></details></div>
-				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Bottom</dd><dt>역할</dt><dd>동의 완료 후 요금제 변경 신청을 제출합니다.</dd><dt>경계</dt><dd>bottom-fixed</dd><dt>후보</dt><dd>AppScreen.Bottom(preset="primary-cta") + SinglePrimaryAction + ActionButton</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AppScreen.Bottom(preset="primary-cta") + SinglePrimaryAction + ActionButton</strong><p>하단 rail에서 submit action을 유지하고 checkbox 상태로 disabled/enabled를 제어합니다.</p><p class="risk">위험: 동의 전 enabled로 보이면 NOVA-CHG-FP-003-E1 처리와 충돌합니다.</p></div></div></details></div>
-			</section><section class="panel"><h2>왜곡 방지 게이트</h2><ul><li>The comparison remains before notices.</li><li>Required notice copy is visible before the confirmation checkbox.</li><li>The submit CTA cannot appear enabled before required confirmation.</li><li>No shared organism dependency is required; route catalog registration is handled by the main integration step.</li></ul></section><section class="panel debug-panel"><h2>MD 계약 이관 상태</h2><p>기존 Screen.diagram.md의 계약 정보를 JSON으로 이관했습니다.</p><details><summary>전체 계약 JSON 보기</summary><pre id="diagram-contract-preview"></pre></details></section></aside>
+		<aside>
+			<section class="panel"><h1>NOVA-CHG-FP-003-0</h1><p><span class="token">detail-confirmation</span><span class="token">SB-only</span><span class="token">synced</span></p><p>변경 전 현재/선택 요금제를 비교하고 필수 유의사항 확인 후 신청합니다.</p></section>
+			<section class="panel"><h2>Review Summary</h2><ul><li>패턴: 통과 - detail confirmation, section divider, required agreement, fixed CTA 순서입니다.</li><li>레퍼런스: 통과 - detail/form의 content sections와 bottom action 구조를 따릅니다.</li><li>스페이싱: 통과 - PageStackContents와 SectionDivider가 섹션 구분을 소유합니다.</li><li>정책/OGN: 통과 - comparison과 noticeAgreement OGN을 분리합니다.</li><li>왜곡 게이트: 통과 - 미동의 상태 CTA disabled를 유지합니다.</li></ul></section>
+			<section class="panel"><h2>Reference Summary</h2><p>`detail-form` 계열의 stacked content section과 bottom CTA 구조를 사용하되, 입력 필드 대신 comparison summary card와 notice agreement를 배치했습니다.</p></section>
+			<section class="panel"><h2>Section Inspector</h2>
+				<div class="inspect"><h3>planComparison</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>현재/변경 요금제와 예상 변경 정보 비교</dd><dt>후보</dt><dd>PlanComparison organism + PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail</dd></dl></div>
+				<div class="inspect"><h3>expectedChange</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>예상 월정액, 적용일, 요금 변동 안내</dd><dt>후보</dt><dd>PlanComparison organism + PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout</dd></dl></div>
+				<div class="inspect"><h3>noticeAgreement</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>필수 유의사항과 확인 checkbox</dd><dt>후보</dt><dd>PlanNoticeAgree organism + PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox</dd></dl></div>
+				<div class="inspect"><h3>actions</h3><dl><dt>slot</dt><dd>Bottom</dd><dt>역할</dt><dd>필수 확인 후 변경 신청</dd><dt>후보</dt><dd>AppScreen.Bottom(preset="primary-cta") + SinglePrimaryAction + ActionButton</dd></dl></div>
+			</section>
+			<section class="panel"><h2>Distortion Gates</h2><ul><li>비교 카드의 label/value rows를 plain paragraph로 합치지 않습니다.</li><li>예상 적용일과 월정액을 notice 안으로 숨기지 않습니다.</li><li>유의사항 확인 전 CTA disabled 상태를 유지합니다.</li></ul></section>
+		</aside>
 	</main>
 	<script type="application/json" id="diagram-contract">
 {
+  "lifecycle": "synced",
   "screenContract": {
     "screenId": "NOVA-CHG-FP-003-0",
     "route": "/NOVA-CHG-FP-003-0",
@@ -38,283 +55,79 @@
     "domain": "chg",
     "source": "SB-only",
     "pattern": "detail-confirmation",
-    "frame": "",
     "policyRefs": [],
-    "ognIds": [
-      "ogn-chg-plan-comparison",
-      "ogn-chg-plan-notice-agree"
-    ],
+    "ognIds": ["ogn-chg-plan-comparison", "ogn-chg-plan-notice-agree"],
     "governanceRefs": [],
-    "notApplicableReason": "",
-    "requiredDesignDocs": [
-      "DESIGN_PATTERNS.md",
-      "DESIGN_FOUNDATION.md",
-      "SCREEN_STRUCTURE_PRINCIPLES.md"
-    ],
+    "requiredDesignDocs": ["DESIGN_PATTERNS.md", "DESIGN_FOUNDATION.md", "SCREEN_STRUCTURE_PRINCIPLES.md"],
     "mapSource": "Screen.map.md",
-    "configBuildSelections": [
-      "PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail",
-      "PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout",
-      "PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox",
-      "AppScreen.Bottom(preset=\"primary-cta\") + SinglePrimaryAction + ActionButton"
-    ],
-    "appScreenRails": [
-      "SystemHeader",
-      "Header",
-      "Content",
-      "Bottom"
-    ],
-    "headerContract": "",
-    "bottomContract": "",
+    "appScreenRails": ["SystemHeader", "Header", "Content", "Bottom"],
+    "headerContract": "StatusBar plus AppBar title 요금제 변경 with back affordance.",
+    "bottomContract": "Bottom(preset=\"primary-cta\") contains 변경 신청 ActionButton disabled until agreement.",
     "wireReference": {
-      "source": "none-found",
-      "matchedParts": "",
-      "intentionalDifferences": "",
-      "limitation": ""
+      "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form",
+      "matchedParts": "stacked content sections, section dividers, fixed bottom submit action",
+      "intentionalDifferences": "comparison summary and notice agreement replace form fields",
+      "limitation": "SB-only notices and static expected date are not live API calculations"
     },
-    "referenceSearch": [],
-    "patternRecheck": {
-      "source": "DESIGN_PATTERNS.md",
-      "result": "legacy-migrated",
-      "reason": "Migrated from deprecated Screen.diagram.md to Screen.diagram.html standard."
-    }
+    "patternRecheck": {"source": "DESIGN_PATTERNS.md", "result": "pass", "reason": "detail confirmation keeps comparison, expected info, and agreement in distinct content sections"}
   },
-  "screenWire": {
-    "rails": [
-      "SystemHeader",
-      "Header",
-      "Content",
-      "Bottom"
-    ],
-    "raw": "```txt\n┌─AppScreen 393x852─────────────────────────────────────┐\n├─SystemHeader──────────────────────────────────────────┤\n│ 9:41                                      ▮▮▮ wifi ▰ │\n├─Header────────────────────────────────────────────────┤\n│ ‹  요금제 변경                                        │\n├─Content───────────────────────────────────────────────┤\n│                                                        │\n│ [planComparison | before-after-summary | cards]       │\n│ 변경할 요금제를 확인해 주세요                        │\n│ 현재 요금제와 변경 후 요금제의 월정액, 데이터...      │\n│ ┌─현재 요금제──────────────────────────────────────┐  │\n│ │ 요금제                              5GX 레귤러   │  │\n│ │ 월정액                              69,000원     │  │\n│ │ 데이터                              110GB        │  │\n│ └──────────────────────────────────────────────────┘  │\n│ ┌─변경할 요금제────────────────────────────────────┐  │\n│ │ 요금제                              5GX 프라임   │  │\n│ │ 월정액                              89,000원     │  │\n│ │ 데이터                              무제한       │  │\n│ └──────────────────────────────────────────────────┘  │\n│                                                        │\n├══Divider 4px / section boundary═══════════════════════┤\n│ [expectedChange | key-value-summary | section-card]   │\n│ 예상 변경 정보                                        │\n│ 예상 월정액                              89,000원     │\n│ 예상 적용일                              2026.05.18   │\n│ ┌─요금 변동 안내───────────────────────────────────┐  │\n│ │ 월 중 변경으로 이번 달 청구 금액은 달라질 수...  │  │\n│ └──────────────────────────────────────────────────┘  │\n│                                                        │\n├══Divider 4px / section boundary═══════════════════════┤\n│ [noticeAgreement | required-notice | checkbox]        │\n│ 변경 전 유의사항                                      │\n│ 월 중 변경 시 이용 기간에 따라 요금이 일할 계산돼요   │\n│ 할인 또는 결합 혜택 금액이 변경될 수 있어요           │\n│ 일부 부가서비스는 이용이 제한될 수 있어요             │\n│ □ 유의사항을 모두 확인했어요                         │\n│                                                        │\n├─Bottom(preset=\"primary-cta\")──────────────────────────┤\n│ [actions | bottom-primary-action | bottom-fixed]      │\n│ ┌──────────────────────────────────────────────────┐  │\n│ │                     변경 신청                    │  │\n│ └──────────────────── full-width primary CTA ──────┘  │\n└───────────────────────────────────────────────────────┘\n```",
-    "sections": [
-      {
-        "sectionId": "planComparison",
-        "slot": "Content",
-        "ogn": "ogn-chg-plan-comparison"
-      },
-      {
-        "sectionId": "expectedChange",
-        "slot": "Content",
-        "ogn": "ogn-chg-plan-comparison"
-      },
-      {
-        "sectionId": "noticeAgreement",
-        "slot": "Content",
-        "ogn": "ogn-chg-plan-notice-agree"
-      },
-      {
-        "sectionId": "actions",
-        "slot": "Bottom",
-        "ogn": "ogn-chg-plan-notice-agree"
-      }
-    ]
-  },
+  "screenWire": {"rails": ["SystemHeader", "Header", "Content", "Bottom"], "raw": "Header 요금제 변경 / Content planComparison cards, expectedChange card, noticeAgreement checkbox / Bottom 변경 신청 disabled until checked"},
   "sections": [
     {
       "sectionId": "planComparison",
       "slot": "Content",
       "ogn": "ogn-chg-plan-comparison",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {
-        "raw": "Visible rail shows TitleMain copy followed by two RQRContentsDetail cards for 현재 요금제 and 변경할 요금제."
-      },
-      "patternDecision": {
-        "pattern": "before-after-summary",
-        "reason": "Screen.tsx renders 현재 요금제 and 변경할 요금제 detail cards under 변경할 요금제를 확인해 주세요."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "Screen.map.md maps current/changed plan comparison to ogn-chg-plan-comparison; this section owns the before/after summary boundary."
-      },
-      "layoutStrategy": {
-        "raw": "PageStackContents title plus a spacing-16 stack of two detail cards preserves side-by-side comparison semantics in a vertical mobile rail."
-      },
-      "layoutContract": {
-        "role": "현재/변경 요금제 비교",
-        "structure": "TitleMain plus two RQRContentsDetail cards for current and selected plans.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Preserves the SB comparison task as two stable label/value summary cards while cx-layout owns the content rail and spacing.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "organism-owned", "reason": "PlanComparison owns current vs selected plan comparison cards."},
+      "layoutContract": {"role": "plan comparison", "structure": "TitleMain plus two RQRContentsDetail cards", "alignment": "leading title and split label/value rows", "density": "comfortable", "wrapping": "benefit values may wrap inside value column", "distortionRisk": "comparison loses scanability if rows become paragraphs"},
+      "componentCandidates": [{"name": "PlanComparison organism + PageStackContents + TitleMain + VStack(gap=spacing-16) + RQRContentsDetail", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The organism keeps comparison as one OGN while RQRContentsDetail provides card surface and stable row alignment for both plans.", "risk": "Low."}]
     },
     {
       "sectionId": "expectedChange",
       "slot": "Content",
       "ogn": "ogn-chg-plan-comparison",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {
-        "raw": "Visible rail places 예상 월정액, 예상 적용일, and 요금 변동 안내 after a section divider."
-      },
-      "patternDecision": {
-        "pattern": "key-value-summary with callout",
-        "reason": "Screen.tsx renders 예상 변경 정보 as table rows plus 요금 변동 안내 Callout."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "expectedChange shares ogn-chg-plan-comparison and separates calculated amount/effective date from the before/after cards."
-      },
-      "layoutStrategy": {
-        "raw": "TitleSection plus SectionItem contains table rows first, then an inline Callout for pro-rated billing guidance."
-      },
-      "layoutContract": {
-        "role": "예상 월정액과 적용일 확인",
-        "structure": "TitleSection, ListText(table) rows for 예상 월정액 and 예상 적용일, plus Callout titled 요금 변동 안내.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Preserves the expected monthly amount, effective date, and pro-rated billing notice without route-level spacing or bespoke table UI.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "same-organism-subsection", "reason": "Expected fee/date is part of comparing the selected plan outcome."},
+      "layoutContract": {"role": "expected change summary", "structure": "TitleSection + SectionItem + ListText(table) rows + Callout", "alignment": "split label/value with leading callout", "density": "comfortable", "wrapping": "callout wraps under rows", "distortionRisk": "hiding date in prose weakens confirmation"},
+      "componentCandidates": [{"name": "PlanComparison organism + PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText(table) + Callout", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The selected composition keeps expected amount and effective date as inspectable rows and reserves Callout for billing caveat.", "risk": "Low; live recalculation is outside this FP scope."}]
     },
     {
       "sectionId": "noticeAgreement",
       "slot": "Content",
       "ogn": "ogn-chg-plan-notice-agree",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {
-        "raw": "Visible rail lists required notices before the checkbox label 유의사항을 모두 확인했어요."
-      },
-      "patternDecision": {
-        "pattern": "required-notice-checkbox",
-        "reason": "Screen.tsx renders required notices before the confirmation checkbox, matching NOVA-CHG-FP-003-E1 CTA gating."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "Screen.map.md maps the required notice agreement gate to ogn-chg-plan-notice-agree."
-      },
-      "layoutStrategy": {
-        "raw": "Notice ListText rows precede the checkbox so the agreement control follows the required information."
-      },
-      "layoutContract": {
-        "role": "변경 전 유의사항 확인과 동의",
-        "structure": "Required notice ListText rows followed by Checkbox label 유의사항을 모두 확인했어요.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Preserves required notices and gates the fixed primary CTA until the confirmation checkbox is selected.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "organism-owned", "reason": "PlanNoticeAgree owns required notices and confirmation state."},
+      "layoutContract": {"role": "required notice agreement", "structure": "TitleSection + SectionItem + notice ListText rows + FieldStack Checkbox", "alignment": "leading", "density": "comfortable", "wrapping": "notice rows wrap within card rail", "distortionRisk": "CTA gating fails if checkbox is visually detached"},
+      "componentCandidates": [{"name": "PlanNoticeAgree organism + PageStackContents + TitleSection + SectionItem + VStack(gap=spacing-12) + ListText + Checkbox", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The organism keeps required notice text and checkbox state together while FieldStack owns control grouping.", "risk": "Low."}]
     },
     {
       "sectionId": "actions",
       "slot": "Bottom",
       "ogn": "ogn-chg-plan-notice-agree",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [],
-      "patternEvidence": {
-        "raw": "Visible rail shows 변경 신청 in Bottom with disabled-before-agreement semantics."
-      },
-      "patternDecision": {
-        "pattern": "bottom-primary-action",
-        "reason": "Screen.tsx keeps 변경 신청 in AppScreen.Bottom and ties enablement to noticeAgreement."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "The Bottom action shares ogn-chg-plan-notice-agree because checkbox agreement controls submit enablement."
-      },
-      "layoutStrategy": {
-        "raw": "AppScreen.Bottom owns the fixed submit CTA while the Content section owns the prerequisite agreement."
-      },
-      "layoutContract": {
-        "role": "변경 신청 제출 CTA",
-        "structure": "AppScreen.Bottom fixed primary CTA labeled 변경 신청; disabled until notice agreement.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "AppScreen.Bottom(preset=\"primary-cta\") + SinglePrimaryAction + ActionButton",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "Keeps the submit action in the mobile bottom action rail and reflects SB case NOVA-CHG-FP-003-E1 with a disabled CTA before required confirmation.",
-          "risk": "None recorded."
-        }
-      ]
+      "ognBoundaryDecision": {"decision": "screen-owned-action", "reason": "The action is enabled by PlanNoticeAgree state but belongs in Bottom rail."},
+      "layoutContract": {"role": "bottom submit action", "structure": "SinglePrimaryAction with ActionButton", "alignment": "full-width bottom rail", "density": "standard bottom safe area", "wrapping": "single-line CTA", "distortionRisk": "CTA must not be enabled before agreement"},
+      "componentCandidates": [{"name": "AppScreen.Bottom(preset=\"primary-cta\") + SinglePrimaryAction + ActionButton", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "Bottom rail preserves the submit action and disabled state while agreement is unchecked.", "risk": "Low."}]
     }
   ],
   "policyOgnMatrix": [
-    {
-      "requirement": "현재/변경 요금제 비교",
-      "sourceRef": "Screen.map.md OGN ogn-chg-plan-comparison",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "ogn-chg-plan-comparison",
-      "section": "planComparison",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "현재/변경 요금제 comparison stays before notices as two detail cards under the main confirmation title."
-    },
-    {
-      "requirement": "예상 월정액과 적용일 확인",
-      "sourceRef": "Screen.map.md OGN ogn-chg-plan-comparison",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "ogn-chg-plan-comparison",
-      "section": "expectedChange",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "예상 월정액 and 예상 적용일 stay in table rows with 요금 변동 안내 as an inline Callout."
-    },
-    {
-      "requirement": "필수 유의사항 확인과 체크박스 동의",
-      "sourceRef": "Screen.map.md OGN ogn-chg-plan-notice-agree",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "ogn-chg-plan-notice-agree",
-      "section": "noticeAgreement",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "Required notice copy stays visible before the confirmation checkbox."
-    },
-    {
-      "requirement": "변경 신청 제출",
-      "sourceRef": "Screen.map.md transition to NOVA-CHG-FP-004-0",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "ogn-chg-plan-notice-agree",
-      "section": "actions",
-      "appliedGovernanceRefs": [],
-      "layoutContractSummary": "변경 신청 remains a fixed Bottom CTA and is disabled until noticeAgreement is checked."
-    }
+    {"section": "planComparison", "ogn": "ogn-chg-plan-comparison", "policyRefs": [], "source": "Screen.map.md SB-only"},
+    {"section": "expectedChange", "ogn": "ogn-chg-plan-comparison", "policyRefs": [], "source": "Screen.map.md SB-only"},
+    {"section": "noticeAgreement", "ogn": "ogn-chg-plan-notice-agree", "policyRefs": [], "source": "Screen.map.md SB-only"},
+    {"section": "actions", "ogn": "ogn-chg-plan-notice-agree", "policyRefs": [], "source": "Screen.map.md SB-only"}
   ],
   "distortionGates": [
-    "The comparison remains before notices.",
-    "Required notice copy is visible before the confirmation checkbox.",
-    "The submit CTA cannot appear enabled before required confirmation.",
-    "No shared organism dependency is required; route catalog registration is handled by the main integration step."
+    "Do not flatten comparison summary cards into prose.",
+    "Do not hide expected monthly fee or effective date inside the callout.",
+    "Do not enable the submit CTA before required notice confirmation."
   ],
-  "migrationGovernanceRefs": []
+  "renderEvidence": {
+    "geometryEvidence": "Static contract sync after CHG organism rebuild: Header 100px, scroll Content includes three sections separated by SectionDivider, Bottom CTA 98px fixed outside Content; long content scrolls under AppScreen.Content.",
+    "viewport": {"width": 393, "height": 852},
+    "rails": {"SystemHeader": "0-44", "Header": "44-100", "Content": "100-754 scroll", "Bottom": "754-852"},
+    "overlap": "Bottom CTA is outside Content; agreement section can scroll without covering CTA."
+  },
+  "iterationPasses": [
+    {"pass": 1, "change": "Moved comparison and notice agreement bodies into CHG organisms and synced diagram/config.", "result": "section contracts and implementation OGN boundaries aligned"}
+  ],
+  "contractSync": {"status": "synced", "syncedFiles": ["Screen.tsx", "Screen.config.ts", "Screen.diagram.html", "apps/mobile/src/organisms/chg"], "notes": "Agreement state remains in Screen.tsx and is passed into PlanNoticeAgree."}
 }
 	</script>
-	<script>const c=document.getElementById('diagram-contract'),p=document.getElementById('diagram-contract-preview');if(c&&p){p.textContent=JSON.stringify(JSON.parse(c.textContent),null,2);}</script>
 </body>
 </html>

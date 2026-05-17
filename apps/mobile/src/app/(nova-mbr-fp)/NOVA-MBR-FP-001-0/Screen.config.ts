@@ -40,6 +40,13 @@ export const screenConfig = defineScreenConfig({
 		],
 		buildSelections: [
 			{
+				section: "progress",
+				selected: "ProgressAppBar (nova-mbr-fp pattern)",
+				source: "new-component",
+				reason:
+					"FP 001/002/003 now share the form-entry 가입 progress chrome. The pattern composes cx-components AppBar with a token-styled progress track, keeping step state in Header instead of route-level layout.",
+			},
+			{
 				section: "termList",
 				selected: "TermList (Accordion + Divider contents)",
 				source: "new-organism",

@@ -18,7 +18,7 @@ export function GuardianResult({
 
 	return (
 		<VStack
-			data-section-id="guardian-result"
+			data-section-id="guardianResult"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			{isExpired ? (

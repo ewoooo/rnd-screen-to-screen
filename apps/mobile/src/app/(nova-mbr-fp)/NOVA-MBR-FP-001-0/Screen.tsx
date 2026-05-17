@@ -2,19 +2,21 @@
 
 import {
 	ActionButton,
-	AppBar,
-	Divider,
 	StatusBar,
 	TitleSection,
 } from "@pxds/cx-components";
-import { AppScreen } from "@pxds/cx-layout/components/chrome";
-import { SinglePrimaryAction } from "@pxds/cx-layout/components/compositions";
-import { PageStackContents } from "@pxds/cx-layout/components/contents";
+import {
+	AppScreen,
+	PageStackContents,
+	SectionDivider,
+	SinglePrimaryAction,
+} from "@pxds/cx-layout/components";
 import { useState } from "react";
 import { GuardianInput } from "@/organisms/nova-mbr-fp/ogn-mbr-guardian-input";
 import { GuardianResult } from "@/organisms/nova-mbr-fp/ogn-mbr-guardian-result";
 import { TermAgree } from "@/organisms/nova-mbr-fp/ogn-mbr-term-agree";
 import { TermList } from "@/organisms/nova-mbr-fp/ogn-mbr-term-list";
+import { ProgressAppBar } from "@/patterns/nova-mbr-fp";
 
 export function Screen() {
 	// REQ-001 게이트 상태는 Screen이 소유(BTN_4: 진행 Primary 단일).
@@ -37,24 +39,38 @@ export function Screen() {
 	}
 
 	return (
-		<AppScreen>
+		<AppScreen
+			headerPreset="form-entry"
+			background="var(--semantic-surface-page-normal)"
+		>
 			<AppScreen.SystemHeader>
 				<StatusBar />
 			</AppScreen.SystemHeader>
 			<AppScreen.Header>
-				<AppBar title="회원 가입" showLeftItem showTitle />
+				<ProgressAppBar
+					title="회원 가입"
+					currentStep={1}
+					totalSteps={5}
+					progressLabel="약관 동의"
+					showProgressLabel
+				/>
 			</AppScreen.Header>
 			<AppScreen.Content>
 				<PageStackContents
+					data-section-id="termList"
+					data-ogn-id="ogn-mbr-term-list"
 					title={
 						<TitleSection title="회원 가입에 필요한 약관을 확인해 주세요" />
 					}
 				>
 					<TermList />
 				</PageStackContents>
-				{/* section 경계 = section Divider(393×4). route-level gap 금지(C2). */}
-				<Divider type="section" />
-				<PageStackContents title={<TitleSection title="약관 동의" />}>
+				<SectionDivider thickness="section" />
+				<PageStackContents
+					data-section-id="termAgree"
+					data-ogn-id="ogn-mbr-term-agree"
+					title={<TitleSection title="약관 동의" />}
+				>
 					<TermAgree
 						showRequiredError={attemptedProgress && !allRequiredAgreed}
 						onRequiredAgreedChange={handleRequiredAgreedChange}

@@ -3,408 +3,169 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>NOVA-MBR-FP-008-0 다이어그램</title>
+	<title>NOVA-MBR-FP-008-0 Screen Diagram</title>
 	<style>
-		:root{--bg:#f5f6f8;--ink:#171719;--muted:#6b7280;--line:#d9dde3;--surface:#fff;--soft:#eef1f5;--brand:#2563eb;--rail:361px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:minmax(393px,430px) minmax(360px,1fr);gap:32px;align-items:start;max-width:1120px;margin:0 auto;padding:32px}.diagram-title{grid-column:1/-1}.diagram-title h1{margin:0 0 8px;font-size:24px;line-height:32px}.diagram-title p,.panel p,.panel li{color:#374151;font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid #cbd5e1;border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 48px rgb(15 23 42 / 16%)}.system-header{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:600}.app-header{display:flex;align-items:center;height:56px;padding:0 16px;font-size:18px;font-weight:700}.content{min-height:654px;padding:28px 16px;background:#fff}.page-stack{width:var(--rail);margin:0 auto;display:grid;gap:14px}.wire-section{display:grid;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:#fbfcfe}.wire-section strong{font-size:14px}.wire-section span{font-size:13px;line-height:20px;color:#475569}.bottom{min-height:98px;padding:12px 16px 22px;border-top:1px solid var(--soft);background:#fff}.cta{width:var(--rail);height:56px;margin:0 auto;border:0;border-radius:14px;background:var(--brand);color:#fff;font-size:17px;font-weight:700}.meta{display:grid;gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px}.panel h2{margin:0 0 12px;font-size:16px;line-height:24px}.token{display:inline-flex;align-items:center;min-height:24px;margin:0 4px 4px 0;padding:2px 8px;border-radius:999px;background:var(--soft);color:#334155;font-size:12px;line-height:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.review-item,.section-card,.candidate{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfcfe}.review-item strong,.candidate strong{display:block;margin-bottom:6px;font-size:13px;line-height:18px}.review-item span,.candidate p{font-size:12px;line-height:18px}.status,.fit-strong{background:#dcfce7;color:#166534}.fit-medium,.fit-weak{background:#fef3c7;color:#92400e}.fit-reject{background:#fee2e2;color:#991b1b}.status{display:inline-flex;min-height:22px;margin-bottom:8px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}.section-card+.section-card{margin-top:10px}.section-card h3{margin:0 0 8px;font-size:14px}.section-card dl{display:grid;grid-template-columns:82px 1fr;gap:6px 10px;margin:0;font-size:13px;line-height:19px}.section-card dt{color:var(--muted)}.section-card dd{margin:0}.candidate-list{display:grid;gap:8px;margin-top:12px}.risk{color:#7c2d12}.debug-panel{display:none}@media(max-width:860px){main{grid-template-columns:1fr;padding:20px}.phone{width:100%;max-width:393px;justify-self:center}.page-stack,.cta{width:100%}}
+		:root{--bg:#f8f9fb;--surface:#fff;--soft:#f4f5fa;--line:#e2e6f1;--ink:#05001a;--muted:#5e6085;--brand:#421ed8;--danger:#feeff0;--caution:#fff7e6;--rail:361px;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:393px minmax(360px,1fr);gap:28px;max-width:1120px;margin:0 auto;padding:28px}.title{grid-column:1/-1}.title h1{margin:0 0 6px;font-size:24px;line-height:32px}.title p,.panel p,.panel li{margin:0;color:var(--muted);font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid var(--line);border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 44px rgb(5 0 26 / 12%)}.system{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:700}.appbar{display:flex;align-items:center;height:56px;padding:0 20px;font-size:18px;font-weight:700}.content{min-height:650px;background:var(--surface)}.stack{width:var(--rail);margin:0 auto;padding:28px 0;display:grid;gap:18px}.section{display:grid;gap:12px}.section h2{margin:0;font-size:18px;line-height:26px}.card{border:1px solid var(--line);border-radius:16px;background:var(--soft);overflow:hidden}.row{display:flex;align-items:center;gap:12px;padding:16px;font-size:15px}.radio{width:20px;height:20px;border:2px solid var(--brand);border-radius:50%}.divider{height:1px;background:var(--line)}.band{height:4px;background:var(--soft);margin:4px -16px}.field{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}.field strong{font-size:15px}.field button{height:32px;padding:0 12px;border:1px solid var(--brand);border-radius:10px;background:white;color:var(--brand);font-weight:700}.helper{font-size:13px;color:var(--muted);line-height:20px}.notice{padding:14px 16px;border-radius:14px;background:var(--caution);font-size:14px;line-height:21px}.notice.negative{background:var(--danger)}.secondary{height:48px;border:1px solid var(--line);border-radius:14px;background:white;font-size:16px;font-weight:700}.bottom{height:102px;padding:12px 16px 34px;border-top:1px solid var(--line);background:var(--surface)}.cta{width:var(--rail);height:56px;border:0;border-radius:14px;background:var(--brand);color:white;font-size:17px;font-weight:700}.meta{display:grid;gap:14px}.panel{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:16px}.panel h2{margin:0 0 10px;font-size:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.status,.token{display:inline-flex;margin:0 4px 4px 0;padding:3px 8px;border-radius:999px;background:var(--soft);font-size:12px;font-weight:700}.status{background:#dcfce7;color:#166534}.inspect{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px;background:#fbfcfe}.inspect strong{display:block;font-size:13px}.inspect span{display:block;color:var(--muted);font-size:12px;line-height:18px}@media(max-width:860px){main{grid-template-columns:1fr;padding:18px}.phone{justify-self:center;max-width:393px;width:100%}.stack,.cta{width:100%}}
 	</style>
 </head>
 <body>
-	<main>
-		<header class="diagram-title"><h1>NOVA-MBR-FP-008-0</h1><p>휴면 해제 본인 확인 화면의 intro, 인증수단 선택, 인증번호 입력, 하단 완료 CTA를 실제 카피로 펼친 시각 다이어그램입니다.</p></header>
-		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="NOVA-MBR-FP-008-0" data-route="/NOVA-MBR-FP-008-0" data-pattern="form" data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md">
-			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
-			<header class="app-header" data-rail="Header">‹ 휴면 해제</header>
-			<div class="content" data-rail="Content"><div class="page-stack">
-					<section class="wire-section" data-section-id="intro" data-ogn-id="structural-only" data-pattern-role="flow-context-title" data-boundary="PageStack title slot" data-layout-contract="Thin leading text only; no callout/hero surface"><strong>휴면 해제를 위해 본인 확인이 필요해요</strong><span>휴면 해제 문맥을 알리는 sectionTitle 텍스트<br />intro와 인증수단 선택 사이에는 section divider 없음</span></section>
-					<section class="wire-section" data-section-id="authSelect" data-ogn-id="ogn-mbr-auth-select" data-pattern-role="single-choice-list" data-boundary="cardBoundary with contents dividers" data-layout-contract="Same OGN as FP-003; three radio rows in fixed policy order"><strong>본인인증 수단을 선택해 주세요</strong><span>○ 휴대폰<br />─ contents divider<br />○ PASS<br />─ contents divider<br />○ 공동인증서<br />로딩: 동일 3행 skeleton · 오류: 사용 가능한 인증수단을 불러오지 못했습니다</span></section>
-					<section class="wire-section" data-section-id="authRequest" data-ogn-id="ogn-mbr-auth-request" data-pattern-role="verification-code-field" data-boundary="FieldStack + secondary action after section divider" data-layout-contract="Numeric TextField maxLength 6 with inline resend action, timer helper, state Notice, secondary confirm"><strong>인증번호 6자리 입력</strong><span>필드 라벨: 인증번호 입력<br />inline action: 재요청<br />helper: 유효시간 3분 · 재요청은 최대 5회 · 남은 시간 03:00<br />상태 Notice 예: 인증 제한 / 인증 실패 한도(5회)를 초과했습니다 · 10분 후 다시 시도해 주세요<br />영역 내 보조 버튼: 인증 확인</span></section>
-					<section class="wire-section" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="bottom-primary-action" data-boundary="Bottom fixed primary-cta" data-layout-contract="Single fixed Bottom primary; disabled until identity confirmation is complete"><strong>Bottom CTA</strong><span>본인 확인 완료 전 비활성<br />완료 후 NOVA-MBR-FP-009-0 약관 재동의로 진행</span></section>
-			</div></div>
-			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">본인 확인 완료하기</button></footer>
+<main>
+	<header class="title">
+		<h1>NOVA-MBR-FP-008-0 · 본인인증</h1>
+		<p>휴면 해제 전 본인 확인. FP-003과 공유되는 인증 선택/요청 OGN은 수정하지 않고, FP-008 screen rail과 휴면 해제 intro 계약만 소유합니다.</p>
+	</header>
+
+	<section class="phone" data-screen-id="NOVA-MBR-FP-008-0" data-route="/NOVA-MBR-FP-008-0" data-pattern="form" data-wire-reference="apps/mobile/src/app/(nova-mbr-fp)/NOVA-MBR-FP-003-0/Screen.diagram.html">
+		<div class="system" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
+		<header class="appbar" data-rail="Header">‹ 휴면 해제</header>
+		<div class="content" data-rail="Content">
+			<div class="stack">
+				<section class="section" data-section-id="intro" data-ogn-id="structural-only" data-pattern-role="flow-context-title" data-boundary="PageStackContents title slot" data-layout-contract="Thin 휴면 해제 context title; no callout surface">
+					<h2>휴면 해제를 위해 본인 확인이 필요해요</h2>
+				</section>
+				<section class="section" data-section-id="authSelect" data-ogn-id="ogn-mbr-auth-select" data-pattern-role="single-choice-list" data-boundary="cardBoundary with contents dividers" data-layout-contract="Three radio rows in policy order with identical loading skeleton">
+					<h2>본인인증 수단을 선택해 주세요</h2>
+					<div class="card">
+						<div class="row"><span class="radio"></span><strong>휴대폰</strong></div>
+						<div class="divider"></div>
+						<div class="row"><span class="radio"></span><strong>PASS</strong></div>
+						<div class="divider"></div>
+						<div class="row"><span class="radio"></span><strong>공동인증서</strong></div>
+					</div>
+				</section>
+				<div class="band" aria-hidden="true"></div>
+				<section class="section" data-section-id="authRequest" data-ogn-id="ogn-mbr-auth-request" data-pattern-role="verification-code-field" data-boundary="FieldStack plus state notice and secondary action" data-layout-contract="Numeric TextField maxLength 6 with inline resend action, timer helper, state Notice, secondary confirm">
+					<h2>인증번호 6자리 입력</h2>
+					<div class="field"><strong>인증번호 입력 · 03:00</strong><button type="button">재요청</button></div>
+					<p class="helper">유효시간 3분 · 재요청은 최대 5회 · 남은 시간 03:00</p>
+					<div class="notice">유효시간이 만료되어 다시 요청해 주세요</div>
+					<div class="notice negative">인증 실패 한도(5회)를 초과했습니다 · 10분 후 다시 시도해 주세요</div>
+					<button class="secondary" type="button">인증 확인</button>
+				</section>
+			</div>
+		</div>
+		<footer class="bottom" data-rail="Bottom" data-preset="primary-cta" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="bottom-primary-action" data-boundary="Bottom fixed primary-cta" data-layout-contract="Single primary enabled only after identity verification"><button class="cta" type="button">본인 확인 완료하기</button></footer>
+	</section>
+
+	<aside class="meta">
+		<section class="panel"><h2>Review Summary</h2><div class="grid"><p><span class="status">통과</span>form 패턴</p><p><span class="status">통과</span>FP-003 OGN reuse</p><p><span class="status">통과</span>휴면 context intro</p><p><span class="status">통과</span>Bottom CTA</p></div></section>
+		<section class="panel"><h2>Reference Summary</h2><p><span class="token">form</span><span class="token">NOVA-MBR-FP-003-0</span></p><p>Matched: authSelect card rows, authRequest field/notice/action, fixed bottom identity CTA. Difference: intro adds 휴면 해제 context before the shared auth flow.</p></section>
+		<section class="panel"><h2>Section Inspector</h2>
+			<div class="inspect"><strong>intro</strong><span>PageStackContents title slot · fit strong · selected because it carries context without a new OGN or callout.</span></div>
+			<div class="inspect"><strong>authSelect</strong><span>AuthSelect shared OGN · fit strong · selected because it owns radio list order, card boundary, dividers, loading skeleton.</span></div>
+			<div class="inspect"><strong>authRequest</strong><span>AuthRequest shared OGN · fit strong · selected because it owns the numeric field, inline resend, timer helper, notices, secondary confirm.</span></div>
+			<div class="inspect"><strong>actions</strong><span>ActionButton in Bottom · fit strong · selected because progression stays in fixed bottom rail.</span></div>
 		</section>
-		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: form</span><span class="token">그룹: nova-mbr-fp</span><span class="token">도메인: mbr</span><span class="token">정책 참조: 11</span><span class="token">OGN ID: 2</span></p><p>정책/구조 계약은 내장 JSON을 기준으로 검증합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">확인</span><span>form 패턴으로 이관되었습니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인</span><span>apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">확인 필요</span><span>실제 렌더 기준으로 최종 확인합니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">확인</span><span>JSON 계약과 config를 대조합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md</span><span class="token">패턴: form</span></p><ul><li>AppScreen Header + scrollable Content + fixed Bottom(preset=&quot;primary-cta&quot;); choice-list selectable list rows under a section title (ref [bundleDiscount]/[phoneDeliveryMethod]); choice-list-with-callout where a notice follows interactive controls in the same section (ref [usimEsim]); 4px SectionDivider band between major sections.</li><li>policy adds a 6-digit numeric code field with an inline resend action and a live validity timer (not in reference); policy-required cautionary/negative notices are state-driven message sections, not static callouts; intro/title copy uses 휴면 해제 context, not 가입.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
-				<div class="section-card"><h3>intro</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>intro</dd><dt>경계</dt><dd>PageStack title slot, no divider before authSelect</dd><dt>후보</dt><dd>PageStackContents title slot + Text(sectionTitle)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents title slot + Text(sectionTitle)</strong><p>휴면 해제 문맥을 알리는 얇은 leading 텍스트 한 줄을 PageStackContents title slot에 둠 — route CSS 없이 callout/hero가 아닌 muted intro. POL-MBR-AUTH-001-01 의도를 휴면 해제 문맥으로 표현하고 새 정책을 발명하지 않음.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>authSelect</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>authSelect</dd><dt>경계</dt><dd>cardBoundary with contents dividers</dd><dt>후보</dt><dd>AuthSelect (ogn-mbr-auth-select)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AuthSelect (ogn-mbr-auth-select)</strong><p>FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TitleSection + 단일 card surface + 3행 ListSelected(radio) + contents divider로 layoutContract/Distortion Gate 충족.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>authRequest</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>authRequest</dd><dt>경계</dt><dd>FieldStack + inline resend after section divider</dd><dt>후보</dt><dd>AuthRequest (ogn-mbr-auth-request)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> AuthRequest (ogn-mbr-auth-request)</strong><p>FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>actions</dd><dt>경계</dt><dd>Bottom fixed primary-cta</dd><dt>후보</dt><dd>SinglePrimaryAction + ActionButton(primary)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> SinglePrimaryAction + ActionButton(primary)</strong><p>AppScreen.Bottom(preset=primary-cta) 고정 rail + 단일 Primary solid &#39;본인 확인 완료하기&#39;, 본인 확인 완료 전 disabled (POL-MBR-AUTH-001-01). route-level CSS 없음.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
-			</section><section class="panel"><h2>왜곡 방지 게이트</h2><ul><li>Preserve AppScreen rails: Header, scrollable Content, fixed Bottom(preset=&quot;primary-cta&quot;). CTA never moves into scroll content.</li><li>intro is a thin context note only — not a callout/hero, no invented 휴면 정책 facts. It carries POL-MBR-AUTH-001-01 intent in 휴면 해제 framing.</li><li>One visible 4px SectionDivider band between authSelect and authRequest. No plain-gap substitute; no extra section bands. intro→authSelect has no band.</li><li>authSelect: 3 rows in one card surface separated by Divider(type=&quot;contents&quot;) (1px). Not FieldStack gaps, not a section band. Fixed order 휴대폰 → PASS → 공동인증서 (POL-MBR-AUTH-002-09). Single-select only (POL-MBR-AUTH-002-01).</li><li>authSelect typography: all 3 labels equal Text(listTitle); emphasisRule: selected-row-only. Any section-title-scale row = controlLabelScale: too-large → do not approve.</li><li>authSelect loading: identical-layout 3-row skeleton (UXPT_LOD). No bare spinner, no layout jump.</li></ul></section><section class="panel debug-panel"><h2>MD 계약 이관 상태</h2><p>기존 Screen.diagram.md의 계약 정보를 JSON으로 이관했습니다.</p><details><summary>전체 계약 JSON 보기</summary><pre id="diagram-contract-preview"></pre></details></section></aside>
-	</main>
-	<script type="application/json" id="diagram-contract">
+		<section class="panel"><h2>Distortion Gates</h2><ul><li>Do not edit shared auth OGNs from this FP-008 rebuild unless validation fails.</li><li>Intro remains thin text, not a callout/hero or invented dormant-account policy.</li><li>One section divider band separates authSelect and authRequest.</li><li>CTA stays in Bottom and remains disabled until verification is complete.</li></ul></section>
+	</aside>
+</main>
+<script type="application/json" id="diagram-contract">
 {
+  "lifecycle": "synced",
   "screenContract": {
     "screenId": "NOVA-MBR-FP-008-0",
     "route": "/NOVA-MBR-FP-008-0",
     "group": "nova-mbr-fp",
     "domain": "mbr",
-    "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md",
     "pattern": "form",
-    "frame": "",
-    "policyRefs": [
-      "POL-MBR-AUTH-001-01",
-      "POL-MBR-AUTH-002-01",
-      "POL-MBR-AUTH-002-05",
-      "POL-MBR-AUTH-002-09",
-      "POL-MBR-AUTH-003-01",
-      "POL-MBR-AUTH-003-03",
-      "POL-MBR-AUTH-004-01",
-      "POL-MBR-AUTH-004-02",
-      "POL-MBR-AUTH-005-01",
-      "POL-MBR-AUTH-005-03",
-      "POL-MBR-AUTH-005-07"
-    ],
-    "ognIds": [
-      "ogn-mbr-auth-select",
-      "ogn-mbr-auth-request"
-    ],
-    "governanceRefs": [
-      "UXPT_BTN",
-      "UXPT_ERR",
-      "UXPT_LOD",
-      "UXPT_NAV",
-      "VOT_RUL"
-    ],
-    "notApplicableReason": "",
-    "requiredDesignDocs": [
-      "DESIGN_PATTERNS.md",
-      "DESIGN_FOUNDATION.md",
-      "SCREEN_STRUCTURE_PRINCIPLES.md"
-    ],
+    "policyRefs": ["POL-MBR-AUTH-001-01", "POL-MBR-AUTH-002-01", "POL-MBR-AUTH-002-05", "POL-MBR-AUTH-002-09", "POL-MBR-AUTH-003-01", "POL-MBR-AUTH-003-03", "POL-MBR-AUTH-004-01", "POL-MBR-AUTH-004-02", "POL-MBR-AUTH-005-01", "POL-MBR-AUTH-005-03", "POL-MBR-AUTH-005-07"],
+    "ognIds": ["ogn-mbr-auth-select", "ogn-mbr-auth-request"],
+    "governanceRefs": ["UXPT_BTN", "UXPT_ERR", "UXPT_LOD", "UXPT_NAV", "VOT_RUL"],
+    "requiredDesignDocs": ["DESIGN_PATTERNS.md", "DESIGN_FOUNDATION.md", "SCREEN_STRUCTURE_PRINCIPLES.md"],
     "mapSource": "Screen.map.md",
-    "configBuildSelections": [
-      "PageStackContents title slot + Text(sectionTitle)",
-      "AuthSelect (ogn-mbr-auth-select)",
-      "AuthRequest (ogn-mbr-auth-request)",
-      "SinglePrimaryAction + ActionButton(primary)"
-    ],
-    "appScreenRails": [
-      "SystemHeader",
-      "Header",
-      "Content",
-      "Bottom"
-    ],
-    "headerContract": "",
-    "bottomContract": "",
+    "appScreenRails": ["SystemHeader", "Header", "Content", "Bottom"],
+    "configBuildSelections": ["PageStackContents title slot + Text(sectionTitle)", "AuthSelect (ogn-mbr-auth-select)", "AuthRequest (ogn-mbr-auth-request)", "SinglePrimaryAction + ActionButton(primary)"],
     "wireReference": {
-      "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md",
-      "matchedParts": "AppScreen Header + scrollable Content + fixed Bottom(preset=\"primary-cta\"); choice-list selectable list rows under a section title (ref [bundleDiscount]/[phoneDeliveryMethod]); choice-list-with-callout where a notice follows interactive controls in the same section (ref [usimEsim]); 4px SectionDivider band between major sections.",
-      "intentionalDifferences": "policy adds a 6-digit numeric code field with an inline resend action and a live validity timer (not in reference); policy-required cautionary/negative notices are state-driven message sections, not static callouts; intro/title copy uses 휴면 해제 context, not 가입.",
-      "limitation": "reference-only visual structure/density; all policy/copy/OGN ids come from Screen.map.md and Screen.config.ts. Reference policy/OGN refs (unknown-from-figma-only/TBD) are not promoted."
+      "source": "apps/mobile/src/app/(nova-mbr-fp)/NOVA-MBR-FP-003-0/Screen.diagram.html",
+      "matchedParts": "Shared authSelect/authRequest OGN layout, section divider, fixed bottom primary CTA.",
+      "intentionalDifferences": "FP-008 adds a thin 휴면 해제 intro and routes to FP-009; auth organism implementation remains shared with FP-003.",
+      "limitation": "Reference controls structure only; 휴면 해제 copy adaptation is from Screen.map.md flow-context copy."
     },
-    "referenceSearch": [],
-    "patternRecheck": {
-      "source": "DESIGN_PATTERNS.md",
-      "result": "legacy-migrated",
-      "reason": "Form pattern confirmed from the visible 휴면 해제 intro, authentication method selection, code request section, and fixed identity-confirmation CTA."
-    }
+    "patternRecheck": {"source": "DESIGN_PATTERNS.md", "result": "detail-form family retained", "reason": "Intro plus grouped auth sections and fixed bottom CTA preserve form flow."}
   },
   "screenWire": {
-    "rails": [
-      "SystemHeader",
-      "Header",
-      "Content",
-      "Bottom"
-    ],
-    "raw": "```txt\n┌─AppScreen────────────────────────────────────────────────┐\n├─Header───────────────────────────────────────────────────┤\n│ 9:41                                       ▮▮▮  wifi  ▰  │\n│  ‹   본인인증                                            │\n├─Content(scroll)──────────────────────────────────────────┤\n│                                                           │\n│ [intro | flow-context-note | section]                    │\n│  휴면 해제를 위해 본인 확인이 필요해요                   │\n│                                                           │\n│ [authSelect | choice-list | section]                     │\n│  본인인증 수단을 선택해 주세요                           │\n│  ┌─────────────────────────────────────────────────────┐ │\n│  │ ◉  휴대폰                                           │ │\n│  ├──────────────── contents-divider ───────────────────┤ │\n│  │ ○  PASS                                             │ │\n│  ├──────────────── contents-divider ───────────────────┤ │\n│  │ ○  공동인증서                                       │ │\n│  └─────────────────────────────────────────────────────┘ │\n│  (state:loading → 3-row skeleton, same row layout)        │\n│                                                           │\n├══Divider 4px / bg-alt════════════════════════════════════┤\n│                                                           │\n│ [authRequest | code-entry-with-message | section]        │\n│  인증번호 6자리 입력                                     │\n│  ┌──────────────────────────────────────┐  ┌──────────┐  │\n│  │ 인증번호 입력            02:47        │  │ 재요청   │  │\n│  └────────── numeric field / timer ──────┘  └ outlined ┘  │\n│  유효시간 3분 · 재요청은 최대 5회                        │\n│  ┌─────────────────────────────────────────────────────┐ │\n│  │ ⚠ 유효시간이 만료되어 다시 요청해 주세요            │ │\n│  └──────── section message (cautionary, expire) ────────┘ │\n│  ┌─────────────────────────────────────────────────────┐ │\n│  │ ⚠ 인증번호를 확인하거나 잠시 후 다시 시도해 주세요  │ │\n│  └──────── section message (negative, fail/blocked) ────┘ │\n│                                                           │\n├─Bottom(preset=\"primary-cta\")─────────────────────────────┤\n│ [actions | bottom-primary-action | bottom-fixed]         │\n│  ┌─────────────────────────────────────────────────────┐ │\n│  │                 본인 확인 완료하기                   │ │\n│  └──────────────────── primary CTA / fixed ─────────────┘ │\n└───────────────────────────────────────────────────────────┘\n```\n\nNotes:\n- `intro` is a thin flow-context note (휴면 해제 framing). It carries the policy intent of POL-MBR-AUTH-001-01 (본인인증 필수) expressed in 휴면 해제 context; it invents no new policy. It is a short text section, not an OGN.\n- `authSelect`/`authRequest` separated by one visible 4px `SectionDivider` band.\n- `authSelect` 3 rows in one card surface separated by 1px `Divider(type=\"contents\")`.\n- `authRequest` resend is an inline field action on the code TextField, not a separate sibling button.\n- The two message rows are mutually exclusive state-driven surfaces; shown stacked for evidence only.",
+    "rails": ["SystemHeader", "Header", "Content", "Bottom"],
     "sections": [
-      {
-        "sectionId": "intro",
-        "slot": "Content",
-        "ogn": "structural-only"
-      },
-      {
-        "sectionId": "authSelect",
-        "slot": "Content",
-        "ogn": "structural-only"
-      },
-      {
-        "sectionId": "authRequest",
-        "slot": "Content",
-        "ogn": "structural-only"
-      },
-      {
-        "sectionId": "actions",
-        "slot": "Content",
-        "ogn": "structural-only"
-      }
-    ]
+      {"sectionId": "intro", "slot": "Content", "ogn": "structural-only"},
+      {"sectionId": "authSelect", "slot": "Content", "ogn": "ogn-mbr-auth-select"},
+      {"sectionId": "authRequest", "slot": "Content", "ogn": "ogn-mbr-auth-request"},
+      {"sectionId": "actions", "slot": "Bottom", "ogn": "structural-only"}
+    ],
+    "raw": "Header 휴면 해제; intro thin title; authSelect three rows 휴대폰/PASS/공동인증서; section divider; authRequest code field with inline resend/timer/notices/secondary confirm; Bottom 본인 확인 완료하기."
   },
   "sections": [
     {
       "sectionId": "intro",
       "slot": "Content",
       "ogn": "structural-only",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "patternEvidence": {
-        "raw": "Intro text frames the dormant-account release task: \"휴면 해제를 위해 본인 확인이 필요해요\"."
-      },
-      "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Screen.config.ts selects PageStackContents title slot + Text(sectionTitle) for the thin flow-context note."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "Intro is structural-only and carries the POL-MBR-AUTH-001-01 gate in 휴면 해제 context without creating a new OGN."
-      },
-      "layoutStrategy": {
-        "raw": "Place a single leading section-title text before authSelect; no callout, hero card, or divider before the choice list."
-      },
-      "layoutContract": {
-        "role": "intro",
-        "structure": "Thin PageStack title note that introduces 본인 확인 as required for 휴면 해제.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "PageStackContents title slot + Text(sectionTitle)",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "휴면 해제 문맥을 알리는 얇은 leading 텍스트 한 줄을 PageStackContents title slot에 둠 — route CSS 없이 callout/hero가 아닌 muted intro. POL-MBR-AUTH-001-01 의도를 휴면 해제 문맥으로 표현하고 새 정책을 발명하지 않음.",
-          "risk": "None recorded."
-        }
-      ]
+      "appliedGovernanceRefs": ["VOT_RUL", "UXPT_NAV"],
+      "ognBoundaryDecision": {"decision": "structural-only", "reason": "Intro is screen-level flow context and does not create a new OGN."},
+      "layoutContract": {"role": "flow-context-title", "structure": "PageStackContents title slot with Text(sectionTitle)", "alignment": "leading", "density": "thin intro", "wrapping": "one or two lines without callout surface", "distortionRisk": "Callout/hero would overstate SB-only 휴면 context."},
+      "componentCandidates": [{"name": "PageStackContents title slot + Text(sectionTitle)", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The PageStack title slot owns the leading text rhythm and keeps the dormant-account context lightweight without raw spacing or a new component.", "risk": "None"}]
     },
     {
       "sectionId": "authSelect",
       "slot": "Content",
-      "ogn": "structural-only",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "patternEvidence": {
-        "raw": "Auth selection rail shows three radio rows in policy order: 휴대폰, PASS, 공동인증서."
-      },
-      "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Screen.config.ts selects AuthSelect (ogn-mbr-auth-select), reused from the FP-003 authentication OGN."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "authSelect is the ogn-mbr-auth-select boundary and owns the single-choice list plus loading/error states."
-      },
-      "layoutStrategy": {
-        "raw": "Use one card surface with three ListSelected(radio) rows separated by contents dividers."
-      },
-      "layoutContract": {
-        "role": "authSelect",
-        "structure": "CardBoundary choice list with 휴대폰, PASS, 공동인증서 rows and same-layout loading skeleton.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "AuthSelect (ogn-mbr-auth-select)",
-          "source": "new-organism",
-          "fit": "strong",
-          "selected": true,
-          "reason": "FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TitleSection + 단일 card surface + 3행 ListSelected(radio) + contents divider로 layoutContract/Distortion Gate 충족.",
-          "risk": "None recorded."
-        }
-      ]
+      "ogn": "ogn-mbr-auth-select",
+      "appliedGovernanceRefs": ["UXPT_LOD", "VOT_RUL"],
+      "ognBoundaryDecision": {"decision": "reuse-shared-new-ogn", "reason": "Screen.map.md declares the same NEW OGN shared with FP-003; do not duplicate or edit it for FP-008 only."},
+      "layoutContract": {"role": "single-choice-list", "structure": "TitleSection plus RQRCard radio rows with contents dividers", "alignment": "leading list rows", "density": "compact card rows", "wrapping": "method labels stay stable", "distortionRisk": "Hand-stacked radio rows would lose card/divider/loading skeleton ownership."},
+      "componentCandidates": [{"name": "AuthSelect (ogn-mbr-auth-select)", "source": "new-organism", "fit": "strong", "selected": true, "reason": "AuthSelect structurally owns the fixed policy order, single-select behavior, card surface, contents dividers, and same-layout loading skeleton.", "risk": "Shared with FP-003, so screen-specific changes must avoid organism edits."}]
     },
     {
       "sectionId": "authRequest",
       "slot": "Content",
-      "ogn": "structural-only",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "patternEvidence": {
-        "raw": "Auth request rail shows a 6-digit numeric code field, timer/helper text, resend action, state notices, and secondary confirmation."
-      },
-      "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Screen.config.ts selects AuthRequest (ogn-mbr-auth-request), reused from the FP-003 authentication request OGN."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "authRequest is the ogn-mbr-auth-request boundary and owns verification-code entry, resend limits, timer, and error states."
-      },
-      "layoutStrategy": {
-        "raw": "Place the code field after the authSelect section divider with inline resend, timer helper, state Notice, and secondary 인증 확인."
-      },
-      "layoutContract": {
-        "role": "authRequest",
-        "structure": "FieldStack verification-code section with maxLength 6 numeric input, inline resend action, timer helper, and state notices.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "AuthRequest (ogn-mbr-auth-request)",
-          "source": "new-organism",
-          "fit": "strong",
-          "selected": true,
-          "reason": "FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족.",
-          "risk": "None recorded."
-        }
-      ]
+      "ogn": "ogn-mbr-auth-request",
+      "appliedGovernanceRefs": ["UXPT_BTN", "UXPT_ERR", "UXPT_LOD", "VOT_RUL"],
+      "ognBoundaryDecision": {"decision": "reuse-shared-new-ogn", "reason": "Screen.map.md declares the same NEW OGN shared with FP-003; screen state is lifted in FP-008."},
+      "layoutContract": {"role": "verification-code-field", "structure": "TitleSection, FieldStack TextField with inline resend, timer helper, state Notice, secondary confirm action", "alignment": "leading form group", "density": "detail-form field rhythm", "wrapping": "helper and notices wrap inside content rail", "distortionRisk": "Separate resend button or primary confirm would violate inline action and CTA hierarchy."},
+      "componentCandidates": [{"name": "AuthRequest (ogn-mbr-auth-request)", "source": "new-organism", "fit": "strong", "selected": true, "reason": "AuthRequest directly owns numeric maxLength, inline resend action, timer helper, policy-backed notices, blocked state, and secondary confirm without route-level layout fixes.", "risk": "Shared with FP-003, so FP-008 keeps changes at Screen.tsx state wiring."}]
     },
     {
       "sectionId": "actions",
-      "slot": "Content",
+      "slot": "Bottom",
       "ogn": "structural-only",
-      "policy": "from Screen.config.ts buildSelections",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "patternEvidence": {
-        "raw": "Bottom rail contains the single primary CTA \"본인 확인 완료하기\" and remains gated until identity confirmation completes."
-      },
-      "patternDecision": {
-        "pattern": "legacy migration",
-        "reason": "Screen.config.ts selects SinglePrimaryAction + ActionButton(primary) for the fixed Bottom gate."
-      },
-      "ognBoundaryDecision": {
-        "decision": "structural-only",
-        "reason": "actions is structural-only because AppScreen.Bottom owns the physical CTA rail."
-      },
-      "layoutStrategy": {
-        "raw": "Keep the primary CTA fixed in Bottom(preset=\"primary-cta\") and disabled before 본인 확인 completion."
-      },
-      "layoutContract": {
-        "role": "actions",
-        "structure": "Single fixed Bottom primary action that advances to NOVA-MBR-FP-009-0 after identity confirmation.",
-        "alignment": "see visual screen",
-        "density": "match reference",
-        "wrapping": "preserve readable wrapping",
-        "distortionRisk": "See distortionGates."
-      },
-      "componentCandidates": [
-        {
-          "name": "SinglePrimaryAction + ActionButton(primary)",
-          "source": "componentCandidates",
-          "fit": "strong",
-          "selected": true,
-          "reason": "AppScreen.Bottom(preset=primary-cta) 고정 rail + 단일 Primary solid '본인 확인 완료하기', 본인 확인 완료 전 disabled (POL-MBR-AUTH-001-01). route-level CSS 없음.",
-          "risk": "None recorded."
-        }
-      ]
+      "appliedGovernanceRefs": ["UXPT_BTN", "UXPT_NAV"],
+      "ognBoundaryDecision": {"decision": "structural-only", "reason": "Screen owns progression to FP-009 after auth completion."},
+      "layoutContract": {"role": "bottom-primary-action", "structure": "SinglePrimaryAction with ActionButton primary", "alignment": "full-width fixed bottom rail", "density": "primary-cta rail", "wrapping": "label remains one action", "distortionRisk": "CTA in content would overlap long auth states and break rail contract."},
+      "componentCandidates": [{"name": "SinglePrimaryAction + ActionButton(primary)", "source": "componentCandidates", "fit": "strong", "selected": true, "reason": "The Bottom composition owns the fixed primary rail and disabled/enabled visual hierarchy while the screen gates completion state.", "risk": "None"}]
     }
   ],
   "policyOgnMatrix": [
-    {
-      "requirement": "intro",
-      "sourceRef": "Screen.diagram.md legacy migration",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
-      "section": "intro",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "layoutContractSummary": "Thin flow-context note before authentication choices; no callout or divider."
-    },
-    {
-      "requirement": "authSelect",
-      "sourceRef": "Screen.diagram.md legacy migration",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
-      "section": "authSelect",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "layoutContractSummary": "Three-option single-choice card in fixed policy order with contents dividers."
-    },
-    {
-      "requirement": "authRequest",
-      "sourceRef": "Screen.diagram.md legacy migration",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
-      "section": "authRequest",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "layoutContractSummary": "Verification-code FieldStack with inline resend, timer, state notices, and secondary confirmation."
-    },
-    {
-      "requirement": "actions",
-      "sourceRef": "Screen.diagram.md legacy migration",
-      "policy": "from Screen.config.ts buildSelections",
-      "ogn": "structural-only",
-      "section": "actions",
-      "appliedGovernanceRefs": [
-        "UXPT_BTN",
-        "UXPT_ERR",
-        "UXPT_LOD",
-        "UXPT_NAV",
-        "VOT_RUL"
-      ],
-      "layoutContractSummary": "Fixed Bottom primary CTA gated by completed identity confirmation."
-    }
+    {"section": "authSelect", "ognId": "ogn-mbr-auth-select", "policyRefs": ["POL-MBR-AUTH-002-01", "POL-MBR-AUTH-002-05", "POL-MBR-AUTH-002-09"]},
+    {"section": "authRequest", "ognId": "ogn-mbr-auth-request", "policyRefs": ["POL-MBR-AUTH-001-01", "POL-MBR-AUTH-003-01", "POL-MBR-AUTH-003-03", "POL-MBR-AUTH-004-01", "POL-MBR-AUTH-004-02", "POL-MBR-AUTH-005-01", "POL-MBR-AUTH-005-03", "POL-MBR-AUTH-005-07"]}
   ],
   "distortionGates": [
-    "Preserve AppScreen rails: Header, scrollable Content, fixed Bottom(preset=\"primary-cta\"). CTA never moves into scroll content.",
-    "intro is a thin context note only — not a callout/hero, no invented 휴면 정책 facts. It carries POL-MBR-AUTH-001-01 intent in 휴면 해제 framing.",
-    "One visible 4px SectionDivider band between authSelect and authRequest. No plain-gap substitute; no extra section bands. intro→authSelect has no band.",
-    "authSelect: 3 rows in one card surface separated by Divider(type=\"contents\") (1px). Not FieldStack gaps, not a section band. Fixed order 휴대폰 → PASS → 공동인증서 (POL-MBR-AUTH-002-09). Single-select only (POL-MBR-AUTH-002-01).",
-    "authSelect typography: all 3 labels equal Text(listTitle); emphasisRule: selected-row-only. Any section-title-scale row = controlLabelScale: too-large → do not approve.",
-    "authSelect loading: identical-layout 3-row skeleton (UXPT_LOD). No bare spinner, no layout jump.",
-    "authRequest resend is an inline field action on the code TextField (actionButton), never a separate sibling content button.",
-    "authRequest timer is a validity indicator near/in the field, NOT a second input field (SB text-field-auth-timer is a structural hint only).",
-    "authRequest error/limit copy may wrap and must not be truncated or collide with the fixed Bottom CTA.",
-    "blocked state (POL-MBR-AUTH-005-03) disables code field AND resend; expired (cautionary) keeps resend enabled (subject to cooldown/limit).",
-    "Single screen Primary (UXPT_BTN): in-section 인증 확인 strong action must not compete as a second Primary solid; resend is Secondary outline.",
-    "Flow-context: intro/title/CTA copy use 휴면 해제 context (not 가입). Same NEW OGNs as FP-003-0; transition target is FP-009 (config concern, not diagram structure).",
-    "No route-level margin/padding/raw width/fontSize/color to fix alignment. Card/row/divider/field-action surfaces are component-owned.",
-    "No legacy reuse: no (nova-mbr-legacy) / nova-mbr-legacy organism imported, referenced, or used as wireReference.",
-    "SB-only E4 (외부 인증기관 오류) renders only as generic system-error copy (UXPT_ERR); no invented alternative-method UI/eligibility.",
-    "DESIGN_PATTERNS correction applied: D3 sections split into separate PageStackContents, D7 auth flow wired, D6 confirm action moved out of FieldStack.",
-    "C1 — 인증번호 6자리 미충족은 TextField error/helperText slot 소유. 상태 레벨 메시지(만료=cautionary / 한도초과·시스템=negative)만 Notice(rqr-notice) tone — Callout tone 분기 부재로 Diagram 기록 fallback 적용.",
-    "C2 — authSelect↔authRequest 경계만 SectionDivider(thickness=\"section\") 4px band. intro→authSelect에는 band 없음(Diagram 명시). 카드 내부 3행은 Divider(type=\"contents\") 1px.",
-    "C3 — 해당 없음(완료 화면 아님).",
-    "C4 — 각 OGN 섹션은 PageStackContents + TitleSection + content slot. intro는 PageStackContents title slot의 얇은 Text(callout/hero 아님). 재요청은 TextField actionButton slot.",
-    "C5 — 해당 없음(약관 동의 화면 아님).",
-    "C6 — 화면 진행 Primary는 AppScreen.Bottom(preset=\"primary-cta\") 단일 ActionButton(variant primary, \"본인 확인 완료하기\"). 인증 확인/재요청은 OGN 내 secondary 위계, 2 Primary 경쟁 없음."
+    "Keep authSelect/authRequest shared with FP-003; FP-008-specific work belongs in Screen.tsx/config/diagram.",
+    "Intro remains a thin PageStack title, not a callout or invented dormant-account policy.",
+    "authSelect and authRequest are separated by one SectionDivider band.",
+    "Bottom CTA stays fixed and is disabled until verification completes."
   ],
-  "migrationGovernanceRefs": [
-    "UXPT_BTN",
-    "UXPT_ERR",
-    "UXPT_LOD",
-    "UXPT_NAV",
-    "VOT_RUL"
-  ]
+  "renderEvidence": {
+    "geometryEvidence": {
+      "tool": "Chrome DevTools Protocol via local headless Chrome",
+      "url": "http://localhost:3010/NOVA-MBR-FP-008-0",
+      "viewport": {"width": 393, "height": 852},
+      "rails": {
+        "systemHeader": {"y": 0, "height": 44, "bottom": 44},
+        "header": {"y": 44, "height": 52, "bottom": 96},
+        "content": {"y": 96, "height": 648, "bottom": 744},
+        "bottom": {"y": 744, "height": 108, "bottom": 852}
+      },
+      "sections": {
+        "intro": {"y": 96, "height": 274, "bottom": 370},
+        "authSelect": {"x": 12, "y": 154, "width": 369, "height": 184, "bottom": 338},
+        "authRequest": {"x": 12, "y": 406, "width": 369, "height": 332, "bottom": 737}
+      },
+      "cta": {"text": "본인 확인 완료하기", "x": 24, "y": 769, "width": 345, "height": 56, "bottom": 825, "visible": true, "disabled": true},
+      "overlap": {"systemHeader": false, "headerContent": false, "contentBottom": false, "bottomVisible": true}
+    }
+  },
+  "iterationPasses": [
+    {"pass": 1, "result": "pass", "notes": "Kept shared auth OGNs untouched; verified intro, auth sections, and disabled bottom CTA fit the rail contract."}
+  ],
+  "contractSync": {"status": "synced", "notes": "Screen.tsx/config/diagram agree on FP-008-specific intro and shared auth OGN reuse."}
 }
-	</script>
-	<script>const c=document.getElementById('diagram-contract'),p=document.getElementById('diagram-contract-preview');if(c&&p){p.textContent=JSON.stringify(JSON.parse(c.textContent),null,2);}</script>
+</script>
 </body>
 </html>
