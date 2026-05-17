@@ -26,7 +26,7 @@
 
 정책과 governance, 디자인 문서가 충돌하면 정책 의미를 먼저 보존하고, UX governance의 행동·상태·문체 규칙을 적용한 뒤, 표현 방식은 디자인 foundation과 pattern 안에서 해결한다. 문서화된 토큰·패턴·컴포넌트 어휘 밖의 inline UI, 자체 spacing, 자체 fontSize가 필요하면 임의 확장하지 말고 시스템 깨짐 신호로 기록한다.
 
-`Screen.map.md`, `Screen.diagram.md`, `Screen.config.ts`, 실제 구현이 `packages/policy-core/policies` 의 정책 원문/정의와 불일치하면 항상 policy-core를 우선한다. 불일치는 map에 기록하되, 최종 화면 요구·copy·구현은 policy-core 기준으로 수정한다.
+`Screen.map.md`, `Screen.diagram.html`, `Screen.config.ts`, 실제 구현이 `packages/policy-core/policies` 의 정책 원문/정의와 불일치하면 항상 policy-core를 우선한다. 불일치는 map에 기록하되, 최종 화면 요구·copy·구현은 policy-core 기준으로 수정한다.
 
 SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상으로 삼지 않는다. 실제 페이지를 재현하거나 신규 화면의 시각 기준을 확인하는 작업에서만 Figma 목업 SOT를 함께 확인한다. Figma 목업은 최종 화면의 구체적 배치와 상태 참고 기준이며, foundation token과 pattern contract를 우회하는 근거로 사용하지 않는다.
 
@@ -80,13 +80,15 @@ Codex 스킬을 사용할 수 있는 환경에서는 화면 생성/수정 요청
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
-3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`.
+3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.html`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.html`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<route-group-or-domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
 페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md`다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
 
-`Screen.map.md` 는 정책 의미, `Screen.diagram.md` 는 화면 구조, `Screen.config.ts` 는 route 등록과 검증 가능한 ID 색인을 소유한다. 세 파일은 서로 내용을 재서술하지 않고 policy ID와 OGN ID로 연결한다.
+`Screen.map.md` 는 정책 의미, `Screen.diagram.html` 는 화면 구조, `Screen.config.ts` 는 route 등록과 검증 가능한 ID 색인을 소유한다. 세 파일은 서로 내용을 재서술하지 않고 policy ID와 OGN ID로 연결한다.
+
+`Screen.diagram.html`을 표준 계약으로 사용한다. 전환 기간의 기존 `Screen.diagram.md`는 migration source/reference로 보존하며, HTML 생성 때문에 삭제하지 않는다. 신규/수정 화면은 HTML의 보이는 Visual Screen / Review Summary / Section Inspector와 숨겨진 `#diagram-contract` JSON을 표준 계약으로 사용한다. Visual Screen은 단순 섹션 요약이 아니라 실제 모바일 rail, 레이어 구조, 표시 텍스트, 좌우 label-value row, fixed bottom action이 눈으로 검수 가능해야 한다. 최종 HTML 계약은 `lifecycle: "synced"`와 필수 geometry 기반 `renderEvidence`, `iterationPasses`, `contractSync`를 포함한다. Screenshot/capture artifact는 가능할 때만 보조 증거로 남긴다.
 
 ## 패키지 책임
 

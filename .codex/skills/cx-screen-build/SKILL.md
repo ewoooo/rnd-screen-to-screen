@@ -1,18 +1,30 @@
 ---
 name: cx-screen-build
-description: Implement Phase 4 CX mobile screens in this repository from approved Screen.map.md and Screen.diagram.md. Use when Codex must create or update organisms, Screen.tsx, and Screen.config.ts using cx-layout, cx-components, cx-icons, and cx-tokens.
+description: Compatibility/phase entrypoint for Phase 4 CX mobile screen implementation from approved Screen.map.md and Screen.diagram.html. Use when Codex must create or update organisms, Screen.tsx, and Screen.config.ts using cx-layout, cx-components, cx-icons, and cx-tokens; route to newer stage skills when available.
 ---
 
 # CX Screen Build
 
-Use this for Phase 4 only. Build translates approved Map and Diagram decisions into code. Do not reinterpret policy or redesign layout during Build.
+Use this as the compatibility entrypoint for Phase 4 only. Build translates approved Map and Diagram decisions into code. Do not reinterpret policy or redesign layout during Build.
 
 This skill executes Step 7-8 from `SCREEN_GENERATION_FLOW.md`: Build Plan and Implementation. The flow document owns the procedure and document routing; this skill enforces it during code changes.
+
+## Compatibility Routing
+
+If newer stage-specific skills are available in the current Codex environment, route to them when they better match the work and use this file as the Phase 4 compatibility contract:
+
+- Use `cx-screen-fast-build` for scoped implementation from an already approved Map and Diagram when no new design judgment is needed.
+- Use `cx-screen-design-iterate` when rendered evidence or review feedback requires a deliberate Diagram/Build/Render loop.
+- Use `cx-screen-contract-sync` after scoped implementation metadata changes that need Map/Diagram/config consistency alignment.
+- Use `cx-screen-render-evidence` after implementation when geometry evidence is needed for approval or Phase 5 handoff.
+- Use this compatibility entrypoint directly for full Step 7-8 work: Build Plan and Implementation.
+
+When no newer stage skill is available, execute the workflow below directly. Do not create local replacement skills or broaden the write scope. Stage routing must preserve the same approved Map/Diagram inputs, Build Plan gate, component selection rules, `Screen.config.ts generation` evidence, and Component Spacing Review.
 
 ## Required Reading
 
 - The target screen's `Screen.map.md`
-- The target screen's `Screen.diagram.md`
+- The target screen's `Screen.diagram.html`
 - `DESIGN_FOUNDATION.md`
 - `DESIGN_PATTERNS.md`
 - package AGENTS files nearest the files being edited
@@ -44,6 +56,16 @@ Do not implement until route-level margin/padding patch, raw color, raw spacing,
 - Keep layout ownership explicit: `Screen.tsx` owns AppScreen rails and slots, OGN owns policy-bearing body composition, `@pxds/cx-layout` owns layout rails/primitives, and `@pxds/cx-components` owns internal component alignment/state visuals.
 - If implementation reveals a wrong boundary, wrong reference, missing layoutContract, or candidate vocabulary gap, stop and return to the relevant Step 3-6 decision instead of quietly redesigning in code.
 
+## Component Spacing Review
+
+After the target `Screen.tsx` is fully assembled, review spacing between components before handing the screen to Register/Verify.
+
+- Check section-to-section gaps, OGN-to-OGN gaps, Header-to-Content start, Content-to-Bottom rail clearance, and fixed bottom CTA spacing.
+- Confirm spacing ownership matches the Diagram: `Screen.tsx` owns AppScreen rails/slots, layout primitives own content rails and stack gaps, organisms own policy-bearing body composition, and components own internal padding.
+- Compare the assembled screen against `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, and the target `Screen.diagram.html` `diagram-contract.sections[].layoutContract`.
+- Do not fix spacing with route-level raw margin/padding, raw spacing values, or custom font-size. If spacing cannot be corrected through the approved layout primitives or component/organism boundary, return to Diagram or record a vocabulary gap.
+- Record the result in `Screen.config.ts generation.buildSelections` when supported, or in the work log as `Component Spacing Review: pass | revised | blocked` with the sections reviewed and any change made.
+
 ## Component Selection
 
 For each section, decide in this order:
@@ -65,6 +87,7 @@ If Build cannot satisfy a recorded structure gate or needs an unresolved authora
 
 ## Done Criteria
 
-- Every OGN/slot in `Screen.diagram.md` exists in code and passes its `layoutContract`/Distortion Gates, or has a recorded deviation.
+- Every OGN/slot in `Screen.diagram.html` exists in code and passes its `layoutContract`/Distortion Gates, or has a recorded deviation.
+- `Component Spacing Review` has been performed after `Screen.tsx` assembly and before Register/Verify.
 - `Screen.config.ts generation.policyRefs` and `generation.ognIds` match Map and Diagram.
 - Mobile lint/build can run without import or type errors.

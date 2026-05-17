@@ -1,6 +1,6 @@
 ---
 name: cx-screen-register-verify
-description: Register and verify Phase 5 CX mobile screens in this repository. Use when Codex must add screen route catalog entries, confirm preview/mobile exposure, and run policy, lint, build, pattern, and foundation checks after a screen is implemented.
+description: Register and verify Phase 5 CX mobile screens in this repository. Use when Codex must add screen route catalog entries, confirm preview/mobile exposure, and run policy, lint, build, pattern, foundation, and required geometry checks after a screen is implemented.
 ---
 
 # CX Screen Register Verify
@@ -13,7 +13,7 @@ Use this for Step 9 / Phase 5 and final verification only. This skill executes `
 - `AGENTS.md` `## 공통 검증`
 - target `Screen.config.ts`
 - target `Screen.map.md`
-- target `Screen.diagram.md`
+- target `Screen.diagram.html`
 - `apps/mobile/src/scripts/screen-routes/`
 
 ## Register
@@ -43,9 +43,11 @@ when route catalog, preview registry, or `@screen/mobile/screens` consumers chan
 
 Run Storybook or figma-export builds only when their package surfaces changed.
 
+If `cx-screen-render-evidence` is available, use it for the rendered geometry evidence portion of Phase 5. If `cx-screen-audit` is available, use it for read-only Map/Diagram/config/implementation/route consistency before final reporting when the screen changed materially.
+
 ## Pattern And Foundation Checks
 
-In addition to command checks, verify the target against `Screen.diagram.md` Distortion Gates:
+In addition to command checks, verify the target against `Screen.diagram.html` Distortion Gates and `#diagram-contract`:
 
 - target route opens in a mobile viewport
 - Header/Content/Bottom rails match the diagram
@@ -53,13 +55,14 @@ In addition to command checks, verify the target against `Screen.diagram.md` Dis
 - no overlap, blank screen, overflow, or unexpected layout shift
 - pattern-specific checklist passes, such as Completion title/check/summary/bottom CTA rules
 - foundation scan does not reveal raw hex color, raw spacing, raw font-size, or route-level layout patch in target files
+- Component Spacing Review was completed after `Screen.tsx` assembly, covering section gaps, OGN gaps, Header/Content start, Content/Bottom clearance, and bottom CTA spacing
 
-For UI-affecting changes, produce layout evidence beyond text existence:
+For UI-affecting changes, geometry evidence is required and screenshot evidence is optional:
 
-- screenshot evidence, or
-- bounding box evidence for Header, Content, Bottom, and primary CTA, including viewport fit and non-overlap.
+- required: bounding box or equivalent geometry evidence for Header, Content, Bottom, and primary CTA, including viewport fit, ordering, scroll/rail behavior, and non-overlap.
+- optional: screenshot evidence, useful for visual audit and communication but not a substitute for geometry checks.
 
-Completion/Form/Detail migrations must not be approved by text-only checks. If a fixed bottom rail is involved, verify that the rail stays inside the viewport and does not cover the final content section.
+Completion/Form/Detail migrations must not be approved by text-only checks or screenshot-only checks. If a fixed bottom rail is involved, verify by geometry that the rail stays inside the viewport and does not cover the final content section.
 
 If a layoutContract, Distortion Gate, or command check fails, return to the relevant phase instead of weakening validation.
 
@@ -67,5 +70,6 @@ If a layoutContract, Distortion Gate, or command check fails, return to the rele
 
 - State which checks passed.
 - State pattern/foundation checks separately from command checks.
+- State geometry evidence separately from screenshot evidence. If no screenshot was taken, say screenshot evidence was skipped because it is optional.
 - If a check fails, fix the contract violation or return to the relevant phase instead of weakening validation.
 - Mention remaining audit warnings separately from build failures.

@@ -25,6 +25,15 @@ export type {
 } from "./candidate/rqr-contents-detail";
 export { RQRContentsDetail } from "./candidate/rqr-contents-detail";
 export type {
+	RQRCardFigmaBridgeProps,
+	RQRCardProps,
+} from "./candidate/rqr-card";
+export {
+	RQRCard,
+	type RQRCardPadding,
+	rqrCardVariants,
+} from "./candidate/rqr-card";
+export type {
 	AccordionFigmaBridgeProps,
 	AccordionProps,
 } from "./components/accordion";

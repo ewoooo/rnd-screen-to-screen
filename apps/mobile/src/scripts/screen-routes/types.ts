@@ -5,6 +5,8 @@ import type {
 
 export type ScreenGroup =
 	| "nova-mbr-legacy"
+	| "nova-mbr-fp"
+	| "chg"
 	| "cx-example"
 	| "wds-mbr-legacy";
 export type ScreenLifecycleStatus = SpecScreenLifecycleStatus;

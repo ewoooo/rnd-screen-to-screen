@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>CX-EXAMPLE-COMPLETE-PLAN-CHANGE 다이어그램</title>
+	<style>
+		:root {
+			--bg: #f5f6f8;
+			--ink: #171719;
+			--muted: #6b7280;
+			--line: #d9dde3;
+			--surface: #ffffff;
+			--soft: #eef1f5;
+			--brand: #2563eb;
+			--warn: #b45309;
+			--radius-lg: 24px;
+			--radius-md: 16px;
+			--rail: 361px;
+			font-family:
+				-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			background: var(--bg);
+			color: var(--ink);
+		}
+
+		main {
+			display: grid;
+			grid-template-columns: minmax(393px, 430px) minmax(360px, 1fr);
+			gap: 32px;
+			align-items: start;
+			max-width: 1120px;
+			margin: 0 auto;
+			padding: 32px;
+		}
+
+		.diagram-title {
+			grid-column: 1 / -1;
+		}
+
+		.diagram-title h1 {
+			margin: 0 0 8px;
+			font-size: 24px;
+			line-height: 32px;
+			font-weight: 700;
+			letter-spacing: 0;
+		}
+
+		.diagram-title p {
+			margin: 0;
+			color: var(--muted);
+			font-size: 14px;
+			line-height: 22px;
+		}
+
+		.phone {
+			width: 393px;
+			min-height: 852px;
+			border: 1px solid #cbd5e1;
+			border-radius: 28px;
+			background: var(--surface);
+			overflow: hidden;
+			box-shadow: 0 16px 48px rgb(15 23 42 / 16%);
+		}
+
+		.system-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 44px;
+			padding: 0 22px;
+			font-size: 13px;
+			font-weight: 600;
+		}
+
+		.app-header {
+			display: flex;
+			align-items: center;
+			height: 56px;
+			padding: 0 16px;
+			border-bottom: 1px solid transparent;
+			font-size: 18px;
+			font-weight: 700;
+		}
+
+		.content {
+			min-height: 654px;
+			padding: 28px 16px 28px;
+			background: var(--surface);
+		}
+
+		.page-stack {
+			width: var(--rail);
+			margin: 0 auto;
+		}
+
+		.completion-hero {
+			margin-bottom: 28px;
+		}
+
+		.completion-hero h2 {
+			margin: 0 0 8px;
+			font-size: 24px;
+			line-height: 32px;
+			font-weight: 700;
+			letter-spacing: 0;
+		}
+
+		.completion-hero p {
+			margin: 0;
+			color: #4b5563;
+			font-size: 16px;
+			line-height: 24px;
+		}
+
+		.summary-card {
+			padding: 24px;
+			border-radius: 20px;
+			background: #f3f5f7;
+		}
+
+		.summary-card h3 {
+			margin: 0 0 16px;
+			font-size: 17px;
+			line-height: 24px;
+			font-weight: 700;
+			letter-spacing: 0;
+		}
+
+		.kv-list {
+			display: grid;
+			gap: 12px;
+			margin: 0;
+		}
+
+		.kv-row {
+			display: grid;
+			grid-template-columns: minmax(104px, 1fr) minmax(120px, auto);
+			gap: 16px;
+			align-items: start;
+			font-size: 15px;
+			line-height: 22px;
+		}
+
+		.kv-row dt {
+			color: #555b66;
+		}
+
+		.kv-row dd {
+			margin: 0;
+			text-align: right;
+			font-weight: 600;
+		}
+
+		.bottom {
+			min-height: 98px;
+			padding: 12px 16px 22px;
+			border-top: 1px solid var(--soft);
+			background: var(--surface);
+		}
+
+		.cta {
+			width: var(--rail);
+			height: 56px;
+			margin: 0 auto;
+			border: 0;
+			border-radius: 14px;
+			background: var(--brand);
+			color: #fff;
+			font-size: 17px;
+			font-weight: 700;
+		}
+
+		.meta {
+			display: grid;
+			gap: 16px;
+		}
+
+		.panel {
+			border: 1px solid var(--line);
+			border-radius: var(--radius-md);
+			background: var(--surface);
+			padding: 18px;
+		}
+
+		.panel h2 {
+			margin: 0 0 12px;
+			font-size: 16px;
+			line-height: 24px;
+		}
+
+		.panel p,
+		.panel li {
+			color: #374151;
+			font-size: 14px;
+			line-height: 22px;
+		}
+
+		.panel p {
+			margin: 0 0 10px;
+		}
+
+		.panel ul {
+			margin: 0;
+			padding-left: 18px;
+		}
+
+		.panel details {
+			margin-top: 12px;
+			border-top: 1px solid var(--line);
+			padding-top: 12px;
+		}
+
+		.panel summary {
+			cursor: pointer;
+			font-size: 14px;
+			line-height: 22px;
+			font-weight: 700;
+		}
+
+		.panel pre {
+			max-height: 420px;
+			overflow: auto;
+			margin: 12px 0 0;
+			padding: 12px;
+			border-radius: 10px;
+			background: #101827;
+			color: #e5e7eb;
+			font-size: 12px;
+			line-height: 18px;
+			white-space: pre-wrap;
+			word-break: break-word;
+		}
+
+		.review-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 8px;
+		}
+
+		.review-item {
+			min-height: 68px;
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			padding: 10px;
+			background: #fbfcfe;
+		}
+
+		.review-item strong {
+			display: block;
+			margin-bottom: 4px;
+			font-size: 13px;
+			line-height: 18px;
+		}
+
+		.review-item span {
+			color: #475569;
+			font-size: 12px;
+			line-height: 18px;
+		}
+
+		.status {
+			display: inline-flex;
+			align-items: center;
+			min-height: 22px;
+			margin-bottom: 8px;
+			padding: 2px 8px;
+			border-radius: 999px;
+			background: #dcfce7;
+			color: #166534;
+			font-size: 12px;
+			line-height: 18px;
+			font-weight: 700;
+		}
+
+		.section-card {
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			padding: 12px;
+			background: #fbfcfe;
+		}
+
+		.section-card + .section-card {
+			margin-top: 10px;
+		}
+
+		.section-card h3 {
+			margin: 0 0 8px;
+			font-size: 14px;
+			line-height: 20px;
+		}
+
+		.section-card dl {
+			display: grid;
+			grid-template-columns: 82px 1fr;
+			gap: 6px 10px;
+			margin: 0;
+			font-size: 13px;
+			line-height: 19px;
+		}
+
+		.section-card dt {
+			color: var(--muted);
+		}
+
+		.section-card dd {
+			margin: 0;
+			color: #1f2937;
+		}
+
+		.candidate-list {
+			display: grid;
+			gap: 8px;
+			margin-top: 12px;
+		}
+
+		.candidate {
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			padding: 10px;
+			background: var(--surface);
+		}
+
+		.candidate strong {
+			display: block;
+			margin-bottom: 6px;
+			font-size: 13px;
+			line-height: 18px;
+		}
+
+		.candidate p {
+			margin: 0;
+			font-size: 12px;
+			line-height: 18px;
+		}
+
+		.fit-strong {
+			background: #dcfce7;
+			color: #166534;
+		}
+
+		.fit-medium {
+			background: #fef3c7;
+			color: #92400e;
+		}
+
+		.fit-reject {
+			background: #fee2e2;
+			color: #991b1b;
+		}
+
+		.token {
+			display: inline-flex;
+			align-items: center;
+			min-height: 24px;
+			margin: 0 4px 4px 0;
+			padding: 2px 8px;
+			border-radius: 999px;
+			background: var(--soft);
+			color: #334155;
+			font-size: 12px;
+			line-height: 18px;
+			font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		}
+
+		.warn {
+			color: var(--warn);
+			font-weight: 700;
+		}
+
+		.debug-panel {
+			display: none;
+		}
+
+		@media (max-width: 860px) {
+			main {
+				grid-template-columns: 1fr;
+				padding: 20px;
+			}
+
+			.phone {
+				width: 100%;
+				max-width: 393px;
+				justify-self: center;
+			}
+
+			.page-stack,
+			.cta {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<header class="diagram-title">
+			<h1>CX-EXAMPLE-COMPLETE-PLAN-CHANGE</h1>
+			<p>시각 계약 검수를 위한 HTML 파일럿 다이어그램입니다. 파일럿 중에는 `Screen.diagram.md`를 기존 계약 문서로 유지합니다.</p>
+		</header>
+
+		<section
+			class="phone"
+			aria-label="모바일 화면 다이어그램"
+			data-screen-id="CX-EXAMPLE-COMPLETE-PLAN-CHANGE"
+			data-route="/CX-EXAMPLE-COMPLETE-PLAN-CHANGE"
+			data-pattern="complete"
+			data-wire-reference="apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.diagram.md"
+		>
+			<div class="system-header" data-rail="SystemHeader">
+				<span>9:41</span>
+				<span>LTE 100%</span>
+			</div>
+
+			<header class="app-header" data-rail="Header" data-component="AppBar">
+				요금제 변경
+			</header>
+
+			<div class="content" data-rail="Content" data-layout-owner="@pxds/cx-layout">
+				<div class="page-stack" data-component="PageStackContents" data-width-tier="content-361">
+					<section
+						class="completion-hero"
+						data-section-id="completionHero"
+						data-ogn-id="structural-only"
+						data-pattern-role="completion-hero"
+						data-boundary="none"
+						data-layout-contract="leading completion title and supporting copy above summary card"
+					>
+						<h2>요금제 변경이 완료되었어요</h2>
+						<p>변경된 요금제는 다음 청구 주기부터 적용돼요.</p>
+					</section>
+
+					<section
+						class="summary-card"
+						data-section-id="completionSummary"
+						data-ogn-id="structural-only"
+						data-pattern-role="key-value-summary"
+						data-boundary="card"
+						data-component-candidate="RQRContentsDetail"
+						data-layout-contract="card-owned surface, header, padding, radius, stable label-value rows"
+					>
+						<h3>변경 정보</h3>
+						<dl class="kv-list">
+							<div class="kv-row" data-row-id="changed-plan">
+								<dt>변경한 요금제</dt>
+								<dd>5GX 프라임</dd>
+							</div>
+							<div class="kv-row" data-row-id="effective-date">
+								<dt>적용일</dt>
+								<dd>2026.05.16</dd>
+							</div>
+							<div class="kv-row" data-row-id="monthly-price">
+								<dt>월정액</dt>
+								<dd>89,000원</dd>
+							</div>
+						</dl>
+					</section>
+				</div>
+			</div>
+
+			<footer
+				class="bottom"
+				data-rail="Bottom"
+				data-preset="primary-cta"
+				data-section-id="actions"
+				data-pattern-role="bottom-primary-action"
+				data-boundary="bottom-fixed"
+				data-layout-contract="single full-width primary CTA fixed outside scroll content"
+			>
+				<button class="cta" type="button">확인</button>
+			</footer>
+		</section>
+
+		<aside class="meta" aria-label="다이어그램 계약 메타데이터">
+			<section class="panel">
+				<h2>화면 계약</h2>
+				<p>
+					<span class="token">패턴: 완료</span>
+					<span class="token">그룹: cx-example</span>
+					<span class="token">도메인: mbr</span>
+					<span class="token">정책 참조: 없음</span>
+					<span class="token">OGN ID: 없음</span>
+				</p>
+				<p>컴포넌트 검증용 화면입니다. 아직 정책 source는 연결하지 않았고, 레이아웃과 컴포넌트 계약만 기록합니다.</p>
+			</section>
+
+			<section class="panel">
+				<h2>검수 상태</h2>
+				<div class="review-grid">
+					<div class="review-item">
+						<strong>패턴</strong>
+						<span class="status">통과</span>
+						<span>완료 패턴의 hero, summary, fixed CTA 흐름을 유지합니다.</span>
+					</div>
+					<div class="review-item">
+						<strong>레퍼런스</strong>
+						<span class="status">통과</span>
+						<span>완료 활성화 화면의 rail과 summary 구조를 기준으로 삼습니다.</span>
+					</div>
+					<div class="review-item">
+						<strong>스페이싱</strong>
+						<span class="status">통과</span>
+						<span>PageStack, card, Bottom rail 소유 경계를 유지합니다.</span>
+					</div>
+					<div class="review-item">
+						<strong>정책/OGN</strong>
+						<span class="status">해당 없음</span>
+						<span>컴포넌트 검증 화면이므로 structural-only로 둡니다.</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="panel">
+				<h2>레퍼런스</h2>
+				<p>
+					<span class="token">기준: CX-EXAMPLE-COMPLETE-ACTIVATION</span>
+					<span class="token">패턴: complete</span>
+				</p>
+				<ul>
+					<li>완료 hero가 summary card 위에 위치합니다.</li>
+					<li>summary card는 3개의 key-value row를 갖습니다.</li>
+					<li>확인 CTA는 scroll content 밖의 fixed Bottom rail에 둡니다.</li>
+				</ul>
+			</section>
+
+			<section class="panel">
+				<h2>섹션 인스펙터</h2>
+				<div class="section-card">
+					<h3>completionHero</h3>
+					<dl>
+						<dt>slot</dt>
+						<dd>Content</dd>
+						<dt>역할</dt>
+						<dd>완료 타이틀과 보조 문구</dd>
+						<dt>경계</dt>
+						<dd>카드 없음, 구분선 없음</dd>
+						<dt>후보</dt>
+						<dd>`PageStackContents` title slot + `TitleMain(type="complete")`</dd>
+					</dl>
+					<details>
+						<summary>후보 평가 보기</summary>
+						<div class="candidate-list">
+							<div class="candidate">
+								<strong><span class="token fit-strong">strong · 선택</span> `PageStackContents` title slot + `TitleMain(type="complete")`</strong>
+								<p>완료 hero의 leading 구조, title/subtitle 위계, content spacing을 route-level patch 없이 만족합니다.</p>
+							</div>
+							<div class="candidate">
+								<strong><span class="token fit-reject">reject</span> PageStackContents + TitleSection</strong>
+								<p>일반 detail/form section heading에 가까워 완료 상태의 display hierarchy를 약화합니다.</p>
+							</div>
+						</div>
+					</details>
+				</div>
+				<div class="section-card">
+					<h3>completionSummary</h3>
+					<dl>
+						<dt>slot</dt>
+						<dd>Content</dd>
+						<dt>역할</dt>
+						<dd>변경 결과 key-value 요약</dd>
+						<dt>경계</dt>
+						<dd>cardBoundary</dd>
+						<dt>후보</dt>
+						<dd>RQRContentsDetail</dd>
+					</dl>
+					<details>
+						<summary>후보 평가 보기</summary>
+						<div class="candidate-list">
+							<div class="candidate">
+								<strong><span class="token fit-strong">strong · 선택</span> RQRContentsDetail</strong>
+								<p>카드 표면, header, 24px padding, 20px radius, 안정적인 label/value row를 컴포넌트가 소유합니다.</p>
+							</div>
+							<div class="candidate">
+								<strong><span class="token fit-medium">medium · 미선택</span> SectionItem(type="card") + ListText(table)</strong>
+								<p>카드 표면은 가능하지만, 현재 화면은 “변경 정보” header가 필요해 RQRContentsDetail이 더 적합합니다. 긴 값에서 value column squeeze 위험이 있습니다.</p>
+							</div>
+							<div class="candidate">
+								<strong><span class="token fit-reject">reject</span> domain key-value summary organism</strong>
+								<p>policy-bound plan-change facts가 없어 reusable domain organism을 만들면 의미 소유권이 과해집니다.</p>
+							</div>
+							<div class="candidate">
+								<strong><span class="token fit-reject">reject</span> plain ListText(table) without card surface</strong>
+								<p>필수 조건인 card surface ownership과 padding/radius ownership을 만족하지 못합니다.</p>
+							</div>
+						</div>
+					</details>
+				</div>
+				<div class="section-card">
+					<h3>actions</h3>
+					<dl>
+						<dt>slot</dt>
+						<dd>Bottom</dd>
+						<dt>역할</dt>
+						<dd>완료 확인 primary CTA</dd>
+						<dt>경계</dt>
+						<dd>bottom-fixed</dd>
+						<dt>후보</dt>
+						<dd>`AppScreen.Bottom(preset="primary-cta")` + `SinglePrimaryAction` + `ActionButton(type="default", buttonCount=1)`</dd>
+					</dl>
+					<details>
+						<summary>후보 평가 보기</summary>
+						<div class="candidate-list">
+							<div class="candidate">
+								<strong><span class="token fit-strong">strong · 선택</span> `AppScreen.Bottom(preset="primary-cta")` + `SinglePrimaryAction` + `ActionButton(type="default", buttonCount=1)`</strong>
+								<p>Bottom rail, safe-area, full-width primary CTA를 route-level width/spacing patch 없이 만족합니다.</p>
+							</div>
+							<div class="candidate">
+								<strong><span class="token fit-reject">reject</span> ActionButton(type="default", buttonCount=1) in Content</strong>
+								<p>button 자체는 가능하지만, Content 배치는 bottom-fixed boundary와 완료 확인 action contract를 위반합니다.</p>
+							</div>
+						</div>
+					</details>
+				</div>
+			</section>
+
+			<section class="panel">
+				<h2>왜곡 방지 게이트</h2>
+				<ul>
+					<li>CTA를 스크롤 콘텐츠 안으로 옮기지 않습니다.</li>
+					<li>섹션 구분선이나 독립 히어로 카드를 추가하지 않습니다.</li>
+					<li>요약 카드의 표면, 안쪽 여백, radius를 route-level CSS로 보정하지 않습니다.</li>
+					<li>정책 ID, OGN ID, 과금 규칙, navigation behavior를 임의로 만들지 않습니다.</li>
+				</ul>
+			</section>
+
+			<section class="panel debug-panel">
+				<h2>MD 계약 이관 상태</h2>
+				<p>기존 `Screen.diagram.md`의 계약 정보를 아래 JSON에 모두 이관했습니다. 화면 위쪽 DOM은 시각 검수용이고, 이 JSON은 표준 스펙 전환 시 자동 검사와 diff의 기준으로 사용할 수 있는 계약 데이터입니다.</p>
+				<details>
+					<summary>전체 계약 JSON 보기</summary>
+					<pre id="diagram-contract-preview"></pre>
+				</details>
+			</section>
+		</aside>
+	</main>
+	<script type="application/json" id="diagram-contract">
+{
+  "screenContract": {
+    "screenId": "CX-EXAMPLE-COMPLETE-PLAN-CHANGE",
+    "route": "/CX-EXAMPLE-COMPLETE-PLAN-CHANGE",
+    "group": "cx-example",
+    "domain": "mbr",
+    "source": "Figma",
+    "pattern": "complete",
+    "frame": "SKT GenUI Test 0512 / Text Section / 완료_요금제 변경",
+    "frameSize": "393x852",
+    "policyRefs": [],
+    "ognIds": [],
+    "governanceRefs": [],
+    "notApplicableReason": "Figma component proof screen. It records layout and component contract only; no policy source has been bound yet.",
+    "requiredDesignDocs": [
+      "DESIGN_PATTERNS.md",
+      "DESIGN_FOUNDATION.md",
+      "SCREEN_STRUCTURE_PRINCIPLES.md"
+    ],
+    "mapSource": "Screen.map.md",
+    "configBuildSelections": [
+      "`PageStackContents` title slot + `TitleMain(type=\"complete\")`",
+      "RQRContentsDetail",
+      "`AppScreen.Bottom(preset=\"primary-cta\")` + `SinglePrimaryAction` + `ActionButton(type=\"default\", buttonCount=1)`"
+    ],
+    "appScreenRails": [
+      "SystemHeader",
+      "Header",
+      "Content",
+      "Bottom"
+    ],
+    "headerContract": "visible title 요금제 변경; no back-navigation behavior is inferred from this structural proof screen",
+    "bottomContract": "Bottom(preset=\"primary-cta\"); the single confirmation action remains fixed outside scroll content",
+    "wireReference": {
+      "source": "apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.diagram.md",
+      "matchedParts": "simple-completion AppScreen rail, completion hero above result summary, compact summary card with three label-value rows, fixed bottom action placement",
+      "intentionalDifferences": "current screen uses plan-change copy, plan/effective-date/price rows, no guided prompt, and one primary confirmation CTA instead of the activation screen's guided two-action bottom area",
+      "limitation": "reference-only visual structure; policy/copy/OGN ids come from Screen.map.md and Screen.config.ts"
+    },
+    "referenceSearch": [
+      {
+        "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/payment-checkout.diagram.md",
+        "decision": "secondary-evidence",
+        "reason": "secondary evidence for Bottom(preset=\"primary-cta\") and key-value rows, but rejected as the primary wire because it is a long checkout/payment pattern with many divider-separated sections"
+      },
+      {
+        "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/personal-info-input.diagram.md",
+        "decision": "secondary-evidence",
+        "reason": "secondary evidence for PageStackContents title plus card/list summary, but rejected as the primary wire because it is a form/detail state rather than a completion state"
+      },
+      {
+        "source": "apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md",
+        "decision": "supporting-evidence",
+        "reason": "nearby complete pattern evidence for hero/summary/action order; used as supporting evidence only because it has legacy conversion concerns and extra sections not present here"
+      }
+    ],
+    "patternRecheck": {
+      "source": "DESIGN_PATTERNS.md#complete",
+      "result": "no-change",
+      "reason": "Completion hero, summary card, and fixed primary CTA remain in one simple-completion flow"
+    }
+  },
+  "screenWire": {
+    "rails": [
+      "AppScreen 393x852",
+      "Header",
+      "Content",
+      "Bottom(preset=\"primary-cta\")"
+    ],
+    "sections": [
+      {
+        "sectionId": "completionHero",
+        "semanticTag": [
+          "completionHero",
+          "completion-hero",
+          "leading"
+        ],
+        "text": [
+          "요금제 변경이 완료되었어요",
+          "변경된 요금제는 다음 청구 주기부터 적용돼요."
+        ]
+      },
+      {
+        "sectionId": "completionSummary",
+        "semanticTag": [
+          "completionSummary",
+          "key-value-summary",
+          "card"
+        ],
+        "cardTitle": "변경 정보",
+        "rows": [
+          {
+            "id": "changed-plan",
+            "label": "변경한 요금제",
+            "value": "5GX 프라임"
+          },
+          {
+            "id": "effective-date",
+            "label": "적용일",
+            "value": "2026.05.16"
+          },
+          {
+            "id": "monthly-price",
+            "label": "월정액",
+            "value": "89,000원"
+          }
+        ]
+      },
+      {
+        "sectionId": "actions",
+        "semanticTag": [
+          "actions",
+          "bottom-primary-action",
+          "bottom-fixed"
+        ],
+        "cta": "확인"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "sectionId": "completionHero",
+      "slot": "Content",
+      "ogn": "structural-only",
+      "policy": "none; component proof screen",
+      "appliedGovernanceRefs": "none; component proof screen",
+      "patternEvidence": {
+        "sectionBoundary": "none",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "complete hero display/headline title",
+          "rowCaption": "supporting body copy",
+          "emphasisRule": "completion result title only",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "PageStackContents title slot + TitleMain(type=\"complete\") composition inside the first content stack",
+        "reason": "Wire Semantic Tag [completionHero | completion-hero | leading] confirms this section's role is a leading completion hero — no standalone card surface, no divider, no centering. DESIGN_PATTERNS.md Completion case A and Pattern G place the success heading before the summary card in one content flow with no visible divider or standalone hero boundary separating the two sections."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "no config OGN id is bound; the screen owns this proof hero slot and no organism-owned policy meaning is introduced"
+      },
+      "layoutStrategy": {
+        "widthTier": "content-361",
+        "padding": "parent page stack owns completion spacing; follows Completion message block spacing",
+        "stack": "vertical title/subtitle",
+        "alignment": "leading",
+        "typography": "complete display/headline title, then body-level support copy",
+        "wrapping": "title max 2 lines; subtitle max 2 lines",
+        "overflow": "multiline copy remains inside the hero stack; no truncation for the configured title/supporting copy"
+      },
+      "layoutContract": {
+        "role": "success-result hero",
+        "structure": "one completion title plus one supporting sentence above the summary card",
+        "alignment": "leading text on the content rail; no independent card or centered splash treatment",
+        "density": "simple completion density with compact vertical rhythm; no section divider, icon-only hero, or cross-sell gap",
+        "wrapping": "title and subtitle may wrap naturally, but must not force the fixed bottom CTA into scroll content",
+        "distortionRisk": "converting the hero into a separate card, adding a divider, or using route-level spacing would break the simple completion pattern"
+      },
+      "componentCandidates": [
+        {
+          "name": "PageStackContents title slot + TitleMain(type=\"complete\")",
+          "source": "@pxds/cx-layout + @pxds/cx-components",
+          "fit": "strong",
+          "reason": "Directly supports the completion-hero / leading layout contract — owns the page-stack rail, completion title/subtitle hierarchy, and content spacing without route-level patching. Matches the approved Screen.config.ts build selection verbatim. No known Distortion Gate risk for the configured copy hierarchy.",
+          "risk": "Verify during rendered screen review."
+        },
+        {
+          "name": "PageStackContents + TitleSection",
+          "source": "@pxds/cx-layout + @pxds/cx-components",
+          "fit": "reject",
+          "reason": "TitleSection targets ordinary detail/form section headings, not the completion display hierarchy required by Pattern G. Downgrades the success-state recognition and weakens the completion-hero role.",
+          "risk": "completion result title emphasis is lost; success state is indistinguishable from a mid-flow section heading"
+        }
+      ]
+    },
+    {
+      "sectionId": "completionSummary",
+      "slot": "Content",
+      "ogn": "structural-only",
+      "policy": "none; component proof screen",
+      "appliedGovernanceRefs": "none; component proof screen",
+      "patternEvidence": {
+        "sectionBoundary": "cardBoundary",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "none",
+        "typography": {
+          "cardHeader": "authored card title 변경 정보 (structural proof, not policy copy)",
+          "rowTitle": "key label text (peer label rows below the authored card header)",
+          "rowCaption": "none",
+          "emphasisRule": "none; all rows are peer result facts",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "compact completion result summary card with an authored card title header and label-value rows",
+        "reason": "Wire Semantic Tag [completionSummary | key-value-summary | card] triggers the Summary Card Decision Rule. Three label-value rows appear inside a card-bounded surface with no internal dividers. Per user instruction, RQRContentsDetail is force-applied and its mandatory title prop is satisfied by the authored card title 변경 정보 — an intentional structural-proof header, not policy copy."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "no config OGN id is bound; the screen owns the authored summary-card slot and proof rows, with no organism-owned plan-change policy meaning"
+      },
+      "summaryCardDecisionRule": {
+        "patternFamily": "card-key-value-summary",
+        "requiredCapability": [
+          "section heading/header slot REQUIRED — an authored card title (변경 정보) is provided to satisfy RQRContentsDetail's mandatory title prop; this is an intentional structural-proof header, not policy copy",
+          "card surface ownership: the component or composition must own background color, border-radius, and outer padding; the route must not supply these via raw CSS",
+          "padding/radius ownership: card padding and corner radius must be internal to the candidate, not applied at route level",
+          "stable label-value relationship: labels must remain stable on the left column; values must remain readable on the right; neither column may steal width from the other",
+          "value wrapping without column squeeze: longer future values must be able to wrap to two lines without compressing the label column into illegibility",
+          "reference density preservation: the compact three-row card density from the Figma proof must be preserved; any outer section divider or extra spacing not present in the wire is a distortion"
+        ]
+      },
+      "layoutStrategy": {
+        "widthTier": "content-361 outer card rail, inner-329 row content",
+        "padding": "card-owned result summary padding; aligns to Completion result summary card padding",
+        "stack": "key-value rows",
+        "alignment": "split label/value with stable left labels and readable right values",
+        "typography": "body-level label/value rows; no emphasized total row",
+        "wrapping": "labels max 1 line; proof values max 1 line; future longer values may wrap to 2 lines only if row rhythm remains readable",
+        "overflow": "if values squeeze or destabilize the row rhythm, Build must choose a stronger key-value candidate or return to Diagram"
+      },
+      "layoutContract": {
+        "role": "completed plan-change facts summary",
+        "structure": "one RQRContentsDetail card: authored card title header 변경 정보 + three label-value rows: changed plan, effective date, monthly price",
+        "alignment": "stable split label/value alignment; the value column must remain readable and must not steal label width",
+        "density": "compact card without inner row dividers; card background/radius/padding are owned by the component/composition",
+        "wrapping": "proof values should stay one line; future longer values must not create a narrow fixed-column squeeze",
+        "distortionRisk": "fixed-width table values or arbitrary route-level CSS would distort the summary card. The card title 변경 정보 is an intentionally authored structural-proof header — do not patch the component-owned card surface, header, padding, or radius with route CSS."
+      },
+      "componentCandidates": [
+        {
+          "name": "RQRContentsDetail",
+          "source": "packages/cx-components/src/candidate/rqr-contents-detail/RQRContentsDetail.tsx (exported from @pxds/cx-components)",
+          "fit": "strong",
+          "selected": true,
+          "reason": "With the authored card title 변경 정보 satisfying its mandatory title prop, RQRContentsDetail is force-applied per user instruction. It natively owns the card surface, authored header, internal header-to-rows spacing (16px), card padding (24px), border-radius (20px), and stable label/value rows without route-level CSS. The authored header is structural-proof copy, not policy copy. Mirrors the LEGACY-MBR-PG-002-0-CX consumer pattern with a rows constant of { id, label, value } items passed to rows={...}.",
+          "risk": "Verify during rendered screen review."
+        },
+        {
+          "name": "SectionItem(type=\"card\") + ListText(table)",
+          "source": "@pxds/cx-components",
+          "fit": "medium",
+          "selected": false,
+          "reason": "A valid no-header card composition: SectionItem(type=\"card\") owns the card surface, background, radius, and padding, and ListText(table) renders peer label-value rows. However, this screen now authors a card title header (변경 정보) that RQRContentsDetail owns natively, making RQRContentsDetail the correct selection. Not selected.",
+          "risk": "ListText(table) uses a fixed column layout that may squeeze value cells when future plan names or amounts are longer than proof values."
+        },
+        {
+          "name": "domain key-value summary organism",
+          "source": "apps/mobile/src/organisms/nova-mbr-legacy candidate",
+          "fit": "reject",
+          "reason": "No policy-bound plan-change facts exist in Screen.map.md; a reusable domain organism adds unjustified ownership and semantic weight for a structural-only component proof screen. Consistent with the sibling CX-EXAMPLE-COMPLETE-ACTIVATION diagram reject decision for cross-screen consistency.",
+          "risk": "N/A — rejected; premature domain organism extraction not warranted by this structural-only proof screen."
+        },
+        {
+          "name": "plain ListText(table) without card surface",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "reason": "Does not satisfy the card surface ownership and padding/radius ownership required capabilities. Omits the required summary card boundary and card-owned padding/radius.",
+          "risk": "Collapses the completion summary into unframed content and breaks the reference density. Fails the Summary Card Decision Rule at the card surface ownership capability check."
+        }
+      ]
+    },
+    {
+      "sectionId": "actions",
+      "slot": "Bottom",
+      "ogn": "structural-only",
+      "policy": "none; component proof screen",
+      "appliedGovernanceRefs": "none; component proof screen",
+      "patternEvidence": {
+        "sectionBoundary": "none",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "Bottom(preset=\"primary-cta\")",
+        "typography": {
+          "rowTitle": "primary CTA label",
+          "rowCaption": "none",
+          "emphasisRule": "single primary action",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "fixed simple-completion primary CTA area",
+        "reason": "Wire Semantic Tag [actions | bottom-primary-action | bottom-fixed] confirms the section is a fixed bottom primary action zone — not scroll content. Completion case A and Pattern G place the completion confirmation action in the fixed bottom action zone. bottom-fixed boundary prevents treating the CTA as the last scroll section."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "no config OGN id is bound; AppScreen.Bottom owns the proof action slot and no organism-owned navigation or policy meaning is introduced"
+      },
+      "layoutStrategy": {
+        "widthTier": "content-361",
+        "padding": "bottom action area owns safe-area and CTA spacing",
+        "stack": "single full-width CTA",
+        "alignment": "centered label, stretch button width",
+        "typography": "large/xlarge CTA label",
+        "wrapping": "button label max 1 line",
+        "overflow": "fixed bottom slot; never converted to content flow"
+      },
+      "layoutContract": {
+        "role": "completion confirmation action",
+        "structure": "one full-width primary CTA in Bottom(preset=\"primary-cta\")",
+        "alignment": "fixed bottom action area; centered label inside a stretched button",
+        "density": "standard primary-cta bottom height; scroll content remains visible above it",
+        "wrapping": "확인 must remain one line",
+        "distortionRisk": "moving the CTA into Content, adding a second action, or losing safe-area behavior makes the completion exit ambiguous"
+      },
+      "componentCandidates": [
+        {
+          "name": "AppScreen.Bottom(preset=\"primary-cta\") + SinglePrimaryAction + ActionButton(type=\"default\", buttonCount=1)",
+          "source": "@pxds/cx-layout + @pxds/cx-components",
+          "fit": "strong",
+          "reason": "Directly satisfies the bottom-primary-action / bottom-fixed layout contract. Owns the physical Bottom rail, safe-area behavior, and single full-width CTA without route-level width or spacing patches. Matches the approved Screen.config.ts build selection verbatim. No known Distortion Gate risk for the configured action count and CTA text.",
+          "risk": "Verify during rendered screen review."
+        },
+        {
+          "name": "ActionButton(type=\"default\", buttonCount=1) in Content",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "reason": "Button capability is valid, but Content placement violates the bottom-fixed boundary from the Wire Semantic Tag and the fixed bottom completion action contract.",
+          "risk": "Bottom safe-area behavior and completion exit hierarchy are lost; the CTA becomes ambiguous relative to scroll content."
+        }
+      ]
+    }
+  ],
+  "policyOgnMatrix": [
+    {
+      "requirement": "CX-COMPLETE-PLAN-HERO",
+      "sourceRef": "Figma Text Section / 완료_요금제 변경",
+      "policy": "structural-only",
+      "ogn": "structural-only",
+      "section": "completionHero",
+      "appliedGovernanceRefs": "none; component proof screen",
+      "layoutContractSummary": "Completion title and supporting sentence above the summary card; leading alignment, no card boundary, no divider."
+    },
+    {
+      "requirement": "CX-COMPLETE-PLAN-SUMMARY",
+      "sourceRef": "Figma Text Section / 완료_요금제 변경",
+      "policy": "structural-only",
+      "ogn": "structural-only",
+      "section": "completionSummary",
+      "appliedGovernanceRefs": "none; component proof screen",
+      "layoutContractSummary": "One RQRContentsDetail card: authored card title header 변경 정보 (structural-proof, not policy copy) + three stable label-value rows; card surface, header, padding (24px), and radius (20px) are RQRContentsDetail-owned."
+    },
+    {
+      "requirement": "CX-COMPLETE-PLAN-ACTION",
+      "sourceRef": "Figma Text Section / 완료_요금제 변경",
+      "policy": "structural-only",
+      "ogn": "structural-only",
+      "section": "actions",
+      "appliedGovernanceRefs": "none; component proof screen",
+      "layoutContractSummary": "Fixed bottom area with one full-width primary confirmation CTA; Bottom(preset=\"primary-cta\") owns safe-area."
+    }
+  ],
+  "distortionGates": [
+    "Preserve rail order: SystemHeader / Header, then scroll Content, then Bottom(preset=\"primary-cta\"). Do not reorder or collapse any rail.",
+    "Use the nearby complete wire reference only for visual structure; do not import activation, signup, checkout, or payment business rules.",
+    "Keep [completionHero | completion-hero | leading] and [completionSummary | key-value-summary | card] in the same simple-completion content flow; do not insert a SectionDivider, standalone hero card, extra cross-sell section, or route-level gap between the two sections.",
+    "Summary acceptance is the layout contract, not the component name: card surface ownership, card-owned header/padding/radius, stable split label/value alignment, and readable values are mandatory. A candidate that fails the Summary Card Decision Rule requiredCapability check must not be accepted.",
+    "The card title 변경 정보 is an intentionally authored structural-proof header (not policy-bound, no policy ID); RQRContentsDetail owns the card surface, header, padding (24px), and radius (20px) — do not patch with route-level CSS or strip the component-owned card header.",
+    "Keep [actions | bottom-primary-action | bottom-fixed] in Bottom(preset=\"primary-cta\"); never render the confirmation CTA as the last scroll content section.",
+    "Preserve action hierarchy: 확인 is the only primary action and must remain full width inside the fixed bottom area.",
+    "Do not invent policy IDs, OGN IDs, billing-cycle rules, price calculation rules, eligibility states, or navigation destinations from this Figma component proof screen.",
+    "Do not add deprecated @pxds/pxds-components or @pxds/pxds-icons imports."
+  ],
+  "migrationGovernanceRefs": []
+}
+	</script>
+	<script>
+		const contractElement = document.getElementById("diagram-contract");
+		const previewElement = document.getElementById("diagram-contract-preview");
+		if (contractElement && previewElement) {
+			previewElement.textContent = JSON.stringify(
+				JSON.parse(contractElement.textContent),
+				null,
+				2,
+			);
+		}
+	</script>
+</body>
+</html>

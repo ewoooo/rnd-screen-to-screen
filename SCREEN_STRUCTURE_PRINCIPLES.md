@@ -1,8 +1,8 @@
 # Screen Structure Principles
 
-> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다. 긴 작성 예시는 `docs/screen-structure-diagram-examples.md`에 둔다.
+> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다. 긴 작성 예시는 `docs/screen-structure-diagram-examples.md`에 둔다. `Screen.diagram.html` 전환 표준은 `docs/html-screen-diagram-standard.md`가 소유한다.
 
-모바일 화면과 `Screen.diagram.md`를 만들 때 먼저 적용하는 구조 원칙이다. SB와 `Screen.map.md`의 정책 요구를 확인한 뒤 곧바로 구현으로 가지 않고, 제한된 layout vocabulary로 화면의 뼈대를 먼저 정리한다.
+모바일 화면과 `Screen.diagram.html`을 만들 때 먼저 적용하는 구조 원칙이다. `Screen.diagram.md`는 전환 기간의 migration source/reference이며 HTML 생성 때문에 삭제하지 않는다. 신규/수정 화면의 표준 계약은 HTML로 작성한다. SB와 `Screen.map.md`의 정책 요구를 확인한 뒤 곧바로 구현으로 가지 않고, 제한된 layout vocabulary로 화면의 뼈대를 먼저 정리한다.
 
 ## 핵심 인사이트
 
@@ -41,7 +41,9 @@ AppScreen
 
 ## Diagram 제작 원칙
 
-`Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, layout contract로 조립할지 판단한 뒤 component 후보를 나열한다. Phase 3에서는 먼저 유사한 `Screen Wire` reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
+`Screen.diagram.html`은 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, layout contract로 조립할지 판단한 뒤 component 후보를 나열한다. Phase 3에서는 먼저 유사한 wire reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
+
+HTML 표준의 사람이 보는 영역은 Visual Screen, Review Summary, Reference Summary, Section Inspector, Distortion Gates로 구성하고, 상세 계약은 `<script type="application/json" id="diagram-contract">`에 보존한다. Visual Screen은 section id 요약이 아니라 실제 모바일 rail, 레이어 구조, 화면 표시 텍스트, 카드/필드/list row, 좌우 label-value 관계, bottom action을 검수 가능한 형태로 보여줘야 한다. HTML 파일의 구체 DOM/JSON 스키마와 보이는 영역 표준은 `docs/html-screen-diagram-standard.md`를 따른다.
 
 - Diagram은 아래 섹션 순서를 고정한다.
   1. `Screen Contract`
@@ -50,7 +52,7 @@ AppScreen
   4. `Policy / OGN Matrix`
   5. `Distortion Gates`
 - `Screen Contract`에는 `wireReference`를 기록한다. 선택한 reference 경로, 유사하게 따른 부분, 의도적으로 따르지 않는 부분, reference 한계를 짧게 남긴다.
-- Wire reference 후보는 `apps/mobile/src/screen-diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.md`에서 찾는다. list 화면은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text`, detail/form 성격은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
+- Wire reference 후보는 `apps/mobile/src/screen-diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.html`에서 찾는다. legacy 화면은 deprecated `Screen.diagram.md`를 보조 reference로만 볼 수 있다. list 화면은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text`, detail/form 성격은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
 - Wire reference는 AppScreen rail, section order, summary/list/search/filter zones, card density, CTA position, visible divider band 같은 시각 구조만 참고한다. 정책 필수 정보, copy, 에러, CTA 의미는 `Screen.map.md` 기준으로만 확정한다.
 - `reference-only`, `unknown-from-figma-only/TBD`, `unknown/unregistered-from-figma` 값은 policy ID, OGN ID, route 계약, copy 근거로 승격하지 않는다.
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
@@ -352,7 +354,8 @@ OGN: ogn-...
 ## 관련 문서
 
 - `SCREEN_GENERATION_FLOW.md` — SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
-- `docs/screen-structure-diagram-examples.md` — Screen.diagram.md 작성 예시
+- `docs/html-screen-diagram-standard.md` — Screen.diagram.html 표준 스펙
+- `docs/screen-structure-diagram-examples.md` — legacy Screen.diagram.md 작성 예시
 - `DESIGN_FOUNDATION.md` — foundation token SOT
 - `DESIGN_PATTERNS.md` — 화면 pattern SOT
 - `SPACING_PATTERNS.md` — 화면·컴포넌트 spacing 실측 운영 규칙

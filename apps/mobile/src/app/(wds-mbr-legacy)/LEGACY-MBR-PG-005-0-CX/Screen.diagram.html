@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>LEGACY-MBR-PG-005-0-CX 다이어그램</title>
+	<style>
+		:root{--bg:#f5f6f8;--ink:#171719;--muted:#6b7280;--line:#d9dde3;--surface:#fff;--soft:#eef1f5;--brand:#2563eb;--rail:361px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:minmax(393px,430px) minmax(360px,1fr);gap:32px;align-items:start;max-width:1120px;margin:0 auto;padding:32px}.diagram-title{grid-column:1/-1}.diagram-title h1{margin:0 0 8px;font-size:24px;line-height:32px}.diagram-title p,.panel p,.panel li{color:#374151;font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid #cbd5e1;border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 48px rgb(15 23 42 / 16%)}.system-header{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:600}.app-header{display:flex;align-items:center;height:56px;padding:0 16px;font-size:18px;font-weight:700}.content{min-height:654px;padding:28px 16px;background:#fff}.page-stack{width:var(--rail);margin:0 auto;display:grid;gap:14px}.wire-section{display:grid;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:#fbfcfe}.wire-section strong{font-size:14px}.wire-section span{font-size:13px;line-height:20px;color:#475569}.bottom{min-height:98px;padding:12px 16px 22px;border-top:1px solid var(--soft);background:#fff}.cta{width:var(--rail);height:56px;margin:0 auto;border:0;border-radius:14px;background:var(--brand);color:#fff;font-size:17px;font-weight:700}.meta{display:grid;gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px}.panel h2{margin:0 0 12px;font-size:16px;line-height:24px}.token{display:inline-flex;align-items:center;min-height:24px;margin:0 4px 4px 0;padding:2px 8px;border-radius:999px;background:var(--soft);color:#334155;font-size:12px;line-height:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.review-item,.section-card,.candidate{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfcfe}.review-item strong,.candidate strong{display:block;margin-bottom:6px;font-size:13px;line-height:18px}.review-item span,.candidate p{font-size:12px;line-height:18px}.status,.fit-strong{background:#dcfce7;color:#166534}.fit-medium,.fit-weak{background:#fef3c7;color:#92400e}.fit-reject{background:#fee2e2;color:#991b1b}.status{display:inline-flex;min-height:22px;margin-bottom:8px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700}.section-card+.section-card{margin-top:10px}.section-card h3{margin:0 0 8px;font-size:14px}.section-card dl{display:grid;grid-template-columns:82px 1fr;gap:6px 10px;margin:0;font-size:13px;line-height:19px}.section-card dt{color:var(--muted)}.section-card dd{margin:0}.candidate-list{display:grid;gap:8px;margin-top:12px}.risk{color:#7c2d12}.debug-panel{display:none}@media(max-width:860px){main{grid-template-columns:1fr;padding:20px}.phone{width:100%;max-width:393px;justify-self:center}.page-stack,.cta{width:100%}}
+	</style>
+</head>
+<body>
+	<main>
+		<header class="diagram-title"><h1>LEGACY-MBR-PG-005-0-CX</h1><p>Screen.diagram.html 표준으로 변환된 시각 계약 다이어그램입니다.</p></header>
+		<section class="phone" aria-label="모바일 화면 다이어그램" data-screen-id="LEGACY-MBR-PG-005-0-CX" data-route="/LEGACY-MBR-PG-005-0-CX" data-pattern="form-entry" data-wire-reference="apps/mobile/src/app/(cx-example)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md">
+			<div class="system-header" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
+			<header class="app-header" data-rail="Header">‹ 탈퇴 사유</header>
+			<div class="content" data-rail="Content"><div class="page-stack">
+					<section class="wire-section" data-section-id="intro" data-ogn-id="ogn-mbr-withdraw-reason-intro" data-pattern-role="form-intro-title" data-boundary="none" data-layout-contract="TitleMain step caption, explicit two-line question, and minimum-one-selection subtitle."><strong>회원 탈퇴 2/6</strong><span>탈퇴하시는 이유가<br />무엇인가요?</span><span>더 나은 서비스를 위해 알려주세요. (1개 이상 선택)</span></section>
+					<section class="wire-section" data-section-id="reasons" data-ogn-id="ogn-mbr-withdraw-reason-options" data-pattern-role="checkbox-field-stack-section" data-boundary="SectionDivider" data-layout-contract="SectionDivider then TitleSection and six ListSelected checkbox rows; no right item or subText."><strong>탈퇴 사유</strong><span>□ 가격이 부담돼요</span><span>□ 이용 빈도가 낮아요</span><span>□ 다른 서비스로 옮겨요</span><span>□ 사용이 불편해요</span><span>□ 오류·결제 문제가 있었어요</span><span>□ 기타 (직접 입력)</span></section>
+					<section class="wire-section" data-section-id="freeText" data-ogn-id="ogn-mbr-withdraw-reason-free-text" data-pattern-role="optional-text-field-section" data-boundary="SectionDivider" data-layout-contract="SectionDivider then optional TextField with label, placeholder, maxLength 500 helper counter."><strong>자유 의견 (선택)</strong><span>자유 의견 (선택)</span><span>자세한 의견을 입력해주세요</span><span>0/500자</span></section>
+					<section class="wire-section" data-section-id="actions" data-ogn-id="ogn-mbr-withdraw-reason-actions" data-pattern-role="bottom-primary-action" data-boundary="Bottom(preset=primary-cta)" data-layout-contract="Fixed bottom single primary CTA disabled until at least one reason is selected."><strong>Bottom</strong><span>다음</span></section>
+			</div></div>
+			<footer class="bottom" data-rail="Bottom" data-preset="primary-cta"><button class="cta" type="button">다음</button></footer>
+		</section>
+		<aside class="meta" aria-label="다이어그램 계약 메타데이터"><section class="panel"><h2>화면 계약</h2><p><span class="token">패턴: form-entry</span><span class="token">그룹: wds-mbr-legacy</span><span class="token">도메인: membership</span><span class="token">정책 참조: 0</span><span class="token">OGN ID: 4</span></p><p>정책/구조 계약은 내장 JSON을 기준으로 검증합니다.</p></section><section class="panel"><h2>검수 상태</h2><div class="review-grid"><div class="review-item"><strong>패턴</strong><span class="status">확인</span><span>form-entry 패턴으로 이관되었습니다.</span></div><div class="review-item"><strong>레퍼런스</strong><span class="status">확인</span><span>apps/mobile/src/app/(cx-example)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md</span></div><div class="review-item"><strong>스페이싱</strong><span class="status">확인 필요</span><span>실제 렌더 기준으로 최종 확인합니다.</span></div><div class="review-item"><strong>정책/OGN</strong><span class="status">확인</span><span>JSON 계약과 config를 대조합니다.</span></div></div></section><section class="panel"><h2>레퍼런스</h2><p><span class="token">기준: apps/mobile/src/app/(cx-example)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md</span><span class="token">패턴: form-entry</span></p><ul><li>AppScreen(headerPreset=&quot;form-entry&quot;), header app bar, TitleMain intro, section divider bands, field-stack sections, fixed primary CTA.</li><li>withdrawal reason screen uses checkbox choice rows and an optional free-text field instead of personal-info text fields.</li></ul></section><section class="panel"><h2>섹션 인스펙터</h2>
+				<div class="section-card"><h3>intro</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>intro</dd><dt>경계</dt><dd>기록 없음</dd><dt>후보</dt><dd>PageStackContents(title=TitleMain)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents(title=TitleMain)</strong><p>Reverse-engineered from the current perfect screen; preserves the implemented step caption, two-line question, and subtitle in the TitleMain slot.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>reasons</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>reasons</dd><dt>경계</dt><dd>기록 없음</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + FieldStack + ListSelected(checkbox)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + FieldStack + ListSelected(checkbox)</strong><p>Preserves the implemented titled section, field stack, six checkbox rows, and closed right/subText row slots.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>freeText</h3><dl><dt>slot</dt><dd>Content</dd><dt>역할</dt><dd>freeText</dd><dt>경계</dt><dd>기록 없음</dd><dt>후보</dt><dd>PageStackContents + TitleSection + SectionItem + TextField(helperText, maxLength=500)</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> PageStackContents + TitleSection + SectionItem + TextField(helperText, maxLength=500)</strong><p>Preserves the optional text field with label, placeholder, max length, and helper counter ownership.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+				<div class="section-card"><h3>actions</h3><dl><dt>slot</dt><dd>Bottom</dd><dt>역할</dt><dd>actions</dd><dt>경계</dt><dd>기록 없음</dd><dt>후보</dt><dd>ActionBar(preset=\</dd></dl><details><summary>후보 평가 보기</summary><div class="candidate-list"><div class="candidate"><strong><span class="token fit-strong">strong · 선택</span> ActionBar(preset=\</strong><p>Preserves the fixed primary action bar and the current disabled-until-selection behavior.</p><p class="risk">위험: None recorded.</p></div></div></details></div>
+			</section><section class="panel"><h2>왜곡 방지 게이트</h2><ul><li>Treat current Screen.tsx as the truth; do not redesign or reinterpret the legacy-converted screen while editing metadata.</li><li>Keep AppScreen.Content as the only scroll owner and keep the primary CTA in AppScreen.ActionBar preset=&quot;primary-cta&quot;.</li><li>Preserve SectionDivider(thickness=&quot;section&quot;) between intro, reasons, and free-text sections.</li><li>Preserve ListSelected checkbox rows with showListSelectedRightItem={false} and showSubText={false}.</li><li>Preserve the CTA enablement rule: disabled when no reason is selected; free text does not participate in CTA activation.</li><li>Preserve TextField maxLength={500} and helper counter ownership inside the field.</li></ul></section><section class="panel debug-panel"><h2>MD 계약 이관 상태</h2><p>기존 Screen.diagram.md의 계약 정보를 JSON으로 이관했습니다.</p><details><summary>전체 계약 JSON 보기</summary><pre id="diagram-contract-preview"></pre></details></section></aside>
+	</main>
+	<script type="application/json" id="diagram-contract">
+{
+  "screenContract": {
+    "screenId": "LEGACY-MBR-PG-005-0-CX",
+    "route": "/LEGACY-MBR-PG-005-0-CX",
+    "group": "wds-mbr-legacy",
+    "domain": "membership",
+    "source": "current Screen.tsx",
+    "pattern": "form-entry",
+    "frame": "",
+    "policyRefs": [],
+    "ognIds": [
+      "ogn-mbr-withdraw-reason-intro",
+      "ogn-mbr-withdraw-reason-options",
+      "ogn-mbr-withdraw-reason-free-text",
+      "ogn-mbr-withdraw-reason-actions"
+    ],
+    "governanceRefs": [
+      "UXPT_BTN",
+      "UXPT_NAV",
+      "VOT_RUL"
+    ],
+    "notApplicableReason": "",
+    "requiredDesignDocs": [
+      "DESIGN_PATTERNS.md",
+      "DESIGN_FOUNDATION.md",
+      "SCREEN_STRUCTURE_PRINCIPLES.md"
+    ],
+    "mapSource": "Screen.map.md",
+    "configBuildSelections": [
+      "PageStackContents(title=TitleMain)",
+      "PageStackContents + TitleSection + SectionItem + FieldStack + ListSelected(checkbox)",
+      "PageStackContents + TitleSection + SectionItem + TextField(helperText, maxLength=500)",
+      "ActionBar(preset=\"primary-cta\") + SinglePrimaryAction + Button(fullWidth, size=\"xlarge\", variant=\"primary\")"
+    ],
+    "appScreenRails": [
+      "SystemHeader",
+      "Header",
+      "Content",
+      "Bottom"
+    ],
+    "headerContract": "",
+    "bottomContract": "",
+    "wireReference": {
+      "source": "apps/mobile/src/app/(cx-example)/CX-EXAMPLE-PERSONAL-INFO-INPUT/Screen.diagram.md",
+      "matchedParts": "AppScreen(headerPreset=\"form-entry\"), header app bar, TitleMain intro, section divider bands, field-stack sections, fixed primary CTA.",
+      "intentionalDifferences": "withdrawal reason screen uses checkbox choice rows and an optional free-text field instead of personal-info text fields.",
+      "limitation": "reference-only visual structure; policy/copy/OGN ids come from current Screen.tsx, Screen.map.md, and Screen.config.ts."
+    },
+    "referenceSearch": [],
+    "patternRecheck": {
+      "source": "DESIGN_PATTERNS.md",
+      "result": "legacy-migrated",
+      "reason": "Migrated from deprecated Screen.diagram.md to Screen.diagram.html standard."
+    }
+  },
+  "screenWire": {
+    "rails": [
+      "SystemHeader",
+      "Header",
+      "Content",
+      "Bottom"
+    ],
+    "raw": "```txt\n┌─AppScreen(headerPreset=\"form-entry\")──────────────────────┐\n├─SystemHeader──────────────────────────────────────────────┤\n│ StatusBar                                                 │\n├─Header────────────────────────────────────────────────────┤\n│ AppBar(title=\"탈퇴 사유\", showLeftItem, showTitle)          │\n├─Content(scroll)───────────────────────────────────────────┤\n│ [intro | form-intro-title | content]                      │\n│ 회원 탈퇴 2/6                                             │\n│ 탈퇴하시는 이유가                                         │\n│ 무엇인가요?                                               │\n│ 더 나은 서비스를 위해 알려주세요. (1개 이상 선택)          │\n├══Divider 4px / SectionDivider(thickness=\"section\")════════┤\n│ [reasons | checkbox-field-stack-section | section-divider]│\n│ 탈퇴 사유                                                 │\n│ ┌──────────────────────────────────────────────────────┐   │\n│ │ □ 가격이 부담돼요                                    │   │\n│ │ □ 이용 빈도가 낮아요                                 │   │\n│ │ □ 다른 서비스로 옮겨요                               │   │\n│ │ □ 사용이 불편해요                                    │   │\n│ │ □ 오류·결제 문제가 있었어요                          │   │\n│ │ □ 기타 (직접 입력)                                   │   │\n│ └──────────────────────────────────────────────────────┘   │\n├══Divider 4px / SectionDivider(thickness=\"section\")════════┤\n│ [freeText | optional-text-field-section | section-divider]│\n│ 자유 의견 (선택)                                         │\n│ ┌──────────────────────────────────────────────────────┐   │\n│ │ 자유 의견 (선택)                                     │   │\n│ │ 자세한 의견을 입력해주세요                           │   │\n│ │ 0/500자                                              │   │\n│ └──────────────────────────────────────────────────────┘   │\n├─Bottom(preset=\"primary-cta\")──────────────────────────────┤\n│ [actions | bottom-primary-action | bottom-fixed]          │\n│ ┌──────────────────────────────────────────────────────┐   │\n│ │                         다음                         │   │\n│ └──────────────────────────────────────────────────────┘   │\n└────────────────────────────────────────────────────────────┘\n```",
+    "sections": [
+      {
+        "sectionId": "intro",
+        "slot": "Content",
+        "ogn": "structural-only"
+      },
+      {
+        "sectionId": "reasons",
+        "slot": "Content",
+        "ogn": "structural-only"
+      },
+      {
+        "sectionId": "freeText",
+        "slot": "Content",
+        "ogn": "structural-only"
+      },
+      {
+        "sectionId": "actions",
+        "slot": "Bottom",
+        "ogn": "structural-only"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "sectionId": "intro",
+      "slot": "Content",
+      "ogn": "structural-only",
+      "policy": "",
+      "appliedGovernanceRefs": [
+        "UXPT_BTN",
+        "UXPT_NAV",
+        "VOT_RUL"
+      ],
+      "patternEvidence": {},
+      "patternDecision": {
+        "pattern": "",
+        "reason": "Migrated from legacy markdown."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "Migrated from legacy markdown."
+      },
+      "layoutStrategy": {},
+      "layoutContract": {
+        "role": "intro",
+        "structure": "Migrated from legacy markdown.",
+        "alignment": "see visual screen",
+        "density": "match reference",
+        "wrapping": "preserve readable wrapping",
+        "distortionRisk": "See distortionGates."
+      },
+      "componentCandidates": [
+        {
+          "name": "PageStackContents(title=TitleMain)",
+          "source": "componentCandidates",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Reverse-engineered from the current perfect screen; preserves the implemented step caption, two-line question, and subtitle in the TitleMain slot.",
+          "risk": "None recorded."
+        }
+      ]
+    },
+    {
+      "sectionId": "reasons",
+      "slot": "Content",
+      "ogn": "structural-only",
+      "policy": "",
+      "appliedGovernanceRefs": [
+        "UXPT_BTN",
+        "UXPT_NAV",
+        "VOT_RUL"
+      ],
+      "patternEvidence": {},
+      "patternDecision": {
+        "pattern": "",
+        "reason": "Migrated from legacy markdown."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "Migrated from legacy markdown."
+      },
+      "layoutStrategy": {},
+      "layoutContract": {
+        "role": "reasons",
+        "structure": "Migrated from legacy markdown.",
+        "alignment": "see visual screen",
+        "density": "match reference",
+        "wrapping": "preserve readable wrapping",
+        "distortionRisk": "See distortionGates."
+      },
+      "componentCandidates": [
+        {
+          "name": "PageStackContents + TitleSection + SectionItem + FieldStack + ListSelected(checkbox)",
+          "source": "componentCandidates",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Preserves the implemented titled section, field stack, six checkbox rows, and closed right/subText row slots.",
+          "risk": "None recorded."
+        }
+      ]
+    },
+    {
+      "sectionId": "freeText",
+      "slot": "Content",
+      "ogn": "structural-only",
+      "policy": "",
+      "appliedGovernanceRefs": [
+        "UXPT_BTN",
+        "UXPT_NAV",
+        "VOT_RUL"
+      ],
+      "patternEvidence": {},
+      "patternDecision": {
+        "pattern": "",
+        "reason": "Migrated from legacy markdown."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "Migrated from legacy markdown."
+      },
+      "layoutStrategy": {},
+      "layoutContract": {
+        "role": "freeText",
+        "structure": "Migrated from legacy markdown.",
+        "alignment": "see visual screen",
+        "density": "match reference",
+        "wrapping": "preserve readable wrapping",
+        "distortionRisk": "See distortionGates."
+      },
+      "componentCandidates": [
+        {
+          "name": "PageStackContents + TitleSection + SectionItem + TextField(helperText, maxLength=500)",
+          "source": "componentCandidates",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Preserves the optional text field with label, placeholder, max length, and helper counter ownership.",
+          "risk": "None recorded."
+        }
+      ]
+    },
+    {
+      "sectionId": "actions",
+      "slot": "Bottom",
+      "ogn": "structural-only",
+      "policy": "",
+      "appliedGovernanceRefs": [
+        "UXPT_BTN",
+        "UXPT_NAV",
+        "VOT_RUL"
+      ],
+      "patternEvidence": {},
+      "patternDecision": {
+        "pattern": "",
+        "reason": "Migrated from legacy markdown."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "Migrated from legacy markdown."
+      },
+      "layoutStrategy": {},
+      "layoutContract": {
+        "role": "actions",
+        "structure": "Migrated from legacy markdown.",
+        "alignment": "see visual screen",
+        "density": "match reference",
+        "wrapping": "preserve readable wrapping",
+        "distortionRisk": "See distortionGates."
+      },
+      "componentCandidates": [
+        {
+          "name": "ActionBar(preset=\\",
+          "source": "componentCandidates",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Preserves the fixed primary action bar and the current disabled-until-selection behavior.",
+          "risk": "None recorded."
+        }
+      ]
+    }
+  ],
+  "policyOgnMatrix": [
+    {
+      "requirement": "LEGACY-MBR-WITHDRAW-REASON-INTRO",
+      "sourceRef": "current Screen.tsx",
+      "policy": "structural-only",
+      "ogn": "ogn-mbr-withdraw-reason-intro",
+      "section": "intro",
+      "appliedGovernanceRefs": "TBD",
+      "layoutContractSummary": "Preserve the step caption, two-line question, and minimum-selection subtitle."
+    },
+    {
+      "requirement": "LEGACY-MBR-WITHDRAW-REASON-OPTIONS",
+      "sourceRef": "current Screen.tsx",
+      "policy": "TBD; no policy-core source confirmed",
+      "ogn": "ogn-mbr-withdraw-reason-options",
+      "section": "reasons",
+      "appliedGovernanceRefs": "TBD",
+      "layoutContractSummary": "Preserve six checkbox ListSelected rows and minimum-one-selection action dependency."
+    },
+    {
+      "requirement": "LEGACY-MBR-WITHDRAW-REASON-FREE-TEXT",
+      "sourceRef": "current Screen.tsx",
+      "policy": "TBD; no policy-core source confirmed",
+      "ogn": "ogn-mbr-withdraw-reason-free-text",
+      "section": "freeText",
+      "appliedGovernanceRefs": "TBD",
+      "layoutContractSummary": "Preserve optional text field, placeholder, maxLength=500, and helper counter."
+    },
+    {
+      "requirement": "LEGACY-MBR-WITHDRAW-REASON-ACTIONS",
+      "sourceRef": "current Screen.tsx",
+      "policy": "structural-only",
+      "ogn": "ogn-mbr-withdraw-reason-actions",
+      "section": "actions",
+      "appliedGovernanceRefs": "TBD",
+      "layoutContractSummary": "Preserve disabled primary CTA until selected.size > 0."
+    }
+  ],
+  "distortionGates": [
+    "Treat current Screen.tsx as the truth; do not redesign or reinterpret the legacy-converted screen while editing metadata.",
+    "Keep AppScreen.Content as the only scroll owner and keep the primary CTA in AppScreen.ActionBar preset=\"primary-cta\".",
+    "Preserve SectionDivider(thickness=\"section\") between intro, reasons, and free-text sections.",
+    "Preserve ListSelected checkbox rows with showListSelectedRightItem={false} and showSubText={false}.",
+    "Preserve the CTA enablement rule: disabled when no reason is selected; free text does not participate in CTA activation.",
+    "Preserve TextField maxLength={500} and helper counter ownership inside the field.",
+    "Do not invent policy IDs, validation copy, required free-text behavior for \"기타\", or multiline textarea behavior without a policy/source update.",
+    "Do not add route-level raw margin, padding, width, fontSize, color, or deprecated imports to recreate this layout."
+  ],
+  "migrationGovernanceRefs": [
+    "UXPT_BTN",
+    "UXPT_NAV",
+    "VOT_RUL"
+  ]
+}
+	</script>
+	<script>const c=document.getElementById('diagram-contract'),p=document.getElementById('diagram-contract-preview');if(c&&p){p.textContent=JSON.stringify(JSON.parse(c.textContent),null,2);}</script>
+</body>
+</html>

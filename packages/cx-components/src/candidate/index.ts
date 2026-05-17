@@ -24,3 +24,12 @@ export type {
 	RQRContentsDetailRow,
 } from "./rqr-contents-detail";
 export { RQRContentsDetail } from "./rqr-contents-detail";
+export type {
+	RQRCardFigmaBridgeProps,
+	RQRCardProps,
+} from "./rqr-card";
+export {
+	RQRCard,
+	type RQRCardPadding,
+	rqrCardVariants,
+} from "./rqr-card";
