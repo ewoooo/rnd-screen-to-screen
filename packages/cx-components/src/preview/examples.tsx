@@ -15,6 +15,8 @@ import { Text } from "../components/text";
 import { TextField } from "../components/text-field";
 import { TitleMain } from "../components/title-main";
 import { TitleSection } from "../components/title-section";
+import { RQRListOption } from "../candidate/rqr-list-option";
+import { RQRNotice } from "../candidate/rqr-notice";
 import type { CxComponentPreviewExample } from "./types";
 
 export const cxComponentPreviewExamples = [
@@ -290,6 +292,62 @@ export const cxComponentPreviewExamples = [
 				id: "contents",
 				label: "Contents",
 				render: () => <Divider type="contents" />,
+			},
+		],
+	},
+	{
+		componentId: "rqr-list-option",
+		description:
+			"RQR candidate selectable option row with stacked title and description.",
+		cases: [
+			{
+				id: "radio-badge",
+				label: "Radio + badge",
+				render: () => (
+					<RQRListOption
+						type="radio"
+						checked
+						title="카카오톡"
+						description="가장 빠르고 간편하게 인증할 수 있어요"
+						badgeText="추천"
+					/>
+				),
+			},
+			{
+				id: "checkbox",
+				label: "Checkbox",
+				render: () => (
+					<RQRListOption
+						type="checkbox"
+						title="마케팅 정보 수신 동의"
+						description="혜택과 이벤트 안내를 받을 수 있어요."
+					/>
+				),
+			},
+		],
+	},
+	{
+		componentId: "rqr-notice",
+		description: "RQR candidate notice generated from a requirement branch.",
+		cases: [
+			{
+				id: "info",
+				label: "Info",
+				render: () => (
+					<RQRNotice title="가입 전 확인">
+						정책상 필수 안내가 있는 경우 이 영역에서 사용자가 바로 확인할 수
+						있게 노출합니다.
+					</RQRNotice>
+				),
+			},
+			{
+				id: "negative",
+				label: "Negative",
+				render: () => (
+					<RQRNotice title="처리할 수 없음" tone="negative">
+						입력한 정보가 정책 조건과 맞지 않습니다.
+					</RQRNotice>
+				),
 			},
 		],
 	},

@@ -1,23 +1,21 @@
 {
   "name": "@screen/mobile",
   "version": "0.1.0",
-	"private": true,
-	"exports": {
-		"./screens": "./src/scripts/screen-routes/index.ts",
-		"./screen-components": "./src/scripts/screen-components/index.ts"
-	},
+  "private": true,
+  "exports": {
+    "./screens": "./src/scripts/screen-routes/index.ts",
+    "./screen-components": "./src/scripts/screen-components/index.ts"
+  },
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev --webpack -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "biome lint ../../apps/mobile && node ../../scripts/check-react-hooks-policy.mjs apps/mobile"
+    "lint": "biome lint ../../apps/mobile && node ../../scripts/check-react-hooks-policy.mjs apps/mobile && node ../../scripts/check-mobile-page-folder-contract.mjs"
   },
   "dependencies": {
     "@pxds/cx-components": "0.1.0",
-    "@pxds/pxds-components": "0.1.0",
-    "@pxds/pxds-icons": "0.1.0",
-    "@pxds/pxds-layout": "0.1.0",
-    "@pxds/pxds-spec": "0.1.0",
+    "@pxds/cx-layout": "0.1.0",
+    "@pxds/cx-spec": "0.1.0",
     "@pxds/cx-tokens": "0.1.0",
     "next": "^16.2.4",
     "react": "19.2.4",

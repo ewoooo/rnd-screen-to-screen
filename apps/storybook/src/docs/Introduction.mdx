@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Docs/Introduction" />
+
+# PXDS Storybook
+
+이 Storybook은 두 가지를 보여 줍니다.
+
+1. **`@pxds/cx-tokens`** — Color / Typography / Spacing / Radius / Theme aliases
+2. **`@pxds/cx-components`** — `cxComponentPreviewRegistry`에 등록된 컴포넌트와 각 `cases`
+
+## 사용법
+
+- 좌측 사이드바의 **Tokens** 항목에서 토큰 카탈로그를 확인합니다.
+- **Components**와 **Candidate** 항목에서 컴포넌트별 case 스토리를 확인합니다.
+- 상단 툴바의 테마 토글로 light / dark를 전환합니다. `data-theme` attribute가 미리보기 root에 적용되어 `theme-aliases.css`가 매핑한 값으로 자동 스왑됩니다.
+- 상단 viewport 메뉴에서 mobile 사이즈 프리셋을 선택할 수 있습니다.
+
+## 작동 방식
+
+- 컴포넌트 stories는 `apps/storybook/scripts/generate-stories.mjs`가 `@pxds/cx-components/preview`의 registry와 examples를 읽어 `generated/components/*.stories.tsx`로 자동 생성합니다.
+- 토큰 페이지는 `@pxds/cx-tokens/originals/_skt/**` 의 Tokens Studio JSON을 직접 import해 동적 렌더합니다.
+- 새 컴포넌트를 cx-components에 등록하면 다음 `npm run dev -w @screen/storybook` 부팅 시 자동으로 사이드바에 등장합니다.
+
+## 관련 SOT
+
+- 컴포넌트 어휘: `packages/cx-components/src/preview/registry.ts`, `examples.tsx`
+- 토큰 원천: `packages/cx-tokens/src/originals/_skt/`
+- 디자인 기준: `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`

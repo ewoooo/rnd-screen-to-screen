@@ -20,6 +20,30 @@
 
 ---
 
+## 조합 레이어 원칙
+
+화면 제작 시 외부 문서의 `Atom` 분류는 직접 사용하지 않고, 이 repo의 구현 어휘인 `Component -> Pattern -> Organism -> Screen`으로 해석한다.
+
+| 레이어 | 역할 | 화면 route 직접 배치 |
+|---|---|---|
+| Component | `Button`, `Badge`, `Ico`, `RadioText`, `CheckboxText` 같은 기초 UI 어휘 | 원칙적으로 금지 |
+| Pattern | `SinglePrimaryAction`, `PageStackContents`, `FieldStack`, `PopupActionButton` 같은 반복 조합 | 가능 |
+| Organism | 정책 의미·도메인 모듈 ID·OGN을 담는 의미 단위 | 가능 |
+| Screen | `AppScreen` slot에 chrome/section/organism을 배치하는 지도 | 해당 |
+
+기초 component는 독립 배치보다 pattern이나 organism의 이름 있는 slot 안에서 의미가 선명해진다. 예를 들어 primary `Button`은 콘텐츠 중간에 직접 배치하지 않고 `SinglePrimaryAction`, 카드 CTA slot, `PopupActionButton`, bottom sheet action slot 안에 둔다.
+
+### 컴포넌트 후보 분기
+
+화면 패턴을 정한 뒤 각 SB part는 바로 신규 component로 만들지 않고 `reuse` 또는 `new`로 분기한다.
+
+- `reuse`: 기존 `@pxds/cx-components/components/*`, `@pxds/cx-components/candidate/*`, `@pxds/cx-layout` pattern, 또는 도메인 `Organism` 조합으로 정책 의미와 상태를 표현할 수 있다.
+- `new`: 기존 vocabulary로 정책 의미, 선택지, 에러, slot, Figma bridge identity를 표현할 수 없어 신규 candidate가 필요하다.
+
+`new` candidate는 생성 가능하지만 반드시 `RQR` 식별자를 붙인다. React 이름은 `RQR{Name}`, 폴더와 `componentId`, `data-figma-component-id`는 `rqr-{name}`을 사용한다. 정식 component vocabulary로 승격할 때는 `RQR` prefix를 제거한다.
+
+---
+
 <a name="section-main"></a>
 ## 섹션 패턴 — 메인 (Main)
 
@@ -629,10 +653,11 @@ Footer
 │   │  Handle  (393×32)  ← 드래그 핸들              │   │
 │   │                                              │   │
 │   │  TitleBottomSheet                           │   │
-│   │    (x=32, w=329, h=32~86)                  │   │
+│   │    (x=32, w=329, h=68 기준)                │   │
 │   │    ← 제목 텍스트 + [선택] 닫기 버튼             │   │
 │   │                                              │   │
 │   │  Con 슬롯  (콘텐츠 영역)                       │   │
+│   │    기본 좌우 20px 또는 자식 component 정의       │   │
 │   │    ← ListSelected × N                        │   │
 │   │    ← 또는 Tab + ListSelected                 │   │
 │   │    ← 또는 CarouselProductModule              │   │
@@ -647,7 +672,7 @@ Footer
 **케이스 A — 선택형 (가장 일반적)**
 ```
 Con 슬롯
-  ListSelected  (x=32, w=329, h=42)  ← 반복, 최대 8개 내외
+  ListSelected  (x=20, w=353, h=42~52)  ← 반복, 최대 8개 내외
   ListSelected  ...
   ListSelected  ...
 ```
@@ -668,7 +693,7 @@ Con 슬롯
 **케이스 D — 확인형**
 ```
 Con 슬롯
-  ListText × N  (x=32, w=329)  ← 선택/주문 내용 확인
+  ListText × N  (x=20, w=353 또는 자식 정의 폭)  ← 선택/주문 내용 확인
   Divider (329×1px)  ← 항목 사이
 ```
 
@@ -687,19 +712,19 @@ Con 슬롯
 
 **높이 산정 가이드**
 ```
-Bottomsheet 최소 높이 = Handle(32) + Title(32~86) + 콘텐츠 + ActionButton(102)
+Bottomsheet 최소 높이 = Handle(32) + Title(68 기준) + 콘텐츠 + ActionButton(102)
 
 콘텐츠 높이 계산:
   ListSelected 1개 = 42px
   8개 선택 목록 = 42 × 8 = 336px
-  → 최소 Bottomsheet ≈ 32 + 60 + 336 + 102 = 530px
+  → 최소 Bottomsheet ≈ 32 + 68 + 336 + 102 = 538px
 ```
 
 **주의사항**
 - Bottomsheet 높이는 화면 높이(852px)를 초과하지 않도록 설계
 - Handle은 항상 최상단 32px
 - TitleBottomSheet는 x=32 (바텀시트 내 양쪽 32px 마진 적용)
-- Con 슬롯 내 ListSelected도 x=32 마진 적용 (329px 너비)
+- Con 슬롯은 기본 x=20, w=353을 사용한다. 단, ActionButton이 있는 시트처럼 자식 component가 자체 padding을 정의하는 구조에서는 Con 슬롯 padding을 0으로 두고 자식의 contract를 따른다.
 - 아이템이 많을 경우 Con 슬롯 내에서 스크롤 처리 (Bottomsheet 높이 고정)
 
 ---
@@ -850,11 +875,14 @@ PopupActionButton: 361×60  (팝업 전체 너비, 하단 배치)
 ```
 393px ── 풀블리드 (StatusBar, AppBar, ActionButton, 섹션 구분 Divider, BottomSheet)
   └── 369px ── 12px 양쪽 마진 (Pagestack, CardCarousel, CardSection)
+  └── 361px ── 16px 양쪽 마진 (일반 본문, 상세/폼 콘텐츠, 2열 그리드)
         └── 329px ── 20px 양쪽 내부 패딩 (TitleSection, ListText, TextField, Accordion)
               └── 297px ── Popup 내부 콘텐츠 (361px 팝업에서 32px 양쪽)
 ```
 
-**BottomSheet 콘텐츠 너비 예외:** screen 기준 32px 마진 → 329px (369 아닌 393에서 직접 계산)
+361px tier는 기존 393/369/329 그리드를 대체하지 않는다. 369px는 카드형 section wrapper와 리스트 그룹, 361px는 일반 본문 콘텐츠와 폼/상세 화면의 기본 콘텐츠 폭으로 사용한다.
+
+**BottomSheet 너비 예외:** title 영역은 screen 기준 32px 마진으로 329px, 일반 Con 슬롯은 20px 마진으로 353px를 기본으로 한다. ActionButton이 있는 시트의 Con 슬롯은 자식 component의 padding contract를 우선한다.
 
 ---
 
@@ -1023,8 +1051,8 @@ ActionButton (393×102)
 [Dim 오버레이 (393×852, 반투명)]
 Bottomsheet (393×384~554, 하단 앵커)
   Handle (393×32)
-  TitleBottomSheet (329×32~86, x=32)
-  Con 슬롯 (콘텐츠)
+  TitleBottomSheet (x=32, w=329, h=68 기준)
+  Con 슬롯 (콘텐츠, 기본 x=20/w=353 또는 자식 정의)
     [Variant A] ListSelected × 8 (선택 목록)
     [Variant B] Tab + ListSelected (탭 선택)
     [Variant C] CarouselProductModule (상품 쇼케이스)
@@ -1192,7 +1220,52 @@ Local_Coupon
 
 ---
 
-## 10. Divider 사용 체계
+## 10. CTA / 폼 / 오버레이 조합 규칙
+
+### CTA 위치와 버튼 조합
+
+| 화면 상황 | CTA 위치 | 원칙 |
+|---|---|---|
+| 단일 페이지 진행 | `Bottom`의 `SinglePrimaryAction` | 항상 접근 가능한 하단 action-area에 둔다 |
+| 카드에 종속된 부가 액션 | 카드/organism 내부 CTA slot | 해당 카드 의미 안에만 머문다 |
+| 섹션 더보기 | `TitleSection` 우측 링크 또는 낮은 강도 action | primary CTA로 올리지 않는다 |
+| 오버레이 확인 | BottomSheet/Popup 자체 action slot | 오버레이 문맥 밖으로 빼지 않는다 |
+
+- Primary 버튼은 구매, 신청, 결제, 다음 단계 진행처럼 주 전환 액션에 사용한다.
+- Secondary 버튼은 취소, 이전, 닫기처럼 보조 또는 철회 액션에 사용한다.
+- 2버튼 조합은 `Secondary + Primary` 순서를 기본으로 한다. 동등한 선택이 아니면 Primary가 더 넓은 비중을 갖는다.
+- Primary CTA를 스크롤 콘텐츠 중간에 직접 배치하지 않는다.
+
+### 폼 조합
+
+- 관련 있는 `TextField`는 그룹 제목과 함께 묶는다. 그룹 제목 없이 필드만 나열하지 않는다.
+- `TextField` 보조 버튼은 필드 외부 병렬 배치보다 입력 컴포넌트의 우측 slot으로 처리한다.
+- 에러 메시지는 해당 `TextField` 바로 아래 help text slot에 붙인다. 별도 callout으로 필드 밖에 띄우지 않는다.
+- 약관 동의는 `전체 동의 -> Divider -> 필수/선택 항목` 순서를 기본으로 한다.
+- 결제 화면의 약관은 Checkbox와 내용을 확인할 수 있는 accordion/policy detail이 연결되어야 한다.
+
+### 오버레이 선택
+
+| 상황 | 선택 |
+|---|---|
+| 옵션 목록에서 하나를 선택 | BottomSheet |
+| 3개 이상 목록 또는 스크롤 가능 콘텐츠 | BottomSheet |
+| 여러 조건 필터 설정 | BottomSheet + 필요한 경우 UnderlineTab |
+| 2줄 이내 단순 확인/취소 | Popup |
+| 결제 실패·에러 알림 | Popup |
+
+- Popup 내부에 스크롤이 생기면 BottomSheet로 전환한다.
+- BottomSheet 안에 또 다른 BottomSheet를 중첩하지 않는다.
+- Popup 버튼은 일반 `Button` 직접 배치가 아니라 `PopupActionButton`을 사용한다.
+
+### 완료 화면 copy
+
+- 완료 화면의 제목은 사용자가 처리 결과를 즉시 이해할 수 있는 친근한 구어체를 우선한다. 예: `개통이 완료되었어요`, `결제가 완료되었어요`.
+- 완료 화면 하단 2버튼은 좌측 Secondary가 관련 추가 탐색, 우측 Primary가 확인/홈 복귀 역할을 갖는다.
+
+---
+
+## 11. Divider 사용 체계
 
 | 크기 | 사용 빈도 | 용도 |
 |---|---|---|
@@ -1204,7 +1277,7 @@ Local_Coupon
 
 ---
 
-## 11. 타이포그래피 사용 패턴 (관찰값)
+## 12. 타이포그래피 사용 패턴 (관찰값)
 
 | 텍스트 높이 | 추정 스타일 | 사용 예 |
 |---|---|---|
@@ -1219,17 +1292,17 @@ Local_Coupon
 
 ---
 
-## 12. 핵심 설계 원칙 요약
+## 13. 핵심 설계 원칙 요약
 
 1. **SDUI 슬롯 아키텍처**: `Pagestack`이 서버 주도 UI의 핵심 컨테이너. 서버는 슬롯에 `Default 20/PagestackItem` 또는 `Card 0/PagestackItem`을 주입하여 화면을 조합.
 
-2. **3단 너비 그리드**: `393 → 369 → 329px`. 모든 컴포넌트가 이 세 너비 중 하나로 정렬.
+2. **화면 너비 그리드**: `393 → 369 / 361 → 329px`. 369px는 카드형 section wrapper와 리스트 그룹, 361px는 일반 본문 콘텐츠와 폼/상세 화면의 기본 폭, 329px는 내부 콘텐츠 폭으로 사용한다.
 
 3. **스크롤 긴 화면**: 화면 높이 852~4604px. 헤더(107px)는 별도 오버레이로 고정.
 
 4. **액션존 이분법**: 메인·브라우즈 화면 → `BottomNavigation` (88px) / 상세·폼 화면 → `ActionButton` (102px). 동시 사용 없음.
 
-5. **`Local_` 컴포넌트**: 화면 특화 조합 컴포넌트. 글로벌 라이브러리 atoms를 조합한 페이지 레벨 molecules. 재사용성보다 페이지 맥락에 최적화.
+5. **`Local_` 컴포넌트**: 화면 특화 조합 컴포넌트. CX component vocabulary와 layout pattern을 조합한 페이지 맥락 중심 organism 후보. 재사용성보다 정책/화면 맥락에 최적화.
 
 6. **섹션 구분 패턴**: `Pagestack + Divider(393×4px)` 반복. 상세/폼 화면의 기본 구조.
 

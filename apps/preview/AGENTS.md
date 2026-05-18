@@ -10,6 +10,7 @@ shadcn/Tailwind 기반 브라우저 프리뷰 셸이다. WDS 모바일 화면을
 - mobile route iframe preview
 - component render iframe preview
 - Figma export / Figma MCP 요청 workflow 생성
+- screen generation 산출물이 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`를 확인했는지 탐색/검증할 수 있게 한다.
 
 ## 구조
 
@@ -39,6 +40,7 @@ shadcn/Tailwind 기반 브라우저 프리뷰 셸이다. WDS 모바일 화면을
 - 토큰은 Tokens Studio JSON으로 내보낸다. Variables와 Text Styles는 Tokens Studio 쪽 export 기능으로 일원화한다.
 - 컴포넌트와 페이지는 Figma plugin JS를 생성한다.
 - Figma capture는 iframe 내부를 파싱하지 못한다. 비교용 캡처가 필요하면 mobile app 자체 route를 capture mode로 열고 `AppScreenRoot` selector를 잡는다.
+- export/capture UI는 `Component -> Pattern -> Organism -> Screen` 계층을 보존하는 metadata를 우선 보여준다. raw pixel capture는 비교 evidence일 뿐 구조화 export의 대체물이 아니다.
 
 ## UI 원칙
 

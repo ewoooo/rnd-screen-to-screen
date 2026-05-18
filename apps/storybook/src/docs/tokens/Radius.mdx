@@ -1,0 +1,11 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import primitive from "@pxds/cx-tokens/originals/_skt/primitive/default.json";
+import { RadiusGrid } from "../../token-blocks/RadiusGrid";
+
+<Meta title="Tokens/Radius" />
+
+# Radius
+
+`--radius-*` CSS 변수의 원천입니다. component-level radius는 semantic / component alias를 사용하세요 (예: `--component-button-radius`).
+
+<RadiusGrid source={primitive.radius} heading="radius.*" />

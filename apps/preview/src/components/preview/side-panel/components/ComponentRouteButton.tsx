@@ -11,6 +11,13 @@ export function ComponentRouteButton({
 	active,
 	onSelect,
 }: ComponentRouteButtonProps) {
+	const candidateLabel =
+		component.status === "candidate"
+			? component.candidateKind === "new"
+				? "RQR"
+				: "reuse"
+			: null;
+
 	return (
 		<button
 			type="button"
@@ -23,7 +30,14 @@ export function ComponentRouteButton({
 		>
 			<span className="flex min-w-0 items-baseline justify-between gap-2">
 				<span className="truncate font-medium">{component.name}</span>
-				<span className="shrink-0 text-xs text-neutral-500">{component.group}</span>
+				<span className="flex shrink-0 items-center gap-1.5 text-xs text-neutral-500">
+					{candidateLabel ? (
+						<span className="rounded border border-neutral-200 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-normal text-neutral-600">
+							{candidateLabel}
+						</span>
+					) : null}
+					<span>{component.group}</span>
+				</span>
 			</span>
 		</button>
 	);

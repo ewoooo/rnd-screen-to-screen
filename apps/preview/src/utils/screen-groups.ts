@@ -1,8 +1,9 @@
 import type { ScreenGroup, ScreenRoute } from "@screen/mobile/screens";
 
 export const SCREEN_GROUP_ORDER = [
-	"membership",
-	"cx-example",
+	"wds-mbr-legacy",
+	"nova-mbr-legacy",
+	"cx",
 ] as const satisfies readonly ScreenGroup[];
 
 export type ScreenGroups = Partial<Record<ScreenGroup, ScreenRoute[]>>;

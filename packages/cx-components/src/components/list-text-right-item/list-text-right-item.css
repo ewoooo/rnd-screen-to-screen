@@ -14,6 +14,14 @@
 	gap: var(--spacing-4);
 }
 
+.list-text-right-item--badge {
+	flex: 0 0 auto;
+}
+
+.list-text-right-item__badge {
+	flex: 0 0 auto;
+}
+
 .list-text-right-item__text {
 	color: currentColor;
 	font-family: var(--14-med-font-family, inherit);

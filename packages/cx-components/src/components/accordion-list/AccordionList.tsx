@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, forwardRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { Accordion } from "../accordion";

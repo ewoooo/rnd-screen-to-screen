@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import primitive from "@pxds/cx-tokens/originals/_skt/primitive/default.json";
+import semanticLight from "@pxds/cx-tokens/originals/_skt/semantic/light.json";
+import semanticDark from "@pxds/cx-tokens/originals/_skt/semantic/dark.json";
+import componentLight from "@pxds/cx-tokens/originals/_skt/component/light.json";
+import componentDark from "@pxds/cx-tokens/originals/_skt/component/dark.json";
+import { ColorSwatchGrid } from "../../token-blocks/ColorSwatchGrid";
+
+<Meta title="Tokens/Theme aliases" />
+
+# Theme aliases
+
+`theme-aliases.css`는 light / dark 두 색상 스코프를 `data-theme="light|dark"` selector로 묶어 컴포넌트 alias(`--component-*`) 와 의미 alias(`--semantic-color-*`)를 같은 변수 이름 하나로 통일합니다.
+
+상단 툴바의 테마 토글로 light / dark를 전환해 보세요. 같은 토큰이 다른 primitive를 가리킵니다.
+
+## Component aliases — light
+
+<ColorSwatchGrid
+	source={componentLight}
+	resolveAgainst={[semanticLight, semanticDark, primitive]}
+	heading="component.* — light"
+/>
+
+## Component aliases — dark
+
+<ColorSwatchGrid
+	source={componentDark}
+	resolveAgainst={[semanticDark, semanticLight, primitive]}
+	heading="component.* — dark"
+/>

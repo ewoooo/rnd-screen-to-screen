@@ -58,8 +58,11 @@ function getDefaultLeftItem(
 	type: ActionButtonProps["type"],
 	actionIndex: number,
 	primaryActionIndex: number,
+	showText: boolean,
 ): ActionButtonActionLeftItem | undefined {
-	if (actionIndex !== primaryActionIndex) {
+	const leftItemActionIndex = showText ? primaryActionIndex : 0;
+
+	if (actionIndex !== leftItemActionIndex) {
 		return undefined;
 	}
 
@@ -162,7 +165,12 @@ export const ActionButton = forwardRef<HTMLDivElement, ActionButtonProps>(
 						const variant = action.variant ?? "primary";
 						const leftItem =
 							action.leftItem ??
-							getDefaultLeftItem(type, index, primaryActionIndex);
+							getDefaultLeftItem(
+								type,
+								index,
+								primaryActionIndex,
+								resolvedShowText,
+							);
 						const hasSplitLabel = hasSecondaryLabel(action);
 
 						return (

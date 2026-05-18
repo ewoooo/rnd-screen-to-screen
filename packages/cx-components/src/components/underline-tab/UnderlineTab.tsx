@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, type KeyboardEvent, useRef, useState } from "react";
 import { cn } from "../../lib/cn";
 import { Text } from "../text";

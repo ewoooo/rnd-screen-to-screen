@@ -1,0 +1,35 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Screen Generation Flow Summary</title><style>
+  :root { color-scheme: light; }
+  body { margin: 0; background: #f6f8fb; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #172033; }
+  .page { box-sizing: border-box; width: max-content; padding: 42px 48px 48px; }
+  h1 { margin: 0 0 20px; font-size: 36px; line-height: 1.25; letter-spacing: 0; font-weight: 760; color: #111827; }
+  .subtitle { margin: -8px 0 28px; font-size: 17px; color: #667085; }
+  .card { display: block; background: #ffffff; border: 1px solid #d9e1ec; border-radius: 8px; padding: 28px 32px; box-shadow: 0 18px 48px rgba(17,24,39,.10); }
+  .card.full { width: 1184px; }
+  .card.short { width: 1220px; }
+  .mermaid { background: #ffffff; margin: 0; }
+  .mermaid svg { max-width: none !important; width: 100% !important; height: auto !important; display: block; }
+</style></head><body><main class="page"><h1>Screen Generation Flow Summary</h1><p class="subtitle">공유용으로 줄인 핵심 단계</p><section class="card short"><pre class="mermaid">flowchart LR
+    A["SB"] --> B["SB 구조 추출"]
+    B --> C["필수 SOT 조회"]
+    C --> D["필수 요구사항 및 정책사항<br/>제한 조건 확인"]
+    C --> E["화면 패턴 결정"]
+    D --> F["SB 기반 제작 화면 스펙 Diagram 생성"]
+    E --> F
+    F --> G{"Diagram 검증"}
+    G --> H["OGN 구현 / 보강"]
+    H --> I["Screen 조립"]
+    I --> J["Preview / 검증"]</pre></section></main><script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      securityLevel: 'loose',
+      flowchart: { htmlLabels: true, curve: 'basis', nodeSpacing: 52, rankSpacing: 58 },
+      themeVariables: {
+        background: '#ffffff', primaryColor: '#f8fafc', primaryTextColor: '#172033', primaryBorderColor: '#8aa4c2',
+        lineColor: '#667085', secondaryColor: '#eef6ff', tertiaryColor: '#fff7ed', clusterBkg: '#ffffff',
+        fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif', fontSize: '16px'
+      }
+    });
+    window.__diagramReady = true;
+</script></body></html>

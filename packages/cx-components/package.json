@@ -7,6 +7,9 @@
 	"sideEffects": [
 		"./src/**/*.css"
 	],
+	"scripts": {
+		"lint": "biome lint ../../packages/cx-components && node ../../scripts/check-cx-component-folder-contract.mjs"
+	},
 	"exports": {
 		".": "./src/index.ts",
 		"./components/accordion": "./src/components/accordion/index.ts",
@@ -60,13 +63,17 @@
 		"./components/tooltip": "./src/components/tooltip/index.ts",
 		"./components/tooltip-bubble": "./src/components/tooltip-bubble/index.ts",
 		"./components/underline-tab": "./src/components/underline-tab/index.ts",
+		"./candidate": "./src/candidate/index.ts",
+		"./candidate/rqr-contents-detail": "./src/candidate/rqr-contents-detail/index.ts",
+		"./candidate/rqr-list-option": "./src/candidate/rqr-list-option/index.ts",
+		"./candidate/rqr-notice": "./src/candidate/rqr-notice/index.ts",
 		"./preview": "./src/preview/index.ts",
 		"./styles.css": "./src/styles.css"
 	},
 	"dependencies": {
 		"@pxds/cx-icons": "0.1.0",
 		"@pxds/cx-tokens": "0.1.0",
-		"@pxds/pxds-layout": "0.1.0",
+		"@pxds/cx-layout": "0.1.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"radix-ui": "^1.4.3",

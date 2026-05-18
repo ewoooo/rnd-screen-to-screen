@@ -8,3 +8,5 @@ Figma desktop plugin bundle이다. 손작업 Figma 노드에서 component spec J
 - manifest network access는 필요한 localhost/tool endpoint만 허용한다.
 - UI copy는 작업 흐름 중심으로 짧게 유지한다.
 - `@pxds/pxds-figma`의 생성/정규화 로직을 재사용하고, plugin 전용 UI 상태와 핵심 spec 로직을 섞지 않는다.
+- 추출/생성 UI는 `Component -> Pattern -> Organism -> Screen` 계층과 slot 이름을 보존한다.
+- spacing 실측값은 `SPACING_PATTERNS.md` 기준의 evidence로 다루고, plugin 전용 raw spacing token을 만들지 않는다.

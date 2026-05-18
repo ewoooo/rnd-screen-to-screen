@@ -6,3 +6,4 @@ export {
 	isRecolorableIconType,
 	recolorableIconTypes,
 } from "./registry";
+export { StatusBattery, StatusSignal, StatusWifi } from "./status-icons";

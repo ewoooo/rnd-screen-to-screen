@@ -17,3 +17,4 @@ CX DS icon 원천 SVG, icon registry, React `Icon` wrapper를 소유한다. 최�
 - CX DS 원천 아이콘 SVG는 `src/originals/`에 보관하고, registry, adapter, owned icon 책임을 분리해서 이 패키지에 반영한다.
 - `src/originals/`의 Figma 원천 SVG는 직접 수정하지 않는다.
 - 앱 import 전환은 deprecated adapter 호환 범위를 확인하며 별도 작업으로 진행한다.
+- 아이콘은 `Component -> Pattern -> Organism -> Screen` 계층에서 기초 component vocabulary다. 화면 route가 raw SVG나 임의 아이콘명을 직접 만들지 않고, pattern/organism slot 안에서 등록된 `Icon`을 소비하도록 한다.

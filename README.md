@@ -1,25 +1,23 @@
 # PXDX Screen System
 
-PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙을 일관되게 조립할 수 있는지 검증하는 디자인 시스템 실험입니다. 화면을 하나씩 예쁘게 만드는 것보다, 화면 수가 늘어나도 spacing, component vocabulary, pattern contract가 무너지지 않는지를 확인합니다.
+PXDX는 정책서 기반 모바일 화면을 제한된 토큰, 컴포넌트 어휘, 레이아웃 패턴으로 일관되게 조립할 수 있는지 검증하는 디자인 시스템 실험입니다. 화면을 하나씩 예쁘게 만드는 것보다, 화면 수가 늘어나도 정책 충실도, spacing, component vocabulary, pattern contract가 무너지지 않는지를 확인합니다.
 
 ## Apps And Packages
 
 ```txt
 .
 ├── apps/
-│   ├── mobile/   실제 모바일 화면 route와 WDS/PXDS 화면 조립
+│   ├── mobile/   정책 기반 모바일 화면 route와 PXDS/CX 화면 조립
 │   └── preview/  모바일 화면과 컴포넌트 registry를 확인하는 브라우저 프리뷰 셸
 └── packages/
     ├── cx-tokens/                CX DS token-set SSOT, CSS variables, text style classes
     ├── cx-icons/                 CX DS icon originals, registry, React Icon wrapper
-    ├── pxds-icons/                deprecated legacy WDS icon adapter
-    ├── pxds-layout/               AppScreen, content layout, bottom-sheet, layout primitives
+    ├── cx-layout/               AppScreen, content layout, bottom-sheet, layout primitives
     ├── cx-components/             latest CX component package and inventory
-    ├── pxds-components/           deprecated legacy PXDS/WDS component adapter
-    ├── pxds-spec/                 screen route/config와 kind 같은 UI 비의존 spec 타입
+    ├── cx-spec/                 screen route/config와 kind 같은 UI 비의존 spec 타입
     ├── pxds-figma/                Figma bridge/hooks/export 관련 도구
     ├── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
-    └── policy-core/               Policy / UseCase 순수 문서 도메인
+    └── policy-core/               Policy / UseCase / UX Governance 순수 문서 도메인
 ```
 
 책임 방향은 아래 흐름을 기본으로 둡니다.
@@ -28,62 +26,72 @@ PXDX는 제한된 토큰과 컴포넌트 어휘만으로 모바일 화면 스펙
 @pxds/cx-tokens
   -> @pxds/cx-icons
   -> @pxds/cx-components
-  -> @pxds/pxds-layout
+  -> @pxds/cx-layout
   -> apps/mobile
 
-@pxds/pxds-icons -> legacy compatibility only
-
 apps/mobile/screens -> apps/preview
-@policy/core -> @pxds/pxds-spec
+@policy/core -> @pxds/cx-spec
 ```
 
 `apps/mobile`은 실제 화면 DOM 조립의 기준입니다. `apps/preview`는 mobile의 route catalog와 component registry를 읽어 화면과 어휘를 확인하는 도구입니다. 공통 런타임 책임은 packages로 분리하되, 화면별 의미 구조는 앱의 page와 organism에 남깁니다.
 
 ## Screen Structure
 
-화면은 route, screen, organism, package component가 분리된 구조를 사용합니다.
+화면은 route, screen, organism, pattern, package component가 분리된 구조를 사용합니다. 신규 화면은 루트 SOT 문서를 함께 조회합니다.
 
 ```txt
-apps/mobile/src/app/(mbr)/NOVA-MBR-PG-001-0/
+DESIGN_FOUNDATION.md
+DESIGN_PATTERNS.md
+SPACING_PATTERNS.md
+SCREEN_STRUCTURE_PRINCIPLES.md
+SCREEN_GENERATION_FLOW.md
+```
+
+Codex 작업에서는 `cx-screen-create`를 전체 오케스트레이션 스킬로 사용하고, 5페이즈에 맞춰 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용합니다. 특히 `cx-screen-diagram`은 `apps/mobile/src/screen-diagrams/`의 wire reference와 최신 `Screen Wire` ASCII rail 규칙을 강제하는 Phase 3 스킬입니다.
+
+```txt
+apps/mobile/src/app/(nova-mbr-legacy)/NOVA-MBR-PG-001-0/
 ├── page.tsx          Next route entry. Screen을 감싸는 얇은 wrapper
 ├── Screen.tsx        화면 DOM 조립의 기준
 ├── Screen.config.ts  route catalog용 화면 설정
 └── index.ts          screen module export
 ```
 
-현재 화면 그룹은 두 축으로 나눕니다.
+현재 화면 그룹은 세 축으로 나눕니다.
 
-- `mbr`: `NOVA-MBR-PG-*` current reference 화면
-- `legacy-mbr`: `LEGACY-MBR-PG-*` membership legacy 비교군
+- `nova-mbr-legacy`: `NOVA-MBR-PG-*` legacy NOVA MBR reference 화면
+- `wds-mbr-legacy`: `LEGACY-MBR-PG-*-CX` WDS 기반 membership legacy CX 전환 비교군
+- `cx`: CX component proof/reference 화면
 
-`@screen/mobile/screens`는 `apps/mobile/src/scripts/screen-routes`를 통해 route catalog와 조회 helper만 공개합니다. 페이지의 실제 UI 조립은 각 screen 폴더와 `apps/mobile/src/organisms/{mbr,legacy-mbr}`가 소유합니다.
+`@screen/mobile/screens`는 `apps/mobile/src/scripts/screen-routes`를 통해 route catalog와 조회 helper만 공개합니다. 페이지의 실제 UI 조립은 각 screen 폴더와 `apps/mobile/src/organisms/nova-mbr-legacy`가 소유합니다.
 
-## Component Structure
+## Component And Layout Structure
 
-컴포넌트 계층은 아래처럼 둡니다.
+컴포넌트와 레이아웃 계층은 아래처럼 둡니다. 외부 디자인 문서의 `Atom` 같은 분류명은 직접 도입하지 않고 repo 어휘로 정규화합니다.
 
 ```txt
-WDS primitive
-  -> @pxds/cx-components
-  -> apps/mobile organisms
-  -> screen/page
+Component -> Pattern -> Organism -> Screen
 ```
 
+- `Component`: `@pxds/cx-components`, `@pxds/cx-icons`, tokenized layout primitive가 제공하는 기초 UI 어휘입니다.
+- `Pattern`: `@pxds/cx-layout`의 `AppScreen`, `PageStackContents`, `FieldStack`, `SinglePrimaryAction`, `SectionDivider`, overlay/action slot 같은 반복 조합 계약입니다.
+- `Organism`: 정책 의미와 도메인 OGN을 담는 앱 소유 의미 단위입니다.
+- `Screen`: `AppScreen` slot에 chrome, section, organism을 배치하는 지도입니다.
 - `@pxds/cx-components`: 최신 CX component package입니다. 신규 화면/컴포넌트 제작의 기준 어휘입니다.
-- `@pxds/pxds-components`: deprecated legacy PXDS/WDS adapter입니다. 기존 호환이나 migration reference가 필요할 때만 제한적으로 봅니다.
 - `@pxds/cx-icons`: 최신 CX icon package입니다. 신규 icon vocabulary와 React `Icon` wrapper의 기준입니다.
-- `@pxds/pxds-icons`: deprecated legacy WDS icon adapter입니다. 기존 호환이나 migration reference가 필요할 때만 제한적으로 봅니다.
-- `organisms`: MBR 또는 legacy-mbr 화면 영역의 의미 구조입니다. 현재 앱이 소유하며 package registry로 올리지 않습니다.
+- `organisms`: MBR 화면 영역의 의미 구조입니다. 현재 앱이 소유하며 package registry로 올리지 않습니다.
 - `screen/page`: route 단위의 최종 화면 조립입니다.
 
 새 컴포넌트가 필요할 때는 먼저 기존 token, layout primitive, molecule로 표현 가능한지 확인합니다. 반복되는 조합이 확인될 때만 package component로 승격합니다.
+
+기초 component(`Button`, `Badge`, `Icon`, 선택 컨트롤 등)는 화면 route에 직접 흩뿌리지 않고 pattern 또는 organism slot 안에서 사용합니다. spacing은 `DESIGN_FOUNDATION.md`의 token을 기준으로 하며, 실제 화면/컴포넌트 적용값은 `SPACING_PATTERNS.md`의 운영 규칙을 따릅니다.
 
 ## CX DS Porting Status
 
 | Area | Status | Note |
 | --- | --- | --- |
 | Token | CSS Variable화 완료 | `@pxds/cx-tokens`가 Tokens Studio token-set을 SSOT로 두고 `tokens.css` CSS custom properties와 `text-styles.css` 합성 텍스트 스타일 클래스를 생성합니다. |
-| Icon | 최신 패키지 기준 | 신규 icon vocabulary는 `@pxds/cx-icons`를 기준으로 하며, `@pxds/pxds-icons`는 deprecated legacy WDS icon adapter입니다. |
-| Component | 최신 패키지 기준 | 신규 component vocabulary는 `@pxds/cx-components`를 기준으로 하며, `@pxds/pxds-components`는 deprecated legacy 호환 경계입니다. |
+| Icon | 최신 패키지 기준 | 신규 icon vocabulary는 `@pxds/cx-icons`를 기준으로 합니다. 삭제된 legacy icon adapter import를 새로 추가하지 않습니다. |
+| Component | 최신 패키지 기준 | 신규 component vocabulary는 `@pxds/cx-components`를 기준으로 합니다. 삭제된 legacy component adapter import를 새로 추가하지 않습니다. |
 
 현재는 token 기반을 먼저 고정하고, component vocabulary를 모바일 화면에서 실제로 쓰이는 어휘 위주로 좁히는 단계입니다.

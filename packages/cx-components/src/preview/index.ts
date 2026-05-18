@@ -5,7 +5,10 @@ export {
 export { cxComponentPreviewRegistry } from "./registry";
 export type {
 	ComponentPreviewExample,
+	CxComponentPreviewActiveEntry,
 	CxComponentPreviewCase,
+	CxComponentPreviewCandidateKind,
+	CxComponentPreviewCandidateEntry,
 	CxComponentPreviewEntry,
 	CxComponentPreviewExample,
 	CxComponentPreviewGroup,

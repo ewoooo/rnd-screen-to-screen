@@ -33,7 +33,7 @@ body {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	/* position:fixed 자손(WDS Modal/BottomSheet 등)이 viewport 가 아닌 이 프레임에 갇히도록 containing block 생성 */
+	/* position:fixed 자손이 viewport가 아닌 이 프레임에 갇히도록 containing block 생성 */
 	transform: translateZ(0);
 }
 

@@ -23,6 +23,7 @@ component vocabulary explicitly makes `ListText.RightItem` public.
 
 ```tsx
 <ListTextRightItem type="text" text="-3,000원" />
+<ListTextRightItem type="badge" text="소멸" />
 <ListTextRightItem type="badgeLevel" levels={["v", "g", "s"]} />
 <ListTextRightItem type="textButton" text="-3,000원" />
 <ListTextRightItem
@@ -36,8 +37,9 @@ component vocabulary explicitly makes `ListText.RightItem` public.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `type` | `"text" \| "badgeLevel" \| "textButton" \| "icon"` | `"text"` | Normalized private preset type. |
-| `text` | `string` | - | Label for `text` and `textButton`. |
+| `type` | `"text" \| "badge" \| "badgeLevel" \| "textButton" \| "icon"` | `"text"` | Normalized private preset type. |
+| `text` | `string` | - | Label for `text`, `badge`, and `textButton`. |
+| `badgeType` | `"gray" \| "black" \| "blue"` | `"gray"` | Badge tone for `badge`. |
 | `levels` | `Array<"v" \| "g" \| "s">` | `["v", "g", "s"]` | Level badge order for `badgeLevel`. |
 | `icon` | `"arrow-right"` | `"arrow-right"` | Icon preset for `icon`. |
 | `onClick` | `() => void` | - | Makes `textButton` or `icon` own the action target. |
@@ -50,13 +52,14 @@ Native `span` attributes are supported. `children` is not supported.
 
 - `data-figma-render="component"`
 - `data-figma-component-id="list-text-right-item"`
-- `data-figma-property-type="Text" | "BadgeLevel" | "TextButton" | "Icon"`
+- `data-figma-property-type="Text" | "Badge" | "BadgeLevel" | "TextButton" | "Icon"`
 
 `ListText` should own `data-figma-property-right-item` on the parent row.
 
 ## Visual Contract
 
 - `Text`: text only, `14 med`, secondary text color.
+- `Badge`: short display-only status using the `Badge` vocabulary.
 - `TextButton`: text plus `Icon type="arrow-right" size={16}` with 2px gap.
 - `Icon`: decorative arrow by default, or `IconButton` when `onClick` is present.
 - `BadgeLevel`: Badge-composed circular `V/G/S` items, 14 x 14 with 4px gap.
