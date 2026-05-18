@@ -44,6 +44,7 @@ apps/mobile/src/app/(group)/SCREEN-ID/
 - 기계 계약은 `<script type="application/json" id="diagram-contract">`에 내장한다.
 - 시각 DOM과 JSON 계약은 같은 section id, OGN id, pattern role을 공유한다.
 - 후보 component 이름은 승인 기준이 아니라 `layoutContract` 충족 여부를 판단하기 위한 후보 목록이다.
+- 버튼과 액션은 `variant` 이름이 아니라 실제 visual weight로 검수한다. Content 내부 보조 액션이 Bottom CTA와 같은 폭/높이/radius/pill shape/고대비 강조로 보이면 시각 다이어그램 단계에서 실패로 표시한다.
 - `data-*` 속성은 자동 검사와 DOM 기반 검수용 계약으로 본다.
 - route-level raw margin/padding, raw spacing, raw color, custom font-size 보정은 HTML 표준에서도 금지 신호로 기록한다.
 - `Migrated from legacy markdown`, section id만 나열한 placeholder, component 이름만 적은 박스는 표준 위반이다. md에서 넘어온 정보가 많아도 보이는 영역에는 최종 화면의 실제 텍스트와 구조로 재구성한다.
@@ -71,6 +72,7 @@ apps/mobile/src/app/(group)/SCREEN-ID/
 - 각 의미 section의 `data-layout-contract`
 - 실제 표시 텍스트: title, subtitle, label, value, helper/error copy, list item title/caption, CTA label
 - 실제 레이어 표현: card surface, divider, field stack, radio/checkbox row, inline action, bottom sheet/popup rail, fixed bottom action
+- 액션의 실제 시각 강도: Bottom Primary, inline field action, compact secondary, text/link action을 서로 구분해 그린다. 같은 화면에 큰 pill 버튼이 두 개 보이면 어느 쪽이 실패인지 Visual Screen에서 드러나야 한다.
 - 좌우 구조가 있는 영역은 label/value를 같은 row 안에서 좌/우 컬럼으로 보여준다. key-value 요약을 단순 문장이나 bullet로 바꾸지 않는다.
 
 금지:
@@ -79,6 +81,7 @@ apps/mobile/src/app/(group)/SCREEN-ID/
 - `Screen.map.md` 또는 JSON 계약만 맞고 Visual Screen은 비어 있는 상태
 - component 후보명만 나열하고 실제 화면 copy/row/layer가 보이지 않는 상태
 - bottom CTA를 content card처럼 표시하거나 fixed bottom rail을 생략하는 상태
+- Content 내부 보조 액션을 Bottom CTA와 같은 full-width pill 버튼으로 표시하면서 `secondary`라고만 기록하는 상태
 
 예:
 
@@ -288,7 +291,7 @@ HTML visual DOM의 구조 요약이다.
 
 ### sections
 
-각 section은 기존 MD의 `Section Contracts`를 구조화한 것이다.
+각 section은 기존 MD의 `Section Contracts`를 구조화한 것이다. `visualWeightContract`는 action-bearing section, Bottom CTA section, 또는 Bottom CTA와 시각적으로 경쟁할 수 있는 section에서 필수다.
 
 필수:
 
@@ -331,6 +334,20 @@ HTML visual DOM의 구조 요약이다.
     "wrapping": "...",
     "distortionRisk": "..."
   },
+  "visualWeightContract": {
+    "primaryShapeAllowed": "Bottom only | none | section-local only",
+    "contentActionShape": "inline | compact | text-link | card-local | none",
+    "disallowed": [
+      "Content full-width pill ActionButton competing with Bottom CTA"
+    ],
+    "hierarchyFailIf": [
+      "secondary action matches Bottom CTA width/height/radius/position"
+    ],
+    "evidenceRequired": [
+      "geometry",
+      "screenshot-or-visual-review"
+    ]
+  },
   "componentCandidates": []
 }
 ```
@@ -345,7 +362,7 @@ HTML visual DOM의 구조 요약이다.
 {
   "name": "RQRContentsDetail",
   "source": "@pxds/cx-components",
-  "fit": "strong | medium | weak | reject",
+  "fit": "strong | medium | risky | weak | reject",
   "selected": true,
   "reason": "...",
   "risk": "..."
@@ -358,6 +375,7 @@ HTML visual DOM의 구조 요약이다.
 - rejected 후보도 반드시 보존한다.
 - `reason`은 component 이름 유사도가 아니라 layoutContract 충족 여부를 설명해야 한다.
 - `risk`는 `medium`, `weak`, `reject`에서 특히 중요하다.
+- `risky`는 기능은 맞지만 visualWeightContract를 깨뜨릴 가능성이 있어 Build 전 또는 Render Evidence 단계에서 screenshot/visual review가 필요한 후보에 사용한다. 예: Bottom CTA가 있는 화면에서 Content 내부 `ActionButton(secondary)`를 쓰는 경우.
 
 ### policyOgnMatrix
 
@@ -421,6 +439,12 @@ HTML visual DOM의 구조 요약이다.
       }
     ],
     "bottomOverlap": false,
+    "visualHierarchy": {
+      "primaryShapedActionCount": 1,
+      "contentActionCompetesWithBottom": false,
+      "checkedBy": "screenshot | visual-review | both",
+      "knownIssues": []
+    },
     "contentOverflow": "none | scrolls-with-clearance | overflow-risk",
     "knownIssues": []
   },

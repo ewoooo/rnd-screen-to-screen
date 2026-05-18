@@ -52,15 +52,19 @@ When no newer stage skill is available, execute the workflow below directly. Do 
    - `actionPlacement`: `none | Content | Bottom(preset="primary-cta") | inline field action`
    - `typography`: row title/caption roles, emphasis rule, and control label scale
    - `patternDecision`: existing pattern, existing composition, or new candidate
+   - `visualWeightContract`: primary-shaped action allowance, content secondary shape, forbidden button shape/scale, hierarchy fail conditions, and required evidence
 6. Run Component Candidate Decision:
-   - score candidates as `strong | medium | weak | reject`
+   - score candidates as `strong | medium | risky | weak | reject`
    - score by capability against layout behavior, not name similarity or sample/proof/copy length
    - reject candidates that need route-level CSS, raw spacing/color/font-size, deprecated imports, or known wrapping/alignment distortion
+   - mark candidates `risky` when their capability is plausible but their rendered visual weight could violate CTA hierarchy, such as Content `ActionButton(secondary)` near a Bottom primary CTA
    - record vocabulary gaps instead of disguising them as custom screen CSS
 7. Run Design Pattern Review Gate after the first draft diagram and before Build planning:
    - reopen `DESIGN_PATTERNS.md`; do not rely on memory or the initial reference selection
    - compare the chosen official pattern against the draft `Screen Wire`
    - verify the pattern's layout/spacing contract, section boundaries, CTA placement, divider behavior, content density, field/list/card grouping, and state expectations
+   - verify Component Composition Gate: field actions use the correct inline/compact slot, list/choice rows use the correct list/card pattern, and Content actions do not visually compete with Bottom primary actions
+   - verify visual weight from the drawn diagram, not component variant names. A `secondary` button that looks like a full-width primary CTA is a fail.
    - revise `Screen Wire`, `Section Contracts`, `layoutStrategy`, `layoutContract`, and `componentCandidates` before moving on
    - record the recheck result in `diagram-contract.screenContract.patternRecheck` as `revised | no-change`, with the pattern section, reason, and changes
 8. Write `Screen.diagram.html` using `docs/html-screen-diagram-standard.md`:
@@ -71,7 +75,7 @@ When no newer stage skill is available, execute the workflow below directly. Do 
    5. `Distortion Gates`
    6. hidden `<script type="application/json" id="diagram-contract">`
 9. Apply Step 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
-10. For each section/OGN in `diagram-contract.sections`, write fields in this order: `patternEvidence`, `patternDecision`, `ognBoundaryDecision`, `layoutStrategy`, `layoutContract`, then `componentCandidates`.
+10. For each section/OGN in `diagram-contract.sections`, write fields in this order: `patternEvidence`, `patternDecision`, `ognBoundaryDecision`, `layoutStrategy`, `layoutContract`, `visualWeightContract`, then `componentCandidates`.
 11. Run the required Step 3 validation before moving to Build.
 
 ## Pattern Analysis Gate
@@ -98,7 +102,15 @@ Do not make a component name the acceptance criterion when the real requirement 
 - `wrapping`: what may wrap, what must stay stable, and how overflow is handled.
 - `distortionRisk`: the specific failure mode that would make the implementation visually wrong.
 
-`componentCandidates` names possible components, compositions, patterns, or organisms after `layoutContract`. Each candidate must record `fit: strong | medium | weak | reject`, `source`, `reason`, and `risk`. Candidates are search space for Build, not acceptance criteria. Do not make component names final unless the Diagram marks `required: true` with `sourceReason`.
+For sections with actions, especially when the screen also has `Bottom(preset="primary-cta")`, add `visualWeightContract`:
+
+- `primaryShapeAllowed`: where a primary-shaped action may appear, usually `Bottom only`.
+- `contentActionShape`: `inline | compact | text-link | card-local | none`.
+- `disallowed`: shapes that would visually compete, such as Content full-width pill `ActionButton`.
+- `hierarchyFailIf`: concrete visual fail conditions based on width, height, radius, emphasis, and proximity.
+- `evidenceRequired`: `geometry` plus `screenshot-or-visual-review` when visual hierarchy is at risk.
+
+`componentCandidates` names possible components, compositions, patterns, or organisms after `layoutContract`. Each candidate must record `fit: strong | medium | risky | weak | reject`, `source`, `reason`, and `risk`. Candidates are search space for Build, not acceptance criteria. Do not make component names final unless the Diagram marks `required: true` with `sourceReason`.
 
 For summary/detail cards with label-value rows, the contract must protect the key-value behavior itself: stable label/value alignment, readable value column, component-owned card background/radius/padding, and no narrow fixed column squeeze.
 
@@ -128,6 +140,7 @@ Score fit by component capability against `layoutContract`, not by current copy 
 
 - `strong`: directly supports role, structure, alignment, density, wrapping, and slots; has no known Distortion Gate risk; works without route-level CSS; preferably matches a nearby reference implementation.
 - `medium`: supports the core structure, but one secondary concern needs verification, such as density, wrapping, state, or slot fit. Current short data alone is not enough for `medium` if the component has a known structural risk.
+- `risky`: supports behavior but may violate visual weight or hierarchy once rendered. Use this for candidates such as Content `ActionButton(secondary)` on a screen with Bottom primary CTA; require screenshot/visual review before accepting.
 - `weak`: role is similar but structure, alignment, density, wrapping, or card/surface treatment is incomplete; known risk touches a core part of the layout contract; it would need wrappers, spacers, arbitrary width, or route-level CSS to look right.
 - `reject`: violates a Distortion Gate, requires deprecated imports, lacks a required slot/state/wrapping behavior, or would change the wire reference's core layout.
 
@@ -191,6 +204,7 @@ Gate checks:
 - selected pattern family matches the user task and screen state
 - section boundaries, divider bands, and contents dividers follow the pattern contract
 - CTA placement matches the pattern, especially fixed bottom actions
+- Component Composition Gate passes: field-bound actions remain inline/compact, Content secondary actions are visually subordinate, and only one primary-shaped CTA is visible on a Bottom CTA screen
 - field/list/card grouping preserves the reference density and hierarchy
 - typography scale and row emphasis do not drift from the pattern
 - state, notice, error, empty, or loading treatment follows the pattern rules

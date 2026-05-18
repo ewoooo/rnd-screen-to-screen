@@ -302,6 +302,8 @@ OGN: ogn-...
 - 중요한 값이 과도하게 wrap되어 사용자가 한눈에 비교해야 하는 정보의 행 구조가 무너진다.
 - 2열 또는 split layout에서 한쪽 텍스트가 2줄 이상으로 늘어나 다른 행과 높이 리듬이 깨진다.
 - 하단 fixed action과 scroll content가 겹치거나, action 위의 마지막 section이 잘린다.
+- `Bottom` Primary가 있는데 Content 내부 액션이 같은 rail 폭, 큰 pill shape, 유사 높이/radius로 렌더되어 두 개의 primary CTA처럼 보인다.
+- `secondary`라는 variant 이름만 믿고 실제 시각 강도, 위치, 크기, CTA와의 근접성을 검수하지 않는다.
 - route-level padding, negative margin, raw width, 임의 fontSize로만 정렬 문제가 해결된다.
 - existing component에는 필요한 slot 이름이 없어 의미 없는 wrapper나 빈 spacer가 추가된다.
 
@@ -315,6 +317,7 @@ OGN: ogn-...
 - 같은 화면 안에 비슷한 역할의 wrapper가 여러 개 겹친다.
 - section title과 content의 책임이 OGN 내부와 layout wrapper에 중복된다.
 - 하단 CTA가 scroll content와 bottom chrome 사이에서 애매하게 섞인다.
+- 화면당 primary-shaped CTA가 2개 이상 보인다. Content 내부 `ActionButton`이 Bottom CTA와 같은 모양이면 `variant="secondary"`라도 금지 신호다.
 - 새 component가 필요해 보이지만 실제로는 기존 slot 이름이 부족한 상태다.
 - `reuse` 판단 없이 신규 candidate를 만들거나, 신규 candidate에 `RQR` 식별자가 없다.
 - 기초 component가 Screen route에 직접 배치되어 CTA, 선택지, 안내, 상태의 소유자가 불명확하다.

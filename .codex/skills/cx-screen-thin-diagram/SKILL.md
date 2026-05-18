@@ -40,8 +40,9 @@ Use this for narrowly scoped Phase 3 diagram work only. `SCREEN_GENERATION_FLOW.
    - `ognBoundaryDecision`
    - `layoutStrategy`
    - `layoutContract`
+   - `visualWeightContract` when the section contains an action or sits near a Bottom CTA
    - `componentCandidates`
-5. Recheck the selected pattern in `DESIGN_PATTERNS.md` after the edit and record `patternRecheck` as `revised` or `no-change`.
+5. Recheck the selected pattern in `DESIGN_PATTERNS.md` after the edit and record `patternRecheck` as `revised` or `no-change`. For any touched action/form/list section, also re-run Component Composition Gate: confirm the component composition, action slot, and visual hierarchy are pattern-compliant rather than merely name-compliant.
 6. If thin work reveals missing policy meaning, unresolved OGN ownership, an absent reference, or a component vocabulary gap, stop and return to `cx-screen-diagram` or `cx-screen-create`.
 
 ## Guardrails
@@ -50,6 +51,7 @@ Use this for narrowly scoped Phase 3 diagram work only. `SCREEN_GENERATION_FLOW.
 - Do not invent new policy meaning, copy, CTA behavior, or errors.
 - Do not change implementation files.
 - Do not score components by name similarity or sample copy length.
+- Do not accept `variant="secondary"` as proof of secondary hierarchy. If the visual shape/scale competes with a Bottom primary CTA, mark the candidate `risky` or `reject` and update the diagram contract.
 - Do not hide visual changes only in JSON. The visible diagram and `#diagram-contract` must agree.
 
 ## Done Criteria

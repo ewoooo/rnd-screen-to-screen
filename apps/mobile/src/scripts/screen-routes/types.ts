@@ -6,6 +6,7 @@ import type {
 export type ScreenGroup =
 	| "nova-mbr-legacy"
 	| "nova-mbr-fp"
+	| "nova-mbr-fp-legacy"
 	| "chg"
 	| "cx-example"
 	| "wds-mbr-legacy";

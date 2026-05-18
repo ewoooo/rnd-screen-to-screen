@@ -1351,12 +1351,16 @@ Local_Coupon
 - Secondary 버튼은 취소, 이전, 닫기처럼 보조 또는 철회 액션에 사용한다.
 - 2버튼 조합은 `Secondary + Primary` 순서를 기본으로 한다. 동등한 선택이 아니면 Primary가 더 넓은 비중을 갖는다.
 - Primary CTA를 스크롤 콘텐츠 중간에 직접 배치하지 않는다.
+- `Bottom`에 Primary CTA가 있는 화면에서는 Content 내부 액션이 같은 너비, 높이, radius, pill shape, 고대비 배경, 하단 근접 위치로 보이면 `variant="secondary"`라도 CTA hierarchy 실패로 본다. 화면 안의 primary-shaped CTA는 Bottom에 1개만 허용한다.
+- 인증번호 확인, 중복확인, 재요청처럼 특정 field/form group에 종속된 액션은 field 우측 slot, compact button, text/link button, 또는 card/organism 내부 낮은 위계 slot으로 표현한다. Content 내부 full-width `ActionButton`으로 올리지 않는다.
+- Content 내부 보조 액션이 필요하면 Bottom CTA와 최소 한 단계 낮은 시각 강도여야 한다: 짧은/내용 맞춤 너비, 낮은 높이, 약한 surface, field group 인접 배치, 충분한 rail 분리. Bottom CTA와 같은 361/393px rail의 큰 버튼이면 실패다.
 
 ### 폼 조합
 
 - 관련 있는 `TextField`는 그룹 제목과 함께 묶는다. 그룹 제목 없이 필드만 나열하지 않는다.
 - `TextField` 보조 버튼은 필드 외부 병렬 배치보다 입력 컴포넌트의 우측 slot으로 처리한다.
 - 에러 메시지는 해당 `TextField` 바로 아래 help text slot에 붙인다. 별도 callout으로 필드 밖에 띄우지 않는다.
+- Verification form은 `TextField(actionButton)` + helper/error/state notice + 낮은 위계 confirm action을 기본으로 한다. `인증 확인` 같은 confirm action이 필요해도 Bottom의 최종 진행 CTA와 같은 full-width pill로 렌더하지 않는다.
 - 약관 동의는 `전체 동의 -> Divider -> 필수/선택 항목` 순서를 기본으로 한다.
 - 결제 화면의 약관은 Checkbox와 내용을 확인할 수 있는 accordion/policy detail이 연결되어야 한다.
 

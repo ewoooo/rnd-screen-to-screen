@@ -38,6 +38,7 @@ Before editing files, publish a Build Plan:
 - `Remove`: files to delete.
 - `No-touch`: nearby files intentionally left alone.
 - `Layout Risk`: rail owner, padding owner, bottom CTA owner, wrapping/overflow risk.
+- `Visual Weight Risk`: whether any Content action could look like a second primary CTA; confirm the Diagram `visualWeightContract` or identify that the work must return to Diagram.
 - `CSS / token risk`: whether any CSS is needed, and why it is not a route-level layout patch.
 - `Shared Ownership`: files that must not be edited in parallel without coordination.
 
@@ -51,6 +52,7 @@ Do not implement until route-level margin/padding patch, raw color, raw spacing,
 - Use `@pxds/cx-layout`, `@pxds/cx-components`, `@pxds/cx-icons`, and `@pxds/cx-tokens`.
 - Do not add deleted legacy imports such as `@pxds/pxds-components`, `@pxds/pxds-icons`, `@pxds/pxds-layout`, or `@pxds/pxds-spec`.
 - Treat Diagram component names as candidates unless the Diagram says they are required. Select by capability against the contract, not by name match. A component name match alone is not acceptance evidence.
+- Preserve each section's `visualWeightContract`. A `secondary` variant is not sufficient if the rendered size, width, radius, color, or proximity makes the action compete with the Bottom primary CTA.
 - Reject candidates that violate Distortion Gates. If no candidate passes, create or adapt a reusable organism/component, or return to `cx-screen-diagram` when the Diagram contract itself is insufficient.
 - Avoid route-level raw margin/padding fixes. If layout distorts, fix the organism/component selection instead of masking it.
 - Keep layout ownership explicit: `Screen.tsx` owns AppScreen rails and slots, OGN owns policy-bearing body composition, `@pxds/cx-layout` owns layout rails/primitives, and `@pxds/cx-components` owns internal component alignment/state visuals.
@@ -71,14 +73,14 @@ After the target `Screen.tsx` is fully assembled, review spacing between compone
 For each section, decide in this order:
 
 1. Read `layoutContract` and Distortion Gates as acceptance criteria.
-2. Evaluate `componentCandidates` by capability: role, structure, alignment, density, wrapping, state handling, and slot fit. Use the Diagram fit scoring rules; sample/proof/copy length is not selection evidence.
+2. Evaluate `componentCandidates` by capability: role, structure, alignment, density, wrapping, state handling, slot fit, and visual weight. Use the Diagram fit scoring rules; sample/proof/copy length is not selection evidence.
 3. Prefer the smallest existing component/composition that preserves the contract and matches nearby screen/reference behavior.
 4. If the Diagram records a Pattern-Family Precedent Gate outcome from `SCREEN_STRUCTURE_PRINCIPLES.md`, follow the recorded `assumption` or stop on unresolved `decisionRequired`.
 5. If every candidate violates a gate, create or adapt a reusable organism/component instead of forcing a named candidate.
 6. Record the selection in `Screen.config.ts generation.buildSelections` when the config schema supports it, or in the work log with the section id.
 7. For each selected candidate/composition, include a reason that explains how it satisfies the section `layoutContract` and Distortion Gates; do not cite component name similarity as sufficient rationale.
 8. Use only these `source` values for build selections: `componentCandidates`, `existing-composition`, `new-organism`, `new-component`.
-9. Record rejected candidates as `{ candidate, reason }`, especially when they fail role, structure, alignment, density, wrapping, state handling, slot fit, or any Distortion Gate. Treat `weak` as reject unless no stronger candidate exists and the contract can still be proven without route-level CSS.
+9. Record rejected candidates as `{ candidate, reason }`, especially when they fail role, structure, alignment, density, wrapping, state handling, slot fit, visual weight, or any Distortion Gate. Treat `weak` as reject unless no stronger candidate exists and the contract can still be proven without route-level CSS. Treat `risky` as requiring rendered evidence before final acceptance.
 10. When the implemented composition deviates from the Diagram candidate or contract, record the deviation with `deviationReason`; use deviations only when policy meaning and layout intent remain intact.
 
 Invalid rationale: `buildSelections.reason`, `rejected.reason`, and work logs must not use sample/proof/copy length as acceptance evidence. Short data is only a wrapping verification input and cannot upgrade fit, justify rejection, or override a Distortion Gate risk.
@@ -88,6 +90,7 @@ If Build cannot satisfy a recorded structure gate or needs an unresolved authora
 ## Done Criteria
 
 - Every OGN/slot in `Screen.diagram.html` exists in code and passes its `layoutContract`/Distortion Gates, or has a recorded deviation.
+- Every action-bearing section passes `visualWeightContract`, especially Content action vs Bottom primary CTA hierarchy.
 - `Component Spacing Review` has been performed after `Screen.tsx` assembly and before Register/Verify.
 - `Screen.config.ts generation.policyRefs` and `generation.ognIds` match Map and Diagram.
 - Mobile lint/build can run without import or type errors.

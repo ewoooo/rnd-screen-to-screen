@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>NOVA-MBR-FP-005-0 Screen Diagram</title>
+	<style>
+		:root{--bg:#f8f9fb;--surface:#fff;--soft:#f4f5fa;--line:#e2e6f1;--ink:#05001a;--muted:#5e6085;--brand:#421ed8;--good:#eaf8ef;--warn:#fff7e6;--rail:361px;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:393px minmax(360px,1fr);gap:28px;max-width:1120px;margin:0 auto;padding:28px}.title{grid-column:1/-1}.title h1{margin:0 0 6px;font-size:24px;line-height:32px}.title p,.panel p,.panel li{margin:0;color:var(--muted);font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid var(--line);border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 44px rgb(5 0 26 / 12%)}.system{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:700}.appbar{display:flex;align-items:center;justify-content:center;height:56px;padding:0 20px;font-size:18px;font-weight:700}.content{min-height:650px;background:var(--surface)}.stack{width:var(--rail);margin:0 auto;padding:34px 0 26px;display:grid;gap:18px}.hero{display:grid;gap:8px;padding:4px 0 10px}.hero strong{font-size:24px;line-height:32px;font-weight:700}.hero span{font-size:16px;line-height:24px;color:var(--muted)}.notice{padding:15px 16px;border-radius:16px;background:var(--good);font-size:14px;line-height:21px}.notice strong{display:block;margin-bottom:2px}.notice.warn{background:var(--warn)}.card{border:1px solid var(--line);border-radius:16px;background:var(--soft);padding:16px;display:grid;gap:12px}.card h2{margin:0;font-size:16px;line-height:24px}.kv{display:flex;justify-content:space-between;gap:18px;font-size:14px;line-height:22px}.kv span:first-child{color:var(--muted)}.kv strong{text-align:right;font-weight:700}.conditional{border:1px dashed var(--line);border-radius:16px;background:var(--soft);padding:14px 16px;font-size:13px;line-height:20px;color:var(--muted)}.conditional strong{display:block;margin-bottom:2px;color:var(--ink);font-size:14px}.bottom{height:102px;padding:12px 16px 34px;border-top:1px solid var(--line);background:var(--surface)}.cta{width:var(--rail);height:56px;border:0;border-radius:14px;background:var(--brand);color:white;font-size:17px;font-weight:700}.meta{display:grid;gap:14px}.panel{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:16px}.panel h2{margin:0 0 10px;font-size:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.status,.token{display:inline-flex;margin:0 4px 4px 0;padding:3px 8px;border-radius:999px;background:var(--soft);font-size:12px;font-weight:700}.status{background:#dcfce7;color:#166534}.inspect{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px;background:#fbfcfe}.inspect strong{display:block;font-size:13px}.inspect span{display:block;color:var(--muted);font-size:12px;line-height:18px}@media(max-width:860px){main{grid-template-columns:1fr;padding:18px}.phone{justify-self:center;max-width:393px;width:100%}.stack,.cta{width:100%}}
+	</style>
+</head>
+<body>
+<main>
+	<header class="title">
+		<h1>NOVA-MBR-FP-005-0 · 가입 완료</h1>
+		<p>가입 완료 결과, 세션 상태 안내, 홈 이동 CTA를 Completion 패턴으로 재작성한 HTML 다이어그램입니다.</p>
+	</header>
+
+	<section class="phone" data-screen-id="NOVA-MBR-FP-005-0" data-route="/NOVA-MBR-FP-005-0" data-pattern="complete" data-wire-reference="apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.diagram.html">
+		<div class="system" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
+		<header class="appbar" data-rail="Header">가입 완료</header>
+		<div class="content" data-rail="Content">
+			<div class="stack">
+				<section class="hero" data-section-id="completeHero" data-ogn-id="ogn-mbr-join-complete" data-pattern-role="completion-title" data-boundary="PageStackContents title" data-layout-contract="TitleMain(type=complete) owns completion result title/subtitle rhythm">
+					<strong>가입이 완료됐어요</strong>
+					<span>이제 서비스를 바로 이용할 수 있어요.</span>
+				</section>
+				<section class="notice" data-section-id="joinSuccessNotice" data-ogn-id="ogn-mbr-join-complete" data-pattern-role="positive-state-message" data-boundary="notice block" data-layout-contract="Positive state message confirms completion without competing with hero">
+					<strong>가입이 정상적으로 완료됐어요.</strong>
+					<span>가입 결과를 확인하고 홈으로 이동할 수 있어요.</span>
+				</section>
+				<section class="conditional" data-section-id="completionSummary" data-ogn-id="ogn-mbr-join-complete" data-pattern-role="key-value-summary" data-boundary="conditional card" data-layout-contract="Render only when confirmed summaryRows exist; do not invent policy/SB-absent rows">
+					<strong>가입 정보</strong>
+					<span>confirmed summaryRows가 있을 때만 key-value 요약을 렌더합니다.</span>
+				</section>
+				<section class="conditional" data-section-id="sessionErrorNotice" data-ogn-id="ogn-mbr-join-complete" data-pattern-role="cautionary-state-message" data-boundary="conditional notice" data-layout-contract="Alternate session error notice; mutually exclusive with the default success notice">
+					<strong>세션 오류 안내</strong>
+					<span>가입은 완료됐지만 세션 생성이 실패한 alternate 상태에서만 렌더합니다.</span>
+				</section>
+			</div>
+		</div>
+		<footer class="bottom" data-rail="Bottom" data-preset="primary-cta" data-section-id="homeAction" data-ogn-id="structural-only" data-pattern-role="bottom-primary-action" data-boundary="Bottom fixed primary-cta" data-layout-contract="Single primary home navigation after completion"><button class="cta" type="button">홈으로 이동하기</button></footer>
+	</section>
+
+	<aside class="meta">
+		<section class="panel"><h2>Review Summary</h2><div class="grid"><p><span class="status">통과</span>Completion</p><p><span class="status">통과</span>policy refs synced</p><p><span class="status">통과</span>home CTA</p><p><span class="status">통과</span>state separation</p></div><p><span class="token">재검수 revised</span> DESIGN_PATTERNS 완료 기준으로 요약 카드는 confirmed rows가 있을 때만 렌더하는 conditional contract로 유지하고, 기본 visual rail에서는 정책/SB에 없는 summary rows를 표시하지 않습니다.</p></section>
+		<section class="panel"><h2>Reference Summary</h2><p><span class="token">complete</span><span class="token">CX-EXAMPLE-COMPLETE-ACTIVATION</span><span class="token">NOVA-MBR-PG-005 legacy reference</span></p><p>Matched: TitleMain completion hero, key-value result summary, fixed Bottom CTA. Difference: FP-005 summary rows are conditional and must not invent product/fee/date values.</p></section>
+		<section class="panel"><h2>Section Inspector</h2>
+			<div class="inspect"><strong>completeHero</strong><span>선택 후보: TitleMain(type=complete) strong. 탈락: custom display text stack weak.</span></div>
+			<div class="inspect"><strong>joinSuccessNotice</strong><span>선택 후보: RQRNotice positive strong. 탈락: second hero reject.</span></div>
+			<div class="inspect"><strong>completionSummary</strong><span>선택 후보: RQRContentsDetail conditional strong. 탈락: notice+manual rows reject.</span></div>
+			<div class="inspect"><strong>sessionErrorNotice</strong><span>선택 후보: RQRNotice cautionary strong. 성공 안내와 동시 노출 금지.</span></div>
+			<div class="inspect"><strong>homeAction</strong><span>선택 후보: Bottom ActionButton strong. 탈락: content button reject.</span></div>
+		</section>
+		<section class="panel"><h2>Distortion Gates</h2><ul><li>완료 후 뒤로가기 재진입을 만들지 않습니다.</li><li>요약 카드에는 policy/SB에 없는 요금제, 금액, 적용일을 만들지 않습니다.</li><li>세션 오류와 성공 안내는 같은 상태에서 함께 보이지 않습니다.</li><li>홈 이동 CTA는 Bottom fixed rail에 둡니다.</li></ul></section>
+	</aside>
+</main>
+<script type="application/json" id="diagram-contract">
+{
+  "lifecycle": "synced",
+  "screenContract": {
+    "screenId": "NOVA-MBR-FP-005-0",
+    "route": "/NOVA-MBR-FP-005-0",
+    "group": "nova-mbr-fp-legacy",
+    "domain": "mbr",
+    "source": "mixed",
+    "pattern": "complete",
+    "policyRefs": [
+      "POL-MBR-ACCT-001-09",
+      "POL-MBR-SESS-001-03",
+      "POL-MBR-SESS-001-07"
+    ],
+    "configPolicyRefs": [],
+    "ognIds": [
+      "ogn-mbr-join-complete"
+    ],
+    "governanceRefs": [
+      "UXPT_BTN",
+      "UXPT_NAV",
+      "UXPT_ERR",
+      "VOT_RUL",
+      "VOT_DEF"
+    ],
+    "requiredDesignDocs": [
+      "DESIGN_PATTERNS.md",
+      "DESIGN_FOUNDATION.md",
+      "SCREEN_STRUCTURE_PRINCIPLES.md"
+    ],
+    "mapSource": "Screen.map.md",
+    "appScreenRails": [
+      "SystemHeader",
+      "Header",
+      "Content",
+      "Bottom"
+    ],
+    "headerContract": "StatusBar + AppBar title 가입 완료; completion flow must not add back navigation.",
+    "bottomContract": "Bottom(preset=primary-cta) with single primary 홈으로 이동하기.",
+    "wireReference": {
+      "source": "apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.diagram.html",
+      "matchedParts": "Completion hero, optional key-value result summary, fixed bottom primary CTA.",
+      "intentionalDifferences": "FP-005 summary is conditional because concrete result rows are not all supplied by current screen data.",
+      "limitation": "Reference controls visual structure only; policy/copy/OGN ids come from Screen.map.md."
+    },
+    "patternRecheck": {
+      "source": "DESIGN_PATTERNS.md#section-complete",
+      "result": "revised",
+      "changes": [
+        "Kept the key-value summary as a conditional contract and removed default visual rows because current SB data does not provide result rows.",
+        "Kept Bottom CTA fixed and single.",
+        "Recorded session error notice as an alternate state, not an extra success-section stack."
+      ],
+      "reason": "Completion pattern expects TitleMain, result summary when available, and fixed ActionButton. The draft needed explicit summary handling and state exclusivity."
+    },
+    "patternFamily": "completion-simple",
+    "officialPattern": "완료 (Completion)",
+    "reviewedNotSelectedGovernanceRefs": [
+      "UXPT_LOD"
+    ]
+  },
+  "screenWire": {
+    "raw": "┌─AppScreen\\n├─SystemHeader 9:41 LTE 100%\\n├─Header 가입 완료\\n├─Content\\n│ [completeHero | completion-title | PageStackContents title]\\n│ 가입이 완료됐어요\\n│ 이제 서비스를 바로 이용할 수 있어요.\\n│ [joinSuccessNotice | positive-state-message | notice]\\n│ 가입이 정상적으로 완료됐어요.\\n│ [completionSummary | key-value-summary | conditional]\\n│ confirmed summaryRows가 있을 때만 렌더\\n│ [sessionErrorNotice | cautionary-state-message | alternate]\\n│ 로그인 세션을 만들지 못했습니다\\n│ 가입은 완료됐어요. 다시 로그인하면 바로 이용할 수 있어요.\\n├─Bottom(preset=primary-cta)\\n│ [homeAction | bottom-primary-action | bottom-fixed]\\n│ 홈으로 이동하기\\n└────────────────",
+    "sections": [
+      "completeHero",
+      "joinSuccessNotice",
+      "completionSummary",
+      "sessionErrorNotice",
+      "homeAction"
+    ]
+  },
+  "sections": [
+    {
+      "sectionId": "completeHero",
+      "slot": "Content",
+      "ogn": "ogn-mbr-join-complete",
+      "policyRefs": [
+        "POL-MBR-ACCT-001-09"
+      ],
+      "patternEvidence": {
+        "sectionBoundary": "none",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "TitleMain(type=complete)",
+          "rowCaption": "TitleMain subtitle",
+          "emphasisRule": "hero-only",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "Completion hero title",
+        "reason": "Completion requires a result-first TitleMain block."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new",
+        "reason": "FP OGN owns completion result meaning; screen owns only chrome and bottom rail."
+      },
+      "layoutStrategy": {
+        "widthTier": "inner title rail",
+        "alignment": "leading",
+        "density": "simple completion",
+        "wrapping": "title/subtitle may wrap within inner rail",
+        "overflow": "single viewport preferred"
+      },
+      "layoutContract": {
+        "role": "completion result announcement",
+        "structure": "large title plus subtitle",
+        "alignment": "leading",
+        "density": "component-owned TitleMain rhythm",
+        "wrapping": "copy wraps naturally without route spacing",
+        "distortionRisk": "adding another hero or icon stack would compete with result message"
+      },
+      "componentCandidates": [
+        {
+          "name": "TitleMain(type=complete)",
+          "source": "@pxds/cx-components",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Owns completion title/subtitle hierarchy.",
+          "risk": "None if used in PageStackContents title slot."
+        },
+        {
+          "name": "custom Text stack",
+          "source": "screen composition",
+          "fit": "weak",
+          "selected": false,
+          "reason": "Could mimic copy but would own typography/spacing locally.",
+          "risk": "Route-level rhythm drift."
+        }
+      ],
+      "id": "completeHero"
+    },
+    {
+      "sectionId": "joinSuccessNotice",
+      "slot": "Content",
+      "ogn": "ogn-mbr-join-complete",
+      "policyRefs": [
+        "POL-MBR-ACCT-001-09"
+      ],
+      "patternEvidence": {
+        "sectionBoundary": "none",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "notice title/body",
+          "rowCaption": "none",
+          "emphasisRule": "state-message-only",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "positive notice",
+        "reason": "Success state is a secondary confirmation below hero."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new",
+        "reason": "State message is part of join complete OGN."
+      },
+      "layoutStrategy": {
+        "widthTier": "content rail",
+        "alignment": "leading",
+        "density": "comfortable notice",
+        "wrapping": "body may wrap",
+        "overflow": "scroll content if copy grows"
+      },
+      "layoutContract": {
+        "role": "success state confirmation",
+        "structure": "positive notice block",
+        "alignment": "leading",
+        "density": "lower than hero",
+        "wrapping": "single short message preferred",
+        "distortionRisk": "second large success title would duplicate hero"
+      },
+      "componentCandidates": [
+        {
+          "name": "RQRNotice(tone=positive)",
+          "source": "@pxds/cx-components",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Supports positive state surface and copy.",
+          "risk": "Must stay secondary to hero."
+        },
+        {
+          "name": "TitleSection success text",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Would make state message look like another section title.",
+          "risk": "Hierarchy collision."
+        }
+      ],
+      "id": "joinSuccessNotice"
+    },
+    {
+      "sectionId": "completionSummary",
+      "slot": "Content",
+      "ogn": "ogn-mbr-join-complete",
+      "policyRefs": [
+        "POL-MBR-ACCT-001-09",
+        "POL-MBR-SESS-001-03",
+        "POL-MBR-SESS-001-07"
+      ],
+      "patternEvidence": {
+        "sectionBoundary": "cardBoundary",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "card title + label/value rows",
+          "rowCaption": "none",
+          "emphasisRule": "value-column",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "card-key-value-summary",
+        "reason": "Completion pattern recommends a result summary card; policy-backed rows can be shown when data is supplied."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new conditional",
+        "reason": "Summary belongs to join complete OGN but renders only with confirmed rows."
+      },
+      "layoutStrategy": {
+        "widthTier": "content rail",
+        "alignment": "split label/value",
+        "density": "card summary",
+        "wrapping": "value may wrap; label column remains stable",
+        "overflow": "scroll if additional rows appear"
+      },
+      "layoutContract": {
+        "role": "completion result summary",
+        "structure": "card surface with title and label-value rows",
+        "alignment": "stable split rows",
+        "density": "card-owned padding/radius",
+        "wrapping": "values wrap without squeezing labels",
+        "distortionRisk": "manual rows or notice surface would lose key-value alignment"
+      },
+      "componentCandidates": [
+        {
+          "name": "RQRContentsDetail",
+          "source": "@pxds/cx-components",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Owns card surface, title slot, and label-value rows.",
+          "risk": "Requires confirmed rows; do not render invented data."
+        },
+        {
+          "name": "RQRNotice + manual rows",
+          "source": "screen composition",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Notice does not guarantee stable key-value behavior.",
+          "risk": "Summary card contract loss."
+        },
+        {
+          "name": "plain text list",
+          "source": "screen composition",
+          "fit": "reject",
+          "selected": false,
+          "reason": "No card surface or split-row contract.",
+          "risk": "Completion summary hierarchy collapses."
+        }
+      ],
+      "id": "completionSummary"
+    },
+    {
+      "sectionId": "sessionErrorNotice",
+      "slot": "Content",
+      "ogn": "ogn-mbr-join-complete",
+      "policyRefs": [
+        "POL-MBR-SESS-001-03"
+      ],
+      "patternEvidence": {
+        "sectionBoundary": "none",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "notice title/body",
+          "rowCaption": "none",
+          "emphasisRule": "alternate-state-only",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "cautionary state notice",
+        "reason": "Session creation failure is a recoverable state after completed signup."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new alternate-state",
+        "reason": "The OGN owns session-error copy; success notice is hidden in this state."
+      },
+      "layoutStrategy": {
+        "widthTier": "content rail",
+        "alignment": "leading",
+        "density": "notice",
+        "wrapping": "body may wrap",
+        "overflow": "scroll content"
+      },
+      "layoutContract": {
+        "role": "session error state",
+        "structure": "cautionary notice block",
+        "alignment": "leading",
+        "density": "state message below hero",
+        "wrapping": "reason and next action both visible",
+        "distortionRisk": "showing success and error together confuses completion state"
+      },
+      "componentCandidates": [
+        {
+          "name": "RQRNotice(tone=cautionary)",
+          "source": "@pxds/cx-components",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Supports cautionary state message.",
+          "risk": "Must be mutually exclusive with success notice."
+        },
+        {
+          "name": "inline helper text",
+          "source": "screen composition",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Not prominent enough for session state.",
+          "risk": "Error discoverability."
+        }
+      ],
+      "id": "sessionErrorNotice"
+    },
+    {
+      "sectionId": "homeAction",
+      "slot": "Bottom",
+      "ogn": "structural-only",
+      "policyRefs": [
+        "POL-MBR-SESS-001-07"
+      ],
+      "patternEvidence": {
+        "sectionBoundary": "none",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "Bottom(preset=primary-cta)",
+        "typography": {
+          "rowTitle": "button label",
+          "rowCaption": "none",
+          "emphasisRule": "primary-only",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "fixed bottom primary action",
+        "reason": "Completion pattern places the final action in fixed Bottom rail."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "reason": "Screen chrome owns bottom rail; policy meaning is home navigation."
+      },
+      "layoutStrategy": {
+        "widthTier": "bottom rail",
+        "alignment": "center",
+        "density": "single primary",
+        "wrapping": "label must fit one line",
+        "overflow": "fixed bottom"
+      },
+      "layoutContract": {
+        "role": "home navigation CTA",
+        "structure": "single primary ActionButton",
+        "alignment": "full-width rail",
+        "density": "393x102 bottom action zone",
+        "wrapping": "short verb label",
+        "distortionRisk": "putting CTA inside content breaks completion affordance"
+      },
+      "componentCandidates": [
+        {
+          "name": "SinglePrimaryAction + ActionButton",
+          "source": "@pxds/cx-layout + @pxds/cx-components",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Owns fixed bottom primary CTA.",
+          "risk": "None if only one primary is present."
+        },
+        {
+          "name": "content Button",
+          "source": "screen composition",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Would move final action into scroll content.",
+          "risk": "CTA rail distortion."
+        }
+      ],
+      "id": "homeAction"
+    }
+  ],
+  "policyOgnMatrix": [
+    {
+      "policyId": "POL-MBR-ACCT-001-09",
+      "ogn": "ogn-mbr-join-complete",
+      "sections": [
+        "completeHero",
+        "joinSuccessNotice",
+        "completionSummary"
+      ]
+    },
+    {
+      "policyId": "POL-MBR-SESS-001-03",
+      "ogn": "ogn-mbr-join-complete",
+      "sections": [
+        "completionSummary",
+        "sessionErrorNotice"
+      ]
+    },
+    {
+      "policyId": "POL-MBR-SESS-001-07",
+      "ogn": "structural-only",
+      "sections": [
+        "completionSummary",
+        "homeAction"
+      ]
+    }
+  ],
+  "distortionGates": [
+    {
+      "id": "DG1",
+      "gate": "Do not add back navigation on completion.",
+      "status": "pass"
+    },
+    {
+      "id": "DG2",
+      "gate": "Do not invent summary rows outside policy/SB data.",
+      "status": "pass"
+    },
+    {
+      "id": "DG3",
+      "gate": "Do not show success and session error notices together.",
+      "status": "pass"
+    },
+    {
+      "id": "DG4",
+      "gate": "Keep home CTA in Bottom fixed rail.",
+      "status": "pass"
+    }
+  ],
+  "renderEvidence": {
+    "status": "pass",
+    "reason": "Fresh geometry evidence collected after Design Iteration fixes. Route measured at http://localhost:3001/NOVA-MBR-FP-005-0 because localhost:3010 was not listening and the existing mobile dev server was already running on 3001.",
+    "geometryEvidence": {
+      "status": "pass",
+      "checkedAt": "2026-05-18",
+      "viewport": {
+        "width": 393,
+        "height": 852,
+        "documentHeight": 852
+      },
+      "rails": {
+        "SystemHeader": {
+          "x": 0,
+          "y": 0,
+          "width": 393,
+          "height": 59,
+          "bottom": 59
+        },
+        "Header": {
+          "x": 0,
+          "y": 59,
+          "width": 393,
+          "height": 48,
+          "bottom": 107
+        },
+        "Content": {
+          "x": 0,
+          "y": 107,
+          "width": 393,
+          "height": 637,
+          "bottom": 744
+        },
+        "Bottom": {
+          "x": 0,
+          "y": 744,
+          "width": 393,
+          "height": 108,
+          "bottom": 852
+        }
+      },
+      "sections": {
+        "completeHero": {
+          "x": 32,
+          "y": 139,
+          "width": 329,
+          "height": 91,
+          "bottom": 230
+        },
+        "joinSuccessNotice": {
+          "x": 12,
+          "y": 230,
+          "width": 369,
+          "height": 72.4,
+          "bottom": 302.4
+        },
+        "completionSummary": {
+          "rendered": false,
+          "reason": "conditional; no confirmed summaryRows supplied by current route"
+        },
+        "sessionErrorNotice": {
+          "rendered": false,
+          "reason": "conditional alternate state; default route is success state"
+        },
+        "homeAction": {
+          "x": 0,
+          "y": 744,
+          "width": 393,
+          "height": 108,
+          "bottom": 852
+        },
+        "homeActionButton": {
+          "x": 12,
+          "y": 757,
+          "width": 369,
+          "height": 56,
+          "bottom": 813
+        }
+      },
+      "checks": {
+        "headerTouchesContent": true,
+        "contentAboveBottom": true,
+        "bottomFitsViewport": true,
+        "homeActionInsideBottom": true,
+        "ctaVisibleInViewport": true,
+        "successAndErrorMutuallyExclusive": true,
+        "summaryAbsentByDefault": true,
+        "sessionErrorAbsentByDefault": true
+      },
+      "notes": [
+        "AppScreen primary-cta runtime metric is 108px including bottom safe-area padding.",
+        "CompletionSummary remains available only when confirmed summaryRows are supplied; no policy/SB-absent rows are rendered."
+      ]
+    }
+  },
+  "iterationPasses": [
+    {
+      "pass": "pattern-recheck",
+      "source": "DESIGN_PATTERNS.md#section-complete",
+      "result": "revised"
+    },
+    {
+      "pass": "design-iteration-geometry",
+      "source": "render evidence",
+      "result": "revised"
+    }
+  ],
+  "contractSync": {
+    "screenMap": "updated",
+    "screenConfig": "updated",
+    "implementation": "updated",
+    "status": "synced"
+  }
+}
+</script>
+</body>
+</html>

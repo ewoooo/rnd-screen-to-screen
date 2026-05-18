@@ -38,6 +38,7 @@ const buildSelectionSources = new Set([
 const routeGroupDomainAliases = new Map([
 	["nova-mbr-legacy", "mbr"],
 	["nova-mbr-fp", "mbr"],
+	["nova-mbr-fp-legacy", "mbr"],
 ]);
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
