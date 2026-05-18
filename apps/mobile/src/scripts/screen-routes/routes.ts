@@ -17,6 +17,7 @@ import { screenConfig as novaMbrPg0010Route } from "../../app/(nova-mbr-legacy)/
 import { screenConfig as novaMbrPg0020Route } from "../../app/(nova-mbr-legacy)/NOVA-MBR-PG-002-0/Screen.config";
 import { screenConfig as novaMbrPg0030Route } from "../../app/(nova-mbr-legacy)/NOVA-MBR-PG-003-0/Screen.config";
 import { screenConfig as novaMbrPg0050Route } from "../../app/(nova-mbr-legacy)/NOVA-MBR-PG-005-0/Screen.config";
+import { screenConfig as novaMbrFp0030CxRoute } from "../../app/(nova-mbr-fp)/NOVA-MBR-FP-003-0-CX/Screen.config";
 import { screenConfig as novaMbrFp0010Route } from "../../app/(nova-mbr-fp-legacy)/NOVA-MBR-FP-001-0/Screen.config";
 import { screenConfig as novaMbrFp0020Route } from "../../app/(nova-mbr-fp-legacy)/NOVA-MBR-FP-002-0/Screen.config";
 import { screenConfig as novaMbrFp0030Route } from "../../app/(nova-mbr-fp-legacy)/NOVA-MBR-FP-003-0/Screen.config";
@@ -37,6 +38,7 @@ export const screenRoutes = [
 	novaMbrPg0020Route,
 	novaMbrPg0030Route,
 	novaMbrPg0050Route,
+	novaMbrFp0030CxRoute,
 	novaMbrFp0010Route,
 	novaMbrFp0020Route,
 	novaMbrFp0030Route,

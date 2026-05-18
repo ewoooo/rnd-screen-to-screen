@@ -679,25 +679,38 @@ function validateCompletionPattern(screen, screenSource, organismSources) {
 	}
 }
 
+function findScreenMapPath(screenDir) {
+	const markdownPath = path.join(screenDir, "Screen.map.md");
+	const typedPath = path.join(screenDir, "Screen.map.ts");
+	if (existsSync(typedPath)) return typedPath;
+	if (existsSync(markdownPath)) return markdownPath;
+	return typedPath;
+}
+
+function screenMapLabel(mapPath) {
+	return path.basename(mapPath);
+}
+
 function validateScreenMap(screen, context, mapPath) {
+	const mapLabel = screenMapLabel(mapPath);
 	if (!existsSync(mapPath)) {
-		problem("Screen.map.md is missing; generated screens must record Phase 2 policy/governance mapping");
+		problem("Screen.map.md or Screen.map.ts is missing; generated screens must record Phase 2 policy/governance mapping");
 		return null;
 	}
 
 	const map = readText(mapPath);
-	ok("Screen.map.md is present");
+	ok(`${mapLabel} is present`);
 
 	if (screen.id && !map.includes(screen.id)) {
-		problem(`Screen.map.md must include screenId ${screen.id}`);
+		problem(`${mapLabel} must include screenId ${screen.id}`);
 	}
 
 	if (!includesAll(map, screen.generation.policyRefs ?? [])) {
-		problem("Screen.map.md must include every policyRef from Screen.config generation");
+		problem(`${mapLabel} must include every policyRef from Screen.config generation`);
 	}
 
 	if (!includesAll(map, screen.generation.ognIds ?? [])) {
-		problem("Screen.map.md must include every ognId from Screen.config generation");
+		problem(`${mapLabel} must include every ognId from Screen.config generation`);
 	}
 
 	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
@@ -708,7 +721,7 @@ function validateScreenMap(screen, context, mapPath) {
 	}
 
 	if (governanceRefsFromConfig.length > 0 && !includesAll(map, governanceRefsFromConfig)) {
-		problem("Screen.map.md must include every governanceRef from Screen.config generation");
+		problem(`${mapLabel} must include every governanceRef from Screen.config generation`);
 	}
 
 	const governanceRefsFromMap = extractGovernanceRefs(map);
@@ -717,7 +730,7 @@ function validateScreenMap(screen, context, mapPath) {
 		!map.includes("governanceRefs") &&
 		!map.includes("notApplicableReason")
 	) {
-		problem("Screen.map.md must record governanceRefs or notApplicableReason");
+		problem(`${mapLabel} must record governanceRefs or notApplicableReason`);
 	}
 
 	return map;
@@ -968,7 +981,7 @@ function validateScreen(screen, context) {
 	const screenLabel = screen.id ?? path.basename(screen.dir);
 	const screenRel = normalizePath(screen.dir);
 	const screenPath = path.join(screen.dir, "Screen.tsx");
-	const mapPath = path.join(screen.dir, "Screen.map.md");
+	const mapPath = findScreenMapPath(screen.dir);
 	const htmlDiagramPath = path.join(screen.dir, "Screen.diagram.html");
 	const markdownDiagramPath = path.join(screen.dir, "Screen.diagram.md");
 	const hasGeneration = hasGenerationConfig(screen);
