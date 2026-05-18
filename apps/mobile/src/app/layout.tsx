@@ -4,6 +4,7 @@ import "@pxds/cx-tokens/style.css";
 import "@pxds/cx-layout/styles.css";
 import "@pxds/cx-components/styles.css";
 import "../patterns/nova-mbr-legacy/styles.css";
+import "../organisms/chg/styles.css";
 import "./globals.css";
 
 const RootLayout = ({ children }: PropsWithChildren) => (

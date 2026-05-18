@@ -5,7 +5,6 @@ import { AppScreen } from "@pxds/cx-layout/components/chrome";
 import { SinglePrimaryAction } from "@pxds/cx-layout/components/compositions";
 import { PageStackContents } from "@pxds/cx-layout/components/contents";
 import { SectionDivider } from "@pxds/cx-layout/components/patterns";
-import { VStack } from "@pxds/cx-layout/primitives";
 import { useState } from "react";
 import {
 	AuthRequest,
@@ -22,9 +21,9 @@ import {
  * FP-003-0와 동일한 두 NEW OGN을 OGN 레벨 재사용. 차이는 flow/intro 문맥(휴면 해제)
  * 과 전이 대상(FP-009)뿐.
  *
- * Content = [intro] 휴면 해제 flow-context note(structural-only, 얇은 텍스트 —
- * callout/hero 금지) → authSelect ── SectionDivider(4px) ── authRequest.
- * intro→authSelect 사이에는 section band를 두지 않는다(Diagram 명시).
+ * Content = [intro] 휴면 해제 flow-context title(structural-only, 얇은 텍스트 —
+ * callout/hero 금지) → [authSelect] shared choice OGN ── SectionDivider(4px)
+ * ── [authRequest]. intro와 authSelect는 Diagram 계약상 별도 section이다.
  * Bottom = 단일 Primary "본인 확인 완료하기", 본인 확인 완료 전 비활성
  * (POL-MBR-AUTH-001-01 / UXPT_BTN_3·4).
  */
@@ -55,33 +54,45 @@ export function Screen() {
 				<AppBar title="휴면 해제" showLeftItem showTitle />
 			</AppScreen.Header>
 			<AppScreen.Content>
-				<VStack data-section-id="identityVerificationFlow">
-					<PageStackContents
-						data-section-id="intro"
-						title={
-							<Text variant="sectionTitle">
+				<PageStackContents
+					data-section-id="intro"
+					data-ogn-id="structural-only"
+					title={
+						<Text variant="sectionTitle">
 							휴면 해제를 위해 본인 확인이 필요해요
-							</Text>
-						}
-					>
-						<AuthSelect
-							selected={selectedMethod}
-							onSelect={setSelectedMethod}
-						/>
-					</PageStackContents>
-					<SectionDivider thickness="section" />
-					<PageStackContents data-section-id="authRequest" showTitle={false}>
-						<AuthRequest
-							errorState={errorState}
-							blocked={errorState === "blocked"}
-							confirmDisabled={confirmDisabled}
-							onCodeChange={(code) => setCodeLength(code.length)}
-							onConfirm={handleConfirm}
-						/>
-					</PageStackContents>
-				</VStack>
+						</Text>
+					}
+				/>
+				<PageStackContents
+					data-section-id="authSelect"
+					data-ogn-id="ogn-mbr-auth-select"
+					showTitle={false}
+				>
+					<AuthSelect
+						selected={selectedMethod}
+						onSelect={setSelectedMethod}
+					/>
+				</PageStackContents>
+				<SectionDivider thickness="section" />
+				<PageStackContents
+					data-section-id="authRequest"
+					data-ogn-id="ogn-mbr-auth-request"
+					showTitle={false}
+				>
+					<AuthRequest
+						errorState={errorState}
+						blocked={errorState === "blocked"}
+						confirmDisabled={confirmDisabled}
+						onCodeChange={(code) => setCodeLength(code.length)}
+						onConfirm={handleConfirm}
+					/>
+				</PageStackContents>
 			</AppScreen.Content>
-			<AppScreen.Bottom preset="primary-cta">
+			<AppScreen.Bottom
+				preset="primary-cta"
+				data-section-id="actions"
+				data-ogn-id="structural-only"
+			>
 				<SinglePrimaryAction>
 					<ActionButton
 						actions={[

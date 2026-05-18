@@ -33,10 +33,10 @@ export const screenConfig = defineScreenConfig({
 			},
 			{
 				section: "planList",
-				selected: "PlanList organism + ContentSection(inset=\"bleed\") + PageStackList + TitleSection + SectionItem + RQRListOption(type=\"radio\")",
+				selected: "PlanList organism + ContentSection(inset=\"bleed\") + PageStackList + TitleSection + ProductPlanCard(list-product-horizontal)",
 				source: "componentCandidates",
 				reason:
-					"Uses the Figma SOT list-card rails while recording ListProductHorizontal as the stronger future component gap.",
+					"Matches the Card List contract: ProductListGroup rail with separate product cards, leading selection control, product title/specs, trailing price, and card-owned spacing instead of one divided radio-list card.",
 			},
 			{
 				section: "actions",

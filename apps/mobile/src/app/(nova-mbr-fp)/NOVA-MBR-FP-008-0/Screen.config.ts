@@ -47,14 +47,14 @@ export const screenConfig = defineScreenConfig({
 				selected: "PageStackContents title slot + Text(sectionTitle)",
 				source: "componentCandidates",
 				reason:
-					"휴면 해제 문맥을 알리는 얇은 leading 텍스트 한 줄을 PageStackContents title slot에 둠 — route CSS 없이 callout/hero가 아닌 muted intro. POL-MBR-AUTH-001-01 의도를 휴면 해제 문맥으로 표현하고 새 정책을 발명하지 않음.",
+					"휴면 해제 문맥을 알리는 얇은 leading 텍스트 한 줄을 title-only PageStackContents에 둠 — route CSS 없이 callout/hero가 아닌 muted intro. POL-MBR-AUTH-001-01 의도를 휴면 해제 문맥으로 표현하고 새 정책을 발명하지 않음. Component Spacing Review: intro는 authSelect와 별도 section으로 분리하고 PageStackContents가 inset/padding을 소유.",
 			},
 			{
 				section: "authSelect",
 				selected: "AuthSelect (ogn-mbr-auth-select)",
 				source: "new-organism",
 				reason:
-					"FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TitleSection + 단일 card surface + 3행 ListSelected(radio) + contents divider로 layoutContract/Distortion Gate 충족.",
+					"FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. intro와 같은 PageStackContents에 섞지 않고 별도 data-section-id=authSelect section으로 배치한다. TitleSection + 단일 card surface + 3행 ListSelected(radio) + contents divider로 layoutContract/Distortion Gate 충족. Component Spacing Review: AuthSelect 내부 spacing은 shared OGN 컴포넌트들이 소유.",
 				rejected: [
 					{
 						candidate: "RadioButton hand-stacked",
@@ -68,7 +68,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "AuthRequest (ogn-mbr-auth-request)",
 				source: "new-organism",
 				reason:
-					"FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족.",
+					"FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족. Component Spacing Review: authSelect와 authRequest 사이의 4px SectionDivider만 route가 배치하고 field/notice/action spacing은 OGN 내부 컴포넌트가 소유.",
 				rejected: [
 					{
 						candidate: "Callout (state message)",

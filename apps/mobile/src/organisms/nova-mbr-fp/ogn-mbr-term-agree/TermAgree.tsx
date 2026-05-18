@@ -35,7 +35,9 @@ function allRequiredAgreedFrom(checked: Record<string, boolean>) {
 }
 
 export function TermAgree({
+	sectionId = "termAgree",
 	showRequiredError = false,
+	keepErrorAnchorMounted = false,
 	onRequiredAgreedChange,
 }: TermAgreeProps) {
 	const [checked, setChecked] = useState<Record<string, boolean>>(() =>
@@ -59,7 +61,8 @@ export function TermAgree({
 
 	return (
 		<VStack
-			data-section-id="termAgree"
+			data-section-id={sectionId}
+			data-ogn-id="ogn-mbr-term-agree"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			{/* card surface = RQRCard 후보 (DESIGN_PATTERNS §13.1 — component-owned
@@ -94,6 +97,12 @@ export function TermAgree({
 				>
 					필수 약관에 동의해 주세요
 				</Notice>
+			) : keepErrorAnchorMounted ? (
+				<div
+					aria-hidden="true"
+					data-section-id="termAgreeError"
+					hidden
+				/>
 			) : null}
 		</VStack>
 	);

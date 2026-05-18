@@ -56,14 +56,14 @@ export const screenConfig = defineScreenConfig({
 				selected: "TermAgree (Checkbox + Divider contents + Notice)",
 				source: "new-organism",
 				reason:
-					"전체 동의 → contents Divider → 개별 항목 순서 고정(C5). all-agree만 강조(first-row-only), 개별 행 listTitle 균일. 필수 미동의 그룹 에러는 인접 negative Notice(C1/ERR_1), 진행 Primary는 Bottom 단일(BTN_4). 뒤로 시 동의 입력 보존(NAV_2).",
+					"전체 동의 → contents Divider → 개별 항목 순서 고정(C5). all-agree만 강조(first-row-only), 개별 행 listTitle 균일. TermAgree root sectionId는 Diagram의 termAgreeSection으로 노출하고, 필수 미동의 그룹 에러는 인접 negative Notice(C1/ERR_1)와 termAgreeError DOM anchor를 소유한다. 진행 Primary는 Bottom 단일(BTN_4). 뒤로 시 동의 입력 보존(NAV_2).",
 			},
 			{
 				section: "actions",
 				selected: 'AppScreen.Bottom(preset="primary-cta") + ActionButton primary',
 				source: "componentCandidates",
 				reason:
-					"화면 진행 Primary 1개를 fixed Bottom rail이 소유(C6/BTN_4_RULE_2) → FP-010. 필수 약관 미동의 상태에서는 Screen이 진행을 차단하고 term-agree 인접 negative Notice를 노출한 뒤 해당 오류 위치로 scrollIntoView 한다(REQ-001/ERR_1). CTA를 Content 마지막에 두지 않고 route-level spacing 보정도 쓰지 않는다.",
+					"화면 진행 Primary 1개를 fixed Bottom rail이 소유(C6/BTN_4_RULE_2) → FP-010. 필수 약관 미동의 상태에서는 Screen이 진행을 차단하고 term-agree 인접 negative Notice를 노출한 뒤 해당 오류 위치로 scrollIntoView 한다(REQ-001/ERR_1). CTA를 Content 마지막에 두지 않고 route-level spacing 보정도 쓰지 않는다. Component Spacing Review: 009 순서는 intro → SectionDivider → termList → SectionDivider → termAgreeSection/termAgreeError → Bottom CTA로 Diagram과 일치하며, route-level raw margin/padding/font-size/color 보정 없이 PageStackContents, SectionDivider, RQRCard, Divider(contents), VStack gap이 spacing을 소유하고 guardian OGN은 추가하지 않았다.",
 			},
 		],
 	},

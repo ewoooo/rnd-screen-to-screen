@@ -57,11 +57,12 @@ When no newer stage skill is available, execute the workflow below directly. Do 
    - score by capability against layout behavior, not name similarity or sample/proof/copy length
    - reject candidates that need route-level CSS, raw spacing/color/font-size, deprecated imports, or known wrapping/alignment distortion
    - record vocabulary gaps instead of disguising them as custom screen CSS
-7. Recheck `DESIGN_PATTERNS.md` after the draft diagram:
+7. Run Design Pattern Review Gate after the first draft diagram and before Build planning:
+   - reopen `DESIGN_PATTERNS.md`; do not rely on memory or the initial reference selection
    - compare the chosen official pattern against the draft `Screen Wire`
-   - verify the pattern's layout/spacing contract, section boundaries, CTA placement, divider behavior, and state expectations
+   - verify the pattern's layout/spacing contract, section boundaries, CTA placement, divider behavior, content density, field/list/card grouping, and state expectations
    - revise `Screen Wire`, `Section Contracts`, `layoutStrategy`, `layoutContract`, and `componentCandidates` before moving on
-   - record the recheck result in `diagram-contract.screenContract.patternRecheck` as `revised | no-change`, with the pattern section and reason
+   - record the recheck result in `diagram-contract.screenContract.patternRecheck` as `revised | no-change`, with the pattern section, reason, and changes
 8. Write `Screen.diagram.html` using `docs/html-screen-diagram-standard.md`:
    1. `Visual Screen`
    2. `Review Summary`
@@ -167,9 +168,11 @@ The visible `Visual Screen` must look like an actual mobile screen rail, not a p
 
 If no reference exists, use `source: none-found` and record `reason`.
 
-## Pattern Recheck
+## Design Pattern Review Gate
 
-After drawing the draft `Screen Wire`, reopen `DESIGN_PATTERNS.md` and compare the selected official pattern against the draft diagram. This is a required pause inside Step 3: draw, check the pattern SOT, revise the diagram, then continue to Build planning.
+After drawing the first draft `Screen Wire`, reopen `DESIGN_PATTERNS.md` and compare the selected official pattern against the draft diagram. This is a required gate inside Step 3: draw, check the pattern SOT, revise the diagram, then continue to Build planning.
+
+Build cannot start until this gate is recorded. If the draft differs from the pattern contract, revise the diagram first; do not leave the mismatch for Fast Build or route-level CSS to solve.
 
 `diagram-contract.screenContract` must include:
 
@@ -182,6 +185,15 @@ After drawing the draft `Screen Wire`, reopen `DESIGN_PATTERNS.md` and compare t
 ```
 
 If the recheck changes section boundaries, divider behavior, CTA placement, density, or component fit, update both the visible `Visual Screen` and hidden `diagram-contract.sections`. Do not leave stale visual DOM with corrected JSON underneath.
+
+Gate checks:
+
+- selected pattern family matches the user task and screen state
+- section boundaries, divider bands, and contents dividers follow the pattern contract
+- CTA placement matches the pattern, especially fixed bottom actions
+- field/list/card grouping preserves the reference density and hierarchy
+- typography scale and row emphasis do not drift from the pattern
+- state, notice, error, empty, or loading treatment follows the pattern rules
 
 ## Done Criteria
 

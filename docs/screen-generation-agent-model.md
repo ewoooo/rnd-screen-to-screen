@@ -28,7 +28,7 @@
 
 | Stage | Subagent 가능 작업 | Main agent 책임 |
 |---|---|---|
-| Diagram | wire reference 탐색, 핵심 section/slot/OGN 구조, layoutContract, componentCandidates 초안 작성 | Reference/OGN/component 결정 승인, Diagram이 정책 의미와 구조 계약을 담는지 승인 |
+| Diagram | wire reference 탐색, 핵심 section/slot/OGN 구조, layoutContract, componentCandidates 초안 작성, 1차 draft 후 `DESIGN_PATTERNS.md` 대조 결과 기록 | Reference/OGN/component 결정 승인, Design Pattern Review Gate 승인, Diagram이 정책 의미와 구조 계약을 담는지 승인 |
 | Fast Build | 승인된 Diagram 기준으로 OGN/Screen/config 구현 또는 보강 | write scope 충돌 조정, 구현이 승인된 계약에서 벗어나지 않는지 검수 |
 | Render Geometry Evidence | preview/mobile 렌더 확인, bounding box, section geometry, viewport, scroll/rail, overflow/overlap evidence 수집 | geometry evidence approval 소유. 실제 렌더가 layoutContract를 지키는지 최종 판단 |
 | Design Iteration | evidence 기반 spacing/stack/component 조정 패치, 필요 시 후보 component 보강 | design iteration approval 소유. 수정 방향, 반복 종료 여부, 정책/DS 훼손 여부 판단 |
@@ -43,6 +43,7 @@ Diagram은 완성형 명세가 아니라 Fast Build를 시작할 수 있는 최�
 - 정책 의미상 반드시 보여야 하는 정보/선택지/제약/에러가 구조에서 빠지지 않았는가
 - OGN boundary와 section hierarchy가 구현 가능한가
 - componentCandidates가 layout capability 기준으로 적절한가
+- 1차 Diagram draft 이후 `DESIGN_PATTERNS.md`의 pattern/layout/spacing contract를 다시 대조했고, 그 결과가 `patternRecheck`로 기록됐는가
 - Fast Build에 들어갈 수 있을 만큼 layoutContract가 구체적인가
 
 ### Fast Build

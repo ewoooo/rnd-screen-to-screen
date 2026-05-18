@@ -1,0 +1,61 @@
+.chg-product-list-group {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.chg-product-plan-card {
+	align-items: flex-start;
+	background: var(--semantic-color-bg-default);
+	border: 1px solid var(--semantic-color-border-subtle);
+	border-radius: var(--semantic-radius-lg);
+	box-shadow: 0 4px 12px rgb(17 24 39 / 4%);
+	box-sizing: border-box;
+	display: grid;
+	gap: var(--spacing-12);
+	grid-template-columns: 24px minmax(0, 1fr);
+	min-height: 168px;
+	padding: var(--spacing-16);
+	width: 100%;
+}
+
+.chg-product-plan-card[data-selected="true"] {
+	background: var(--semantic-color-bg-info-weak);
+	border-color: var(--semantic-color-border-brand);
+}
+
+.chg-product-plan-card__body {
+	display: grid;
+	gap: var(--spacing-12);
+	min-width: 0;
+}
+
+.chg-product-plan-card__header {
+	align-items: flex-start;
+	display: flex;
+	gap: var(--spacing-12);
+	justify-content: space-between;
+	min-width: 0;
+}
+
+.chg-product-plan-card__title {
+	min-width: 0;
+}
+
+.chg-product-plan-card__price {
+	color: var(--semantic-color-text-primary);
+	flex: 0 0 auto;
+	white-space: nowrap;
+}
+
+.chg-product-plan-card__specs {
+	display: grid;
+	gap: var(--spacing-4);
+}
+
+.chg-product-plan-card__spec {
+	color: var(--semantic-color-text-secondary);
+}
+
+.chg-product-plan-card__badge {
+	justify-self: start;
+}

@@ -16,14 +16,21 @@ export function GuardianInput({
 	showError = false,
 	onRequestSend,
 }: GuardianInputProps) {
-	// layoutPreservationDecision: visible=false 시 null — divider/spacing 점유 0.
 	if (!visible) {
-		return null;
+		return (
+			<div
+				aria-hidden="true"
+				data-section-id="guardianInput"
+				data-ogn-id="ogn-mbr-guardian-input"
+				hidden
+			/>
+		);
 	}
 
 	return (
 		<VStack
 			data-section-id="guardianInput"
+			data-ogn-id="ogn-mbr-guardian-input"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			{/* REQ-002 requirement copy 원문(POL-MBR-TERM-002-01). */}

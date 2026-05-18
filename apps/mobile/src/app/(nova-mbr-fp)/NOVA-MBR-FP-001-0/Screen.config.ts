@@ -79,21 +79,21 @@ export const screenConfig = defineScreenConfig({
 				selected: "GuardianInput (Callout + FieldStack + ActionButton)",
 				source: "new-organism",
 				reason:
-					"visible=false 시 null 렌더로 mounted-hidden 레이아웃 보존(divider/spacing 점유 0). info Callout(REQ-003 유효시간 원문) + 이름/연락처 FieldStack + 발송 ActionButton은 secondary 위계로 Bottom Primary와 분리(BTN_4). 인증수단(SB-only)은 단정하지 않고 필드 구조만 유지.",
+					"visible=false 시 hidden marker 렌더로 mounted-hidden 계약과 레이아웃 보존(divider/spacing 점유 0)을 함께 충족한다. info Callout(REQ-003 유효시간 원문) + 이름/연락처 FieldStack + 발송 ActionButton은 secondary 위계로 Bottom Primary와 분리(BTN_4). 인증수단(SB-only)은 단정하지 않고 필드 구조만 유지.",
 			},
 			{
 				section: "guardianResult",
 				selected: "GuardianResult (Callout / Notice + Button)",
 				source: "new-organism",
 				reason:
-					"visible=false 기본으로 out-of-state 미렌더 — 초기 레이아웃 영향 0. 만료 시 negative Notice(REQ-003 error 원문) + 재요청 Button은 보조 위계로 Bottom Primary와 시각 경쟁 금지(BTN_4).",
+					"visible=false 기본으로 hidden marker를 렌더해 out-of-state mounted-hidden section id를 보존하고 초기 레이아웃 영향은 0으로 유지한다. 만료 시 negative Notice(REQ-003 error 원문) + 재요청 Button은 보조 위계로 Bottom Primary와 시각 경쟁 금지(BTN_4).",
 			},
 			{
 				section: "actions",
 				selected: 'AppScreen.Bottom(preset="primary-cta") + ActionButton primary',
 				source: "componentCandidates",
 				reason:
-					"화면 진행 Primary 1개를 fixed Bottom rail이 소유(C6/BTN_4_RULE_2). 필수 약관 미동의 시 disabled, 진행 시도 시 term-agree 인접 안내. CTA를 Content 마지막에 두지 않는다.",
+					"화면 진행 Primary 1개를 fixed Bottom rail이 소유(C6/BTN_4_RULE_2). 필수 약관 미동의 시 disabled, 진행 시도 시 term-agree 인접 안내. CTA를 Content 마지막에 두지 않는다. Component Spacing Review: 001 순서는 termList → SectionDivider → termAgree → guardianInput/guardianResult mounted-hidden marker → Bottom CTA로 Diagram과 일치하며, route-level raw margin/padding/font-size/color 보정 없이 PageStackContents, SectionDivider, RQRCard, Divider(contents), VStack gap이 spacing을 소유한다.",
 			},
 		],
 	},

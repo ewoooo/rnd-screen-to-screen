@@ -263,12 +263,15 @@ HTML 파일은 반드시 아래 script를 포함한다.
   "patternRecheck": {
     "source": "DESIGN_PATTERNS.md#...",
     "result": "revised | no-change",
-    "reason": "..."
+    "reason": "...",
+    "changes": []
   }
 }
 ```
 
 `policyRefs`, `ognIds`, `governanceRefs`가 비어 있으면 사유를 `notApplicableReason` 또는 section별 `policy`에 기록한다.
+
+`patternRecheck`는 1차 Diagram draft 이후 `DESIGN_PATTERNS.md`를 다시 열어 수행한 Design Pattern Review Gate 결과다. 신규/수정 화면은 Build 전에 이 필드를 기록해야 한다. `result: "revised"`이면 Visual Screen과 hidden `sections` 계약이 모두 같은 수정 결과를 반영해야 하며, `result: "no-change"`여도 대조한 pattern source와 유지 사유를 남긴다.
 
 ### screenWire
 

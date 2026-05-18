@@ -54,7 +54,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "AuthSelect (ogn-mbr-auth-select)",
 				source: "new-organism",
 				reason:
-					"TitleSection + 단일 card surface + 3행 ListSelected(type=radio), 행 사이 Divider(type=contents)로 layoutContract(compact list-row, selected-row-only emphasis, fixed order)와 Distortion Gate(카드 1면·contents divider·loading 동일 레이아웃 skeleton)를 충족.",
+					"TitleSection + 단일 card surface + 3행 ListSelected(type=radio), 행 사이 Divider(type=contents)로 layoutContract(compact list-row, selected-row-only emphasis, fixed order)와 Distortion Gate(카드 1면·contents divider·loading 동일 레이아웃 skeleton)를 충족. Component Spacing Review: AuthSelect 내부 card/list rhythm은 RQRCard, ListSelected, Divider(type=contents)가 소유하고 route는 SectionDivider만 배치.",
 				rejected: [
 					{
 						candidate: "RadioButton hand-stacked",
@@ -68,7 +68,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "AuthRequest (ogn-mbr-auth-request)",
 				source: "new-organism",
 				reason:
-					"TextField(inputMode=numeric, maxLength=6, helperText, error, inline actionButton 재요청) + 상태 메시지 + 영역 내 secondary 인증 확인으로 layoutContract(단일 필드 + inline action + state message)와 Distortion Gate(C1 필드 에러 slot 소유, 재요청 inline, blocked 차단, 단일 Primary)를 충족.",
+					"TextField(inputMode=numeric, maxLength=6, helperText, error, inline actionButton 재요청) + 상태 메시지 + 영역 내 secondary 인증 확인으로 layoutContract(단일 필드 + inline action + state message)와 Distortion Gate(C1 필드 에러 slot 소유, 재요청 inline, blocked 차단, 단일 Primary)를 충족. Component Spacing Review: FieldStack/TextField/Notice/ActionButton이 내부 spacing을 소유하고, route-level raw margin/padding 없음.",
 				rejected: [
 					{
 						candidate: "Callout (state message)",

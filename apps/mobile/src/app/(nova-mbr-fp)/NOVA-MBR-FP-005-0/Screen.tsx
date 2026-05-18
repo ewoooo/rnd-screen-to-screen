@@ -16,7 +16,7 @@ export function Screen() {
 				<JoinComplete />
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="primary-cta">
-				<SinglePrimaryAction>
+				<SinglePrimaryAction data-section-id="homeAction">
 					<ActionButton actions={[{ label: "홈으로 이동하기" }]} />
 				</SinglePrimaryAction>
 			</AppScreen.Bottom>

@@ -56,13 +56,15 @@ export function Screen() {
 				<StatusBar />
 			</AppScreen.SystemHeader>
 			<AppScreen.Header>
-				<ProgressAppBar
-					title="회원 가입"
-					currentStep={3}
-					totalSteps={5}
-					progressLabel="본인인증"
-					showProgressLabel
-				/>
+				<div data-section-id="progress" data-ogn-id="structural-only">
+					<ProgressAppBar
+						title="회원 가입"
+						currentStep={3}
+						totalSteps={5}
+						progressLabel="본인인증"
+						showProgressLabel
+					/>
+				</div>
 			</AppScreen.Header>
 			<AppScreen.Content>
 				<PageStackContents
@@ -90,7 +92,11 @@ export function Screen() {
 					/>
 				</PageStackContents>
 			</AppScreen.Content>
-			<AppScreen.Bottom preset="primary-cta">
+			<AppScreen.Bottom
+				preset="primary-cta"
+				data-section-id="actions"
+				data-ogn-id="structural-only"
+			>
 				<SinglePrimaryAction>
 					<ActionButton
 						actions={[

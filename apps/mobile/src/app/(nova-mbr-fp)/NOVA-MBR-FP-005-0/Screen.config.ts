@@ -22,7 +22,11 @@ export const screenConfig = defineScreenConfig({
 	generation: {
 		source: "SB",
 		pattern: "complete",
-		policyRefs: [],
+		policyRefs: [
+			"POL-MBR-ACCT-001-09",
+			"POL-MBR-SESS-001-03",
+			"POL-MBR-SESS-001-07",
+		],
 		ognIds: ["ogn-mbr-join-complete"],
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
@@ -39,17 +43,17 @@ export const screenConfig = defineScreenConfig({
 			},
 			{
 				section: "joinSuccessNotice",
-				selected: "RQRNotice(tone=\"positive\")",
+				selected: "RQRNotice(tone=\"positive\", title)",
 				source: "componentCandidates",
 				reason:
-					"SB section-message-join-success positive와 1:1. component-owned surface/padding으로 hero보다 약한 보조 위계를 유지(Distortion Gate 2).",
+					"SB section-message-join-success positive와 1:1. title/body slot과 component-owned surface/padding으로 hero보다 약한 보조 위계를 유지(Distortion Gate 2). Component Spacing Review: Notice padding/radius/body gap은 RQRNotice가 소유하고 route-level spacing 보정 없음.",
 			},
 			{
 				section: "completionSummary",
 				selected: "RQRContentsDetail (conditional)",
 				source: "componentCandidates",
 				reason:
-					"Summary Card Decision Rule: SB가 결과 key-value를 제공하지 않음(서버 제어 항목 -). card-key-value-summary capability(card surface/title slot/label-value rows/value wrap)를 component-owned로 보장하나, summaryRows 미제공 시 OGN 내부에서 미렌더(structural conditional). 임의 요금제/금액/적용일 발명 금지(Distortion Gate 8).",
+					"Summary Card Decision Rule: SB가 결과 key-value를 제공하지 않음(서버 제어 항목 -). card-key-value-summary capability(card surface/title slot/label-value rows/value wrap)를 component-owned로 보장하나, summaryRows 미제공 시 OGN 내부에서 미렌더(structural conditional). 임의 요금제/금액/적용일 발명 금지(Distortion Gate 8). Component Spacing Review: card padding/radius/header/list rhythm은 RQRContentsDetail이 소유.",
 				rejected: [
 					{
 						candidate: "RQRNotice + 수동 row 조합",
@@ -63,7 +67,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "RQRNotice(tone=\"cautionary\")",
 				source: "componentCandidates",
 				reason:
-					"SB section-message-session-error cautionary와 1:1. sessionError state에서만 렌더해 default success 안내와 배타(Distortion Gate 7). 별도 복구 UI 신설 없음(UXPT_RCV 비선정).",
+					"SB section-message-session-error cautionary와 1:1. sessionError state에서만 렌더해 default success 안내와 배타(Distortion Gate 7). 별도 복구 UI 신설 없음(UXPT_RCV 비선정). Component Spacing Review: cautionary surface와 title/body gap은 RQRNotice가 소유.",
 			},
 			{
 				section: "homeAction",

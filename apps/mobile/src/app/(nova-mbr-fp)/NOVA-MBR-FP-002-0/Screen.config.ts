@@ -55,7 +55,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "PageStackContents + TitleSection + ogn-mbr-member-input(FieldStack + TextField x5)",
 				source: "new-organism",
 				reason:
-					"Single FieldStack semantic group under a TitleSection group title (C4). TextField owns label/helperText/error/actionButton/maxLength/inputMode/type natively; inline 중복확인 uses TextField.actionButton slot. Per-field INFO-002 validation errors live in each TextField error/help slot (C1).",
+					"Single FieldStack semantic group under a TitleSection group title (C4). TextField owns label/helperText/error/actionButton/maxLength/inputMode/type natively; inline 중복확인 uses TextField.actionButton slot. Per-field INFO-002 validation errors live in each TextField error/help slot (C1). Component Spacing Review: PageStackContents and FieldStack own the section/field rhythm; no route-level spacing compensation.",
 				rejected: [
 					{
 						candidate: "raw <input> / route-level field layout",
@@ -69,7 +69,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "ogn-mbr-member-input submit-level Notice(RQRNotice tone=negative)",
 				source: "componentCandidates",
 				reason:
-					"Field-adjacent inline errors are first priority (UXPT_ERR_1). The single negative Notice is limited to the 필수값 누락 종합 (E1) that cannot bind to one field; duplicate (E3/E4/E5) copy is server-provided and not authored (SB-only).",
+					"Field-adjacent inline errors are first priority (UXPT_ERR_1). The single negative Notice is limited to the 필수값 누락 종합 (E1) that cannot bind to one field; duplicate (E3/E4/E5) copy is server-provided and not authored (SB-only). Component Spacing Review: data-section-id=inputError remains adjacent inside the memberInput OGN, hidden until the state is active, and Notice owns its own padding/radius.",
 			},
 			{
 				section: "entryCheck",

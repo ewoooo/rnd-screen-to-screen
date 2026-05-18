@@ -1,6 +1,25 @@
 # NOVA-MBR-FP-001-0 · Screen.map.md
 
-> Phase 2 (Map) SOT. 정책 의미와 governance 선정만 소유한다. layout/spacing/component/route는 `Screen.diagram.md`·`Screen.config.ts`가 소유한다.
+> Phase 2 (Map) SOT. 정책 의미와 governance 선정만 소유한다. layout/spacing/component/route는 `Screen.diagram.html`·`Screen.config.ts`가 소유한다.
+
+## Policy Coverage Matrix
+
+Coverage 판정 = **YELLOW**. `Screen.config.ts generation.policyRefs`에 있는 3건은 모두 policy-core에 존재한다. SB가 참조했으나 policy-core에 없는 항목은 SB-only로 분리하며, 정책 의미·카피·제약의 구현 근거로 승격하지 않는다.
+
+| OGN | Screen.config.ts 추적 | SB policy IDs | policy-backed | SB-only / missing policy | coverage | next action |
+| --- | --- | --- | --- | --- | --- | --- |
+| `ogn-mbr-term-list` | `generation.ognIds` 포함, `policyRefs` 직접 연결 없음 | TERM-001-01, TERM-001-02, TERM-001-10 | 없음 | POL-MBR-TERM-001-01, POL-MBR-TERM-001-02, POL-MBR-TERM-001-10 | yellow | structural-only로 유지. 약관 항목/전문 구조만 표시하고 정책 copy 발명 금지 |
+| `ogn-mbr-term-agree` | `POL-MBR-TERM-001-06` | TERM-001-06, TERM-001-07, TERM-003-01 | POL-MBR-TERM-001-06 | POL-MBR-TERM-001-07, POL-MBR-TERM-003-01 | yellow | 필수 약관 동의 완료 전 CTA 차단과 required error를 정책-backed로 확정 |
+| `ogn-mbr-guardian-input` | `POL-MBR-TERM-002-01`, `POL-MBR-TERM-002-05` | TERM-002-01, TERM-002-03, TERM-002-05, TERM-002-06 | POL-MBR-TERM-002-01, POL-MBR-TERM-002-05 | POL-MBR-TERM-002-03, POL-MBR-TERM-002-06 | yellow | 만 14세 미만 조건부 법정대리인 동의와 24시간 유효시간 안내만 확정 |
+| `ogn-mbr-guardian-result` | `POL-MBR-TERM-002-05` | TERM-002-05, TERM-002-06 | POL-MBR-TERM-002-05 | POL-MBR-TERM-002-06 | yellow | 요청 만료/재요청 recovery만 out-of-state로 추적 |
+
+Screen 종합 policy-backed IDs: `POL-MBR-TERM-001-06`, `POL-MBR-TERM-002-01`, `POL-MBR-TERM-002-05`.
+
+Screen 종합 SB-only / missingPolicyIds: `POL-MBR-TERM-001-01`, `POL-MBR-TERM-001-02`, `POL-MBR-TERM-001-07`, `POL-MBR-TERM-001-10`, `POL-MBR-TERM-002-03`, `POL-MBR-TERM-002-06`, `POL-MBR-TERM-003-01`.
+
+- blockedReason: 없음. 필수 약관 차단, 만 14세 미만 법정대리인 조건, 동의 요청 24시간 유효시간은 policy-core로 확인됐다.
+- neededDecision: missing policy는 정책 backfill 전까지 SB-only 구조 보존만 허용한다.
+- configTrace: `generation.policyRefs` 3건과 `generation.ognIds` 4건은 이 Map의 Policy-Backed Requirements / OGN Linkage에서 모두 추적된다.
 
 ## Screen Identity
 
@@ -13,24 +32,6 @@
 - SB source: `SB-MBR-UC01_02-0513/screen/NOVA-MBR-FP-001-0.md`
 - SB 관련 정책 그룹: PG-MBR-TERM-001, PG-MBR-TERM-002, PG-MBR-TERM-003
 
-## Policy Coverage Matrix
-
-Coverage 판정 = **YELLOW**. SB가 참조한 정책 ID 중 policy-core에 존재(present)하는 것만 구현 근거로 사용한다. 부재(absent) ID는 SB-only로만 기록하고, `Screen.config.ts generation.policyRefs`로 승격하지 않는다.
-
-| OGN | SB policy IDs | present (policy-core) | absent (SB-only) | coverage | next action |
-| --- | --- | --- | --- | --- | --- |
-| `ogn-mbr-term-list` | TERM-001-01, TERM-001-02, TERM-001-10 | (none) | TERM-001-01, TERM-001-02, TERM-001-10 | yellow | map (structural-only; SB-only contents) |
-| `ogn-mbr-term-agree` | TERM-001-06, TERM-001-07, TERM-003-01 | TERM-001-06 | TERM-001-07, TERM-003-01 | yellow | map |
-| `ogn-mbr-guardian-input` | TERM-002-01, TERM-002-03, TERM-002-05, TERM-002-06 | TERM-002-01, TERM-002-05 | TERM-002-03, TERM-002-06 | yellow | map (conditional / under-14) |
-| `ogn-mbr-guardian-result` | TERM-002-05, TERM-002-06 | TERM-002-05 | TERM-002-06 | yellow | map (out-of-state) |
-
-Screen 종합 present policy IDs: `POL-MBR-TERM-001-06`, `POL-MBR-TERM-002-01`, `POL-MBR-TERM-002-05`.
-
-Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MBR-TERM-001-02`, `POL-MBR-TERM-001-07`, `POL-MBR-TERM-001-10`, `POL-MBR-TERM-002-03`, `POL-MBR-TERM-002-06`, `POL-MBR-TERM-003-01`.
-
-- blockedReason: 없음. present 정책 3건이 화면 진행(필수 약관 차단, 미성년자 동의 대상, 동의 유효시간)을 충분히 지지하므로 화면은 blocked가 아니다.
-- neededDecision: absent ID는 정책 backfill 없이는 구현 요구로 확정하지 않는다. SB-only 항목은 화면 구조 보존을 위해 표시는 유지하되 정책 의미 단정/copy 발명 금지.
-
 ## Policy-Backed Requirements (present in policy-core)
 
 각 항목 sourceRef = policy-core file. copy = policy-core `copy` 원문 그대로 사용.
@@ -42,12 +43,12 @@ Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MB
 - sourceRef: `packages/policy-core/policies/MBR/TERM/POL-MBR-TERM-001-06.policy.ts` (sourceRef.document: "NC 회원가입·탈퇴 정책서 Full v1.0 확정본", section: POL-MBR-TERM-001)
 - sourceText: "필수 약관에 미동의한 경우 다음 단계 진행을 차단한다."
 - requiredInformation: 필수 약관이 미동의 상태일 때 다음 단계로 진행할 수 없다는 제약이 화면에서 드러나야 한다.
-- constraint/validation: 모든 필수 약관 동의 전에는 `다음` CTA 진행 차단. 미동의 상태에서 진행 시도 시 negative 안내 노출.
-- errorRule: 필수 약관 미동의 상태에서 진행 시도 → 차단 + 에러 안내.
+- constraint/validation: 모든 필수 약관 동의 전에는 `다음` CTA 진행 차단. disabled 상태를 기본으로 두고, 미동의 상태 진행 시도는 required error로 회수한다.
+- requiredError: 필수 약관 미동의 상태에서 진행 시도 → `ogn-mbr-term-agree` 인접 영역에 negative 안내 노출.
 - userCopy.requirement: "필수 약관 동의 후 다음 단계로 진행 가능"
 - userCopy.error: "필수 약관에 동의해 주세요"
 - mappedOGN: `ogn-mbr-term-agree`
-- CTA meaning: `다음` CTA는 필수 약관 전체 동의 상태에서만 진행을 수행한다. 미동의 시 진행을 막고 에러 안내를 노출한다.
+- CTA meaning: `다음` CTA는 필수 약관 전체 동의 상태에서만 `NOVA-MBR-FP-002-0`로 진행한다. 미동의 상태에서는 이동·저장을 수행하지 않는다.
 
 ### REQ-002 · 법정대리인 동의 대상
 
@@ -56,8 +57,9 @@ Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MB
 - sourceRef: `packages/policy-core/policies/MBR/TERM/POL-MBR-TERM-002-01.policy.ts` (section: POL-MBR-TERM-002)
 - sourceText: "만 14세 미만 고객은 법정대리인의 동의를 받아야 한다."
 - requiredInformation: 만 14세 미만 고객은 법정대리인 동의가 필요하다는 사실. 해당 고객 유형일 때만 법정대리인 입력 영역이 의미를 가진다.
-- constraint/validation: 미성년자(만 14세 미만) 고객 상태일 때 법정대리인 동의 절차가 필수. 비대상 고객에게는 노출하지 않는다(조건부).
-- errorRule: 법정대리인 동의 미완료 → 진행 불가 안내.
+- guardian condition: 고객이 만 14세 미만일 때만 법정대리인 동의 절차가 필수다. 비대상 고객에게 법정대리인 입력/결과 영역은 정책 의미를 갖지 않는다.
+- constraint/validation: 만 14세 미만 고객 상태에서 법정대리인 동의 미완료 → 진행 불가 안내.
+- requiredError: 법정대리인 동의 미완료 → "법정대리인 동의를 완료해 주세요" 범위로 안내한다.
 - userCopy.requirement: "만 14세 미만 고객은 법정대리인 동의가 필요합니다"
 - userCopy.error: "법정대리인 동의를 완료해 주세요"
 - mappedOGN: `ogn-mbr-guardian-input` (conditional, 고객유형=미성년자)
@@ -71,7 +73,7 @@ Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MB
 - sourceText: "법정대리인 동의 요청의 유효시간은 24시간이다."
 - requiredInformation: 동의 요청 유효시간이 24시간이라는 안내. 만료 시 재요청이 필요하다는 사실.
 - constraint/validation: 동의 요청 발송 후 24시간 경과 시 요청 만료. 만료 후에는 재요청 필요.
-- errorRule: 유효시간 만료 → 만료 안내 + 재요청 유도.
+- requiredError/recovery: 유효시간 만료 → 만료 안내 + 재요청 유도.
 - userCopy.requirement: "동의 요청 유효시간 24시간"
 - userCopy.error: "동의 요청 유효시간이 만료되어 다시 요청해 주세요"
 - mappedOGN: `ogn-mbr-guardian-input` (안내), `ogn-mbr-guardian-result` (만료/재요청, out-of-state)
@@ -107,7 +109,7 @@ Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MB
 
 | governanceRef | selectionReason | affectedRequirement | copy/state/CTA impact | notApplicableReason |
 | --- | --- | --- | --- | --- |
-| `UXPT_BTN` (BTN_2 동사형 라벨, BTN_3/BTN_4 Primary 1개·위계) | 화면의 핵심 CTA(`다음`, `동의 요청 발송`, `재요청`)가 행동 중심·단일 Primary 위계여야 한다 | REQ-001, REQ-002, REQ-003 | `다음` 라벨은 행동 결과 예측 가능 형태. Primary는 화면당 1개(Bottom), guardian/result action은 보조 위계 | - |
+| `UXPT_BTN` (BTN_2 동사형 라벨, BTN_3/BTN_4 Primary 1개·위계) | 화면의 핵심 CTA(`다음`, `동의 요청 발송`, `재요청`)가 행동 중심·단일 Primary 위계여야 한다 | REQ-001, REQ-002, REQ-003 | `다음`은 가입 다음 단계 진행 의미를 가진다. Primary는 화면당 1개(Bottom), guardian/result action은 보조 위계 | - |
 | `UXPT_ERR` (ERR_1 인라인 에러) | 필수 약관 미동의·법정대리인 인증 실패·만료가 사용자 시선 근처에서 원인+해결과 함께 안내돼야 한다 | REQ-001, REQ-002, REQ-003 | 에러는 상단 통합 알림이 아니라 해당 영역(term-agree / guardian) 인접에 노출. copy는 policy error copy 사용 | ERR_4(AI 실패)는 해당 흐름 없음 |
 | `UXPT_LOD` (LOD_2 스켈레톤) | 약관 목록 조회 중 결과 형태 예측 가능한 skeleton 필요 | term-list 표시(구조-only) | term-list loading은 실제 콘텐츠와 동일 레이아웃의 skeleton. 정책 의미 아님(SB-only 구조 통제용) | LOD_4(AI 생각중) 해당 없음 |
 | `UXPT_NAV` (NAV_2 뒤로가기 입력 보존, NAV_3 닫기 손실 방지) | 다단계 가입 폼에서 뒤로/닫기 시 입력 보존·확인 필요 | REQ-001, REQ-002 | 뒤로 가기 시 약관 동의·법정대리인 입력 보존. 닫기 시 손실 방지 확인 | NAV_1(GNB)은 폼 화면에 미해당 |
@@ -125,5 +127,5 @@ Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MB
 | `ogn-mbr-guardian-input` | REQ-002 (TERM-002-01), REQ-003 (TERM-002-05) | TERM-002-03 SB-only. conditional 노출(미성년자) | mapped |
 | `ogn-mbr-guardian-result` | REQ-003 (TERM-002-05) | TERM-002-06 SB-only. out-of-state | mapped |
 
-- 모든 OGN은 신규(`ognBoundaryDecision = new`, Diagram에서 확정). legacy organism 재사용 금지.
+- 모든 OGN은 Diagram에서 `ognBoundaryDecision`으로 확정한다. 현 Map은 OGN과 정책 의미 연결만 소유한다.
 - `ogn-mbr-term-list`는 정책-backed 요구가 없어 `structural-only`. Diagram에서 structural-only 사유로 기록한다.

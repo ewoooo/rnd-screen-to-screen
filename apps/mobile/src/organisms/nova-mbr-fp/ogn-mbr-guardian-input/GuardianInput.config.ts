@@ -3,7 +3,7 @@ import { defineComponentConfig } from "@pxds/cx-spec";
 export type GuardianInputProps = {
 	/**
 	 * 고객유형=미성년자(만 14세 미만)일 때만 true.
-	 * 기본 false → mounted-hidden(null 렌더, 레이아웃 점유 0).
+	 * 기본 false → mounted-hidden marker(레이아웃 점유 0).
 	 * REQ-002(POL-MBR-TERM-002-01) 조건부 노출.
 	 */
 	visible?: boolean;

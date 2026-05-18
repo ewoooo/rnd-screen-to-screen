@@ -9,9 +9,15 @@ export function GuardianResult({
 	status = "waiting",
 	onRetry,
 }: GuardianResultProps) {
-	// out-of-state: 초기 wire 미노출 — 레이아웃 점유 0.
 	if (!visible) {
-		return null;
+		return (
+			<div
+				aria-hidden="true"
+				data-section-id="guardianResult"
+				data-ogn-id="ogn-mbr-guardian-result"
+				hidden
+			/>
+		);
 	}
 
 	const isExpired = status === "expired";
@@ -19,6 +25,7 @@ export function GuardianResult({
 	return (
 		<VStack
 			data-section-id="guardianResult"
+			data-ogn-id="ogn-mbr-guardian-result"
 			gap="var(--semantic-spacing-gap-comfortable)"
 		>
 			{isExpired ? (

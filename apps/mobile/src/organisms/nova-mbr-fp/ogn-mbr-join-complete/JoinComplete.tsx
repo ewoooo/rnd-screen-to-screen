@@ -40,17 +40,13 @@ export function JoinComplete({
 			}
 		>
 			<VStack gap="var(--semantic-spacing-gap-comfortable)">
-				{sessionError ? (
+				{sessionError ? null : (
 					<RQRNotice
-						data-section-id="sessionErrorNotice"
-						tone="cautionary"
-						title="로그인 세션을 만들지 못했습니다"
+						data-section-id="joinSuccessNotice"
+						tone="positive"
+						title="가입이 정상적으로 완료됐어요."
 					>
-						가입은 완료됐어요. 다시 로그인하면 바로 이용할 수 있어요.
-					</RQRNotice>
-				) : (
-					<RQRNotice data-section-id="joinSuccessNotice" tone="positive">
-						가입이 정상적으로 완료됐어요.
+						가입 결과를 확인하고 홈으로 이동할 수 있어요.
 					</RQRNotice>
 				)}
 				{hasSummary ? (
@@ -59,6 +55,15 @@ export function JoinComplete({
 						title="가입 정보"
 						rows={summaryRows}
 					/>
+				) : null}
+				{sessionError ? (
+					<RQRNotice
+						data-section-id="sessionErrorNotice"
+						tone="cautionary"
+						title="로그인 세션을 만들지 못했습니다"
+					>
+						가입은 완료됐어요. 다시 로그인하면 바로 이용할 수 있어요.
+					</RQRNotice>
 				) : null}
 			</VStack>
 		</PageStackContents>

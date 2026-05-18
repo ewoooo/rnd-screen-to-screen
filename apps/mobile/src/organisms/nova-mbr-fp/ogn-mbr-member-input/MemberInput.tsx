@@ -107,10 +107,11 @@ export function MemberInput() {
 
 	const missingRequired =
 		!userId || !password || !passwordConfirm || !email || !phone;
+	const showMissingRequiredNotice = submitAttempted && missingRequired;
 
 	return (
 		<VStack gap="var(--semantic-spacing-gap-loose)">
-			<FieldStack data-section-id="memberInput">
+			<FieldStack>
 				<TextField
 					label="아이디"
 					value={userId}
@@ -183,11 +184,15 @@ export function MemberInput() {
 					}}
 				/>
 			</FieldStack>
-			{submitAttempted && missingRequired ? (
+			<div
+				data-section-id="inputError"
+				data-ogn-id="ogn-mbr-member-input"
+				hidden={!showMissingRequiredNotice}
+			>
 				<Notice tone="negative">
 					입력하지 않은 필수 항목이 있어요. 모든 항목을 입력해 주세요
 				</Notice>
-			) : null}
+			</div>
 		</VStack>
 	);
 }

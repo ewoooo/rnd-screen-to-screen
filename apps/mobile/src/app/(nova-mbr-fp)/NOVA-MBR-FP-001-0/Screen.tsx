@@ -72,6 +72,7 @@ export function Screen() {
 					title={<TitleSection title="약관 동의" />}
 				>
 					<TermAgree
+						sectionId="termAgree"
 						showRequiredError={attemptedProgress && !allRequiredAgreed}
 						onRequiredAgreedChange={handleRequiredAgreedChange}
 					/>
@@ -81,7 +82,7 @@ export function Screen() {
 				<GuardianResult visible={false} />
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="primary-cta">
-				<SinglePrimaryAction>
+				<SinglePrimaryAction data-section-id="actions">
 					<ActionButton
 						actions={[
 							{

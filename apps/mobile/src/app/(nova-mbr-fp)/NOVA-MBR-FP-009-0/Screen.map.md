@@ -1,6 +1,24 @@
 # NOVA-MBR-FP-009-0 · Screen.map.md
 
-> Phase 2 (Map) SOT. 정책 의미와 governance 선정만 소유한다. layout/spacing/component/route는 `Screen.diagram.md`·`Screen.config.ts`가 소유한다.
+> Phase 2 (Map) SOT. 정책 의미와 governance 선정만 소유한다. layout/spacing/component/route는 `Screen.diagram.html`·`Screen.config.ts`가 소유한다.
+
+## Policy Coverage Matrix
+
+Coverage 판정 = **YELLOW**. 이 화면은 guardian OGN 없이 재동의 대상 약관 목록과 필수 동의 차단만 가진다. `Screen.config.ts generation.policyRefs`의 `POL-MBR-TERM-001-06`은 policy-core에 존재한다.
+
+| OGN / section | Screen.config.ts 추적 | SB policy IDs | policy-backed | SB-only / missing policy | coverage | next action |
+| --- | --- | --- | --- | --- | --- | --- |
+| `intro` | OGN 아님, `buildSelections.section=intro` | 재동의 intro context | 없음 | 재동의가 필요한 약관 및 고지 내용 확인 | yellow | structural-only 안내. 정책 문구로 단정하지 않음 |
+| `ogn-mbr-term-list` | `generation.ognIds` 포함, `policyRefs` 직접 연결 없음 | TERM-001-01, TERM-001-02, TERM-001-10 | 없음 | POL-MBR-TERM-001-01, POL-MBR-TERM-001-02, POL-MBR-TERM-001-10 | yellow | 재동의 대상 약관 1..N 구조만 유지. 약관 본문 copy 발명 금지 |
+| `ogn-mbr-term-agree` | `POL-MBR-TERM-001-06` | TERM-001-06, TERM-001-07, TERM-003-01 | POL-MBR-TERM-001-06 | POL-MBR-TERM-001-07, POL-MBR-TERM-003-01 | yellow | 필수 약관 재동의 완료 전 CTA 차단과 required error를 정책-backed로 확정 |
+
+Screen 종합 policy-backed IDs: `POL-MBR-TERM-001-06`.
+
+Screen 종합 SB-only / missingPolicyIds: `POL-MBR-TERM-001-01`, `POL-MBR-TERM-001-02`, `POL-MBR-TERM-001-07`, `POL-MBR-TERM-001-10`, `POL-MBR-TERM-003-01`, `(재동의 intro context)`.
+
+- blockedReason: 없음. 필수 약관 미동의 차단은 policy-core로 확인됐다.
+- neededDecision: missing policy와 재동의 intro는 정책 backfill 전까지 SB-only 구조 보존만 허용한다.
+- configTrace: `generation.policyRefs` 1건과 `generation.ognIds` 2건, `buildSelections.section=intro`는 이 Map의 Policy-Backed Requirements / SB-Only Facts / OGN Linkage에서 추적된다.
 
 ## Screen Identity
 
@@ -15,22 +33,6 @@
 - SB source: `SB-MBR-UC01_02-0513/screen/NOVA-MBR-FP-009-0.md`
 - SB 관련 정책 그룹: PG-MBR-TERM-001
 
-## Policy Coverage Matrix
-
-Coverage 판정 = **YELLOW**. 이 화면은 guardian OGN이 없다(term-list + term-agree only).
-
-| OGN | SB policy IDs | present (policy-core) | absent (SB-only) | coverage | next action |
-| --- | --- | --- | --- | --- | --- |
-| `ogn-mbr-term-list` | TERM-001-01, TERM-001-02, TERM-001-10 | (none) | TERM-001-01, TERM-001-02, TERM-001-10 | yellow | map (structural-only; SB-only contents) |
-| `ogn-mbr-term-agree` | TERM-001-06, TERM-001-07, TERM-003-01 | TERM-001-06 | TERM-001-07, TERM-003-01 | yellow | map |
-
-Screen 종합 present policy IDs: `POL-MBR-TERM-001-06`.
-
-Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MBR-TERM-001-02`, `POL-MBR-TERM-001-07`, `POL-MBR-TERM-001-10`, `POL-MBR-TERM-003-01`.
-
-- blockedReason: 없음. present 정책(필수 약관 미동의 차단)이 재동의 화면 진행 제약을 지지하므로 blocked 아님.
-- neededDecision: absent ID는 정책 backfill 없이 구현 요구로 확정하지 않는다. 재동의 intro context의 정확한 안내 문구는 SB-only이므로 정책 copy로 발명하지 않고 governance(VOT_RUL) 어체 기준으로만 일반 안내 작성.
-
 ## Policy-Backed Requirements (present in policy-core)
 
 ### REQ-001 · 필수 약관 미동의 시 진행 차단 (재동의)
@@ -40,12 +42,12 @@ Screen 종합 absent (SB-only, missingPolicyIds): `POL-MBR-TERM-001-01`, `POL-MB
 - sourceRef: `packages/policy-core/policies/MBR/TERM/POL-MBR-TERM-001-06.policy.ts` (sourceRef.document: "NC 회원가입·탈퇴 정책서 Full v1.0 확정본", section: POL-MBR-TERM-001)
 - sourceText: "필수 약관에 미동의한 경우 다음 단계 진행을 차단한다."
 - requiredInformation: 재동의 대상 필수 약관이 미동의 상태이면 다음 단계로 진행할 수 없다는 제약.
-- constraint/validation: 모든 재동의 대상 필수 약관 동의 전 진행 차단. 미동의 상태에서 진행 시도 시 negative 안내.
-- errorRule: 필수 약관 미동의 상태 진행 시도 → 차단 + 에러 안내.
+- constraint/validation: 모든 재동의 대상 필수 약관 동의 전 진행 차단. 현재 구현 CTA는 enabled로 보일 수 있으나, 진행 시도 시 Screen이 이동을 막고 required error를 노출한다.
+- requiredError: 필수 약관 미동의 상태 진행 시도 → `ogn-mbr-term-agree` 인접 영역에 negative 안내 노출.
 - userCopy.requirement: "필수 약관 동의 후 다음 단계로 진행 가능"
 - userCopy.error: "필수 약관에 동의해 주세요"
 - mappedOGN: `ogn-mbr-term-agree`
-- CTA meaning: `다음` CTA는 필수 약관 재동의 완료 상태에서만 `NOVA-MBR-FP-010-0` 진행을 수행한다.
+- CTA meaning: `다음` CTA는 필수 약관 재동의 완료 상태에서만 `NOVA-MBR-FP-010-0` 진행을 수행한다. 미동의 상태에서는 이동·저장을 수행하지 않고 오류 위치로 시선을 회수한다.
 
 ## SB-Only Facts (absent from policy-core — NOT implementation policy)
 
@@ -75,7 +77,7 @@ sourceRef = `SB-MBR-UC01_02-0513`. config `policyRefs` 승격 금지.
 
 | governanceRef | selectionReason | affectedRequirement | copy/state/CTA impact | notApplicableReason |
 | --- | --- | --- | --- | --- |
-| `UXPT_BTN` (BTN_2 동사형 라벨, BTN_3/BTN_4 Primary 1개·위계) | 재동의 핵심 CTA(`다음`)가 행동 중심 단일 Primary 위계여야 한다 | REQ-001 | `다음` 라벨 행동 결과 예측 가능. Primary는 화면당 1개(Bottom) | - |
+| `UXPT_BTN` (BTN_2 동사형 라벨, BTN_3/BTN_4 Primary 1개·위계) | 재동의 핵심 CTA(`다음`)가 행동 중심 단일 Primary 위계여야 한다 | REQ-001 | `다음`은 재동의 다음 단계 진행 의미를 가진다. Primary는 화면당 1개(Bottom) | - |
 | `UXPT_ERR` (ERR_1 인라인 에러) | 필수 약관 미동의가 사용자 시선 근처에서 원인+해결과 함께 안내돼야 한다 | REQ-001 | 에러는 term-agree 영역 인접 노출. copy = policy error copy | ERR_4(AI 실패) 흐름 없음 |
 | `UXPT_LOD` (LOD_2 스켈레톤) | 재동의 약관 목록 조회 중 결과 형태 예측 가능 skeleton 필요 | term-list 표시(구조-only) | term-list loading은 실제 콘텐츠와 동일 레이아웃 skeleton. 정책 의미 아님 | LOD_4 해당 없음 |
 | `UXPT_NAV` (NAV_2 뒤로가기 입력 보존) | 재동의 폼에서 뒤로 시 동의 입력 보존 필요 | REQ-001 | 뒤로 가기 시 약관 동의 입력 보존 | NAV_1(GNB), NAV_3(닫기)은 단일 폼 진행에 미해당 |
@@ -90,6 +92,6 @@ sourceRef = `SB-MBR-UC01_02-0513`. config `policyRefs` 승격 금지.
 | `ogn-mbr-term-list` | 없음 (정책-backed 직접 연결 없음) | TERM-001-01/02/10 SB-only. 재동의는 노출 개수 1..N. structural-only | structural-only |
 | `ogn-mbr-term-agree` | REQ-001 (POL-MBR-TERM-001-06) | TERM-001-07/003-01 SB-only | mapped |
 
-- 모든 OGN은 신규(`ognBoundaryDecision = new`, Diagram에서 확정). legacy organism 재사용 금지.
+- 모든 OGN은 Diagram에서 `ognBoundaryDecision`으로 확정한다. 현 Map은 OGN과 정책 의미 연결만 소유한다.
 - `ogn-mbr-term-list`는 정책-backed 요구가 없어 `structural-only`. Diagram에서 structural-only 사유로 기록한다.
 - guardian OGN 없음: 이 화면은 SB 구성상 term-list + term-agree만 가진다.
