@@ -45,8 +45,8 @@ async function findOrCreateComponent(name, variant) {
   label.characters = comp.name;
   label.fontSize = 12;
   label.fills = [{ type: "SOLID", color: { r: 0.08, g: 0.3, b: 0.7 } }];
-  label.layoutSizingHorizontal = "FILL";
   comp.appendChild(label);
+  label.layoutSizingHorizontal = "FILL";
   comp.x = 5000;
   comp.y = figma.currentPage.children.length * 80;
   figma.currentPage.appendChild(comp);
@@ -75,7 +75,7 @@ async function appendInstance(parent, node) {
   var comp = await findOrCreateComponent(node.figmaName, node.figmaVariant);
   var instance = comp.createInstance();
   parent.appendChild(instance);
-  instance.layoutSizingHorizontal = "FILL";
+  try { instance.layoutSizingHorizontal = "FILL"; } catch(e) {}
 
   // 1. 최상위 component properties
   if (node.figmaProps && Object.keys(node.figmaProps).length > 0) {
@@ -126,7 +126,7 @@ async function appendFrame(parent, node) {
   frame.paddingRight = node.paddingRight || 0;
   frame.fills = [];
   parent.appendChild(frame);
-  frame.layoutSizingHorizontal = "FILL";
+  try { frame.layoutSizingHorizontal = "FILL"; } catch(e) {}
 
   for (var i = 0; i < node.children.length; i++) {
     await appendNode(frame, node.children[i]);

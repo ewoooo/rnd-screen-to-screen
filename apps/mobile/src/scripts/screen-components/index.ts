@@ -3,7 +3,7 @@
  * Separate from @screen/mobile/screens (metadata-only export).
  */
 import type { ComponentType, ReactElement } from "react";
-import { AppBar, Button, Checkbox, ListText, StatusBar, TextField, TitleMain, TitleSection as TitleSectionCx } from "@pxds/cx-components";
+import { AppBar, Button, Checkbox, ListText, SectionItem, StatusBar, TextField, TitleMain, TitleSection as TitleSectionCx } from "@pxds/cx-components";
 import { FieldStack } from "@pxds/cx-layout/components/compositions";
 import { PageStackContents } from "@pxds/cx-layout/components/contents";
 import { SectionDivider } from "@pxds/cx-layout/components/patterns";
@@ -264,6 +264,12 @@ export const cxExamplePersonalInfoRegistry: readonly RegistryEntry[] = [
 ];
 
 export const cxExamplePersonalInfoLayoutRegistry: readonly LayoutEntry[] = [
+	{
+		// SectionItem → 투명 wrapper frame (case 3 forwardRef 불안정 경로 대신 case 2로 처리)
+		component: SectionItem as unknown as ComponentType<Record<string, unknown>>,
+		name: "SectionItem",
+		direction: "VERTICAL",
+	},
 	{
 		// PageStackContents → Figma "PageStackContents" frame (Figma node 4:697)
 		// title prop은 ReactNode이므로 propsToTraverse로 별도 탐색
