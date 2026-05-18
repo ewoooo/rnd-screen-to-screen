@@ -4,12 +4,13 @@
  */
 import type { ComponentType, ReactElement } from "react";
 import { AppBar, Button, Checkbox, ListText, StatusBar, TextField, TitleMain, TitleSection as TitleSectionCx } from "@pxds/cx-components";
-import { FieldStack, SectionDivider } from "@pxds/pxds-layout/components";
-import { VStack } from "@pxds/pxds-layout/primitives";
-import { ProgressAppBar } from "../../patterns/mbr";
-import { SectionHeaderPage } from "../../organisms/mbr";
-import { Screen as NovaMbrPg002Screen, screenConfig as novaMbrPg002Config } from "../../app/(mbr)/NOVA-MBR-PG-002-0";
-import { Screen as CxExamplePersonalInfoScreen, screenConfig as cxExamplePersonalInfoConfig } from "../../app/(cx)/CX-EXAMPLE-PERSONAL-INFO-INPUT";
+import { FieldStack } from "@pxds/cx-layout/components/compositions";
+import { SectionDivider } from "@pxds/cx-layout/components/patterns";
+import { VStack } from "@pxds/cx-layout/components/primitives";
+import { ProgressAppBar } from "../../patterns/nova-mbr-legacy";
+import { SectionHeaderPage } from "../../organisms/nova-mbr-legacy";
+import { Screen as NovaMbrPg002Screen, screenConfig as novaMbrPg002Config } from "../../app/(nova-mbr-legacy)/NOVA-MBR-PG-002-0";
+import { Screen as CxExamplePersonalInfoScreen, screenConfig as cxExamplePersonalInfoConfig } from "../../app/(cx-example)/CX-EXAMPLE-PERSONAL-INFO-INPUT";
 
 type FigmaPropsValue = Record<string, boolean | string>;
 type FigmaTextNodesValue = Record<string, string>;

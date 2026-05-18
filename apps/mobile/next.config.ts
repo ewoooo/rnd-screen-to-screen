@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
 	transpilePackages: [
 		"@pxds/cx-icons",
 		"@pxds/cx-layout",
+		"@pxds/cx-spec",
 		"@pxds/cx-tokens",
 	],
 };

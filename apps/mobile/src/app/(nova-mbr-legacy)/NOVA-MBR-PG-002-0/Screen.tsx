@@ -4,8 +4,8 @@ import {
 	SectionHeaderPage,
 	SectionMessageEntryBranch,
 	TextFieldMemberInfo,
-} from "@/organisms/nova-mbr-legacy";
-import { ProgressAppBar } from "@/patterns/nova-mbr-legacy";
+} from "../../../organisms/nova-mbr-legacy";
+import { ProgressAppBar } from "../../../patterns/nova-mbr-legacy";
 
 export function Screen() {
 	return (
