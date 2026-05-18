@@ -5,6 +5,7 @@
 import type { ComponentType, ReactElement } from "react";
 import { AppBar, Button, Checkbox, ListText, StatusBar, TextField, TitleMain, TitleSection as TitleSectionCx } from "@pxds/cx-components";
 import { FieldStack } from "@pxds/cx-layout/components/compositions";
+import { PageStackContents } from "@pxds/cx-layout/components/contents";
 import { SectionDivider } from "@pxds/cx-layout/components/patterns";
 import { VStack } from "@pxds/cx-layout/components/primitives";
 import { ProgressAppBar } from "../../patterns/nova-mbr-legacy";
@@ -27,6 +28,8 @@ type LayoutEntry = {
 		paddingLeft?: number;
 		paddingRight?: number;
 	};
+	/** children 외에 추가로 재귀 탐색할 JSX prop 이름 목록 */
+	propsToTraverse?: string[];
 };
 
 type RegistryEntry = {
@@ -261,6 +264,15 @@ export const cxExamplePersonalInfoRegistry: readonly RegistryEntry[] = [
 ];
 
 export const cxExamplePersonalInfoLayoutRegistry: readonly LayoutEntry[] = [
+	{
+		// PageStackContents → Figma "PageStackContents" frame (Figma node 4:697)
+		// title prop은 ReactNode이므로 propsToTraverse로 별도 탐색
+		component: PageStackContents as unknown as ComponentType<Record<string, unknown>>,
+		name: "PageStackContents",
+		direction: "VERTICAL",
+		mapLayout: () => ({ paddingLeft: 12, paddingRight: 12, paddingTop: 32, paddingBottom: 32 }),
+		propsToTraverse: ["title"],
+	},
 	{
 		// FieldStack → Figma VERTICAL Auto Layout frame (gap=8)
 		component: FieldStack as unknown as ComponentType<Record<string, unknown>>,

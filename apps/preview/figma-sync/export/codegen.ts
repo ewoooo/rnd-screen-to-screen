@@ -141,59 +141,67 @@ async function appendNode(parent, node) {
   }
 }
 
+async function appendSlotFrame(parent, slotName, nodes, opts) {
+  if (!nodes || nodes.length === 0) return null;
+  var f = figma.createFrame();
+  f.name = slotName;
+  f.layoutMode = "VERTICAL";
+  f.primaryAxisSizingMode = opts.primarySizing || "AUTO";
+  f.counterAxisSizingMode = "AUTO";
+  f.itemSpacing = opts.gap || 0;
+  f.paddingTop    = opts.paddingTop    || 0;
+  f.paddingBottom = opts.paddingBottom || 0;
+  f.paddingLeft   = opts.paddingLeft   || 0;
+  f.paddingRight  = opts.paddingRight  || 0;
+  f.fills = [];
+  parent.appendChild(f);
+  f.layoutSizingHorizontal = "FILL";
+  if (opts.verticalSizing) f.layoutSizingVertical = opts.verticalSizing;
+  for (var i = 0; i < nodes.length; i++) {
+    try { await appendNode(f, nodes[i]); }
+    catch(e) { figma.notify(slotName + ": " + (nodes[i].figmaName || nodes[i].name) + " — " + (e && e.message || e), { error: true }); }
+  }
+  return f;
+}
+
 async function run() {
   await figma.loadAllPagesAsync();
 
-  var frame = figma.createFrame();
-  frame.name = SPEC.id;
-  frame.layoutMode = "VERTICAL";
-  frame.primaryAxisSizingMode = "FIXED";
-  frame.counterAxisSizingMode = "FIXED";
-  frame.resize(SPEC.width, SPEC.height);
-  frame.itemSpacing = 0;
-  frame.paddingLeft = 0; frame.paddingRight = 0;
-  frame.paddingTop = 0; frame.paddingBottom = 0;
-  frame.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
-  figma.currentPage.appendChild(frame);
+  // 루트: AppScreen
+  var appScreen = figma.createFrame();
+  appScreen.name = "AppScreen";
+  appScreen.layoutMode = "VERTICAL";
+  appScreen.primaryAxisSizingMode = "FIXED";
+  appScreen.counterAxisSizingMode = "FIXED";
+  appScreen.resize(SPEC.width, SPEC.height);
+  appScreen.itemSpacing = 0;
+  appScreen.paddingLeft = 0; appScreen.paddingRight = 0;
+  appScreen.paddingTop = 0;  appScreen.paddingBottom = 0;
+  appScreen.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+  figma.currentPage.appendChild(appScreen);
 
-  var topNodes     = SPEC.nodes.filter(function(n) { return n.slot === "top"; });
-  var contentNodes = SPEC.nodes.filter(function(n) { return n.slot === "content"; });
-  var bottomNodes  = SPEC.nodes.filter(function(n) { return n.slot === "bottom"; });
+  var slots = SPEC.slots;
 
-  // ── chrome header zone
-  for (var i = 0; i < topNodes.length; i++) {
-    try { await appendNode(frame, topNodes[i]); }
-    catch(e) { figma.notify("header: " + topNodes[i].figmaName + " — " + (e && e.message || e), { error: true }); }
-  }
+  // AppScreen.SystemHeader
+  await appendSlotFrame(appScreen, "SystemHeader", slots.systemHeader, { gap: 0 });
 
-  // ── content zone — 좌우 12px, 하단 16px, gap 4px
-  if (contentNodes.length > 0) {
-    var contentFrame = figma.createFrame();
-    contentFrame.name = "_content";
-    contentFrame.layoutMode = "VERTICAL";
-    contentFrame.primaryAxisSizingMode = "AUTO";
-    contentFrame.fills = [];
-    contentFrame.itemSpacing = 4;
-    contentFrame.paddingLeft = 12; contentFrame.paddingRight = 12;
-    contentFrame.paddingTop = 0;   contentFrame.paddingBottom = 16;
-    frame.appendChild(contentFrame);
-    contentFrame.layoutSizingHorizontal = "FILL";
-    contentFrame.layoutSizingVertical = "FILL";
+  // AppScreen.Header
+  await appendSlotFrame(appScreen, "Header", slots.header, { gap: 0 });
 
-    for (var j = 0; j < contentNodes.length; j++) {
-      try { await appendNode(contentFrame, contentNodes[j]); }
-      catch(e) { figma.notify("content: " + (contentNodes[j].figmaName || contentNodes[j].name) + " — " + (e && e.message || e), { error: true }); }
-    }
-  }
+  // AppScreen.Content — 좌우 12px, 하단 16px, flex-grow
+  await appendSlotFrame(appScreen, "Content", slots.content, {
+    gap: 0,
+    paddingLeft: 12, paddingRight: 12,
+    paddingTop: 0,   paddingBottom: 16,
+    verticalSizing: "FILL",
+  });
 
-  // ── bottom zone
-  for (var k = 0; k < bottomNodes.length; k++) {
-    try { await appendNode(frame, bottomNodes[k]); }
-    catch(e) { figma.notify("bottom: " + (bottomNodes[k].figmaName || bottomNodes[k].name) + " — " + (e && e.message || e), { error: true }); }
-  }
+  // AppScreen.Bottom
+  await appendSlotFrame(appScreen, "Bottom", slots.bottom, { gap: 0 });
 
-  figma.viewport.scrollAndZoomIntoView([frame]);
-  figma.notify("✓ " + SPEC.name + " (" + SPEC.nodes.length + " components)");
+  var total = (slots.systemHeader.length + slots.header.length + slots.content.length + slots.bottom.length);
+  figma.viewport.scrollAndZoomIntoView([appScreen]);
+  figma.notify("✓ " + SPEC.name + " (" + total + " components)");
 }
 
 run().catch(function(e) {

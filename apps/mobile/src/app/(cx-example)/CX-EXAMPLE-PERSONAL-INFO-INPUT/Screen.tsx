@@ -27,7 +27,7 @@ type TextSectionProps = {
 
 function IntroSection() {
 	return <PageStackContents title={<TitleMain title="개인정보 입력" />} />;
-}
+} 
 
 function TextSection({ title, children }: TextSectionProps) {
 	return (

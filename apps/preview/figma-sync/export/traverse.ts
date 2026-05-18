@@ -1,7 +1,7 @@
 import { isValidElement, type ReactElement, type ReactNode, type ComponentType } from "react";
 import { AppScreen } from "@pxds/cx-layout/components/chrome";
 
-export type FigmaSlot = "top" | "content" | "bottom";
+export type FigmaSlot = "system-header" | "header" | "content" | "bottom";
 
 export type NestedInstanceOverride = {
 	properties?: Record<string, boolean | string>;
@@ -39,12 +39,19 @@ export type FigmaTreeNode = FigmaComponentNode | FigmaFrameNode;
 /** 하위 호환 alias */
 export type FigmaNode = FigmaComponentNode;
 
+export type ScreenSlots = {
+	systemHeader: FigmaTreeNode[];
+	header: FigmaTreeNode[];
+	content: FigmaTreeNode[];
+	bottom: FigmaTreeNode[];
+};
+
 export type ScreenFigmaSpec = {
 	id: string;
 	name: string;
 	width: number;
 	height: number;
-	nodes: FigmaTreeNode[];
+	slots: ScreenSlots;
 };
 
 type FigmaPropsValue = Record<string, boolean | string>;
@@ -80,6 +87,8 @@ export type LayoutEntry = {
 		paddingLeft?: number;
 		paddingRight?: number;
 	};
+	/** children 외에 추가로 재귀 탐색할 JSX prop 이름 목록 */
+	propsToTraverse?: string[];
 };
 
 export type LayoutRegistry = readonly LayoutEntry[];
@@ -90,7 +99,12 @@ export function traverseScreen(
 	layoutRegistry: LayoutRegistry,
 	config: { id: string; name: string; width?: number; height?: number },
 ): ScreenFigmaSpec {
-	const nodes: FigmaTreeNode[] = [];
+	const slots: ScreenSlots = {
+		systemHeader: [],
+		header: [],
+		content: [],
+		bottom: [],
+	};
 	const element = Screen();
 
 	if (isValidElement(element) && element.type === AppScreen) {
@@ -104,16 +118,16 @@ export function traverseScreen(
 					(child.props as { children?: ReactNode }).children,
 					registry,
 					layoutRegistry,
-					"top",
-					nodes,
+					"system-header",
+					slots.systemHeader,
 				);
 			} else if (child.type === AppScreen.Header) {
 				collectNodes(
 					(child.props as { children?: ReactNode }).children,
 					registry,
 					layoutRegistry,
-					"top",
-					nodes,
+					"header",
+					slots.header,
 				);
 			} else if (child.type === AppScreen.Content) {
 				collectNodes(
@@ -121,7 +135,7 @@ export function traverseScreen(
 					registry,
 					layoutRegistry,
 					"content",
-					nodes,
+					slots.content,
 				);
 			} else if (
 				child.type === AppScreen.Bottom ||
@@ -132,7 +146,7 @@ export function traverseScreen(
 					registry,
 					layoutRegistry,
 					"bottom",
-					nodes,
+					slots.bottom,
 				);
 			}
 		}
@@ -143,7 +157,7 @@ export function traverseScreen(
 		name: config.name,
 		width: config.width ?? 375,
 		height: config.height ?? 812,
-		nodes,
+		slots,
 	};
 }
 
@@ -235,6 +249,15 @@ function collectNodes(
 				paddingRight: layout.paddingRight ?? 0,
 				children: [],
 			};
+			// propsToTraverse: children보다 먼저 탐색 (렌더 순서 보존 — title이 content 위에 위치)
+			if (layoutEntry.propsToTraverse) {
+				for (const propKey of layoutEntry.propsToTraverse) {
+					const val = props[propKey];
+					if (val !== undefined && val !== null) {
+						collectNodes(val as ReactNode, registry, layoutRegistry, slot, frameNode.children);
+					}
+				}
+			}
 			const inner = (props as { children?: ReactNode }).children;
 			if (inner) {
 				collectNodes(inner, registry, layoutRegistry, slot, frameNode.children);
@@ -243,30 +266,51 @@ function collectNodes(
 			continue;
 		}
 
-		// 3. 매칭 없음 — 함수형이면 직접 호출 (hooks 없는 순수 컴포넌트만 안전)
-		//    forwardRef / HTML 요소이면 모든 ReactNode prop + children 재귀
-		if (typeof child.type === "function") {
-			try {
-				const rendered = (child.type as (p: unknown) => ReactElement)(child.props);
-				if (rendered) collectNodes(normalizeChildren(rendered), registry, layoutRegistry, slot, out);
-			} catch {
-				// hooks 등 실패 → children 폴백
-				const inner = (child.props as { children?: ReactNode }).children;
-				if (inner) collectNodes(inner, registry, layoutRegistry, slot, out);
-			}
+		// 3. 매칭 없음 — HTML 요소이면 transparent 재귀, React 컴포넌트이면 named frame으로 보존
+		if (typeof child.type === "string") {
+			// HTML 요소 (div, section 등) — 레이어 없이 children만 재귀
+			const inner = (child.props as { children?: ReactNode }).children;
+			if (inner) collectNodes(inner, registry, layoutRegistry, slot, out);
 		} else {
-			// forwardRef, HTML 요소 등 — children 포함 모든 ReactNode prop을 재귀
-			const props = child.props as Record<string, unknown>;
-			for (const [key, val] of Object.entries(props)) {
-				if (key === "children") {
-					if (val !== undefined && val !== null) {
-						collectNodes(val as ReactNode, registry, layoutRegistry, slot, out);
+			// React 컴포넌트 (함수형 / forwardRef) — 컴포넌트 이름으로 named frame 생성
+			const name = getComponentName(child.type);
+			const frameNode: FigmaFrameNode = {
+				type: "frame",
+				name,
+				slot,
+				direction: "VERTICAL",
+				gap: 0,
+				paddingTop: 0,
+				paddingBottom: 0,
+				paddingLeft: 0,
+				paddingRight: 0,
+				children: [],
+			};
+
+			if (typeof child.type === "function") {
+				try {
+					const rendered = (child.type as (p: unknown) => ReactElement)(child.props);
+					if (rendered) collectNodes(normalizeChildren(rendered), registry, layoutRegistry, slot, frameNode.children);
+				} catch {
+					// hooks 등 실패 → children 폴백
+					const inner = (child.props as { children?: ReactNode }).children;
+					if (inner) collectNodes(inner, registry, layoutRegistry, slot, frameNode.children);
+				}
+			} else {
+				// forwardRef 등 — children + JSX prop 재귀
+				const props = child.props as Record<string, unknown>;
+				for (const [key, val] of Object.entries(props)) {
+					if (key === "children") {
+						if (val !== undefined && val !== null) {
+							collectNodes(val as ReactNode, registry, layoutRegistry, slot, frameNode.children);
+						}
+					} else if (isValidElement(val)) {
+						collectNodes([val], registry, layoutRegistry, slot, frameNode.children);
 					}
-				} else if (isValidElement(val)) {
-					// title, header 같이 prop으로 전달된 JSX도 재귀
-					collectNodes([val], registry, layoutRegistry, slot, out);
 				}
 			}
+
+			if (frameNode.children.length > 0) out.push(frameNode);
 		}
 	}
 }
@@ -275,4 +319,18 @@ function normalizeChildren(children: ReactNode): ReactNode[] {
 	if (children === null || children === undefined) return [];
 	if (Array.isArray(children)) return children.flat(Infinity) as ReactNode[];
 	return [children];
+}
+
+function getComponentName(type: unknown): string {
+	if (typeof type === "function") {
+		return (type as { displayName?: string; name?: string }).displayName
+			?? (type as { name?: string }).name
+			?? "Unknown";
+	}
+	// forwardRef — { $$typeof, render, displayName? }
+	if (type && typeof type === "object") {
+		const t = type as { displayName?: string; render?: { name?: string } };
+		return t.displayName ?? t.render?.name ?? "Unknown";
+	}
+	return "Unknown";
 }
