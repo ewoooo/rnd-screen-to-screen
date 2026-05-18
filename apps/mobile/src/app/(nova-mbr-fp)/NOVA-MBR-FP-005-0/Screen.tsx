@@ -1,6 +1,5 @@
 import { ActionButton, AppBar, StatusBar } from "@pxds/cx-components";
 import { AppScreen } from "@pxds/cx-layout/components/chrome";
-import { SinglePrimaryAction } from "@pxds/cx-layout/components/compositions";
 import { JoinComplete } from "@/organisms/nova-mbr-fp/ogn-mbr-join-complete";
 
 export function Screen() {
@@ -16,9 +15,10 @@ export function Screen() {
 				<JoinComplete />
 			</AppScreen.Content>
 			<AppScreen.Bottom preset="primary-cta">
-				<SinglePrimaryAction data-section-id="homeAction">
-					<ActionButton actions={[{ label: "홈으로 이동하기" }]} />
-				</SinglePrimaryAction>
+				<ActionButton
+					data-section-id="homeAction"
+					actions={[{ label: "홈으로 이동하기" }]}
+				/>
 			</AppScreen.Bottom>
 		</AppScreen>
 	);

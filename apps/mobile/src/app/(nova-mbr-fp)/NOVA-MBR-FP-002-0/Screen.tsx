@@ -52,10 +52,9 @@ export function Screen() {
 			</AppScreen.Content>
 			<AppScreen.Bottom
 				preset="primary-cta"
-				data-section-id="actions"
 				data-ogn-id="structural-only"
 			>
-				<SinglePrimaryAction>
+				<SinglePrimaryAction data-section-id="actions">
 					<ActionButton
 						type="default"
 						buttonCount={1}

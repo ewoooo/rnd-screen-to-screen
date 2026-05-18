@@ -30,9 +30,9 @@ export function JoinComplete({
 
 	return (
 		<PageStackContents
-			data-section-id="completeHero"
 			title={
 				<TitleMain
+					data-section-id="completeHero"
 					type="complete"
 					title="가입이 완료됐어요"
 					subTitle="이제 서비스를 바로 이용할 수 있어요."

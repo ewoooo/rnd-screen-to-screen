@@ -68,7 +68,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "AuthRequest (ogn-mbr-auth-request)",
 				source: "new-organism",
 				reason:
-					"FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족. Component Spacing Review: authSelect와 authRequest 사이의 4px SectionDivider만 route가 배치하고 field/notice/action spacing은 OGN 내부 컴포넌트가 소유.",
+					"FP-003-0와 동일 NEW OGN의 OGN 레벨 재사용. TextField inline actionButton + helperText 타이머 + 상태 메시지 + secondary 인증 확인으로 layoutContract/Distortion Gate(C1/C6) 충족. Component Spacing Review: authSelect와 authRequest 사이의 4px SectionDivider만 route가 배치하고 field/notice/action spacing은 OGN 내부 컴포넌트가 소유. Design Iteration 2026-05-18: shared AuthRequest internal VStack gap is gap-loose(16px), so FP-008's extra intro preserves visible intro/authSelect separation while keeping the secondary 인증 확인 action clear of the fixed Bottom CTA.",
 				rejected: [
 					{
 						candidate: "Callout (state message)",

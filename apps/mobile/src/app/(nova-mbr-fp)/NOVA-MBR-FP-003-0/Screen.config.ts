@@ -68,7 +68,7 @@ export const screenConfig = defineScreenConfig({
 				selected: "AuthRequest (ogn-mbr-auth-request)",
 				source: "new-organism",
 				reason:
-					"TextField(inputMode=numeric, maxLength=6, helperText, error, inline actionButton 재요청) + 상태 메시지 + 영역 내 secondary 인증 확인으로 layoutContract(단일 필드 + inline action + state message)와 Distortion Gate(C1 필드 에러 slot 소유, 재요청 inline, blocked 차단, 단일 Primary)를 충족. Component Spacing Review: FieldStack/TextField/Notice/ActionButton이 내부 spacing을 소유하고, route-level raw margin/padding 없음.",
+					"TextField(inputMode=numeric, maxLength=6, helperText, error, inline actionButton 재요청) + 상태 메시지 + 영역 내 secondary 인증 확인으로 layoutContract(단일 필드 + inline action + state message)와 Distortion Gate(C1 필드 에러 slot 소유, 재요청 inline, blocked 차단, 단일 Primary)를 충족. Component Spacing Review: FieldStack/TextField/Notice/ActionButton이 내부 spacing을 소유하고, route-level raw margin/padding 없음. Design Iteration 2026-05-18: shared AuthRequest internal VStack gap is gap-loose(16px), keeping the secondary 인증 확인 action inside Content and clear of Bottom rail when reused by FP-008 with intro.",
 				rejected: [
 					{
 						candidate: "Callout (state message)",
