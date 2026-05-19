@@ -1,27 +1,50 @@
 ---
 name: cx-screen-diagram
-description: Create or review latest-spec Phase 3 Screen.diagram.md for CX mobile screens in this repository. Use when Codex must select a screen-diagrams wire reference, run Pattern Analysis Gate, write screen-like ASCII Screen Wire rails, Section Contracts, layoutStrategy, layoutContract, componentCandidates, Policy / OGN Matrix, and Distortion Gates before implementation.
+description: Compatibility entrypoint for Step 3 Screen.diagram.html work. Use when Codex must select a screen-diagrams wire reference, run Pattern Analysis Gate, write visual mobile rail diagrams, Section Inspector, layoutStrategy, layoutContract, componentCandidates, Policy / OGN Matrix, and Distortion Gates before implementation; route to newer stage skills when available.
 ---
 
 # CX Screen Diagram
 
-Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference application, layout strategy, layout contract, governance application, and component candidate discovery. It must not invent policy meaning or make component names the acceptance criteria.
+Use this as the compatibility entrypoint for Step 3 Diagram work. `Screen.diagram.html` owns structure, wire reference application, layout strategy, layout contract, governance application, OGN boundary decisions, and component candidate discovery. Existing `Screen.diagram.md` is a migration source/reference during transition and must not be deleted just because an HTML diagram is created. The HTML diagram must not invent policy meaning or make component names the acceptance criteria.
+
+This skill executes Step 3-6 from `SCREEN_GENERATION_FLOW.md`: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract. The flow and structure documents are the SOT; this skill only operationalizes them.
+
+## Compatibility Routing
+
+If newer stage-specific skills are available in the current Codex environment, route to them when they better match the work and use this file as the Step 3 compatibility contract:
+
+- Use `cx-screen-thin-diagram` for scoped Screen.diagram.html updates where Map, pattern family, wire reference, and OGN ownership are already clear.
+- Use `cx-screen-design-iterate` when rendered evidence or review feedback requires a deliberate Diagram/Build/Render loop.
+- Use `cx-screen-contract-sync` when the diagram only needs consistency alignment with Map/config/implementation metadata and no new design decision.
+- Use this compatibility entrypoint directly for full Step 3-6 work: Reference Decision, OGN Boundary Decision, Component Candidate Decision, and Diagram Contract.
+
+When no newer stage skill is available, execute the workflow below directly. Do not split routing by creating files or ad-hoc local skills. Stage routing must preserve the same `Screen.diagram.html` output, hidden `#diagram-contract`, and Step 3 validation gates.
 
 ## Required Reading
 
 - `SCREEN_STRUCTURE_PRINCIPLES.md`
+- `docs/html-screen-diagram-standard.md`
 - `SCREEN_GENERATION_FLOW.md`
 - `DESIGN_PATTERNS.md`
-- `SPACING_PATTERNS.md`
-- Phase 2 `Screen.map.md`
+- `DESIGN_FOUNDATION.md`
+- Step 2 `Screen.map.md`
 - closest references under `apps/mobile/src/screen-diagrams/`
 
 ## Workflow
 
-1. Search `apps/mobile/src/screen-diagrams/` and nearby existing `Screen.diagram.md` files for the closest visual wire reference.
+1. Run Reference Decision:
+   - choose `patternFamily`
+   - identify the official `DESIGN_PATTERNS.md` pattern
+   - search `apps/mobile/src/screen-diagrams/`, nearby existing `Screen.diagram.html`, legacy `Screen.diagram.md`, and `cx-example`
+   - record accepted and rejected references with reasons
 2. Record `wireReference` in `Screen Contract`.
-3. Draw `Screen Wire` from the reference and current Map before naming components.
-4. Run Pattern Analysis Gate before finalizing section contracts:
+3. Draw a draft `Screen Wire` from the reference and current Map before naming components.
+4. Run OGN Boundary Decision:
+   - map SB OGN IDs to actual organism boundaries
+   - choose `reuse | extend | new | structural-only`
+   - record screen-owned slots, organism-owned policy meaning, and layout rhythm owner
+   - keep AppBar/Header/Bottom chrome out of OGN organisms
+5. Run Pattern Analysis Gate before finalizing section contracts:
    - `wireSemanticTag`: section id + semantic role + boundary/placement, such as `[summary | key-value-summary | card]`
    - `sectionBoundary`: `none | SectionDivider | contentsDivider | cardBoundary`
    - `fieldGrouping`: `none | single | FieldStack | FieldStackWithDividers`
@@ -29,19 +52,35 @@ Use this for Phase 3 only. `Screen.diagram.md` owns structure, wire reference ap
    - `actionPlacement`: `none | Content | Bottom(preset="primary-cta") | inline field action`
    - `typography`: row title/caption roles, emphasis rule, and control label scale
    - `patternDecision`: existing pattern, existing composition, or new candidate
-5. Write sections in this exact order:
-   1. `Screen Contract`
-   2. `Screen Wire`
-   3. `Section Contracts`
-   4. `Policy / OGN Matrix`
+   - `visualWeightContract`: primary-shaped action allowance, content secondary shape, forbidden button shape/scale, hierarchy fail conditions, and required evidence
+6. Run Component Candidate Decision:
+   - score candidates as `strong | medium | risky | weak | reject`
+   - score by capability against layout behavior, not name similarity or sample/proof/copy length
+   - reject candidates that need route-level CSS, raw spacing/color/font-size, deprecated imports, or known wrapping/alignment distortion
+   - mark candidates `risky` when their capability is plausible but their rendered visual weight could violate CTA hierarchy, such as Content `ActionButton(secondary)` near a Bottom primary CTA
+   - record vocabulary gaps instead of disguising them as custom screen CSS
+7. Run Design Pattern Review Gate after the first draft diagram and before Build planning:
+   - reopen `DESIGN_PATTERNS.md`; do not rely on memory or the initial reference selection
+   - compare the chosen official pattern against the draft `Screen Wire`
+   - verify the pattern's layout/spacing contract, section boundaries, CTA placement, divider behavior, content density, field/list/card grouping, and state expectations
+   - verify Component Composition Gate: field actions use the correct inline/compact slot, list/choice rows use the correct list/card pattern, and Content actions do not visually compete with Bottom primary actions
+   - verify visual weight from the drawn diagram, not component variant names. A `secondary` button that looks like a full-width primary CTA is a fail.
+   - revise `Screen Wire`, `Section Contracts`, `layoutStrategy`, `layoutContract`, and `componentCandidates` before moving on
+   - record the recheck result in `diagram-contract.screenContract.patternRecheck` as `revised | no-change`, with the pattern section, reason, and changes
+8. Write `Screen.diagram.html` using `docs/html-screen-diagram-standard.md`:
+   1. `Visual Screen`
+   2. `Review Summary`
+   3. `Reference Summary`
+   4. `Section Inspector` with candidate evaluation details
    5. `Distortion Gates`
-6. Apply Phase 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
-7. For each section/OGN, write fields in this order: `patternEvidence`, `patternDecision`, `layoutStrategy`, `layoutContract`, then `componentCandidates`.
-8. Run the checker before moving to Build.
+   6. hidden `<script type="application/json" id="diagram-contract">`
+9. Apply Step 2 governance refs to CTA hierarchy, state handling, navigation, and copy decisions.
+10. For each section/OGN in `diagram-contract.sections`, write fields in this order: `patternEvidence`, `patternDecision`, `ognBoundaryDecision`, `layoutStrategy`, `layoutContract`, `visualWeightContract`, then `componentCandidates`.
+11. Run the required Step 3 validation before moving to Build.
 
 ## Pattern Analysis Gate
 
-Do not collapse visible micro patterns into generic spacing. Record the evidence in `Section Contracts`.
+Do not collapse visible micro patterns into generic spacing. Record the evidence in `diagram-contract.sections[].patternEvidence` and surface the review in the visible Section Inspector.
 
 - A 4px section band is `SectionDivider` and appears in `Screen Wire` as `├══Divider 4px / ...══┤`.
 - A 1px line inside a section/card/list is `Divider(type="contents")`.
@@ -63,7 +102,15 @@ Do not make a component name the acceptance criterion when the real requirement 
 - `wrapping`: what may wrap, what must stay stable, and how overflow is handled.
 - `distortionRisk`: the specific failure mode that would make the implementation visually wrong.
 
-`componentCandidates` names possible components, compositions, patterns, or organisms after `layoutContract`. Each candidate must record `fit: strong | medium | weak | reject`, `source`, `reason`, and `risk`. Candidates are search space for Build, not acceptance criteria. Do not make component names final unless the Diagram marks `required: true` with `sourceReason`.
+For sections with actions, especially when the screen also has `Bottom(preset="primary-cta")`, add `visualWeightContract`:
+
+- `primaryShapeAllowed`: where a primary-shaped action may appear, usually `Bottom only`.
+- `contentActionShape`: `inline | compact | text-link | card-local | none`.
+- `disallowed`: shapes that would visually compete, such as Content full-width pill `ActionButton`.
+- `hierarchyFailIf`: concrete visual fail conditions based on width, height, radius, emphasis, and proximity.
+- `evidenceRequired`: `geometry` plus `screenshot-or-visual-review` when visual hierarchy is at risk.
+
+`componentCandidates` names possible components, compositions, patterns, or organisms after `layoutContract`. Each candidate must record `fit: strong | medium | risky | weak | reject`, `source`, `reason`, and `risk`. Candidates are search space for Build, not acceptance criteria. Do not make component names final unless the Diagram marks `required: true` with `sourceReason`.
 
 For summary/detail cards with label-value rows, the contract must protect the key-value behavior itself: stable label/value alignment, readable value column, component-owned card background/radius/padding, and no narrow fixed column squeeze.
 
@@ -83,19 +130,9 @@ Add semantic tags to important `Screen Wire` sections before component scoring:
 - Tags are layout meaning, not component names. They must flow into `patternDecision` and `layoutContract.role/structure`.
 - If a tag and component scoring conflict, revise the scoring to preserve the tag/layout contract.
 
-## Summary Card Decision Rule
+## Structure Gates
 
-When a complete/detail wire shows 2+ label-value rows inside a card-like summary section, classify it as `[... | key-value-summary | card]`.
-
-- First choose `patternFamily: card-key-value-summary`, then write required capabilities before naming candidates.
-- Required capabilities include section heading/header slot fit, card surface ownership, padding/radius ownership, stable label-value relationship, value wrapping without column squeeze, and reference-density preservation.
-- Score candidates by those capabilities: `strong` when they directly guarantee them, `medium` when only secondary concerns need verification, and `weak/reject` when a known structural risk touches core behavior or needs wrappers, fixed columns, spacers, or route-level CSS.
-- A component or composition name is only an implementation candidate for the pattern family, not the default answer. Domain organisms and new reusable candidates are evaluated by the same capability contract.
-- Main-agent review must return the Diagram to Phase 3 if summary-card scoring is component-name driven, or if a known structural risk is upgraded to `medium/strong` without proving the core behavior is preserved.
-
-## Pattern-Family Precedent Gate
-
-Before candidate scoring or reject finalization, run `SCREEN_STRUCTURE_PRINCIPLES.md` → `Pattern-Family Precedent Gate`. If a thin/proof/no-policy source conflicts with an established primary convention from the same pattern family, record the gate fields in the section contract and keep the conflict open as `decisionRequired` or a documented `assumption`; do not auto-reject the convention candidate only because the proof wire omitted an authorable structural title/header.
+Apply the relevant gates from `SCREEN_STRUCTURE_PRINCIPLES.md` before final candidate scoring, including summary-card classification and Pattern-Family Precedent Gate handling. Record required gate fields, decisions, assumptions, and unresolved `decisionRequired` items in the section contract; do not resolve conflicts with unsupported component-name preference or proof-only omissions.
 
 ## Fit Scoring
 
@@ -103,16 +140,17 @@ Score fit by component capability against `layoutContract`, not by current copy 
 
 - `strong`: directly supports role, structure, alignment, density, wrapping, and slots; has no known Distortion Gate risk; works without route-level CSS; preferably matches a nearby reference implementation.
 - `medium`: supports the core structure, but one secondary concern needs verification, such as density, wrapping, state, or slot fit. Current short data alone is not enough for `medium` if the component has a known structural risk.
+- `risky`: supports behavior but may violate visual weight or hierarchy once rendered. Use this for candidates such as Content `ActionButton(secondary)` on a screen with Bottom primary CTA; require screenshot/visual review before accepting.
 - `weak`: role is similar but structure, alignment, density, wrapping, or card/surface treatment is incomplete; known risk touches a core part of the layout contract; it would need wrappers, spacers, arbitrary width, or route-level CSS to look right.
 - `reject`: violates a Distortion Gate, requires deprecated imports, lacks a required slot/state/wrapping behavior, or would change the wire reference's core layout.
 
 When a candidate has a known fixed-width, missing surface, missing slot, or wrapping limitation that affects the section's core behavior, mark it `weak` or `reject` even if the current sample text is short.
 
-Forbidden rationale: do not write or accept claims like "current values are short enough", "current proof copy fits", "현재 값이 짧아서 괜찮다", or any equivalent current-sample-length argument. Current sample length may be used only as a test case to verify wrapping, never as evidence that a candidate satisfies `fit`, `patternDecision`, or `layoutContract`.
+Sample/proof/copy length may be used only as a wrapping test case, never as evidence for `fit`, `patternDecision`, `layoutContract`, candidate selection, rejection, or risk downgrade.
 
 ## Screen Wire Rules
 
-`Screen Wire` must look like an actual mobile screen rail, not a prose outline. Include:
+The visible `Visual Screen` must look like an actual mobile screen rail, not a prose outline or generic section-card summary. It must expose the layer structure and real display text: title, subtitle, labels, values, helper/error copy, list row titles/captions, card titles, and CTA labels. Left/right key-value sections must be rendered as left/right rows, not prose bullets. The hidden `diagram-contract.screenWire` must preserve the same rail and section structure. Include:
 
 ```txt
 ┌─AppScreen
@@ -125,12 +163,13 @@ Forbidden rationale: do not write or accept claims like "current values are shor
 - `┌─AppScreen`, `├─Header`, and `├─Content` are always required.
 - `├─Bottom` is required when the diagram or implementation uses `Bottom(preset=...)`.
 - `├══Divider` is required when a visible section divider appears.
-- Every `[section-id]` in `Screen Wire` must appear in `Section Contracts`.
+- Every visual `data-section-id` must appear in `diagram-contract.sections`.
 - Use `Bottom(preset="...")`; do not use `AppScreen.ActionBar` in new diagrams.
+- Reject placeholder visual output such as only section ids, component names, or "Migrated from legacy markdown" cards. If the md has richer Screen Wire content, move that visible structure into HTML instead of summarizing it.
 
 ## Wire Reference Rules
 
-`Screen Contract` must include:
+`diagram-contract.screenContract.wireReference` must include:
 
 ```txt
 - wireReference:
@@ -142,12 +181,34 @@ Forbidden rationale: do not write or accept claims like "current values are shor
 
 If no reference exists, use `source: none-found` and record `reason`.
 
-## Done Criteria
+## Design Pattern Review Gate
 
-Run:
+After drawing the first draft `Screen Wire`, reopen `DESIGN_PATTERNS.md` and compare the selected official pattern against the draft diagram. This is a required gate inside Step 3: draw, check the pattern SOT, revise the diagram, then continue to Build planning.
 
-```bash
-npm run check:screen-generation:strict -w @policy/core
+Build cannot start until this gate is recorded. If the draft differs from the pattern contract, revise the diagram first; do not leave the mismatch for Fast Build or route-level CSS to solve.
+
+`diagram-contract.screenContract` must include:
+
+```txt
+- patternRecheck:
+  - source: DESIGN_PATTERNS.md#<pattern-or-section>
+  - result: revised | no-change
+  - changes: ...
+  - reason: ...
 ```
 
-Do not proceed to Build while the checker fails.
+If the recheck changes section boundaries, divider behavior, CTA placement, density, or component fit, update both the visible `Visual Screen` and hidden `diagram-contract.sections`. Do not leave stale visual DOM with corrected JSON underneath.
+
+Gate checks:
+
+- selected pattern family matches the user task and screen state
+- section boundaries, divider bands, and contents dividers follow the pattern contract
+- CTA placement matches the pattern, especially fixed bottom actions
+- Component Composition Gate passes: field-bound actions remain inline/compact, Content secondary actions are visually subordinate, and only one primary-shaped CTA is visible on a Bottom CTA screen
+- field/list/card grouping preserves the reference density and hierarchy
+- typography scale and row emphasis do not drift from the pattern
+- state, notice, error, empty, or loading treatment follows the pattern rules
+
+## Done Criteria
+
+Run the Step 3 validation required by `SCREEN_GENERATION_FLOW.md`. Do not proceed to Build while validation or the diagram contract fails.

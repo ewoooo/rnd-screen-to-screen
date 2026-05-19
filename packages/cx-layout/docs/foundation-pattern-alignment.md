@@ -239,7 +239,7 @@ Pattern guide의 기준 viewport는 393px width다. root는 preview/mobile/captu
 - `styles.css`에 layout semantic variables 선언
 - old token -> foundation token alias 정리
 - `space/*`, `spacing/layout/*`, `spacing/inner/*` 매핑 table 추가
-- `SPACING_PATTERNS.md`의 component/screen 실측값과 layout semantic rail 매핑 table 추가
+- 의 component/screen 실측값과 layout semantic rail 매핑 table 추가
 - overlay/radius token mapping 추가
 
 기대 효과:

@@ -2,7 +2,7 @@
 
 Page body stack을 표현하는 composition wrapper입니다. 시각 컴포넌트가 아니라 `title`과 `content` 영역을 이름 있는 layout slot으로 묶습니다.
 
-`PageStackContents`는 `Pattern` 레이어의 section wrapper다. 화면 route는 이 wrapper 안에 domain organism 또는 CX component 조합을 넣고, route-local padding/margin으로 369/361/329 기준선을 보정하지 않는다. spacing 적용은 `DESIGN_FOUNDATION.md` token과 `SPACING_PATTERNS.md` 운영 규칙을 따른다.
+`PageStackContents`는 `Pattern` 레이어의 section wrapper다. 화면 route는 이 wrapper 안에 domain organism 또는 CX component 조합을 넣고, route-local padding/margin으로 369/361/329 기준선을 보정하지 않는다. spacing 적용은 `DESIGN_FOUNDATION.md` token과  운영 규칙을 따른다.
 
 ## Import
 

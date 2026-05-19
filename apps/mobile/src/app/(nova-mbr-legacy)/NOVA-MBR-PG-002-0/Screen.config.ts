@@ -37,8 +37,30 @@ export const screenConfig = defineScreenConfig({
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
-			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
+		],
+		buildSelections: [
+			{
+				section: "intro",
+				selected: "SectionHeaderPage",
+				source: "componentCandidates",
+				reason:
+					"Preserves the Diagram layoutContract by keeping the task title as a content organism while the progress header remains AppScreen header chrome.",
+			},
+			{
+				section: "memberInfo",
+				selected: "TextFieldMemberInfo",
+				source: "componentCandidates",
+				reason:
+					"Preserves member information fields, inline duplicate-check action, helper text, and validation copy inside the policy OGN instead of splitting field behavior into route markup.",
+			},
+			{
+				section: "entryBranch",
+				selected: "SectionMessageEntryBranch",
+				source: "componentCandidates",
+				reason:
+					"Preserves the reserved entry-branch state with `visible={false}` so branch copy and spacing do not appear in the current screen state.",
+			},
 		],
 	},
 } as const satisfies ScreenRouteConfig);

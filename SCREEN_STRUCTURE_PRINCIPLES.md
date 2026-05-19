@@ -1,8 +1,8 @@
 # Screen Structure Principles
 
-> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다. 긴 작성 예시는 `docs/screen-structure-diagram-examples.md`에 둔다.
+> 이 문서는 `SCREEN_GENERATION_FLOW.md` Phase 3의 **구조 원칙·Diagram 작성 규칙·OGN별 layoutStrategy·Layout Distortion Gate** 책임을 단독 소유한다. 절차 문서는 이 규칙을 재서술하지 않고 이 문서를 가리킨다. 긴 작성 예시는 `docs/screen-structure-diagram-examples.md`에 둔다. `Screen.diagram.html` 전환 표준은 `docs/html-screen-diagram-standard.md`가 소유한다.
 
-모바일 화면과 `Screen.diagram.md`를 만들 때 먼저 적용하는 구조 원칙이다. SB와 `Screen.map.md`의 정책 요구를 확인한 뒤 곧바로 구현으로 가지 않고, 제한된 layout vocabulary로 화면의 뼈대를 먼저 정리한다.
+모바일 화면과 `Screen.diagram.html`을 만들 때 먼저 적용하는 구조 원칙이다. `Screen.diagram.md`는 전환 기간의 migration source/reference이며 HTML 생성 때문에 삭제하지 않는다. 신규/수정 화면의 표준 계약은 HTML로 작성한다. SB와 `Screen.map.md`의 정책 요구를 확인한 뒤 곧바로 구현으로 가지 않고, 제한된 layout vocabulary로 화면의 뼈대를 먼저 정리한다.
 
 ## 핵심 인사이트
 
@@ -41,7 +41,9 @@ AppScreen
 
 ## Diagram 제작 원칙
 
-`Screen.diagram.md`는 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, layout contract로 조립할지 판단한 뒤 component 후보를 나열한다. Phase 3에서는 먼저 유사한 `Screen Wire` reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
+`Screen.diagram.html`은 픽셀 좌표표가 아니다. 구현 전에 화면의 의미 구조를 확인하는 계약이다. 정책 요구와 사용자 copy는 `Screen.map.md` 를 참조하고, 이 문서는 그 요구를 어떤 AppScreen slot, section, OGN, layout contract로 조립할지 판단한 뒤 component 후보를 나열한다. Phase 3에서는 먼저 유사한 wire reference를 찾고, 그 reference의 시각 구조와 밀도를 현재 화면에 적용할지 결정한다.
+
+HTML 표준의 사람이 보는 영역은 Visual Screen, Review Summary, Reference Summary, Section Inspector, Distortion Gates로 구성하고, 상세 계약은 `<script type="application/json" id="diagram-contract">`에 보존한다. Visual Screen은 section id 요약이 아니라 실제 모바일 rail, 레이어 구조, 화면 표시 텍스트, 카드/필드/list row, 좌우 label-value 관계, bottom action을 검수 가능한 형태로 보여줘야 한다. HTML 파일의 구체 DOM/JSON 스키마와 보이는 영역 표준은 `docs/html-screen-diagram-standard.md`를 따른다.
 
 - Diagram은 아래 섹션 순서를 고정한다.
   1. `Screen Contract`
@@ -50,7 +52,7 @@ AppScreen
   4. `Policy / OGN Matrix`
   5. `Distortion Gates`
 - `Screen Contract`에는 `wireReference`를 기록한다. 선택한 reference 경로, 유사하게 따른 부분, 의도적으로 따르지 않는 부분, reference 한계를 짧게 남긴다.
-- Wire reference 후보는 `apps/mobile/src/screen-diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.md`에서 찾는다. list 화면은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text`, detail/form 성격은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
+- Wire reference 후보는 `apps/mobile/src/screen-diagrams/`의 reference pack과 기존 구현 화면의 `Screen.diagram.html`에서 찾는다. legacy 화면은 deprecated `Screen.diagram.md`를 보조 reference로만 볼 수 있다. list 화면은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/list-text`, detail/form 성격은 `apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form`, complete/detail 성격은 가까운 converted screen diagram을 우선 후보로 본다.
 - Wire reference는 AppScreen rail, section order, summary/list/search/filter zones, card density, CTA position, visible divider band 같은 시각 구조만 참고한다. 정책 필수 정보, copy, 에러, CTA 의미는 `Screen.map.md` 기준으로만 확정한다.
 - `reference-only`, `unknown-from-figma-only/TBD`, `unknown/unregistered-from-figma` 값은 policy ID, OGN ID, route 계약, copy 근거로 승격하지 않는다.
 - 먼저 `AppScreen`의 `SystemHeader`, `Header`, `Content`, `Bottom` slot을 나눈다.
@@ -122,7 +124,7 @@ Wire Semantic Tag는 `Screen Wire` 안에서 section의 구조 의미를 짧게 
 
 ### Summary Card Decision Rule
 
-완료/상세 화면에서 `[... | key-value-summary | card]` 또는 같은 의미의 wire가 보이면 summary card로 판정한다. 같은 section 안에 label-value 행이 2개 이상 있고 카드형 surface가 요구되면 현재 샘플 값이 짧아 보여도 이 규칙을 적용한다.
+완료/상세 화면에서 `[... | key-value-summary | card]` 또는 같은 의미의 wire가 보이면 summary card로 판정한다. 같은 section 안에 label-value 행이 2개 이상 있고 카드형 surface가 요구되면 샘플 값의 길이와 무관하게 이 규칙을 적용한다.
 
 - 먼저 `patternFamily: card-key-value-summary`를 결정하고, 그 다음 required capability를 적는다. 후보 이름은 그 뒤에 평가한다.
 - Required capability는 section heading/header slot 필요 여부, card surface ownership, padding/radius ownership, stable label-value relationship, value wrapping without column squeeze, reference density 보존을 포함한다.
@@ -235,10 +237,10 @@ buildOwner:
 
 #### Fit 산정 기준
 
-`fit`은 현재 샘플 copy가 짧아서 맞아 보이는지가 아니라, 후보의 capability가 `layoutContract`를 구조적으로 보장하는지로 판단한다.
+`fit`은 현재 샘플/proof/copy 길이가 아니라, 후보의 capability가 `layoutContract`를 구조적으로 보장하는지로 판단한다.
 
 - `strong`: `role`, `structure`, `alignment`, `density`, `wrapping`, slot을 직접 지원하고, 알려진 Distortion Gate 위험이 없으며, route-level CSS 없이 구현 가능하다. 가까운 reference에서 같은 visual pattern을 안정적으로 구현한 사례가 있으면 우선한다.
-- `medium`: 핵심 structure는 맞지만 `density`, `wrapping`, state, slot 중 하나가 검증에 의존한다. 단, 알려진 구조적 위험이 layoutContract의 핵심을 건드리면 현재 값이 짧아도 `medium`이 아니다.
+- `medium`: 핵심 structure는 맞지만 `density`, `wrapping`, state, slot 중 하나가 검증에 의존한다. 단, 알려진 구조적 위험이 layoutContract의 핵심을 건드리면 샘플 길이만으로 `medium`이 될 수 없다.
 - `weak`: 역할은 비슷하지만 structure/alignment/density/wrapping/card treatment 중 하나 이상이 부족하거나, wrapper/spacer/임의 width/route-level CSS 없이는 맞추기 어렵다.
 - `reject`: Distortion Gate를 위반하거나, required slot/state/wrapping을 지원하지 않거나, deprecated import가 필요하거나, wire reference의 핵심 레이아웃을 바꾼다.
 
@@ -246,7 +248,7 @@ buildOwner:
 
 단, reject 사유가 thin/proof/no-policy 소스의 slot/header 부재뿐이고 후보가 다른 화면 같은 pattern family의 established primary convention이면 확정하지 말고 Pattern-Family Precedent Gate를 적용한다.
 
-금지 판단: "현재 값이 짧아서 괜찮다", "current values are short enough", "current proof copy fits"처럼 현재 샘플 길이를 후보 승인/거절 근거로 쓰지 않는다. 현재 샘플은 wrapping 검증용 입력일 뿐이며, `fit`, `patternDecision`, `buildSelections.reason`, `rejected.reason`의 acceptance evidence가 될 수 없다.
+샘플/proof/copy 길이는 후보 승인/거절 근거가 될 수 없다. 현재 샘플은 wrapping 검증용 입력일 뿐이며, `fit`, `patternDecision`, `buildSelections.reason`, `rejected.reason`의 acceptance evidence는 reusable layout capability와 Distortion Gate 충족 여부로 증명해야 한다.
 
 ## OGN별 Layout Strategy
 
@@ -300,6 +302,8 @@ OGN: ogn-...
 - 중요한 값이 과도하게 wrap되어 사용자가 한눈에 비교해야 하는 정보의 행 구조가 무너진다.
 - 2열 또는 split layout에서 한쪽 텍스트가 2줄 이상으로 늘어나 다른 행과 높이 리듬이 깨진다.
 - 하단 fixed action과 scroll content가 겹치거나, action 위의 마지막 section이 잘린다.
+- `Bottom` Primary가 있는데 Content 내부 액션이 같은 rail 폭, 큰 pill shape, 유사 높이/radius로 렌더되어 두 개의 primary CTA처럼 보인다.
+- `secondary`라는 variant 이름만 믿고 실제 시각 강도, 위치, 크기, CTA와의 근접성을 검수하지 않는다.
 - route-level padding, negative margin, raw width, 임의 fontSize로만 정렬 문제가 해결된다.
 - existing component에는 필요한 slot 이름이 없어 의미 없는 wrapper나 빈 spacer가 추가된다.
 
@@ -313,6 +317,7 @@ OGN: ogn-...
 - 같은 화면 안에 비슷한 역할의 wrapper가 여러 개 겹친다.
 - section title과 content의 책임이 OGN 내부와 layout wrapper에 중복된다.
 - 하단 CTA가 scroll content와 bottom chrome 사이에서 애매하게 섞인다.
+- 화면당 primary-shaped CTA가 2개 이상 보인다. Content 내부 `ActionButton`이 Bottom CTA와 같은 모양이면 `variant="secondary"`라도 금지 신호다.
 - 새 component가 필요해 보이지만 실제로는 기존 slot 이름이 부족한 상태다.
 - `reuse` 판단 없이 신규 candidate를 만들거나, 신규 candidate에 `RQR` 식별자가 없다.
 - 기초 component가 Screen route에 직접 배치되어 CTA, 선택지, 안내, 상태의 소유자가 불명확하다.
@@ -352,7 +357,8 @@ OGN: ogn-...
 ## 관련 문서
 
 - `SCREEN_GENERATION_FLOW.md` — SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
-- `docs/screen-structure-diagram-examples.md` — Screen.diagram.md 작성 예시
+- `docs/html-screen-diagram-standard.md` — Screen.diagram.html 표준 스펙
+- `docs/screen-structure-diagram-examples.md` — legacy Screen.diagram.md 작성 예시
 - `DESIGN_FOUNDATION.md` — foundation token SOT
 - `DESIGN_PATTERNS.md` — 화면 pattern SOT
 - `SPACING_PATTERNS.md` — 화면·컴포넌트 spacing 실측 운영 규칙

@@ -89,6 +89,7 @@
   - alignment: left affordance plus visible title.
   - wrapping: title max 1 line.
   - overflow: title truncates within AppBar rules.
+- ognBoundaryDecision: `chrome-owned` — AppScreen/Header owns placement; the listed app-bar OGN/config id is treated as route chrome, not body policy content.
 - layoutContract:
   - role: step navigation for the identity verification flow.
   - structure: one header bar with back affordance and `본인인증` title.
@@ -131,6 +132,7 @@
   - alignment: leading.
   - wrapping: title is intentionally two lines; subtitle may wrap.
   - overflow: normal content scroll.
+- ognBoundaryDecision: `structural-or-policy-intro` — the intro section owns task framing copy inside Content; screen owns section placement and no new OGN id is introduced.
 - layoutContract:
   - role: explain the identity-verification task and current signup step.
   - structure: leading form intro, no card, no inline controls.
@@ -173,6 +175,7 @@
   - alignment: radio control + text body leading; callout leading.
   - wrapping: option labels max 1 line where possible; descriptions and callout body may wrap.
   - overflow: all content remains in scroll content above Bottom.
+- ognBoundaryDecision: reuse `ogn-mbr-auth-select`; authentication method choice, ordering, and related callout behavior stay inside the section contract while the screen owns only Content placement.
 - layoutContract:
   - role: choose exactly one authentication method and expose failure/terms constraints before proceeding.
   - structure: titled single-select radio group plus same-section notice callout.
@@ -220,6 +223,7 @@
   - alignment: stretch.
   - wrapping: button label max 1 line.
   - overflow: fixed bottom slot; never last scroll content.
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: proceed to the selected authentication method.
   - structure: one primary button inside `SinglePrimaryAction`.

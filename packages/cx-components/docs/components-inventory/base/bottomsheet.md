@@ -37,7 +37,7 @@ No new implementation file is required for this documentation task.
 - Keep modal, dimmer, focus trap, scroll lock, and bottom placement inside `@pxds/cx-layout`.
 - Use tokenized spacing and radius from the layout/component layers. Do not correct sheet alignment from route-level margin, padding, or raw style.
 - `@pxds/cx-layout` may consume WDS bottom-sheet primitives directly at this boundary to avoid a circular dependency with component packages.
-- Follow `SPACING_PATTERNS.md` for measured sheet structure. Title rail is `x=32 / w=329`; the general `Con` rail is `x=20 / w=353` unless the child component owns its own padding. `space/5`-style measured exceptions are not new public tokens.
+- Follow  for measured sheet structure. Title rail is `x=32 / w=329`; the general `Con` rail is `x=20 / w=353` unless the child component owns its own padding. `space/5`-style measured exceptions are not new public tokens.
 
 ## Structure
 

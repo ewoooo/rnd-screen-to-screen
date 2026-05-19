@@ -20,7 +20,6 @@ const routesPath = path.join(
 const requiredDesignDocs = [
 	"DESIGN_PATTERNS.md",
 	"DESIGN_FOUNDATION.md",
-	"SPACING_PATTERNS.md",
 	"SCREEN_STRUCTURE_PRINCIPLES.md",
 ];
 const requiredDiagramSections = [
@@ -36,12 +35,46 @@ const buildSelectionSources = new Set([
 	"new-organism",
 	"new-component",
 ]);
-const routeGroupDomainAliases = new Map([["nova-mbr-legacy", "mbr"]]);
+const routeGroupDomainAliases = new Map([
+	["nova-mbr-legacy", "mbr"],
+	["nova-mbr-fp", "mbr"],
+	["nova-mbr-fp-legacy", "mbr"],
+]);
 const strict =
 	process.argv.includes("--strict") || process.env.SCREEN_GENERATION_STRICT === "1";
 
 function readText(filePath) {
 	return readFileSync(filePath, "utf8");
+}
+
+function parseHtmlDiagram(filePath) {
+	const html = readText(filePath);
+	const match = html.match(
+		/<script\s+type=["']application\/json["']\s+id=["']diagram-contract["'][^>]*>([\s\S]*?)<\/script>/i,
+	);
+	if (!match) {
+		return { html, contract: null, contractText: "" };
+	}
+	try {
+		const contract = JSON.parse(match[1]);
+		return {
+			html,
+			contract,
+			contractText: JSON.stringify(contract, null, 2),
+		};
+	} catch (error) {
+		return {
+			html,
+			contract: null,
+			contractText: "",
+			error,
+		};
+	}
+}
+
+function extractHtmlDataValues(html, attributeName) {
+	const pattern = new RegExp(`${attributeName}=["']([^"']+)["']`, "g");
+	return Array.from(html.matchAll(pattern)).map((match) => match[1]);
 }
 
 function walkFiles(dir, predicate) {
@@ -426,7 +459,7 @@ function includesAll(text, values) {
 	return values.every((value) => text.includes(value));
 }
 
-const forbiddenSampleLengthRationalePatterns = [
+const sampleLengthAcceptanceEvidencePatterns = [
 	/\bshort enough\b/i,
 	/\bcurrent\b[^\n]{0,120}\b(?:sample|proof|copy|data|values?|figma proof)\b[^\n]{0,120}\b(?:short|fit|fits|sufficient|enough)\b/i,
 	/\b(?:sample|proof|copy|data|values?|figma proof)\b[^\n]{0,120}\b(?:short|fit|fits|sufficient|enough)\b[^\n]{0,120}\bcurrent\b/i,
@@ -434,14 +467,14 @@ const forbiddenSampleLengthRationalePatterns = [
 	/(?:샘플|증빙|값|데이터|문구|카피|copy)[\s\S]{0,80}(?:짧|맞|충분|들어맞)[\s\S]{0,80}현재/,
 ];
 
-function hasForbiddenSampleLengthRationale(text) {
-	return forbiddenSampleLengthRationalePatterns.some((pattern) => pattern.test(text));
+function hasSampleLengthAcceptanceEvidence(text) {
+	return sampleLengthAcceptanceEvidencePatterns.some((pattern) => pattern.test(text));
 }
 
-function validateNoForbiddenSampleLengthRationale(label, text) {
-	if (!text || !hasForbiddenSampleLengthRationale(text)) return;
+function validateCapabilityBasedFitEvidence(label, text) {
+	if (!text || !hasSampleLengthAcceptanceEvidence(text)) return;
 	problem(
-		`${label} must not use current sample/proof/copy length as fit or selection evidence; prove component capability against layoutContract and Distortion Gates instead`,
+		`${label} fit and selection rationale must be capability-based; prove reusable layout behavior against layoutContract and Distortion Gates`,
 	);
 }
 
@@ -537,7 +570,7 @@ function validateBuildSelectionsShape(generation) {
 				problem(`${itemLabel}.${field} must be a non-empty string`);
 			}
 		}
-		validateNoForbiddenSampleLengthRationale(itemLabel, item.body);
+		validateCapabilityBasedFitEvidence(itemLabel, item.body);
 		validateNoUnderSpecifiedConventionAutoReject(itemLabel, item.body);
 
 		const source = readRawObjectStringProperty(item.body, "source");
@@ -563,7 +596,7 @@ function validateBuildSelectionsShape(generation) {
 							problem(`${rejectedLabel}.${field} must be a non-empty string`);
 						}
 					}
-					validateNoForbiddenSampleLengthRationale(rejectedLabel, rejectedBody);
+					validateCapabilityBasedFitEvidence(rejectedLabel, rejectedBody);
 					validateNoUnderSpecifiedConventionAutoReject(rejectedLabel, rejectedBody);
 				}
 			}
@@ -592,34 +625,92 @@ function validateBuildSelectionsAgainstDiagram(generation, diagram) {
 		const selected = readRawObjectStringProperty(item.body, "selected");
 
 		if (section && !diagram.includes(`[${section}]`) && !diagram.includes(section)) {
-			problem(`${itemLabel}.section "${section}" must appear in Screen.diagram.md`);
+			problem(`${itemLabel}.section "${section}" must appear in Screen.diagram`);
 		}
 
 		if (selected && !diagram.includes(selected)) {
-			warning(`${itemLabel}.selected "${selected}" does not appear verbatim in Screen.diagram.md`);
+			warning(`${itemLabel}.selected "${selected}" does not appear verbatim in Screen.diagram`);
 		}
 	}
 }
 
+function validateDiagramProcessGates(diagram) {
+	if (!/wireReference\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record wireReference in Screen Contract");
+	}
+	if (!/ognBoundaryDecision\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record ognBoundaryDecision for each policy-bearing section/OGN");
+	}
+	if (!/layoutContract\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record layoutContract before Build");
+	}
+	if (!/componentCandidates\s*:/i.test(diagram)) {
+		warning("Screen.diagram.md should record componentCandidates before Build");
+	}
+}
+
+function validateFoundationScan(label, source) {
+	if (!source) return;
+	const rawStylePatterns = [
+		{ name: "raw hex color", pattern: /#[0-9a-fA-F]{3,8}\b/ },
+		{ name: "raw fontSize", pattern: /\bfontSize\s*[:=]/ },
+		{ name: "raw font-size", pattern: /\bfont-size\s*:/ },
+		{ name: "route-level margin", pattern: /\bmargin(?:Top|Right|Bottom|Left)?\s*[:=]/ },
+		{ name: "route-level padding", pattern: /\bpadding(?:Top|Right|Bottom|Left)?\s*[:=]/ },
+	];
+	for (const { name, pattern } of rawStylePatterns) {
+		if (pattern.test(source)) {
+			warning(`${label} contains ${name}; confirm DESIGN_FOUNDATION.md token/component ownership`);
+		}
+	}
+}
+
+function validateCompletionPattern(screen, screenSource, organismSources) {
+	if (screen.generation.pattern !== "complete") return;
+	const combinedSource = `${screenSource}\n${organismSources.join("\n")}`;
+	if (!/TitleMain[\s\S]{0,300}type=["']complete["']/.test(combinedSource)) {
+		warning('complete pattern should render TitleMain type="complete"');
+	}
+	if (/type=["']back["']|leftLabel=["']뒤로["']|title=["']뒤로["']/.test(screenSource)) {
+		warning("complete pattern should not expose back navigation as the primary AppBar action");
+	}
+	if (!/AppScreen\.Bottom[\s\S]{0,200}preset=["']primary-cta["']/.test(screenSource)) {
+		warning('complete pattern should keep the primary CTA in AppScreen.Bottom preset="primary-cta"');
+	}
+}
+
+function findScreenMapPath(screenDir) {
+	const markdownPath = path.join(screenDir, "Screen.map.md");
+	const typedPath = path.join(screenDir, "Screen.map.ts");
+	if (existsSync(typedPath)) return typedPath;
+	if (existsSync(markdownPath)) return markdownPath;
+	return typedPath;
+}
+
+function screenMapLabel(mapPath) {
+	return path.basename(mapPath);
+}
+
 function validateScreenMap(screen, context, mapPath) {
+	const mapLabel = screenMapLabel(mapPath);
 	if (!existsSync(mapPath)) {
-		problem("Screen.map.md is missing; generated screens must record Phase 2 policy/governance mapping");
+		problem("Screen.map.md or Screen.map.ts is missing; generated screens must record Phase 2 policy/governance mapping");
 		return null;
 	}
 
 	const map = readText(mapPath);
-	ok("Screen.map.md is present");
+	ok(`${mapLabel} is present`);
 
 	if (screen.id && !map.includes(screen.id)) {
-		problem(`Screen.map.md must include screenId ${screen.id}`);
+		problem(`${mapLabel} must include screenId ${screen.id}`);
 	}
 
 	if (!includesAll(map, screen.generation.policyRefs ?? [])) {
-		problem("Screen.map.md must include every policyRef from Screen.config generation");
+		problem(`${mapLabel} must include every policyRef from Screen.config generation`);
 	}
 
 	if (!includesAll(map, screen.generation.ognIds ?? [])) {
-		problem("Screen.map.md must include every ognId from Screen.config generation");
+		problem(`${mapLabel} must include every ognId from Screen.config generation`);
 	}
 
 	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
@@ -630,7 +721,7 @@ function validateScreenMap(screen, context, mapPath) {
 	}
 
 	if (governanceRefsFromConfig.length > 0 && !includesAll(map, governanceRefsFromConfig)) {
-		problem("Screen.map.md must include every governanceRef from Screen.config generation");
+		problem(`${mapLabel} must include every governanceRef from Screen.config generation`);
 	}
 
 	const governanceRefsFromMap = extractGovernanceRefs(map);
@@ -639,7 +730,7 @@ function validateScreenMap(screen, context, mapPath) {
 		!map.includes("governanceRefs") &&
 		!map.includes("notApplicableReason")
 	) {
-		problem("Screen.map.md must record governanceRefs or notApplicableReason");
+		problem(`${mapLabel} must record governanceRefs or notApplicableReason`);
 	}
 
 	return map;
@@ -647,7 +738,8 @@ function validateScreenMap(screen, context, mapPath) {
 
 function validateDiagramContract(screen, context, diagramPath, mapText) {
 	const diagram = readText(diagramPath);
-	validateNoForbiddenSampleLengthRationale("Screen.diagram.md", diagram);
+	warning("Screen.diagram.md is deprecated; create Screen.diagram.html with #diagram-contract instead");
+	validateCapabilityBasedFitEvidence("Screen.diagram.md", diagram);
 	for (const candidate of extractNamedCandidateBlocks(diagram)) {
 		if (!/RQRContentsDetail/i.test(candidate.name)) continue;
 		validateNoUnderSpecifiedConventionAutoReject(
@@ -682,6 +774,7 @@ function validateDiagramContract(screen, context, diagramPath, mapText) {
 	const screenWire = extractMarkdownSection(diagram, "Screen Wire");
 	const sectionContracts = extractMarkdownSection(diagram, "Section Contracts");
 	validateScreenWireContract(diagram, screenWire, sectionContracts);
+	validateDiagramProcessGates(diagram);
 	validateBuildSelectionsAgainstDiagram(screen.generation, diagram);
 
 	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
@@ -709,25 +802,203 @@ function validateDiagramContract(screen, context, diagramPath, mapText) {
 	return diagram;
 }
 
+function validateHtmlDiagramContract(screen, context, diagramPath, mapText) {
+	const parsed = parseHtmlDiagram(diagramPath);
+	const label = "Screen.diagram.html";
+	if (parsed.error) {
+		problem(`${label} #diagram-contract JSON must parse: ${parsed.error.message}`);
+		return parsed.html;
+	}
+	if (!parsed.contract) {
+		problem(`${label} must include <script type="application/json" id="diagram-contract">`);
+		return parsed.html;
+	}
+
+	const { html, contract, contractText } = parsed;
+	const searchable = `${html}\n${contractText}\n${contractText.replaceAll('\\"', '"')}`;
+	const screenContract = contract.screenContract ?? {};
+	const sections = Array.isArray(contract.sections) ? contract.sections : [];
+	const policyOgnMatrix = Array.isArray(contract.policyOgnMatrix)
+		? contract.policyOgnMatrix
+		: [];
+	const distortionGates = Array.isArray(contract.distortionGates)
+		? contract.distortionGates
+		: [];
+	const lifecycle = contract.lifecycle;
+	const renderEvidence = contract.renderEvidence;
+	const iterationPasses = contract.iterationPasses;
+	const contractSync = contract.contractSync;
+
+	ok("Screen.diagram.html is present");
+	validateCapabilityBasedFitEvidence(label, searchable);
+
+	if (lifecycle === undefined) {
+		warning(`${label} should record lifecycle as "thin" or "synced"`);
+	} else if (!["thin", "synced"].includes(lifecycle)) {
+		problem(`${label} lifecycle must be "thin" or "synced"`);
+	}
+	if (lifecycle === "synced") {
+		if (!renderEvidence?.geometryEvidence) {
+			problem(`${label} lifecycle "synced" requires renderEvidence.geometryEvidence`);
+		}
+		if (!Array.isArray(iterationPasses) || iterationPasses.length === 0) {
+			problem(`${label} lifecycle "synced" requires at least one iterationPasses entry`);
+		}
+		if (contractSync?.status !== "synced") {
+			problem(`${label} lifecycle "synced" requires contractSync.status "synced"`);
+		}
+	}
+
+	if (!html.includes("data-screen-id=")) {
+		problem(`${label} visual DOM must include data-screen-id`);
+	}
+	if (screen.id && screenContract.screenId !== screen.id) {
+		problem(`${label} screenContract.screenId must equal Screen.config.ts id ${screen.id}`);
+	}
+	if (screen.id && !extractHtmlDataValues(html, "data-screen-id").includes(screen.id)) {
+		problem(`${label} data-screen-id must include ${screen.id}`);
+	}
+	if (screen.route && screenContract.route !== screen.route) {
+		problem(`${label} screenContract.route must equal Screen.config.ts route ${screen.route}`);
+	}
+	if (screen.route && !extractHtmlDataValues(html, "data-route").includes(screen.route)) {
+		problem(`${label} data-route must include ${screen.route}`);
+	}
+	if (screen.generation.pattern && screenContract.pattern !== screen.generation.pattern) {
+		problem(`${label} screenContract.pattern must equal Screen.config.ts generation.pattern`);
+	}
+	if (!Array.isArray(screenContract.requiredDesignDocs)) {
+		problem(`${label} screenContract.requiredDesignDocs must be an array`);
+	} else if (!includesAll(screenContract.requiredDesignDocs.join("\n"), requiredDesignDocs)) {
+		problem(`${label} screenContract.requiredDesignDocs must include required design docs`);
+	}
+	if (!screenContract.wireReference?.source) {
+		warning(`${label} should record screenContract.wireReference.source`);
+	}
+	if (!screenContract.patternRecheck?.result) {
+		warning(`${label} should record screenContract.patternRecheck`);
+	}
+	if (!Array.isArray(screenContract.appScreenRails) || !screenContract.appScreenRails.includes("Content")) {
+		problem(`${label} screenContract.appScreenRails must include Content`);
+	}
+	if (!html.includes('data-rail="Content"') && !html.includes("data-rail='Content'")) {
+		problem(`${label} visual DOM must include data-rail="Content"`);
+	}
+	if (
+		(screenContract.appScreenRails ?? []).includes("Bottom") &&
+		!html.includes('data-rail="Bottom"') &&
+		!html.includes("data-rail='Bottom'")
+	) {
+		problem(`${label} visual DOM must include data-rail="Bottom" when contract includes Bottom`);
+	}
+
+	if (screen.id && !searchable.includes(screen.id)) {
+		problem(`${label} must include screenId ${screen.id}`);
+	}
+	if (!includesAll(searchable, screen.generation.ognIds ?? [])) {
+		problem(`${label} must include every ognId from Screen.config generation`);
+	}
+	if (!includesAll(searchable, screen.generation.policyRefs ?? [])) {
+		problem(`${label} must include every policyRef from Screen.config generation`);
+	}
+
+	const domSectionIds = Array.from(new Set(extractHtmlDataValues(html, "data-section-id")));
+	const jsonSectionIds = sections.map((section) => section.sectionId).filter(Boolean);
+	for (const sectionId of domSectionIds) {
+		if (!jsonSectionIds.includes(sectionId)) {
+			problem(`${label} DOM section "${sectionId}" must exist in diagram-contract.sections`);
+		}
+	}
+	for (const sectionId of jsonSectionIds) {
+		if (!domSectionIds.includes(sectionId)) {
+			problem(`${label} contract section "${sectionId}" must exist in visual DOM data-section-id`);
+		}
+	}
+
+	for (const section of sections) {
+		const sectionLabel = `${label} sections[${section.sectionId ?? "unknown"}]`;
+		if (!section.ognBoundaryDecision) {
+			problem(`${sectionLabel} must include ognBoundaryDecision`);
+		}
+		if (!section.layoutContract) {
+			problem(`${sectionLabel} must include layoutContract`);
+		}
+		if (!Array.isArray(section.componentCandidates) || section.componentCandidates.length === 0) {
+			problem(`${sectionLabel} must include componentCandidates`);
+		}
+		for (const [candidateIndex, candidate] of (section.componentCandidates ?? []).entries()) {
+			const candidateLabel = `${sectionLabel}.componentCandidates[${candidateIndex}]`;
+			for (const field of ["name", "source", "fit", "reason"]) {
+				if (typeof candidate[field] !== "string" || candidate[field].trim().length === 0) {
+					problem(`${candidateLabel}.${field} must be a non-empty string`);
+				}
+			}
+			if (!["strong", "medium", "weak", "reject"].includes(candidate.fit)) {
+				problem(`${candidateLabel}.fit must be strong, medium, weak, or reject`);
+			}
+			validateCapabilityBasedFitEvidence(candidateLabel, JSON.stringify(candidate));
+		}
+	}
+
+	for (const row of policyOgnMatrix) {
+		if (row.section && !jsonSectionIds.includes(row.section)) {
+			problem(`${label} policyOgnMatrix section "${row.section}" must exist in sections`);
+		}
+	}
+
+	if (distortionGates.length === 0) {
+		problem(`${label} distortionGates must include at least one gate`);
+	}
+	if (searchable.includes("AppScreen.ActionBar") || searchable.includes("ActionBar(")) {
+		problem(`${label} must use Bottom(preset="...") instead of AppScreen.ActionBar/ActionBar`);
+	}
+
+	validateBuildSelectionsAgainstDiagram(screen.generation, searchable);
+
+	const governanceRefsFromConfig = screen.generation.governanceRefs ?? [];
+	if (governanceRefsFromConfig.length > 0 && !includesAll(searchable, governanceRefsFromConfig)) {
+		problem(`${label} must include every governanceRef from Screen.config generation`);
+	}
+
+	if (mapText) {
+		const governanceRefsFromMap = Array.from(new Set(extractGovernanceRefs(mapText)));
+		const appliedGovernanceRefs = extractGovernanceRefs(searchable);
+		for (const governanceRef of governanceRefsFromMap) {
+			if (!context.governanceIds.has(governanceRef)) {
+				problem(`unknown governanceRef in Screen.map.md: ${governanceRef}`);
+				continue;
+			}
+			if (!appliedGovernanceRefs.includes(governanceRef)) {
+				problem(`${label} must apply governanceRef from Screen.map.md: ${governanceRef}`);
+			}
+		}
+	}
+
+	return searchable;
+}
+
 function validateScreen(screen, context) {
 	const screenLabel = screen.id ?? path.basename(screen.dir);
 	const screenRel = normalizePath(screen.dir);
 	const screenPath = path.join(screen.dir, "Screen.tsx");
-	const mapPath = path.join(screen.dir, "Screen.map.md");
-	const diagramPath = path.join(screen.dir, "Screen.diagram.md");
+	const mapPath = findScreenMapPath(screen.dir);
+	const htmlDiagramPath = path.join(screen.dir, "Screen.diagram.html");
+	const markdownDiagramPath = path.join(screen.dir, "Screen.diagram.md");
 	const hasGeneration = hasGenerationConfig(screen);
-	const hasDiagram = existsSync(diagramPath);
+	const hasHtmlDiagram = existsSync(htmlDiagramPath);
+	const hasMarkdownDiagram = existsSync(markdownDiagramPath);
+	const hasDiagram = hasHtmlDiagram || hasMarkdownDiagram;
 	console.log(`  ${screenLabel}  ${dim(screenRel)}`);
 
 	if (!hasGeneration && !hasDiagram) {
 		adoptionWarning(
-			"Screen.config.ts generation and Screen.diagram.md are not present yet",
+			"Screen.config.ts generation and Screen.diagram.html are not present yet",
 		);
 		return;
 	}
 
 	if (!hasGeneration || !hasDiagram) {
-		problem("Screen.config.ts generation and Screen.diagram.md must be created together");
+		problem("Screen.config.ts generation and Screen.diagram.html must be created together");
 		return;
 	}
 
@@ -758,13 +1029,22 @@ function validateScreen(screen, context) {
 	}
 
 	const mapText = validateScreenMap(screen, context, mapPath);
-	validateDiagramContract(screen, context, diagramPath, mapText);
+	if (hasHtmlDiagram) {
+		validateHtmlDiagramContract(screen, context, htmlDiagramPath, mapText);
+		if (hasMarkdownDiagram) {
+			warning("Screen.diagram.md is deprecated; Screen.diagram.html is the active diagram contract");
+		}
+	} else {
+		validateDiagramContract(screen, context, markdownDiagramPath, mapText);
+	}
 
 	const screenSource = existsSync(screenPath) ? readText(screenPath) : "";
 	if (!screenSource) {
 		problem("Screen.tsx is missing");
 	}
 
+	validateFoundationScan("Screen.tsx", screenSource);
+	const organismSources = [];
 	for (const ognId of generation.ognIds ?? []) {
 		const organism = context.organismsById.get(ognId);
 		if (!organism) {
@@ -777,10 +1057,17 @@ function validateScreen(screen, context) {
 		if (!screenSource.includes(organism.name)) {
 			problem(`Screen.tsx must use organism component ${organism.name} for ${ognId}`);
 		}
-		if (hasDeprecatedImport(path.join(organism.dir, `${organism.name}.tsx`))) {
+		const organismPath = path.join(organism.dir, `${organism.name}.tsx`);
+		if (existsSync(organismPath)) {
+			const organismSource = readText(organismPath);
+			organismSources.push(organismSource);
+			validateFoundationScan(`organism ${ognId}`, organismSource);
+		}
+		if (hasDeprecatedImport(organismPath)) {
 			problem(`organism ${ognId} imports deprecated @pxds/pxds-components`);
 		}
 	}
+	validateCompletionPattern(screen, screenSource, organismSources);
 
 	if (hasDeprecatedImport(screenPath)) {
 		problem("Screen.tsx imports deprecated @pxds/pxds-components");

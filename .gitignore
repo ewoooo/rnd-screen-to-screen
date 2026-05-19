@@ -13,6 +13,10 @@ docs/*.zip
 .env*
 .vercel
 .gstack/
-.claude/
+.claude/*
+!.claude/commands/
+!.claude/commands/*.md
+!.claude/codex-skills
+.claude/scheduled_tasks.lock
 .vscode/
 **/next-env.d.ts

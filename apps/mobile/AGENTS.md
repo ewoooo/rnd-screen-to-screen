@@ -42,8 +42,8 @@ Active 모바일 화면 렌더러다. route는 화면을 조립하고, 실제 la
 - scroll content는 `AppScreen.Content`가 소유한다. 화면별 별도 scroll container를 만들지 않는다.
 - content direct item gap은 `ContentList`가 소유한다.
 - 기본 inset은 `ContentOutlet`, section boundary/bleed는 `ContentSection`, bleed 내부 기준선 복귀와 readable measure는 `ContentRail`을 사용한다.
-- 신규 화면은 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SCREEN_GENERATION_FLOW.md`를 함께 조회한다.
-- Codex 스킬을 사용할 수 있으면 신규/수정 화면은 `cx-screen-create`로 시작하고, `Screen.diagram.md` 작성 또는 수정은 반드시 `cx-screen-diagram` 절차를 따른다.
+- 신규 화면은 `DESIGN_FOUNDATION.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SCREEN_GENERATION_FLOW.md`를 함께 조회한다.
+- Codex 스킬을 사용할 수 있으면 신규/수정 화면은 `cx-screen-create`로 시작하고, `Screen.diagram.html` 작성 또는 수정은 반드시 `cx-screen-diagram` 절차를 따른다. Deprecated `Screen.diagram.md`는 legacy/fallback reference로만 읽는다.
 - 361px 일반 콘텐츠 폭은 `spacing/layout/content-horizontal`, 369px section/card 폭은 `spacing/layout/section-horizontal`, 329px 내부 콘텐츠 폭은 `spacing/layout/card-horizontal-pagestack` 의미로 해석한다.
 - `space/5`처럼 실측 예외로만 등장한 값은 route에서 새 token처럼 확장하지 않는다. 필요한 경우 컴포넌트 실측 evidence로 남기고 token 승격은 foundation에서 결정한다.
 

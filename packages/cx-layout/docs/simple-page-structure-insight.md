@@ -108,7 +108,7 @@ Figma 변환기가 알아야 하는 정보는 `x=12`, `width=369` 같은 수치�
 4. route에서 spacing을 보정하고 있다면, 그 값은 layout package의 pattern contract로 올라가야 하지 않는가?
 5. Figma bridge가 이 구조를 읽었을 때 화면 layer와 slot을 복원할 수 있는가?
 6. 361px 일반 content rail, 369px section/card rail, 329px inner rail 중 어느 기준선을 쓰는지 SOT 문서로 설명되는가?
-7. `SPACING_PATTERNS.md`의 실측 운영 규칙과 충돌하는 route-local margin/padding이 없는가?
+7. 의 실측 운영 규칙과 충돌하는 route-local margin/padding이 없는가?
 
 ## 결론
 

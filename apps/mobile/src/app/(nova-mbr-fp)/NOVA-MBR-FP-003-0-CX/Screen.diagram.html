@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NOVA-MBR-FP-003-0-CX Screen Diagram</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f5f7;
+        --ink: #15171a;
+        --muted: #66707c;
+        --line: #d9dde3;
+        --brand: #4b55ff;
+        --danger: #d92d20;
+        --warn: #ad5b00;
+        --card: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      main {
+        display: grid;
+        grid-template-columns: 430px minmax(0, 1fr);
+        gap: 24px;
+        padding: 24px;
+        align-items: start;
+      }
+      .phone {
+        width: 393px;
+        min-height: 812px;
+        margin: auto;
+        background: #fff;
+        border: 1px solid #cfd5dd;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 18px 40px rgba(20, 30, 45, 0.16);
+      }
+      .rail {
+        padding: 0 20px;
+      }
+      .system {
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .header {
+        min-height: 78px;
+        border-bottom: 1px solid var(--line);
+        padding: 10px 20px 14px;
+      }
+      .appbar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+      }
+      .back {
+        font-size: 24px;
+        line-height: 1;
+      }
+      .progress-label {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+      }
+      .track {
+        height: 4px;
+        background: #e8ebf0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 6px;
+      }
+      .track > span {
+        display: block;
+        width: 60%;
+        height: 100%;
+        background: var(--brand);
+      }
+      .content {
+        min-height: 596px;
+        padding: 0;
+        background: #fff;
+      }
+      .section {
+        padding: 24px 20px;
+      }
+      .divider {
+        height: 4px;
+        background: #eef0f3;
+      }
+      .title {
+        font-size: 18px;
+        line-height: 1.35;
+        font-weight: 750;
+        margin-bottom: 12px;
+      }
+      .card {
+        border: 1px solid #e0e4ea;
+        border-radius: 10px;
+        background: #fff;
+        overflow: hidden;
+      }
+      .choice {
+        display: flex;
+        align-items: center;
+        min-height: 52px;
+        padding: 0 14px;
+        gap: 10px;
+        font-size: 15px;
+      }
+      .choice + .choice {
+        border-top: 1px solid #eceff3;
+      }
+      .radio {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid #aab2bd;
+        display: inline-block;
+        position: relative;
+      }
+      .choice.selected .radio {
+        border-color: var(--brand);
+      }
+      .choice.selected .radio:after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        border-radius: 50%;
+        background: var(--brand);
+      }
+      .field {
+        border: 1px solid #cfd5dd;
+        border-radius: 8px;
+        padding: 11px 12px 9px;
+        background: #fff;
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 72px;
+        gap: 8px;
+        align-items: start;
+      }
+      .label {
+        font-size: 12px;
+        color: #48515c;
+        margin-bottom: 5px;
+      }
+      .value {
+        font-size: 15px;
+        color: #9aa2ad;
+      }
+      .helper {
+        font-size: 12px;
+        color: #687381;
+        margin-top: 6px;
+        line-height: 1.35;
+      }
+      .inline-action {
+        height: 48px;
+        border: 1px solid #aab2bd;
+        border-radius: 8px;
+        background: #fff;
+        font-weight: 700;
+        color: #2c3440;
+      }
+      .notice {
+        margin-top: 12px;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 13px;
+        line-height: 1.45;
+        border: 1px solid #ffd89a;
+        background: #fff8ed;
+        color: var(--warn);
+      }
+      .notice.negative {
+        border-color: #ffd0cc;
+        background: #fff4f2;
+        color: var(--danger);
+      }
+      .secondary {
+        margin-top: 16px;
+        width: 100%;
+        height: 48px;
+        border: 1px solid var(--brand);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--brand);
+        font-weight: 800;
+      }
+      .bottom {
+        height: 102px;
+        padding: 12px 16px 34px;
+        border-top: 1px solid var(--line);
+        background: #fff;
+      }
+      .primary {
+        width: 100%;
+        height: 56px;
+        border: 0;
+        border-radius: 8px;
+        background: #d8dce4;
+        color: #707986;
+        font-weight: 800;
+        font-size: 16px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #d8dde5;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 16px;
+      }
+      .panel h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+      .panel h3 {
+        margin: 16px 0 8px;
+        font-size: 15px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 8px 12px;
+        font-size: 13px;
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #eef1ff;
+        color: #3036a0;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      details {
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+        margin-top: 10px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 700;
+      }
+      ul {
+        margin: 8px 0 0 18px;
+        padding: 0;
+      }
+      li {
+        margin: 4px 0;
+      }
+      code {
+        background: #f1f3f5;
+        padding: 1px 4px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section
+        class="phone"
+        data-screen-id="NOVA-MBR-FP-003-0-CX"
+        data-route="/NOVA-MBR-FP-003-0-CX"
+        data-pattern="form"
+        data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md"
+      >
+        <div class="system rail" data-rail="SystemHeader">
+          <span>9:41</span><span>LTE 100%</span>
+        </div>
+        <header
+          class="header"
+          data-rail="Header"
+          data-section-id="progress"
+          data-ogn-id="structural-only"
+          data-pattern-role="progress-header"
+          data-boundary="chrome"
+          data-layout-contract="form-entry progress chrome; title, step label, progress track"
+        >
+          <div class="appbar">
+            <span class="back">‹</span><span>회원 가입</span>
+          </div>
+          <div class="progress-label">
+            <span>본인인증</span><span>3/5</span>
+          </div>
+          <div class="track" aria-hidden="true"><span></span></div>
+        </header>
+        <div class="content" data-rail="Content">
+          <section
+            class="section"
+            data-section-id="authSelect"
+            data-ogn-id="ogn-mbr-auth-select"
+            data-pattern-role="choice-list-card"
+            data-boundary="cardBoundary"
+            data-layout-contract="TitleSection plus one card containing three radio rows with contents dividers"
+          >
+            <div class="title">본인인증 수단을 선택해 주세요</div>
+            <div class="card">
+              <div class="choice selected">
+                <span class="radio"></span><span>휴대폰</span>
+              </div>
+              <div class="choice">
+                <span class="radio"></span><span>PASS</span>
+              </div>
+              <div class="choice">
+                <span class="radio"></span><span>공동인증서</span>
+              </div>
+            </div>
+          </section>
+          <div class="divider" aria-label="section divider"></div>
+          <section
+            class="section"
+            data-section-id="authRequest"
+            data-ogn-id="ogn-mbr-auth-request"
+            data-pattern-role="code-field-with-state-action"
+            data-boundary="single-pagestack"
+            data-layout-contract="TitleSection, numeric code field, inline resend, helper timer, state notice, secondary confirm"
+          >
+            <div class="title">인증번호 6자리 입력</div>
+            <div class="field-row">
+              <div class="field">
+                <div class="label">인증번호 입력</div>
+                <div class="value">123456</div>
+                <div class="helper">
+                  유효시간 3분 · 재요청은 최대 5회 · 남은 시간 02:43
+                </div>
+              </div>
+              <button class="inline-action" type="button">재요청</button>
+            </div>
+            <div class="notice">
+              인증번호 만료 · 유효시간이 만료되어 다시 요청해 주세요
+            </div>
+            <div class="notice negative">
+              인증 제한 · 인증 실패 한도(5회)를 초과했습니다 · 10분 후 다시
+              시도해 주세요
+            </div>
+            <button class="secondary" type="button">인증 확인</button>
+          </section>
+        </div>
+        <footer
+          class="bottom"
+          data-rail="Bottom"
+          data-preset="primary-cta"
+          data-section-id="actions"
+          data-ogn-id="structural-only"
+          data-pattern-role="bottom-primary-action"
+          data-boundary="bottom-fixed"
+          data-layout-contract="single fixed bottom primary CTA gated by verification success"
+        >
+          <button class="primary" type="button">본인인증 완료하기</button>
+        </footer>
+      </section>
+
+      <aside>
+        <section class="panel">
+          <h2>Review Summary</h2>
+          <div class="grid">
+            <strong>패턴</strong
+            ><span
+              ><span class="badge">통과</span> Form Entry with two visible
+              Pagestack sections.</span
+            >
+            <strong>레퍼런스</strong
+            ><span
+              ><span class="badge">통과</span> detail-form check reference for
+              choice rows plus fixed CTA.</span
+            >
+            <strong>스페이싱</strong
+            ><span
+              ><span class="badge">통과</span> Visible sections are separated by
+              a 4px section divider.</span
+            >
+            <strong>정책/OGN</strong
+            ><span
+              ><span class="badge">통과</span> AUTH-002 maps to authSelect;
+              AUTH-001/003/004/005 map to authRequest.</span
+            >
+            <strong>왜곡 게이트</strong
+            ><span
+              ><span class="badge">통과</span> One bottom primary, inline
+              resend, secondary confirm, field/state errors.</span
+            >
+            <strong>patternRecheck</strong
+            ><span
+              ><span class="badge">revised</span>
+              DESIGN_PATTERNS.md#section-detail-form 대조 후 authSelect와
+              authRequest 사이 4px SectionDivider를 확정.</span
+            >
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Reference Summary</h2>
+          <p>
+            <code
+              >apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md</code
+            >
+          </p>
+          <p>
+            Matched: choice-list sections, 4px section divider, fixed bottom
+            CTA. Difference: authentication request uses a code field with
+            inline resend and state notices.
+          </p>
+        </section>
+        <section class="panel">
+          <h2>Section Inspector</h2>
+          <h3>progress</h3>
+          <p>
+            slot Header · structural progress chrome · selected ProgressAppBar
+            candidate.
+          </p>
+          <details>
+            <summary>candidate evaluation</summary>
+            <ul>
+              <li>strong selected: ProgressAppBar pattern</li>
+              <li>weak rejected: plain AppBar without progress</li>
+            </ul>
+          </details>
+          <h3>authSelect</h3>
+          <p>
+            slot Content · choice-list-card · selected TitleSection + RQRCard +
+            ListSelected radio rows.
+          </p>
+          <details>
+            <summary>candidate evaluation</summary>
+            <ul>
+              <li>
+                strong selected: RQRCard + ListSelected + Divider(contents)
+              </li>
+              <li>reject: hand-stacked radio buttons</li>
+            </ul>
+          </details>
+          <h3>authRequest</h3>
+          <p>
+            slot Content · code-field-with-state-action · selected FieldStack +
+            TextField inline resend + Notice + secondary ActionButton.
+          </p>
+          <details>
+            <summary>candidate evaluation</summary>
+            <ul>
+              <li>
+                strong selected: TextField with inline action plus Notice states
+              </li>
+              <li>reject: sibling resend button outside the field row</li>
+              <li>
+                weak: Callout for state message because tone coverage is
+                insufficient
+              </li>
+            </ul>
+          </details>
+          <h3>actions</h3>
+          <p>
+            slot Bottom · bottom-fixed · selected SinglePrimaryAction +
+            ActionButton.
+          </p>
+        </section>
+        <section class="panel">
+          <h2>Distortion Gates</h2>
+          <ul>
+            <li>Do not add more than one primary solid action.</li>
+            <li>
+              Do not move 재요청 outside the code field action relationship.
+            </li>
+            <li>
+              Do not omit timer, cooldown, resend limit, failed-attempt limit,
+              or 10-minute blocked state.
+            </li>
+            <li>
+              Do not invent policy-backed alternative-method behavior for
+              external agency failure.
+            </li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+    <script type="application/json" id="diagram-contract">
+      {
+        "lifecycle": "synced",
+        "screenContract": {
+          "screenId": "NOVA-MBR-FP-003-0-CX",
+          "route": "/NOVA-MBR-FP-003-0-CX",
+          "group": "nova-mbr-fp",
+          "domain": "mbr",
+          "source": "SB",
+          "pattern": "form",
+          "policyRefs": [
+            "POL-MBR-AUTH-001-01",
+            "POL-MBR-AUTH-002-01",
+            "POL-MBR-AUTH-002-05",
+            "POL-MBR-AUTH-002-09",
+            "POL-MBR-AUTH-003-01",
+            "POL-MBR-AUTH-003-03",
+            "POL-MBR-AUTH-004-01",
+            "POL-MBR-AUTH-004-02",
+            "POL-MBR-AUTH-005-01",
+            "POL-MBR-AUTH-005-03",
+            "POL-MBR-AUTH-005-07"
+          ],
+          "ognIds": ["ogn-mbr-auth-select", "ogn-mbr-auth-request"],
+          "governanceRefs": [
+            "UXPT_BTN",
+            "UXPT_ERR",
+            "UXPT_LOD",
+            "UXPT_NAV",
+            "VOT_RUL"
+          ],
+          "requiredDesignDocs": [
+            "DESIGN_PATTERNS.md",
+            "DESIGN_FOUNDATION.md",
+            "SCREEN_STRUCTURE_PRINCIPLES.md"
+          ],
+          "mapSource": "Screen.map.ts",
+          "appScreenRails": ["SystemHeader", "Header", "Content", "Bottom"],
+          "headerContract": "ProgressAppBar in Header: title, step 3 of 5, progress label 본인인증.",
+          "bottomContract": "Bottom(preset=\"primary-cta\") with one primary CTA 본인인증 완료하기, disabled until verified.",
+          "wireReference": {
+            "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md",
+            "matchedParts": "choice-list rows, 4px section dividers, and fixed bottom action",
+            "intentionalDifferences": "authRequest uses code input, inline resend, timer helper, and verification state notices",
+            "limitation": "reference-only visual structure; policy and copy come from Screen.map.ts"
+          },
+          "patternRecheck": {
+            "source": "DESIGN_PATTERNS.md#section-detail-form",
+            "result": "revised",
+            "changes": [
+              "authSelect and authRequest are separate visible Pagestack sections",
+              "inserted 4px SectionDivider between visible semantic sections",
+              "kept 인증 확인 as secondary content action and bottom CTA as the only primary"
+            ],
+            "reason": "Form Entry requires meaningful section separation with Divider(393x4) and a fixed Bottom ActionButton; multiple visible primary actions would violate CTA hierarchy."
+          }
+        },
+        "screenWire": {
+          "raw": "AppScreen/SystemHeader/Header(progress)/Content(authSelect, Divider 4px, authRequest)/Bottom(actions)",
+          "sections": ["progress", "authSelect", "authRequest", "actions"]
+        },
+        "sections": [
+          {
+            "id": "progress",
+            "slot": "Header",
+            "ognId": "structural-only",
+            "patternRole": "progress-header",
+            "patternEvidence": {
+              "sectionBoundary": "none",
+              "fieldGrouping": "none",
+              "rowSeparators": "none",
+              "actionPlacement": "none",
+              "typography": {
+                "rowTitle": "AppBar title",
+                "rowCaption": "progress label",
+                "emphasisRule": "none",
+                "controlLabelScale": "matches-reference"
+              }
+            },
+            "patternDecision": {
+              "pattern": "ProgressAppBar",
+              "decision": "existing FP pattern",
+              "reason": "multi-step signup header needs title plus progress indicator"
+            },
+            "ognBoundaryDecision": {
+              "type": "structural-only",
+              "reason": "no policy OGN; chrome owned by Screen"
+            },
+            "layoutStrategy": {
+              "slot": "Header",
+              "density": "compact chrome",
+              "wrapping": "title and label stay one line"
+            },
+            "layoutContract": {
+              "role": "show flow location",
+              "structure": "back affordance, title, step label, progress track",
+              "alignment": "leading title with progress below",
+              "density": "form-entry header",
+              "wrapping": "no wrapping in chrome",
+              "distortionRisk": "plain AppBar hides step context"
+            },
+            "componentCandidates": [
+              {
+                "name": "ProgressAppBar",
+                "fit": "strong",
+                "source": "existing FP pattern",
+                "selected": true,
+                "reason": "owns appbar and progress track without route-level patch",
+                "risk": "must remain Header chrome"
+              },
+              {
+                "name": "AppBar only",
+                "fit": "weak",
+                "source": "cx-components",
+                "selected": false,
+                "reason": "no progress slot",
+                "risk": "progress would need wrapper patch"
+              }
+            ],
+            "sectionId": "progress"
+          },
+          {
+            "id": "authSelect",
+            "slot": "Content",
+            "ognId": "ogn-mbr-auth-select",
+            "patternRole": "choice-list-card",
+            "patternEvidence": {
+              "sectionBoundary": "SectionDivider-after",
+              "fieldGrouping": "none",
+              "rowSeparators": "Divider(type=\"contents\")",
+              "actionPlacement": "Content",
+              "typography": {
+                "rowTitle": "Text(listTitle)",
+                "rowCaption": "none",
+                "emphasisRule": "selected-row-only",
+                "controlLabelScale": "matches-reference"
+              }
+            },
+            "patternDecision": {
+              "pattern": "TitleSection + card radio choice list",
+              "decision": "existing composition",
+              "reason": "AUTH-002 requires exactly three mutually exclusive options in a fixed order"
+            },
+            "ognBoundaryDecision": {
+              "type": "policy-ogn",
+              "reason": "owns AUTH-002 method choice policy"
+            },
+            "layoutStrategy": {
+              "slot": "Content",
+              "density": "compact choice rows in card",
+              "wrapping": "short method labels stay one line"
+            },
+            "layoutContract": {
+              "role": "select authentication method",
+              "structure": "section title plus one card containing three radio rows separated by contents dividers",
+              "alignment": "leading radio controls and labels",
+              "density": "compact list-row density",
+              "wrapping": "labels should remain stable",
+              "distortionRisk": "hand-stacked rows losing card surface or divider rhythm"
+            },
+            "componentCandidates": [
+              {
+                "name": "RQRCard + ListSelected(type=\"radio\") + Divider(type=\"contents\")",
+                "fit": "strong",
+                "source": "@pxds/cx-components",
+                "selected": true,
+                "reason": "owns card surface, radio state, and contents dividers",
+                "risk": "loading skeleton must keep the same row geometry"
+              },
+              {
+                "name": "hand-stacked RadioButton rows",
+                "fit": "reject",
+                "source": "manual composition",
+                "selected": false,
+                "reason": "would recreate card/list semantics manually",
+                "risk": "typography and dividers drift"
+              }
+            ],
+            "sectionId": "authSelect"
+          },
+          {
+            "id": "authRequest",
+            "slot": "Content",
+            "ognId": "ogn-mbr-auth-request",
+            "patternRole": "code-field-with-state-action",
+            "patternEvidence": {
+              "sectionBoundary": "SectionDivider-before",
+              "fieldGrouping": "FieldStack",
+              "rowSeparators": "none",
+              "actionPlacement": "inline field action + Content secondary + Bottom(preset=\"primary-cta\")",
+              "typography": {
+                "rowTitle": "TitleSection + TextField label",
+                "rowCaption": "TextField helper",
+                "emphasisRule": "none",
+                "controlLabelScale": "matches-reference"
+              }
+            },
+            "patternDecision": {
+              "pattern": "TitleSection + FieldStack + TextField inline action + Notice + secondary action",
+              "decision": "existing composition with Notice fallback",
+              "reason": "AUTH-003/004/005 require code input, timer, resend, failure, and blocked states without creating a second bottom primary"
+            },
+            "ognBoundaryDecision": {
+              "type": "policy-ogn",
+              "reason": "owns AUTH-001 required auth, AUTH-003 code/timer, AUTH-004 resend, AUTH-005 failure/blocked states"
+            },
+            "layoutStrategy": {
+              "slot": "Content",
+              "density": "single field plus compact state messages",
+              "wrapping": "helper and Notice body may wrap inside rail"
+            },
+            "layoutContract": {
+              "role": "request and confirm authentication code",
+              "structure": "numeric code field with inline resend action, helper timer, state Notice, secondary 인증 확인 action",
+              "alignment": "field and resend action aligned as one input relationship",
+              "density": "Form Entry field density",
+              "wrapping": "state message wraps below field without covering the confirm action",
+              "distortionRisk": "resend becomes sibling content button or confirm becomes a second primary"
+            },
+            "componentCandidates": [
+              {
+                "name": "TextField(actionButton) + Notice + ActionButton(secondary)",
+                "fit": "strong",
+                "source": "@pxds/cx-components",
+                "selected": true,
+                "reason": "supports inline resend, field helper/error, tone state messages, and secondary confirm",
+                "risk": "Notice tone must distinguish recoverable and blocked states"
+              },
+              {
+                "name": "Callout for state message",
+                "fit": "weak",
+                "source": "@pxds/cx-components",
+                "selected": false,
+                "reason": "tone coverage is insufficient for cautionary versus negative states",
+                "risk": "blocked and expired states may look equivalent"
+              },
+              {
+                "name": "bare sibling resend button",
+                "fit": "reject",
+                "source": "manual composition",
+                "selected": false,
+                "reason": "violates inline field action relationship",
+                "risk": "resend competes with confirm and bottom CTA"
+              }
+            ],
+            "sectionId": "authRequest"
+          },
+          {
+            "id": "actions",
+            "slot": "Bottom",
+            "ognId": "structural-only",
+            "patternRole": "bottom-primary-action",
+            "patternEvidence": {
+              "sectionBoundary": "none",
+              "fieldGrouping": "none",
+              "rowSeparators": "none",
+              "actionPlacement": "Bottom(preset=\"primary-cta\")",
+              "typography": {
+                "rowTitle": "button label",
+                "rowCaption": "none",
+                "emphasisRule": "primary-only",
+                "controlLabelScale": "matches-reference"
+              }
+            },
+            "patternDecision": {
+              "pattern": "SinglePrimaryAction + ActionButton",
+              "decision": "existing pattern",
+              "reason": "Form Entry uses fixed bottom ActionButton and AUTH-001 gates continuation"
+            },
+            "ognBoundaryDecision": {
+              "type": "structural-only",
+              "reason": "CTA belongs to screen transition, not a policy OGN"
+            },
+            "layoutStrategy": {
+              "slot": "Bottom",
+              "density": "102px fixed rail",
+              "wrapping": "button label stays one line"
+            },
+            "layoutContract": {
+              "role": "complete identity verification step",
+              "structure": "single fixed primary CTA disabled until verified",
+              "alignment": "full width button",
+              "density": "fixed bottom rail",
+              "wrapping": "label must not wrap",
+              "distortionRisk": "second primary action or CTA inside scroll content"
+            },
+            "componentCandidates": [
+              {
+                "name": "SinglePrimaryAction + ActionButton",
+                "fit": "strong",
+                "source": "@pxds/cx-layout and @pxds/cx-components",
+                "selected": true,
+                "reason": "owns fixed primary CTA rail",
+                "risk": "disabled state must stay tied to verification success"
+              },
+              {
+                "name": "content primary button",
+                "fit": "reject",
+                "source": "manual composition",
+                "selected": false,
+                "reason": "violates fixed bottom action pattern",
+                "risk": "CTA can scroll away and compete with 인증 확인"
+              }
+            ],
+            "sectionId": "actions"
+          }
+        ],
+        "policyOgnMatrix": [
+          {
+            "policyRefs": [
+              "POL-MBR-AUTH-002-01",
+              "POL-MBR-AUTH-002-05",
+              "POL-MBR-AUTH-002-09"
+            ],
+            "ognId": "ogn-mbr-auth-select",
+            "sectionId": "authSelect",
+            "coverage": "policy-backed"
+          },
+          {
+            "policyRefs": [
+              "POL-MBR-AUTH-001-01",
+              "POL-MBR-AUTH-003-01",
+              "POL-MBR-AUTH-003-03",
+              "POL-MBR-AUTH-004-01",
+              "POL-MBR-AUTH-004-02",
+              "POL-MBR-AUTH-005-01",
+              "POL-MBR-AUTH-005-03",
+              "POL-MBR-AUTH-005-07"
+            ],
+            "ognId": "ogn-mbr-auth-request",
+            "sectionId": "authRequest",
+            "coverage": "policy-backed"
+          },
+          {
+            "policyRefs": [],
+            "missingPolicy": "external auth agency failure",
+            "ognId": "ogn-mbr-auth-request",
+            "sectionId": "authRequest",
+            "coverage": "SB-only"
+          }
+        ],
+        "distortionGates": [
+          {
+            "id": "DG-001",
+            "rule": "Only one bottom primary solid action is allowed",
+            "status": "pass"
+          },
+          {
+            "id": "DG-002",
+            "rule": "재요청 remains an inline field action",
+            "status": "pass"
+          },
+          {
+            "id": "DG-003",
+            "rule": "Timer, cooldown, resend limit, failure limit, and 10-minute blocked state remain visible in field helper or state notice",
+            "status": "pass"
+          },
+          {
+            "id": "DG-004",
+            "rule": "External agency failure is SB-only and cannot invent alternative-method policy",
+            "status": "pass"
+          },
+          {
+            "id": "DG-005",
+            "rule": "Visible authSelect and authRequest sections are separated by 4px SectionDivider",
+            "status": "pass"
+          }
+        ],
+        "renderEvidence": {
+          "status": "rendered",
+          "visualDomSectionIds": [
+            "progress",
+            "authSelect",
+            "authRequest",
+            "actions"
+          ],
+          "contractSectionIds": [
+            "progress",
+            "authSelect",
+            "authRequest",
+            "actions"
+          ],
+          "geometryEvidence": {
+            "status": "pass",
+            "checkedAt": "2026-05-18",
+            "method": "Playwright against http://localhost:3001/NOVA-MBR-FP-003-0-CX at 393x852",
+            "viewport": { "width": 393, "height": 852 },
+            "boxes": {
+              "progress": { "x": 0, "y": 61, "width": 393, "height": 88, "bottom": 149 },
+              "authSelect": { "x": 0, "y": 117, "width": 393, "height": 248, "bottom": 365 },
+              "authRequest": { "x": 0, "y": 377, "width": 393, "height": 364, "bottom": 740 },
+              "actions": { "x": 0, "y": 744, "width": 393, "height": 161, "bottom": 905 }
+            },
+            "contentBottom": 740,
+            "bottomRailTop": 744,
+            "overlap": false,
+            "scroll": { "scrollHeight": 852, "clientHeight": 852 },
+            "visiblePolicyText": [
+              "본인인증 수단을 선택해 주세요",
+              "휴대폰",
+              "PASS",
+              "공동인증서",
+              "인증번호 6자리 입력",
+              "유효시간 3분 · 재요청은 최대 5회 · 남은 시간 03:00",
+              "본인인증 완료하기"
+            ],
+            "expectedRails": ["SystemHeader", "Header", "Content", "Bottom"]
+          }
+        },
+        "iterationPasses": [
+          {
+            "pass": 1,
+            "source": "DESIGN_PATTERNS.md#section-detail-form",
+            "result": "revised",
+            "summary": "authSelect and authRequest separated by 4px section divider; 인증 확인 kept secondary and bottom CTA remains the only primary"
+          }
+        ],
+        "contractSync": {
+          "status": "synced",
+          "syncedWith": ["Screen.map.ts", "Screen.config.ts", "Screen.tsx"],
+          "notes": "policyRefs and ognIds trace to map and config"
+        }
+      }
+    </script>
+  </body>
+</html>

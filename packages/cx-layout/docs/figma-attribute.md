@@ -14,7 +14,7 @@
 - `cx-layout`은 화면 구조, 레이어, slot, auto layout 의도를 설명한다.
 - CSS에서 추론 가능한 값도 Figma 변환에 필요한 핵심 정보라면 attribute로 명시한다.
 - bridge 구조는 `Component -> Pattern -> Organism -> Screen` 계층을 보존한다. 기초 component가 route-level raw 좌표로 평탄화되면 안 된다.
-- spacing attribute는 token 또는 semantic rail 이름을 우선 기록한다. Figma 실측값은 `SPACING_PATTERNS.md`와 대조할 evidence이며, 임의 token 생성 근거가 아니다.
+- spacing attribute는 token 또는 semantic rail 이름을 우선 기록한다. Figma 실측값은 와 대조할 evidence이며, 임의 token 생성 근거가 아니다.
 
 ## 공통 attribute
 

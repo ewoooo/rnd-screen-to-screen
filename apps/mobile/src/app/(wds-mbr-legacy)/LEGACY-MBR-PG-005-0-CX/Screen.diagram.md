@@ -79,6 +79,7 @@
   - alignment: leading
   - wrapping: title intentionally wraps at the newline; subtitle may wrap inside content width.
   - overflow: normal content scroll.
+- ognBoundaryDecision: `structural-or-policy-intro` — the intro section owns task framing copy inside Content; screen owns section placement and no new OGN id is introduced.
 - layoutContract:
   - role: introduce the withdrawal-reason step and minimum selection requirement.
   - structure: `PageStackContents` title slot containing `TitleMain`.
@@ -113,6 +114,7 @@
   - alignment: leading row labels; right item and subText slots are closed.
   - wrapping: labels should stay readable without colliding with checkbox affordance.
   - overflow: rows remain in the content scroll region.
+- ognBoundaryDecision: `choice-section` — withdrawal reason choices stay grouped in the list/field-stack section; screen owns placement only.
 - layoutContract:
   - role: collect one or more withdrawal reasons.
   - structure: titled section + `SectionItem` + multi-select row stack.
@@ -147,6 +149,7 @@
   - alignment: leading
   - wrapping: placeholder and helper stay inside field contract.
   - overflow: typed text remains in field; section scrolls with content.
+- ognBoundaryDecision: `input-section` — free-text reason field and helper/max-length behavior stay inside the field section; screen owns placement only.
 - layoutContract:
   - role: collect optional free-form withdrawal feedback.
   - structure: titled section + one text field with helper counter.
@@ -181,6 +184,7 @@
   - alignment: full-width
   - wrapping: button label one line.
   - overflow: fixed bottom action stays outside scroll content.
+- ognBoundaryDecision: `structural-bottom-action` — AppScreen.Bottom owns the fixed action rail; the action OGN/config id owns button state/labels when present, with no scroll-content CTA reconstruction.
 - layoutContract:
   - role: progress to the next withdrawal step once at least one reason is selected.
   - structure: fixed bottom primary CTA.

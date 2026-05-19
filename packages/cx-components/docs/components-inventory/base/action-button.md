@@ -45,7 +45,7 @@ Existing dependency implementation to reuse:
 - Keep action-area padding, text-to-button gap, tooltip placement, and button-group gap owned by `ActionButton`.
 - Route or screen styles must not compensate for the Figma `ActionButton` spacing.
 - `ActionButton` is a high-level component consumed through pattern/organism action slots. Screen routes should not place raw `Button` groups in the scroll content to mimic this component.
-- Spacing follows `DESIGN_FOUNDATION.md` tokens and `SPACING_PATTERNS.md` application rules. This document does not redefine the screen sticky CTA height decision.
+- Spacing follows `DESIGN_FOUNDATION.md` tokens and  application rules. This document does not redefine the screen sticky CTA height decision.
 
 ## Structure
 

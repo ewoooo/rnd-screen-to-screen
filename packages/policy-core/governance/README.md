@@ -31,7 +31,7 @@
 - `copy/state/CTA impact`: 사용자가 보는 문구, 상태 처리, 버튼 위계에 주는 영향.
 - `notApplicableReason`: 검토했지만 적용하지 않는 governance ref가 있을 때의 제외 사유.
 
-### Phase 3 `Screen.diagram.md`
+### Phase 3 `Screen.diagram.html`
 
 - `appliedGovernanceRefs`: 실제 diagram 판단에 반영한 governance id.
 - `sectionId`: 적용 대상 section.
@@ -43,6 +43,6 @@
 ### Phase 4 Build Record
 
 - `implementedGovernanceRefs`: 코드화한 governance id.
-- `diagramSection`: 근거가 된 `Screen.diagram.md` section id.
+- `diagramSection`: 근거가 된 `Screen.diagram.html` section id.
 - `component/organism owner`: 구현 책임 component 또는 organism.
 - `deviationReason`: 구현이 diagram과 달라진 경우의 사유. 새 governance 해석은 Phase 4에서 추가하지 않는다.

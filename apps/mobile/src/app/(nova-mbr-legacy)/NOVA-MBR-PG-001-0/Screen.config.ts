@@ -36,8 +36,37 @@ export const screenConfig = defineScreenConfig({
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
-			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
+		],
+		buildSelections: [
+			{
+				section: "intro",
+				selected: "SectionHeaderPage",
+				source: "componentCandidates",
+				reason:
+					"Preserves the Diagram layoutContract by keeping the step intro as a content-owned title/subtitle organism; Screen.tsx only owns Content placement and does not move intro copy into AppBar chrome.",
+			},
+			{
+				section: "terms",
+				selected: "CheckboxTerms",
+				source: "componentCandidates",
+				reason:
+					"Preserves the terms checklist, required/optional hierarchy, agreement state, and negative notice inside the policy OGN without route-level row reconstruction or spacing patches.",
+			},
+			{
+				section: "guardian",
+				selected: "TextFieldGuardianRequest",
+				source: "componentCandidates",
+				reason:
+					"Preserves the hidden guardian state boundary with `visible={false}` so the reserved state contributes no visible spacing or misleading fields in the initial screen.",
+			},
+			{
+				section: "actions",
+				selected: "ActionAreaTerms",
+				source: "componentCandidates",
+				reason:
+					"Preserves the disabled progression action inside `AppScreen.Bottom(preset=\"primary-cta\")`; the OGN owns disabled action state while cx-layout owns the fixed bottom rail.",
+			},
 		],
 	},
 } as const satisfies ScreenRouteConfig);

@@ -31,7 +31,7 @@ import { Slot } from "@pxds/cx-layout/primitives";
 | `name` | `string` | - | Slot name. Added to `data-slot`. |
 | `children` | `ReactNode` | - | Slot content. |
 | `className` | `string` | - | Additional class name. |
-| `gap` | `number \| string` | - | Vertical stack gap. Prefer tokenized values from `DESIGN_FOUNDATION.md`; measured exceptions stay documented in `SPACING_PATTERNS.md`. |
+| `gap` | `number \| string` | - | Vertical stack gap. Prefer tokenized values from `DESIGN_FOUNDATION.md`; measured exceptions stay documented in . |
 | `align` | `"start" \| "center" \| "end" \| "stretch"` | `"stretch"` | Cross-axis alignment. |
 
 ## DOM Markers

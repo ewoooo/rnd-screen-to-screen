@@ -21,7 +21,7 @@
 | Converted screen | `apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.tsx` | current copy, section order, CTA structure, summary rows |
 | Current diagram | `apps/mobile/src/app/(wds-mbr-legacy)/LEGACY-MBR-PG-002-0-CX/Screen.diagram.md` | latest Screen Contract, section contract, layoutContract, component candidate 연결 |
 | Wire reference | `apps/mobile/src/app/(cx-example)/CX-EXAMPLE-COMPLETE-ACTIVATION/Screen.diagram.md` | complete hero + summary + fixed bottom action contract comparison |
-| Design docs | `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SPACING_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md` | completion pattern, rails, spacing/token guardrails |
+| Design docs | `DESIGN_PATTERNS.md`, `DESIGN_FOUNDATION.md`, `SCREEN_STRUCTURE_PRINCIPLES.md` | completion pattern, rails, spacing/token guardrails |
 
 ## Policy Requirement Matrix
 

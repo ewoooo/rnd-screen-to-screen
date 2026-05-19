@@ -7,9 +7,10 @@ const requiredFiles = [
 	"index.ts",
 	"page.tsx",
 	"Screen.config.ts",
-	"Screen.diagram.md",
+	"Screen.diagram.html",
 	"Screen.tsx",
 ];
+const pageFolderSignals = [...requiredFiles, "Screen.diagram.md"];
 const ignoredDirectories = new Set([".next", "node_modules"]);
 
 const violations = [];
@@ -57,7 +58,7 @@ async function scanDirectory(dir) {
 }
 
 function isPageFolder(entryNames) {
-	return requiredFiles.some((file) => entryNames.has(file));
+	return pageFolderSignals.some((file) => entryNames.has(file));
 }
 
 async function validateScreenGroup(screenDir) {

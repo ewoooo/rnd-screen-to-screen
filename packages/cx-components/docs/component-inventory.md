@@ -36,7 +36,7 @@ Component -> Pattern -> Organism -> Screen
 Spacing guidance:
 
 - Token SSOT: `DESIGN_FOUNDATION.md`
-- Component/screen application rules: `SPACING_PATTERNS.md`
+- Component/screen application rules: 
 - Route-level raw padding/margin should not compensate for a component's Figma spacing.
 - Non-token measured gaps should be aligned to the nearest approved spacing token instead of being added as public primitives.
 

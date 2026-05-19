@@ -6,4 +6,4 @@ Use semantic presets such as `headerPreset="form-entry"` and `ActionBar preset="
 
 `AppScreen` is the Screen-level container in the `Component -> Pattern -> Organism -> Screen` hierarchy. Routes should place domain organisms and layout patterns into `SystemHeader`, `Header`, `Content`, and `Bottom` slots instead of recreating chrome with raw `position`, `margin`, or `padding`.
 
-Width/spacing rails follow `DESIGN_FOUNDATION.md` and `SPACING_PATTERNS.md`: full screen is 393px, section/card rail is 369px, general content rail is 361px, and inner content rail is 329px.
+Width/spacing rails follow `DESIGN_FOUNDATION.md` and : full screen is 393px, section/card rail is 369px, general content rail is 361px, and inner content rail is 329px.

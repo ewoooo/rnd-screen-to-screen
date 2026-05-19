@@ -25,7 +25,8 @@
 | --- | --- | --- | --- |
 | title | `개통이 완료되었어요` | Figma Text Section / 완료_개통 | `completionHero` |
 | subtitle | `지금부터 새로운 휴대폰 사용이 가능해요.` | Figma Text Section / 완료_개통 | `completionHero` |
-| action-guide | `사진이나 연락처, 앱도 새 휴대폰으로 한 번에 옮겨볼까요?` | Figma Text Section / 완료_개통 | `actions` |
+| secondary-action | `홈으로 이동` | Figma Text Section / 완료_개통 | `actions` |
+| primary-action | `데이터 옮기기` | Figma Text Section / 완료_개통 | `actions` |
 
 ## Governance Review
 

@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>NOVA-MBR-FP-001-0 Screen Diagram</title>
+	<style>
+		:root{--bg:#f7f8fb;--surface:#fff;--soft:#f3f5f8;--line:#dde3ee;--ink:#111322;--muted:#62677a;--brand:#2f5bea;--danger:#fff1f2;--danger-line:#ffb4bd;--info:#eef5ff;--rail:361px;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}main{display:grid;grid-template-columns:393px minmax(360px,1fr);gap:28px;max-width:1160px;margin:0 auto;padding:28px}.title{grid-column:1/-1}.title h1{margin:0 0 6px;font-size:24px;line-height:32px}.title p,.panel p,.panel li{margin:0;color:var(--muted);font-size:14px;line-height:22px}.phone{width:393px;min-height:852px;border:1px solid var(--line);border-radius:28px;background:var(--surface);overflow:hidden;box-shadow:0 16px 44px rgb(17 19 34 / 12%)}.system{display:flex;justify-content:space-between;align-items:center;height:44px;padding:0 22px;font-size:13px;font-weight:700}.appbar{height:64px;padding:10px 20px 8px}.appbar .top{display:flex;align-items:center;gap:12px;font-weight:800}.appbar .progress{margin-top:9px;height:4px;background:var(--soft);border-radius:99px;overflow:hidden}.appbar .bar{display:block;width:20%;height:100%;background:var(--brand)}.appbar .label{margin-top:4px;color:var(--muted);font-size:12px}.content{min-height:642px;background:var(--surface)}.stack{width:var(--rail);margin:0 auto;padding:24px 0;display:grid;gap:18px}.section{display:grid;gap:12px}.section h2{margin:0;font-size:18px;line-height:26px}.card{border:1px solid var(--line);border-radius:14px;background:white;overflow:hidden}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px}.row .left{display:flex;align-items:center;gap:8px;min-width:0}.prefix{color:var(--muted);font-size:14px;white-space:nowrap}.label{font-size:15px;font-weight:700;line-height:22px}.divider{height:1px;background:var(--line)}.band{height:4px;background:var(--soft);margin:2px calc((var(--rail) - 393px)/2)}.accordion{padding:16px;font-weight:700}.check{width:22px;height:22px;border:2px solid var(--brand);border-radius:6px;flex:0 0 auto}.all .label{font-size:17px}.notice{padding:14px 16px;border:1px solid var(--danger-line);border-radius:14px;background:var(--danger);font-size:14px;line-height:21px}.conditional{border:1px dashed var(--line);border-radius:14px;background:var(--info);padding:14px 16px}.conditional strong{display:block;margin-bottom:6px;font-size:14px}.field{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}.secondary{height:44px;border:1px solid var(--brand);border-radius:12px;background:white;color:var(--brand);font-weight:800}.bottom{height:102px;padding:12px 16px 34px;border-top:1px solid var(--line);background:var(--surface)}.cta{width:var(--rail);height:56px;border:0;border-radius:14px;background:#9aa8c7;color:white;font-size:17px;font-weight:800}.meta{display:grid;gap:14px}.panel{border:1px solid var(--line);border-radius:16px;background:white;padding:16px}.panel h2{margin:0 0 10px;font-size:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.status,.token{display:inline-flex;margin:0 4px 4px 0;padding:3px 8px;border-radius:999px;background:var(--soft);font-size:12px;font-weight:800}.status{background:#dcfce7;color:#166534}.status.thin{background:#fef9c3;color:#854d0e}.inspect{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px;background:#fbfcfe}.inspect strong{display:block;font-size:13px}.inspect span{display:block;color:var(--muted);font-size:12px;line-height:18px}@media(max-width:860px){main{grid-template-columns:1fr;padding:18px}.phone{justify-self:center;max-width:393px;width:100%}.stack,.cta{width:100%}}
+	</style>
+</head>
+<body>
+<main>
+	<header class="title">
+		<h1>NOVA-MBR-FP-001-0 · 약관 동의</h1>
+		<p>가입 플로우 첫 단계. 약관 목록은 SB-only 구조, 필수 동의 차단과 guardian 조건은 policy-core 근거로 분리합니다. lifecycle: thin (Map/Diagram 범위, Build 전 계약).</p>
+	</header>
+
+	<section class="phone" data-screen-id="NOVA-MBR-FP-001-0" data-route="/NOVA-MBR-FP-001-0" data-pattern="form" data-wire-reference="apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md">
+		<div class="system" data-rail="SystemHeader"><span>9:41</span><span>LTE 100%</span></div>
+		<header class="appbar" data-rail="Header">
+			<div class="top">‹ <span>회원 가입</span></div>
+			<div class="progress" aria-label="1/5 약관 동의"><span class="bar"></span></div>
+			<div class="label">약관 동의 · 1/5</div>
+		</header>
+		<div class="content" data-rail="Content">
+			<div class="stack">
+				<section class="section" data-section-id="termList" data-ogn-id="ogn-mbr-term-list" data-pattern-role="choice-list-with-accordion" data-boundary="PageStackContents + cardBoundary + contentsDivider" data-layout-contract="약관 항목 rows, contents dividers, default-collapsed accordion; SB-only copy; structural-only OGN">
+					<h2>회원 가입에 필요한 약관을 확인해 주세요</h2>
+					<div class="card">
+						<div class="row"><div class="left"><span class="prefix">필수</span><span class="label">서비스 이용약관</span></div><span>〉</span></div>
+						<div class="divider"></div>
+						<div class="row"><div class="left"><span class="prefix">필수</span><span class="label">개인정보 수집·이용 동의</span></div><span>〉</span></div>
+						<div class="divider"></div>
+						<div class="row"><div class="left"><span class="prefix">선택</span><span class="label">마케팅 정보 수신 동의</span></div><span>〉</span></div>
+					</div>
+					<div class="card"><div class="accordion">약관 전문 보기</div><div class="divider"></div><div class="row"><span class="prefix">약관 전문은 화면 진입 시 불러옵니다.</span></div></div>
+				</section>
+				<div class="band" aria-hidden="true"></div>
+				<section class="section" data-section-id="termAgree" data-ogn-id="ogn-mbr-term-agree" data-pattern-role="checkbox-agreement-group" data-boundary="PageStackContents + cardBoundary + contentsDivider + inline error" data-layout-contract="전체 동의 first-row emphasis, individual checkbox rows, required error adjacent">
+					<h2>약관 동의</h2>
+					<div class="card">
+						<div class="row all"><div class="left"><span class="check"></span><span class="label">약관에 모두 동의</span></div></div>
+						<div class="divider"></div>
+						<div class="row"><div class="left"><span class="check"></span><span class="label">[필수] 서비스 이용약관에 동의</span></div></div>
+						<div class="divider"></div>
+						<div class="row"><div class="left"><span class="check"></span><span class="label">[필수] 개인정보 수집·이용에 동의</span></div></div>
+						<div class="divider"></div>
+						<div class="row"><div class="left"><span class="check"></span><span class="label">[선택] 마케팅 정보 수신에 동의</span></div></div>
+					</div>
+					<div class="notice">필수 약관에 동의해 주세요</div>
+				</section>
+				<section class="conditional" data-section-id="guardianInput" data-ogn-id="ogn-mbr-guardian-input" data-pattern-role="conditional-guardian-form" data-boundary="mounted-hidden initial state" data-layout-contract="visible only when under-14 condition applies (SB 노출 min0/max1); field stack plus secondary request">
+					<strong>조건부 · 만 14세 미만 고객 (SB 노출 min0/max1)</strong>
+					<p>만 14세 미만 고객은 법정대리인 동의가 필요합니다</p>
+					<p>동의 요청 유효시간 24시간</p>
+					<div class="field"><span>법정대리인 이름</span><span>이름 입력</span></div>
+					<div class="field"><span>법정대리인 연락처</span><span>연락처 입력</span></div>
+					<button class="secondary" type="button">동의 요청 발송하기</button>
+				</section>
+				<section class="conditional" data-section-id="guardianResult" data-ogn-id="ogn-mbr-guardian-result" data-pattern-role="conditional-guardian-result" data-boundary="mounted-hidden initial state" data-layout-contract="visible only for guardian waiting/expired recovery state">
+					<strong>조건부 · 동의 요청 결과 (SB 노출 min0/max1)</strong>
+					<p>동의 요청 유효시간이 만료되어 다시 요청해 주세요</p>
+					<button class="secondary" type="button">동의 재요청</button>
+				</section>
+			</div>
+		</div>
+		<footer class="bottom" data-rail="Bottom" data-preset="primary-cta" data-section-id="actions" data-ogn-id="structural-only" data-pattern-role="bottom-primary-action" data-boundary="Bottom fixed primary-cta" data-layout-contract="single disabled primary until required terms are agreed"><button class="cta" type="button">다음</button></footer>
+	</section>
+
+	<aside class="meta">
+		<section class="panel"><h2>Review Summary</h2><div class="grid"><p><span class="status thin">thin</span>lifecycle</p><p><span class="status">통과</span>Form Entry</p><p><span class="status">통과</span>Policy / SB 분리</p><p><span class="status">통과</span>Guardian 조건부</p><p><span class="status">통과</span>Bottom CTA</p></div><p><span class="token">patternRecheck revised</span> DESIGN_PATTERNS.md#section-detail-form 기준으로 약관 목록/동의는 의미 단위 Pagestack과 4px divider로 분리하고 CTA는 fixed Bottom으로 유지했습니다. 1패스 재검수.</p></section>
+		<section class="panel"><h2>Reference Summary</h2><p><span class="token">form</span><span class="token">additional-info-check</span></p><p>Matched: checkbox agreement, accordion policy detail, section divider, bottom action. Difference: guardian input/result are conditional states and do not affect initial rail occupancy.</p></section>
+		<section class="panel"><h2>Section Inspector</h2>
+			<div class="inspect"><strong>termList</strong><span>structural-only OGN. 선택 후보: TermList strong, AccordionList medium, ListSelected reject.</span></div>
+			<div class="inspect"><strong>termAgree</strong><span>선택 후보: TermAgree strong, CheckboxText hand-stack weak, Callout error reject.</span></div>
+			<div class="inspect"><strong>guardianInput</strong><span>conditional (미성년자). 선택 후보: GuardianInput strong, always-visible field group reject.</span></div>
+			<div class="inspect"><strong>guardianResult</strong><span>conditional out-of-state. 선택 후보: GuardianResult strong, modal/popup recovery reject.</span></div>
+			<div class="inspect"><strong>actions</strong><span>선택 후보: Bottom SinglePrimaryAction strong, content button reject.</span></div>
+		</section>
+		<section class="panel"><h2>Distortion Gates</h2><ul><li>약관 목록의 SB-only 항목을 정책-backed copy로 승격하지 않는다.</li><li>전체 동의 행만 강조하고 개별 checkbox row는 listTitle 위계를 유지한다.</li><li>필수 미동의 오류는 termAgree 바로 아래에 둔다.</li><li>Guardian 조건부 영역은 비대상 상태에서 레이아웃 점유 0이어야 한다.</li><li>Primary CTA는 Bottom(preset="primary-cta")에만 둔다.</li></ul></section>
+	</aside>
+</main>
+<script type="application/json" id="diagram-contract">
+{
+  "lifecycle": "thin",
+  "screenContract": {
+    "screenId": "NOVA-MBR-FP-001-0",
+    "route": "/NOVA-MBR-FP-001-0",
+    "group": "nova-mbr-fp",
+    "domain": "mbr",
+    "source": "SB",
+    "pattern": "form",
+    "policyRefs": [
+      "POL-MBR-TERM-001-06",
+      "POL-MBR-TERM-002-01",
+      "POL-MBR-TERM-002-05"
+    ],
+    "ognIds": [
+      "ogn-mbr-term-list",
+      "ogn-mbr-term-agree",
+      "ogn-mbr-guardian-input",
+      "ogn-mbr-guardian-result"
+    ],
+    "governanceRefs": [
+      "UXPT_BTN",
+      "UXPT_ERR",
+      "UXPT_LOD",
+      "UXPT_NAV",
+      "VOT_RUL"
+    ],
+    "requiredDesignDocs": [
+      "DESIGN_PATTERNS.md",
+      "DESIGN_FOUNDATION.md",
+      "SCREEN_STRUCTURE_PRINCIPLES.md"
+    ],
+    "mapSource": "Screen.map.md",
+    "appScreenRails": [
+      "SystemHeader",
+      "Header",
+      "Content",
+      "Bottom"
+    ],
+    "headerContract": "StatusBar + ProgressAppBar for 가입 step 1/5; progress chrome is screen-owned.",
+    "bottomContract": "Bottom(preset=\"primary-cta\") owns the only Primary action; disabled until all required terms are agreed.",
+    "wireReference": {
+      "source": "apps/mobile/src/screen-diagrams/skt-genui-test-0512/detail-form/additional-info-check.diagram.md",
+      "matchedParts": "Form Entry confirmation/agreement pattern: Pagestack sections, CheckboxText/AccordionList agreement content, Divider(393x4), fixed ActionButton rail.",
+      "intentionalDifferences": "ProgressAppBar replaces simple AppBar; guardian sections are conditional out-of-state rails backed by TERM-002 policies.",
+      "limitation": "Reference controls visual structure only; policy IDs, CTA meaning, guardian condition, and copy come from Screen.map.md."
+    },
+    "patternRecheck": {
+      "source": "DESIGN_PATTERNS.md#section-detail-form",
+      "result": "revised",
+      "changes": [
+        "Separated termList and termAgree with a 4px section divider instead of treating them as one agreement card.",
+        "Kept Checkbox + Accordion as Form Entry agreement content and rejected ListSelected-only terms.",
+        "Moved/kept the primary action in Bottom fixed rail and recorded guardian as conditional out-of-state."
+      ],
+      "reason": "DESIGN_PATTERNS.md#section-detail-form requires Pagestack sections divided by Divider(393x4), agreement content using CheckboxText/AccordionList, and Bottom ActionButton fixed rail for form/detail screens. 1패스 재검수."
+    },
+    "patternFamily": "section-detail-form/agreement-entry",
+    "officialPattern": "상세_정보 입력 (Form Entry)",
+    "reviewedNotSelectedGovernanceRefs": [
+      "UXPT_PRC",
+      "UXPT_RCV",
+      "VOT_CS",
+      "VOT_CVS"
+    ]
+  },
+  "screenWire": {
+    "raw": "┌─AppScreen NOVA-MBR-FP-001-0\\n├─SystemHeader 9:41 LTE 100%\\n├─Header 회원 가입 / 약관 동의 1/5 progress\\n├─Content\\n│ [termList | choice-list-with-accordion | cardBoundary]\\n│ 회원 가입에 필요한 약관을 확인해 주세요\\n│ 필수 서비스 이용약관 〉\\n│ 필수 개인정보 수집·이용 동의 〉\\n│ 선택 마케팅 정보 수신 동의 〉\\n│ 약관 전문 보기 / 약관 전문은 화면 진입 시 불러옵니다.\\n├══Divider 4px / section══\\n│ [termAgree | checkbox-agreement-group | cardBoundary contents-divider]\\n│ 약관 동의\\n│ □ 약관에 모두 동의\\n│ □ [필수] 서비스 이용약관에 동의\\n│ □ [필수] 개인정보 수집·이용에 동의\\n│ □ [선택] 마케팅 정보 수신에 동의\\n│ ! 필수 약관에 동의해 주세요\\n│ [guardianInput | conditional-guardian-form | mounted-hidden]\\n│ 만 14세 미만 고객은 법정대리인 동의가 필요합니다 / 동의 요청 유효시간 24시간\\n│ [guardianResult | conditional-guardian-result | mounted-hidden]\\n│ 동의 요청 유효시간이 만료되어 다시 요청해 주세요 / 동의 재요청\\n├─Bottom(preset=\"primary-cta\") [actions | bottom-primary-action] 다음\\n└────────────────",
+    "sections": [
+      "termList",
+      "termAgree",
+      "guardianInput",
+      "guardianResult",
+      "actions"
+    ]
+  },
+  "sections": [
+    {
+      "id": "termList",
+      "patternEvidence": {
+        "wireSemanticTag": "termList | choice-list-with-accordion | cardBoundary",
+        "sectionBoundary": "SectionDivider after section",
+        "fieldGrouping": "none",
+        "rowSeparators": "Divider(type=\"contents\") between rows",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "Text(listTitle)",
+          "rowCaption": "Text(bodySubtle) prefix",
+          "emphasisRule": "none",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "PageStackContents + RQRCard rows + Accordion",
+        "reason": "Form Entry agreement content supports rows plus policy detail accordion without inventing policy copy."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "ognId": "ogn-mbr-term-list",
+        "reason": "Map links no policy-backed requirement to ogn-mbr-term-list (TERM-001-01/02/10 are SB-only). Preserve term item and accordion structure only; do not invent policy copy."
+      },
+      "layoutStrategy": {
+        "slot": "Content",
+        "rail": "content 361px",
+        "stack": "TitleSection then terms card and accordion card",
+        "state": "loading skeleton preserves identical row structure; error Notice is adjacent"
+      },
+      "layoutContract": {
+        "role": "term item review",
+        "structure": "card rows with prefix/name/chevron plus collapsed accordion card",
+        "alignment": "leading row text with trailing chevron",
+        "density": "comfortable form list",
+        "wrapping": "term name may wrap; prefix remains leading",
+        "distortionRisk": "ListSelected-only candidate loses accordion/detail affordance and SB-only body boundary."
+      },
+      "componentCandidates": [
+        {
+          "name": "TermList (RQRCard + Divider contents + Accordion)",
+          "source": "apps/mobile organisms",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Owns exact row, contents divider, skeleton, error, and accordion behavior while keeping copy SB-only structural.",
+          "risk": "None if copy remains SB-only structural."
+        },
+        {
+          "name": "AccordionList",
+          "source": "@pxds/cx-components",
+          "fit": "medium",
+          "selected": false,
+          "reason": "Supports accordion rows but not the separate prefix/name list row plus skeleton/error contract as-is.",
+          "risk": "Would need wrapper decisions."
+        },
+        {
+          "name": "ListSelected",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Selection row semantics do not own policy detail accordion.",
+          "risk": "Agreement review becomes selectable list."
+        }
+      ],
+      "policyRefs": [],
+      "appliedGovernanceRefs": [
+        "UXPT_LOD",
+        "UXPT_ERR",
+        "VOT_RUL"
+      ],
+      "sectionId": "termList"
+    },
+    {
+      "id": "termAgree",
+      "patternEvidence": {
+        "wireSemanticTag": "termAgree | checkbox-agreement-group | cardBoundary | inline-error",
+        "sectionBoundary": "SectionDivider before section",
+        "fieldGrouping": "none",
+        "rowSeparators": "Divider(type=\"contents\") between checkbox rows",
+        "actionPlacement": "none",
+        "typography": {
+          "rowTitle": "Text(sectionTitle) first row, Text(listTitle) item rows",
+          "rowCaption": "none",
+          "emphasisRule": "first-row-only",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "PageStackContents + RQRCard checkbox rows + adjacent Notice",
+        "reason": "Required agreement error stays near the checkbox group and the all-agree row is the only emphasized row."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new",
+        "ognId": "ogn-mbr-term-agree",
+        "reason": "Owns required agreement state (POL-MBR-TERM-001-06) and propagates allRequiredAgreed to Screen CTA gate."
+      },
+      "layoutStrategy": {
+        "slot": "Content",
+        "rail": "content 361px",
+        "stack": "TitleSection, checkbox card, optional negative Notice",
+        "state": "showRequiredError only after progress attempt while required terms are incomplete"
+      },
+      "layoutContract": {
+        "role": "required agreement validation",
+        "structure": "all-agree checkbox row, contents divider, individual required/optional checkbox rows, adjacent required error",
+        "alignment": "leading checkbox + label",
+        "density": "comfortable rows with stable divider rhythm",
+        "wrapping": "long labels may wrap after checkbox without changing checkbox column",
+        "distortionRisk": "Using sectionTitle for every row or moving error to page top breaks Form Entry agreement pattern."
+      },
+      "componentCandidates": [
+        {
+          "name": "TermAgree (Checkbox + RQRCard + Divider contents + Notice)",
+          "source": "apps/mobile organisms",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Directly owns all-agree emphasis, individual rows, required state callback, and adjacent Notice.",
+          "risk": "None."
+        },
+        {
+          "name": "CheckboxText hand-stacked in Screen",
+          "source": "@pxds/cx-components",
+          "fit": "weak",
+          "selected": false,
+          "reason": "Would move policy state and row rhythm into route assembly.",
+          "risk": "Route-level layout/state sprawl."
+        },
+        {
+          "name": "Callout negative for required error",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Overstates inline validation and weakens proximity to checkbox group.",
+          "risk": "ERR_1 distortion."
+        }
+      ],
+      "policyRefs": [
+        "POL-MBR-TERM-001-06"
+      ],
+      "appliedGovernanceRefs": [
+        "UXPT_BTN",
+        "UXPT_ERR",
+        "UXPT_NAV",
+        "VOT_RUL"
+      ],
+      "sectionId": "termAgree"
+    },
+    {
+      "id": "guardianInput",
+      "patternEvidence": {
+        "wireSemanticTag": "guardianInput | conditional-guardian-form | mounted-hidden",
+        "sectionBoundary": "none in initial state",
+        "fieldGrouping": "FieldStack",
+        "rowSeparators": "FieldStack internal",
+        "actionPlacement": "Content secondary action",
+        "typography": {
+          "rowTitle": "TitleSection",
+          "rowCaption": "Callout",
+          "emphasisRule": "none",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "Conditional TitleSection + Callout + FieldStack + secondary ActionButton",
+        "reason": "Guardian collection is only meaningful under the under-14 condition (SB 노출 min0/max1) and must not compete with bottom primary CTA."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new",
+        "ognId": "ogn-mbr-guardian-input",
+        "reason": "Owns legal guardian policy meaning for TERM-002-01 and TERM-002-05 when visible; conditional on 고객유형=미성년자."
+      },
+      "layoutStrategy": {
+        "slot": "Content conditional",
+        "rail": "content 361px",
+        "stack": "visible=false renders null; visible state uses title, info, fields, error, secondary action",
+        "state": "mounted-hidden initial; shown only for under-14 customer"
+      },
+      "layoutContract": {
+        "role": "conditional guardian consent request",
+        "structure": "policy title, info callout, guardian name/contact fields, adjacent error, secondary request action",
+        "alignment": "leading form field stack",
+        "density": "form group rhythm",
+        "wrapping": "policy copy may wrap; field labels stable",
+        "distortionRisk": "Always-visible guardian fields would add policy requirements for non-target customers."
+      },
+      "visualWeightContract": {
+        "primaryShapeAllowed": "Bottom only",
+        "contentActionShape": "compact",
+        "disallowed": [
+          "Content full-width pill ActionButton competing with Bottom CTA"
+        ],
+        "hierarchyFailIf": [
+          "secondary 동의 요청 발송 action matches Bottom CTA width/height/radius/position"
+        ],
+        "evidenceRequired": [
+          "geometry",
+          "screenshot-or-visual-review"
+        ]
+      },
+      "componentCandidates": [
+        {
+          "name": "GuardianInput",
+          "source": "apps/mobile organisms",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Implements visible=false null rendering and policy-backed copy/field structure.",
+          "risk": "Requires runtime condition wiring beyond current initial state."
+        },
+        {
+          "name": "Always-visible FieldStack",
+          "source": "@pxds/cx-layout",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Ignores guardian condition.",
+          "risk": "Incorrect policy exposure."
+        },
+        {
+          "name": "Bottom primary request button",
+          "source": "@pxds/cx-layout",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Would compete with screen primary CTA.",
+          "risk": "BTN_4 violation."
+        }
+      ],
+      "policyRefs": [
+        "POL-MBR-TERM-002-01",
+        "POL-MBR-TERM-002-05"
+      ],
+      "appliedGovernanceRefs": [
+        "UXPT_BTN",
+        "UXPT_ERR",
+        "VOT_RUL"
+      ],
+      "sectionId": "guardianInput"
+    },
+    {
+      "id": "guardianResult",
+      "patternEvidence": {
+        "wireSemanticTag": "guardianResult | conditional-guardian-result | mounted-hidden",
+        "sectionBoundary": "none in initial state",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "Content secondary action for retry",
+        "typography": {
+          "rowTitle": "Notice/Callout body",
+          "rowCaption": "none",
+          "emphasisRule": "state-dependent",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "Conditional Callout/Notice + secondary Button",
+        "reason": "Result/waiting/expired states are recovery states, not primary navigation (SB 노출 min0/max1)."
+      },
+      "ognBoundaryDecision": {
+        "decision": "new",
+        "ognId": "ogn-mbr-guardian-result",
+        "reason": "Owns TERM-002-05 expiry/retry state and SB-only waiting structure; conditional out-of-state."
+      },
+      "layoutStrategy": {
+        "slot": "Content conditional",
+        "rail": "content 361px",
+        "stack": "visible=false renders null; expired state shows negative Notice and retry button",
+        "state": "mounted-hidden initial; shown for guardian waiting/expired"
+      },
+      "layoutContract": {
+        "role": "guardian consent request result and recovery",
+        "structure": "state message with optional retry",
+        "alignment": "leading",
+        "density": "compact recovery block",
+        "wrapping": "error copy may wrap",
+        "distortionRisk": "Popup/modal recovery would detach error from guardian context."
+      },
+      "visualWeightContract": {
+        "primaryShapeAllowed": "Bottom only",
+        "contentActionShape": "compact",
+        "disallowed": [
+          "Content full-width pill retry button competing with Bottom CTA"
+        ],
+        "hierarchyFailIf": [
+          "동의 재요청 action matches Bottom CTA width/height/radius/position"
+        ],
+        "evidenceRequired": [
+          "geometry",
+          "screenshot-or-visual-review"
+        ]
+      },
+      "componentCandidates": [
+        {
+          "name": "GuardianResult",
+          "source": "apps/mobile organisms",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Implements waiting/expired states with secondary retry and no initial layout occupancy.",
+          "risk": "None."
+        },
+        {
+          "name": "Popup recovery",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "selected": false,
+          "reason": "No blocking overlay is required by policy.",
+          "risk": "State overstatement."
+        }
+      ],
+      "policyRefs": [
+        "POL-MBR-TERM-002-05"
+      ],
+      "appliedGovernanceRefs": [
+        "UXPT_ERR",
+        "UXPT_BTN",
+        "VOT_RUL"
+      ],
+      "sectionId": "guardianResult"
+    },
+    {
+      "id": "actions",
+      "patternEvidence": {
+        "wireSemanticTag": "actions | bottom-primary-action | bottom-fixed",
+        "sectionBoundary": "Bottom rail",
+        "fieldGrouping": "none",
+        "rowSeparators": "none",
+        "actionPlacement": "Bottom(preset=\"primary-cta\")",
+        "typography": {
+          "rowTitle": "ActionButton label",
+          "rowCaption": "none",
+          "emphasisRule": "single-primary",
+          "controlLabelScale": "matches-reference"
+        }
+      },
+      "patternDecision": {
+        "pattern": "SinglePrimaryAction + ActionButton(primary)",
+        "reason": "Form Entry screens keep the primary action in the fixed bottom rail."
+      },
+      "ognBoundaryDecision": {
+        "decision": "structural-only",
+        "ognId": "structural-only",
+        "reason": "CTA state is screen-owned and derives from termAgree required state."
+      },
+      "layoutStrategy": {
+        "slot": "Bottom",
+        "rail": "393x102 fixed",
+        "stack": "single primary action",
+        "state": "disabled until all required agreements are true"
+      },
+      "layoutContract": {
+        "role": "advance to next signup step",
+        "structure": "one full-width primary button in bottom rail",
+        "alignment": "centered button",
+        "density": "standard CTA rail",
+        "wrapping": "label must stay one line",
+        "distortionRisk": "Putting CTA in scroll content reduces persistent task completion access."
+      },
+      "visualWeightContract": {
+        "primaryShapeAllowed": "Bottom only",
+        "contentActionShape": "none",
+        "disallowed": [
+          "Second primary-shaped action anywhere in Content"
+        ],
+        "hierarchyFailIf": [
+          "Any Content action matches this Bottom CTA width/height/radius"
+        ],
+        "evidenceRequired": [
+          "geometry",
+          "screenshot-or-visual-review"
+        ]
+      },
+      "componentCandidates": [
+        {
+          "name": "AppScreen.Bottom + SinglePrimaryAction + ActionButton",
+          "source": "@pxds/cx-layout + @pxds/cx-components",
+          "fit": "strong",
+          "selected": true,
+          "reason": "Matches config and Form Entry CTA placement.",
+          "risk": "None."
+        },
+        {
+          "name": "Content Button",
+          "source": "@pxds/cx-components",
+          "fit": "reject",
+          "selected": false,
+          "reason": "Violates fixed Bottom CTA contract.",
+          "risk": "CTA scrolls away."
+        }
+      ],
+      "policyRefs": [
+        "POL-MBR-TERM-001-06"
+      ],
+      "appliedGovernanceRefs": [
+        "UXPT_BTN"
+      ],
+      "sectionId": "actions"
+    }
+  ],
+  "policyOgnMatrix": [
+    {
+      "policyRef": "POL-MBR-TERM-001-06",
+      "ognId": "ogn-mbr-term-agree",
+      "sectionId": "termAgree",
+      "coverage": "policy-backed",
+      "requirement": "필수 약관 미동의 시 다음 진행 차단과 required error"
+    },
+    {
+      "policyRef": "POL-MBR-TERM-002-01",
+      "ognId": "ogn-mbr-guardian-input",
+      "sectionId": "guardianInput",
+      "coverage": "policy-backed",
+      "requirement": "만 14세 미만 고객 법정대리인 동의 조건"
+    },
+    {
+      "policyRef": "POL-MBR-TERM-002-05",
+      "ognId": "ogn-mbr-guardian-input",
+      "sectionId": "guardianInput",
+      "coverage": "policy-backed",
+      "requirement": "동의 요청 유효시간 24시간 안내"
+    },
+    {
+      "policyRef": "POL-MBR-TERM-002-05",
+      "ognId": "ogn-mbr-guardian-result",
+      "sectionId": "guardianResult",
+      "coverage": "policy-backed",
+      "requirement": "만료 시 재요청 recovery"
+    },
+    {
+      "policyRef": "SB-only TERM-001-01/02/10",
+      "ognId": "ogn-mbr-term-list",
+      "sectionId": "termList",
+      "coverage": "SB-only",
+      "requirement": "약관 항목과 전문 구조만 보존"
+    },
+    {
+      "policyRef": "SB-only TERM-001-07/003-01",
+      "ognId": "ogn-mbr-term-agree",
+      "sectionId": "termAgree",
+      "coverage": "SB-only",
+      "requirement": "선택 약관 행 구조만 보존"
+    }
+  ],
+  "distortionGates": [
+    {
+      "id": "DG-001",
+      "gate": "Do not promote SB-only term item/detail facts to policy-backed requirements.",
+      "status": "pass"
+    },
+    {
+      "id": "DG-002",
+      "gate": "Keep section divider as 4px band between termList and termAgree.",
+      "status": "pass"
+    },
+    {
+      "id": "DG-003",
+      "gate": "Keep required error adjacent to termAgree checkbox group.",
+      "status": "pass"
+    },
+    {
+      "id": "DG-004",
+      "gate": "Guardian sections render with zero occupancy unless under-14 or guardian result state applies (SB 노출 min0/max1).",
+      "status": "pass"
+    },
+    {
+      "id": "DG-005",
+      "gate": "Keep the only Primary action in Bottom(preset=\"primary-cta\"); guardian secondary actions stay compact.",
+      "status": "pass"
+    }
+  ],
+  "renderEvidence": {
+    "status": "diagram-only",
+    "reason": "Worker scope is Step 2B Thin Map + Step 3 Diagram only. No implementation render is performed; live geometry collection remains required before Build.",
+    "expectedRails": [
+      "SystemHeader",
+      "Header",
+      "Content",
+      "Bottom"
+    ],
+    "geometryEvidence": {
+      "status": "diagram-contract-only",
+      "checkedAt": "2026-05-18",
+      "reason": "Map and Diagram were generated in this pass; live render geometry collection is outside this request and remains required before Build changes.",
+      "expectedRails": [
+        "SystemHeader",
+        "Header",
+        "Content",
+        "Bottom"
+      ]
+    }
+  },
+  "iterationPasses": [
+    {
+      "pass": 1,
+      "type": "patternRecheck",
+      "source": "DESIGN_PATTERNS.md#section-detail-form",
+      "result": "revised",
+      "changes": "Split agreement sections with SectionDivider(393x4) and fixed Bottom CTA; kept guardian conditional out-of-state. 1패스."
+    }
+  ],
+  "contractSync": {
+    "status": "pending",
+    "syncedWith": [
+      "Screen.map.md"
+    ],
+    "reason": "thin lifecycle: Map and Diagram are aligned; Build/Register/render-sync are out of worker scope.",
+    "map": "Screen.map.md policy-backed/SB-only split matches policyOgnMatrix.",
+    "config": "Screen.config.ts not authored in worker scope (Build/Register).",
+    "implementation": "Screen.tsx not authored in worker scope (Build)."
+  }
+}
+</script>
+</body>
+</html>

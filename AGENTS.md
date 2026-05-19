@@ -19,15 +19,14 @@
 2. `packages/policy-core/policies/**/*.policy.ts` — 화면과 카피가 참조할 수 있는 구조화된 정책 정의
 3. `packages/policy-core/governance/**/*.md` — UX 원칙(UXP), UI pattern/state control(UXPT), UX writing/voice(VOT) SOT
 4. [SKT GenUI Test 0512](https://www.figma.com/design/n8pS1Vq9RdYEQ8fygQByhj/SKT_GenUI_Test_0512?node-id=12001-103520&t=MXbXJQlMpLVcgIv3-1) — 실제 페이지 목업 Figma SOT
-5. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing 등 디자인 foundation SOT
-6. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴 SOT
-7. `SPACING_PATTERNS.md` — foundation spacing token을 화면·컴포넌트 실측 간격으로 적용하는 운영 규칙
-8. `SCREEN_STRUCTURE_PRINCIPLES.md` — Diagram과 화면 조립의 단순 구조 원칙
-9. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
+5. `DESIGN_FOUNDATION.md` — color, typography, radius, icon, spacing token 등 디자인 foundation SOT
+6. `DESIGN_PATTERNS.md` — Main, list, detail, form, complete, bottom sheet, popup 등 화면 패턴과 layout/spacing contract SOT
+7. `SCREEN_STRUCTURE_PRINCIPLES.md` — Diagram과 화면 조립의 단순 구조 원칙
+8. 가장 가까운 `AGENTS.md` — 패키지 책임, 의존 방향, 구현·검증 운영 규칙
 
 정책과 governance, 디자인 문서가 충돌하면 정책 의미를 먼저 보존하고, UX governance의 행동·상태·문체 규칙을 적용한 뒤, 표현 방식은 디자인 foundation과 pattern 안에서 해결한다. 문서화된 토큰·패턴·컴포넌트 어휘 밖의 inline UI, 자체 spacing, 자체 fontSize가 필요하면 임의 확장하지 말고 시스템 깨짐 신호로 기록한다.
 
-`Screen.map.md`, `Screen.diagram.md`, `Screen.config.ts`, 실제 구현이 `packages/policy-core/policies` 의 정책 원문/정의와 불일치하면 항상 policy-core를 우선한다. 불일치는 map에 기록하되, 최종 화면 요구·copy·구현은 policy-core 기준으로 수정한다.
+`Screen.map.md`, `Screen.diagram.html`, `Screen.config.ts`, 실제 구현이 `packages/policy-core/policies` 의 정책 원문/정의와 불일치하면 항상 policy-core를 우선한다. 불일치는 map에 기록하되, 최종 화면 요구·copy·구현은 policy-core 기준으로 수정한다.
 
 SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상으로 삼지 않는다. 실제 페이지를 재현하거나 신규 화면의 시각 기준을 확인하는 작업에서만 Figma 목업 SOT를 함께 확인한다. Figma 목업은 최종 화면의 구체적 배치와 상태 참고 기준이며, foundation token과 pattern contract를 우회하는 근거로 사용하지 않는다.
 
@@ -62,31 +61,34 @@ SB 기반 신규 생성 절차에서는 Figma 목업 SOT를 필수 대조 대상
 │   ├── pxds-figma/                Figma bridge/hooks/spec authoring
 │   └── pxds-figma-bridge-plugin/  Figma bridge plugin artifact
 ├── DESIGN_FOUNDATION.md  디자인 foundation SOT
-├── DESIGN_PATTERNS.md    화면 패턴 SOT
-├── SPACING_PATTERNS.md   화면·컴포넌트 spacing 실측 운영 규칙
+├── DESIGN_PATTERNS.md    화면 패턴 + layout/spacing contract SOT
 ├── SCREEN_STRUCTURE_PRINCIPLES.md  Diagram/화면 구조 원칙 SOT
-├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 5페이즈 절차 계약 SOT
+├── SCREEN_GENERATION_FLOW.md  SB 첨부 기반 스크린 생성 절차·문서 라우팅·공개 체크포인트 SOT
 ├── AGENTS.md             루트 운영 방향
 └── CLAUDE.md             AGENTS.md symlink
 ```
 
 ## 정책서 기반 화면 생성 흐름
 
-새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **5페이즈 절차 계약**을 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 페이즈 요약과 포인터만 둔다.
+새 화면을 만들거나 기존 화면을 고칠 때는 `SCREEN_GENERATION_FLOW.md` 의 **0-10 운영 순서**를 따른다. 이 문서(AGENTS.md)는 절차를 재서술하지 않고 단계 요약과 포인터만 둔다.
 
-메인 에이전트의 매니징/오케스트레이션과 서브 에이전트의 페이즈별 실무 생성 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
+메인 에이전트의 매니징/오케스트레이션과 서브 에이전트의 단계별 실무 생성 역할 분리는 `SCREEN_GENERATION_FLOW.md` 의 `## 에이전트 역할 모델`을 따른다.
 
-Codex 스킬을 사용할 수 있는 환경에서는 화면 생성/수정 요청에 `cx-screen-create`를 메인 오케스트레이션 스킬로 사용하고, 페이즈별로 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용한다. 특히 Phase 3는 `cx-screen-diagram`의 최신 Screen Wire/wireReference 규칙을 건너뛰지 않는다.
+Codex 스킬을 사용할 수 있는 환경에서는 화면 생성/수정 요청에 `cx-screen-create`를 메인 오케스트레이션 스킬로 사용하고, 단계별로 `cx-screen-extract`, `cx-screen-map`, `cx-screen-diagram`, `cx-screen-build`, `cx-screen-register-verify`를 적용한다. 특히 Step 3 Diagram은 `cx-screen-diagram`의 최신 Screen Wire/wireReference 규칙을 건너뛰지 않는다.
+
+구현 전 공개 체크포인트는 `SCREEN_GENERATION_FLOW.md`가 소유한다. 메인 에이전트는 최소한 SB Extract 결과, Reference Decision, Component Candidate Decision, Build Plan을 사용자에게 확인 가능한 형태로 공개한 뒤 구현에 들어간다.
 
 1. **Extract** — SB에서 화면ID·도메인·과업·상태·CTA·정책태그·도메인모듈ID/OGN ID·slot/part/hierarchy 추출. 참고: SB.
 2. **Map** — 정책 필수정보/선택지/제약/에러/sourceRef → 화면 요구 매트릭스, 사용자 copy 분리 + 적용 governance refs 선정. 산출: `Screen.map.md`(모든 화면 의무). 참고: `packages/policy-core/policies` (`.md` + `.policy.ts`)와 `packages/policy-core/governance`.
-3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Phase 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.md`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.md`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`, `SPACING_PATTERNS.md`.
+3. **Diagram** — 유사 wire reference 탐색 + 패턴 결정 + Step 2 governance refs 적용 + OGN별 layoutStrategy + reuse/new 분기 + SB 기반 Diagram, Layout Distortion Gate 통과. 산출: `Screen.diagram.html`(모든 화면 의무, `wireReference` 기록). 참고: `apps/mobile/src/screen-diagrams/`, 기존 화면 `Screen.diagram.html`, `DESIGN_PATTERNS.md`, `SCREEN_STRUCTURE_PRINCIPLES.md`.
 4. **Build** — 정책서 OGN을 `apps/mobile/src/organisms/<route-group-or-domain>/` 에 제작/보강 + `Screen.tsx` 조립 + `Screen.config.ts`(`generation` 포함). 참고: `DESIGN_FOUNDATION.md`, `@pxds/cx-components`, `@pxds/cx-icons`, `@pxds/cx-tokens`, `@pxds/cx-layout`.
 5. **Register** — `apps/mobile/src/scripts/screen-routes/routes.ts` 등록 + preview 노출 확인.
 
-페이즈별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md`다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
+단계별 책임·산출물·완료조건의 단일 SOT는 `SCREEN_GENERATION_FLOW.md`다. 검증은 절차 밖이며 아래 `## 공통 검증` 이 단독 소유한다.
 
-`Screen.map.md` 는 정책 의미, `Screen.diagram.md` 는 화면 구조, `Screen.config.ts` 는 route 등록과 검증 가능한 ID 색인을 소유한다. 세 파일은 서로 내용을 재서술하지 않고 policy ID와 OGN ID로 연결한다.
+`Screen.map.md` 는 정책 의미, `Screen.diagram.html` 는 화면 구조, `Screen.config.ts` 는 route 등록과 검증 가능한 ID 색인을 소유한다. 세 파일은 서로 내용을 재서술하지 않고 policy ID와 OGN ID로 연결한다.
+
+`Screen.diagram.html`을 표준 계약으로 사용한다. 전환 기간의 기존 `Screen.diagram.md`는 migration source/reference로 보존하며, HTML 생성 때문에 삭제하지 않는다. 신규/수정 화면은 HTML의 보이는 Visual Screen / Review Summary / Section Inspector와 숨겨진 `#diagram-contract` JSON을 표준 계약으로 사용한다. Visual Screen은 단순 섹션 요약이 아니라 실제 모바일 rail, 레이어 구조, 표시 텍스트, 좌우 label-value row, fixed bottom action이 눈으로 검수 가능해야 한다. 최종 HTML 계약은 `lifecycle: "synced"`와 필수 geometry 기반 `renderEvidence`, `iterationPasses`, `contractSync`를 포함한다. Screenshot/capture artifact는 가능할 때만 보조 증거로 남긴다.
 
 ## 패키지 책임
 
@@ -149,7 +151,7 @@ WDS와 외부 package 직접 사용은 패키지 경계로 흡수한다. **WDS C
 
 ## 공통 검증
 
-검증은 스크린 생성 절차(`SCREEN_GENERATION_FLOW.md` 의 5페이즈)의 일부가 아니다. 절차 밖 게이트이며 이 섹션과 `@policy/core` 의 `check:*` 스크립트가 검증 명령·책임을 단독 소유한다. 작업 범위에 맞게 실행한다.
+검증 명령은 스크린 생성 절차(`SCREEN_GENERATION_FLOW.md` 의 0-10 운영 순서)의 일부가 아니다. 절차 밖 게이트이며 이 섹션과 `@policy/core` 의 `check:*` 스크립트가 검증 명령·책임을 단독 소유한다. 작업 범위에 맞게 실행한다.
 
 - mobile: `npm run lint -w @screen/mobile`, `npm run build -w @screen/mobile`
 - preview: `npm run lint -w @screen/preview`, `npm run build -w @screen/preview`

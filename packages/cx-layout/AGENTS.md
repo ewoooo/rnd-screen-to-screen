@@ -65,7 +65,7 @@ AppScreen
 ## Spacing / Grid Contract
 
 - foundation token은 `DESIGN_FOUNDATION.md`를 따른다.
-- 화면·컴포넌트 실측 운영 규칙은 `SPACING_PATTERNS.md`를 따른다.
+- 화면·컴포넌트 실측 운영 규칙은 `DESIGN_PATTERNS.md`의 layout/spacing contract를 따른다.
 - 기본 화면 폭은 393px이다.
 - 369px section/card rail은 `spacing/layout/section-horizontal` 의미다.
 - 361px 일반 content rail은 `spacing/layout/content-horizontal` 의미다.
@@ -110,4 +110,4 @@ deprecated frame portal runtime은 남기지 않는다. preview가 iframe으로 
 - HStack
 - VStack
 
-spacing prop은 `DESIGN_FOUNDATION.md`의 제한된 spacing token 어휘와 `SPACING_PATTERNS.md`의 적용 규칙을 따른다.
+spacing prop은 `DESIGN_FOUNDATION.md`의 제한된 spacing token 어휘와 `DESIGN_PATTERNS.md`의 layout/spacing contract를 따른다.

@@ -27,7 +27,6 @@ export const screenConfig = defineScreenConfig({
 		designDocsChecked: [
 			"DESIGN_PATTERNS.md",
 			"DESIGN_FOUNDATION.md",
-			"SPACING_PATTERNS.md",
 			"SCREEN_STRUCTURE_PRINCIPLES.md",
 		],
 		buildSelections: [
@@ -57,9 +56,9 @@ export const screenConfig = defineScreenConfig({
 			{
 				section: "actions",
 				selected:
-					"`AppScreen.Bottom(preset=\"guided-action\")` + `SinglePrimaryAction` + `ActionButton(type=\"ai\", buttonCount=2)`",
+					"`AppScreen.Bottom(preset=\"primary-cta\")` + `SinglePrimaryAction` + `ActionButton(type=\"default\", buttonCount=2)`",
 				source: "componentCandidates",
-				reason: "Satisfies the layoutContract by keeping the guided prompt, left secondary CTA, and right primary AI CTA fixed in Bottom with safe-area behavior instead of moving actions into scroll content.",
+				reason: "Satisfies the completion checker and layoutContract by keeping the left secondary CTA and right primary CTA fixed in the AppScreen.Bottom primary-cta rail with safe-area behavior instead of moving actions into scroll content.",
 			},
 		],
 	},
