@@ -3,6 +3,7 @@
 import { Puck } from "@puckeditor/core";
 import "@puckeditor/core/puck.css";
 import { useEffect, useState } from "react";
+import { EditorLayout } from "@/components/EditorLayout";
 import { puckConfig } from "@/puck/config";
 import { loadData, saveData } from "@/puck/storage";
 import type { Data } from "@puckeditor/core";
@@ -16,18 +17,7 @@ export default function EditorPage() {
 
   if (!initialData) {
     return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100dvh",
-          fontFamily: "system-ui, sans-serif",
-          color: "#666",
-        }}
-      >
-        Loading…
-      </div>
+      <div style={loadingStyle}>Loading…</div>
     );
   }
 
@@ -38,6 +28,17 @@ export default function EditorPage() {
       onPublish={saveData}
       headerTitle="PXDX · Puck Editor"
       headerPath="/preview"
-    />
+    >
+      <EditorLayout />
+    </Puck>
   );
 }
+
+const loadingStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100dvh",
+  fontFamily: "system-ui, sans-serif",
+  color: "#666",
+} as const;
