@@ -4,7 +4,12 @@
   "private": true,
   "exports": {
     "./screens": "./src/scripts/screen-routes/index.ts",
-    "./screen-components": "./src/scripts/screen-components/index.ts"
+    "./screen-components": "./src/scripts/screen-components/index.ts",
+    "./organisms/chg": "./src/organisms/chg/index.ts",
+    "./organisms/nova-mbr-fp": "./src/organisms/nova-mbr-fp/index.ts",
+    "./organisms/nova-mbr-fp-legacy": "./src/organisms/nova-mbr-fp-legacy/index.ts",
+    "./organisms/nova-mbr-legacy": "./src/organisms/nova-mbr-legacy/index.ts",
+    "./organisms/chg-styles": "./src/organisms/chg/styles.css"
   },
   "scripts": {
     "dev": "next dev --webpack -p 3001",

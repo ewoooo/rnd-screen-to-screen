@@ -11,6 +11,7 @@
     "dev:mobile": "npm run dev -w @screen/mobile",
     "dev:preview": "npm run dev -w @screen/preview",
     "dev:storybook": "npm run dev -w @screen/storybook",
+    "dev:puck": "npm run dev -w @screen/puck-test",
     "build:mobile": "npm run build -w @screen/mobile",
     "build:preview": "npm run build -w @screen/preview",
     "build:storybook": "npm run build -w @screen/storybook",
