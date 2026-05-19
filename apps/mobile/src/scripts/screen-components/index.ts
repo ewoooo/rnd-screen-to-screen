@@ -198,13 +198,18 @@ export const cxExamplePersonalInfoRegistry: readonly RegistryEntry[] = [
 		}),
 	},
 	{
-		// 동의 체크박스 — Checked=On, Disabled=Off, Text=True
 		component: Checkbox as unknown as ComponentType<Record<string, unknown>>,
 		figmaName: "CheckBox",
-		figmaVariant: "Checked=On, Disabled=Off, Text=True",
+		figmaVariant: (mp) => {
+			const checked = mp.isChecked ? "On" : "Off";
+			const text = (mp.labelText as string)?.length > 0 ? "On" : "Off";
+			const disabled = mp.isDisabled ? "On" : "Off";
+			return `Checked=${checked}, Text=${text}, Disabled=${disabled}`;
+		},
 		mapProps: (props) => ({
 			labelText: typeof props.label === "string" ? props.label : "",
 			isChecked: Boolean(props.checked),
+			isDisabled: Boolean(props.disabled),
 		}),
 		figmaTextNodes: { labelText: "텍스트" },
 	},
