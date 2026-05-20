@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { DraggableLine } from "./DraggableLine";
 import { PolicyPanel } from "./PolicyPanel";
 import { ImportPanel } from "./ImportPanel";
-import { CodeViewer } from "./CodeViewer";
+import { ScreenViewer } from "./ScreenViewer";
 
 const CLAMP = (v: number, min: number, max: number) =>
   Math.min(Math.max(v, min), max);
@@ -25,7 +25,10 @@ export function EditorLayout() {
   const [leftTopPct, setLeftTopPct] = useState(DEFAULTS.leftTopPct);
   const [rightTopPct, setRightTopPct] = useState(DEFAULTS.rightTopPct);
 
-  const [selectedScreenPath, setSelectedScreenPath] = useState<string | null>(null);
+  // 현재 Puck 캔버스에 로드된 Screen (없으면 null)
+  const [loadedScreenPath, setLoadedScreenPath] = useState<string | null>(null);
+  // 미리보기 뷰어로 열린 Screen
+  const [previewScreenPath, setPreviewScreenPath] = useState<string | null>(null);
   const [selectedPolicyGroup, setSelectedPolicyGroup] = useState<string | null>(null);
 
   const onDragLeft = useCallback(({ x }: { x: number; y: number }) => {
@@ -50,6 +53,8 @@ export function EditorLayout() {
     setRightTopPct(CLAMP(((y - rect.top) / rect.height) * 100, 15, 85));
   }, []);
 
+  const loadedScreenId = loadedScreenPath?.split("/")[1] ?? null;
+
   return (
     <div
       style={{
@@ -63,8 +68,9 @@ export function EditorLayout() {
       <aside data-aside="left" style={styles.aside}>
         <div style={{ flex: `0 0 ${leftTopPct}%`, overflow: "hidden", display: "flex", flexDirection: "column" }}>
           <ImportPanel
-            selectedScreenPath={selectedScreenPath}
-            onSelectScreen={setSelectedScreenPath}
+            loadedScreenPath={loadedScreenPath}
+            onLoadedToCanvas={setLoadedScreenPath}
+            onPreviewScreen={(p) => setPreviewScreenPath(p)}
             selectedPolicyGroup={selectedPolicyGroup}
             onSelectPolicyGroup={setSelectedPolicyGroup}
           />
@@ -82,10 +88,25 @@ export function EditorLayout() {
 
       {/* ── 캔버스 ── */}
       <main style={styles.canvas}>
-        {selectedScreenPath ? (
-          <CodeViewer
-            relPath={selectedScreenPath}
-            onClose={() => setSelectedScreenPath(null)}
+        {loadedScreenId && (
+          <div style={styles.banner}>
+            <span>
+              <strong>{loadedScreenId}</strong> 불러옴 — Publish 전까지 저장 안 됨
+            </span>
+            <button
+              type="button"
+              style={styles.bannerClose}
+              onClick={() => setLoadedScreenPath(null)}
+            >
+              ✕
+            </button>
+          </div>
+        )}
+        {previewScreenPath ? (
+          <ScreenViewer
+            screenId={previewScreenPath.split("/")[1] ?? ""}
+            relPath={previewScreenPath}
+            onClose={() => setPreviewScreenPath(null)}
           />
         ) : (
           <Puck.Preview />
@@ -118,7 +139,6 @@ const styles = {
     display: "flex",
     flexDirection: "column" as const,
     overflow: "hidden",
-    borderRight: "1px solid #e5e7eb",
   },
   asideSection: {
     flex: 1,
@@ -132,6 +152,26 @@ const styles = {
     background: "#f0f0f0",
     display: "flex",
     flexDirection: "column" as const,
+  },
+  banner: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "6px 14px",
+    background: "#fef9c3",
+    borderBottom: "1px solid #fde047",
+    fontSize: 11,
+    color: "#713f12",
+    fontFamily: "system-ui, sans-serif",
+    flexShrink: 0,
+  },
+  bannerClose: {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    color: "#a16207",
+    fontSize: 12,
+    padding: "0 2px",
   },
   sectionLabel: {
     padding: "10px 14px 6px",

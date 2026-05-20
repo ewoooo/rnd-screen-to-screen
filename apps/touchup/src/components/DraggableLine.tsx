@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 type DragPos = { x: number; y: number };
 
@@ -24,16 +24,24 @@ export function DraggableLine({
   handleLength = 24,
   handleMargin = 8,
   lineColor = "#d1d5db",
-  background = "transparent",
+  background = "#f0f0f0",
   style,
   className,
 }: Props) {
   const isH = direction === "horizontal";
+  const [hovered, setHovered] = useState(false);
+  const [active, setActive] = useState(false);
+
+  const activeColor = "#6b7280";
+  const hoverColor = "#9ca3af";
+  const currentColor = active ? activeColor : hovered ? hoverColor : lineColor;
+  const currentBg = active ? "#d8d8d8" : hovered ? "#e8e8e8" : background;
   const border = `1px solid ${lineColor}`;
 
   const startDrag = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
+      setActive(true);
 
       const overlay = document.createElement("div");
       overlay.style.cssText =
@@ -46,6 +54,7 @@ export function DraggableLine({
         document.removeEventListener("mouseup", onUp);
         document.body.removeChild(overlay);
         document.body.style.userSelect = "";
+        setActive(false);
       };
 
       const onMove = (ev: MouseEvent) => {
@@ -66,10 +75,11 @@ export function DraggableLine({
     flexShrink: 0,
     width: isH ? thickness : "100%",
     height: isH ? "100%" : thickness,
-    background,
+    background: currentBg,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    transition: "background 0.1s",
     ...(isH
       ? { borderLeft: border, borderRight: border }
       : { borderTop: border, borderBottom: border }),
@@ -89,12 +99,18 @@ export function DraggableLine({
   const lineStyle: CSSProperties = {
     width: isH ? 1 : handleLength,
     height: isH ? handleLength : 1,
-    background: lineColor,
+    background: currentColor,
     pointerEvents: "none",
+    transition: "background 0.1s",
   };
 
   return (
-    <div className={className} style={containerStyle}>
+    <div
+      className={className}
+      style={containerStyle}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <div style={handleStyle} onMouseDown={startDrag}>
         <div style={lineStyle} />
       </div>

@@ -148,7 +148,6 @@ const styles = {
     flexDirection: "column" as const,
     height: "100%",
     background: "#fafafa",
-    borderRight: "1px solid #e5e7eb",
     fontFamily: "system-ui, sans-serif",
     fontSize: 12,
     color: "#374151",
