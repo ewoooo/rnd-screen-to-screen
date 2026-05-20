@@ -12,7 +12,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const RootLayout = ({ children }: PropsWithChildren) => (
-  <html lang="ko" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+  <html lang="ko" suppressHydrationWarning className={cn("font-sans dark", geist.variable)}>
     <head>
       <title>PXDX · Puck Editor</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />

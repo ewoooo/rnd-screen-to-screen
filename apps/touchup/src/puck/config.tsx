@@ -2,6 +2,19 @@
 
 import type { Config } from "@puckeditor/core";
 import {
+  AuthRequest,
+  AuthSelect,
+} from "@screen/mobile/organisms/nova-mbr-fp";
+import {
+  ChangeComplete,
+  ChangeEligibility,
+  CurrentPlanSummary,
+  PlanComparison,
+  PlanFilter,
+  PlanList,
+  PlanNoticeAgree,
+} from "@screen/mobile/organisms/chg";
+import {
   Accordion,
   AccordionList,
   ActionButton,
@@ -410,36 +423,105 @@ export const puckConfig: Config = {
       defaultProps: {},
       render: () => <Bottomsheet />,
     },
+
+    // ── Organisms — nova-mbr-fp ───────────────────────
+    "OGN/AuthSelect": {
+      fields: {},
+      defaultProps: {},
+      render: () => <AuthSelect />,
+    },
+    "OGN/AuthRequest": {
+      fields: {},
+      defaultProps: {},
+      render: () => <AuthRequest />,
+    },
+
+    // ── Organisms — chg ──────────────────────────────
+    "OGN/CurrentPlanSummary": {
+      fields: {},
+      defaultProps: {},
+      render: () => <CurrentPlanSummary />,
+    },
+    "OGN/ChangeEligibility": {
+      fields: {},
+      defaultProps: {},
+      render: () => <ChangeEligibility />,
+    },
+    "OGN/PlanFilter": {
+      fields: {},
+      defaultProps: {},
+      render: () => <PlanFilter />,
+    },
+    "OGN/PlanList": {
+      fields: {},
+      defaultProps: {},
+      render: () => <PlanList />,
+    },
+    "OGN/PlanComparison": {
+      fields: {},
+      defaultProps: {},
+      render: () => <PlanComparison />,
+    },
+    "OGN/PlanNoticeAgree": {
+      fields: {},
+      defaultProps: {},
+      render: () => <PlanNoticeAgree />,
+    },
+    "OGN/ChangeComplete": {
+      fields: {},
+      defaultProps: {},
+      render: () => <ChangeComplete />,
+    },
   },
 
   categories: {
-    "텍스트 / 제목": {
+    "Typography": {
       components: ["TitleMain", "TitleSection", "TitleContents", "TitleBottomSheet", "Text"],
       defaultExpanded: true,
     },
-    "내비게이션": {
+    "Navigation": {
       components: ["AppBar", "StatusBar", "Tab", "TabItem", "UnderlineTab", "Footer"],
       defaultExpanded: false,
     },
-    "버튼": {
+    "Button": {
       components: ["Button", "ActionButton", "IconButton"],
       defaultExpanded: true,
     },
-    "입력": {
+    "Input": {
       components: ["TextField", "Checkbox", "RadioButton", "SearchBar"],
       defaultExpanded: true,
     },
-    "리스트 / 카드": {
+    "List / Card": {
       components: ["ListText", "ListSelected", "SectionItem", "PageStackList", "Accordion", "AccordionList", "RQRCard", "RQRContentsDetail", "RQRListOption"],
       defaultExpanded: false,
     },
-    "피드백 / 상태": {
+    "Feedback / State": {
       components: ["Badge", "BadgeIcon", "Indicator", "Callout", "Notice", "BannerHorizontal", "Popup", "Tooltip", "Chips", "ChipItem", "FilterSorting"],
       defaultExpanded: false,
     },
-    "구조 / 기타": {
+    "Structure": {
       components: ["Divider", "Handle", "Bottomsheet"],
       defaultExpanded: false,
     },
+
+    // organism categories — ComponentPanel이 탭 필터에 사용
+    "nova-mbr-fp": {
+      components: ["OGN/AuthSelect", "OGN/AuthRequest"],
+      defaultExpanded: true,
+    },
+    "chg": {
+      components: [
+        "OGN/CurrentPlanSummary",
+        "OGN/ChangeEligibility",
+        "OGN/PlanFilter",
+        "OGN/PlanList",
+        "OGN/PlanComparison",
+        "OGN/PlanNoticeAgree",
+        "OGN/ChangeComplete",
+      ],
+      defaultExpanded: true,
+    },
   },
 };
+
+export const ORGANISM_CATEGORY_NAMES = new Set(["nova-mbr-fp", "chg"]);

@@ -2,146 +2,96 @@
 
 import { createUsePuck } from "@puckeditor/core";
 import { useState } from "react";
-import { puckConfig } from "@/puck/config";
+import { ORGANISM_CATEGORY_NAMES, puckConfig } from "@/puck/config";
 
 const usePuck = createUsePuck();
-
 const ROOT_ZONE = "root:default-zone";
+
+type Mode = "components" | "organisms";
 
 export function ComponentPanel() {
   const dispatch = usePuck((s) => s.dispatch);
   const data = usePuck((s) => s.appState.data);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
-
-  function toggle(category: string) {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(category)) next.delete(category);
-      else next.add(category);
-      return next;
-    });
-  }
+  const [mode, setMode] = useState<Mode>("components");
 
   function insertComponent(componentType: string) {
-    const index = data.content.length;
     dispatch({
       type: "insert",
       componentType,
       destinationZone: ROOT_ZONE,
-      destinationIndex: index,
+      destinationIndex: data.content.length,
     } as Parameters<typeof dispatch>[0]);
   }
 
-  const categories = Object.entries(puckConfig.categories ?? {});
+  const allCategories = Object.entries(puckConfig.categories ?? {});
+  const categories = allCategories.filter(([name]) =>
+    mode === "organisms"
+      ? ORGANISM_CATEGORY_NAMES.has(name)
+      : !ORGANISM_CATEGORY_NAMES.has(name),
+  );
 
   return (
-    <div style={styles.panel}>
-      {categories.map(([categoryName, category]) => {
-        const isOpen = expanded.has(categoryName);
-        const components = category.components ?? [];
-
-        return (
-          <div key={categoryName} style={styles.group}>
+    <div className="flex flex-col flex-1 min-h-0 overflow-hidden px-3.5">
+      {/* 탭 토글 */}
+      <div className="py-2.5 shrink-0">
+        <div className="flex items-center gap-0.5 bg-white/6 rounded-md p-0.5 w-full">
+          {(["components", "organisms"] as const).map((m) => (
             <button
+              key={m}
               type="button"
-              style={styles.groupHeader}
-              onClick={() => toggle(categoryName)}
+              onClick={() => setMode(m)}
+              className={[
+                "flex-1 text-center py-1 text-[11px] font-medium rounded transition-colors cursor-pointer",
+                mode === m
+                  ? "bg-white/15 text-white"
+                  : "text-white/40 hover:text-white/65",
+              ].join(" ")}
             >
-              <span style={styles.chevron}>{isOpen ? "▾" : "▸"}</span>
-              <span style={styles.groupName}>{categoryName}</span>
-              <span style={styles.groupCount}>{components.length}</span>
+              {m === "components" ? "Components" : "Organisms"}
             </button>
+          ))}
+        </div>
+      </div>
 
-            {isOpen && (
-              <div style={styles.componentList}>
-                {components.map((componentType) => (
-                  <button
-                    key={String(componentType)}
-                    type="button"
-                    style={styles.componentItem}
-                    onClick={() => insertComponent(String(componentType))}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = "#f3f4f6";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = "none";
-                    }}
-                  >
-                    {String(componentType)}
-                  </button>
-                ))}
-              </div>
-            )}
+      {/* 목록 */}
+      <div className="flex-1 min-h-0 pb-4">
+        <div className="relative h-full rounded-lg border border-white/10 bg-black/20 p-2">
+          <div className="h-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8">
+            {categories.map(([categoryName, category], i) => {
+              const components = category.components ?? [];
+              // organism 카테고리는 OGN/ prefix 제거해서 표시
+              const displayName = mode === "organisms"
+                ? categoryName
+                : categoryName;
+              return (
+                <div key={categoryName}>
+                  {i > 0 && <div className="mx-2 my-1 border-t border-white/8" />}
+                  <div className="px-1 pt-1 pb-0.5">
+                    <div className="px-1.5 py-1 text-sm font-medium text-white/25 select-none cursor-default">
+                      {displayName}
+                    </div>
+                    {components.map((componentType) => {
+                      // "OGN/AuthSelect" → "AuthSelect"
+                      const label = String(componentType).replace(/^OGN\//, "");
+                      return (
+                        <button
+                          key={String(componentType)}
+                          type="button"
+                          onClick={() => insertComponent(String(componentType))}
+                          className="w-full text-left text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 px-1.5 py-1 rounded-md cursor-pointer transition-colors"
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+          <div className="pointer-events-none absolute bottom-0 inset-x-0 h-8 rounded-b-lg bg-gradient-to-t from-black to-transparent" />
+        </div>
+      </div>
     </div>
   );
 }
-
-const styles = {
-  panel: {
-    display: "flex",
-    flexDirection: "column" as const,
-    gap: 0,
-  },
-
-  group: {
-    borderBottom: "1px solid #f3f4f6",
-  },
-
-  groupHeader: {
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-    width: "100%",
-    padding: "8px 0",
-    background: "none",
-    border: "none",
-    textAlign: "left" as const,
-    cursor: "pointer",
-    fontFamily: "system-ui, sans-serif",
-  },
-
-  chevron: {
-    fontSize: 9,
-    color: "#9ca3af",
-    width: 10,
-    flexShrink: 0,
-  },
-
-  groupName: {
-    flex: 1,
-    fontSize: 11,
-    fontWeight: 500,
-    color: "#6b7280",
-    letterSpacing: "0.01em",
-  },
-
-  groupCount: {
-    fontSize: 10,
-    color: "#d1d5db",
-    flexShrink: 0,
-  },
-
-  componentList: {
-    display: "flex",
-    flexDirection: "column" as const,
-    paddingBottom: 4,
-  },
-
-  componentItem: {
-    width: "100%",
-    padding: "6px 0 6px 16px",
-    background: "none",
-    border: "none",
-    textAlign: "left" as const,
-    cursor: "pointer",
-    fontSize: 13,
-    fontWeight: 500,
-    color: "#111827",
-    fontFamily: "system-ui, sans-serif",
-    borderRadius: 4,
-    transition: "background 0.1s",
-  },
-} as const;

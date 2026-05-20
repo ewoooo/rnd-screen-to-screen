@@ -67,66 +67,81 @@ export function ImportPanel({
   })();
 
   return (
-    <div style={styles.panel}>
+    <div className="flex flex-col h-full overflow-hidden text-xs">
       {/* ── 화면 ── */}
-      <div style={styles.section}>
-        <div style={styles.sectionHeader}>
-          <span style={styles.sectionTitle}>화면</span>
+      <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+        <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/8 shrink-0">
+          <span className="text-[10px] font-semibold text-white/30 uppercase tracking-widest">Screens</span>
           {loadedScreenPath && (
-            <button type="button" style={styles.clearBtn} onClick={() => onLoadedToCanvas(null)}>
+            <button
+              type="button"
+              onClick={() => onLoadedToCanvas(null)}
+              className="text-white/30 hover:text-white/60 text-xs leading-none cursor-pointer transition-colors"
+            >
               ✕
             </button>
           )}
         </div>
 
-        <div style={styles.listWrap}>
+        <div className="flex-1 min-h-0 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1">
           {groups.map((group) => {
             const isOpen = !collapsed.has(group.key);
             return (
               <div key={group.key}>
-                {/* 그룹 헤더 */}
                 <button
                   type="button"
-                  style={styles.groupHeader}
                   onClick={() => toggleGroup(group.key)}
+                  className="flex items-center gap-1.5 w-full px-3.5 py-1.5 text-left hover:bg-white/4 transition-colors cursor-pointer"
                 >
-                  <span style={styles.groupChevron}>{isOpen ? "▾" : "▸"}</span>
-                  <span style={styles.groupLabel}>{group.label}</span>
-                  <span style={styles.groupCount}>{group.items.length}</span>
+                  <span className="text-white/25 text-[10px] w-3 shrink-0">
+                    {isOpen ? "▾" : "▸"}
+                  </span>
+                  <span className="flex-1 text-[11px] font-medium text-white/50 truncate">
+                    {group.label}
+                  </span>
+                  <span className="text-[10px] text-white/20 shrink-0">{group.items.length}</span>
                 </button>
 
-                {/* 폴더 목록 */}
                 {isOpen && group.items.map((s) => {
                   const isLoaded = loadedScreenPath === s.relPath;
                   const isLoading = loadingPath === s.relPath;
-                  const isHovered = hoveredPath === s.relPath;
-                  const disabledReason = !s.hasScreen ? "Screen.tsx가 아직 생성되지 않은 화면이에요" : null;
+                  const disabled = !s.hasScreen;
                   return (
                     <div
                       key={s.relPath}
-                      style={{
-                        ...styles.item,
-                        ...(isLoaded ? styles.itemLoaded : {}),
-                        ...(disabledReason ? styles.itemDisabled : {}),
-                      }}
+                      className="relative flex items-center"
                       onMouseEnter={() => setHoveredPath(s.relPath)}
                       onMouseLeave={() => setHoveredPath(null)}
                     >
                       <button
                         type="button"
-                        style={{
-                          ...styles.itemMain,
-                          ...(disabledReason ? styles.itemMainDisabled : {}),
-                        }}
-                        disabled={!!disabledReason || !!loadingPath}
+                        disabled={disabled || !!loadingPath}
                         onClick={() => loadIntoCanvas(s.relPath)}
+                        className={[
+                          "flex-1 flex items-center gap-1.5 pl-8 pr-3 py-1.5 text-left text-[11px] transition-colors min-w-0",
+                          disabled
+                            ? "opacity-35 cursor-default"
+                            : "cursor-pointer hover:bg-white/5",
+                          isLoaded
+                            ? "text-emerald-400"
+                            : "text-white/60 hover:text-white/85",
+                        ].join(" ")}
                       >
-                        <span style={styles.itemId}>{s.id}</span>
-                        {isLoaded && <span style={styles.currentBadge}>현재 화면</span>}
-                        {isLoading && <span style={styles.spinner}>…</span>}
+                        <span className="flex-1 truncate">{s.id}</span>
+                        {isLoaded && (
+                          <span className="shrink-0 text-[9px] font-semibold text-emerald-400 border border-emerald-500/30 rounded px-1.5 py-px whitespace-nowrap">
+                            current
+                          </span>
+                        )}
+                        {isLoading && (
+                          <span className="shrink-0 text-white/30 text-[11px]">…</span>
+                        )}
                       </button>
-                      {disabledReason && isHovered && (
-                        <span style={styles.hoverBadge}>{disabledReason}</span>
+
+                      {disabled && hoveredPath === s.relPath && (
+                        <span className="absolute right-2 z-10 text-[10px] text-white/50 bg-neutral-800 border border-white/10 rounded px-2 py-1 whitespace-nowrap pointer-events-none shadow-lg">
+                          Screen.tsx 미생성
+                        </span>
                       )}
                     </div>
                   );
@@ -137,19 +152,23 @@ export function ImportPanel({
         </div>
       </div>
 
-      <div style={styles.divider} />
+      <div className="h-px bg-white/8 shrink-0" />
 
       {/* ── 정책서 ── */}
-      <div style={styles.section}>
-        <div style={styles.sectionHeader}>
-          <span style={styles.sectionTitle}>정책서</span>
+      <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+        <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/8 shrink-0">
+          <span className="text-[10px] font-semibold text-white/30 uppercase tracking-widest">Policy</span>
           {selectedPolicyGroup && (
-            <button type="button" style={styles.clearBtn} onClick={() => onSelectPolicyGroup(null)}>
+            <button
+              type="button"
+              onClick={() => onSelectPolicyGroup(null)}
+              className="text-white/30 hover:text-white/60 text-xs leading-none cursor-pointer transition-colors"
+            >
               ✕
             </button>
           )}
         </div>
-        <div style={styles.listWrap}>
+        <div className="flex-1 min-h-0 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1">
           {[...policyGroupMap.entries()].map(([key, items]) => {
             const first = items[0];
             const isActive = selectedPolicyGroup === first?.group;
@@ -157,14 +176,24 @@ export function ImportPanel({
               <button
                 key={key}
                 type="button"
-                style={{ ...styles.policyItem, ...(isActive ? styles.policyItemActive : {}) }}
                 onClick={() => onSelectPolicyGroup(isActive ? null : (first?.group ?? null))}
+                className={[
+                  "flex items-center gap-2 w-full px-3.5 py-1.5 text-left text-[11px] transition-colors cursor-pointer",
+                  isActive
+                    ? "bg-white/10 text-white"
+                    : "text-white/55 hover:bg-white/5 hover:text-white/80",
+                ].join(" ")}
               >
-                <span style={{ ...styles.policyBadge, ...(isActive ? styles.policyBadgeActive : {}) }}>
+                <span className={[
+                  "shrink-0 text-[10px] font-semibold rounded px-1.5 py-px",
+                  isActive
+                    ? "bg-white/20 text-white"
+                    : "bg-white/8 text-white/40",
+                ].join(" ")}>
                   {first?.group}
                 </span>
-                <span style={styles.policyDomain}>{first?.domain}</span>
-                <span style={styles.policyCount}>{items.length}</span>
+                <span className="flex-1 truncate opacity-60">{first?.domain}</span>
+                <span className="shrink-0 text-[10px] text-white/20">{items.length}</span>
               </button>
             );
           })}
@@ -173,202 +202,3 @@ export function ImportPanel({
     </div>
   );
 }
-
-const styles = {
-  panel: {
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    height: "100%",
-    background: "#fafafa",
-    fontFamily: "system-ui, sans-serif",
-    fontSize: 12,
-    color: "#374151",
-    overflow: "hidden" as const,
-  },
-  section: {
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    flex: 1,
-    minHeight: 0,
-    overflow: "hidden" as const,
-  },
-  sectionHeader: {
-    display: "flex" as const,
-    alignItems: "center" as const,
-    justifyContent: "space-between" as const,
-    padding: "10px 14px 6px",
-    borderBottom: "1px solid #f3f4f6",
-    flexShrink: 0,
-  },
-  sectionTitle: {
-    fontSize: 11,
-    fontWeight: 600,
-    color: "#9ca3af",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.05em",
-  },
-  clearBtn: {
-    background: "none",
-    border: "none",
-    cursor: "pointer" as const,
-    color: "#9ca3af",
-    fontSize: 11,
-    padding: "0 2px",
-    lineHeight: 1,
-  },
-  listWrap: {
-    flex: 1,
-    overflowY: "auto" as const,
-    padding: "4px 0 8px",
-  },
-  groupHeader: {
-    display: "flex" as const,
-    alignItems: "center" as const,
-    gap: 5,
-    width: "100%",
-    padding: "7px 12px 5px",
-    background: "none",
-    border: "none",
-    textAlign: "left" as const,
-    cursor: "pointer" as const,
-    borderBottom: "1px solid #f3f4f6",
-  },
-  groupChevron: {
-    fontSize: 10,
-    color: "#9ca3af",
-    width: 10,
-    flexShrink: 0,
-  },
-  groupLabel: {
-    flex: 1,
-    fontSize: 11,
-    fontWeight: 600,
-    color: "#374151",
-    letterSpacing: "0.01em",
-  },
-  groupCount: {
-    fontSize: 10,
-    color: "#c4c9d4",
-    flexShrink: 0,
-  },
-  item: {
-    display: "flex" as const,
-    alignItems: "center" as const,
-    width: "100%",
-    borderBottom: "1px solid #f9fafb",
-  },
-  itemLoaded: {
-    background: "#f0fdf4",
-  },
-  itemDisabled: {
-    opacity: 0.45,
-  },
-  itemMain: {
-    flex: 1,
-    display: "flex" as const,
-    alignItems: "center" as const,
-    gap: 6,
-    padding: "6px 8px 6px 22px",
-    background: "none",
-    border: "none",
-    textAlign: "left" as const,
-    cursor: "pointer" as const,
-    fontSize: 11,
-    color: "#374151",
-    minWidth: 0,
-  },
-  itemMainDisabled: {
-    cursor: "default" as const,
-  },
-  currentBadge: {
-    fontSize: 9,
-    fontWeight: 600,
-    color: "#16a34a",
-    background: "#f0fdf4",
-    border: "1px solid #bbf7d0",
-    borderRadius: 3,
-    padding: "1px 5px",
-    flexShrink: 0,
-    whiteSpace: "nowrap" as const,
-  },
-  itemId: {
-    flex: 1,
-    overflow: "hidden" as const,
-    textOverflow: "ellipsis" as const,
-    whiteSpace: "nowrap" as const,
-  },
-  spinner: {
-    color: "#9ca3af",
-    fontSize: 11,
-    flexShrink: 0,
-  },
-  hoverBadge: {
-    fontSize: 10,
-    color: "#6b7280",
-    background: "#f3f4f6",
-    border: "1px solid #e5e7eb",
-    borderRadius: 4,
-    padding: "2px 6px",
-    marginRight: 8,
-    flexShrink: 0,
-    whiteSpace: "nowrap" as const,
-    pointerEvents: "none" as const,
-  },
-  previewBtn: {
-    flexShrink: 0,
-    padding: "4px 8px",
-    marginRight: 6,
-    background: "none",
-    border: "none",
-    cursor: "pointer" as const,
-    fontSize: 12,
-    color: "#9ca3af",
-    lineHeight: 1,
-  },
-  divider: {
-    height: 1,
-    background: "#e5e7eb",
-    flexShrink: 0,
-  },
-  policyItem: {
-    display: "flex" as const,
-    alignItems: "center" as const,
-    gap: 6,
-    width: "100%",
-    padding: "6px 14px",
-    background: "none",
-    border: "none",
-    textAlign: "left" as const,
-    cursor: "pointer" as const,
-    fontSize: 11,
-    color: "#374151",
-    borderBottom: "1px solid #f9fafb",
-  },
-  policyItemActive: {
-    background: "#111827",
-    color: "#fff",
-  },
-  policyBadge: {
-    fontSize: 10,
-    fontWeight: 700,
-    background: "#e5e7eb",
-    borderRadius: 3,
-    padding: "1px 5px",
-    color: "#374151",
-    flexShrink: 0,
-  },
-  policyBadgeActive: {
-    background: "#374151",
-    color: "#fff",
-  },
-  policyDomain: {
-    flex: 1,
-    color: "inherit",
-    opacity: 0.6,
-  },
-  policyCount: {
-    fontSize: 10,
-    color: "#9ca3af",
-    flexShrink: 0,
-  },
-} as const;

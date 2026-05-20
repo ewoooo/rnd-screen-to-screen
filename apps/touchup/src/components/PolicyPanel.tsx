@@ -73,63 +73,70 @@ export function PolicyPanel({ groupFilter }: Props) {
   const pct = total > 0 ? Math.round((coveredCount / total) * 100) : 0;
 
   return (
-    <div style={styles.panel}>
+    <div className="flex flex-col h-full overflow-hidden text-xs">
       {/* header */}
-      <div style={styles.header}>
-        <span style={styles.headerTitle}>정책 커버리지</span>
-        <span style={styles.badge}>
+      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/8 shrink-0">
+        <span className="text-[10px] font-semibold text-white/30 uppercase tracking-widest">Policy Coverage</span>
+        <span className="text-[10px] tabular-nums text-white/30 bg-white/6 rounded-full px-2 py-px">
           {coveredCount}/{total}
         </span>
       </div>
 
-      {/* progress bar */}
-      <div style={styles.progressWrap}>
-        <div style={{ ...styles.progressBar, width: `${pct}%` }} />
+      {/* progress bar + pct */}
+      <div className="px-3.5 pt-2.5 pb-1 shrink-0">
+        <div className="h-1 bg-white/8 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-emerald-500 rounded-full transition-[width] duration-300"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <div className="text-right text-[10px] text-white/25 mt-1">{pct}% covered</div>
       </div>
-      <div style={styles.pct}>{pct}% 반영</div>
 
       {/* filter */}
-      <div style={styles.filterRow}>
+      <div className="flex gap-1.5 px-3.5 pb-2.5 shrink-0">
         {(["all", "covered", "missing"] as const).map((f) => (
           <button
             key={f}
             type="button"
             onClick={() => setFilter(f)}
-            style={{
-              ...styles.filterBtn,
-              ...(filter === f ? styles.filterBtnActive : {}),
-            }}
+            className={[
+              "flex-1 py-1 text-[10px] rounded border cursor-pointer transition-colors",
+              filter === f
+                ? "bg-white/12 border-white/20 text-white/90"
+                : "bg-transparent border-white/10 text-white/35 hover:text-white/55 hover:border-white/20",
+            ].join(" ")}
           >
-            {f === "all" ? "전체" : f === "covered" ? "반영됨" : "미반영"}
+            {f === "all" ? "All" : f === "covered" ? "Covered" : "Missing"}
           </button>
         ))}
       </div>
 
       {/* list */}
-      <div style={styles.list}>
+      <div className="flex-1 min-h-0 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-3">
         {loading ? (
-          <div style={styles.empty}>불러오는 중…</div>
+          <div className="py-6 text-center text-white/25">불러오는 중…</div>
         ) : filtered.length === 0 ? (
-          <div style={styles.empty}>항목 없음</div>
+          <div className="py-6 text-center text-white/25">항목 없음</div>
         ) : (
           [...groups.entries()].map(([group, items]) => (
             <div key={group}>
-              <div style={styles.groupLabel}>
+              <div className="px-3.5 pt-3 pb-1 text-[10px] font-semibold text-white/20 uppercase tracking-widest">
                 {GROUP_LABEL[group] ?? group}
               </div>
               {items.map((p) => {
                 const covered = coveredIds.has(p.id);
                 return (
-                  <div key={p.id} style={styles.item}>
+                  <div key={p.id} className="flex items-start gap-2 px-3.5 py-1.5 border-b border-white/4">
                     <span
-                      style={{
-                        ...styles.dot,
-                        background: covered ? "#22c55e" : "#e5e7eb",
-                      }}
+                      className={[
+                        "w-2 h-2 rounded-full shrink-0 mt-0.5",
+                        covered ? "bg-emerald-500" : "bg-white/15",
+                      ].join(" ")}
                     />
-                    <div style={styles.itemBody}>
-                      <div style={styles.itemId}>{p.id}</div>
-                      <div style={styles.itemTitle}>{p.title}</div>
+                    <div className="min-w-0">
+                      <div className="text-[10px] tabular-nums text-white/25 mb-px">{p.id}</div>
+                      <div className="text-[11px] text-white/60 leading-snug">{p.title}</div>
                     </div>
                   </div>
                 );
@@ -141,119 +148,3 @@ export function PolicyPanel({ groupFilter }: Props) {
     </div>
   );
 }
-
-const styles = {
-  panel: {
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    height: "100%",
-    background: "#fafafa",
-    fontFamily: "system-ui, sans-serif",
-    fontSize: 12,
-    color: "#374151",
-  },
-  header: {
-    display: "flex" as const,
-    alignItems: "center" as const,
-    justifyContent: "space-between" as const,
-    padding: "12px 14px 8px",
-    borderBottom: "1px solid #e5e7eb",
-  },
-  headerTitle: {
-    fontWeight: 600,
-    fontSize: 13,
-    color: "#111827",
-  },
-  badge: {
-    background: "#f3f4f6",
-    borderRadius: 20,
-    padding: "2px 8px",
-    fontSize: 11,
-    color: "#6b7280",
-    fontVariantNumeric: "tabular-nums" as const,
-  },
-  progressWrap: {
-    height: 4,
-    background: "#e5e7eb",
-    margin: "10px 14px 4px",
-    borderRadius: 2,
-    overflow: "hidden" as const,
-  },
-  progressBar: {
-    height: "100%",
-    background: "#22c55e",
-    borderRadius: 2,
-    transition: "width 0.3s ease",
-  },
-  pct: {
-    textAlign: "right" as const,
-    padding: "0 14px 8px",
-    color: "#6b7280",
-    fontSize: 11,
-  },
-  filterRow: {
-    display: "flex" as const,
-    gap: 4,
-    padding: "0 14px 10px",
-  },
-  filterBtn: {
-    flex: 1,
-    padding: "4px 0",
-    border: "1px solid #e5e7eb",
-    borderRadius: 4,
-    background: "#fff",
-    cursor: "pointer" as const,
-    fontSize: 11,
-    color: "#6b7280",
-  },
-  filterBtnActive: {
-    background: "#111827",
-    color: "#fff",
-    borderColor: "#111827",
-  },
-  list: {
-    flex: 1,
-    overflowY: "auto" as const,
-    padding: "0 0 12px",
-  },
-  groupLabel: {
-    padding: "8px 14px 4px",
-    fontSize: 10,
-    fontWeight: 600,
-    color: "#9ca3af",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.05em",
-  },
-  item: {
-    display: "flex" as const,
-    alignItems: "flex-start" as const,
-    gap: 8,
-    padding: "6px 14px",
-    borderBottom: "1px solid #f3f4f6",
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: "50%",
-    flexShrink: 0,
-    marginTop: 3,
-  },
-  itemBody: {
-    minWidth: 0,
-  },
-  itemId: {
-    fontVariantNumeric: "tabular-nums" as const,
-    color: "#9ca3af",
-    fontSize: 10,
-    marginBottom: 1,
-  },
-  itemTitle: {
-    color: "#374151",
-    lineHeight: 1.4,
-  },
-  empty: {
-    padding: "24px 14px",
-    color: "#9ca3af",
-    textAlign: "center" as const,
-  },
-} as const;
