@@ -1,8 +1,8 @@
 "use client";
 
 import { createUsePuck } from "@puckeditor/core";
-import { useEffect, useMemo, useState } from "react";
-import type { ScreenItem } from "@/app/api/screens/route";
+import { useEffect, useState } from "react";
+import type { ScreenGroup } from "@/app/api/screens/route";
 import type { PolicyFile } from "@/app/api/policy-files/route";
 
 const usePuck = createUsePuck();
@@ -23,9 +23,11 @@ export function ImportPanel({
   onSelectPolicyGroup,
 }: Props) {
   const dispatch = usePuck((s) => s.dispatch);
-  const [screens, setScreens] = useState<ScreenItem[]>([]);
+  const [groups, setGroups] = useState<ScreenGroup[]>([]);
   const [policyFiles, setPolicyFiles] = useState<PolicyFile[]>([]);
   const [loadingPath, setLoadingPath] = useState<string | null>(null);
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
   async function loadIntoCanvas(relPath: string) {
     if (loadingPath) return;
@@ -40,21 +42,21 @@ export function ImportPanel({
     }
   }
 
+  function toggleGroup(key: string) {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }
+
   useEffect(() => {
-    fetch("/api/screens").then((r) => r.json()).then(setScreens);
+    fetch("/api/screens").then((r) => r.json()).then(setGroups);
     fetch("/api/policy-files").then((r) => r.json()).then(setPolicyFiles);
   }, []);
 
-  const screenGroups = useMemo(() => {
-    const map = new Map<string, ScreenItem[]>();
-    for (const s of screens) {
-      if (!map.has(s.group)) map.set(s.group, []);
-      map.get(s.group)!.push(s);
-    }
-    return map;
-  }, [screens]);
-
-  const policyGroups = useMemo(() => {
+  const policyGroupMap = (() => {
     const map = new Map<string, PolicyFile[]>();
     for (const p of policyFiles) {
       const key = `${p.domain}/${p.group}`;
@@ -62,7 +64,7 @@ export function ImportPanel({
       map.get(key)!.push(p);
     }
     return map;
-  }, [policyFiles]);
+  })();
 
   return (
     <div style={styles.panel}>
@@ -76,39 +78,62 @@ export function ImportPanel({
             </button>
           )}
         </div>
+
         <div style={styles.listWrap}>
-          {[...screenGroups.entries()].map(([group, items]) => (
-            <div key={group}>
-              <div style={styles.groupLabel}>{group}</div>
-              {items.map((s) => {
-                const isLoaded = loadedScreenPath === s.relPath;
-                const isLoading = loadingPath === s.relPath;
-                return (
-                  <div key={s.relPath} style={{ ...styles.item, ...(isLoaded ? styles.itemLoaded : {}) }}>
-                    <button
-                      type="button"
-                      style={styles.itemMain}
-                      disabled={!!loadingPath}
-                      onClick={() => loadIntoCanvas(s.relPath)}
-                      title="Puck 캔버스에 블록으로 불러오기"
+          {groups.map((group) => {
+            const isOpen = !collapsed.has(group.key);
+            return (
+              <div key={group.key}>
+                {/* 그룹 헤더 */}
+                <button
+                  type="button"
+                  style={styles.groupHeader}
+                  onClick={() => toggleGroup(group.key)}
+                >
+                  <span style={styles.groupChevron}>{isOpen ? "▾" : "▸"}</span>
+                  <span style={styles.groupLabel}>{group.label}</span>
+                  <span style={styles.groupCount}>{group.items.length}</span>
+                </button>
+
+                {/* 폴더 목록 */}
+                {isOpen && group.items.map((s) => {
+                  const isLoaded = loadedScreenPath === s.relPath;
+                  const isLoading = loadingPath === s.relPath;
+                  const isHovered = hoveredPath === s.relPath;
+                  const disabledReason = !s.hasScreen ? "Screen.tsx가 아직 생성되지 않은 화면이에요" : null;
+                  return (
+                    <div
+                      key={s.relPath}
+                      style={{
+                        ...styles.item,
+                        ...(isLoaded ? styles.itemLoaded : {}),
+                        ...(disabledReason ? styles.itemDisabled : {}),
+                      }}
+                      onMouseEnter={() => setHoveredPath(s.relPath)}
+                      onMouseLeave={() => setHoveredPath(null)}
                     >
-                      {isLoaded && <span style={styles.dot} />}
-                      <span style={styles.itemId}>{s.id}</span>
-                      {isLoading && <span style={styles.spinner}>…</span>}
-                    </button>
-                    <button
-                      type="button"
-                      style={styles.previewBtn}
-                      onClick={() => onPreviewScreen(s.relPath)}
-                      title="미리보기"
-                    >
-                      ↗
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+                      <button
+                        type="button"
+                        style={{
+                          ...styles.itemMain,
+                          ...(disabledReason ? styles.itemMainDisabled : {}),
+                        }}
+                        disabled={!!disabledReason || !!loadingPath}
+                        onClick={() => loadIntoCanvas(s.relPath)}
+                      >
+                        <span style={styles.itemId}>{s.id}</span>
+                        {isLoaded && <span style={styles.currentBadge}>현재 화면</span>}
+                        {isLoading && <span style={styles.spinner}>…</span>}
+                      </button>
+                      {disabledReason && isHovered && (
+                        <span style={styles.hoverBadge}>{disabledReason}</span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -125,7 +150,7 @@ export function ImportPanel({
           )}
         </div>
         <div style={styles.listWrap}>
-          {[...policyGroups.entries()].map(([key, items]) => {
+          {[...policyGroupMap.entries()].map(([key, items]) => {
             const first = items[0];
             const isActive = selectedPolicyGroup === first?.group;
             return (
@@ -196,13 +221,35 @@ const styles = {
     overflowY: "auto" as const,
     padding: "4px 0 8px",
   },
-  groupLabel: {
-    padding: "6px 14px 2px",
+  groupHeader: {
+    display: "flex" as const,
+    alignItems: "center" as const,
+    gap: 5,
+    width: "100%",
+    padding: "7px 12px 5px",
+    background: "none",
+    border: "none",
+    textAlign: "left" as const,
+    cursor: "pointer" as const,
+    borderBottom: "1px solid #f3f4f6",
+  },
+  groupChevron: {
     fontSize: 10,
+    color: "#9ca3af",
+    width: 10,
+    flexShrink: 0,
+  },
+  groupLabel: {
+    flex: 1,
+    fontSize: 11,
     fontWeight: 600,
+    color: "#374151",
+    letterSpacing: "0.01em",
+  },
+  groupCount: {
+    fontSize: 10,
     color: "#c4c9d4",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.04em",
+    flexShrink: 0,
   },
   item: {
     display: "flex" as const,
@@ -213,12 +260,15 @@ const styles = {
   itemLoaded: {
     background: "#f0fdf4",
   },
+  itemDisabled: {
+    opacity: 0.45,
+  },
   itemMain: {
     flex: 1,
     display: "flex" as const,
     alignItems: "center" as const,
     gap: 6,
-    padding: "6px 10px 6px 14px",
+    padding: "6px 8px 6px 22px",
     background: "none",
     border: "none",
     textAlign: "left" as const,
@@ -227,12 +277,19 @@ const styles = {
     color: "#374151",
     minWidth: 0,
   },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: "50%",
-    background: "#22c55e",
+  itemMainDisabled: {
+    cursor: "default" as const,
+  },
+  currentBadge: {
+    fontSize: 9,
+    fontWeight: 600,
+    color: "#16a34a",
+    background: "#f0fdf4",
+    border: "1px solid #bbf7d0",
+    borderRadius: 3,
+    padding: "1px 5px",
     flexShrink: 0,
+    whiteSpace: "nowrap" as const,
   },
   itemId: {
     flex: 1,
@@ -244,6 +301,18 @@ const styles = {
     color: "#9ca3af",
     fontSize: 11,
     flexShrink: 0,
+  },
+  hoverBadge: {
+    fontSize: 10,
+    color: "#6b7280",
+    background: "#f3f4f6",
+    border: "1px solid #e5e7eb",
+    borderRadius: 4,
+    padding: "2px 6px",
+    marginRight: 8,
+    flexShrink: 0,
+    whiteSpace: "nowrap" as const,
+    pointerEvents: "none" as const,
   },
   previewBtn: {
     flexShrink: 0,

@@ -61,17 +61,7 @@ export const puckConfig: Config = {
   root: {
     fields: {},
     render: ({ children }) => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          padding: "24px",
-          background: "#f0f0f0",
-          minHeight: "100dvh",
-        }}
-      >
-        <div className="mobile-shell">{children}</div>
-      </div>
+      <div className="mobile-shell">{children}</div>
     ),
   },
 

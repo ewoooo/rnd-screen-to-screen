@@ -5,9 +5,14 @@ import "@pxds/cx-layout/styles.css";
 import "@pxds/cx-components/styles.css";
 import "@screen/mobile/organisms/chg-styles";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const RootLayout = ({ children }: PropsWithChildren) => (
-  <html lang="ko" suppressHydrationWarning>
+  <html lang="ko" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
     <head>
       <title>PXDX · Puck Editor</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,7 +30,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
       />
     </head>
-    <body>{children}</body>
+    <body><TooltipProvider>{children}</TooltipProvider></body>
   </html>
 );
 

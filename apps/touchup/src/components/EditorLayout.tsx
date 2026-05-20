@@ -1,10 +1,12 @@
 "use client";
 
 import { Puck } from "@puckeditor/core";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { CanvasToolbar } from "./CanvasToolbar";
+import { ComponentPanel } from "./ComponentPanel";
 import { DraggableLine } from "./DraggableLine";
-import { PolicyPanel } from "./PolicyPanel";
 import { ImportPanel } from "./ImportPanel";
+import { PolicyPanel } from "./PolicyPanel";
 import { ScreenViewer } from "./ScreenViewer";
 
 const CLAMP = (v: number, min: number, max: number) =>
@@ -16,7 +18,9 @@ const DEFAULTS = {
   leftWidth: 260,
   rightWidth: 300,
   leftTopPct: 45,
-  rightTopPct: 45,
+  rightTopPct: 30,
+  frameWidth: 390,
+  frameHeight: 844,
 };
 
 export function EditorLayout() {
@@ -24,10 +28,23 @@ export function EditorLayout() {
   const [rightWidth, setRightWidth] = useState(DEFAULTS.rightWidth);
   const [leftTopPct, setLeftTopPct] = useState(DEFAULTS.leftTopPct);
   const [rightTopPct, setRightTopPct] = useState(DEFAULTS.rightTopPct);
+  const [frameWidth, setFrameWidth] = useState(DEFAULTS.frameWidth);
+  const [frameHeight, setFrameHeight] = useState(DEFAULTS.frameHeight);
+  const frameRef = useRef<HTMLDivElement>(null);
 
-  // 현재 Puck 캔버스에 로드된 Screen (없으면 null)
+  const handleAutoHeight = useCallback(() => {
+    const shell = frameRef.current?.querySelector(".mobile-shell");
+    if (shell) {
+      const natural = (shell as HTMLElement).scrollHeight;
+      if (natural > 0) { setFrameHeight(natural); return; }
+    }
+    // fallback: frame 자체 scrollHeight
+    if (frameRef.current) {
+      setFrameHeight(frameRef.current.scrollHeight || 844);
+    }
+  }, []);
+
   const [loadedScreenPath, setLoadedScreenPath] = useState<string | null>(null);
-  // 미리보기 뷰어로 열린 Screen
   const [previewScreenPath, setPreviewScreenPath] = useState<string | null>(null);
   const [selectedPolicyGroup, setSelectedPolicyGroup] = useState<string | null>(null);
 
@@ -60,7 +77,7 @@ export function EditorLayout() {
       style={{
         display: "grid",
         gridTemplateColumns: `${leftWidth}px ${LINE_THICKNESS}px 1fr ${LINE_THICKNESS}px ${rightWidth}px`,
-        height: "100dvh",
+        height: "calc(100dvh - 48px)",
         overflow: "hidden",
       }}
     >
@@ -75,9 +92,7 @@ export function EditorLayout() {
             onSelectPolicyGroup={setSelectedPolicyGroup}
           />
         </div>
-
         <DraggableLine direction="vertical" onDrag={onDragLeftV} />
-
         <div style={styles.asideSection}>
           <PolicyPanel groupFilter={selectedPolicyGroup} />
         </div>
@@ -88,6 +103,16 @@ export function EditorLayout() {
 
       {/* ── 캔버스 ── */}
       <main style={styles.canvas}>
+        {/* 캔버스 툴바 */}
+        <CanvasToolbar
+          width={frameWidth}
+          height={frameHeight}
+          onWidthChange={setFrameWidth}
+          onHeightChange={setFrameHeight}
+          onAutoHeight={handleAutoHeight}
+        />
+
+        {/* 로드 배너 */}
         {loadedScreenId && (
           <div style={styles.banner}>
             <span>
@@ -102,15 +127,32 @@ export function EditorLayout() {
             </button>
           </div>
         )}
-        {previewScreenPath ? (
-          <ScreenViewer
-            screenId={previewScreenPath.split("/")[1] ?? ""}
-            relPath={previewScreenPath}
-            onClose={() => setPreviewScreenPath(null)}
-          />
-        ) : (
-          <Puck.Preview />
-        )}
+
+        {/* 프레임 영역 */}
+        <div style={styles.canvasScroll}>
+          {previewScreenPath ? (
+            <ScreenViewer
+              screenId={previewScreenPath.split("/")[1] ?? ""}
+              relPath={previewScreenPath}
+              onClose={() => setPreviewScreenPath(null)}
+            />
+          ) : (
+            <div
+              ref={frameRef}
+              style={{
+                width: frameWidth,
+                height: frameHeight,
+                overflow: "hidden",
+                flexShrink: 0,
+                background: "white",
+                boxShadow: "0 2px 16px rgba(0,0,0,0.10)",
+                borderRadius: 2,
+              }}
+            >
+              <Puck.Preview />
+            </div>
+          )}
+        </div>
       </main>
 
       {/* ── 수평 드래그 라인 (오른쪽) ── */}
@@ -118,16 +160,14 @@ export function EditorLayout() {
 
       {/* ── 오른쪽 aside ── */}
       <aside data-aside="right" style={styles.aside}>
-        <div style={{ flex: `0 0 ${rightTopPct}%`, overflow: "auto" }}>
-          <div style={styles.sectionLabel}>속성</div>
+        <div style={styles.rightSection}>
+          <div style={styles.sectionLabel}>속성 & 상태</div>
           <Puck.Fields />
         </div>
-
         <DraggableLine direction="vertical" onDrag={onDragRightV} />
-
-        <div style={styles.asideSection}>
-          <div style={styles.sectionLabel}>컴포넌트</div>
-          <Puck.Components />
+        <div style={{ ...styles.rightSection, ...styles.rightSectionFlex }}>
+          <div style={styles.sectionLabel}>컴포넌트 추가</div>
+          <ComponentPanel />
         </div>
       </aside>
     </div>
@@ -148,10 +188,20 @@ const styles = {
     minHeight: 0,
   },
   canvas: {
-    overflow: "auto",
-    background: "#f0f0f0",
     display: "flex",
     flexDirection: "column" as const,
+    overflow: "hidden",
+    background: "#f0f0f0",
+  },
+  canvasScroll: {
+    flex: 1,
+    overflow: "auto",
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: "32px 24px",
+    gap: 0,
   },
   banner: {
     display: "flex",
@@ -173,13 +223,21 @@ const styles = {
     fontSize: 12,
     padding: "0 2px",
   },
+  rightSection: {
+    padding: "0 14px",
+    overflow: "auto",
+    minHeight: 0,
+  },
+  rightSectionFlex: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column" as const,
+  },
   sectionLabel: {
-    padding: "10px 14px 6px",
-    fontSize: 11,
+    padding: "12px 0 10px",
+    fontSize: 13,
     fontWeight: 600,
-    color: "#9ca3af",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.05em",
+    color: "#111827",
     fontFamily: "system-ui, sans-serif",
     borderBottom: "1px solid #f3f4f6",
     flexShrink: 0,
