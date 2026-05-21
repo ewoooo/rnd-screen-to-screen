@@ -448,9 +448,11 @@ export const puckConfig: Config = {
       render: () => <ChangeEligibility />,
     },
     "OGN/PlanFilter": {
-      fields: {},
-      defaultProps: {},
-      render: () => <PlanFilter />,
+      fields: {
+        totalCount: { type: "number", label: "Total count" },
+      },
+      defaultProps: { totalCount: 12 },
+      render: ({ totalCount }) => <PlanFilter totalCount={totalCount} />,
     },
     "OGN/PlanList": {
       fields: {},
@@ -463,9 +465,13 @@ export const puckConfig: Config = {
       render: () => <PlanComparison />,
     },
     "OGN/PlanNoticeAgree": {
-      fields: {},
-      defaultProps: {},
-      render: () => <PlanNoticeAgree />,
+      fields: {
+        agreed: boolRadio("Agreed"),
+      },
+      defaultProps: { agreed: false },
+      render: ({ agreed }) => (
+        <PlanNoticeAgree agreed={agreed} onAgreedChange={() => {}} />
+      ),
     },
     "OGN/ChangeComplete": {
       fields: {},

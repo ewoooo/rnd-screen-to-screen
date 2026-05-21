@@ -174,3 +174,50 @@
   overflow-y: auto;
   position: relative;
 }
+
+/* ─── Puck drawer skin (keep Puck DnD, replace the visible chrome) ── */
+
+.touchup-component-drawer [class*="ComponentList"] {
+  color: inherit;
+}
+
+.touchup-component-drawer [class*="ComponentList-title"] {
+  width: 100%;
+  padding: 8px 6px 4px;
+  border: 0;
+  background: transparent;
+  color: rgb(255 255 255 / 0.25);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  cursor: default;
+}
+
+.touchup-component-drawer [class*="ComponentList-title"] svg {
+  display: none;
+}
+
+.touchup-component-drawer [class*="ComponentList-content"] {
+  padding: 0 4px 4px;
+}
+
+.touchup-component-drawer [class*="ComponentList"] + [class*="ComponentList"] {
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.touchup-component-drawer [data-puck-drawer] {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.touchup-component-drawer [data-puck-drawer-item] {
+  width: 100%;
+}
+
+.touchup-component-drawer [class*="Drawer-draggable"],
+.touchup-component-drawer [class*="Drawer-draggableBg"],
+.touchup-component-drawer [class*="Drawer-draggableFg"] {
+  width: 100%;
+}
