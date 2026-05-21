@@ -4,6 +4,8 @@ import type { Config } from "@puckeditor/core";
 import {
   AuthRequest,
   AuthSelect,
+  AuthRequestCopy,
+  AuthSelectCopy,
 } from "@screen/mobile/organisms/nova-mbr-fp";
 import {
   ChangeComplete,
@@ -425,15 +427,69 @@ export const puckConfig: Config = {
     },
 
     // ── Organisms — nova-mbr-fp ───────────────────────
+    "OGN/AuthSelectCopy": {
+      fields: {},
+      defaultProps: { selected: "", loading: false, loadErrorText: "" },
+      render: ({ selected, loading, loadErrorText }) => (
+        <AuthSelectCopy
+          selected={(selected as "phone" | "pass" | "cert") || undefined}
+          loading={loading as boolean}
+          loadErrorText={(loadErrorText as string) || undefined}
+        />
+      ),
+    },
+    "OGN/AuthRequestCopy": {
+      fields: {},
+      defaultProps: {
+        errorState: "none",
+        fieldError: false,
+        blocked: false,
+        resendDisabled: false,
+        confirmDisabled: true,
+        confirming: false,
+      },
+      render: ({ errorState, fieldError, blocked, resendDisabled, confirmDisabled, confirming }) => (
+        <AuthRequestCopy
+          errorState={errorState as "none"}
+          fieldError={fieldError as boolean}
+          blocked={blocked as boolean}
+          resendDisabled={resendDisabled as boolean}
+          confirmDisabled={confirmDisabled as boolean}
+          confirming={confirming as boolean}
+        />
+      ),
+    },
     "OGN/AuthSelect": {
       fields: {},
-      defaultProps: {},
-      render: () => <AuthSelect />,
+      defaultProps: { selected: "", loading: false, loadErrorText: "" },
+      render: ({ selected, loading, loadErrorText }) => (
+        <AuthSelect
+          selected={(selected as "phone" | "pass" | "cert") || undefined}
+          loading={loading as boolean}
+          loadErrorText={(loadErrorText as string) || undefined}
+        />
+      ),
     },
     "OGN/AuthRequest": {
       fields: {},
-      defaultProps: {},
-      render: () => <AuthRequest />,
+      defaultProps: {
+        errorState: "none",
+        fieldError: false,
+        blocked: false,
+        resendDisabled: false,
+        confirmDisabled: true,
+        confirming: false,
+      },
+      render: ({ errorState, fieldError, blocked, resendDisabled, confirmDisabled, confirming }) => (
+        <AuthRequest
+          errorState={errorState as "none"}
+          fieldError={fieldError as boolean}
+          blocked={blocked as boolean}
+          resendDisabled={resendDisabled as boolean}
+          confirmDisabled={confirmDisabled as boolean}
+          confirming={confirming as boolean}
+        />
+      ),
     },
 
     // ── Organisms — chg ──────────────────────────────
@@ -512,7 +568,7 @@ export const puckConfig: Config = {
 
     // organism categories — ComponentPanel이 탭 필터에 사용
     "nova-mbr-fp": {
-      components: ["OGN/AuthSelect", "OGN/AuthRequest"],
+      components: ["OGN/AuthSelect", "OGN/AuthRequest", "OGN/AuthSelectCopy", "OGN/AuthRequestCopy"],
       defaultExpanded: true,
     },
     "chg": {

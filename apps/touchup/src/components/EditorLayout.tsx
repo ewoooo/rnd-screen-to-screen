@@ -1,6 +1,6 @@
 "use client";
 
-import { Puck } from "@puckeditor/core";
+import { Puck, createUsePuck } from "@puckeditor/core";
 import { X } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { CanvasToolbar } from "./CanvasToolbar";
@@ -14,6 +14,10 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { puckConfig } from "@/puck/config";
+import { ORGANISM_SCHEMAS, type OgnFieldDef } from "@/puck/organism-schemas";
+
+const usePuck = createUsePuck();
 
 const DEFAULTS = {
   frameWidth: 390,
@@ -132,6 +136,7 @@ export function EditorLayout({
                       <OrganismEditorShell
                         target={editingOrganism}
                         onClose={onCloseOrganismEditor}
+                        frameWidth={frameWidth}
                       />
                     )}
                   </div>
@@ -173,47 +178,137 @@ const sectionTitle = "text-sm font-semibold text-white py-3 shrink-0";
 function OrganismEditorShell({
   target,
   onClose,
+  frameWidth,
 }: {
   target: EditingOrganism;
   onClose: () => void;
+  frameWidth: number;
 }) {
   const label = target.type.replace(/^OGN\//, "");
+  const schema = ORGANISM_SCHEMAS[target.type];
+
+  const dispatch = usePuck((s) => s.dispatch);
+  const data = usePuck((s) => s.appState.data);
+  const props = usePuck((s) => s.appState.data.content.find((c) => c.props.id === target.id)?.props ?? {});
+
+  const updateProp = (key: string, value: unknown) => {
+    const newContent = data.content.map((item) =>
+      item.props.id === target.id
+        ? { ...item, props: { ...item.props, [key]: value } }
+        : item
+    );
+    dispatch({ type: "setData", data: { ...data, content: newContent }, recordHistory: true } as Parameters<typeof dispatch>[0]);
+  };
+
+  const renderFn = (puckConfig.components as Record<string, { render: (p: Record<string, unknown>) => React.ReactNode }>)[target.type]?.render;
 
   return (
-    <div className="min-h-[360px] rounded-sm border border-white/12 bg-card shadow-2xl">
-      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/30">
-            Organism Canvas
-          </div>
-          <div className="text-sm font-semibold text-white">{label}</div>
+    <div
+      style={{ width: frameWidth }}
+      className="shrink-0 rounded-sm shadow-2xl overflow-hidden border border-white/10 flex flex-col"
+    >
+      {/* 헤더 */}
+      <div className="flex items-center justify-between bg-neutral-900 border-b border-white/10 px-3 py-2 shrink-0">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-widest text-white/30">Organism</span>
+          <span className="text-[10px] text-white/15">·</span>
+          <span className="text-xs font-semibold text-white/80">{label}</span>
         </div>
         <button
           type="button"
           onClick={onClose}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-white/45 transition-colors hover:bg-white/8 hover:text-white"
+          className="flex h-6 w-6 items-center justify-center rounded text-white/35 hover:bg-white/8 hover:text-white transition-colors cursor-pointer"
           aria-label="Close organism editor"
         >
-          <X size={14} />
+          <X size={12} />
         </button>
       </div>
 
-      <div className="p-3">
-        <div className="rounded-lg border border-dashed border-white/15 bg-black/20 p-4">
-          <div className="rounded-md border border-white/10 bg-white/[0.03] p-3">
-            <div className="mb-2 h-3 w-32 rounded bg-white/15" />
-            <div className="space-y-2">
-              <div className="h-8 rounded-md bg-white/8" />
-              <div className="h-8 rounded-md bg-white/8" />
-              <div className="h-8 rounded-md bg-white/8" />
-            </div>
-          </div>
-          <div className="mt-3 text-xs leading-5 text-white/35">
-            This is a temporary single-organism editing surface. It shares the
-            Screen width and keeps height auto.
-          </div>
-        </div>
+      {/* organism 렌더링 */}
+      <div className="bg-white overflow-y-auto shrink-0" style={{ minHeight: 120 }}>
+        {renderFn ? renderFn(props) : (
+          <div className="p-4 text-xs text-neutral-400">Render not found for {target.type}</div>
+        )}
       </div>
+
+      {/* 편집 fields */}
+      {schema ? (
+        <div className="bg-neutral-950 border-t border-white/8 px-3 pt-3 pb-4 overflow-y-auto">
+          <div className="text-[10px] font-semibold text-white/25 uppercase tracking-widest mb-3">Props</div>
+          {Object.entries(schema.fields).map(([key, field]) => (
+            <OgnField
+              key={key}
+              fieldKey={key}
+              field={field}
+              value={props[key]}
+              onChange={(val) => updateProp(key, val)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="bg-neutral-950 border-t border-white/8 px-3 py-4 text-[11px] text-white/25">
+          편집 가능한 props 없음
+        </div>
+      )}
+    </div>
+  );
+}
+
+function OgnField({
+  fieldKey,
+  field,
+  value,
+  onChange,
+}: {
+  fieldKey: string;
+  field: OgnFieldDef;
+  value: unknown;
+  onChange: (val: unknown) => void;
+}) {
+  return (
+    <div className="mb-3">
+      <span className="block text-[10px] font-medium text-white/40 uppercase tracking-widest mb-1.5 select-none">
+        {field.label}
+      </span>
+      {field.type === "text" && (
+        <input
+          type="text"
+          value={String(value ?? "")}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full rounded-md border bg-white/5 px-2.5 py-1.5 text-sm text-white border-white/10 focus:border-white/30 focus:outline-none transition-colors"
+        />
+      )}
+      {field.type === "select" && (
+        <select
+          value={String(value ?? "")}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full rounded-md border bg-white/5 px-2.5 py-1.5 text-sm text-white border-white/10 focus:outline-none appearance-none cursor-pointer [&>option]:bg-neutral-900"
+        >
+          {field.options.map((opt) => (
+            <option key={String(opt.value)} value={String(opt.value)}>{opt.label}</option>
+          ))}
+        </select>
+      )}
+      {field.type === "radio" && (
+        <div className="flex items-center gap-0.5 rounded-md bg-white/6 p-0.5">
+          {field.options.map((opt) => {
+            const isActive = String(value) === String(opt.value);
+            return (
+              <button
+                key={String(opt.value)}
+                type="button"
+                onClick={() => onChange(opt.value)}
+                className={[
+                  "flex-1 text-center py-1 text-[11px] font-medium rounded transition-colors",
+                  isActive ? "bg-white/15 text-white cursor-default" : "text-white/40 hover:text-white/65 cursor-pointer",
+                ].join(" ")}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
